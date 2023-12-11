@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../assets/css/dashboard.css'
 import Slider from '../components/Slider';
 
@@ -27,10 +27,24 @@ const Dashboard = () => {
    const roundProfile = require('../assets/icons/round-profile.png');
    const quoteIcon = require('../assets/icons/9044931_quotes_icon 1.png');
    const heartIcon = require('../assets/icons/heart.png');
-
-    return (
+   const [menuOpen, setMenuOpen] = useState(false)
+    return ( 
        <>
          <div className=''> 
+         <div className='mobile-navbar'>
+         <div className='icon'>
+             <img className='btLogo' src={btLogo}></img>
+             </div>
+             <div onClick={()=>{
+               setMenuOpen(!menuOpen)
+             }}>
+             <i class="fa-solid fa-bars"></i>
+             </div>
+         </div>
+         <div className={menuOpen ? 'mobile-nav-content' : 'hide-nav'}>
+         <div className='login-text'>Login</div>
+                  <div className='signup'>Sign up</div>
+         </div>
            <div className='header'>
              <div className='icon'>
              <img src={btLogo}></img>
@@ -295,7 +309,7 @@ const Dashboard = () => {
                         </div>
                      </div>
                      </div>
-                     <div className='box-one'>
+                     <div className='box-one box-two'>
                      <div>
                        <img className='carousel-img' src={female}></img>
                      </div>
@@ -352,7 +366,7 @@ const Dashboard = () => {
                         </div>
                      </div>
                      </div>
-                     <div className='box-one'>
+                     <div className='box-one box-two'>
                      <div>
                        <img className='carousel-img' src={fashion}></img>
                      </div>
