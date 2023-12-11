@@ -14,6 +14,8 @@ const Dashboard = () => {
    const girl = require('../assets/images/girl.png');
    const female = require('../assets/images/female.png');
    const fashion = require('../assets/images/fashion.png');
+   const sliderBackground = require('../assets/images/slider-background.png');
+   const fieldsBackground = require('../assets/images/fields-background.png');
    const adidasIcon = require('../assets/icons/6539fea9ad514fe89ff5d7fc_adidas.png');
    const ubisoftIcon = require('../assets/icons/6539fd74ad514fe89ff48cdd_ubisoft.png');
    const wppIcon = require('../assets/icons/651508c575f862fac120d7b1_wpp.webp');
@@ -24,10 +26,11 @@ const Dashboard = () => {
    const socialIcons = require('../assets/icons/Social.png');
    const roundProfile = require('../assets/icons/round-profile.png');
    const quoteIcon = require('../assets/icons/9044931_quotes_icon 1.png');
+   const heartIcon = require('../assets/icons/heart.png');
 
     return (
        <>
-         <div className='container-fluid'> 
+         <div className=''> 
            <div className='header'>
              <div className='icon'>
              <img src={btLogo}></img>
@@ -41,9 +44,11 @@ const Dashboard = () => {
              </div>
              <div className='header-functions'>
                   <div>
-                     <img src={searchLogo}></img>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                  </svg>
                   </div>
-                  <div>Login</div>
+                  <div className='login-text'>Login</div>
                   <div className='signup'>Sign up</div>
                   <div className='gridLogo'>
                   <img src={gridLogo}></img>
@@ -52,24 +57,24 @@ const Dashboard = () => {
            </div>
            <div className='section-1'>
                <div className='find-work'>
-                  <div>Find work as a model</div>
-                  <div>Unlock Your Gateway to Modeling Opportunities.</div>
+                  <div className='section-title'>Find work as a model</div>
+                  <div className='section-description'>Unlock Your Gateway to Modeling Opportunities.</div>
                   <div className='Join-wrapper center'> 
-                     <div>Join Now</div>
+                     <div className='joinnow-btn'>Join Now</div>
                   </div>
                </div>
                <div className='find-work'>
-                  <div>Find models and talents</div>
-                  <div>Discover Your Ideal Model: Connecting Visions with Talent.</div>
+                  <div className='section-title'>Find models and talents</div>
+                  <div className='section-description'>Discover Your Ideal Model: Connecting Visions with Talent.</div>
                   <div className='white-joinnow center'>
-                     <div>Join Now</div>
+                     <div className='joinnow-btn'>Join Now</div>
                   </div>
                </div>
            </div>
            <div className='tabs-section'>
               <div className='title'>Popular Models</div>
               <div className='tabs'>
-               <div>Fashion</div>
+               <div className='active-tab'>Fashion</div>
                <div>Plus sized</div>
                <div>Real people</div>
                <div>Unique</div>
@@ -77,7 +82,10 @@ const Dashboard = () => {
            </div>
            <div className='gallery-section'>
               <div className='gallery-warpper'>
-                <img src={gents}></img>
+               <div className='gallery-position'>
+               <img className='gallery-img' src={gents}></img>
+               <img className='heart-icon' src={heartIcon}></img>
+               </div>
                 <div className='gallery-content'>
                   <div className='content'>
                      <div className='name'>Alexander</div>
@@ -91,7 +99,10 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className='gallery-warpper'>
-                <img src={gents}></img>
+              <div className='gallery-position'>
+               <img className='gallery-img' src={gents}></img>
+               <img className='heart-icon' src={heartIcon}></img>
+               </div>
                 <div className='gallery-content'>
                   <div className='content'>
                      <div className='name'>Alexander</div>
@@ -105,7 +116,10 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className='gallery-warpper'>
-                <img src={gents}></img>
+              <div className='gallery-position'>
+               <img className='gallery-img' src={gents}></img>
+               <img className='heart-icon' src={heartIcon}></img>
+               </div>
                 <div className='gallery-content'>
                   <div className='content'>
                      <div className='name'>Alexander</div>
@@ -119,7 +133,27 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className='gallery-warpper'>
-                <img src={gents}></img>
+              <div className='gallery-position'>
+               <img className='gallery-img' src={gents}></img>
+               <img className='heart-icon' src={heartIcon}></img>
+               </div>
+                <div className='gallery-content'>
+                  <div className='content'>
+                     <div className='name'>Alexander</div>
+                     <div className='address'>Copenhagen, Denmark</div>
+                  </div>
+                  <div className='rating'>
+                     <img src={starIcon}></img>
+                     <img src={starIcon}></img>
+                     <img src={starIcon}></img>
+                  </div>
+                </div>
+              </div>
+              <div className='gallery-warpper'>
+              <div className='gallery-position'>
+               <img className='gallery-img' src={gents}></img>
+               <img className='heart-icon' src={heartIcon}></img>
+               </div>
                 <div className='gallery-content'>
                   <div className='content'>
                      <div className='name'>Alexander</div>
@@ -141,22 +175,22 @@ const Dashboard = () => {
           <div className='title'>Our Community</div>
           </div>    
           <div className='cards'>
-            <div className='card-wrapper'>
+            <div className='card-wrapper card-background'>
                <div className='count'>5,258,451</div>
                <div className='cards-text'>Models in community</div>
             </div>
-            <div className='card-wrapper'>
+            <div className='card-wrapper  card-background'>
                <div className='count'>5,258,451</div>
                <div className='cards-text'>Industry Professionals</div>
             </div>
-            <div className='card-wrapper'>
+            <div className='card-wrapper  card-background'>
                <div className='count'>5,258,451</div>
                <div className='cards-text'>Agencies</div>
             </div>
           </div>
           <div className='title'>Prioritizing Your Well-being</div>
           <div className='cards'>
-            <div className='card-wrapper'>
+            <div className='card-wrapper '>
                <div className='card-picture center'>
                  <img src={ checkMark}></img>
                </div>
@@ -225,7 +259,9 @@ const Dashboard = () => {
                      <div>Find More</div>
             </div>
           </div>
-         <div className='carousel-section'>    
+         <div style={{ 
+      backgroundImage: `url(${sliderBackground})` 
+    }} className='carousel-section'>    
              <div className='carousel-title center'>
              Success Stories
              </div>
@@ -349,11 +385,11 @@ const Dashboard = () => {
                
                </div>
                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                 <span className="carousel-control-prev-icon carousel-icons" aria-hidden="true"></span>
                  <span className="visually-hidden">Previous</span>
                </button>
                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                 <span className="carousel-control-next-icon carousel-icons" aria-hidden="true"></span>
                  <span className="visually-hidden">Next</span>
                </button>
              </div>
@@ -384,11 +420,13 @@ const Dashboard = () => {
                <img src={havasIcon}></img>
             </div>
           </div>
-          <div className='form-section'>
+          <div className='form-section' style={{ 
+      backgroundImage: `url(${fieldsBackground})` 
+    }}>
             <div className='form-title'>Get Discovered</div>
             <div className='form-fields'>
-               <input className='form-control' placeholder='First Name'></input>
-               <input className='form-control'  placeholder='Email Address'></input>
+               <input className='input-style form-control' placeholder='First Name'></input>
+               <input className='input-style form-control'  placeholder='Email Address'></input>
                <div className='subscribe-btn'>Subscribe Now</div>
             </div>
           </div>
