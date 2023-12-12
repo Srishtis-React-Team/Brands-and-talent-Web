@@ -1,16 +1,14 @@
-
+@media only screen and (min-width:390px){
 .header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 55px;
-    position: fixed;
     top: 0;
     width: 100%;
     background-color: #FFF;
     z-index: 9;
 }
-
 
 .icon{
     padding-left: 30px;
@@ -81,7 +79,10 @@
     justify-content: space-around;
     align-items: end;
     background-image: url("../images/section1.png");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    /* height: 100; */ 
 }
 
 .find-work{
@@ -198,7 +199,8 @@
 .gallery-content{
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    align-items: baseline;
+    padding: 20px 0px;
 }
 
 .name{
@@ -523,5 +525,175 @@
     height: 34px;
     background-color: rgba(255, 255, 255, 0.10);
 }
+    .mobile-navbar{
+        display: none;
+    }
 
-@media only screen and (max-width:390px){}
+    .mobile-navbar{
+        display: none;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    
+    .fa-bars{
+        cursor: pointer;
+        font-size: 40px;
+    }
+
+    .mobile-nav-content{
+        visibility: hidden;
+    }
+
+}
+@media only screen and (max-width:390px){
+    .section-1{
+        background-color: black !important;
+        height: 340px;
+        display: flex;
+        justify-content: space-around;
+        align-items: end;
+        background-image: url("../images/section1.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 100%;
+    }
+    .gallery-img{
+        width: 150px;
+    }
+    .gallery-section{
+        padding: 10px 0px;
+    }
+    .cards{
+        flex-wrap: wrap;
+        /* margin-top: ; */
+    }
+    .card-wrapper{
+        margin-top: 15px;
+    }
+    .case-images{
+        width: 150px;
+    }
+    .box-two{
+        display: none;
+    }
+    .box-one{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .carousel-title{
+        padding: 15px 0px 15px 0px;
+    }
+    .carousel-section{
+        padding: 10px;
+    }
+    .carousel-description{
+        font-size: 16px;
+    }
+    .quote>img{
+        width: 20px;
+        height: 20px;
+    }
+    .profile-info{
+        font-size: 12px;
+    }
+    .profile-name{
+        font-size: 14px;
+    }
+    .profile-section{
+        padding: 10px 0px !important;
+    }
+    .carousel-img{
+        width: 275px;
+    }
+    .brands-section{
+        flex-wrap: wrap;
+        padding: 0px 15px;
+    }
+    .brands-section>div{
+        padding: 18px 10px;
+    }
+    .form-section{
+        width: 355px;
+        height: 287px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 20px;
+    }
+    
+    .form-fields{
+        display: flex;
+        flex-direction: column;
+        padding-top: 0px;
+    }
+    .form-fields>input{
+        margin: 15px 0px;
+    }
+    .input-style{
+        height: 48px;
+    }
+    .subscribe-btn{
+        height: 48px;
+    }
+    .footer-section{
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .footer-wrapper{
+        margin: 30px 0px;
+    }
+    .title{
+        padding: 35px 0px;
+    }
+    .section-title {
+        font-size: 18px;
+    }
+    .find-work{
+        padding-bottom: 20px;
+    }
+    .Join-wrapper {
+        width: 100px;
+        height: 33px;
+    }
+    .white-joinnow{
+        width: 100px;
+        height: 33px;
+    }
+    .section-description{
+        font-size: 14px;
+    }
+    .tabs>div{
+        margin: 10px;
+    }
+    .header{
+        display: none;
+    }
+    .mobile-nav-content{
+        visibility: visible;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .mobile-nav-content>div{
+        margin: 12px 0px;
+    }
+
+    .signup {
+        width: 80px;
+        height: 30px;
+    }
+
+    .mobile-navbar{
+        display: flex;
+    }
+
+}
+
+.hide-nav{
+    display: none;
+}
