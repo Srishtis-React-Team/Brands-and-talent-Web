@@ -1,0 +1,333 @@
+@media (max-width: 475px) {
+  .hide-filter {
+    display: none;
+  }
+  .header {
+    display: none;
+  }
+  .popular-header {
+    width: 100%;
+    height: 56px;
+    background: #c2114b;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .header-title {
+    color: #fff;
+    font-family: "Montagu Slab";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .header-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-menu > div {
+    padding-right: 15px;
+    color: #fff;
+    font-family: "Montaga";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+  }
+  .header-menu > div:nth-child(1) {
+    padding-right: 15px;
+    border-right: 1px solid #fff;
+  }
+  .header-menu > div:nth-child(2) {
+    padding-left: 15px;
+  }
+  .filter-section {
+    margin-top: 20px;
+  }
+  .filter-wrapper {
+    width: 100%;
+  }
+  .filter-btn {
+    width: 296px;
+    height: 49px;
+    border-radius: 11px;
+    background: #000;
+    cursor: pointer;
+    color: #fff;
+    font-family: "Montagu Slab";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .filter-btn-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 45px;
+  }
+  .filter-content {
+    display: block;
+  }
+  .filter-items {
+    padding: 15px 0px;
+    color: #000;
+    font-family: "Montagu Slab";
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .keyword-wrapper {
+    display: flex;
+    border-bottom: 1px solid #000;
+    padding-bottom: 14px;
+    opacity: 0.4;
+  }
+  .keyword-input {
+    border: none;
+    outline: none;
+    padding-left: 15px;
+  }
+  .check-section {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .label-style {
+    color: #000;
+    font-family: "Montaga";
+    font-size: 15px;
+    font-weight: 400;
+    padding-left: 10px;
+  }
+  .input-items-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  .input-items-style {
+    width: 137px;
+    height: 35px;
+    border-radius: 7px;
+    border: 1px solid #000;
+    background: #fff;
+  }
+  .input-items-style::placeholder {
+    color: #000;
+    font-family: "Montaga";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .input-country-style {
+    width: 100%;
+    height: 35px;
+    border-radius: 7px;
+    border: 1px solid #000;
+    background: #fff;
+  }
+  .category-chips {
+    padding: 20px 0px 0px 15px;
+  }
+  .each-category {
+    padding: 8px 0px;
+  }
+  .submit-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+  }
+  .reset-btn,
+  .search-btn {
+    width: 86px;
+    height: 40px;
+    border-radius: 140px;
+    background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
+    color: #fff;
+    font-family: "Montaga";
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .search-btn {
+    background: #c2114b;
+    margin-left: 15px;
+  }
+}
+
+@media (min-width: 475px) {
+  .mobile-navbar {
+    display: none;
+  }
+  .popular-header {
+    width: 100%;
+    height: 56px;
+    background: #c2114b;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .header-title {
+    color: #fff;
+    font-family: "Montagu Slab";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .header-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-menu > div {
+    padding-right: 15px;
+    color: #fff;
+    font-family: "Montaga";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+  }
+  .header-menu > div:nth-child(1) {
+    padding-right: 15px;
+    border-right: 1px solid #fff;
+  }
+  .header-menu > div:nth-child(2) {
+    padding-left: 15px;
+  }
+  .filter-section {
+    margin-top: 20px;
+    display: flex;
+  }
+  .filter-wrapper {
+    width: 30%;
+  }
+  .filter-btn {
+    width: 296px;
+    height: 49px;
+    border-radius: 11px;
+    background: #000;
+    cursor: pointer;
+    color: #fff;
+    font-family: "Montagu Slab";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .filter-btn-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 25px;
+  }
+  .filter-content {
+    display: block;
+  }
+  .filter-items {
+    padding: 15px 0px;
+    color: #000;
+    font-family: "Montagu Slab";
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .keyword-wrapper {
+    display: flex;
+    border-bottom: 1px solid #000;
+    padding-bottom: 14px;
+    opacity: 0.4;
+  }
+  .keyword-input {
+    border: none;
+    outline: none;
+    padding-left: 15px;
+  }
+  .check-section {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .label-style {
+    color: #000;
+    font-family: "Montaga";
+    font-size: 15px;
+    font-weight: 400;
+    padding-left: 10px;
+  }
+  .input-items-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  .input-items-style {
+    width: 137px;
+    height: 35px;
+    border-radius: 7px;
+    border: 1px solid #000;
+    background: #fff;
+  }
+  .input-items-style::placeholder {
+    color: #000;
+    font-family: "Montaga";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .input-country-style {
+    width: 100%;
+    height: 35px;
+    border-radius: 7px;
+    border: 1px solid #000;
+    background: #fff;
+  }
+  .category-chips {
+    padding: 20px 0px 0px 15px;
+  }
+  .each-category {
+    padding: 8px 0px;
+  }
+  .submit-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+  }
+  .reset-btn,
+  .search-btn {
+    width: 86px;
+    height: 40px;
+    border-radius: 140px;
+    background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
+    color: #fff;
+    font-family: "Montaga";
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .search-btn {
+    background: #c2114b;
+    margin-left: 15px;
+  }
+  .models-images {
+    width: 70%;
+  }
+  .filtered-gallery {
+    padding: 0;
+  }
+}
