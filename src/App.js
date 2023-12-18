@@ -1,10 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import Dashboard from './views/Dashboard'
+import Routing from './config/Routes';
+
 function App() {
   return (
     <div>
-      <Dashboard />
+      <Routing />
     </div>
   );
 }

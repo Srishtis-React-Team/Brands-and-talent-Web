@@ -1,0 +1,78 @@
+import React, { useState } from "react";
+import "../assets/css/dashboard.css";
+import { NavLink } from "react-router-dom";
+const Footer = () => {
+  const fieldsBackground = require("../assets/images/fields-background.png");
+  const btLogo = require("../assets/icons/Group 56.png");
+  const socialIcons = require("../assets/icons/Social.png");
+
+  return (
+    <>
+      <section className="main-form">
+        <div
+          className="form-section"
+          style={{
+            backgroundImage: `url(${fieldsBackground})`,
+          }}
+        >
+          <div className="form-title">Get Discovered</div>
+          <div className="form-fields">
+            <input
+              className="input-style form-control"
+              placeholder="First Name"
+            ></input>
+            <input
+              className="input-style form-control"
+              placeholder="Email Address"
+            ></input>
+            <div className="subscribe-btn">Subscribe Now</div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="footer-section">
+          <div className="footer-wrapper">
+            <div className="footer-icon">
+              <img src={btLogo}></img>
+            </div>
+            <div className="company-info">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+              placerat dapibus sapien, pellentesque elementum dolor finibus sed.
+            </div>
+            <div className="social-medias">
+              <img src={socialIcons}></img>
+            </div>
+          </div>
+          <div className="footer-wrapper">
+            <div className="footer-title">Company</div>
+            <div>Home</div>
+            <div>Find Creators</div>
+            <div>Pricing</div>
+            <div>Learn</div>
+          </div>
+          <div className="footer-wrapper">
+            <div className="footer-title">Help</div>
+            <div>Customer Support</div>
+            <div>Help & FAQ</div>
+            <div>Terms & Conditions</div>
+            <div>Pricing</div>
+          </div>
+          <div className="footer-wrapper">
+            <div className="footer-title">Resources</div>
+            <div>Featured Lists</div>
+            <div>New Faces</div>
+            <div>How to - Blog</div>
+            <div>Youtube Playlist</div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="copyright-section">
+          <div>© Copyright 2023 Brandsandtalent All Right Reserved.</div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Footer;
