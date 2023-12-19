@@ -235,7 +235,7 @@
   .filter-wrapper {
     display: flex;
     flex-direction: column;
-    padding: 0px 25px;
+    padding: 0px 40px;
   }
   .filter-content {
     display: block;

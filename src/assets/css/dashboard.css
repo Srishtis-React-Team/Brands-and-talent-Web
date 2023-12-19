@@ -2,6 +2,19 @@ section {
   /* border: 1px solid red; */
 }
 
+a.active {
+  max-width: 110px;
+  height: 30px;
+  border-radius: 140px;
+  background: #000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff !important;
+  padding: 15px;
+}
+
 .hide-nav {
   display: none;
 }
@@ -53,6 +66,7 @@ a {
     border-bottom: 1px solid #d4d4d8;
     background-color: #fff;
     z-index: 9;
+    width: 475px;
   }
 
   .mobile-nav-content > div {
