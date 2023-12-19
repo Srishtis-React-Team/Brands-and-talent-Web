@@ -17,19 +17,6 @@ a {
   color: #000;
 }
 
-.active {
-  text-decoration: none;
-  width: 86px;
-  height: 40px;
-  border-radius: 140px;
-  background: #000;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff !important;
-}
-
 .gallery-position {
   position: relative;
 }

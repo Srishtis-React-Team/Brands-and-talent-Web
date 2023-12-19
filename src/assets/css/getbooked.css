@@ -1,0 +1,137 @@
+.model-profile {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0px;
+}
+
+.modal-profile-img {
+  border-radius: 16px;
+}
+
+.model-details {
+  padding-left: 30px;
+  width: 48%;
+}
+
+.model-name {
+  color: #000;
+  font-family: "Montagu Slab";
+  font-size: 27px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 40px 0px 15px 0px;
+}
+
+.model-infos {
+  color: #000;
+  font-family: "Montagu Slab";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.model-location {
+  display: flex;
+  align-items: center;
+  padding: 15px 0px;
+}
+
+.location-text {
+  color: #000;
+  font-family: "Montagu Slab";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-left: 14px;
+}
+
+.models-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.share-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 140px;
+  background: #000;
+  cursor: pointer;
+}
+
+.message-wrapper {
+  width: 118px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 140px;
+  background: #c2114b;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+
+.message-wrapper > span {
+  color: #fff;
+  font-family: "Montaga";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.reserve-background {
+  width: 118px;
+  height: 40px;
+  border-radius: 140px;
+  background: #b0b0b0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+
+.text-span {
+  color: #000;
+  font-family: "Montaga";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.invite {
+  width: 159px;
+  height: 40px;
+}
+
+.follow {
+  width: 110px;
+  height: 40px;
+}
+
+.models-social-counts {
+  padding: 20px 0px;
+}
+
+.count-wrapper {
+  color: #000;
+  font-family: "Montagu Slab";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.count-wrapper > span {
+  color: #c2114b;
+  font-family: "Montagu Slab";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding-right: 18px;
+}
