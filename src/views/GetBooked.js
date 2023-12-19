@@ -1,16 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/findcreators.css";
 import "../assets/css/getbooked.css";
 import Header from "./header.js";
 import Footer from "./Footer.js";
+import axios from "axios";
 const GetBooked = () => {
+  const [data, setDate] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((res) => setDate(res.data))
+      .catch();
+  }, []);
   const model = require("../assets/images/model-profile.png");
+  const model1 = require("../assets/images/model1.png");
+  const model2 = require("../assets/images/model2.png");
+  const model3 = require("../assets/images/model3.png");
+  const model4 = require("../assets/images/model4.png");
+  const model5 = require("../assets/images/model5.png");
+  const model6 = require("../assets/images/model6.png");
+  const model7 = require("../assets/images/model7.png");
+  const model8 = require("../assets/images/model8.png");
+  const model9 = require("../assets/images/model9.png");
+  const model10 = require("../assets/images/model10.png");
+  const model11 = require("../assets/images/model11.png");
+  const model12 = require("../assets/images/model12.png");
+  const model13 = require("../assets/images/model13.png");
+  const model14 = require("../assets/images/model14.png");
+  const model15 = require("../assets/images/model15.png");
   const mapPin = require("../assets/icons/map-pin.png");
   const message = require("../assets/icons/message-circle.png");
   const share = require("../assets/icons/share-2.png");
   const plus = require("../assets/icons/plus-square.png");
   const calander = require("../assets/icons/calendar.png");
   const user = require("../assets/icons/user-plus.png");
+  const pinkStar = require("../assets/icons/pink-star.png");
+  const greyStar = require("../assets/icons/grey-star.png");
+  const [photos, showPhotos] = useState(true);
+  const [videos, showVideos] = useState(false);
+  const [features, showFeatures] = useState(false);
+  const [reviews, setReviews] = useState(false);
+  const [bio, showBio] = useState(false);
+  const [analytics, showAnalytics] = useState(false);
+
+  function handleForms(e) {
+    console.log(e, "e");
+    if (e == "photos") {
+      showPhotos(true);
+    } else {
+      showPhotos(false);
+    }
+    if (e == "videos") {
+      showVideos(true);
+    } else {
+      showVideos(false);
+    }
+    if (e == "features") {
+      showFeatures(true);
+    } else {
+      showFeatures(false);
+    }
+    if (e == "reviews") {
+      setReviews(true);
+    } else {
+      setReviews(false);
+    }
+    if (e == "bio") {
+      showBio(true);
+    } else {
+      showBio(false);
+    }
+    if (e == "analytics") {
+      showAnalytics(true);
+    } else {
+      showAnalytics(false);
+    }
+  }
 
   return (
     <>
@@ -76,12 +141,259 @@ const GetBooked = () => {
       </div>
 
       <div className="tabs">
-        <div className="active-tab">Photos</div>
-        <div>Videos</div>
-        <div>Features</div>
-        <div>Reviews</div>
-        <div>Bio</div>
-        <div>Analytics</div>
+        <div
+          className={photos ? "active-tab" : null}
+          onClick={(e) => {
+            handleForms("photos");
+          }}
+        >
+          Photos
+        </div>
+        <div
+          className={videos ? "active-tab" : null}
+          onClick={(e) => {
+            handleForms("videos");
+          }}
+        >
+          Videos
+        </div>
+        <div
+          className={features ? "active-tab" : null}
+          onClick={(e) => {
+            handleForms("features");
+          }}
+        >
+          Features
+        </div>
+        <div
+          className={reviews ? "active-tab" : null}
+          onClick={(e) => {
+            handleForms("reviews");
+          }}
+        >
+          Reviews
+        </div>
+        <div
+          className={bio ? "active-tab" : null}
+          onClick={(e) => {
+            handleForms("bio");
+          }}
+        >
+          Bio
+        </div>
+        <div
+          className={analytics ? "active-tab" : null}
+          onClick={(e) => {
+            handleForms("analytics");
+          }}
+        >
+          Analytics
+        </div>
+      </div>
+
+      {photos && (
+        <div className="models-photos">
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model1}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model2}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model3}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model4}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model5}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model6}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model7}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model8}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model9}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model10}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model11}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model12}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model13}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model14}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model15}></img>
+          </div>
+        </div>
+      )}
+      {videos && (
+        <div className="models-photos">
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model1}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model2}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model3}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model4}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model5}></img>
+          </div>
+          <div className="model-picture-wrapper">
+            <img className="model-picture" src={model6}></img>
+          </div>
+        </div>
+      )}
+      {features && (
+        <div className="features-tabel">
+          <table class="table caption-top">
+            <tbody>
+              {data.map((data, index) => {
+                return;
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {bio && (
+        <div className="models-bio">
+          I'm a fashion, fitness and lifestyle influencer/content creator based
+          in Melbourne. Australia. I am personable, have great attention to
+          detail and pride myself on being a coffee snob! I love to share my
+          understated but elegant personal style with my followers. In
+          particular I enjoy putting together simple, minimalist and wearable
+          outfits. I also really enjoy cooking/baking and indulging in cruelty
+          free skincare and makeup. I started my Instagram page with the vision
+          of sharing my style tips and snippets of my lifestyle with a wider
+          audience. I have already collaborated with a variety of brands, from
+          jewelry to wellness and skincare. I'm looking forward to collaborating
+          on many more quality campaigns. I have an understated and elegant
+          style. I the ability to manage tight deadlines and give my best to
+          every project that I am a part of. I like meeting new people and I'm
+          looking forward to collaborating with a lot of lovely brands and
+          people on a personal and professional level.
+        </div>
+      )}
+
+      {reviews && (
+        <div className="model-reviews">
+          <div className="model-review-wrapper">
+            <div className="review-date">23 Nov 2023</div>
+            <div className="review-title">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </div>
+            <div className="review-content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+              sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...
+            </div>
+            <div className="reviewer-section">
+              <div className="reviewers-rating">
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={greyStar}></img>
+              </div>
+              <div className="reviewer-details">
+                <div className="initial center">S</div>
+                <div className="reviewer-name">Sanjay Manuel</div>
+              </div>
+            </div>
+          </div>
+          <div className="model-review-wrapper">
+            <div className="review-date">23 Nov 2023</div>
+            <div className="review-title">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </div>
+            <div className="review-content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+              sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...
+            </div>
+            <div className="reviewer-section">
+              <div className="reviewers-rating">
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={greyStar}></img>
+              </div>
+              <div className="reviewer-details">
+                <div className="initial center">S</div>
+                <div className="reviewer-name">Sanjay Manuel</div>
+              </div>
+            </div>
+          </div>
+          <div className="model-review-wrapper">
+            <div className="review-date">23 Nov 2023</div>
+            <div className="review-title">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </div>
+            <div className="review-content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+              sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...
+            </div>
+            <div className="reviewer-section">
+              <div className="reviewers-rating">
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={greyStar}></img>
+              </div>
+              <div className="reviewer-details">
+                <div className="initial center">S</div>
+                <div className="reviewer-name">Sanjay Manuel</div>
+              </div>
+            </div>
+          </div>
+          <div className="model-review-wrapper">
+            <div className="review-date">23 Nov 2023</div>
+            <div className="review-title">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </div>
+            <div className="review-content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+              sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...
+            </div>
+            <div className="reviewer-section">
+              <div className="reviewers-rating">
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={pinkStar}></img>
+                <img src={greyStar}></img>
+              </div>
+              <div className="reviewer-details">
+                <div className="initial center">S</div>
+                <div className="reviewer-name">Sanjay Manuel</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="center">
+        <div className="Join-wrapper center">
+          <div>Find More</div>
+        </div>
       </div>
 
       <Footer />

@@ -79,7 +79,9 @@ const Header = () => {
           <div>
             <NavLink to="/get-booked">Get Booked</NavLink>
           </div>
-          <div>Pricing</div>
+          <div>
+            <NavLink to="/pricing">Pricing</NavLink>
+          </div>
           <div>Learn</div>
         </div>
         <div className="header-functions">
