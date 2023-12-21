@@ -9,6 +9,9 @@ const Pricing = () => {
   const [plan2_Selected, selectPlan2] = useState(true);
   const [plan3_Selected, selectPlan3] = useState(false);
   const checkIcon = require("../assets/icons/check-square.png");
+  const checkShield = require("../assets/icons/check-shield.png");
+  const greyCircle = require("../assets/icons/grey-filled-circle.png");
+  const filledCircle = require("../assets/icons/pink-filled-circle.png");
   function handleForms(e) {
     console.log(e, "e");
     if (e == "plan-1") {
@@ -39,44 +42,25 @@ const Pricing = () => {
           </div>
         </div>
       </section>
-      <div className="pricing-title">Choose your plan</div>
+      {/* <div className="pricing-title">Choose your plan</div> */}
       <div className="pricing-section">
+        <div className="guarantee-wrapper">
+          <div>
+            <img src={checkShield}></img>
+          </div>
+          <div className="plan-name">30-day money-back guarantee</div>
+        </div>
         <div
           className={plan1_Selected ? "pricing-fill" : "pricing-wrapper"}
           onClick={(e) => {
             handleForms("plan-1");
           }}
         >
-          <div className="plan-name">Phasellus faucibus sem ac efficitur</div>
-          <div className="plan-status">Paid</div>
-          <div className="plan-action center">Start for Free</div>
-          <div className="plan-info">Core plan includes</div>
-          <div className="plan-details">
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">Lorem ipsum</span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">consectetur adi</span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">varius nisl et </span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">Vivamus ullam</span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">placerat. Duis </span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content"> magna vestibulum </span>
-            </div>
-          </div>
+          <div className="plan-name">Starter</div>
+          <div className="plan-value">$0</div>
+          <div className="plan-duration">per month</div>
+
+          <div className="plan-action center">Choose plan</div>
         </div>
         <div
           className={plan2_Selected ? "pricing-fill" : "pricing-wrapper"}
@@ -84,36 +68,11 @@ const Pricing = () => {
             handleForms("plan-2");
           }}
         >
-          <div className="plan-name">Phasellus faucibus sem ac efficitur</div>
-          <div className="plan-status">Paid</div>
-          <div className="plan-action center">Start for Free</div>
-          <div className="plan-info">Core plan includes</div>
-          <div className="plan-details">
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">Lorem ipsum</span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">consectetur adi</span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">varius nisl et </span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">Vivamus ullam</span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">placerat. Duis </span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content"> magna vestibulum </span>
-            </div>
-          </div>
+          <div className="plan-name">Enterprise</div>
+          <div className="plan-value">$19</div>
+          <div className="plan-duration">per month</div>
+
+          <div className="plan-action center">Choose plan</div>
         </div>
         <div
           className={plan3_Selected ? "pricing-fill" : "pricing-wrapper"}
@@ -121,37 +80,60 @@ const Pricing = () => {
             handleForms("plan-3");
           }}
         >
-          <div className="plan-name">Phasellus faucibus sem ac efficitur</div>
-          <div className="plan-status">Paid</div>
-          <div className="plan-action center">Start for Free</div>
-          <div className="plan-info">Core plan includes</div>
-          <div className="plan-details">
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">Lorem ipsum</span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">consectetur adi</span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">varius nisl et </span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">Vivamus ullam</span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content">placerat. Duis </span>
-            </div>
-            <div className="plan-details-wrapper">
-              <img src={checkIcon}></img>
-              <span className="plan-details-content"> magna vestibulum </span>
-            </div>
-          </div>
+          <div className="plan-name">Premium</div>
+          <div className="plan-value">$99</div>
+          <div className="plan-duration">per month</div>
+          <div className="plan-action center">Choose plan</div>
         </div>
+      </div>
+      <div className="pricing-table">
+        <table id="customers">
+          <tr className="table-row">
+            <td>Lorem ipsum dolor sit amet, conse</td>
+            <td>
+              <img className="filled-circle" src={greyCircle}></img>
+            </td>
+            <td>
+              <img className="filled-circle" src={filledCircle}></img>
+            </td>
+          </tr>
+          <tr>
+            <td>Lorem ipsum dolor sit amet, conse</td>
+            <td>
+              <img className="filled-circle" src={greyCircle}></img>
+            </td>
+            <td>
+              <img className="filled-circle" src={filledCircle}></img>
+            </td>
+          </tr>
+          <tr>
+            <td>Lorem ipsum dolor sit amet, conse</td>
+            <td>
+              <img className="filled-circle" src={filledCircle}></img>
+            </td>
+            <td>
+              <img className="filled-circle" src={filledCircle}></img>
+            </td>
+          </tr>
+          <tr>
+            <td>Lorem ipsum dolor sit amet, conse</td>
+            <td>
+              <img className="filled-circle" src={filledCircle}></img>
+            </td>
+            <td>
+              <img className="filled-circle" src={filledCircle}></img>
+            </td>
+          </tr>
+          <tr>
+            <td>Lorem ipsum dolor sit amet, conse</td>
+            <td>
+              <img className="filled-circle" src={greyCircle}></img>
+            </td>
+            <td>
+              <img className="filled-circle" src={filledCircle}></img>
+            </td>
+          </tr>
+        </table>
       </div>
 
       <Footer />

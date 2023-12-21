@@ -4,6 +4,7 @@ import Dashboard from "../views/Dashboard";
 import FindCreators from "../views/FindCreators";
 import GetBooked from "../views/GetBooked";
 import Pricing from "../views/pricing";
+import Resources from "../views/resources";
 
 function Routing() {
   return (
@@ -13,6 +14,7 @@ function Routing() {
       <Route path="/find-creators" element={<FindCreators />} />
       <Route path="/get-booked" element={<GetBooked />} />
       <Route path="/pricing" element={<Pricing />} />
+      <Route path="/resources" element={<Resources />} />
     </Routes>
   );
 }

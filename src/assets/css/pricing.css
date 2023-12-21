@@ -1,6 +1,7 @@
 .pricing-section {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .pricing-title {
@@ -15,80 +16,130 @@
   padding: 30px 0px;
 }
 
+.pricing-table {
+  padding: 40px 60px;
+}
+
 .pricing-wrapper {
-  width: 324px;
-  height: 472px;
+  width: 210px;
+  height: 330px;
   padding: 40px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.guarantee-wrapper {
+  width: 210px;
+  height: 330px;
+  padding: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+  flex-direction: column;
 }
 
 .pricing-fill {
-  width: 324px;
-  height: 472px;
-  padding: 40px;
-  background: #f1e9e9;
+  width: 250px;
+  height: 350px;
+  border-radius: 26px;
+  background: #c2114b;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .plan-name {
   color: #000;
+  text-align: center;
   font-family: "Montagu Slab";
   font-size: 20px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: normal;
+  letter-spacing: -0.333px;
 }
 
-.plan-status {
-  color: #c2114b;
-  font-family: "Montaga";
-  font-size: 15px;
+.plan-value {
+  color: #000;
+  text-align: center;
+  font-family: "Montagu Slab";
+  font-size: 60px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  padding: 15px 0px;
+  letter-spacing: -1px;
 }
 
 .plan-action {
-  border-radius: 140px;
-  border: 1px solid #bab4b4;
-  background: #151516;
-  width: 166px;
-  height: 40px;
-  flex-shrink: 0;
-  color: #fff;
+  border-radius: 26px;
+  background: #f9f2ff;
+  width: 207.761px;
+  height: 64.308px;
+  color: #c2114b;
+  text-align: center;
+  font-family: "Montagu Slab";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.233px;
+  margin-top: 40px;
+}
+
+.plan-duration {
+  color: #b6afaf;
+  text-align: center;
+  font-family: "Montagu Slab";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.233px;
+}
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td {
+  padding: 8px;
+  width: 1260px;
+  height: 99px;
+  color: #000;
   font-family: "Montaga";
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin: 10px 0px 10px 0px;
-  cursor: pointer;
+  letter-spacing: -0.25px;
 }
 
-.plan-info {
-  padding: 10px 0px;
-  color: #000;
-  font-family: "Montagu Slab";
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+.filled-circle {
+  width: 20px;
+  height: 20px;
 }
 
-.plan-details {
-  padding: 20px 0px;
+#customers tr:nth-child(odd) {
+  border-radius: 26px;
+  background: #f9f2ff;
 }
 
-.plan-details-wrapper {
+#customers tr:hover {
+  background-color: #ddd;
 }
 
-.plan-details-content {
-  color: #000;
-  font-family: "Montagu Slab";
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 32px; /* 246.154% */
-  padding-left: 8px;
+@media (max-width: 475px) {
+  .pricing-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

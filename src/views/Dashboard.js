@@ -66,406 +66,378 @@ const Dashboard = () => {
   return (
     <>
       <Header />
-      <section>
-        <div className="section-1">
-          <div className="find-work">
-            <div className="section-title">Find work as a model</div>
-            <div className="section-description">
-              Unlock Your Gateway to Modeling Opportunities.
-            </div>
-            <div className="Join-wrapper center">
-              <div className="joinnow-btn">Join Now</div>
-            </div>
+      <div className="section-1">
+        <div className="find-work">
+          <div className="section-title">Find work as a model</div>
+          <div className="section-description">
+            Unlock Your Gateway to Modeling Opportunities.
           </div>
-          <div className="find-work">
-            <div className="section-title">Find models and talents</div>
-            <div className="section-description">
-              Discover Your Ideal Model: Connecting Visions with Talent.
-            </div>
-            <div className="white-joinnow center">
-              <div className="joinnow-btn">Join Now</div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div className="tabs-section">
-          <div className="title">Popular Models</div>
-          <div className="tabs">
-            <div className="active-tab">Fashion</div>
-            <div>Plus sized</div>
-            <div>Real people</div>
-            <div>Unique</div>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div className="gallery-section">
-          <div className="gallery-warpper">
-            <div className="gallery-position">
-              <img className="gallery-img" src={gents}></img>
-              <img className="heart-icon" src={heartIcon}></img>
-            </div>
-            <div className="gallery-content">
-              <div className="content">
-                <div className="name">Alexander</div>
-                <div className="address">Copenhagen, Denmark</div>
-              </div>
-              <div className="rating">
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-              </div>
-            </div>
-          </div>
-          <div className="gallery-warpper">
-            <div className="gallery-position">
-              <img className="gallery-img" src={gents}></img>
-              <img className="heart-icon" src={heartIcon}></img>
-            </div>
-            <div className="gallery-content">
-              <div className="content">
-                <div className="name">Alexander</div>
-                <div className="address">Copenhagen, Denmark</div>
-              </div>
-              <div className="rating">
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-              </div>
-            </div>
-          </div>
-          <div className="gallery-warpper">
-            <div className="gallery-position">
-              <img className="gallery-img" src={gents}></img>
-              <img className="heart-icon" src={heartIcon}></img>
-            </div>
-            <div className="gallery-content">
-              <div className="content">
-                <div className="name">Alexander</div>
-                <div className="address">Copenhagen, Denmark</div>
-              </div>
-              <div className="rating">
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-              </div>
-            </div>
-          </div>
-          <div className="gallery-warpper">
-            <div className="gallery-position">
-              <img className="gallery-img" src={gents}></img>
-              <img className="heart-icon" src={heartIcon}></img>
-            </div>
-            <div className="gallery-content">
-              <div className="content">
-                <div className="name">Alexander</div>
-                <div className="address">Copenhagen, Denmark</div>
-              </div>
-              <div className="rating">
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-              </div>
-            </div>
-          </div>
-          <div className="gallery-warpper">
-            <div className="gallery-position">
-              <img className="gallery-img" src={gents}></img>
-              <img className="heart-icon" src={heartIcon}></img>
-            </div>
-            <div className="gallery-content">
-              <div className="content">
-                <div className="name">Alexander</div>
-                <div className="address">Copenhagen, Denmark</div>
-              </div>
-              <div className="rating">
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-                <img src={starIcon}></img>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div className="center">
           <div className="Join-wrapper center">
-            <div>Find More</div>
+            <div className="joinnow-btn">Join Now</div>
           </div>
         </div>
-      </section>
-      <section>
-        <div className="title">Our Community</div>
-      </section>
-      <section>
-        <div className="cards">
-          <div className="card-wrapper card-background">
-            <div className="count">5,258,451</div>
-            <div className="cards-text">Models in community</div>
+        <div className="find-work">
+          <div className="section-title">Find models and talents</div>
+          <div className="section-description">
+            Discover Your Ideal Model: Connecting Visions with Talent.
           </div>
-          <div className="card-wrapper  card-background">
-            <div className="count">5,258,451</div>
-            <div className="cards-text">Industry Professionals</div>
-          </div>
-          <div className="card-wrapper  card-background">
-            <div className="count">5,258,451</div>
-            <div className="cards-text">Agencies</div>
+          <div className="white-joinnow center">
+            <div className="joinnow-btn">Join Now</div>
           </div>
         </div>
-      </section>
-      <section>
-        <div className="title">Prioritizing Your Well-being</div>
-      </section>
-      <section>
-        <div className="cards">
-          <div className="card-wrapper ">
-            <div className="card-picture center">
-              <img src={checkMark}></img>
-            </div>
-            <div className="cards-description">
-              Every professional member undergoes thorough verification by our
-              team.
-            </div>
+      </div>
+      <div className="tabs-section">
+        <div className="title">Popular Models</div>
+        <div className="tabs">
+          <div className="active-tab">Fashion</div>
+          <div>Plus sized</div>
+          <div>Real people</div>
+          <div>Unique</div>
+        </div>
+      </div>
+      <div className="gallery-section">
+        <div className="gallery-warpper">
+          <div className="gallery-position">
+            <img className="gallery-img" src={gents}></img>
+            <img className="heart-icon" src={heartIcon}></img>
           </div>
-          <div className="card-wrapper">
-            <div className="card-picture center">
-              <img src={lockIcon}></img>
+          <div className="gallery-content">
+            <div className="content">
+              <div className="name">Alexander</div>
+              <div className="address">Copenhagen, Denmark</div>
             </div>
-            <div className="cards-description">
-              Cutting-edge tools designed to thwart scammers at every turn.
-            </div>
-          </div>
-          <div className="card-wrapper">
-            <div className="card-picture center">
-              <img src={whiteStar}></img>
-            </div>
-            <div className="cards-description">
-              Rely on community reviews for an extra layer of assurance.
+            <div className="rating">
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
             </div>
           </div>
         </div>
-      </section>
-      <section>
-        <div className="title">Case studies</div>
-      </section>
-      <section>
-        <div className="gallery-section">
-          <div className="gallery-warpper">
-            <img src={gents} className="case-images"></img>
-            <div className="gallery-content">
-              <div className="content">
-                <div className="name">Lorem ipsum dolor sit</div>
-                <div className="address">Copenhagen, Denmark</div>
-              </div>
-            </div>
+        <div className="gallery-warpper">
+          <div className="gallery-position">
+            <img className="gallery-img" src={gents}></img>
+            <img className="heart-icon" src={heartIcon}></img>
           </div>
-          <div className="gallery-warpper">
-            <img src={gents} className="case-images"></img>
-            <div className="gallery-content">
-              <div className="content">
-                <div className="name">Lorem ipsum dolor sit</div>
-                <div className="address">Copenhagen, Denmark</div>
-              </div>
+          <div className="gallery-content">
+            <div className="content">
+              <div className="name">Alexander</div>
+              <div className="address">Copenhagen, Denmark</div>
             </div>
-          </div>
-          <div className="gallery-warpper">
-            <img src={gents} className="case-images"></img>
-            <div className="gallery-content">
-              <div className="content">
-                <div className="name">Lorem ipsum dolor sit</div>
-                <div className="address">Copenhagen, Denmark</div>
-              </div>
-            </div>
-          </div>
-          <div className="gallery-warpper">
-            <img src={gents} className="case-images"></img>
-            <div className="gallery-content">
-              <div className="content">
-                <div className="name">Lorem ipsum dolor sit</div>
-                <div className="address">Copenhagen, Denmark</div>
-              </div>
+            <div className="rating">
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
             </div>
           </div>
         </div>
-      </section>
-      <section>
-        <div className="center">
-          <div className="Join-wrapper center">
-            <div>Find More</div>
+        <div className="gallery-warpper">
+          <div className="gallery-position">
+            <img className="gallery-img" src={gents}></img>
+            <img className="heart-icon" src={heartIcon}></img>
+          </div>
+          <div className="gallery-content">
+            <div className="content">
+              <div className="name">Alexander</div>
+              <div className="address">Copenhagen, Denmark</div>
+            </div>
+            <div className="rating">
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
+            </div>
           </div>
         </div>
-      </section>
-      <section>
+        <div className="gallery-warpper">
+          <div className="gallery-position">
+            <img className="gallery-img" src={gents}></img>
+            <img className="heart-icon" src={heartIcon}></img>
+          </div>
+          <div className="gallery-content">
+            <div className="content">
+              <div className="name">Alexander</div>
+              <div className="address">Copenhagen, Denmark</div>
+            </div>
+            <div className="rating">
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
+            </div>
+          </div>
+        </div>
+        <div className="gallery-warpper">
+          <div className="gallery-position">
+            <img className="gallery-img" src={gents}></img>
+            <img className="heart-icon" src={heartIcon}></img>
+          </div>
+          <div className="gallery-content">
+            <div className="content">
+              <div className="name">Alexander</div>
+              <div className="address">Copenhagen, Denmark</div>
+            </div>
+            <div className="rating">
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
+              <img src={starIcon}></img>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="center">
+        <div className="Join-wrapper center">
+          <div>Find More</div>
+        </div>
+      </div>
+      <div className="title">Our Community</div>
+      <div className="cards">
+        <div className="card-wrapper card-background">
+          <div className="count">5,258,451</div>
+          <div className="cards-text">Models in community</div>
+        </div>
+        <div className="card-wrapper  card-background">
+          <div className="count">5,258,451</div>
+          <div className="cards-text">Industry Professionals</div>
+        </div>
+        <div className="card-wrapper  card-background">
+          <div className="count">5,258,451</div>
+          <div className="cards-text">Agencies</div>
+        </div>
+      </div>
+      <div className="title">Prioritizing Your Well-being</div>
+      <div className="cards">
+        <div className="card-wrapper ">
+          <div className="card-picture center">
+            <img src={checkMark}></img>
+          </div>
+          <div className="cards-description">
+            Every professional member undergoes thorough verification by our
+            team.
+          </div>
+        </div>
+        <div className="card-wrapper">
+          <div className="card-picture center">
+            <img src={lockIcon}></img>
+          </div>
+          <div className="cards-description">
+            Cutting-edge tools designed to thwart scammers at every turn.
+          </div>
+        </div>
+        <div className="card-wrapper">
+          <div className="card-picture center">
+            <img src={whiteStar}></img>
+          </div>
+          <div className="cards-description">
+            Rely on community reviews for an extra layer of assurance.
+          </div>
+        </div>
+      </div>
+      <div className="title">Case studies</div>
+      <div className="gallery-section">
+        <div className="gallery-warpper">
+          <img src={gents} className="case-images"></img>
+          <div className="gallery-content">
+            <div className="content">
+              <div className="name">Lorem ipsum dolor sit</div>
+              <div className="address">Copenhagen, Denmark</div>
+            </div>
+          </div>
+        </div>
+        <div className="gallery-warpper">
+          <img src={gents} className="case-images"></img>
+          <div className="gallery-content">
+            <div className="content">
+              <div className="name">Lorem ipsum dolor sit</div>
+              <div className="address">Copenhagen, Denmark</div>
+            </div>
+          </div>
+        </div>
+        <div className="gallery-warpper">
+          <img src={gents} className="case-images"></img>
+          <div className="gallery-content">
+            <div className="content">
+              <div className="name">Lorem ipsum dolor sit</div>
+              <div className="address">Copenhagen, Denmark</div>
+            </div>
+          </div>
+        </div>
+        <div className="gallery-warpper">
+          <img src={gents} className="case-images"></img>
+          <div className="gallery-content">
+            <div className="content">
+              <div className="name">Lorem ipsum dolor sit</div>
+              <div className="address">Copenhagen, Denmark</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="center">
+        <div className="Join-wrapper center">
+          <div>Find More</div>
+        </div>
+      </div>
+      <div
+        style={{
+          backgroundImage: `url(${sliderBackground})`,
+        }}
+        className="carousel-section"
+      >
+        <div className="carousel-title center">Success Stories</div>
         <div
-          style={{
-            backgroundImage: `url(${sliderBackground})`,
-          }}
-          className="carousel-section"
+          id="carouselExampleControls"
+          className="carousel slide"
+          data-bs-ride="carousel"
         >
-          <div className="carousel-title center">Success Stories</div>
-          <div
-            id="carouselExampleControls"
-            className="carousel slide"
-            data-bs-ride="carousel"
-          >
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <div className="carousel-wrapper">
-                  <div className="box-one">
-                    <div>
-                      <img className="carousel-img" src={gents}></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
-                      </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div>
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
-                      </div>
-                    </div>
+          <div className="carousel-inner">
+            <div className="carousel-item active">
+              <div className="carousel-wrapper">
+                <div className="box-one">
+                  <div>
+                    <img className="carousel-img" src={gents}></img>
                   </div>
-                  <div className="box-one box-two">
-                    <div>
-                      <img className="carousel-img" src={female}></img>
+                  <div className="box-content">
+                    <div className="quote">
+                      <img src={quoteIcon}></img>
                     </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
+                    <div className="carousel-description">
+                      A great photographer's tool for online castings that
+                      really works!
+                    </div>
+                    <div className="profile-section">
+                      <div>
+                        <img src={roundProfile}></img>
                       </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div>
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
+                      <div className="profile-content">
+                        <div className="profile-name">Dorothy</div>
+                        <div className="profile-info">Lorem ipsum dolor</div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="carousel-item">
-                <div className="carousel-wrapper">
-                  <div className="box-one">
-                    <div>
-                      <img className="carousel-img" src={girl}></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
-                      </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div>
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
-                      </div>
-                    </div>
+                <div className="box-one box-two">
+                  <div>
+                    <img className="carousel-img" src={female}></img>
                   </div>
-                  <div className="box-one box-two">
-                    <div>
-                      <img className="carousel-img" src={fashion}></img>
+                  <div className="box-content">
+                    <div className="quote">
+                      <img src={quoteIcon}></img>
                     </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
+                    <div className="carousel-description">
+                      A great photographer's tool for online castings that
+                      really works!
+                    </div>
+                    <div className="profile-section">
+                      <div>
+                        <img src={roundProfile}></img>
                       </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div>
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
+                      <div className="profile-content">
+                        <div className="profile-name">Dorothy</div>
+                        <div className="profile-info">Lorem ipsum dolor</div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExampleControls"
-              data-bs-slide="prev"
-            >
-              <span
-                className="carousel-control-prev-icon carousel-icons"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExampleControls"
-              data-bs-slide="next"
-            >
-              <span
-                className="carousel-control-next-icon carousel-icons"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Next</span>
-            </button>
+            <div className="carousel-item">
+              <div className="carousel-wrapper">
+                <div className="box-one">
+                  <div>
+                    <img className="carousel-img" src={girl}></img>
+                  </div>
+                  <div className="box-content">
+                    <div className="quote">
+                      <img src={quoteIcon}></img>
+                    </div>
+                    <div className="carousel-description">
+                      A great photographer's tool for online castings that
+                      really works!
+                    </div>
+                    <div className="profile-section">
+                      <div>
+                        <img src={roundProfile}></img>
+                      </div>
+                      <div className="profile-content">
+                        <div className="profile-name">Dorothy</div>
+                        <div className="profile-info">Lorem ipsum dolor</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="box-one box-two">
+                  <div>
+                    <img className="carousel-img" src={fashion}></img>
+                  </div>
+                  <div className="box-content">
+                    <div className="quote">
+                      <img src={quoteIcon}></img>
+                    </div>
+                    <div className="carousel-description">
+                      A great photographer's tool for online castings that
+                      really works!
+                    </div>
+                    <div className="profile-section">
+                      <div>
+                        <img src={roundProfile}></img>
+                      </div>
+                      <div className="profile-content">
+                        <div className="profile-name">Dorothy</div>
+                        <div className="profile-info">Lorem ipsum dolor</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <button
+            className="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev"
+          >
+            <span
+              className="carousel-control-prev-icon carousel-icons"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Previous</span>
+          </button>
+          <button
+            className="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="next"
+          >
+            <span
+              className="carousel-control-next-icon carousel-icons"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Next</span>
+          </button>
         </div>
-      </section>
-      <section>
-        <div className="title">Trusted by renowned brands</div>
-      </section>
-      <section>
-        <div className="brands-section">
-          <div>
-            <img src={adidasIcon}></img>
-          </div>
-          <div>
-            <img src={ubisoftIcon}></img>
-          </div>
-          <div>
-            <img src={wppIcon}></img>
-          </div>
-          <div>
-            <img src={lorealIcon}></img>
-          </div>
-          <div>
-            <img src={joseIcon}></img>
-          </div>
-          <div>
-            <img src={calvinIcon}></img>
-          </div>
-          <div>
-            <img src={havasIcon}></img>
-          </div>
+      </div>
+      <div className="title">Trusted by renowned brands</div>
+      <div className="brands-section">
+        <div>
+          <img src={adidasIcon}></img>
         </div>
-      </section>
+        <div>
+          <img src={ubisoftIcon}></img>
+        </div>
+        <div>
+          <img src={wppIcon}></img>
+        </div>
+        <div>
+          <img src={lorealIcon}></img>
+        </div>
+        <div>
+          <img src={joseIcon}></img>
+        </div>
+        <div>
+          <img src={calvinIcon}></img>
+        </div>
+        <div>
+          <img src={havasIcon}></img>
+        </div>
+      </div>
       <Footer />
     </>
   );
