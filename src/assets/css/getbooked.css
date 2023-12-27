@@ -228,6 +228,14 @@
   margin: 15px;
 }
 
+.features-wrapper {
+  display: flex;
+  padding: 30px 0px 40px 120px;
+}
+
+.features-heading {
+  padding-bottom: 10px;
+}
 @media (max-width: 475px) {
   .model-profile {
     display: flex;

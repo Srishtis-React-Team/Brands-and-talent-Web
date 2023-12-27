@@ -83,7 +83,7 @@ const Header = () => {
             <NavLink to="/pricing">Pricing</NavLink>
           </div>
           <div>
-            <NavLink to="/resources">Resources</NavLink>
+            <NavLink to="/resources">Learn to Resources</NavLink>
           </div>
         </div>
         <div className="header-functions">

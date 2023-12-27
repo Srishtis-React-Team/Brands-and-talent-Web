@@ -5,12 +5,10 @@ import Header from "./header.js";
 import Footer from "./Footer.js";
 import axios from "axios";
 const GetBooked = () => {
-  const [data, setDate] = useState([]);
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((res) => setDate(res.data))
-      .catch();
+    console.log(data, "features data");
   }, []);
   const model = require("../assets/images/model-profile.png");
   const model1 = require("../assets/images/model1.png");
@@ -57,6 +55,41 @@ const GetBooked = () => {
     }
     if (e == "features") {
       showFeatures(true);
+      setData([
+        {
+          _id: "6581594628ccd5fc45f027e0",
+          email: "aiswrya@gmail.com",
+          password:
+            "$2a$10$KWp5g7TyUYHzccm/vHCzg.ewDhRyxdQn7XH2NCe2BFVM5cFzZEAfu",
+          isActive: true,
+          ethnicity: "white/Caucasian",
+          height: "170cm",
+          hairColour: "Brown",
+          hairType: "Wavy",
+          build: "Ferite",
+          skinType: "Regular",
+          skinTone: "Olive",
+          eyeColour: "Brown",
+          hairLength: "Long",
+          chest: "82cm",
+          waist: "64cm",
+          hipSize: "84cm",
+          dressSize: "64cm",
+          shoeSize: "64cm",
+          braSize: "64cm",
+          transgender: "No",
+          sexuality: "Straight",
+          maritalStatus: "Long term Relationship",
+          children: "None",
+          pets: "None",
+          diet: "None",
+          created: "2023-12-19T08:50:14.498Z",
+          createdAt: "2023-12-19T08:50:14.532Z",
+          updatedAt: "2023-12-19T08:50:14.532Z",
+          __v: 0,
+        },
+      ]);
+      console.log(data, "features");
     } else {
       showFeatures(false);
     }
@@ -263,14 +296,32 @@ const GetBooked = () => {
         </div>
       )}
       {features && (
-        <div className="features-tabel">
-          <table class="table caption-top">
-            <tbody>
-              {data.map((data, index) => {
-                return;
-              })}
-            </tbody>
-          </table>
+        <div className="features-wrapper">
+          <div className="features-row1">
+            {data.map((titleList) => {
+              const titles = Object.keys(titleList);
+              const values = Object.values;
+              return titles.map((item, key) => {
+                return (
+                  <div key={key} className="features-heading">
+                    {item}
+                  </div>
+                );
+              });
+            })}
+          </div>
+          <div className="features-row2">
+            {data.map((valuesList) => {
+              const values = Object.values(valuesList);
+              return values.map((item, key) => {
+                return (
+                  <div key={key} className="features-values">
+                    {item}
+                  </div>
+                );
+              });
+            })}
+          </div>
         </div>
       )}
       {bio && (
