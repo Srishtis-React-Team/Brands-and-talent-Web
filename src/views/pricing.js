@@ -42,13 +42,13 @@ const Pricing = () => {
           </div>
         </div>
       </section>
-      {/* <div className="pricing-title">Choose your plan</div> */}
       <div className="pricing-section">
         <div className="guarantee-wrapper">
           <div>
             <img src={checkShield}></img>
           </div>
-          <div className="plan-name">30-day money-back guarantee</div>
+          <div className="plan-name">Our Top</div>
+          <div className="plan-name-bold">Plans</div>
         </div>
         <div
           className={plan1_Selected ? "pricing-fill" : "pricing-wrapper"}
@@ -59,7 +59,6 @@ const Pricing = () => {
           <div className="plan-name">Starter</div>
           <div className="plan-value">$0</div>
           <div className="plan-duration">per month</div>
-
           <div className="plan-action center">Choose plan</div>
         </div>
         <div
@@ -87,53 +86,110 @@ const Pricing = () => {
         </div>
       </div>
       <div className="pricing-table">
-        <table id="customers">
-          <tr className="table-row">
-            <td>Lorem ipsum dolor sit amet, conse</td>
-            <td>
-              <img className="filled-circle" src={greyCircle}></img>
-            </td>
-            <td>
-              <img className="filled-circle" src={filledCircle}></img>
-            </td>
-          </tr>
-          <tr>
-            <td>Lorem ipsum dolor sit amet, conse</td>
-            <td>
-              <img className="filled-circle" src={greyCircle}></img>
-            </td>
-            <td>
-              <img className="filled-circle" src={filledCircle}></img>
-            </td>
-          </tr>
-          <tr>
-            <td>Lorem ipsum dolor sit amet, conse</td>
-            <td>
-              <img className="filled-circle" src={filledCircle}></img>
-            </td>
-            <td>
-              <img className="filled-circle" src={filledCircle}></img>
-            </td>
-          </tr>
-          <tr>
-            <td>Lorem ipsum dolor sit amet, conse</td>
-            <td>
-              <img className="filled-circle" src={filledCircle}></img>
-            </td>
-            <td>
-              <img className="filled-circle" src={filledCircle}></img>
-            </td>
-          </tr>
-          <tr>
-            <td>Lorem ipsum dolor sit amet, conse</td>
-            <td>
-              <img className="filled-circle" src={greyCircle}></img>
-            </td>
-            <td>
-              <img className="filled-circle" src={filledCircle}></img>
-            </td>
-          </tr>
-        </table>
+        <div className="pricing-row">
+          <div className="pricing-name">create profile upload for free</div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+        </div>
+        <div className="pricing-row">
+          <div className="pricing-name">Verification</div>
+          <div className="pricing-img-wrapper">
+            <img src={greyCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+        </div>
+        <div className="pricing-row">
+          <div className="pricing-name">Verification</div>
+          <div className="pricing-img-wrapper">
+            <img src={greyCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+        </div>
+        <div className="pricing-row">
+          <div className="pricing-name">Photos</div>
+          <div className="pricing-img-wrapper">3 Photos</div>
+          <div className="pricing-img-wrapper">6 Photos</div>
+          <div className="pricing-img-wrapper">Unlimited</div>
+        </div>
+        <div className="pricing-row">
+          <div className="pricing-name">Cv(copy paste box)</div>
+          <div className="pricing-img-wrapper">
+            <img src={greyCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+        </div>
+        <div className="pricing-row">
+          <div className="pricing-name">ReviewsGet invited to job button</div>
+          <div className="pricing-img-wrapper">
+            <img src={greyCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+        </div>
+        <div className="pricing-row">
+          <div className="pricing-name">
+            Showcase thier social media profile
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={greyCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+        </div>
+        <div className="pricing-row">
+          <div className="pricing-name">Notification</div>
+          <div className="pricing-img-wrapper">
+            <img src={greyCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+        </div>
+        <div className="pricing-row">
+          <div className="pricing-name">Rates ( Fixed/Negotiable)</div>
+          <div className="pricing-img-wrapper">
+            <img src={greyCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+          <div className="pricing-img-wrapper">
+            <img src={filledCircle}></img>
+          </div>
+        </div>
       </div>
 
       <Footer />

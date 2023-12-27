@@ -3,7 +3,7 @@ section {
 }
 
 a.active {
-  max-width: 110px;
+  max-width: 140px;
   height: 30px;
   border-radius: 140px;
   background: #000;
@@ -34,7 +34,18 @@ a {
   position: relative;
 }
 
-@media (max-width: 475px) {
+.card-title {
+  color: #000;
+  font-family: "Montagu Slab";
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 10px 0px;
+  margin: 0 !important;
+}
+
+@media (max-width: 480px) {
   .input-style::placeholder {
     padding-left: 15px;
     color: #fff !important;
@@ -151,6 +162,7 @@ a {
     font-weight: 400;
     line-height: 24px;
     padding-top: 15px;
+    width: 422px;
   }
 
   .Join-wrapper {
@@ -327,7 +339,6 @@ a {
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 160% */
-    padding-top: 8px;
   }
   .case-images {
     border-radius: 12px;
@@ -510,6 +521,7 @@ a {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
+    cursor: pointer;
   }
   .company-info {
     width: 200px;
@@ -802,7 +814,11 @@ a {
   }
 }
 
-@media (min-width: 476px) {
+a:hover {
+  color: #c2114b;
+}
+
+@media (min-width: 480px) {
   .mobile-navbar {
     display: none;
   }
@@ -1111,6 +1127,7 @@ a {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
+    cursor: pointer;
   }
   .footer-section {
     display: flex;
@@ -1267,7 +1284,6 @@ a {
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 160% */
-    padding-top: 8px;
   }
 
   .card-picture {
@@ -1448,6 +1464,7 @@ a {
     font-weight: 400;
     line-height: 24px;
     padding-top: 15px;
+    width: 422px;
   }
 
   .section-title {

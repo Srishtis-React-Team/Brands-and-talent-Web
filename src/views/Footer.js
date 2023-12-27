@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../assets/css/dashboard.css";
 import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Footer = () => {
   const fieldsBackground = require("../assets/images/fields-background.png");
   const btLogo = require("../assets/icons/Group 56.png");
@@ -44,11 +45,23 @@ const Footer = () => {
             </div>
           </div>
           <div className="footer-wrapper">
-            <div className="footer-title">Company</div>
-            <div>Home</div>
-            <div>Find Creators</div>
-            <div>Pricing</div>
-            <div>Learn</div>
+            <div>
+              <Link className="footer-title" to="">
+                Company
+              </Link>
+            </div>
+            <div>
+              <Link to="/">Home</Link>
+            </div>
+            <div>
+              <Link to="/find-creators">Find Creators</Link>
+            </div>
+            <div>
+              <Link to="/pricing">Pricing</Link>
+            </div>
+            <div>
+              <Link to="/resources">Resources</Link>
+            </div>
           </div>
           <div className="footer-wrapper">
             <div className="footer-title">Help</div>
@@ -58,7 +71,11 @@ const Footer = () => {
             <div>Pricing</div>
           </div>
           <div className="footer-wrapper">
-            <div className="footer-title">Resources</div>
+            <div>
+              <Link className="footer-title" to="/resources">
+                Learn To Resources
+              </Link>
+            </div>
             <div>Featured Lists</div>
             <div>New Faces</div>
             <div>How to - Blog</div>

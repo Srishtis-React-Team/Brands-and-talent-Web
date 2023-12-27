@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import "../assets/css/findcreators.css";
 import Header from "./header.js";
 import Footer from "./Footer.js";
+import Select from "react-select";
 const FindCreators = () => {
   const [filterOpen, setFilterOpen] = useState(false);
+  const [isClearable, setIsClearable] = useState(true);
+  const [isSearchable, setIsSearchable] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRtl, setIsRtl] = useState(false);
   const searchIcon = require("../assets/icons/search.png");
   const heartIcon = require("../assets/icons/heart.png");
   const gents = require("../assets/images/gents.png");
@@ -24,6 +30,13 @@ const FindCreators = () => {
   const girl15 = require("../assets/images/girl15.png");
   const girl16 = require("../assets/images/girl16.png");
   const starIcon = require("../assets/icons/star.png");
+
+  const colourOptions = [
+    { value: "ocean", label: "Photographer", color: "#00B8D9", isFixed: true },
+    { value: "purple", label: "Beauticians", color: "#5243AA" },
+    { value: "red", label: "Artists", color: "#FF5630", isFixed: true },
+    { value: "orange", label: "Video Grapher", color: "#FF8B00" },
+  ];
 
   return (
     <>
@@ -51,29 +64,74 @@ const FindCreators = () => {
               </div>
             </div>
             <div className={filterOpen ? "filter-content" : "hide-filter"}>
-              <div className="filter-items">Keyword</div>
-              <div className="keyword-wrapper">
-                <div className="search-icon">
-                  <img src={searchIcon}></img>
+              <div className="keyword-wrapper pt-4">
+                <div className="filter-items">Keyword</div>
+                <div className="filter-input-wrapper">
+                  <div>
+                    <img className="search-icon" src={searchIcon}></img>
+                  </div>
+                  <input
+                    className="keyword-input"
+                    placeholder="Search Keyword"
+                  ></input>
                 </div>
-                <input
-                  className="keyword-input"
-                  placeholder="Search Keyword"
-                ></input>
               </div>
-              <div className="filter-items">Gender</div>
-              <div className="check-section">
-                <div>
-                  <input type="checkbox"></input>
-                  <label className="label-style">Male</label>
+
+              <div className="search-words-section">
+                <div></div>
+                <div className="search-history">
+                  <div>creators*</div>
+                  <div>makeup artists*</div>
+                  <div>writers*</div>
+                  <div>beauticians*</div>
+                  <div>fitness*</div>
                 </div>
-                <div>
-                  <input type="checkbox"></input>
-                  <label className="label-style">Female</label>
+              </div>
+              <div className="">
+                <div className="filter-items">Profession</div>
+                <div className="profession-wrapper">
+                  <Select
+                    defaultValue={[colourOptions[2], colourOptions[3]]}
+                    isMulti
+                    name="colors"
+                    options={colourOptions}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                  />
                 </div>
-                <div>
-                  <input type="checkbox"></input>
-                  <label className="label-style">other</label>
+              </div>
+              <div className="keyword-wrapper">
+                <div className="filter-items">Gender</div>
+                <div className="">
+                  <Select
+                    className="basic-single"
+                    classNamePrefix="select"
+                    defaultValue={colourOptions[0]}
+                    isDisabled={isDisabled}
+                    isLoading={isLoading}
+                    isClearable={isClearable}
+                    isRtl={isRtl}
+                    isSearchable={isSearchable}
+                    name="color"
+                    options={colourOptions}
+                  />
+                </div>
+              </div>
+              <div className="keyword-wrapper">
+                <div className="filter-items">Sub Category</div>
+                <div className="">
+                  <Select
+                    className="basic-single"
+                    classNamePrefix="select"
+                    defaultValue={colourOptions[0]}
+                    isDisabled={isDisabled}
+                    isLoading={isLoading}
+                    isClearable={isClearable}
+                    isRtl={isRtl}
+                    isSearchable={isSearchable}
+                    name="color"
+                    options={colourOptions}
+                  />
                 </div>
               </div>
               <div className="filter-items">Age</div>
@@ -93,69 +151,59 @@ const FindCreators = () => {
                   ></input>
                 </div>
               </div>
-              <div className="filter-items">Price</div>
-              <div className="input-items-wrapper">
-                <div>
-                  <input
-                    placeholder="Min"
-                    type="text"
-                    className="input-items-style form-control"
-                  ></input>
-                </div>
-                <div>
-                  <input
-                    placeholder="Max"
-                    type="text"
-                    className="input-items-style  form-control"
-                  ></input>
-                </div>
-              </div>
-              <div className="filter-items">Country</div>
-              <div>
-                <div>
-                  <input
-                    placeholder="India"
-                    type="text"
-                    className="input-country-style form-control"
-                  ></input>
-                </div>
-              </div>
-              <div className="filter-items">Category</div>
+
               <div className="keyword-wrapper">
-                <div className="search-icon">
-                  <img src={searchIcon}></img>
-                </div>
-                <input
-                  className="keyword-input"
-                  placeholder="Search category"
-                ></input>
-              </div>
-              <div className="category-chips">
-                <div className="each-category">
-                  <input type="checkbox"></input>
-                  <label className="label-style">Vestibulum</label>
-                </div>
-                <div className="each-category">
-                  <input type="checkbox"></input>
-                  <label className="label-style">Vestibulum</label>
-                </div>
-                <div className="each-category">
-                  <input type="checkbox"></input>
-                  <label className="label-style">Vestibulum</label>
-                </div>
-                <div className="each-category">
-                  <input type="checkbox"></input>
-                  <label className="label-style">Vestibulum</label>
-                </div>
-                <div className="each-category">
-                  <input type="checkbox"></input>
-                  <label className="label-style">Vestibulum</label>
-                </div>
-                <div className="each-category">
-                  <input type="checkbox"></input>
-                  <label className="label-style">Vestibulum</label>
+                <div className="filter-items">Country</div>
+                <div className="">
+                  <Select
+                    className="basic-single"
+                    classNamePrefix="select"
+                    defaultValue={colourOptions[0]}
+                    isDisabled={isDisabled}
+                    isLoading={isLoading}
+                    isClearable={isClearable}
+                    isRtl={isRtl}
+                    isSearchable={isSearchable}
+                    name="color"
+                    options={colourOptions}
+                  />
                 </div>
               </div>
+              <div className="keyword-wrapper">
+                <div className="filter-items">State</div>
+                <div className="">
+                  <Select
+                    className="basic-single"
+                    classNamePrefix="select"
+                    defaultValue={colourOptions[0]}
+                    isDisabled={isDisabled}
+                    isLoading={isLoading}
+                    isClearable={isClearable}
+                    isRtl={isRtl}
+                    isSearchable={isSearchable}
+                    name="color"
+                    options={colourOptions}
+                  />
+                </div>
+              </div>
+              <div className="keyword-wrapper">
+                <div className="filter-items">Ethnicity</div>
+                <div className="">
+                  <Select
+                    className="basic-single"
+                    classNamePrefix="select"
+                    defaultValue={colourOptions[0]}
+                    isDisabled={isDisabled}
+                    isLoading={isLoading}
+                    isClearable={isClearable}
+                    isRtl={isRtl}
+                    isSearchable={isSearchable}
+                    name="color"
+                    options={colourOptions}
+                  />
+                </div>
+              </div>
+
               <div className="submit-buttons">
                 <div className="reset-btn">Reset</div>
                 <div className="search-btn">Search</div>

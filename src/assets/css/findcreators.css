@@ -62,23 +62,23 @@
     font-weight: 500;
     line-height: normal;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    padding-left: 15px;
   }
   .filter-btn-wrapper {
     display: flex;
-    justify-content: center;
   }
   .filter-wrapper {
     display: flex;
     flex-direction: column;
-    padding: 0px 45px;
+    align-items: center;
   }
   .filter-content {
     display: block;
   }
   .filter-items {
-    padding: 15px 0px;
+    padding: 8px 0px;
     color: #000;
     font-family: "Montagu Slab";
     font-size: 16px;
@@ -86,36 +86,56 @@
   }
   .keyword-wrapper {
     display: flex;
-    border-bottom: 1px solid #000;
-    padding-bottom: 14px;
-    opacity: 0.4;
+    /* justify-content: space-evenly; */
+    align-items: center;
+    padding: 10px 0px;
+  }
+  .filter-input-wrapper {
+    border-radius: 5px;
+    border: 0.5px solid rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0);
+    /* width: 200px; */
+    height: 39px;
+    flex-shrink: 0;
+    display: flex;
+    margin-left: 20px;
+    cursor: pointer;
   }
   .keyword-input {
     border: none;
     outline: none;
-    padding-left: 15px;
   }
-  .check-section {
+  .search-words-section {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
-  .label-style {
+  .search-history {
+    display: flex;
+    flex-wrap: wrap;
+    width: 200px;
+  }
+  .search-history > div {
+    padding: 8px 8px;
     color: #000;
     font-family: "Montaga";
-    font-size: 15px;
+    font-size: 14px;
+    font-style: normal;
     font-weight: 400;
-    padding-left: 10px;
+    cursor: pointer;
   }
   .input-items-wrapper {
     display: flex;
     justify-content: space-between;
+    padding-bottom: 10px;
   }
   .input-items-style {
     width: 137px;
-    height: 35px;
-    border-radius: 7px;
-    border: 1px solid #000;
-    background: #fff;
+    min-height: 38px;
+    background-color: hsl(0, 0%, 100%);
+    border-color: hsl(0, 0%, 80%);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
   }
   .input-items-style::placeholder {
     color: #000;
@@ -140,7 +160,7 @@
   }
   .submit-buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     padding: 20px 0;
   }
   .reset-btn,
@@ -206,14 +226,14 @@
     padding-left: 15px;
   }
   .filter-section {
-    margin-top: 20px;
+    margin-top: 40px;
     display: flex;
   }
   .filter-wrapper {
     width: 30%;
   }
   .filter-btn {
-    width: 296px;
+    width: 315px;
     height: 49px;
     border-radius: 11px;
     background: #000;
@@ -225,38 +245,79 @@
     font-weight: 500;
     line-height: normal;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    padding-left: 15px;
   }
   .filter-btn-wrapper {
     display: flex;
-    justify-content: center;
+  }
+  .search-words-section {
+    display: flex;
+    justify-content: space-between;
+  }
+  .search-history {
+    display: flex;
+    flex-wrap: wrap;
+    width: 200px;
+  }
+  .search-history > div {
+    padding: 8px 8px;
+    color: #000;
+    font-family: "Montaga";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    cursor: pointer;
   }
   .filter-wrapper {
     display: flex;
     flex-direction: column;
-    padding: 0px 40px;
+    padding: 0px 30px 0px 60px;
   }
   .filter-content {
     display: block;
   }
   .filter-items {
-    padding: 15px 0px;
+    padding: 8px 0px;
     color: #000;
     font-family: "Montagu Slab";
     font-size: 16px;
     font-weight: 600;
   }
   .keyword-wrapper {
+    justify-content: space-between;
+    align-items: center;
     display: flex;
-    border-bottom: 1px solid #000;
-    padding-bottom: 14px;
-    opacity: 0.4;
+    padding: 10px 0px;
+  }
+  .profession-wrapper {
+    /* height: 39px; */
+    border-radius: 5px;
+    outline: none !important;
+    background: rgba(0, 0, 0, 0);
+    padding-bottom: 10px;
+  }
+  .filter-input-wrapper {
+    border-radius: 5px;
+    border: 0.5px solid rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0);
+    /* width: 200px; */
+    height: 39px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .search-icon {
+    padding-left: 10px;
   }
   .keyword-input {
     border: none;
     outline: none;
-    padding-left: 15px;
+    padding-left: 10px;
+    width: 160px;
+    opacity: 0.4;
   }
   .check-section {
     display: flex;
@@ -272,13 +333,16 @@
   .input-items-wrapper {
     display: flex;
     justify-content: space-between;
+    padding-bottom: 10px;
   }
   .input-items-style {
     width: 137px;
-    height: 35px;
-    border-radius: 7px;
-    border: 1px solid #000;
-    background: #fff;
+    min-height: 38px;
+    background-color: hsl(0, 0%, 100%);
+    border-color: hsl(0, 0%, 80%);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
   }
   .input-items-style::placeholder {
     color: #000;
@@ -303,7 +367,7 @@
   }
   .submit-buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     padding: 20px 0;
   }
   .reset-btn,
@@ -330,4 +394,17 @@
   .filtered-gallery {
     padding: 0;
   }
+}
+
+select {
+  cursor: pointer;
+}
+
+.select__multi-value {
+  background-color: #c2114b !important;
+  color: #fff !important;
+}
+
+.select__multi-value__label {
+  color: #fff !important;
 }

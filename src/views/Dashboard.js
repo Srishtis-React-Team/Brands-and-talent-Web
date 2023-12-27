@@ -3,6 +3,7 @@ import "../assets/css/dashboard.css";
 import { NavLink } from "react-router-dom";
 import Header from "./header";
 import Footer from "./Footer";
+import ChatBot from "react-simple-chatbot";
 const Dashboard = () => {
   const btLogo = require("../assets/icons/Group 56.png");
   const searchLogo = require("../assets/icons/search (1).png");
@@ -68,18 +69,20 @@ const Dashboard = () => {
       <Header />
       <div className="section-1">
         <div className="find-work">
-          <div className="section-title">Find work as a model</div>
+          <div className="section-title">Find Jobs</div>
           <div className="section-description">
-            Unlock Your Gateway to Modeling Opportunities.
+            Talent can  build and manage their personal brands and will have a
+            unique url like linkedin that they can share as thier portfolio...
           </div>
           <div className="Join-wrapper center">
             <div className="joinnow-btn">Join Now</div>
           </div>
         </div>
         <div className="find-work">
-          <div className="section-title">Find models and talents</div>
+          <div className="section-title">Hire Talent</div>
           <div className="section-description">
-            Discover Your Ideal Model: Connecting Visions with Talent.
+            The platform will help brands find, attract, and hire the best
+            talent as per their budget and requirement in less than 5 minutes.
           </div>
           <div className="white-joinnow center">
             <div className="joinnow-btn">Join Now</div>
@@ -87,12 +90,14 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="tabs-section">
-        <div className="title">Popular Models</div>
+        <div className="title">Popular Talents</div>
         <div className="tabs">
-          <div className="active-tab">Fashion</div>
-          <div>Plus sized</div>
-          <div>Real people</div>
-          <div>Unique</div>
+          <div className="active-tab">Artists</div>
+          <div>Photographers</div>
+          <div>Actors</div>
+          <div>Influencers</div>
+          <div>Models</div>
+          <div>More</div>
         </div>
       </div>
       <div className="gallery-section">
@@ -202,31 +207,36 @@ const Dashboard = () => {
           <div className="cards-text">Agencies</div>
         </div>
       </div>
-      <div className="title">Prioritizing Your Well-being</div>
+      <div className="title">Products and Services</div>
       <div className="cards">
         <div className="card-wrapper ">
           <div className="card-picture center">
             <img src={checkMark}></img>
           </div>
+          <div className="card-title">Talent Marketplace</div>
           <div className="cards-description">
-            Every professional member undergoes thorough verification by our
-            team.
+            A platform where talents can create a profile, showcase their work,
+            and connect with...
           </div>
         </div>
         <div className="card-wrapper">
           <div className="card-picture center">
             <img src={lockIcon}></img>
           </div>
+          <div className="card-title">Hire Talent</div>
           <div className="cards-description">
-            Cutting-edge tools designed to thwart scammers at every turn.
+            The platform will help brands find, attract, and hire the best
+            talent as per their ...
           </div>
         </div>
         <div className="card-wrapper">
           <div className="card-picture center">
             <img src={whiteStar}></img>
           </div>
+          <div className="card-title">Find Jobs</div>
           <div className="cards-description">
-            Rely on community reviews for an extra layer of assurance.
+            Talent can  build and manage their personal brands and will have a
+            unique url ...
           </div>
         </div>
       </div>
@@ -439,6 +449,25 @@ const Dashboard = () => {
         </div>
       </div>
       <Footer />
+      {/* <ChatBot
+        steps={[
+          {
+            id: "1",
+            message: "What is your name?",
+            trigger: "2",
+          },
+          {
+            id: "2",
+            user: true,
+            trigger: "3",
+          },
+          {
+            id: "3",
+            message: "Hi {previousValue}, nice to meet you!",
+            end: true,
+          },
+        ]}
+      /> */}
     </>
   );
 };
