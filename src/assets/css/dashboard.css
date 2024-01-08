@@ -1,5 +1,67 @@
-section {
-  /* border: 1px solid red; */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+input[type="checkbox"]:checked {
+  accent-color: #c2114b !important;
+  color: #ffffff !important;
+}
+
+.btn-logo {
+  padding-left: 25px;
+}
+
+.box {
+  max-width: 305px;
+  width: 100%;
+}
+.box .search-box {
+  position: relative;
+  height: 50px;
+  max-width: 50px;
+  margin: 0 0 0 auto;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+#check:checked ~ .search-box {
+  max-width: 380px;
+}
+.search-box input {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 25px;
+  background: #fff;
+  outline: none;
+  border: none;
+  padding-left: 20px;
+  font-size: 18px;
+}
+.search-box .icon {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  width: 50px;
+  background: #fff;
+  height: 100%;
+  text-align: center;
+  line-height: 50px;
+  color: #c2114b;
+  font-size: 20px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+#check:checked ~ .search-box .icon {
+  background: #c2114b;
+  color: #fff;
+  width: 60px;
+  border-radius: 0 25px 25px 0;
+}
+#check {
+  display: none;
 }
 
 a.active {
@@ -46,6 +108,56 @@ a {
 }
 
 @media (max-width: 480px) {
+  .responsive-box {
+    max-width: 305px;
+    width: 100%;
+  }
+  .responsive-box .responsive-search-box {
+    position: relative;
+    height: 50px;
+    max-width: 50px;
+    margin: auto;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+  }
+  #search-check:checked ~ .responsive-search-box {
+    max-width: 380px;
+  }
+  .responsive-search-box input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 25px;
+    background: #fff;
+    outline: none;
+    border: none;
+    padding-left: 20px;
+    font-size: 18px;
+  }
+  .responsive-search-box .responsive-search-icon {
+    position: absolute;
+    right: -2px;
+    top: 0;
+    width: 50px;
+    background: #fff;
+    height: 100%;
+    text-align: center;
+    line-height: 50px;
+    color: #c2114b;
+    font-size: 20px;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  #search-check:checked ~ .responsive-search-box .responsive-search-icon {
+    background: #c2114b;
+    color: #fff;
+    width: 60px;
+    border-radius: 0 25px 25px 0;
+  }
+  #search-check {
+    display: none;
+  }
   .input-style::placeholder {
     padding-left: 15px;
     color: #fff !important;
@@ -222,7 +334,6 @@ a {
   }
 
   .active-tab {
-    width: 70px;
     height: 30px;
     border-radius: 140px;
     background: #000;
@@ -231,6 +342,8 @@ a {
     justify-content: center;
     align-items: center;
     color: #fff !important;
+    max-width: 140px;
+    padding: 15px;
   }
 
   .gallery-section {
@@ -497,6 +610,7 @@ a {
     font-style: normal;
     font-weight: 400;
     border-radius: 100px;
+    cursor: pointer;
   }
   .main-form {
     display: flex;
@@ -584,7 +698,27 @@ a {
     line-height: 37px;
     cursor: pointer;
   }
-  .model-btn {
+
+  .choose-register {
+    width: 150px;
+    height: 50px;
+    border-radius: 6px;
+    border: 1px solid #000;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    text-align: center;
+    font-family: "Montaga";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    cursor: pointer;
+    margin-right: 25px;
+  }
+
+  .selected-register {
     width: 150px;
     height: 50px;
     border-radius: 6px;
@@ -602,23 +736,7 @@ a {
     line-height: 37px;
     cursor: pointer;
   }
-  .seeker-btn {
-    width: 150px;
-    height: 50px;
-    border-radius: 6px;
-    border: 1px solid #000;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #000;
-    text-align: center;
-    font-family: "Montaga";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    cursor: pointer;
-  }
+
   .modal-buttons {
     display: flex;
     justify-content: center;
@@ -730,6 +848,7 @@ a {
     font-weight: 400;
     line-height: normal;
     padding-left: 20px;
+    cursor: pointer;
   }
 
   .step-back {
@@ -862,6 +981,7 @@ a:hover {
     font-weight: 400;
     line-height: normal;
     padding-left: 20px;
+    cursor: pointer;
   }
 
   .step-back {
@@ -1020,7 +1140,7 @@ a:hover {
     line-height: 37px;
     cursor: pointer;
   }
-  .model-btn {
+  .selected-register {
     width: 221px;
     height: 52px;
     border-radius: 6px;
@@ -1038,7 +1158,7 @@ a:hover {
     line-height: 37px;
     cursor: pointer;
   }
-  .seeker-btn {
+  .choose-register {
     width: 221px;
     height: 52px;
     border-radius: 6px;
@@ -1055,6 +1175,7 @@ a:hover {
     font-weight: 400;
     line-height: 37px;
     cursor: pointer;
+    margin-right: 25px;
   }
   .modal-buttons {
     display: flex;
@@ -1151,6 +1272,7 @@ a:hover {
     font-style: normal;
     font-weight: 400;
     border-radius: 100px;
+    cursor: pointer;
   }
   .input-style {
     width: 250px !important;
@@ -1390,7 +1512,6 @@ a:hover {
     margin: 10px;
   }
   .active-tab {
-    width: 86px;
     height: 40px;
     border-radius: 140px;
     background: #000;
@@ -1399,6 +1520,8 @@ a:hover {
     justify-content: center;
     align-items: center;
     color: #fff !important;
+    max-width: 140px;
+    padding: 15px;
   }
 
   .tabs {
@@ -1491,9 +1614,9 @@ a:hover {
 
   .header {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
-    height: 55px;
+    height: 60px;
     top: 0;
     position: sticky;
     width: 100%;
@@ -1502,14 +1625,12 @@ a:hover {
     border-bottom: 1px solid #d4d4d8;
   }
 
-  .icon {
-    padding-left: 30px;
-  }
-
   .menu-items {
     display: flex;
     justify-content: space-between;
+    justify-content: end;
     align-items: center;
+    padding-left: 130px;
   }
 
   .menu-items > div {
@@ -1520,13 +1641,14 @@ a:hover {
     font-weight: 400;
     line-height: normal;
     cursor: pointer;
-    padding-right: 50px;
+    padding-right: 30px;
     text-decoration: none;
   }
 
   .header-functions {
     display: flex;
     align-items: center;
+    width: 41%;
   }
 
   .header-functions > div {

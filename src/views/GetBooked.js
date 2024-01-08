@@ -7,9 +7,7 @@ import axios from "axios";
 const GetBooked = () => {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    console.log(data, "features data");
-  }, []);
+  useEffect(() => {}, []);
   const model = require("../assets/images/model-profile.png");
   const model1 = require("../assets/images/model1.png");
   const model2 = require("../assets/images/model2.png");
@@ -40,9 +38,62 @@ const GetBooked = () => {
   const [reviews, setReviews] = useState(false);
   const [bio, showBio] = useState(false);
   const [analytics, showAnalytics] = useState(false);
+  const [test, setTest] = useState("");
+
+  const photosList = [
+    {
+      photo: model1,
+    },
+    {
+      photo: model2,
+    },
+    {
+      photo: model3,
+    },
+    {
+      photo: model4,
+    },
+    {
+      photo: model5,
+    },
+    {
+      photo: model6,
+    },
+    {
+      photo: model7,
+    },
+    {
+      photo: model8,
+    },
+    {
+      photo: model9,
+    },
+    {
+      photo: model10,
+    },
+  ];
+
+  const reviewsList = [
+    {
+      date: "23 Nov 2023",
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...",
+      rating: [4],
+      reviewer_name: "Sanjay Manuel",
+    },
+    {
+      date: "23 Nov 2023",
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...",
+      rating: [4],
+      reviewer_name: "Sanjay Manuel",
+    },
+  ];
 
   function handleForms(e) {
-    console.log(e, "e");
+    setTest("features set");
     if (e == "photos") {
       showPhotos(true);
     } else {
@@ -55,41 +106,6 @@ const GetBooked = () => {
     }
     if (e == "features") {
       showFeatures(true);
-      setData([
-        {
-          _id: "6581594628ccd5fc45f027e0",
-          email: "aiswrya@gmail.com",
-          password:
-            "$2a$10$KWp5g7TyUYHzccm/vHCzg.ewDhRyxdQn7XH2NCe2BFVM5cFzZEAfu",
-          isActive: true,
-          ethnicity: "white/Caucasian",
-          height: "170cm",
-          hairColour: "Brown",
-          hairType: "Wavy",
-          build: "Ferite",
-          skinType: "Regular",
-          skinTone: "Olive",
-          eyeColour: "Brown",
-          hairLength: "Long",
-          chest: "82cm",
-          waist: "64cm",
-          hipSize: "84cm",
-          dressSize: "64cm",
-          shoeSize: "64cm",
-          braSize: "64cm",
-          transgender: "No",
-          sexuality: "Straight",
-          maritalStatus: "Long term Relationship",
-          children: "None",
-          pets: "None",
-          diet: "None",
-          created: "2023-12-19T08:50:14.498Z",
-          createdAt: "2023-12-19T08:50:14.532Z",
-          updatedAt: "2023-12-19T08:50:14.532Z",
-          __v: 0,
-        },
-      ]);
-      console.log(data, "features");
     } else {
       showFeatures(false);
     }
@@ -109,6 +125,43 @@ const GetBooked = () => {
       showAnalytics(false);
     }
   }
+  useEffect(() => {
+    setData([
+      {
+        _id: "6581594628ccd5fc45f027e0",
+        email: "aiswrya@gmail.com",
+        password:
+          "$2a$10$KWp5g7TyUYHzccm/vHCzg.ewDhRyxdQn7XH2NCe2BFVM5cFzZEAfu",
+        isActive: true,
+        ethnicity: "white/Caucasian",
+        height: "170cm",
+        hairColour: "Brown",
+        hairType: "Wavy",
+        build: "Ferite",
+        skinType: "Regular",
+        skinTone: "Olive",
+        eyeColour: "Brown",
+        hairLength: "Long",
+        chest: "82cm",
+        waist: "64cm",
+        hipSize: "84cm",
+        dressSize: "64cm",
+        shoeSize: "64cm",
+        braSize: "64cm",
+        transgender: "No",
+        sexuality: "Straight",
+        maritalStatus: "Long term Relationship",
+        children: "None",
+        pets: "None",
+        diet: "None",
+        created: "2023-12-19T08:50:14.498Z",
+        createdAt: "2023-12-19T08:50:14.532Z",
+        updatedAt: "2023-12-19T08:50:14.532Z",
+        __v: 0,
+      },
+    ]);
+    console.log(data, "features data useeffect");
+  }, [test]);
 
   return (
     <>
@@ -226,101 +279,103 @@ const GetBooked = () => {
 
       {photos && (
         <div className="models-photos">
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model1}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model2}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model3}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model4}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model5}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model6}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model7}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model8}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model9}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model10}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model11}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model12}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model13}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model14}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model15}></img>
-          </div>
+          {photosList.map((item) => {
+            return (
+              <div className="model-picture-wrapper">
+                <img className="model-picture" src={item.photo}></img>
+              </div>
+            );
+          })}
         </div>
       )}
       {videos && (
         <div className="models-photos">
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model1}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model2}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model3}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model4}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model5}></img>
-          </div>
-          <div className="model-picture-wrapper">
-            <img className="model-picture" src={model6}></img>
-          </div>
+          {photosList.map((item) => {
+            return (
+              <div className="model-picture-wrapper">
+                <img className="model-picture" src={item.photo}></img>
+              </div>
+            );
+          })}
         </div>
       )}
       {features && (
-        <div className="features-wrapper">
-          <div className="features-row1">
-            {data.map((titleList) => {
-              const titles = Object.keys(titleList);
-              const values = Object.values;
-              return titles.map((item, key) => {
-                return (
-                  <div key={key} className="features-heading">
-                    {item}
-                  </div>
-                );
-              });
-            })}
+        <div className="features-section">
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
           </div>
-          <div className="features-row2">
-            {data.map((valuesList) => {
-              const values = Object.values(valuesList);
-              return values.map((item, key) => {
-                return (
-                  <div key={key} className="features-values">
-                    {item}
-                  </div>
-                );
-              });
-            })}
+          <div className="features-wrapper">
+            <div className="features-heading">Height</div>
+            <div className="features-value">{data[0].height}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Hair Color</div>
+            <div className="features-value">{data[0].hairColour}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Hair Type</div>
+            <div className="features-value">{data[0].hairType}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Build</div>
+            <div className="features-value">{data[0].build}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Skin Type</div>
+            <div className="features-value">{data[0].skinType}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Skin Tone</div>
+            <div className="features-value">{data[0].skinTone}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Eye Color</div>
+            <div className="features-value">{data[0].eyeColour}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
+          </div>
+          <div className="features-wrapper">
+            <div className="features-heading">Ethnicity</div>
+            <div className="features-value">{data[0].ethnicity}</div>
           </div>
         </div>
       )}
@@ -346,98 +401,26 @@ const GetBooked = () => {
 
       {reviews && (
         <div className="model-reviews">
-          <div className="model-review-wrapper">
-            <div className="review-date">23 Nov 2023</div>
-            <div className="review-title">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-            <div className="review-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...
-            </div>
-            <div className="reviewer-section">
-              <div className="reviewers-rating">
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={greyStar}></img>
+          {reviewsList.map((item) => {
+            return (
+              <div className="model-review-wrapper">
+                <div className="review-date">{item.date}</div>
+                <div className="review-title">{item.title}</div>
+                <div className="review-content">{item.description}</div>
+                <div className="reviewer-section">
+                  <div className="reviewers-rating">
+                    {item.rating.map((item) => {
+                      return <img src={pinkStar}></img>;
+                    })}
+                  </div>
+                  <div className="reviewer-details">
+                    <div className="initial center">S</div>
+                    <div className="reviewer-name">{item.reviewer_name}</div>
+                  </div>
+                </div>
               </div>
-              <div className="reviewer-details">
-                <div className="initial center">S</div>
-                <div className="reviewer-name">Sanjay Manuel</div>
-              </div>
-            </div>
-          </div>
-          <div className="model-review-wrapper">
-            <div className="review-date">23 Nov 2023</div>
-            <div className="review-title">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-            <div className="review-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...
-            </div>
-            <div className="reviewer-section">
-              <div className="reviewers-rating">
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={greyStar}></img>
-              </div>
-              <div className="reviewer-details">
-                <div className="initial center">S</div>
-                <div className="reviewer-name">Sanjay Manuel</div>
-              </div>
-            </div>
-          </div>
-          <div className="model-review-wrapper">
-            <div className="review-date">23 Nov 2023</div>
-            <div className="review-title">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-            <div className="review-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...
-            </div>
-            <div className="reviewer-section">
-              <div className="reviewers-rating">
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={greyStar}></img>
-              </div>
-              <div className="reviewer-details">
-                <div className="initial center">S</div>
-                <div className="reviewer-name">Sanjay Manuel</div>
-              </div>
-            </div>
-          </div>
-          <div className="model-review-wrapper">
-            <div className="review-date">23 Nov 2023</div>
-            <div className="review-title">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-            <div className="review-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...
-            </div>
-            <div className="reviewer-section">
-              <div className="reviewers-rating">
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={pinkStar}></img>
-                <img src={greyStar}></img>
-              </div>
-              <div className="reviewer-details">
-                <div className="initial center">S</div>
-                <div className="reviewer-name">Sanjay Manuel</div>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       )}
 

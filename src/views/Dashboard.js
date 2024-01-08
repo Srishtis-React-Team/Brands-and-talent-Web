@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "../assets/css/dashboard.css";
-import { NavLink } from "react-router-dom";
 import Header from "./header";
 import Footer from "./Footer";
-import ChatBot from "react-simple-chatbot";
 const Dashboard = () => {
   const btLogo = require("../assets/icons/Group 56.png");
   const searchLogo = require("../assets/icons/search (1).png");
@@ -11,7 +9,6 @@ const Dashboard = () => {
   const whiteStar = require("../assets/icons/white_star.png");
   const checkMark = require("../assets/icons/check-circle.png");
   const lockIcon = require("../assets/icons/lock.png");
-  const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
   const gents = require("../assets/images/gents.png");
   const girl = require("../assets/images/girl.png");
   const female = require("../assets/images/female.png");
@@ -29,40 +26,89 @@ const Dashboard = () => {
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
   const heartIcon = require("../assets/icons/heart.png");
-  const uploadIcon = require("../assets/icons/upload.png");
-  const importIcon = require("../assets/icons/instagram.png");
-  const placeholder = "Your message";
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [formOne_visibility, showFormOne] = useState(true);
-  const [formTwo_visibility, showFormTwo] = useState(false);
-  const [formThree_visibility, showForThree] = useState(false);
-  const [formFour_visibility, showFormFour] = useState(false);
-  const [formFive_visibility, showFormFive] = useState(false);
+  const girl1 = require("../assets/images/girl1.png");
+  const girl2 = require("../assets/images/girl2.png");
+  const girl3 = require("../assets/images/girl3.png");
+  const girl4 = require("../assets/images/girl4.jpg");
+  const girl5 = require("../assets/images/girl5.png");
 
-  function handleForms(e) {
-    console.log(e, "e");
-    if (e == "form-one") {
-      showFormOne(false);
-      showFormTwo(true);
+  const [artists, showArtists] = useState(true);
+  const [photographers, showPhotographers] = useState(false);
+  const [actors, showActors] = useState(false);
+  const [influencers, setInfluencers] = useState(false);
+  const [models, showModels] = useState(false);
+  const [more, showMore] = useState(false);
+
+  function handleTabs(e) {
+    if (e == "artists") {
+      showArtists(true);
     } else {
-      showFormTwo(false);
+      showArtists(false);
     }
-    if (e == "form-two") {
-      showForThree(true);
+    if (e == "photographers") {
+      showPhotographers(true);
     } else {
-      showForThree(false);
+      showPhotographers(false);
     }
-    if (e == "form-three") {
-      showFormFour(true);
+    if (e == "actors") {
+      showActors(true);
     } else {
-      showFormFour(false);
+      showActors(false);
     }
-    if (e == "form-four") {
-      showFormFive(true);
+    if (e == "influencers") {
+      setInfluencers(true);
     } else {
-      showFormFive(false);
+      setInfluencers(false);
+    }
+    if (e == "models") {
+      showModels(true);
+    } else {
+      showModels(false);
+    }
+    if (e == "more") {
+      showMore(true);
+    } else {
+      showMore(false);
     }
   }
+
+  const talentList = [
+    {
+      photo: girl1,
+      name: "Alexander",
+      address: "Copenhagen, Denmark",
+      isFavorite: true,
+      rating: 4,
+    },
+    {
+      photo: girl2,
+      name: "william",
+      address: "Copenhagen, Denmark",
+      isFavorite: false,
+      rating: 3,
+    },
+    {
+      photo: girl3,
+      name: "Michael",
+      address: "Pitsburg, Canada",
+      isFavorite: false,
+      rating: 5,
+    },
+    {
+      photo: girl4,
+      name: "Andrea",
+      address: "North Carolina, USA",
+      isFavorite: false,
+      rating: 1,
+    },
+    {
+      photo: girl5,
+      name: "Alexa",
+      address: "South Carolina, USA",
+      isFavorite: false,
+      rating: 1,
+    },
+  ];
 
   return (
     <>
@@ -92,101 +138,183 @@ const Dashboard = () => {
       <div className="tabs-section">
         <div className="title">Popular Talents</div>
         <div className="tabs">
-          <div className="active-tab">Artists</div>
-          <div>Photographers</div>
-          <div>Actors</div>
-          <div>Influencers</div>
-          <div>Models</div>
-          <div>More</div>
-        </div>
-      </div>
-      <div className="gallery-section">
-        <div className="gallery-warpper">
-          <div className="gallery-position">
-            <img className="gallery-img" src={gents}></img>
-            <img className="heart-icon" src={heartIcon}></img>
+          <div
+            className={artists ? "active-tab" : null}
+            onClick={(e) => {
+              handleTabs("artists");
+            }}
+          >
+            Artists
           </div>
-          <div className="gallery-content">
-            <div className="content">
-              <div className="name">Alexander</div>
-              <div className="address">Copenhagen, Denmark</div>
-            </div>
-            <div className="rating">
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-            </div>
+          <div
+            className={photographers ? "active-tab" : null}
+            onClick={(e) => {
+              handleTabs("photographers");
+            }}
+          >
+            Photographers
           </div>
-        </div>
-        <div className="gallery-warpper">
-          <div className="gallery-position">
-            <img className="gallery-img" src={gents}></img>
-            <img className="heart-icon" src={heartIcon}></img>
+          <div
+            className={actors ? "active-tab" : null}
+            onClick={(e) => {
+              handleTabs("actors");
+            }}
+          >
+            Actors
           </div>
-          <div className="gallery-content">
-            <div className="content">
-              <div className="name">Alexander</div>
-              <div className="address">Copenhagen, Denmark</div>
-            </div>
-            <div className="rating">
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-            </div>
+          <div
+            className={influencers ? "active-tab" : null}
+            onClick={(e) => {
+              handleTabs("influencers");
+            }}
+          >
+            Influencers
           </div>
-        </div>
-        <div className="gallery-warpper">
-          <div className="gallery-position">
-            <img className="gallery-img" src={gents}></img>
-            <img className="heart-icon" src={heartIcon}></img>
+          <div
+            className={models ? "active-tab" : null}
+            onClick={(e) => {
+              handleTabs("models");
+            }}
+          >
+            Models
           </div>
-          <div className="gallery-content">
-            <div className="content">
-              <div className="name">Alexander</div>
-              <div className="address">Copenhagen, Denmark</div>
-            </div>
-            <div className="rating">
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-            </div>
-          </div>
-        </div>
-        <div className="gallery-warpper">
-          <div className="gallery-position">
-            <img className="gallery-img" src={gents}></img>
-            <img className="heart-icon" src={heartIcon}></img>
-          </div>
-          <div className="gallery-content">
-            <div className="content">
-              <div className="name">Alexander</div>
-              <div className="address">Copenhagen, Denmark</div>
-            </div>
-            <div className="rating">
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-            </div>
-          </div>
-        </div>
-        <div className="gallery-warpper">
-          <div className="gallery-position">
-            <img className="gallery-img" src={gents}></img>
-            <img className="heart-icon" src={heartIcon}></img>
-          </div>
-          <div className="gallery-content">
-            <div className="content">
-              <div className="name">Alexander</div>
-              <div className="address">Copenhagen, Denmark</div>
-            </div>
-            <div className="rating">
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-              <img src={starIcon}></img>
-            </div>
+          <div
+            className={more ? "active-tab" : null}
+            onClick={(e) => {
+              handleTabs("more");
+            }}
+          >
+            More
           </div>
         </div>
       </div>
+
+      {artists && (
+        <div className="gallery-section">
+          {talentList.map((item) => {
+            return (
+              <div className="gallery-warpper">
+                <div className="gallery-position">
+                  <img className="gallery-img" src={item.photo}></img>
+                  <img className="heart-icon" src={heartIcon}></img>
+                </div>
+                <div className="gallery-content">
+                  <div className="content">
+                    <div className="name">{item.name}</div>
+                    <div className="address">{item.address}</div>
+                  </div>
+                  <div className="rating">
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {photographers && (
+        <div className="gallery-section">
+          {talentList.map((item) => {
+            return (
+              <div className="gallery-warpper">
+                <div className="gallery-position">
+                  <img className="gallery-img" src={item.photo}></img>
+                  <img className="heart-icon" src={heartIcon}></img>
+                </div>
+                <div className="gallery-content">
+                  <div className="content">
+                    <div className="name">{item.name}</div>
+                    <div className="address">{item.address}</div>
+                  </div>
+                  <div className="rating">
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {actors && (
+        <div className="gallery-section">
+          {talentList.map((item) => {
+            return (
+              <div className="gallery-warpper">
+                <div className="gallery-position">
+                  <img className="gallery-img" src={item.photo}></img>
+                  <img className="heart-icon" src={heartIcon}></img>
+                </div>
+                <div className="gallery-content">
+                  <div className="content">
+                    <div className="name">{item.name}</div>
+                    <div className="address">{item.address}</div>
+                  </div>
+                  <div className="rating">
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {influencers && (
+        <div className="gallery-section">
+          {talentList.map((item) => {
+            return (
+              <div className="gallery-warpper">
+                <div className="gallery-position">
+                  <img className="gallery-img" src={item.photo}></img>
+                  <img className="heart-icon" src={heartIcon}></img>
+                </div>
+                <div className="gallery-content">
+                  <div className="content">
+                    <div className="name">{item.name}</div>
+                    <div className="address">{item.address}</div>
+                  </div>
+                  <div className="rating">
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {models && (
+        <div className="gallery-section">
+          {talentList.map((item) => {
+            return (
+              <div className="gallery-warpper">
+                <div className="gallery-position">
+                  <img className="gallery-img" src={item.photo}></img>
+                  <img className="heart-icon" src={heartIcon}></img>
+                </div>
+                <div className="gallery-content">
+                  <div className="content">
+                    <div className="name">{item.name}</div>
+                    <div className="address">{item.address}</div>
+                  </div>
+                  <div className="rating">
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       <div className="center">
         <div className="Join-wrapper center">
           <div>Find More</div>
@@ -242,42 +370,27 @@ const Dashboard = () => {
       </div>
       <div className="title">Case studies</div>
       <div className="gallery-section">
-        <div className="gallery-warpper">
-          <img src={gents} className="case-images"></img>
-          <div className="gallery-content">
-            <div className="content">
-              <div className="name">Lorem ipsum dolor sit</div>
-              <div className="address">Copenhagen, Denmark</div>
+        {talentList.map((item) => {
+          return (
+            <div className="gallery-warpper">
+              <div className="gallery-position">
+                <img className="gallery-img" src={item.photo}></img>
+                <img className="heart-icon" src={heartIcon}></img>
+              </div>
+              <div className="gallery-content">
+                <div className="content">
+                  <div className="name">{item.name}</div>
+                  <div className="address">{item.address}</div>
+                </div>
+                <div className="rating">
+                  <img src={starIcon}></img>
+                  <img src={starIcon}></img>
+                  <img src={starIcon}></img>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="gallery-warpper">
-          <img src={gents} className="case-images"></img>
-          <div className="gallery-content">
-            <div className="content">
-              <div className="name">Lorem ipsum dolor sit</div>
-              <div className="address">Copenhagen, Denmark</div>
-            </div>
-          </div>
-        </div>
-        <div className="gallery-warpper">
-          <img src={gents} className="case-images"></img>
-          <div className="gallery-content">
-            <div className="content">
-              <div className="name">Lorem ipsum dolor sit</div>
-              <div className="address">Copenhagen, Denmark</div>
-            </div>
-          </div>
-        </div>
-        <div className="gallery-warpper">
-          <img src={gents} className="case-images"></img>
-          <div className="gallery-content">
-            <div className="content">
-              <div className="name">Lorem ipsum dolor sit</div>
-              <div className="address">Copenhagen, Denmark</div>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
       <div className="center">
         <div className="Join-wrapper center">

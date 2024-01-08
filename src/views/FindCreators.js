@@ -1,15 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/css/findcreators.css";
 import Header from "./header.js";
 import Footer from "./Footer.js";
 import Select from "react-select";
 const FindCreators = () => {
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [isClearable, setIsClearable] = useState(true);
-  const [isSearchable, setIsSearchable] = useState(true);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRtl, setIsRtl] = useState(false);
   const searchIcon = require("../assets/icons/search.png");
   const heartIcon = require("../assets/icons/heart.png");
   const gents = require("../assets/images/gents.png");
@@ -31,12 +25,111 @@ const FindCreators = () => {
   const girl16 = require("../assets/images/girl16.png");
   const starIcon = require("../assets/icons/star.png");
 
-  const colourOptions = [
-    { value: "ocean", label: "Photographer", color: "#00B8D9", isFixed: true },
-    { value: "purple", label: "Beauticians", color: "#5243AA" },
-    { value: "red", label: "Artists", color: "#FF5630", isFixed: true },
-    { value: "orange", label: "Video Grapher", color: "#FF8B00" },
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [isClearable, setIsClearable] = useState(true);
+  const [isSearchable, setIsSearchable] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRtl, setIsRtl] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [selectedKeyword, setSelectedKeywords] = useState("");
+  const [profession, setProfession] = useState("");
+  const [gender, setGender] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [age, setAge] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [ethnicity, setEthnicity] = useState("");
+  const [talentList, setTalentList] = useState([]);
+
+  useEffect(() => {
+    setTalentList([
+      {
+        photo: girl1,
+        name: "Alexander",
+        address: "Copenhagen, Denmark",
+        isFavorite: true,
+        rating: 4,
+      },
+      {
+        photo: girl2,
+        name: "william",
+        address: "Copenhagen, Denmark",
+        isFavorite: false,
+        rating: 3,
+      },
+      {
+        photo: girl3,
+        name: "Michael",
+        address: "Pitsburg, Canada",
+        isFavorite: false,
+        rating: 5,
+      },
+      {
+        photo: girl4,
+        name: "Andrea",
+        address: "North Carolina, USA",
+        isFavorite: false,
+        rating: 1,
+      },
+      {
+        photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        rating: 1,
+      },
+    ]);
+  }, []);
+
+  const clear = () => {
+    setSearchKeyword("");
+  };
+
+  const reset = async () => {
+    clear();
+  };
+
+  const professionList = [
+    {
+      value: "photographer",
+      label: "Photographer",
+      color: "#00B8D9",
+      isFixed: true,
+    },
+    { value: "beauticians", label: "Beauticians", color: "#5243AA" },
+    { value: "artists", label: "Artists", color: "#FF5630", isFixed: true },
+    { value: "video Grapher", label: "Video Grapher", color: "#FF8B00" },
   ];
+
+  const genderList = [
+    {
+      value: "male",
+      label: "Male",
+      color: "#00B8D9",
+      isFixed: true,
+    },
+    { value: "female", label: "Female", color: "#5243AA" },
+  ];
+
+  const search = async () => {
+    console.log(profession, "profession");
+    console.log(gender, "gender");
+    console.log(age, "age");
+    console.log(selectedKeyword, "selectedKeyword");
+    console.log(searchKeyword, "searchKeyword");
+
+    let filteredTalents = talentList.filter((element) => {
+      // 👇️ using AND (&&) operator
+      return (
+        element.name === searchKeyword || element.address === searchKeyword
+      );
+    });
+
+    // 👉️ [ {name: 'Carl', age: 30} ]
+    console.log(filteredTalents, "Filtered Talent List");
+    setTalentList(filteredTalents);
+  };
 
   return (
     <>
@@ -73,14 +166,22 @@ const FindCreators = () => {
                   <input
                     className="keyword-input"
                     placeholder="Search Keyword"
+                    onChange={(e) => {
+                      setSearchKeyword(e.target.value);
+                    }}
                   ></input>
                 </div>
               </div>
-
               <div className="search-words-section">
                 <div></div>
                 <div className="search-history">
-                  <div>creators*</div>
+                  <div
+                    onClick={(e) => {
+                      setSelectedKeywords("creators");
+                    }}
+                  >
+                    creators*
+                  </div>
                   <div>makeup artists*</div>
                   <div>writers*</div>
                   <div>beauticians*</div>
@@ -91,12 +192,14 @@ const FindCreators = () => {
                 <div className="filter-items">Profession</div>
                 <div className="profession-wrapper">
                   <Select
-                    defaultValue={[colourOptions[2], colourOptions[3]]}
+                    defaultValue={[professionList[2], professionList[3]]}
                     isMulti
                     name="colors"
-                    options={colourOptions}
+                    options={professionList}
+                    valueField="value"
                     className="basic-multi-select"
                     classNamePrefix="select"
+                    onChange={(value) => setProfession(value)}
                   />
                 </div>
               </div>
@@ -106,14 +209,12 @@ const FindCreators = () => {
                   <Select
                     className="basic-single"
                     classNamePrefix="select"
-                    defaultValue={colourOptions[0]}
-                    isDisabled={isDisabled}
-                    isLoading={isLoading}
                     isClearable={isClearable}
                     isRtl={isRtl}
                     isSearchable={isSearchable}
-                    name="color"
-                    options={colourOptions}
+                    options={genderList}
+                    valueField="value"
+                    onChange={(value) => setGender(value.value)}
                   />
                 </div>
               </div>
@@ -123,14 +224,14 @@ const FindCreators = () => {
                   <Select
                     className="basic-single"
                     classNamePrefix="select"
-                    defaultValue={colourOptions[0]}
+                    defaultValue={professionList[0]}
                     isDisabled={isDisabled}
                     isLoading={isLoading}
                     isClearable={isClearable}
                     isRtl={isRtl}
                     isSearchable={isSearchable}
                     name="color"
-                    options={colourOptions}
+                    options={professionList}
                   />
                 </div>
               </div>
@@ -141,6 +242,9 @@ const FindCreators = () => {
                     placeholder="Min"
                     type="text"
                     className="input-items-style form-control"
+                    onChange={(e) => {
+                      setAge(e.target.value);
+                    }}
                   ></input>
                 </div>
                 <div>
@@ -148,6 +252,9 @@ const FindCreators = () => {
                     placeholder="Max"
                     type="text"
                     className="input-items-style  form-control"
+                    onChange={(e) => {
+                      setAge(e.target.value);
+                    }}
                   ></input>
                 </div>
               </div>
@@ -158,14 +265,14 @@ const FindCreators = () => {
                   <Select
                     className="basic-single"
                     classNamePrefix="select"
-                    defaultValue={colourOptions[0]}
+                    defaultValue={professionList[0]}
                     isDisabled={isDisabled}
                     isLoading={isLoading}
                     isClearable={isClearable}
                     isRtl={isRtl}
                     isSearchable={isSearchable}
                     name="color"
-                    options={colourOptions}
+                    options={professionList}
                   />
                 </div>
               </div>
@@ -175,14 +282,14 @@ const FindCreators = () => {
                   <Select
                     className="basic-single"
                     classNamePrefix="select"
-                    defaultValue={colourOptions[0]}
+                    defaultValue={professionList[0]}
                     isDisabled={isDisabled}
                     isLoading={isLoading}
                     isClearable={isClearable}
                     isRtl={isRtl}
                     isSearchable={isSearchable}
                     name="color"
-                    options={colourOptions}
+                    options={professionList}
                   />
                 </div>
               </div>
@@ -192,298 +299,63 @@ const FindCreators = () => {
                   <Select
                     className="basic-single"
                     classNamePrefix="select"
-                    defaultValue={colourOptions[0]}
+                    defaultValue={professionList[0]}
                     isDisabled={isDisabled}
                     isLoading={isLoading}
                     isClearable={isClearable}
                     isRtl={isRtl}
                     isSearchable={isSearchable}
                     name="color"
-                    options={colourOptions}
+                    options={professionList}
                   />
                 </div>
               </div>
 
               <div className="submit-buttons">
-                <div className="reset-btn">Reset</div>
-                <div className="search-btn">Search</div>
+                <div
+                  className="reset-btn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    reset();
+                  }}
+                >
+                  Reset
+                </div>
+                <div
+                  className="search-btn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    search();
+                  }}
+                >
+                  Search
+                </div>
               </div>
             </div>
           </div>
           <div className="models-images">
             <div className="gallery-section filtered-gallery">
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl1}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
+              {talentList.map((item) => {
+                return (
+                  <div className="gallery-warpper">
+                    <div className="gallery-position">
+                      <img className="gallery-img" src={item.photo}></img>
+                      <img className="heart-icon" src={heartIcon}></img>
+                    </div>
+                    <div className="gallery-content">
+                      <div className="content">
+                        <div className="name">{item.name}</div>
+                        <div className="address">{item.address}</div>
+                      </div>
+                      <div className="rating">
+                        <img src={starIcon}></img>
+                        <img src={starIcon}></img>
+                        <img src={starIcon}></img>
+                      </div>
+                    </div>
                   </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl2}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl3}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl4}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl5}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl6}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl7}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl8}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl9}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl10}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl11}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl12}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl13}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl14}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl15}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={girl16}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">Alexander</div>
-                    <div className="address">Copenhagen, Denmark</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
             <div className="center">
               <div className="Join-wrapper center">
