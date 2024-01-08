@@ -228,13 +228,39 @@
   margin: 15px;
 }
 
+.features-heading {
+  padding-bottom: 10px;
+}
+
+.features-section {
+  padding: 0px 90px;
+}
+
 .features-wrapper {
   display: flex;
-  padding: 30px 0px 40px 120px;
+  border-bottom: 1px solid #b8b3b3;
+  padding: 12px 0px;
 }
 
 .features-heading {
-  padding-bottom: 10px;
+  color: #000;
+  font-family: "Montagu Slab";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 0px !important;
+  width: 20%;
+}
+
+.features-value {
+  color: #000;
+  font-family: "Montaga";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  /* padding: 0px 0px 0px 90px; */
 }
 @media (max-width: 475px) {
   .model-profile {

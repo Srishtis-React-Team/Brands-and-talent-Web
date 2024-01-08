@@ -6,6 +6,22 @@ const Footer = () => {
   const fieldsBackground = require("../assets/images/fields-background.png");
   const btLogo = require("../assets/icons/Group 56.png");
   const socialIcons = require("../assets/icons/Social.png");
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const clear = () => {
+    setFirstName("");
+    setEmail("");
+  };
+
+  const subscribe = async () => {
+    const formData = {
+      firstName: firstName,
+      email: email,
+    };
+    console.log(formData, "formData subscribe form");
+    clear();
+  };
 
   return (
     <>
@@ -21,12 +37,28 @@ const Footer = () => {
             <input
               className="input-style form-control"
               placeholder="First Name"
+              value={firstName}
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
             ></input>
             <input
               className="input-style form-control"
               placeholder="Email Address"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             ></input>
-            <div className="subscribe-btn">Subscribe Now</div>
+            <div
+              className="subscribe-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                subscribe();
+              }}
+            >
+              Subscribe Now
+            </div>
           </div>
         </div>
       </section>

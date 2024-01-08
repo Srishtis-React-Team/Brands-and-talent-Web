@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../assets/css/dashboard.css";
 
@@ -14,6 +14,24 @@ const Header = () => {
   const [formThree_visibility, showForThree] = useState(false);
   const [formFour_visibility, showFormFour] = useState(false);
   const [formFive_visibility, showFormFive] = useState(false);
+  const [model, setModel] = useState(true);
+  const [seeker, setSeeker] = useState(false);
+  const [dob, setDOB] = useState("");
+  const [phone, setPhone] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [gender, setGenders] = useState("");
+  const [genderList, setGenderList] = useState([]);
+
+  useEffect(() => {
+    setGenderList(["Male", "Female"]);
+  }, []);
+
+  const handleSelectChange = (event) => {
+    setGenders(event.target.value);
+    const selectedName = event.target.options[event.target.selectedIndex].text;
+    // setRoomType(selectedName);
+  };
+
   function handleForms(e) {
     console.log(e, "e");
     if (e == "form-one") {
@@ -37,6 +55,16 @@ const Header = () => {
     } else {
       showFormFive(false);
     }
+    if (e == "model") {
+      setModel(true);
+    } else {
+      setModel(false);
+    }
+    if (e == "seeker") {
+      setSeeker(true);
+    } else {
+      setSeeker(false);
+    }
   }
 
   return (
@@ -55,6 +83,15 @@ const Header = () => {
         </div>
       </div>
       <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
+        <div className="responsive-box">
+          <input type="checkbox" id="search-check"></input>
+          <div className="responsive-search-box">
+            <input type="text" placeholder="Type here..."></input>
+            <label for="search-check" className="responsive-search-icon">
+              <i className="fas fa-search"></i>
+            </label>
+          </div>
+        </div>
         <div className="login-text">Login</div>
         <div
           className="signup"
@@ -66,7 +103,7 @@ const Header = () => {
       </div>
 
       <div className="header">
-        <div className="icon">
+        <div className="icon btn-logo">
           <img src={btLogo}></img>
         </div>
         <div className="menu-items">
@@ -87,17 +124,14 @@ const Header = () => {
           </div>
         </div>
         <div className="header-functions">
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-search"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
+          <div className="box">
+            <input type="checkbox" id="check"></input>
+            <div className="search-box">
+              <input type="text" placeholder="Type here..."></input>
+              <label for="check" className="icon">
+                <i className="fas fa-search"></i>
+              </label>
+            </div>
           </div>
           <div className="login-text">Login</div>
           <div
@@ -140,8 +174,22 @@ const Header = () => {
                   we'd love to know more about you.
                 </div>
                 <div className="modal-buttons">
-                  <div className="model-btn">I'm a Model</div>
-                  <div className="seeker-btn">I'm a Model Seeker</div>
+                  <div
+                    onClick={(e) => {
+                      handleForms("model");
+                    }}
+                    className={model ? "selected-register" : "choose-register"}
+                  >
+                    I'm a Model
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      handleForms("seeker");
+                    }}
+                    className={seeker ? "selected-register" : "choose-register"}
+                  >
+                    I'm a Model Seeker
+                  </div>
                 </div>
                 <div className="question-model">
                   Are you the star of the show or the one seeking brilliance?
@@ -180,19 +228,22 @@ const Header = () => {
                 </div>
                 <div className="step-selection">
                   <div className="select-wrapper">
-                    <input type="checkbox"></input>
-                    <div className="select-text"> Aspiring model</div>
+                    <input type="checkbox" id="aspiring"></input>
+                    <label for="aspiring" className="select-text">
+                      Aspiring model
+                    </label>
                   </div>
                   <div className="select-wrapper">
-                    <input type="checkbox"></input>
-                    <div className="select-text"> Professional model</div>
+                    <input type="checkbox" id="professional"></input>
+                    <label for="professional" className="select-text">
+                      Professional model
+                    </label>
                   </div>
                   <div className="select-wrapper">
-                    <input type="checkbox"></input>
-                    <div className="select-text">
-                      {" "}
+                    <input type="checkbox" id="other-talent"></input>
+                    <label for="other-talent" className="select-text">
                       Talent (Actor, dancer, musician, sports person, etc)
-                    </div>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -236,32 +287,44 @@ const Header = () => {
                     <input
                       type="text"
                       placeholderTextColor="#202020"
-                      placeholder="Room Name"
+                      placeholder="Full Name"
+                      value={fullName}
+                      onChange={(e) => {
+                        setFullName(e.target.value);
+                      }}
                       className=" form-control step-input"
                     />
                     <select
+                      onChange={handleSelectChange}
+                      value={gender}
+                      id="disabledSelect"
                       className="form-select step-select"
-                      aria-label="Default select example"
+                      placeholder="Gender"
                     >
-                      <option selected>Gender</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      {genderList.map((item) => {
+                        return <option value={item}>{item}</option>;
+                      })}
                     </select>
                     <select
+                      onChange={handleSelectChange}
+                      value={gender}
+                      id="disabledSelect"
                       className="form-select step-select"
-                      aria-label="Default select example"
+                      placeholder="Nationality"
                     >
-                      <option selected>Nationality</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      {genderList.map((item) => {
+                        return <option value={item}>{item}</option>;
+                      })}
                     </select>
                   </div>
                   <div className="step-section-2">
                     <input
                       className="form-control"
                       placeholder="Date of birth"
+                      value={dob}
+                      onChange={(e) => {
+                        setDOB(e.target.value);
+                      }}
                     ></input>
                     <select
                       className="form-select step-select"
@@ -331,6 +394,10 @@ const Header = () => {
                     <input
                       className="form-control step-input"
                       placeholder="Phone"
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
                     ></input>
                     <select
                       className="form-select step-select"
