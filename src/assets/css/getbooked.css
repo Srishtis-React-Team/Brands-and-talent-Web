@@ -20,7 +20,7 @@
 }
 .review-title {
   color: #000;
-  font-family: "Montagu Slab";
+  font-family: sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -30,7 +30,7 @@
 .review-date {
   text-align: end;
   color: #c2114b;
-  font-family: "Montaga";
+  font-family: sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
@@ -38,7 +38,7 @@
 }
 .review-content {
   color: #000;
-  font-family: "Montagu Slab";
+  font-family: sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -47,7 +47,7 @@
 .models-bio {
   padding: 40px;
   color: #000;
-  font-family: "Montaga";
+  font-family: sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
@@ -77,7 +77,7 @@
 .reviewer-name {
   padding-left: 8px;
   color: #181818;
-  font-family: "Montaga";
+  font-family: sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
@@ -94,17 +94,16 @@
 
 .model-name {
   color: #000;
-  font-family: "Montagu Slab";
+  font-family: sans-serif;
   font-size: 27px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  padding: 40px 0px 15px 0px;
 }
 
 .model-infos {
   color: #000;
-  font-family: "Montagu Slab";
+  font-family: sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -119,7 +118,7 @@
 
 .location-text {
   color: #000;
-  font-family: "Montagu Slab";
+  font-family: sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -155,7 +154,7 @@
 
 .message-wrapper > span {
   color: #fff;
-  font-family: "Montaga";
+  font-family: sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -175,7 +174,7 @@
 
 .text-span {
   color: #000;
-  font-family: "Montaga";
+  font-family: sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -198,7 +197,7 @@
 
 .count-wrapper {
   color: #000;
-  font-family: "Montagu Slab";
+  font-family: sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -207,7 +206,7 @@
 
 .count-wrapper > span {
   color: #c2114b;
-  font-family: "Montagu Slab";
+  font-family: sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -244,7 +243,7 @@
 
 .features-heading {
   color: #000;
-  font-family: "Montagu Slab";
+  font-family: sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
@@ -255,13 +254,177 @@
 
 .features-value {
   color: #000;
-  font-family: "Montaga";
+  font-family: sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   /* padding: 0px 0px 0px 90px; */
 }
+
+.talent-profile-main {
+  display: flex;
+  padding: 30px;
+}
+
+.talent-wrapper {
+  width: 25%;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #fff;
+  height: 1273px;
+  position: relative;
+}
+
+.talent-info-wrapper {
+  width: 75%;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #fff;
+  height: 1273px;
+  margin-left: 25px;
+}
+
+.talent-img-backdrop {
+  opacity: 0.4;
+  width: 316px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.talent-backdrop {
+  height: 290px;
+}
+
+.talent-img {
+  width: 190px;
+  height: 190px;
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #c2114b;
+  top: 6%;
+  left: 18%;
+}
+
+.talent-name {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.talent-status {
+  display: flex;
+  border-radius: 130px;
+  background: #fdae20;
+  padding: 10px;
+  width: 87px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.talent-status > span {
+  padding-right: 6px;
+}
+
+.talents-social {
+  align-items: center;
+  display: flex;
+  width: 133px;
+  height: 78px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #d9d9d9;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 6px;
+}
+
+.insta-backdrop {
+  margin-right: 6px;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: linear-gradient(
+    45deg,
+    #ffd521 14.64%,
+    #ffd020 18.54%,
+    #fec01e 23.42%,
+    #fca71b 28.82%,
+    #fa8316 34.59%,
+    #f85510 40.67%,
+    #f51e09 46.91%,
+    #f30005 50%,
+    #f20007 50.25%,
+    #e1003b 56.83%,
+    #d30067 63.29%,
+    #c70088 69.49%,
+    #bf00a0 75.38%,
+    #bb00af 80.81%,
+    #b900b4 85.36%
+  );
+}
+
+.social-count {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.followers-text {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.talent-details {
+  margin-top: 15px;
+}
+
+.talent-details-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 15px 0px 0px 20px;
+}
+
+.talent-details-wrapper > span {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-left: 10px;
+}
+
+.logo-fill {
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid #c2114b;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.talent-logo {
+  width: 20px;
+  height: 20px;
+}
+
 @media (max-width: 475px) {
   .model-profile {
     display: flex;

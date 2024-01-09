@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/css/dashboard.css";
 import Header from "./header";
 import Footer from "./Footer";
 const Dashboard = () => {
+  const uploadIcon = require("../assets/icons/upload.png");
+  const importIcon = require("../assets/icons/instagram.png");
   const btLogo = require("../assets/icons/Group 56.png");
   const searchLogo = require("../assets/icons/search (1).png");
   const starIcon = require("../assets/icons/star.png");
@@ -26,6 +28,7 @@ const Dashboard = () => {
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
   const heartIcon = require("../assets/icons/heart.png");
+  const favoruiteIcon = require("../assets/icons/favorite.png");
   const girl1 = require("../assets/images/girl1.png");
   const girl2 = require("../assets/images/girl2.png");
   const girl3 = require("../assets/images/girl3.png");
@@ -38,6 +41,139 @@ const Dashboard = () => {
   const [influencers, setInfluencers] = useState(false);
   const [models, showModels] = useState(false);
   const [more, showMore] = useState(false);
+
+  const [formOne_visibility, showFormOne] = useState(true);
+  const [formTwo_visibility, showFormTwo] = useState(false);
+  const [formThree_visibility, showForThree] = useState(false);
+  const [formFour_visibility, showFormFour] = useState(false);
+  const [formFive_visibility, showFormFive] = useState(false);
+  const [model, setModel] = useState(true);
+  const [seeker, setSeeker] = useState(false);
+  const [dob, setDOB] = useState("");
+  const [phone, setPhone] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [gender, setGenders] = useState("");
+  const [genderList, setGenderList] = useState([]);
+  const [talentList, setTalentList] = useState([]);
+  useEffect(() => {
+    setTalentList([
+      {
+        id: 1,
+        photo: girl1,
+        name: "Alexander",
+        address: "Copenhagen, Denmark",
+        isFavorite: false,
+        rating: 4,
+      },
+      {
+        id: 2,
+        photo: girl2,
+        name: "william",
+        address: "Copenhagen, Denmark",
+        isFavorite: false,
+        rating: 3,
+      },
+      {
+        id: 3,
+        photo: girl3,
+        name: "Michael",
+        address: "Pitsburg, Canada",
+        isFavorite: false,
+        rating: 5,
+      },
+      {
+        id: 4,
+        photo: girl4,
+        name: "Andrea",
+        address: "North Carolina, USA",
+        isFavorite: false,
+        rating: 1,
+      },
+      {
+        id: 5,
+        photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        rating: 1,
+      },
+    ]);
+  }, []);
+
+  const handleClick = () => {
+    window.scrollTo(0, 0); // Scroll to top on link click
+  };
+
+  const addFavorite = (item) => {
+    console.log(item, "item");
+    const modifiedTalents = talentList.map((obj) => {
+      console.log(obj, "obj");
+      if (obj.id === item.id) {
+        return { ...obj, isFavorite: true };
+      }
+      return obj;
+    });
+    setTalentList(modifiedTalents);
+    console.log(modifiedTalents, "modifiedTalents");
+  };
+
+  const removeFavorite = (item) => {
+    console.log(item, "item");
+    const modifiedTalents = talentList.map((obj) => {
+      console.log(obj, "obj");
+      if (obj.id === item.id) {
+        return { ...obj, isFavorite: false };
+      }
+      return obj;
+    });
+    setTalentList(modifiedTalents);
+    console.log(modifiedTalents, "modifiedTalents");
+  };
+
+  useEffect(() => {
+    setGenderList(["Male", "Female"]);
+  }, []);
+
+  const handleSelectChange = (event) => {
+    setGenders(event.target.value);
+    const selectedName = event.target.options[event.target.selectedIndex].text;
+    // setRoomType(selectedName);
+  };
+
+  function handleForms(e) {
+    console.log(e, "e");
+    if (e == "form-one") {
+      showFormOne(false);
+      showFormTwo(true);
+    } else {
+      showFormTwo(false);
+    }
+    if (e == "form-two") {
+      showForThree(true);
+    } else {
+      showForThree(false);
+    }
+    if (e == "form-three") {
+      showFormFour(true);
+    } else {
+      showFormFour(false);
+    }
+    if (e == "form-four") {
+      showFormFive(true);
+    } else {
+      showFormFive(false);
+    }
+    if (e == "model") {
+      setModel(true);
+    } else {
+      setModel(false);
+    }
+    if (e == "seeker") {
+      setSeeker(true);
+    } else {
+      setSeeker(false);
+    }
+  }
 
   function handleTabs(e) {
     if (e == "artists") {
@@ -72,44 +208,6 @@ const Dashboard = () => {
     }
   }
 
-  const talentList = [
-    {
-      photo: girl1,
-      name: "Alexander",
-      address: "Copenhagen, Denmark",
-      isFavorite: true,
-      rating: 4,
-    },
-    {
-      photo: girl2,
-      name: "william",
-      address: "Copenhagen, Denmark",
-      isFavorite: false,
-      rating: 3,
-    },
-    {
-      photo: girl3,
-      name: "Michael",
-      address: "Pitsburg, Canada",
-      isFavorite: false,
-      rating: 5,
-    },
-    {
-      photo: girl4,
-      name: "Andrea",
-      address: "North Carolina, USA",
-      isFavorite: false,
-      rating: 1,
-    },
-    {
-      photo: girl5,
-      name: "Alexa",
-      address: "South Carolina, USA",
-      isFavorite: false,
-      rating: 1,
-    },
-  ];
-
   return (
     <>
       <Header />
@@ -131,7 +229,13 @@ const Dashboard = () => {
             talent as per their budget and requirement in less than 5 minutes.
           </div>
           <div className="white-joinnow center">
-            <div className="joinnow-btn">Join Now</div>
+            <div
+              className="joinnow-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >
+              Join Now
+            </div>
           </div>
         </div>
       </div>
@@ -196,7 +300,20 @@ const Dashboard = () => {
               <div className="gallery-warpper">
                 <div className="gallery-position">
                   <img className="gallery-img" src={item.photo}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
+                  {!item.isFavorite && (
+                    <img
+                      className="heart-icon"
+                      src={heartIcon}
+                      onClick={() => addFavorite(item)}
+                    ></img>
+                  )}
+                  {item.isFavorite === true && (
+                    <img
+                      className="heart-icon"
+                      src={favoruiteIcon}
+                      onClick={() => removeFavorite(item)}
+                    ></img>
+                  )}
                 </div>
                 <div className="gallery-content">
                   <div className="content">
@@ -221,7 +338,20 @@ const Dashboard = () => {
               <div className="gallery-warpper">
                 <div className="gallery-position">
                   <img className="gallery-img" src={item.photo}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
+                  {!item.isFavorite && (
+                    <img
+                      className="heart-icon"
+                      src={heartIcon}
+                      onClick={() => addFavorite(item)}
+                    ></img>
+                  )}
+                  {item.isFavorite === true && (
+                    <img
+                      className="heart-icon"
+                      src={favoruiteIcon}
+                      onClick={() => removeFavorite(item)}
+                    ></img>
+                  )}
                 </div>
                 <div className="gallery-content">
                   <div className="content">
@@ -246,7 +376,20 @@ const Dashboard = () => {
               <div className="gallery-warpper">
                 <div className="gallery-position">
                   <img className="gallery-img" src={item.photo}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
+                  {!item.isFavorite && (
+                    <img
+                      className="heart-icon"
+                      src={heartIcon}
+                      onClick={() => addFavorite(item)}
+                    ></img>
+                  )}
+                  {item.isFavorite === true && (
+                    <img
+                      className="heart-icon"
+                      src={favoruiteIcon}
+                      onClick={() => removeFavorite(item)}
+                    ></img>
+                  )}
                 </div>
                 <div className="gallery-content">
                   <div className="content">
@@ -271,7 +414,20 @@ const Dashboard = () => {
               <div className="gallery-warpper">
                 <div className="gallery-position">
                   <img className="gallery-img" src={item.photo}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
+                  {!item.isFavorite && (
+                    <img
+                      className="heart-icon"
+                      src={heartIcon}
+                      onClick={() => addFavorite(item)}
+                    ></img>
+                  )}
+                  {item.isFavorite === true && (
+                    <img
+                      className="heart-icon"
+                      src={favoruiteIcon}
+                      onClick={() => removeFavorite(item)}
+                    ></img>
+                  )}
                 </div>
                 <div className="gallery-content">
                   <div className="content">
@@ -296,7 +452,20 @@ const Dashboard = () => {
               <div className="gallery-warpper">
                 <div className="gallery-position">
                   <img className="gallery-img" src={item.photo}></img>
-                  <img className="heart-icon" src={heartIcon}></img>
+                  {!item.isFavorite && (
+                    <img
+                      className="heart-icon"
+                      src={heartIcon}
+                      onClick={() => addFavorite(item)}
+                    ></img>
+                  )}
+                  {item.isFavorite === true && (
+                    <img
+                      className="heart-icon"
+                      src={favoruiteIcon}
+                      onClick={() => removeFavorite(item)}
+                    ></img>
+                  )}
                 </div>
                 <div className="gallery-content">
                   <div className="content">
@@ -322,15 +491,15 @@ const Dashboard = () => {
       </div>
       <div className="title">Our Community</div>
       <div className="cards">
-        <div className="card-wrapper card-background">
+        <div className="community-card-wrapper card-background">
           <div className="count">5,258,451</div>
           <div className="cards-text">Models in community</div>
         </div>
-        <div className="card-wrapper  card-background">
+        <div className="community-card-wrapper  card-background">
           <div className="count">5,258,451</div>
           <div className="cards-text">Industry Professionals</div>
         </div>
-        <div className="card-wrapper  card-background">
+        <div className="community-card-wrapper  card-background">
           <div className="count">5,258,451</div>
           <div className="cards-text">Agencies</div>
         </div>
@@ -338,7 +507,7 @@ const Dashboard = () => {
       <div className="title">Products and Services</div>
       <div className="cards">
         <div className="card-wrapper ">
-          <div className="card-picture center">
+          <div className="card-picture">
             <img src={checkMark}></img>
           </div>
           <div className="card-title">Talent Marketplace</div>
@@ -348,7 +517,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="card-wrapper">
-          <div className="card-picture center">
+          <div className="card-picture">
             <img src={lockIcon}></img>
           </div>
           <div className="card-title">Hire Talent</div>
@@ -358,7 +527,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="card-wrapper">
-          <div className="card-picture center">
+          <div className="card-picture">
             <img src={whiteStar}></img>
           </div>
           <div className="card-title">Find Jobs</div>
@@ -375,7 +544,20 @@ const Dashboard = () => {
             <div className="gallery-warpper">
               <div className="gallery-position">
                 <img className="gallery-img" src={item.photo}></img>
-                <img className="heart-icon" src={heartIcon}></img>
+                {!item.isFavorite && (
+                  <img
+                    className="heart-icon"
+                    src={heartIcon}
+                    onClick={() => addFavorite(item)}
+                  ></img>
+                )}
+                {item.isFavorite === true && (
+                  <img
+                    className="heart-icon"
+                    src={favoruiteIcon}
+                    onClick={() => removeFavorite(item)}
+                  ></img>
+                )}
               </div>
               <div className="gallery-content">
                 <div className="content">
@@ -562,25 +744,362 @@ const Dashboard = () => {
         </div>
       </div>
       <Footer />
-      {/* <ChatBot
-        steps={[
-          {
-            id: "1",
-            message: "What is your name?",
-            trigger: "2",
-          },
-          {
-            id: "2",
-            user: true,
-            trigger: "3",
-          },
-          {
-            id: "3",
-            message: "Hi {previousValue}, nice to meet you!",
-            end: true,
-          },
-        ]}
-      /> */}
+      {/* <ChatBot /> */}
+
+      <div
+        className="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        {formOne_visibility && (
+          <div className="modal-dialog modal-wrapper MODAL ONE">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body modal-content ">
+                <div className="modal-title">Welcome</div>
+                <div className="modal-description">
+                  Welcome to our vibrant community! To tailor your experience,
+                  we'd love to know more about you.
+                </div>
+                <div className="modal-buttons">
+                  <div
+                    onClick={(e) => {
+                      handleForms("model");
+                    }}
+                    className={model ? "selected-register" : "choose-register"}
+                  >
+                    I'm a Talent
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      handleForms("seeker");
+                    }}
+                    className={seeker ? "selected-register" : "choose-register"}
+                  >
+                    I'm a Talent Seeker
+                  </div>
+                </div>
+                <div className="question-model">
+                  Are you the star of the show or the one seeking brilliance?
+                </div>
+                <div className="register-modal">
+                  <div
+                    className="register-btn"
+                    onClick={(e) => {
+                      handleForms("form-one");
+                    }}
+                  >
+                    Register Now
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {formTwo_visibility && (
+          <div className="modal-dialog modal-wrapper">
+            <div className="modal-content">
+              <div className="modal-header header-wrapper">
+                <img className="modal-logo" src={btLogo}></img>
+                <div className="step-text">Step 1 of 4</div>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body modal-content ">
+                <div className="step-title">Which one are you?</div>
+                <div className="step-description">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </div>
+                <div className="step-selection">
+                  <div className="select-wrapper">
+                    <input type="checkbox" id="aspiring"></input>
+                    <label for="aspiring" className="select-text">
+                      Aspiring Talent
+                    </label>
+                  </div>
+                  <div className="select-wrapper">
+                    <input type="checkbox" id="professional"></input>
+                    <label for="professional" className="select-text">
+                      Professional Talent
+                    </label>
+                  </div>
+                  <div className="select-wrapper">
+                    <input type="checkbox" id="other-talent"></input>
+                    <label for="other-talent" className="select-text">
+                      Talent (Actor, dancer, musician, sports person, etc)
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="step-back">
+                  Back
+                </button>
+                <button
+                  type="button"
+                  className="step-continue"
+                  onClick={(e) => {
+                    handleForms("form-two");
+                  }}
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {formThree_visibility && (
+          <div className="modal-dialog modal-wrapper MODAL THREE">
+            <div className="modal-content">
+              <div className="modal-header header-wrapper">
+                <img className="modal-logo" src={btLogo}></img>
+                <div className="step-text">Step 2 of 4</div>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body modal-content ">
+                <div className="step-title">Personal Details</div>
+                <div className="step-description">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </div>
+                <div className="step2-selection">
+                  <div className="step-section-1">
+                    <input
+                      type="text"
+                      placeholderTextColor="#202020"
+                      placeholder="Full Name"
+                      value={fullName}
+                      onChange={(e) => {
+                        setFullName(e.target.value);
+                      }}
+                      className=" form-control step-input"
+                    />
+                    <select
+                      onChange={handleSelectChange}
+                      value={gender}
+                      id="disabledSelect"
+                      className="form-select step-select"
+                      placeholder="Gender"
+                    >
+                      {genderList.map((item) => {
+                        return <option value={item}>{item}</option>;
+                      })}
+                    </select>
+                    <select
+                      onChange={handleSelectChange}
+                      value={gender}
+                      id="disabledSelect"
+                      className="form-select step-select"
+                      placeholder="Nationality"
+                    >
+                      {genderList.map((item) => {
+                        return <option value={item}>{item}</option>;
+                      })}
+                    </select>
+                  </div>
+                  <div className="step-section-2">
+                    <input
+                      className="form-control"
+                      placeholder="Date of birth"
+                      value={dob}
+                      onChange={(e) => {
+                        setDOB(e.target.value);
+                      }}
+                    ></input>
+                    <select
+                      className="form-select step-select"
+                      aria-label="Default select example"
+                    >
+                      <option selected>Height</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                    <select
+                      className="form-select step-select"
+                      aria-label="Default select example"
+                    >
+                      <option selected>Ethnicity</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    handleForms("form-one");
+                  }}
+                  className="step-back"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  className="step-continue"
+                  onClick={(e) => {
+                    handleForms("form-three");
+                  }}
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {formFour_visibility && (
+          <div className="modal-dialog modal-wrapper MODAL FOUR">
+            <div className="modal-content">
+              <div className="modal-header header-wrapper">
+                <img className="modal-logo" src={btLogo}></img>
+                <div className="step-text">Step 3 of 4</div>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body modal-content ">
+                <div className="step-title">Contact Details</div>
+                <div className="step-description">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </div>
+                <div className="step2-selection">
+                  <div className="step-section-1">
+                    <input
+                      className="form-control step-input"
+                      placeholder="Phone"
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
+                    ></input>
+                    <select
+                      className="form-select step-select"
+                      aria-label="Default select example"
+                    >
+                      <option selected>Country</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                  <div className="step-section-2">
+                    <input className="form-control" placeholder="Email"></input>
+                    <select
+                      className="form-select step-select"
+                      aria-label="Default select example"
+                    >
+                      <option selected>City</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    handleForms("form-two");
+                  }}
+                  className="step-back"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  className="step-continue"
+                  onClick={(e) => {
+                    handleForms("form-four");
+                  }}
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {formFive_visibility && (
+          <div className="modal-dialog modal-wrapper MODAL FIVE">
+            <div className="modal-content">
+              <div className="modal-header header-wrapper">
+                <img className="modal-logo" src={btLogo}></img>
+                <div className="step-text">Step 4 of 4</div>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body modal-content ">
+                <div className="step-title">Only one more thing to do</div>
+                <div className="step-description">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </div>
+                <div className="step-selection upload-step">
+                  <div className="upload-wrapper">
+                    <img src={uploadIcon}></img>
+                    <div className="upload-text"> Professional Talent</div>
+                  </div>
+                  <div className="import-wrapper">
+                    <img src={importIcon}></img>
+                    <div className="import-text"> Professional Talent</div>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    handleForms("form-three");
+                  }}
+                  className="step-back"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  data-bs-dismiss="modal"
+                  className="step-continue"
+                  onClick={(e) => {
+                    handleForms("form-five");
+                  }}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 };

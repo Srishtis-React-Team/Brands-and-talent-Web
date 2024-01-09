@@ -22,6 +22,10 @@ const Header = () => {
   const [gender, setGenders] = useState("");
   const [genderList, setGenderList] = useState([]);
 
+  const handleClick = () => {
+    window.scrollTo(0, 0); // Scroll to top on link click
+  };
+
   useEffect(() => {
     setGenderList(["Male", "Female"]);
   }, []);
@@ -83,6 +87,33 @@ const Header = () => {
         </div>
       </div>
       <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
+        <div className="mobile-menu-items">
+          <div>
+            <NavLink to="/" onClick={handleClick}>
+              Home
+            </NavLink>
+          </div>
+          <div>
+            <NavLink to="/find-creators" onClick={handleClick}>
+              Find Creators
+            </NavLink>
+          </div>
+          <div>
+            <NavLink to="/get-booked" onClick={handleClick}>
+              Get Booked
+            </NavLink>
+          </div>
+          <div>
+            <NavLink to="/pricing" onClick={handleClick}>
+              Pricing
+            </NavLink>
+          </div>
+          <div>
+            <NavLink to="/resources" onClick={handleClick}>
+              Learn to Resources
+            </NavLink>
+          </div>
+        </div>
         <div className="responsive-box">
           <input type="checkbox" id="search-check"></input>
           <div className="responsive-search-box">
@@ -108,19 +139,29 @@ const Header = () => {
         </div>
         <div className="menu-items">
           <div>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/" onClick={handleClick}>
+              Home
+            </NavLink>
           </div>
           <div>
-            <NavLink to="/find-creators">Find Creators</NavLink>
+            <NavLink to="/find-creators" onClick={handleClick}>
+              Find Creators
+            </NavLink>
           </div>
           <div>
-            <NavLink to="/get-booked">Get Booked</NavLink>
+            <NavLink to="/get-booked" onClick={handleClick}>
+              Get Booked
+            </NavLink>
           </div>
           <div>
-            <NavLink to="/pricing">Pricing</NavLink>
+            <NavLink to="/pricing" onClick={handleClick}>
+              Pricing
+            </NavLink>
           </div>
           <div>
-            <NavLink to="/resources">Learn to Resources</NavLink>
+            <NavLink to="/resources" onClick={handleClick}>
+              Learn to Resources
+            </NavLink>
           </div>
         </div>
         <div className="header-functions">
@@ -180,7 +221,7 @@ const Header = () => {
                     }}
                     className={model ? "selected-register" : "choose-register"}
                   >
-                    I'm a Model
+                    I'm a Talent
                   </div>
                   <div
                     onClick={(e) => {
@@ -188,7 +229,7 @@ const Header = () => {
                     }}
                     className={seeker ? "selected-register" : "choose-register"}
                   >
-                    I'm a Model Seeker
+                    I'm a Talent Seeker
                   </div>
                 </div>
                 <div className="question-model">
@@ -230,13 +271,13 @@ const Header = () => {
                   <div className="select-wrapper">
                     <input type="checkbox" id="aspiring"></input>
                     <label for="aspiring" className="select-text">
-                      Aspiring model
+                      Aspiring Talent
                     </label>
                   </div>
                   <div className="select-wrapper">
                     <input type="checkbox" id="professional"></input>
                     <label for="professional" className="select-text">
-                      Professional model
+                      Professional Talent
                     </label>
                   </div>
                   <div className="select-wrapper">
@@ -468,11 +509,11 @@ const Header = () => {
                 <div className="step-selection upload-step">
                   <div className="upload-wrapper">
                     <img src={uploadIcon}></img>
-                    <div className="upload-text"> Professional model</div>
+                    <div className="upload-text"> Professional Talent</div>
                   </div>
                   <div className="import-wrapper">
                     <img src={importIcon}></img>
-                    <div className="import-text"> Professional model</div>
+                    <div className="import-text"> Professional Talent</div>
                   </div>
                 </div>
               </div>

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/css/dashboard.css";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router";
+
 const Footer = () => {
+  const navigate = useNavigate();
   const fieldsBackground = require("../assets/images/fields-background.png");
   const btLogo = require("../assets/icons/Group 56.png");
   const socialIcons = require("../assets/icons/Social.png");
@@ -22,6 +25,14 @@ const Footer = () => {
     console.log(formData, "formData subscribe form");
     clear();
   };
+
+  const handleClick = () => {
+    window.scrollTo(0, 0); // Scroll to top on link click
+  };
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [navigate]);
 
   return (
     <>
@@ -78,21 +89,29 @@ const Footer = () => {
           </div>
           <div className="footer-wrapper">
             <div>
-              <Link className="footer-title" to="">
+              <Link className="footer-title" onClick={handleClick} to="/">
                 Company
               </Link>
             </div>
             <div>
-              <Link to="/">Home</Link>
+              <Link onClick={handleClick} to="/">
+                Home
+              </Link>
             </div>
             <div>
-              <Link to="/find-creators">Find Creators</Link>
+              <Link onClick={handleClick} to="/find-creators">
+                Find Creators
+              </Link>
             </div>
             <div>
-              <Link to="/pricing">Pricing</Link>
+              <Link to="/pricing" onClick={handleClick}>
+                Pricing
+              </Link>
             </div>
             <div>
-              <Link to="/resources">Resources</Link>
+              <Link to="/resources" onClick={handleClick}>
+                Resources
+              </Link>
             </div>
           </div>
           <div className="footer-wrapper">
