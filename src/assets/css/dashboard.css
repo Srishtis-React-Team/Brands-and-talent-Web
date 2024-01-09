@@ -98,7 +98,7 @@ a {
 
 .card-title {
   color: #000;
-  font-family: "Montagu Slab";
+  font-family: sans-serif;
   font-size: 19px;
   font-style: normal;
   font-weight: 500;
@@ -108,6 +108,25 @@ a {
 }
 
 @media (max-width: 480px) {
+  .mobile-menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .mobile-menu-items > div {
+    color: #000;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+    padding-right: 30px;
+    text-decoration: none;
+    margin: 10px;
+  }
+
   .responsive-box {
     max-width: 305px;
     width: 100%;
@@ -161,7 +180,7 @@ a {
   .input-style::placeholder {
     padding-left: 15px;
     color: #fff !important;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -169,7 +188,7 @@ a {
   ::placeholder {
     color: #000000 !important;
     opacity: 0.7 !important;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-weight: 400;
   }
@@ -205,7 +224,7 @@ a {
 
   .login-text {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -216,7 +235,7 @@ a {
     border-radius: 140px;
     background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -257,7 +276,7 @@ a {
 
   .section-title {
     color: #fff;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -268,13 +287,13 @@ a {
   .section-description {
     color: #fff;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
     padding-top: 15px;
-    width: 422px;
+    /* width: 422px; */
   }
 
   .Join-wrapper {
@@ -308,7 +327,7 @@ a {
 
   .title {
     color: #000;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 600;
@@ -321,12 +340,13 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
   }
 
   .tabs > div {
     margin: 10px;
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -379,7 +399,7 @@ a {
 
   .name {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -388,7 +408,7 @@ a {
 
   .address {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -402,15 +422,27 @@ a {
     align-items: center;
     padding-top: 20px;
   }
-  .card-wrapper {
-    width: 180px;
-    height: 130px;
+  .community-card-wrapper {
+    padding: 15px;
     border-radius: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 10px;
+    width: 260px;
+    height: 125px;
+  }
+  .card-wrapper {
+    padding: 15px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 200px;
+    height: 240px;
   }
 
   .card-background {
@@ -419,7 +451,7 @@ a {
   }
   .count {
     color: #c2114b;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -427,7 +459,7 @@ a {
   }
   .cards-text {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -438,16 +470,19 @@ a {
   .card-picture {
     border-radius: 104px;
     border: 1px solid #fff;
-    background: linear-gradient(0deg, #000 0%, #000 100%),
-      linear-gradient(90deg, #c2114b 6.98%, #1898e1 65.92%);
+    background: #000;
     width: 50px;
     height: 50px;
     padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .cards-description {
+    padding-bottom: 10px;
     color: #000;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -465,7 +500,7 @@ a {
   }
   .carousel-title {
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 500;
@@ -497,7 +532,7 @@ a {
   }
   .carousel-description {
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -516,7 +551,7 @@ a {
 
   .profile-name {
     color: #fff;
-    font-family: "Montaga Slab";
+    font-family: "sans-serif Slab";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -524,7 +559,7 @@ a {
 
   .profile-info {
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -569,7 +604,7 @@ a {
   .form-title {
     color: #fff;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -591,7 +626,7 @@ a {
     background: #c2114b !important;
     margin-right: 20px;
     color: #fff !important;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -605,7 +640,7 @@ a {
     align-items: center;
     background: #090914;
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -631,7 +666,7 @@ a {
   }
   .footer-wrapper > div {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -640,7 +675,7 @@ a {
   .company-info {
     width: 200px;
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -661,14 +696,14 @@ a {
 
   .copyright-section > div {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
   }
   .question-model {
     color: #000;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -691,7 +726,7 @@ a {
     align-items: center;
     color: #fff;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -710,7 +745,7 @@ a {
     align-items: center;
     color: #000;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -729,7 +764,7 @@ a {
     margin-right: 25px;
     color: #fff;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -745,7 +780,7 @@ a {
   .modal-description {
     color: #000;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -753,7 +788,7 @@ a {
   }
   .modal-title {
     color: #c2114b;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 500;
@@ -773,7 +808,7 @@ a {
     border-left: 1px solid #d9d9d9;
     height: 47px;
     color: #060606;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -785,7 +820,7 @@ a {
   }
   .step-title {
     color: #000;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -796,7 +831,7 @@ a {
 
   .step-description {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -842,7 +877,7 @@ a {
 
   .select-text {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -859,7 +894,7 @@ a {
     border: 1px solid #fff;
     background: #000;
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -875,7 +910,7 @@ a {
     border: 1px solid #fff;
     background: #c2114b;
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -902,7 +937,7 @@ a {
 
   .upload-text {
     color: #fff;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -924,7 +959,7 @@ a {
 
   .import-text {
     color: #0e0e0e;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -975,7 +1010,7 @@ a:hover {
 
   .select-text {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -992,7 +1027,7 @@ a:hover {
     border: 1px solid #fff;
     background: #000;
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -1008,7 +1043,7 @@ a:hover {
     border: 1px solid #fff;
     background: #c2114b;
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -1035,7 +1070,7 @@ a:hover {
 
   .upload-text {
     color: #fff;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -1057,7 +1092,7 @@ a:hover {
 
   .import-text {
     color: #0e0e0e;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -1071,7 +1106,7 @@ a:hover {
 
   .step-description {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
@@ -1081,7 +1116,7 @@ a:hover {
   }
   .step-title {
     color: #000;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 600;
@@ -1094,7 +1129,7 @@ a:hover {
     border-left: 1px solid #d9d9d9;
     height: 47px;
     color: #060606;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -1110,7 +1145,7 @@ a:hover {
 
   .question-model {
     color: #000;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -1133,7 +1168,7 @@ a:hover {
     align-items: center;
     color: #fff;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -1151,7 +1186,7 @@ a:hover {
     margin-right: 25px;
     color: #fff;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -1169,7 +1204,7 @@ a:hover {
     align-items: center;
     color: #000;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -1185,7 +1220,7 @@ a:hover {
   .modal-description {
     color: #000;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -1194,7 +1229,7 @@ a:hover {
   }
   .modal-title {
     color: #c2114b;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 33px;
     font-style: normal;
     font-weight: 500;
@@ -1216,7 +1251,7 @@ a:hover {
 
   .copyright-section > div {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -1230,7 +1265,7 @@ a:hover {
   .company-info {
     width: 200px;
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -1244,7 +1279,7 @@ a:hover {
   }
   .footer-wrapper > div {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -1267,7 +1302,7 @@ a:hover {
     align-items: center;
     background: #090914;
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -1282,7 +1317,7 @@ a:hover {
     background: #c2114b !important;
     margin-right: 20px;
     color: #fff !important;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -1295,7 +1330,7 @@ a:hover {
   .form-title {
     color: #fff;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 22px;
     font-style: normal;
     font-weight: 600;
@@ -1332,14 +1367,14 @@ a:hover {
   }
   .profile-info {
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
   }
   .profile-name {
     color: #fff;
-    font-family: "Montaga Slab";
+    font-family: "sans-serif Slab";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -1353,7 +1388,7 @@ a:hover {
   }
   .carousel-description {
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 23px;
     font-style: normal;
     font-weight: 400;
@@ -1381,7 +1416,7 @@ a:hover {
   }
   .carousel-title {
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 500;
@@ -1401,7 +1436,7 @@ a:hover {
   .cards-description {
     color: #000;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
@@ -1411,14 +1446,16 @@ a:hover {
   .card-picture {
     border-radius: 104px;
     border: 1px solid #fff;
-    background: linear-gradient(0deg, #000 0%, #000 100%),
-      linear-gradient(90deg, #c2114b 6.98%, #1898e1 65.92%);
+    background: #000;
     width: 50px;
     height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .cards-text {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -1427,7 +1464,7 @@ a:hover {
   }
   .count {
     color: #c2114b;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 33px;
     font-style: normal;
     font-weight: 400;
@@ -1437,14 +1474,27 @@ a:hover {
     border-radius: 24px;
     background: #f1f1f1;
   }
-  .card-wrapper {
-    width: 350px;
-    height: 150px;
+  .community-card-wrapper {
+    padding: 15px;
     border-radius: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 10px;
+    width: 250px;
+    height: 160px;
+  }
+  .card-wrapper {
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    margin: 10px;
+    width: 200px;
+    height: 240px;
   }
   .cards {
     display: flex;
@@ -1466,7 +1516,7 @@ a:hover {
 
   .address {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -1475,7 +1525,7 @@ a:hover {
 
   .name {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -1533,7 +1583,7 @@ a:hover {
   .tabs > div {
     margin: 20px;
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
@@ -1542,7 +1592,7 @@ a:hover {
 
   .title {
     color: #000;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 600;
@@ -1581,7 +1631,7 @@ a:hover {
   .section-description {
     color: #fff;
     text-align: center;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
@@ -1592,7 +1642,7 @@ a:hover {
 
   .section-title {
     color: #fff;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 33px;
     font-style: normal;
     font-weight: 400;
@@ -1635,8 +1685,8 @@ a:hover {
 
   .menu-items > div {
     color: #000;
-    font-family: "Montaga";
-    font-size: 14px;
+    font-family: sans-serif;
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -1670,7 +1720,7 @@ a:hover {
     border-radius: 140px;
     background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -1684,7 +1734,7 @@ a:hover {
   .input-style::placeholder {
     padding-left: 15px;
     color: #fff !important;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -1692,7 +1742,7 @@ a:hover {
   ::placeholder {
     color: #000000 !important;
     opacity: 0.7 !important;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 16px;
     font-weight: 400;
   }

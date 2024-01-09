@@ -15,7 +15,7 @@
   }
   .header-title {
     color: #fff;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -29,7 +29,7 @@
   .header-menu > div {
     padding-right: 15px;
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -56,7 +56,7 @@
     background: #000;
     cursor: pointer;
     color: #fff;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -80,7 +80,7 @@
   .filter-items {
     padding: 8px 0px;
     color: #000;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 16px;
     font-weight: 600;
   }
@@ -117,7 +117,7 @@
   .search-history > div {
     padding: 8px 8px;
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -139,7 +139,7 @@
   }
   .input-items-style::placeholder {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
@@ -170,7 +170,7 @@
     border-radius: 140px;
     background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-weight: 400;
     display: flex;
@@ -198,7 +198,7 @@
   }
   .header-title {
     color: #fff;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
@@ -212,7 +212,7 @@
   .header-menu > div {
     padding-right: 15px;
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -240,7 +240,7 @@
     background: #000;
     cursor: pointer;
     color: #fff;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -265,7 +265,7 @@
   .search-history > div {
     padding: 8px 8px;
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -282,7 +282,7 @@
   .filter-items {
     padding: 8px 0px;
     color: #000;
-    font-family: "Montagu Slab";
+    font-family: sans-serif;
     font-size: 16px;
     font-weight: 600;
   }
@@ -326,7 +326,7 @@
   }
   .label-style {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 15px;
     font-weight: 400;
     padding-left: 10px;
@@ -347,7 +347,7 @@
   }
   .input-items-style::placeholder {
     color: #000;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
@@ -378,7 +378,7 @@
     border-radius: 140px;
     background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
     color: #fff;
-    font-family: "Montaga";
+    font-family: sans-serif;
     font-size: 14px;
     font-weight: 400;
     display: flex;

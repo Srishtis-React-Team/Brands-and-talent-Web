@@ -8,6 +8,7 @@ const GetBooked = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {}, []);
+  const girl1 = require("../assets/images/girl.png");
   const model = require("../assets/images/model-profile.png");
   const model1 = require("../assets/images/model1.png");
   const model2 = require("../assets/images/model2.png");
@@ -32,6 +33,13 @@ const GetBooked = () => {
   const user = require("../assets/icons/user-plus.png");
   const pinkStar = require("../assets/icons/pink-star.png");
   const greyStar = require("../assets/icons/grey-star.png");
+  const darkStar = require("../assets/icons/darkStar.png");
+  const instaLogo = require("../assets/icons/insta.png");
+  const xLogo = require("../assets/icons/twitter_x.png");
+  const userFill = require("../assets/icons/userFill.png");
+  const mapFill = require("../assets/icons/mapFill.png");
+  const checkShield = require("../assets/icons/check-shield.png");
+
   const [photos, showPhotos] = useState(true);
   const [videos, showVideos] = useState(false);
   const [features, showFeatures] = useState(false);
@@ -176,12 +184,70 @@ const GetBooked = () => {
         </div>
       </section>
 
+      <div className="talent-profile-main">
+        <div className="talent-wrapper">
+          <div className="talent-backdrop">
+            <img className="talent-img-backdrop" src={model9}></img>
+            <img className="talent-img" src={girl1}></img>
+          </div>
+          <div className="talent-name">
+            <div className="model-name">Elizabeth</div>
+            <div className="talent-status">
+              <span>
+                <img src={darkStar}></img>
+              </span>
+              Pro
+            </div>
+          </div>
+          <div className="talent-name mt-4">
+            <div className="talents-social">
+              <span className="insta-backdrop">
+                <img src={instaLogo}></img>
+              </span>
+              <soan className="social-count">15.6k</soan>
+              <div className="followers-text">Followers</div>
+            </div>
+            <div className="talents-social">
+              <img src={xLogo}></img>
+              <soan className="social-count">9.6k</soan>
+              <div className="followers-text">Followers</div>
+            </div>
+          </div>
+          <div className="talent-details">
+            <div className="talent-details-wrapper">
+              <div className="logo-fill">
+                <img className="talent-logo" src={checkShield}></img>
+              </div>
+              <span>Verified</span>
+            </div>
+            <div className="talent-details-wrapper">
+              <div className="logo-fill">
+                <img className="talent-logo" src={pinkStar}></img>
+              </div>
+              <span>5.0 (45 jobs completed)</span>
+            </div>
+            <div className="talent-details-wrapper">
+              <div className="logo-fill">
+                <img className="talent-logo" src={mapFill}></img>
+              </div>
+              <span>Lorem ipsum dolor sit</span>
+            </div>
+            <div className="talent-details-wrapper">
+              <div className="logo-fill">
+                <img className="talent-logo" src={userFill}></img>
+              </div>
+              <span>Actor, Model, Creator</span>
+            </div>
+          </div>
+        </div>
+        <div className="talent-info-wrapper"></div>
+      </div>
+
       <div className="model-profile">
         <div>
           <img className="modal-profile-img" src={model}></img>
         </div>
         <div className="model-details">
-          <div className="model-name">Elizabeth</div>
           <div className="model-infos">Professional model</div>
           <div className="model-location">
             <div>
@@ -276,7 +342,6 @@ const GetBooked = () => {
           Analytics
         </div>
       </div>
-
       {photos && (
         <div className="models-photos">
           {photosList.map((item) => {
@@ -398,7 +463,6 @@ const GetBooked = () => {
           people on a personal and professional level.
         </div>
       )}
-
       {reviews && (
         <div className="model-reviews">
           {reviewsList.map((item) => {
