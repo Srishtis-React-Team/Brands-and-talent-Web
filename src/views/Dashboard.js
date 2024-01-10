@@ -34,6 +34,16 @@ const Dashboard = () => {
   const girl3 = require("../assets/images/girl3.png");
   const girl4 = require("../assets/images/girl4.jpg");
   const girl5 = require("../assets/images/girl5.png");
+  const girl6 = require("../assets/images/girl6.png");
+  const girl7 = require("../assets/images/girl7.png");
+  const girl8 = require("../assets/images/girl8.png");
+  const girl9 = require("../assets/images/girl9.png");
+  const girl10 = require("../assets/images/girl10.png");
+  const model1 = require("../assets/images/model1.png");
+  const model2 = require("../assets/images/model2.png");
+  const model3 = require("../assets/images/model3.png");
+  const model4 = require("../assets/images/model4.png");
+  const model5 = require("../assets/images/model5.png");
 
   const [artists, showArtists] = useState(true);
   const [photographers, showPhotographers] = useState(false);
@@ -55,6 +65,7 @@ const Dashboard = () => {
   const [gender, setGenders] = useState("");
   const [genderList, setGenderList] = useState([]);
   const [talentList, setTalentList] = useState([]);
+  const [photoGraphersList, setphotoGraphersList] = useState([]);
   useEffect(() => {
     setTalentList([
       {
@@ -92,6 +103,48 @@ const Dashboard = () => {
       {
         id: 5,
         photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        rating: 1,
+      },
+    ]);
+    setphotoGraphersList([
+      {
+        id: 1,
+        photo: girl6,
+        name: "Alexander",
+        address: "Copenhagen, Denmark",
+        isFavorite: false,
+        rating: 4,
+      },
+      {
+        id: 2,
+        photo: girl7,
+        name: "william",
+        address: "Copenhagen, Denmark",
+        isFavorite: false,
+        rating: 3,
+      },
+      {
+        id: 3,
+        photo: girl8,
+        name: "Michael",
+        address: "Pitsburg, Canada",
+        isFavorite: false,
+        rating: 5,
+      },
+      {
+        id: 4,
+        photo: girl9,
+        name: "Andrea",
+        address: "North Carolina, USA",
+        isFavorite: false,
+        rating: 1,
+      },
+      {
+        id: 5,
+        photo: girl10,
         name: "Alexa",
         address: "South Carolina, USA",
         isFavorite: false,
@@ -333,7 +386,7 @@ const Dashboard = () => {
       )}
       {photographers && (
         <div className="gallery-section">
-          {talentList.map((item) => {
+          {photoGraphersList.map((item) => {
             return (
               <div className="gallery-warpper">
                 <div className="gallery-position">
