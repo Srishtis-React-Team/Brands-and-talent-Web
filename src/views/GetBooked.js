@@ -4,6 +4,7 @@ import "../assets/css/getbooked.css";
 import Header from "./header.js";
 import Footer from "./Footer.js";
 import axios from "axios";
+import $ from "jquery";
 const GetBooked = () => {
   const [data, setData] = useState([]);
 
@@ -39,13 +40,14 @@ const GetBooked = () => {
   const userFill = require("../assets/icons/userFill.png");
   const mapFill = require("../assets/icons/mapFill.png");
   const checkShield = require("../assets/icons/check-shield.png");
+  const whitePlus = require("../assets/icons/whitePlus.png");
 
-  const [photos, showPhotos] = useState(true);
+  const [portofolio, showPortofolio] = useState(true);
+  const [photos, showPhotos] = useState(false);
   const [videos, showVideos] = useState(false);
   const [features, showFeatures] = useState(false);
   const [reviews, setReviews] = useState(false);
   const [bio, showBio] = useState(false);
-  const [analytics, showAnalytics] = useState(false);
   const [test, setTest] = useState("");
 
   const photosList = [
@@ -76,9 +78,6 @@ const GetBooked = () => {
     {
       photo: model9,
     },
-    {
-      photo: model10,
-    },
   ];
 
   const reviewsList = [
@@ -102,6 +101,11 @@ const GetBooked = () => {
 
   function handleForms(e) {
     setTest("features set");
+    if (e == "portofolio") {
+      showPortofolio(true);
+    } else {
+      showPortofolio(false);
+    }
     if (e == "photos") {
       showPhotos(true);
     } else {
@@ -127,12 +131,21 @@ const GetBooked = () => {
     } else {
       showBio(false);
     }
-    if (e == "analytics") {
-      showAnalytics(true);
-    } else {
-      showAnalytics(false);
-    }
   }
+
+  function prev() {
+    document.getElementById("slider-container").scrollLeft -= 270;
+  }
+
+  function next() {
+    document.getElementById("slider-container").scrollLeft += 270;
+  }
+
+  $(".slide img").on("click", function () {
+    $(this).toggleClass("zoomed");
+    $(".overlay").toggleClass("active");
+  });
+
   useEffect(() => {
     setData([
       {
@@ -239,8 +252,336 @@ const GetBooked = () => {
               <span>Actor, Model, Creator</span>
             </div>
           </div>
+          <div className="invite-btn">
+            <img src={whitePlus}></img>
+            <div>Invite to Job</div>
+          </div>
         </div>
-        <div className="talent-info-wrapper"></div>
+        <div className="talent-info-section">
+          <div className="talent-info-wrapper">
+            <div className="bio-text">Bio</div>
+            <div className="bio-info">
+              I'm a fashion, fitness and lifestyle influencer/content creator
+              based in Melbourne. Australia. I am personable, have great
+              attention to detail and pride myself on being a coffee snob! I
+              love to share my understated but elegant personal style with my
+              followers. In particular I enjoy putting together simple,
+              minimalist and wearable outfits. I also really enjoy
+              cooking/baking and indulging in cruelty free skincare and makeup.
+              I started my Instagram page with the vision of sharing my style
+              tips and snippets of my lifestyle with a wider audience. I have
+              already collaborated with a variety of brands, from jewelry to
+              wellness and skincare. I'm looking forward to collaborating on
+              many more quality campaigns. I have an understated and elegant
+              style. I the ability to manage tight deadlines and give my best to
+              every project that I am a part of. I like meeting new people and
+              I'm looking forward to collaborating with a lot of lovely brands
+              and people on a personal and professional level.
+            </div>
+            <div className="tabs profile-tabs">
+              <div
+                className={portofolio ? "active-tab" : null}
+                onClick={(e) => {
+                  handleForms("portofolio");
+                }}
+              >
+                Porfolio
+              </div>
+              <div
+                className={photos ? "active-tab" : null}
+                onClick={(e) => {
+                  handleForms("photos");
+                }}
+              >
+                Photos
+              </div>
+              <div
+                className={videos ? "active-tab" : null}
+                onClick={(e) => {
+                  handleForms("videos");
+                }}
+              >
+                Videos & Audios
+              </div>
+              <div
+                className={features ? "active-tab" : null}
+                onClick={(e) => {
+                  handleForms("features");
+                }}
+              >
+                Features
+              </div>
+              <div
+                className={reviews ? "active-tab" : null}
+                onClick={(e) => {
+                  handleForms("reviews");
+                }}
+              >
+                Reviews
+              </div>
+              <div
+                className={bio ? "active-tab" : null}
+                onClick={(e) => {
+                  handleForms("bio");
+                }}
+              >
+                CV
+              </div>
+            </div>
+            {portofolio && (
+              <>
+                <div className="portofolio-section">
+                  <div className="portofolio-title">Photos</div>
+                  <div className="view-all">View All</div>
+                </div>
+                <div className="photos-slider">
+                  <div id="slider-container" className="slider">
+                    <div className="slide">
+                      <img src={model}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model1}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model2}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model3}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model4}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model5}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model6}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model7}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model8}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model9}></img>
+                    </div>
+                    <div className="slide">
+                      <img src={model10}></img>
+                    </div>
+                    <div
+                      onClick={(e) => {
+                        prev();
+                      }}
+                      className="control-prev-btn"
+                    >
+                      <i className="fas fa-arrow-left"></i>
+                    </div>
+                    <div
+                      onClick={(e) => {
+                        next();
+                      }}
+                      className="control-next-btn"
+                    >
+                      <i className="fas fa-arrow-right"></i>
+                    </div>
+                  </div>
+
+                  <div className="overlay"></div>
+                </div>
+              </>
+            )}
+            {photos && (
+              <div className="models-photos">
+                <section className="photos-gallery">
+                  <div className="photos-gallery-image">
+                    <img src={model}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model2}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model3}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model4}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model5}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model6}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model7}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model8}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model9}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model10}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model11}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model12}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model13}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model14}></img>
+                  </div>
+                  <div className="photos-gallery-image">
+                    <img src={model15}></img>
+                  </div>
+                </section>
+              </div>
+            )}
+            {videos && (
+              <div className="models-photos">
+                {photosList.map((item) => {
+                  return (
+                    <div className="model-picture-wrapper">
+                      <img className="model-picture" src={item.photo}></img>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            {features && (
+              <div className="features-section">
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Height</div>
+                  <div className="features-value">{data[0].height}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Hair Color</div>
+                  <div className="features-value">{data[0].hairColour}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Hair Type</div>
+                  <div className="features-value">{data[0].hairType}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Build</div>
+                  <div className="features-value">{data[0].build}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Skin Type</div>
+                  <div className="features-value">{data[0].skinType}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Skin Tone</div>
+                  <div className="features-value">{data[0].skinTone}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Eye Color</div>
+                  <div className="features-value">{data[0].eyeColour}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+                <div className="features-wrapper">
+                  <div className="features-heading">Ethnicity</div>
+                  <div className="features-value">{data[0].ethnicity}</div>
+                </div>
+              </div>
+            )}
+            {bio && (
+              <div className="models-bio">
+                I'm a fashion, fitness and lifestyle influencer/content creator
+                based in Melbourne. Australia. I am personable, have great
+                attention to detail and pride myself on being a coffee snob! I
+                love to share my understated but elegant personal style with my
+                followers. In particular I enjoy putting together simple,
+                minimalist and wearable outfits. I also really enjoy
+                cooking/baking and indulging in cruelty free skincare and
+                makeup. I started my Instagram page with the vision of sharing
+                my style tips and snippets of my lifestyle with a wider
+                audience. I have already collaborated with a variety of brands,
+                from jewelry to wellness and skincare. I'm looking forward to
+                collaborating on many more quality campaigns. I have an
+                understated and elegant style. I the ability to manage tight
+                deadlines and give my best to every project that I am a part of.
+                I like meeting new people and I'm looking forward to
+                collaborating with a lot of lovely brands and people on a
+                personal and professional level.
+              </div>
+            )}
+            {reviews && (
+              <div className="model-reviews">
+                {reviewsList.map((item) => {
+                  return (
+                    <div className="model-review-wrapper">
+                      <div className="review-date">{item.date}</div>
+                      <div className="review-title">{item.title}</div>
+                      <div className="review-content">{item.description}</div>
+                      <div className="reviewer-section">
+                        <div className="reviewers-rating">
+                          {item.rating.map((item) => {
+                            return <img src={pinkStar}></img>;
+                          })}
+                        </div>
+                        <div className="reviewer-details">
+                          <div className="initial center">S</div>
+                          <div className="reviewer-name">
+                            {item.reviewer_name}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       <div className="model-profile">
@@ -291,202 +632,6 @@ const GetBooked = () => {
           </div>
         </div>
       </div>
-
-      <div className="tabs">
-        <div
-          className={photos ? "active-tab" : null}
-          onClick={(e) => {
-            handleForms("photos");
-          }}
-        >
-          Photos
-        </div>
-        <div
-          className={videos ? "active-tab" : null}
-          onClick={(e) => {
-            handleForms("videos");
-          }}
-        >
-          Videos
-        </div>
-        <div
-          className={features ? "active-tab" : null}
-          onClick={(e) => {
-            handleForms("features");
-          }}
-        >
-          Features
-        </div>
-        <div
-          className={reviews ? "active-tab" : null}
-          onClick={(e) => {
-            handleForms("reviews");
-          }}
-        >
-          Reviews
-        </div>
-        <div
-          className={bio ? "active-tab" : null}
-          onClick={(e) => {
-            handleForms("bio");
-          }}
-        >
-          Bio
-        </div>
-        <div
-          className={analytics ? "active-tab" : null}
-          onClick={(e) => {
-            handleForms("analytics");
-          }}
-        >
-          Analytics
-        </div>
-      </div>
-      {photos && (
-        <div className="models-photos">
-          {photosList.map((item) => {
-            return (
-              <div className="model-picture-wrapper">
-                <img className="model-picture" src={item.photo}></img>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {videos && (
-        <div className="models-photos">
-          {photosList.map((item) => {
-            return (
-              <div className="model-picture-wrapper">
-                <img className="model-picture" src={item.photo}></img>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {features && (
-        <div className="features-section">
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Height</div>
-            <div className="features-value">{data[0].height}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Hair Color</div>
-            <div className="features-value">{data[0].hairColour}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Hair Type</div>
-            <div className="features-value">{data[0].hairType}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Build</div>
-            <div className="features-value">{data[0].build}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Skin Type</div>
-            <div className="features-value">{data[0].skinType}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Skin Tone</div>
-            <div className="features-value">{data[0].skinTone}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Eye Color</div>
-            <div className="features-value">{data[0].eyeColour}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-          <div className="features-wrapper">
-            <div className="features-heading">Ethnicity</div>
-            <div className="features-value">{data[0].ethnicity}</div>
-          </div>
-        </div>
-      )}
-      {bio && (
-        <div className="models-bio">
-          I'm a fashion, fitness and lifestyle influencer/content creator based
-          in Melbourne. Australia. I am personable, have great attention to
-          detail and pride myself on being a coffee snob! I love to share my
-          understated but elegant personal style with my followers. In
-          particular I enjoy putting together simple, minimalist and wearable
-          outfits. I also really enjoy cooking/baking and indulging in cruelty
-          free skincare and makeup. I started my Instagram page with the vision
-          of sharing my style tips and snippets of my lifestyle with a wider
-          audience. I have already collaborated with a variety of brands, from
-          jewelry to wellness and skincare. I'm looking forward to collaborating
-          on many more quality campaigns. I have an understated and elegant
-          style. I the ability to manage tight deadlines and give my best to
-          every project that I am a part of. I like meeting new people and I'm
-          looking forward to collaborating with a lot of lovely brands and
-          people on a personal and professional level.
-        </div>
-      )}
-      {reviews && (
-        <div className="model-reviews">
-          {reviewsList.map((item) => {
-            return (
-              <div className="model-review-wrapper">
-                <div className="review-date">{item.date}</div>
-                <div className="review-title">{item.title}</div>
-                <div className="review-content">{item.description}</div>
-                <div className="reviewer-section">
-                  <div className="reviewers-rating">
-                    {item.rating.map((item) => {
-                      return <img src={pinkStar}></img>;
-                    })}
-                  </div>
-                  <div className="reviewer-details">
-                    <div className="initial center">S</div>
-                    <div className="reviewer-name">{item.reviewer_name}</div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
 
       <div className="center">
         <div className="Join-wrapper center">
