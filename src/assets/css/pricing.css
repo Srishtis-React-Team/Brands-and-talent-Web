@@ -1,286 +1,205 @@
-.pricing-section {
+.plans-section {
+  padding: 60px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 40px;
 }
 
-.pricing-table {
-  padding: 60px 60px;
+.plans-wrapper {
+  width: 350px;
+  height: 840px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 2px 4px 24px 0px rgba(0, 0, 0, 0.25);
 }
 
-.pricing-img-wrapper > img {
-  width: 30px;
-  height: 30px;
+.free-plans {
+  border-top: 11px solid #ab7e13;
 }
 
-.pricing-wrapper {
-  width: 210px;
-  height: 330px;
-  padding: 40px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin: 20px;
+.pro-plans {
+  border-top: 11px solid #5f2895;
 }
 
-.pricing-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 0px;
-}
-
-.pricing-img-wrapper {
-  width: 210px;
-  text-align: center;
-}
-
-.pricing-name {
-  width: 210px;
-  color: #000;
-  font-family: sans-serif;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.25px;
-}
-
-.pricing-img-wrapper {
-  color: #000;
-  font-family: sans-serif;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.25px;
-}
-
-.guarantee-wrapper {
-  width: 210px;
-  height: 330px;
-  padding: 40px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-around;
-  align-items: start;
-  flex-direction: column;
-}
-
-.pricing-fill {
-  width: 250px;
-  height: 350px;
-  border-radius: 26px;
-  background: #c2114b;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin: 25px;
+.premium-plans {
+  border-top: 11px solid #106d3e;
 }
 
 .plan-name {
   color: #000;
   text-align: center;
   font-family: sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.333px;
-}
-
-.plan-name-bold {
-  color: #000;
-  font-family: sans-serif;
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  letter-spacing: -0.333px;
+  padding: 50px 0px 25px 0px;
 }
 
 .plan-value {
+  padding: 10px 0px 20px 0px;
   color: #000;
   text-align: center;
   font-family: sans-serif;
-  font-size: 60px;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.25px;
+}
+
+.plan-validity {
+  color: #000;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px; /* 175% */
+  letter-spacing: -0.25px;
+  padding-bottom: 20px;
+}
+
+.choose-btn {
+  cursor: pointer;
+  width: 250px;
+  height: 45px;
+  flex-shrink: 0;
+  border-radius: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 15px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  letter-spacing: -1px;
+  letter-spacing: -0.25px;
+  margin: 25px auto;
 }
 
-.plan-action {
-  border-radius: 26px;
-  background: #f9f2ff;
-  width: 207.761px;
-  height: 64.308px;
+.include {
+  cursor: pointer;
+  color: #000;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.333px;
+  text-decoration-line: underline;
+  padding-bottom: 10px 0px;
+}
+
+.included-things {
+  padding: 20px;
+}
+
+.included-things > div {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 30px; /* 187.5% */
+  letter-spacing: -0.25px;
+  padding: 0px 30px;
+}
+
+.learn-btn {
+  cursor: pointer;
+  border-radius: 60px;
+  background: #dddddd;
+  width: 250px;
+  height: 45px;
+  flex-shrink: 0;
   color: #c2114b;
   text-align: center;
   font-family: sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.233px;
-  margin-top: 40px;
+  font-weight: 600;
+  line-height: 28px; /* 175% */
+  letter-spacing: -0.25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
-.plan-duration {
-  color: #b6afaf;
+.free-btn {
+  background: #ab7e13;
+}
+
+.pro-btn {
+  background: #5f2895;
+}
+
+.premium-btn {
+  background: #106d3e;
+}
+
+.pro-gift {
+  color: #106d3e;
   text-align: center;
   font-family: sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
+  letter-spacing: -0.25px;
+  padding-top: 12px;
+}
+.premium-gift {
+  color: #5f2895;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.25px;
+  padding-top: 12px;
+}
+
+.save-plan {
+  color: #000;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px; /* 175% */
+  letter-spacing: -0.25px;
+}
+
+.save-plan > span {
+  font-weight: 700;
+}
+
+.premium-text {
+  color: #000;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
   line-height: normal;
-  letter-spacing: -0.233px;
+  letter-spacing: -0.333px;
+  padding: 50px 0px 60px 0px;
 }
 
 @media (max-width: 475px) {
-  .pricing-section {
+  .plans-section {
+    padding: 60px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 0px;
-  }
-
-  .pricing-table {
-    padding: 40px 40px;
-  }
-
-  .pricing-wrapper {
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #d5dfff;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    max-width: 360px;
-    padding: 31px 23px;
-    justify-content: space-around;
-    height: 230px;
-  }
-
-  .pricing-fill {
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #d5dfff;
-    border-radius: 26px;
-    display: flex;
-    flex-direction: column;
-    max-width: 360px;
-    padding: 31px 23px;
-    justify-content: space-around;
-    height: 230px;
-    background: #c2114b;
-  }
-
-  .pricing-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 0px;
-  }
-
-  .pricing-img-wrapper {
-    width: 210px;
-    text-align: center;
-  }
-
-  .pricing-name {
-    color: #000;
-    font-family: sans-serif;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 30px;
-  }
-
-  .pricing-img-wrapper {
-    color: #000;
-    font-family: sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.25px;
-  }
-
-  .guarantee-wrapper {
-    width: 100%;
-    height: initial;
-    padding: 30px 15px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
   }
-
-  .plan-name {
-    color: #000;
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    padding: 0px 15px;
-  }
-
-  .plan-name-bold {
-    color: #000;
-    font-family: sans-serif;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-  }
-
-  .plan-value {
-    color: #000;
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -1px;
-  }
-
-  .plan-action {
-    border-radius: 26px;
-    background: #f9f2ff;
-    width: 150px;
-    height: 40px;
-    color: #c2114b;
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-top: 0px;
-  }
-
-  .plan-duration {
-    color: #b6afaf;
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.233px;
-  }
-  .pricing-img-wrapper > img {
-    width: 25px;
-    height: 25px;
+  .plans-wrapper {
+    margin-bottom: 15px;
   }
 }

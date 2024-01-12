@@ -3,6 +3,7 @@ import "../assets/css/findcreators.css";
 import "../assets/css/getbooked.css";
 import Header from "./header.js";
 import Footer from "./Footer.js";
+import CardCarousel from "./CardCarousel.js";
 import axios from "axios";
 import $ from "jquery";
 const GetBooked = () => {
@@ -389,6 +390,11 @@ const GetBooked = () => {
 
                   <div className="overlay"></div>
                 </div>
+                <div className="portofolio-section">
+                  <div className="portofolio-title">Posts</div>
+                  <div className="view-all">View All</div>
+                </div>
+                <CardCarousel />
               </>
             )}
             {photos && (
