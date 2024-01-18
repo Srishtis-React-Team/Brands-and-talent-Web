@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../assets/css/dashboard.css";
-import { useNavigate } from "react-router";
+import { Route } from "react-router";
 import Register from "./Register";
 const Header = () => {
-  const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const searchLogo = require("../assets/icons/search (1).png");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
@@ -84,7 +83,7 @@ const Header = () => {
         <div
           className="signup"
           onClick={() => {
-            navigate("/signup");
+            Route("/signup");
           }}
         >
           Sign up
@@ -136,7 +135,7 @@ const Header = () => {
           <div
             className="signup"
             onClick={() => {
-              navigate("/signup");
+              Route("/signup");
             }}
           >
             Sign up
