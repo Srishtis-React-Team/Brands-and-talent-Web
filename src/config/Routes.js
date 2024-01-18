@@ -5,6 +5,7 @@ import FindCreators from "../views/FindCreators";
 import GetBooked from "../views/GetBooked";
 import Pricing from "../views/pricing";
 import Resources from "../views/resources";
+import Register from "../views/Register";
 
 function Routing() {
   return (
@@ -14,6 +15,7 @@ function Routing() {
       <Route path="/get-booked" element={<GetBooked />} />
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/resources" element={<Resources />} />
+      <Route path="/signup" element={<Register />} />
     </Routes>
   );
 }

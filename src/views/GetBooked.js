@@ -4,6 +4,8 @@ import "../assets/css/getbooked.css";
 import Header from "./header.js";
 import Footer from "./Footer.js";
 import CardCarousel from "./CardCarousel.js";
+import PhotosCarousel from "./PhotosCarousel.js";
+
 import axios from "axios";
 import $ from "jquery";
 const GetBooked = () => {
@@ -42,6 +44,8 @@ const GetBooked = () => {
   const mapFill = require("../assets/icons/mapFill.png");
   const checkShield = require("../assets/icons/check-shield.png");
   const whitePlus = require("../assets/icons/whitePlus.png");
+  const white_star = require("../assets/icons/white_star.png");
+  const check = require("../assets/icons/check.png");
 
   const [portofolio, showPortofolio] = useState(true);
   const [photos, showPhotos] = useState(false);
@@ -257,6 +261,18 @@ const GetBooked = () => {
             <img src={whitePlus}></img>
             <div>Invite to Job</div>
           </div>
+          <div className="talent-rates">
+            <div className="title">Vlada D Rates</div>
+            <div className="name">Actor</div>
+            <div className="value">$100 per hour (Negotiable)</div>
+            <div className="value">$100 per hour (Negotiable)</div>
+            <div className="name">Model</div>
+            <div className="value">$100 per hour (Negotiable)</div>
+            <div className="value">$100 per hour (Negotiable)</div>
+            <div className="name">Creator</div>
+            <div className="value">$100 per hour (Negotiable)</div>
+            <div className="value">$100 per hour (Negotiable)</div>
+          </div>
         </div>
         <div className="talent-info-section">
           <div className="talent-info-wrapper">
@@ -335,66 +351,38 @@ const GetBooked = () => {
                   <div className="portofolio-title">Photos</div>
                   <div className="view-all">View All</div>
                 </div>
-                <div className="photos-slider">
-                  <div id="slider-container" className="slider">
-                    <div className="slide">
-                      <img src={model}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model1}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model2}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model3}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model4}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model5}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model6}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model7}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model8}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model9}></img>
-                    </div>
-                    <div className="slide">
-                      <img src={model10}></img>
-                    </div>
-                    <div
-                      onClick={(e) => {
-                        prev();
-                      }}
-                      className="control-prev-btn"
-                    >
-                      <i className="fas fa-arrow-left"></i>
-                    </div>
-                    <div
-                      onClick={(e) => {
-                        next();
-                      }}
-                      className="control-next-btn"
-                    >
-                      <i className="fas fa-arrow-right"></i>
-                    </div>
-                  </div>
-
-                  <div className="overlay"></div>
-                </div>
+                <div className="photos-slider">{/* <PhotosCarousel /> */}</div>
                 <div className="portofolio-section">
-                  <div className="portofolio-title">Posts</div>
+                  <div className="portofolio-title">Social media posts</div>
                   <div className="view-all">View All</div>
                 </div>
-                <CardCarousel />
+                {/* <CardCarousel /> */}
+                <div className="portofolio-section">
+                  <div className="portofolio-title">Reviews</div>
+                  <div className="view-all">View All</div>
+                </div>
+                <div className="reviews-section">
+                  <div className="rating">
+                    <div className="num">4.5</div>
+                    <img src={white_star}></img>
+                  </div>
+                  <div className="content">
+                    <div className="title">
+                      Studio Shoot for Unrecognisable Ecommerce
+                    </div>
+                    <div className="description">
+                      Kate is a delight to work with, beautiful both punctual &
+                      professional. She knew exactly what was required and
+                      everything was effortless.
+                    </div>
+                  </div>
+                  <div className="booked-btn">
+                    <div className="wrapper">
+                      <img src={check}></img>
+                    </div>
+                    <div className="posted-jobs">24 Jobs Booked</div>
+                  </div>
+                </div>
               </>
             )}
             {photos && (
