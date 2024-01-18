@@ -290,9 +290,9 @@ const Dashboard = () => {
           <div className="Join-wrapper center">
             <div
               className="joinnow-btn"
-              onClick={() => {
-                navigate("/signup");
-              }}
+              // onClick={() => {
+              //   navigate("/signup");
+              // }}
             >
               Join Now
             </div>
@@ -307,9 +307,9 @@ const Dashboard = () => {
           <div className="white-joinnow center">
             <div
               className="joinnow-btn"
-              onClick={() => {
-                navigate("/signup");
-              }}
+              // onClick={() => {
+              //   navigate("/signup");
+              // }}
             >
               Join Now
             </div>
