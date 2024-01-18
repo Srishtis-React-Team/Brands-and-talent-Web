@@ -107,6 +107,59 @@ a {
   margin: 0 !important;
 }
 
+.modal-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.register-modal {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-body {
+  height: 486px;
+}
+
+.modal-header {
+  width: 100%;
+}
+.absolute-input {
+  height: 55px;
+  border: none;
+  outline: none;
+}
+
+.input-icons {
+  width: 22px;
+  height: 22px;
+}
+
+.or-signup {
+  color: #858597;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 15px 0px;
+}
+
+.stroke-div {
+  width: 103.5px;
+  height: 0.5px;
+  flex-shrink: 0;
+  stroke-width: 0.5px;
+  stroke: #b8b8d2;
+}
+
+.stroke-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 @media (max-width: 480px) {
   .mobile-menu-items {
     display: flex;
@@ -714,11 +767,12 @@ a {
   .register-modal {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
+    flex-direction: column;
+    align-items: center;
   }
   .register-btn {
-    width: 150px;
-    height: 50px;
+    width: 170px;
+    height: 45px;
     border-radius: 161px;
     background: #000;
     display: flex;
@@ -795,6 +849,7 @@ a {
     line-height: normal;
     text-align: center;
     padding: 20px 0px;
+    margin-top: 30px;
   }
   .modal-wrapper {
     max-width: 475px !important;
@@ -827,6 +882,7 @@ a {
     line-height: normal;
     text-align: center;
     padding: 20px 0px;
+    margin-top: 40px;
   }
 
   .step-description {
@@ -840,7 +896,7 @@ a {
     text-align: center;
   }
   .step-selection {
-    margin: 10px 20px;
+    margin: 0 auto;
   }
 
   .step2-selection {
@@ -866,6 +922,7 @@ a {
   .select-wrapper {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 390px;
     height: 55px;
     flex-shrink: 0;
@@ -883,7 +940,8 @@ a {
     font-weight: 400;
     line-height: normal;
     padding-left: 20px;
-    cursor: pointer;
+    cursor: auto;
+    width: 400px;
   }
 
   .step-back {
@@ -973,6 +1031,11 @@ a:hover {
 }
 
 @media (min-width: 480px) {
+  .modal-dialog {
+    max-width: 600px !important;
+    margin: 1.75rem auto;
+  }
+
   .mobile-navbar {
     display: none;
   }
@@ -1006,6 +1069,11 @@ a:hover {
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
     padding: 20px;
     margin: 10px 0px;
+    justify-content: space-between;
+  }
+
+  .email-input {
+    justify-content: unset;
   }
 
   .select-text {
@@ -1016,7 +1084,7 @@ a:hover {
     font-weight: 400;
     line-height: normal;
     padding-left: 20px;
-    cursor: pointer;
+    cursor: auto;
   }
 
   .step-back {
@@ -1101,7 +1169,7 @@ a:hover {
   }
 
   .step-selection {
-    margin: 10px 50px;
+    margin: 0 auto;
   }
 
   .step-description {
@@ -1123,6 +1191,7 @@ a:hover {
     line-height: normal;
     text-align: center;
     padding: 20px 0px;
+    margin-top: 40px;
   }
   .step-text {
     padding-left: 20px;
@@ -1159,8 +1228,8 @@ a:hover {
     margin-bottom: 30px;
   }
   .register-btn {
-    width: 231px;
-    height: 62px;
+    width: 170px;
+    height: 45px;
     border-radius: 161px;
     background: #000;
     display: flex;
@@ -1236,10 +1305,11 @@ a:hover {
     line-height: normal;
     text-align: center;
     padding: 20px 0px;
+    margin-top: 50px;
   }
   .modal-wrapper {
-    max-width: 699px !important;
-    max-height: 569px !important;
+    width: 100% !important;
+    height: 100% !important;
   }
   .copyright-section {
     margin: 30px 0px;

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../assets/css/dashboard.css";
-
+import { useNavigate } from "react-router";
+import Register from "./Register";
 const Header = () => {
+  const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const searchLogo = require("../assets/icons/search (1).png");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
@@ -25,51 +27,6 @@ const Header = () => {
   const handleClick = () => {
     window.scrollTo(0, 0); // Scroll to top on link click
   };
-
-  useEffect(() => {
-    setGenderList(["Male", "Female"]);
-  }, []);
-
-  const handleSelectChange = (event) => {
-    setGenders(event.target.value);
-    const selectedName = event.target.options[event.target.selectedIndex].text;
-    // setRoomType(selectedName);
-  };
-
-  function handleForms(e) {
-    console.log(e, "e");
-    if (e == "form-one") {
-      showFormOne(false);
-      showFormTwo(true);
-    } else {
-      showFormTwo(false);
-    }
-    if (e == "form-two") {
-      showForThree(true);
-    } else {
-      showForThree(false);
-    }
-    if (e == "form-three") {
-      showFormFour(true);
-    } else {
-      showFormFour(false);
-    }
-    if (e == "form-four") {
-      showFormFive(true);
-    } else {
-      showFormFive(false);
-    }
-    if (e == "model") {
-      setModel(true);
-    } else {
-      setModel(false);
-    }
-    if (e == "seeker") {
-      setSeeker(true);
-    } else {
-      setSeeker(false);
-    }
-  }
 
   return (
     <>
@@ -118,7 +75,7 @@ const Header = () => {
           <input type="checkbox" id="search-check"></input>
           <div className="responsive-search-box">
             <input type="text" placeholder="Type here..."></input>
-            <label for="search-check" className="responsive-search-icon">
+            <label htmlFor="search-check" className="responsive-search-icon">
               <i className="fas fa-search"></i>
             </label>
           </div>
@@ -126,8 +83,9 @@ const Header = () => {
         <div className="login-text">Login</div>
         <div
           className="signup"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
+          onClick={() => {
+            navigate("/signup");
+          }}
         >
           Sign up
         </div>
@@ -169,7 +127,7 @@ const Header = () => {
             <input type="checkbox" id="check"></input>
             <div className="search-box">
               <input type="text" placeholder="Type here..."></input>
-              <label for="check" className="icon">
+              <label htmlFor="check" className="icon">
                 <i className="fas fa-search"></i>
               </label>
             </div>
@@ -177,8 +135,9 @@ const Header = () => {
           <div className="login-text">Login</div>
           <div
             className="signup"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
+            onClick={() => {
+              navigate("/signup");
+            }}
           >
             Sign up
           </div>
@@ -186,361 +145,6 @@ const Header = () => {
             <img src={gridLogo}></img>
           </div>
         </div>
-      </div>
-
-      <div
-        className="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        {formOne_visibility && (
-          <div className="modal-dialog modal-wrapper MODAL ONE">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="modal-title">Welcome</div>
-                <div className="modal-description">
-                  Welcome to our vibrant community! To tailor your experience,
-                  we'd love to know more about you.
-                </div>
-                <div className="modal-buttons">
-                  <div
-                    onClick={(e) => {
-                      handleForms("model");
-                    }}
-                    className={model ? "selected-register" : "choose-register"}
-                  >
-                    I'm a Talent
-                  </div>
-                  <div
-                    onClick={(e) => {
-                      handleForms("seeker");
-                    }}
-                    className={seeker ? "selected-register" : "choose-register"}
-                  >
-                    I'm a Talent Seeker
-                  </div>
-                </div>
-                <div className="question-model">
-                  Are you the star of the show or the one seeking brilliance?
-                </div>
-                <div className="register-modal">
-                  <div
-                    className="register-btn"
-                    onClick={(e) => {
-                      handleForms("form-one");
-                    }}
-                  >
-                    Register Now
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {formTwo_visibility && (
-          <div className="modal-dialog modal-wrapper">
-            <div className="modal-content">
-              <div className="modal-header header-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
-                <div className="step-text">Step 1 of 4</div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="step-title">Which one are you?</div>
-                <div className="step-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div className="step-selection">
-                  <div className="select-wrapper">
-                    <input type="checkbox" id="aspiring"></input>
-                    <label for="aspiring" className="select-text">
-                      Aspiring Talent
-                    </label>
-                  </div>
-                  <div className="select-wrapper">
-                    <input type="checkbox" id="professional"></input>
-                    <label for="professional" className="select-text">
-                      Professional Talent
-                    </label>
-                  </div>
-                  <div className="select-wrapper">
-                    <input type="checkbox" id="other-talent"></input>
-                    <label for="other-talent" className="select-text">
-                      Talent (Actor, dancer, musician, sports person, etc)
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="step-back">
-                  Back
-                </button>
-                <button
-                  type="button"
-                  className="step-continue"
-                  onClick={(e) => {
-                    handleForms("form-two");
-                  }}
-                >
-                  Continue
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        {formThree_visibility && (
-          <div className="modal-dialog modal-wrapper MODAL THREE">
-            <div className="modal-content">
-              <div className="modal-header header-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
-                <div className="step-text">Step 2 of 4</div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="step-title">Personal Details</div>
-                <div className="step-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div className="step2-selection">
-                  <div className="step-section-1">
-                    <input
-                      type="text"
-                      placeholderTextColor="#202020"
-                      placeholder="Full Name"
-                      value={fullName}
-                      onChange={(e) => {
-                        setFullName(e.target.value);
-                      }}
-                      className=" form-control step-input"
-                    />
-                    <select
-                      onChange={handleSelectChange}
-                      value={gender}
-                      id="disabledSelect"
-                      className="form-select step-select"
-                      placeholder="Gender"
-                    >
-                      {genderList.map((item) => {
-                        return <option value={item}>{item}</option>;
-                      })}
-                    </select>
-                    <select
-                      onChange={handleSelectChange}
-                      value={gender}
-                      id="disabledSelect"
-                      className="form-select step-select"
-                      placeholder="Nationality"
-                    >
-                      {genderList.map((item) => {
-                        return <option value={item}>{item}</option>;
-                      })}
-                    </select>
-                  </div>
-                  <div className="step-section-2">
-                    <input
-                      className="form-control"
-                      placeholder="Date of birth"
-                      value={dob}
-                      onChange={(e) => {
-                        setDOB(e.target.value);
-                      }}
-                    ></input>
-                    <select
-                      className="form-select step-select"
-                      aria-label="Default select example"
-                    >
-                      <option selected>Height</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                    <select
-                      className="form-select step-select"
-                      aria-label="Default select example"
-                    >
-                      <option selected>Ethnicity</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    handleForms("form-one");
-                  }}
-                  className="step-back"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  className="step-continue"
-                  onClick={(e) => {
-                    handleForms("form-three");
-                  }}
-                >
-                  Continue
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {formFour_visibility && (
-          <div className="modal-dialog modal-wrapper MODAL FOUR">
-            <div className="modal-content">
-              <div className="modal-header header-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
-                <div className="step-text">Step 3 of 4</div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="step-title">Contact Details</div>
-                <div className="step-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div className="step2-selection">
-                  <div className="step-section-1">
-                    <input
-                      className="form-control step-input"
-                      placeholder="Phone"
-                      value={phone}
-                      onChange={(e) => {
-                        setPhone(e.target.value);
-                      }}
-                    ></input>
-                    <select
-                      className="form-select step-select"
-                      aria-label="Default select example"
-                    >
-                      <option selected>Country</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                  <div className="step-section-2">
-                    <input className="form-control" placeholder="Email"></input>
-                    <select
-                      className="form-select step-select"
-                      aria-label="Default select example"
-                    >
-                      <option selected>City</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    handleForms("form-two");
-                  }}
-                  className="step-back"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  className="step-continue"
-                  onClick={(e) => {
-                    handleForms("form-four");
-                  }}
-                >
-                  Continue
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {formFive_visibility && (
-          <div className="modal-dialog modal-wrapper MODAL FIVE">
-            <div className="modal-content">
-              <div className="modal-header header-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
-                <div className="step-text">Step 4 of 4</div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="step-title">Only one more thing to do</div>
-                <div className="step-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div className="step-selection upload-step">
-                  <div className="upload-wrapper">
-                    <img src={uploadIcon}></img>
-                    <div className="upload-text"> Professional Talent</div>
-                  </div>
-                  <div className="import-wrapper">
-                    <img src={importIcon}></img>
-                    <div className="import-text"> Professional Talent</div>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    handleForms("form-three");
-                  }}
-                  className="step-back"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  data-bs-dismiss="modal"
-                  className="step-continue"
-                  onClick={(e) => {
-                    handleForms("form-five");
-                  }}
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );

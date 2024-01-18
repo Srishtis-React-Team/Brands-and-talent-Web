@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import "../assets/css/dashboard.css";
 import Header from "./header";
 import Footer from "./Footer";
+import { useNavigate } from "react-router";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../config/api";
 const Dashboard = () => {
+  const navigate = useNavigate();
+
   const uploadIcon = require("../assets/icons/upload.png");
   const importIcon = require("../assets/icons/instagram.png");
   const btLogo = require("../assets/icons/Group 56.png");
@@ -151,7 +156,18 @@ const Dashboard = () => {
         rating: 1,
       },
     ]);
+    getDemo();
   }, []);
+
+  const getDemo = async () => {
+    await ApiHelper.post(API.getDemo)
+      .then((resData) => {
+        console.log("getDemo", resData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleClick = () => {
     window.scrollTo(0, 0); // Scroll to top on link click
@@ -272,7 +288,14 @@ const Dashboard = () => {
             unique url like linkedin that they can share as thier portfolio...
           </div>
           <div className="Join-wrapper center">
-            <div className="joinnow-btn">Join Now</div>
+            <div
+              className="joinnow-btn"
+              onClick={() => {
+                navigate("/signup");
+              }}
+            >
+              Join Now
+            </div>
           </div>
         </div>
         <div className="find-work">
@@ -284,8 +307,9 @@ const Dashboard = () => {
           <div className="white-joinnow center">
             <div
               className="joinnow-btn"
-              data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop"
+              onClick={() => {
+                navigate("/signup");
+              }}
             >
               Join Now
             </div>
@@ -881,19 +905,19 @@ const Dashboard = () => {
                 <div className="step-selection">
                   <div className="select-wrapper">
                     <input type="checkbox" id="aspiring"></input>
-                    <label for="aspiring" className="select-text">
+                    <label htmlFor="aspiring" className="select-text">
                       Aspiring Talent
                     </label>
                   </div>
                   <div className="select-wrapper">
                     <input type="checkbox" id="professional"></input>
-                    <label for="professional" className="select-text">
+                    <label htmlFor="professional" className="select-text">
                       Professional Talent
                     </label>
                   </div>
                   <div className="select-wrapper">
                     <input type="checkbox" id="other-talent"></input>
-                    <label for="other-talent" className="select-text">
+                    <label htmlFor="other-talent" className="select-text">
                       Talent (Actor, dancer, musician, sports person, etc)
                     </label>
                   </div>

@@ -214,9 +214,9 @@
 }
 
 .models-photos {
-  /* display: flex;
+  display: flex;
   flex-wrap: wrap;
-  padding: 20px 0px 0px 40px; */
+  padding: 20px 0px 0px 40px;
 }
 
 .model-picture {
@@ -542,10 +542,10 @@
 }
 
 @import "https://fonts.googleapis.com/css?family=Open+Sans:800&display=swap";
-
+/* 
 .slider {
   display: flex;
-  height: 350px;
+  height: 250px;
   max-height: auto;
   overflow-y: hidden;
   overflow-x: scroll !important;
@@ -575,7 +575,7 @@
   position: relative;
 }
 .slide img {
-  height: 60%;
+  height: 100%;
   width: 215px;
   margin: 0 10px;
   object-fit: cover;
@@ -585,8 +585,8 @@
 }
 .control-prev-btn {
   position: absolute;
-  top: 80%;
-  left: 340px;
+  top: 108%;
+  left: 425px;
   background-color: #c2114b;
   height: 50px;
   width: 45px;
@@ -600,8 +600,8 @@
 }
 .control-next-btn {
   position: absolute;
-  top: 80%;
-  right: 32px;
+  top: 108%;
+  right: 35px;
   height: 50px;
   width: 45px;
   background-color: #c2114b;
@@ -633,9 +633,9 @@
 }
 .overlay.active {
   display: block;
-}
+} */
 @media only screen and (max-width: 420px) {
-  .slider {
+  /* .slider {
     padding: 0;
   }
   .slide {
@@ -646,10 +646,125 @@
   }
   .control-prev-btn {
     top: 37%;
-  }
+  } 
   .control-next-btn {
     top: 37%;
-  }
+  } */
+}
+
+.talent-rates {
+  padding: 15px 0px 0px 20px;
+}
+.talent-rates > .title {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border-bottom: 1px solid #000;
+  background: #fff;
+  text-align: start;
+}
+.talent-rates > .name {
+  color: #c2114b;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 15px 0px;
+}
+.talent-rates > .value {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-bottom: 20px;
+}
+
+.reviews-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.reviews-section > .rating {
+  width: 82px;
+  height: 82px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #c2114b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.reviews-section > .rating .num {
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.reviews-section > .rating > img {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-left: 5px;
+}
+.reviews-section > .content {
+  padding: 0px 20px;
+}
+.reviews-section > .content > .title {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: start;
+  padding: 0px 0px 10px 0px;
+}
+.reviews-section > .content > .description {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+}
+
+.booked-btn {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  width: 229px;
+  height: 53px;
+  flex-shrink: 0;
+  border-radius: 120px;
+  background: #27970b;
+  cursor: pointer;
+}
+.booked-btn > .wrapper {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.booked-btn > .posted-jobs {
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding-left: 10px;
 }
 
 @media (max-width: 475px) {
@@ -674,9 +789,9 @@
     width: 390px;
   }
   .models-photos {
-    /* display: flex;
+    display: flex;
     flex-wrap: wrap;
-    padding: 20px 0px 0px 20px; */
+    padding: 20px 0px 0px 20px;
   }
 
   .model-picture {
