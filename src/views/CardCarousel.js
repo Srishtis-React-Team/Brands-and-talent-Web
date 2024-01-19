@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../assets/css/CardCarousel.css";
 import Carousel from "react-elastic-carousel";
-import Item from "./Item";
+import "../assets/css/responsive.css";
+
 const CardCarousel = () => {
   const model1 = require("../assets/images/model1.png");
   const model2 = require("../assets/images/model2.png");
