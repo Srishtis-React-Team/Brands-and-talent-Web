@@ -94,43 +94,85 @@ const Footer = () => {
               </Link>
             </div>
             <div>
+              <Link onClick={handleClick} to="/about-us">
+                About Us
+              </Link>
+            </div>
+            <div>
+              <Link onClick={handleClick} to="/community-guidelines">
+                Community guidelines
+              </Link>
+            </div>
+            <div>
+              <Link to="/" onClick={handleClick}>
+                Career
+              </Link>
+            </div>
+            <div>
+              <Link to="/" onClick={handleClick}>
+                Become an Affiliate
+              </Link>
+            </div>
+            <div>
+              <Link to="/" onClick={handleClick}>
+                Contact Us
+              </Link>
+            </div>
+          </div>
+          <div className="footer-wrapper">
+            <div>
+              <Link className="footer-title" onClick={handleClick} to="/">
+                Products & Services
+              </Link>
+            </div>
+            <div>
               <Link onClick={handleClick} to="/">
-                Home
+                Verified Talent Marketplace
               </Link>
             </div>
             <div>
               <Link onClick={handleClick} to="/find-creators">
-                Find Creators
+                Hire Talent
               </Link>
             </div>
             <div>
-              <Link to="/pricing" onClick={handleClick}>
-                Pricing
+              <Link to="/" onClick={handleClick}>
+                Register as Talent
+              </Link>
+            </div>
+            <div>
+              <Link to="/" onClick={handleClick}>
+                Get Hired
               </Link>
             </div>
             <div>
               <Link to="/resources" onClick={handleClick}>
-                Resources
+                Brands & Talent Store
               </Link>
             </div>
-          </div>
-          <div className="footer-wrapper">
-            <div className="footer-title">Help</div>
-            <div>Customer Support</div>
-            <div>Help & FAQ</div>
-            <div>Terms & Conditions</div>
-            <div>Pricing</div>
           </div>
           <div className="footer-wrapper">
             <div>
-              <Link className="footer-title" to="/resources">
-                Learn To Resources
+              <Link className="footer-title" onClick={handleClick} to="/">
+                Resources
               </Link>
             </div>
-            <div>Featured Lists</div>
-            <div>New Faces</div>
-            <div>How to - Blog</div>
-            <div>Youtube Playlist</div>
+
+            <div>
+              <Link onClick={handleClick} to="/">
+                Industry news and insights
+              </Link>
+            </div>
+            <div>
+              <Link onClick={handleClick} to="/">
+                Case studies
+              </Link>
+            </div>
+            <div>
+              <Link to="/" onClick={handleClick}>
+                Talent stories
+              </Link>
+            </div>
           </div>
         </div>
       </section>

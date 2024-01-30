@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../assets/css/pricing.css";
-import Header from "./header.js";
-import Footer from "./Footer.js";
+import Header from "../layout/header.js";
+import Footer from "../layout/Footer.js";
 const Pricing = () => {
   const [data, setDate] = useState([]);
   useEffect(() => {}, []);

@@ -1,0 +1,267 @@
+.gig-preview {
+  margin: auto;
+  display: flex;
+  padding: 18px 0px;
+  border-bottom: 1px solid #bab4b4;
+}
+
+.gig-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gig-image {
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.gig-name {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  line-height: normal;
+  font-weight: 600;
+}
+
+.gig-description {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 30px 0px;
+}
+
+.gig-infos {
+  display: flex;
+  justify-content: space-between;
+}
+
+.gig-followers {
+  display: flex;
+}
+
+.gig-logo {
+  border-radius: 50%;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  background: #dddddd;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gig-logo > img {
+  width: 18px;
+  height: 18px;
+}
+
+.followers-text {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.gig-counts {
+  padding-left: 12px;
+}
+
+.followers-count {
+  color: #c2114b;
+  font-family: sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding-top: 5px;
+}
+
+.brands-preview-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.company {
+  width: 795px;
+}
+
+.company {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0px;
+}
+
+.company-name {
+  display: flex;
+  align-items: center;
+}
+
+.name-wrapper {
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  background-color: #c2114b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.name-wrapper {
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.company-text {
+  color: #181818;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-left: 6px;
+}
+
+.company-plan {
+  color: #c2114b;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.trial-page {
+  display: flex;
+  justify-content: space-between;
+  padding: 60px 0px;
+}
+
+.trial-title {
+  color: #000;
+  font-family: "Montagu Slab";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.inlcluded {
+  color: #c2114b;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.333px;
+  text-decoration-line: underline;
+  padding: 30px 0px;
+}
+
+.included-content {
+  display: flex;
+}
+
+.included-line {
+  display: flex;
+  align-items: center;
+}
+
+.include-text {
+  padding-left: 8px;
+  color: #000;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.25px;
+  padding: 10px 0px 10px 10px;
+}
+
+.trialing > img {
+  width: 350px;
+  height: 350px;
+  flex-shrink: 0;
+}
+
+.trial-model {
+  display: flex;
+  align-items: center;
+}
+
+.include-wrapper {
+  padding-left: 30px;
+}
+
+.gmail-wrapper {
+  width: 80%;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 1px 8px 24px 0px rgba(0, 0, 0, 0.1);
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.gmail-tick > img {
+  width: 166px;
+  height: 166px;
+  flex-shrink: 0;
+}
+
+.done {
+  color: #000;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 25px 0px;
+}
+
+.gmail-info {
+  color: #000;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  padding-bottom: 25px;
+  width: 550px;
+}
+
+.open-gmail {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  border-radius: 60px;
+  border: 5px solid #000;
+  background: #000;
+}
+
+.gmail-btn-text {
+  color: #fff;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+}

@@ -1,27 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import "../assets/css/dashboard.css";
-import { Route } from "react-router";
-import Register from "./Register";
-const Header = () => {
-  const btLogo = require("../assets/icons/Group 56.png");
-  const searchLogo = require("../assets/icons/search (1).png");
-  const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
-  const uploadIcon = require("../assets/icons/upload.png");
-  const importIcon = require("../assets/icons/instagram.png");
+const BrandHeader = () => {
+  const btLogo = require("../../assets/icons/Group 56 (1).svg");
+  const gridLogo = require("../../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [formOne_visibility, showFormOne] = useState(true);
-  const [formTwo_visibility, showFormTwo] = useState(false);
-  const [formThree_visibility, showForThree] = useState(false);
-  const [formFour_visibility, showFormFour] = useState(false);
-  const [formFive_visibility, showFormFive] = useState(false);
-  const [model, setModel] = useState(true);
-  const [seeker, setSeeker] = useState(false);
-  const [dob, setDOB] = useState("");
-  const [phone, setPhone] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [gender, setGenders] = useState("");
-  const [genderList, setGenderList] = useState([]);
 
   const handleClick = () => {
     window.scrollTo(0, 0); // Scroll to top on link click
@@ -80,13 +62,10 @@ const Header = () => {
           </div>
         </div>
         <div className="login-text">Login</div>
-        <div
-          className="signup"
-          onClick={() => {
-            Route("/signup");
-          }}
-        >
-          Sign up
+        <div className="signup">
+          <NavLink to="/signup" onClick={handleClick}>
+            Sign up
+          </NavLink>
         </div>
       </div>
 
@@ -101,13 +80,23 @@ const Header = () => {
             </NavLink>
           </div>
           <div>
-            <NavLink to="/find-creators" onClick={handleClick}>
-              Find Creators
+            <NavLink to="/post-job" onClick={handleClick}>
+              Post a Job
             </NavLink>
           </div>
           <div>
+            <NavLink to="/find-creators" onClick={handleClick}>
+              Find Talent
+            </NavLink>
+          </div>
+          {/* <div>
             <NavLink to="/get-booked" onClick={handleClick}>
               Get Booked
+            </NavLink>
+          </div> */}
+          <div>
+            <NavLink to="/how-it-works" onClick={handleClick}>
+              How It Works
             </NavLink>
           </div>
           <div>
@@ -117,7 +106,7 @@ const Header = () => {
           </div>
           <div>
             <NavLink to="/resources" onClick={handleClick}>
-              Learn to Resources
+              Resources
             </NavLink>
           </div>
         </div>
@@ -131,14 +120,15 @@ const Header = () => {
               </label>
             </div>
           </div>
-          <div className="login-text">Login</div>
-          <div
-            className="signup"
-            onClick={() => {
-              Route("/signup");
-            }}
-          >
-            Sign up
+          <div className="">
+            <NavLink to="/login" className="login-text" onClick={handleClick}>
+              Login
+            </NavLink>
+          </div>
+          <div>
+            <NavLink to="/signup" className="signup" onClick={handleClick}>
+              Sign up
+            </NavLink>
           </div>
           <div className="gridLogo">
             <img src={gridLogo}></img>
@@ -149,4 +139,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default BrandHeader;

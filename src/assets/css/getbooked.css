@@ -338,7 +338,6 @@
   height: 78px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: #d9d9d9;
   flex-wrap: wrap;
   justify-content: center;
   padding: 6px;
@@ -380,6 +379,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  padding-left: 10px;
 }
 
 .followers-text {
@@ -765,6 +765,20 @@
   font-weight: 600;
   line-height: normal;
   padding-left: 10px;
+}
+
+.talents-social-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #ddd5d5;
+  background: #fff;
+  width: 284px;
+  height: 170px;
+  flex-shrink: 0;
+  margin: 15px 0px 0px 20px;
 }
 
 @media (max-width: 475px) {
