@@ -5,7 +5,13 @@ import FindCreators from "../views/FindCreators";
 import GetBooked from "../views/GetBooked";
 import Pricing from "../views/pricing";
 import Resources from "../views/resources";
-import Register from "../views/Register";
+import About from "../pages/About";
+import Guidelines from "../pages/Guidelines";
+import PostJob from "../pages/PostJob";
+import HowItWorks from "../pages/how-it-works";
+import Register from "../auth/Register";
+import Login from "../auth/Login";
+import BrandDashboard from "../brand/pages/brand-dashboard";
 
 function Routing() {
   return (
@@ -16,6 +22,12 @@ function Routing() {
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/resources" element={<Resources />} />
       <Route path="/signup" element={<Register />} />
+      <Route path="/about-us" element={<About />} />
+      <Route path="/community-guidelines" element={<Guidelines />} />
+      <Route path="/post-job" element={<PostJob />} />
+      <Route path="/how-it-works" element={<HowItWorks />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/brand-dashboard" element={<BrandDashboard />} />
     </Routes>
   );
 }

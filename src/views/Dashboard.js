@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/dashboard.css";
-import Header from "./header";
-import Footer from "./Footer";
+import Header from "../layout/header";
+import Footer from "../layout/Footer";
 import { useNavigate } from "react-router";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
+import { NavLink } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
-
   const uploadIcon = require("../assets/icons/upload.png");
   const importIcon = require("../assets/icons/instagram.png");
   const btLogo = require("../assets/icons/Group 56.png");
@@ -15,7 +15,7 @@ const Dashboard = () => {
   const starIcon = require("../assets/icons/star.png");
   const whiteStar = require("../assets/icons/white_star.png");
   const checkMark = require("../assets/icons/check-circle.png");
-  const lockIcon = require("../assets/icons/lock.png");
+  const lockIcon = require("../assets/icons/white-lock.png");
   const gents = require("../assets/images/gents.png");
   const girl = require("../assets/images/girl.png");
   const female = require("../assets/images/female.png");
@@ -281,38 +281,47 @@ const Dashboard = () => {
     <>
       <Header />
       <div className="section-1">
-        <div className="find-work">
-          <div className="section-title">Find Jobs</div>
-          <div className="section-description">
-            Talent can  build and manage their personal brands and will have a
-            unique url like linkedin that they can share as thier portfolio...
-          </div>
-          <div className="Join-wrapper center">
-            <div
-              className="joinnow-btn"
-              // onClick={() => {
-              //   navigate("/signup");
-              // }}
-            >
-              Join Now
-            </div>
-          </div>
+        <div className="brand-section">
+          <p className="brand-title">
+            <span>C</span>onnecting <span>B</span>rands and <span>T</span>alent
+          </p>
+          <p className="brand-description">
+            No Middle Man. No Commisions. No Hidden Fees
+          </p>
         </div>
-        <div className="find-work">
-          <div className="section-title">Hire Talent</div>
-          <div className="section-description">
-            The platform will help brands find, attract, and hire the best
-            talent as per their budget and requirement in less than 5 minutes.
-          </div>
-          <div className="white-joinnow center">
-            <div
-              className="joinnow-btn"
-              // onClick={() => {
-              //   navigate("/signup");
-              // }}
-            >
-              Join Now
+        <div className="brand-options">
+          <div className="join-talent-section">
+            <div className="section-title">Get Booked</div>
+            <div className="section-description">
+              Get discovered by top brands, set your own rates, and keep 100% of
+              your earnings. Chat directly with brands you love and build
+              lasting relationships. We put creators first. Sign up today and
+              start earning!
             </div>
+            <NavLink
+              className="joinnow-btn "
+              to="/signup"
+              onClick={handleClick}
+            >
+              <div className="Join-wrapper center">
+                <div className="joinnow-text">Join Now</div>
+              </div>
+            </NavLink>
+          </div>
+          <div className="hire-talent-section">
+            <div className="section-title">Hire Talent</div>
+            <div className="section-description brand-secription">
+              Skip the search, skip the stress. Hire dream talent in minutes.
+            </div>
+            <NavLink
+              className="joinnow-text"
+              to="/signup"
+              onClick={handleClick}
+            >
+              <div className="white-joinnow center">
+                <div className="joinnow-btn">Hire Now</div>
+              </div>
+            </NavLink>
           </div>
         </div>
       </div>
@@ -360,7 +369,7 @@ const Dashboard = () => {
             Models
           </div>
           <div
-            className={more ? "active-tab" : null}
+            className={more ? "active-tab more-text" : "more-text"}
             onClick={(e) => {
               handleTabs("more");
             }}
@@ -851,9 +860,6 @@ const Dashboard = () => {
                 </div>
                 <div className="modal-buttons">
                   <div
-                    onClick={(e) => {
-                      handleForms("model");
-                    }}
                     className={model ? "selected-register" : "choose-register"}
                   >
                     I'm a Talent

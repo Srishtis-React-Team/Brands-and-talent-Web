@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../assets/css/findcreators.css";
 import "../assets/css/getbooked.css";
-import Header from "./header.js";
-import Footer from "./Footer.js";
+import Header from "../layout/header.js";
+import Footer from "../layout/Footer.js";
 import CardCarousel from "./CardCarousel.js";
 import PhotosCarousel from "./PhotosCarousel.js";
 
@@ -46,6 +46,9 @@ const GetBooked = () => {
   const whitePlus = require("../assets/icons/whitePlus.png");
   const white_star = require("../assets/icons/white_star.png");
   const check = require("../assets/icons/check.png");
+  const fbIcon = require("../assets/icons/facebook logo_icon.png");
+  const linkdin = require("../assets/icons/linkdin_icon.png");
+  const tiktok = require("../assets/icons/tiktok_social media_icon.png");
 
   const [portofolio, showPortofolio] = useState(true);
   const [photos, showPhotos] = useState(false);
@@ -217,7 +220,7 @@ const GetBooked = () => {
               Pro
             </div>
           </div>
-          <div className="talent-name mt-4">
+          <div className="talents-social-wrapper mt-4">
             <div className="talents-social">
               <span className="insta-backdrop">
                 <img src={instaLogo}></img>
@@ -226,7 +229,17 @@ const GetBooked = () => {
               <div className="followers-text">Followers</div>
             </div>
             <div className="talents-social">
-              <img src={xLogo}></img>
+              <img src={fbIcon}></img>
+              <soan className="social-count">9.6k</soan>
+              <div className="followers-text">Followers</div>
+            </div>
+            <div className="talents-social">
+              <img src={tiktok}></img>
+              <soan className="social-count">9.6k</soan>
+              <div className="followers-text">Followers</div>
+            </div>
+            <div className="talents-social">
+              <img src={linkdin}></img>
               <soan className="social-count">9.6k</soan>
               <div className="followers-text">Followers</div>
             </div>
@@ -578,7 +591,7 @@ const GetBooked = () => {
         </div>
       </div>
 
-      <div className="model-profile">
+      {/* <div className="model-profile">
         <div>
           <img className="modal-profile-img" src={model}></img>
         </div>
@@ -625,7 +638,7 @@ const GetBooked = () => {
             </span>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="center">
         <div className="Join-wrapper center">

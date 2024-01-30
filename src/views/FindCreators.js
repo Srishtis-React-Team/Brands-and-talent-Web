@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/findcreators.css";
-import Header from "./header.js";
-import Footer from "./Footer.js";
+import Header from "../layout/header.js";
+import Footer from "../layout/Footer.js";
 import Select from "react-select";
 const FindCreators = () => {
   const searchIcon = require("../assets/icons/search.png");
