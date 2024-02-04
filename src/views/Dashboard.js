@@ -33,6 +33,7 @@ const Dashboard = () => {
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
   const heartIcon = require("../assets/icons/heart.png");
+  const chatIcon = require("../assets/icons/chat-icon.png");
   const favoruiteIcon = require("../assets/icons/favorite.png");
   const girl1 = require("../assets/images/girl1.png");
   const girl2 = require("../assets/images/girl2.png");
@@ -279,912 +280,920 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header />
-      <div className="section-1">
-        <div className="brand-section">
-          <p className="brand-title">
-            <span>C</span>onnecting <span>B</span>rands and <span>T</span>alent
-          </p>
-          <p className="brand-description">
-            No Middle Man. No Commisions. No Hidden Fees
-          </p>
-        </div>
-        <div className="brand-options">
-          <div className="join-talent-section">
-            <div className="section-title">Get Booked</div>
-            <div className="section-description">
-              Get discovered by top brands, set your own rates, and keep 100% of
-              your earnings. Chat directly with brands you love and build
-              lasting relationships. We put creators first. Sign up today and
-              start earning!
+      <div className="dashboard-main">
+        <Header />
+        <div className="section-1">
+          <div className="brand-section">
+            <p className="brand-title">
+              <span>C</span>onnecting <span>B</span>rands and <span>T</span>
+              alent
+            </p>
+            <p className="brand-description">
+              No Middle Man. No Commisions. No Hidden Fees
+            </p>
+          </div>
+          <div className="brand-options">
+            <div className="join-talent-section">
+              <div className="section-title">Get Booked</div>
+              <div className="section-description">
+                Get discovered by top brands, set your own rates, and keep 100%
+                of your earnings. Chat directly with brands you love and build
+                lasting relationships. We put creators first. Sign up today and
+                start earning!
+              </div>
+              <NavLink
+                className="joinnow-btn "
+                to="/signup"
+                onClick={handleClick}
+              >
+                <div className="Join-wrapper center">
+                  <div className="joinnow-text">Join Now</div>
+                </div>
+              </NavLink>
             </div>
-            <NavLink
-              className="joinnow-btn "
-              to="/signup"
-              onClick={handleClick}
+            <div className="hire-talent-section">
+              <div className="section-title">Hire Talent</div>
+              <div className="section-description brand-secription">
+                Skip the search, skip the stress. Hire dream talent in minutes.
+              </div>
+              <NavLink
+                className="joinnow-text"
+                to="/signup"
+                onClick={handleClick}
+              >
+                <div className="white-joinnow center">
+                  <div className="joinnow-btn">Hire Now</div>
+                </div>
+              </NavLink>
+            </div>
+          </div>
+        </div>
+        <div className="tabs-section">
+          <div className="title">Popular Talents</div>
+          <div className="tabs">
+            <div
+              className={artists ? "active-tab" : null}
+              onClick={(e) => {
+                handleTabs("artists");
+              }}
             >
-              <div className="Join-wrapper center">
-                <div className="joinnow-text">Join Now</div>
-              </div>
-            </NavLink>
-          </div>
-          <div className="hire-talent-section">
-            <div className="section-title">Hire Talent</div>
-            <div className="section-description brand-secription">
-              Skip the search, skip the stress. Hire dream talent in minutes.
+              Artists
             </div>
-            <NavLink
-              className="joinnow-text"
-              to="/signup"
-              onClick={handleClick}
+            <div
+              className={photographers ? "active-tab" : null}
+              onClick={(e) => {
+                handleTabs("photographers");
+              }}
             >
-              <div className="white-joinnow center">
-                <div className="joinnow-btn">Hire Now</div>
-              </div>
-            </NavLink>
-          </div>
-        </div>
-      </div>
-      <div className="tabs-section">
-        <div className="title">Popular Talents</div>
-        <div className="tabs">
-          <div
-            className={artists ? "active-tab" : null}
-            onClick={(e) => {
-              handleTabs("artists");
-            }}
-          >
-            Artists
-          </div>
-          <div
-            className={photographers ? "active-tab" : null}
-            onClick={(e) => {
-              handleTabs("photographers");
-            }}
-          >
-            Photographers
-          </div>
-          <div
-            className={actors ? "active-tab" : null}
-            onClick={(e) => {
-              handleTabs("actors");
-            }}
-          >
-            Actors
-          </div>
-          <div
-            className={influencers ? "active-tab" : null}
-            onClick={(e) => {
-              handleTabs("influencers");
-            }}
-          >
-            Influencers
-          </div>
-          <div
-            className={models ? "active-tab" : null}
-            onClick={(e) => {
-              handleTabs("models");
-            }}
-          >
-            Models
-          </div>
-          <div
-            className={more ? "active-tab more-text" : "more-text"}
-            onClick={(e) => {
-              handleTabs("more");
-            }}
-          >
-            More
-          </div>
-        </div>
-      </div>
-
-      {artists && (
-        <div className="gallery-section">
-          {talentList.map((item) => {
-            return (
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={item.photo}></img>
-                  {!item.isFavorite && (
-                    <img
-                      className="heart-icon"
-                      src={heartIcon}
-                      onClick={() => addFavorite(item)}
-                    ></img>
-                  )}
-                  {item.isFavorite === true && (
-                    <img
-                      className="heart-icon"
-                      src={favoruiteIcon}
-                      onClick={() => removeFavorite(item)}
-                    ></img>
-                  )}
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">{item.name}</div>
-                    <div className="address">{item.address}</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {photographers && (
-        <div className="gallery-section">
-          {photoGraphersList.map((item) => {
-            return (
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={item.photo}></img>
-                  {!item.isFavorite && (
-                    <img
-                      className="heart-icon"
-                      src={heartIcon}
-                      onClick={() => addFavorite(item)}
-                    ></img>
-                  )}
-                  {item.isFavorite === true && (
-                    <img
-                      className="heart-icon"
-                      src={favoruiteIcon}
-                      onClick={() => removeFavorite(item)}
-                    ></img>
-                  )}
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">{item.name}</div>
-                    <div className="address">{item.address}</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {actors && (
-        <div className="gallery-section">
-          {talentList.map((item) => {
-            return (
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={item.photo}></img>
-                  {!item.isFavorite && (
-                    <img
-                      className="heart-icon"
-                      src={heartIcon}
-                      onClick={() => addFavorite(item)}
-                    ></img>
-                  )}
-                  {item.isFavorite === true && (
-                    <img
-                      className="heart-icon"
-                      src={favoruiteIcon}
-                      onClick={() => removeFavorite(item)}
-                    ></img>
-                  )}
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">{item.name}</div>
-                    <div className="address">{item.address}</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {influencers && (
-        <div className="gallery-section">
-          {talentList.map((item) => {
-            return (
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={item.photo}></img>
-                  {!item.isFavorite && (
-                    <img
-                      className="heart-icon"
-                      src={heartIcon}
-                      onClick={() => addFavorite(item)}
-                    ></img>
-                  )}
-                  {item.isFavorite === true && (
-                    <img
-                      className="heart-icon"
-                      src={favoruiteIcon}
-                      onClick={() => removeFavorite(item)}
-                    ></img>
-                  )}
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">{item.name}</div>
-                    <div className="address">{item.address}</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {models && (
-        <div className="gallery-section">
-          {talentList.map((item) => {
-            return (
-              <div className="gallery-warpper">
-                <div className="gallery-position">
-                  <img className="gallery-img" src={item.photo}></img>
-                  {!item.isFavorite && (
-                    <img
-                      className="heart-icon"
-                      src={heartIcon}
-                      onClick={() => addFavorite(item)}
-                    ></img>
-                  )}
-                  {item.isFavorite === true && (
-                    <img
-                      className="heart-icon"
-                      src={favoruiteIcon}
-                      onClick={() => removeFavorite(item)}
-                    ></img>
-                  )}
-                </div>
-                <div className="gallery-content">
-                  <div className="content">
-                    <div className="name">{item.name}</div>
-                    <div className="address">{item.address}</div>
-                  </div>
-                  <div className="rating">
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                    <img src={starIcon}></img>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      <div className="center">
-        <div className="Join-wrapper center">
-          <div>Find More</div>
-        </div>
-      </div>
-      <div className="title">Our Community</div>
-      <div className="cards">
-        <div className="community-card-wrapper card-background">
-          <div className="count">5,258,451</div>
-          <div className="cards-text">Models in community</div>
-        </div>
-        <div className="community-card-wrapper  card-background">
-          <div className="count">5,258,451</div>
-          <div className="cards-text">Industry Professionals</div>
-        </div>
-        <div className="community-card-wrapper  card-background">
-          <div className="count">5,258,451</div>
-          <div className="cards-text">Agencies</div>
-        </div>
-      </div>
-      <div className="title">Products and Services</div>
-      <div className="cards">
-        <div className="card-wrapper ">
-          <div className="card-picture">
-            <img src={checkMark}></img>
-          </div>
-          <div className="card-title">Talent Marketplace</div>
-          <div className="cards-description">
-            A platform where talents can create a profile, showcase their work,
-            and connect with...
-          </div>
-        </div>
-        <div className="card-wrapper">
-          <div className="card-picture">
-            <img src={lockIcon}></img>
-          </div>
-          <div className="card-title">Hire Talent</div>
-          <div className="cards-description">
-            The platform will help brands find, attract, and hire the best
-            talent as per their ...
-          </div>
-        </div>
-        <div className="card-wrapper">
-          <div className="card-picture">
-            <img src={whiteStar}></img>
-          </div>
-          <div className="card-title">Find Jobs</div>
-          <div className="cards-description">
-            Talent can  build and manage their personal brands and will have a
-            unique url ...
-          </div>
-        </div>
-      </div>
-      <div className="title">Case studies</div>
-      <div className="gallery-section">
-        {talentList.map((item) => {
-          return (
-            <div className="gallery-warpper">
-              <div className="gallery-position">
-                <img className="gallery-img" src={item.photo}></img>
-                {!item.isFavorite && (
-                  <img
-                    className="heart-icon"
-                    src={heartIcon}
-                    onClick={() => addFavorite(item)}
-                  ></img>
-                )}
-                {item.isFavorite === true && (
-                  <img
-                    className="heart-icon"
-                    src={favoruiteIcon}
-                    onClick={() => removeFavorite(item)}
-                  ></img>
-                )}
-              </div>
-              <div className="gallery-content">
-                <div className="content">
-                  <div className="name">{item.name}</div>
-                  <div className="address">{item.address}</div>
-                </div>
-                <div className="rating">
-                  <img src={starIcon}></img>
-                  <img src={starIcon}></img>
-                  <img src={starIcon}></img>
-                </div>
-              </div>
+              Photographers
             </div>
-          );
-        })}
-      </div>
-      <div className="center">
-        <div className="Join-wrapper center">
-          <div>Find More</div>
+            <div
+              className={actors ? "active-tab" : null}
+              onClick={(e) => {
+                handleTabs("actors");
+              }}
+            >
+              Actors
+            </div>
+            <div
+              className={influencers ? "active-tab" : null}
+              onClick={(e) => {
+                handleTabs("influencers");
+              }}
+            >
+              Influencers
+            </div>
+            <div
+              className={models ? "active-tab" : null}
+              onClick={(e) => {
+                handleTabs("models");
+              }}
+            >
+              Models
+            </div>
+            <div
+              className={more ? "active-tab more-text" : "more-text"}
+              onClick={(e) => {
+                handleTabs("more");
+              }}
+            >
+              More
+            </div>
+          </div>
         </div>
-      </div>
-      <div
-        style={{
-          backgroundImage: `url(${sliderBackground})`,
-        }}
-        className="carousel-section"
-      >
-        <div className="carousel-title center">Success Stories</div>
+
+        {artists && (
+          <div className="gallery-section">
+            {talentList.map((item) => {
+              return (
+                <div className="gallery-warpper">
+                  <div className="gallery-position">
+                    <img className="gallery-img" src={item.photo}></img>
+                    {!item.isFavorite && (
+                      <img
+                        className="heart-icon"
+                        src={heartIcon}
+                        onClick={() => addFavorite(item)}
+                      ></img>
+                    )}
+                    {item.isFavorite === true && (
+                      <img
+                        className="heart-icon"
+                        src={favoruiteIcon}
+                        onClick={() => removeFavorite(item)}
+                      ></img>
+                    )}
+                  </div>
+                  <div className="gallery-content">
+                    <div className="content">
+                      <div className="name">{item.name}</div>
+                      <div className="address">{item.address}</div>
+                    </div>
+                    <div className="rating">
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {photographers && (
+          <div className="gallery-section">
+            {photoGraphersList.map((item) => {
+              return (
+                <div className="gallery-warpper">
+                  <div className="gallery-position">
+                    <img className="gallery-img" src={item.photo}></img>
+                    {!item.isFavorite && (
+                      <img
+                        className="heart-icon"
+                        src={heartIcon}
+                        onClick={() => addFavorite(item)}
+                      ></img>
+                    )}
+                    {item.isFavorite === true && (
+                      <img
+                        className="heart-icon"
+                        src={favoruiteIcon}
+                        onClick={() => removeFavorite(item)}
+                      ></img>
+                    )}
+                  </div>
+                  <div className="gallery-content">
+                    <div className="content">
+                      <div className="name">{item.name}</div>
+                      <div className="address">{item.address}</div>
+                    </div>
+                    <div className="rating">
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {actors && (
+          <div className="gallery-section">
+            {talentList.map((item) => {
+              return (
+                <div className="gallery-warpper">
+                  <div className="gallery-position">
+                    <img className="gallery-img" src={item.photo}></img>
+                    {!item.isFavorite && (
+                      <img
+                        className="heart-icon"
+                        src={heartIcon}
+                        onClick={() => addFavorite(item)}
+                      ></img>
+                    )}
+                    {item.isFavorite === true && (
+                      <img
+                        className="heart-icon"
+                        src={favoruiteIcon}
+                        onClick={() => removeFavorite(item)}
+                      ></img>
+                    )}
+                  </div>
+                  <div className="gallery-content">
+                    <div className="content">
+                      <div className="name">{item.name}</div>
+                      <div className="address">{item.address}</div>
+                    </div>
+                    <div className="rating">
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {influencers && (
+          <div className="gallery-section">
+            {talentList.map((item) => {
+              return (
+                <div className="gallery-warpper">
+                  <div className="gallery-position">
+                    <img className="gallery-img" src={item.photo}></img>
+                    {!item.isFavorite && (
+                      <img
+                        className="heart-icon"
+                        src={heartIcon}
+                        onClick={() => addFavorite(item)}
+                      ></img>
+                    )}
+                    {item.isFavorite === true && (
+                      <img
+                        className="heart-icon"
+                        src={favoruiteIcon}
+                        onClick={() => removeFavorite(item)}
+                      ></img>
+                    )}
+                  </div>
+                  <div className="gallery-content">
+                    <div className="content">
+                      <div className="name">{item.name}</div>
+                      <div className="address">{item.address}</div>
+                    </div>
+                    <div className="rating">
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {models && (
+          <div className="gallery-section">
+            {talentList.map((item) => {
+              return (
+                <div className="gallery-warpper">
+                  <div className="gallery-position">
+                    <img className="gallery-img" src={item.photo}></img>
+                    {!item.isFavorite && (
+                      <img
+                        className="heart-icon"
+                        src={heartIcon}
+                        onClick={() => addFavorite(item)}
+                      ></img>
+                    )}
+                    {item.isFavorite === true && (
+                      <img
+                        className="heart-icon"
+                        src={favoruiteIcon}
+                        onClick={() => removeFavorite(item)}
+                      ></img>
+                    )}
+                  </div>
+                  <div className="gallery-content">
+                    <div className="content">
+                      <div className="name">{item.name}</div>
+                      <div className="address">{item.address}</div>
+                    </div>
+                    <div className="rating">
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                      <img src={starIcon}></img>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        <div className="center">
+          <div className="Join-wrapper center">
+            <div>Find More</div>
+          </div>
+        </div>
+        <div className="title">Our Community</div>
+        <div className="cards">
+          <div className="community-card-wrapper card-background">
+            <div className="count">5,258,451</div>
+            <div className="cards-text">Models in community</div>
+          </div>
+          <div className="community-card-wrapper  card-background">
+            <div className="count">5,258,451</div>
+            <div className="cards-text">Industry Professionals</div>
+          </div>
+          <div className="community-card-wrapper  card-background">
+            <div className="count">5,258,451</div>
+            <div className="cards-text">Agencies</div>
+          </div>
+        </div>
+        <div className="title">Products and Services</div>
+        <div className="cards">
+          <div className="card-wrapper ">
+            <div className="card-picture">
+              <img src={checkMark}></img>
+            </div>
+            <div className="card-title">Talent Marketplace</div>
+            <div className="cards-description">
+              A platform where talents can create a profile, showcase their
+              work, and connect with...
+            </div>
+          </div>
+          <div className="card-wrapper">
+            <div className="card-picture">
+              <img src={lockIcon}></img>
+            </div>
+            <div className="card-title">Hire Talent</div>
+            <div className="cards-description">
+              The platform will help brands find, attract, and hire the best
+              talent as per their ...
+            </div>
+          </div>
+          <div className="card-wrapper">
+            <div className="card-picture">
+              <img src={whiteStar}></img>
+            </div>
+            <div className="card-title">Find Jobs</div>
+            <div className="cards-description">
+              Talent can  build and manage their personal brands and will have a
+              unique url ...
+            </div>
+          </div>
+        </div>
+        <div className="title">Case studies</div>
+        <div className="gallery-section">
+          {talentList.map((item) => {
+            return (
+              <div className="gallery-warpper">
+                <div className="gallery-position">
+                  <img className="gallery-img" src={item.photo}></img>
+                  {!item.isFavorite && (
+                    <img
+                      className="heart-icon"
+                      src={heartIcon}
+                      onClick={() => addFavorite(item)}
+                    ></img>
+                  )}
+                  {item.isFavorite === true && (
+                    <img
+                      className="heart-icon"
+                      src={favoruiteIcon}
+                      onClick={() => removeFavorite(item)}
+                    ></img>
+                  )}
+                </div>
+                <div className="gallery-content">
+                  <div className="content">
+                    <div className="name">{item.name}</div>
+                    <div className="address">{item.address}</div>
+                  </div>
+                  <div className="rating">
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                    <img src={starIcon}></img>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="center">
+          <div className="Join-wrapper center">
+            <div>Find More</div>
+          </div>
+        </div>
         <div
-          id="carouselExampleControls"
-          className="carousel slide"
-          data-bs-ride="carousel"
+          style={{
+            backgroundImage: `url(${sliderBackground})`,
+          }}
+          className="carousel-section"
         >
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <div className="carousel-wrapper">
-                <div className="box-one">
-                  <div>
-                    <img className="carousel-img" src={gents}></img>
-                  </div>
-                  <div className="box-content">
-                    <div className="quote">
-                      <img src={quoteIcon}></img>
-                    </div>
-                    <div className="carousel-description">
-                      A great photographer's tool for online castings that
-                      really works!
-                    </div>
-                    <div className="profile-section">
-                      <div>
-                        <img src={roundProfile}></img>
-                      </div>
-                      <div className="profile-content">
-                        <div className="profile-name">Dorothy</div>
-                        <div className="profile-info">Lorem ipsum dolor</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="box-one box-two">
-                  <div>
-                    <img className="carousel-img" src={female}></img>
-                  </div>
-                  <div className="box-content">
-                    <div className="quote">
-                      <img src={quoteIcon}></img>
-                    </div>
-                    <div className="carousel-description">
-                      A great photographer's tool for online castings that
-                      really works!
-                    </div>
-                    <div className="profile-section">
-                      <div>
-                        <img src={roundProfile}></img>
-                      </div>
-                      <div className="profile-content">
-                        <div className="profile-name">Dorothy</div>
-                        <div className="profile-info">Lorem ipsum dolor</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="carousel-item">
-              <div className="carousel-wrapper">
-                <div className="box-one">
-                  <div>
-                    <img className="carousel-img" src={girl}></img>
-                  </div>
-                  <div className="box-content">
-                    <div className="quote">
-                      <img src={quoteIcon}></img>
-                    </div>
-                    <div className="carousel-description">
-                      A great photographer's tool for online castings that
-                      really works!
-                    </div>
-                    <div className="profile-section">
-                      <div>
-                        <img src={roundProfile}></img>
-                      </div>
-                      <div className="profile-content">
-                        <div className="profile-name">Dorothy</div>
-                        <div className="profile-info">Lorem ipsum dolor</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="box-one box-two">
-                  <div>
-                    <img className="carousel-img" src={fashion}></img>
-                  </div>
-                  <div className="box-content">
-                    <div className="quote">
-                      <img src={quoteIcon}></img>
-                    </div>
-                    <div className="carousel-description">
-                      A great photographer's tool for online castings that
-                      really works!
-                    </div>
-                    <div className="profile-section">
-                      <div>
-                        <img src={roundProfile}></img>
-                      </div>
-                      <div className="profile-content">
-                        <div className="profile-name">Dorothy</div>
-                        <div className="profile-info">Lorem ipsum dolor</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="prev"
+          <div className="carousel-title center">Success Stories</div>
+          <div
+            id="carouselExampleControls"
+            className="carousel slide"
+            data-bs-ride="carousel"
           >
-            <span
-              className="carousel-control-prev-icon carousel-icons"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="next"
-          >
-            <span
-              className="carousel-control-next-icon carousel-icons"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Next</span>
-          </button>
+            <div className="carousel-inner">
+              <div className="carousel-item active">
+                <div className="carousel-wrapper">
+                  <div className="box-one">
+                    <div>
+                      <img className="carousel-img" src={gents}></img>
+                    </div>
+                    <div className="box-content">
+                      <div className="quote">
+                        <img src={quoteIcon}></img>
+                      </div>
+                      <div className="carousel-description">
+                        A great photographer's tool for online castings that
+                        really works!
+                      </div>
+                      <div className="profile-section">
+                        <div>
+                          <img src={roundProfile}></img>
+                        </div>
+                        <div className="profile-content">
+                          <div className="profile-name">Dorothy</div>
+                          <div className="profile-info">Lorem ipsum dolor</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="box-one box-two">
+                    <div>
+                      <img className="carousel-img" src={female}></img>
+                    </div>
+                    <div className="box-content">
+                      <div className="quote">
+                        <img src={quoteIcon}></img>
+                      </div>
+                      <div className="carousel-description">
+                        A great photographer's tool for online castings that
+                        really works!
+                      </div>
+                      <div className="profile-section">
+                        <div>
+                          <img src={roundProfile}></img>
+                        </div>
+                        <div className="profile-content">
+                          <div className="profile-name">Dorothy</div>
+                          <div className="profile-info">Lorem ipsum dolor</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="carousel-item">
+                <div className="carousel-wrapper">
+                  <div className="box-one">
+                    <div>
+                      <img className="carousel-img" src={girl}></img>
+                    </div>
+                    <div className="box-content">
+                      <div className="quote">
+                        <img src={quoteIcon}></img>
+                      </div>
+                      <div className="carousel-description">
+                        A great photographer's tool for online castings that
+                        really works!
+                      </div>
+                      <div className="profile-section">
+                        <div>
+                          <img src={roundProfile}></img>
+                        </div>
+                        <div className="profile-content">
+                          <div className="profile-name">Dorothy</div>
+                          <div className="profile-info">Lorem ipsum dolor</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="box-one box-two">
+                    <div>
+                      <img className="carousel-img" src={fashion}></img>
+                    </div>
+                    <div className="box-content">
+                      <div className="quote">
+                        <img src={quoteIcon}></img>
+                      </div>
+                      <div className="carousel-description">
+                        A great photographer's tool for online castings that
+                        really works!
+                      </div>
+                      <div className="profile-section">
+                        <div>
+                          <img src={roundProfile}></img>
+                        </div>
+                        <div className="profile-content">
+                          <div className="profile-name">Dorothy</div>
+                          <div className="profile-info">Lorem ipsum dolor</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleControls"
+              data-bs-slide="prev"
+            >
+              <span
+                className="carousel-control-prev-icon carousel-icons"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleControls"
+              data-bs-slide="next"
+            >
+              <span
+                className="carousel-control-next-icon carousel-icons"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
         </div>
+        <div className="title">Trusted by renowned brands</div>
+        <div className="brands-section">
+          <div>
+            <img src={adidasIcon}></img>
+          </div>
+          <div>
+            <img src={ubisoftIcon}></img>
+          </div>
+          <div>
+            <img src={wppIcon}></img>
+          </div>
+          <div>
+            <img src={lorealIcon}></img>
+          </div>
+          <div>
+            <img src={joseIcon}></img>
+          </div>
+          <div>
+            <img src={calvinIcon}></img>
+          </div>
+          <div>
+            <img src={havasIcon}></img>
+          </div>
+        </div>
+        <Footer />
       </div>
-      <div className="title">Trusted by renowned brands</div>
-      <div className="brands-section">
-        <div>
-          <img src={adidasIcon}></img>
-        </div>
-        <div>
-          <img src={ubisoftIcon}></img>
-        </div>
-        <div>
-          <img src={wppIcon}></img>
-        </div>
-        <div>
-          <img src={lorealIcon}></img>
-        </div>
-        <div>
-          <img src={joseIcon}></img>
-        </div>
-        <div>
-          <img src={calvinIcon}></img>
-        </div>
-        <div>
-          <img src={havasIcon}></img>
-        </div>
-      </div>
-      <Footer />
-      {/* <ChatBot /> */}
-
-      <div
-        className="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        {formOne_visibility && (
-          <div className="modal-dialog modal-wrapper MODAL ONE">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="modal-title">Welcome</div>
-                <div className="modal-description">
-                  Welcome to our vibrant community! To tailor your experience,
-                  we'd love to know more about you.
-                </div>
-                <div className="modal-buttons">
-                  <div
-                    className={model ? "selected-register" : "choose-register"}
-                  >
-                    I'm a Talent
-                  </div>
-                  <div
-                    onClick={(e) => {
-                      handleForms("seeker");
-                    }}
-                    className={seeker ? "selected-register" : "choose-register"}
-                  >
-                    I'm a Talent Seeker
-                  </div>
-                </div>
-                <div className="question-model">
-                  Are you the star of the show or the one seeking brilliance?
-                </div>
-                <div className="register-modal">
-                  <div
-                    className="register-btn"
-                    onClick={(e) => {
-                      handleForms("form-one");
-                    }}
-                  >
-                    Register Now
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {formTwo_visibility && (
-          <div className="modal-dialog modal-wrapper">
-            <div className="modal-content">
-              <div className="modal-header header-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
-                <div className="step-text">Step 1 of 4</div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="step-title">Which one are you?</div>
-                <div className="step-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div className="step-selection">
-                  <div className="select-wrapper">
-                    <input type="checkbox" id="aspiring"></input>
-                    <label htmlFor="aspiring" className="select-text">
-                      Aspiring Talent
-                    </label>
-                  </div>
-                  <div className="select-wrapper">
-                    <input type="checkbox" id="professional"></input>
-                    <label htmlFor="professional" className="select-text">
-                      Professional Talent
-                    </label>
-                  </div>
-                  <div className="select-wrapper">
-                    <input type="checkbox" id="other-talent"></input>
-                    <label htmlFor="other-talent" className="select-text">
-                      Talent (Actor, dancer, musician, sports person, etc)
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="step-back">
-                  Back
-                </button>
-                <button
-                  type="button"
-                  className="step-continue"
-                  onClick={(e) => {
-                    handleForms("form-two");
-                  }}
-                >
-                  Continue
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        {formThree_visibility && (
-          <div className="modal-dialog modal-wrapper MODAL THREE">
-            <div className="modal-content">
-              <div className="modal-header header-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
-                <div className="step-text">Step 2 of 4</div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="step-title">Personal Details</div>
-                <div className="step-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div className="step2-selection">
-                  <div className="step-section-1">
-                    <input
-                      type="text"
-                      placeholderTextColor="#202020"
-                      placeholder="Full Name"
-                      value={fullName}
-                      onChange={(e) => {
-                        setFullName(e.target.value);
-                      }}
-                      className=" form-control step-input"
-                    />
-                    <select
-                      onChange={handleSelectChange}
-                      value={gender}
-                      id="disabledSelect"
-                      className="form-select step-select"
-                      placeholder="Gender"
-                    >
-                      {genderList.map((item) => {
-                        return <option value={item}>{item}</option>;
-                      })}
-                    </select>
-                    <select
-                      onChange={handleSelectChange}
-                      value={gender}
-                      id="disabledSelect"
-                      className="form-select step-select"
-                      placeholder="Nationality"
-                    >
-                      {genderList.map((item) => {
-                        return <option value={item}>{item}</option>;
-                      })}
-                    </select>
-                  </div>
-                  <div className="step-section-2">
-                    <input
-                      className="form-control"
-                      placeholder="Date of birth"
-                      value={dob}
-                      onChange={(e) => {
-                        setDOB(e.target.value);
-                      }}
-                    ></input>
-                    <select
-                      className="form-select step-select"
-                      aria-label="Default select example"
-                    >
-                      <option selected>Height</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                    <select
-                      className="form-select step-select"
-                      aria-label="Default select example"
-                    >
-                      <option selected>Ethnicity</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    handleForms("form-one");
-                  }}
-                  className="step-back"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  className="step-continue"
-                  onClick={(e) => {
-                    handleForms("form-three");
-                  }}
-                >
-                  Continue
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {formFour_visibility && (
-          <div className="modal-dialog modal-wrapper MODAL FOUR">
-            <div className="modal-content">
-              <div className="modal-header header-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
-                <div className="step-text">Step 3 of 4</div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="step-title">Contact Details</div>
-                <div className="step-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div className="step2-selection">
-                  <div className="step-section-1">
-                    <input
-                      className="form-control step-input"
-                      placeholder="Phone"
-                      value={phone}
-                      onChange={(e) => {
-                        setPhone(e.target.value);
-                      }}
-                    ></input>
-                    <select
-                      className="form-select step-select"
-                      aria-label="Default select example"
-                    >
-                      <option selected>Country</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                  <div className="step-section-2">
-                    <input className="form-control" placeholder="Email"></input>
-                    <select
-                      className="form-select step-select"
-                      aria-label="Default select example"
-                    >
-                      <option selected>City</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    handleForms("form-two");
-                  }}
-                  className="step-back"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  className="step-continue"
-                  onClick={(e) => {
-                    handleForms("form-four");
-                  }}
-                >
-                  Continue
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {formFive_visibility && (
-          <div className="modal-dialog modal-wrapper MODAL FIVE">
-            <div className="modal-content">
-              <div className="modal-header header-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
-                <div className="step-text">Step 4 of 4</div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body modal-content ">
-                <div className="step-title">Only one more thing to do</div>
-                <div className="step-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div className="step-selection upload-step">
-                  <div className="upload-wrapper">
-                    <img src={uploadIcon}></img>
-                    <div className="upload-text"> Professional Talent</div>
-                  </div>
-                  <div className="import-wrapper">
-                    <img src={importIcon}></img>
-                    <div className="import-text"> Professional Talent</div>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    handleForms("form-three");
-                  }}
-                  className="step-back"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  data-bs-dismiss="modal"
-                  className="step-continue"
-                  onClick={(e) => {
-                    handleForms("form-five");
-                  }}
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+      <div className="chat-section"></div>
+      <div className="chatbot-icon">
+        <img src={chatIcon} alt="" />
       </div>
     </>
   );
 };
 
 export default Dashboard;
+
+{
+  /* <div
+className="modal fade"
+id="staticBackdrop"
+data-bs-backdrop="static"
+data-bs-keyboard="false"
+tabindex="-1"
+aria-labelledby="staticBackdropLabel"
+aria-hidden="true"
+>
+{formOne_visibility && (
+  <div className="modal-dialog modal-wrapper MODAL ONE">
+    <div className="modal-content">
+      <div className="modal-header">
+        <button
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div className="modal-body modal-content ">
+        <div className="modal-title">Welcome</div>
+        <div className="modal-description">
+          Welcome to our vibrant community! To tailor your experience,
+          we'd love to know more about you.
+        </div>
+        <div className="modal-buttons">
+          <div
+            className={model ? "selected-register" : "choose-register"}
+          >
+            I'm a Talent
+          </div>
+          <div
+            onClick={(e) => {
+              handleForms("seeker");
+            }}
+            className={seeker ? "selected-register" : "choose-register"}
+          >
+            I'm a Talent Seeker
+          </div>
+        </div>
+        <div className="question-model">
+          Are you the star of the show or the one seeking brilliance?
+        </div>
+        <div className="register-modal">
+          <div
+            className="register-btn"
+            onClick={(e) => {
+              handleForms("form-one");
+            }}
+          >
+            Register Now
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+{formTwo_visibility && (
+  <div className="modal-dialog modal-wrapper">
+    <div className="modal-content">
+      <div className="modal-header header-wrapper">
+        <img className="modal-logo" src={btLogo}></img>
+        <div className="step-text">Step 1 of 4</div>
+        <button
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div className="modal-body modal-content ">
+        <div className="step-title">Which one are you?</div>
+        <div className="step-description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </div>
+        <div className="step-selection">
+          <div className="select-wrapper">
+            <input type="checkbox" id="aspiring"></input>
+            <label htmlFor="aspiring" className="select-text">
+              Aspiring Talent
+            </label>
+          </div>
+          <div className="select-wrapper">
+            <input type="checkbox" id="professional"></input>
+            <label htmlFor="professional" className="select-text">
+              Professional Talent
+            </label>
+          </div>
+          <div className="select-wrapper">
+            <input type="checkbox" id="other-talent"></input>
+            <label htmlFor="other-talent" className="select-text">
+              Talent (Actor, dancer, musician, sports person, etc)
+            </label>
+          </div>
+        </div>
+      </div>
+      <div className="modal-footer">
+        <button type="button" className="step-back">
+          Back
+        </button>
+        <button
+          type="button"
+          className="step-continue"
+          onClick={(e) => {
+            handleForms("form-two");
+          }}
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+{formThree_visibility && (
+  <div className="modal-dialog modal-wrapper MODAL THREE">
+    <div className="modal-content">
+      <div className="modal-header header-wrapper">
+        <img className="modal-logo" src={btLogo}></img>
+        <div className="step-text">Step 2 of 4</div>
+        <button
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div className="modal-body modal-content ">
+        <div className="step-title">Personal Details</div>
+        <div className="step-description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </div>
+        <div className="step2-selection">
+          <div className="step-section-1">
+            <input
+              type="text"
+              placeholderTextColor="#202020"
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => {
+                setFullName(e.target.value);
+              }}
+              className=" form-control step-input"
+            />
+            <select
+              onChange={handleSelectChange}
+              value={gender}
+              id="disabledSelect"
+              className="form-select step-select"
+              placeholder="Gender"
+            >
+              {genderList.map((item) => {
+                return <option value={item}>{item}</option>;
+              })}
+            </select>
+            <select
+              onChange={handleSelectChange}
+              value={gender}
+              id="disabledSelect"
+              className="form-select step-select"
+              placeholder="Nationality"
+            >
+              {genderList.map((item) => {
+                return <option value={item}>{item}</option>;
+              })}
+            </select>
+          </div>
+          <div className="step-section-2">
+            <input
+              className="form-control"
+              placeholder="Date of birth"
+              value={dob}
+              onChange={(e) => {
+                setDOB(e.target.value);
+              }}
+            ></input>
+            <select
+              className="form-select step-select"
+              aria-label="Default select example"
+            >
+              <option selected>Height</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+            <select
+              className="form-select step-select"
+              aria-label="Default select example"
+            >
+              <option selected>Ethnicity</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div className="modal-footer">
+        <button
+          type="button"
+          onClick={(e) => {
+            handleForms("form-one");
+          }}
+          className="step-back"
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          className="step-continue"
+          onClick={(e) => {
+            handleForms("form-three");
+          }}
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+{formFour_visibility && (
+  <div className="modal-dialog modal-wrapper MODAL FOUR">
+    <div className="modal-content">
+      <div className="modal-header header-wrapper">
+        <img className="modal-logo" src={btLogo}></img>
+        <div className="step-text">Step 3 of 4</div>
+        <button
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div className="modal-body modal-content ">
+        <div className="step-title">Contact Details</div>
+        <div className="step-description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </div>
+        <div className="step2-selection">
+          <div className="step-section-1">
+            <input
+              className="form-control step-input"
+              placeholder="Phone"
+              value={phone}
+              onChange={(e) => {
+                setPhone(e.target.value);
+              }}
+            ></input>
+            <select
+              className="form-select step-select"
+              aria-label="Default select example"
+            >
+              <option selected>Country</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div className="step-section-2">
+            <input className="form-control" placeholder="Email"></input>
+            <select
+              className="form-select step-select"
+              aria-label="Default select example"
+            >
+              <option selected>City</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div className="modal-footer">
+        <button
+          type="button"
+          onClick={(e) => {
+            handleForms("form-two");
+          }}
+          className="step-back"
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          className="step-continue"
+          onClick={(e) => {
+            handleForms("form-four");
+          }}
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+{formFive_visibility && (
+  <div className="modal-dialog modal-wrapper MODAL FIVE">
+    <div className="modal-content">
+      <div className="modal-header header-wrapper">
+        <img className="modal-logo" src={btLogo}></img>
+        <div className="step-text">Step 4 of 4</div>
+        <button
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div className="modal-body modal-content ">
+        <div className="step-title">Only one more thing to do</div>
+        <div className="step-description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </div>
+        <div className="step-selection upload-step">
+          <div className="upload-wrapper">
+            <img src={uploadIcon}></img>
+            <div className="upload-text"> Professional Talent</div>
+          </div>
+          <div className="import-wrapper">
+            <img src={importIcon}></img>
+            <div className="import-text"> Professional Talent</div>
+          </div>
+        </div>
+      </div>
+      <div className="modal-footer">
+        <button
+          type="button"
+          onClick={(e) => {
+            handleForms("form-three");
+          }}
+          className="step-back"
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          data-bs-dismiss="modal"
+          className="step-continue"
+          onClick={(e) => {
+            handleForms("form-five");
+          }}
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+</div> */
+}

@@ -4,4 +4,5 @@ export const API = {
   //common
   baseUrl: BASEURL,
   getDemo: BASEURL + "users/userFetch",
+  getPricingList: BASEURL + "pricing/pricingList",
 };

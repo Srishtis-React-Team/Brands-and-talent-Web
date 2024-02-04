@@ -556,7 +556,7 @@ const Register = () => {
                     placeholder="Gmail"
                   />
                 </div>
-                <div className="gmail-info">
+                <div className="email-info">
                   Talents that apply to your job will be send to this email
                 </div>
                 <div className="select-wrapper password-wrapper">
