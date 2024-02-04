@@ -5,6 +5,8 @@ import "./index.css";
 import App from "./App";
 // basename="/project/brandsandtalent/"basename="/project/brandsandtalent/"
 // https://hybrid.sicsglobal.com/project/brandsandtalent/
+// "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent/",
+
 ReactDOM.render(
   <BrowserRouter>
     <App />

@@ -93,6 +93,10 @@
   cursor: pointer;
 }
 
+.plan-details-content {
+  padding-left: 8px;
+}
+
 @media (max-width: 475px) {
   .resources {
     padding: 30px 30px;

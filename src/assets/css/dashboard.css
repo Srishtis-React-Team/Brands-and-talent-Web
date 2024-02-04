@@ -4,6 +4,24 @@
   box-sizing: border-box;
 }
 
+/* .dashboard-main {
+  position: relative;
+} */
+
+.chatbot-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: yellow;
+  position: fixed;
+  top: 83%;
+  left: 92%;
+  border-radius: 50%;
+}
+
 .user-icon {
   width: 22px;
   height: 23px;
@@ -1923,7 +1941,7 @@ a:hover {
   color: #c2114b;
 }
 
-.gmail-info {
+.email-info {
   color: #000;
   font-family: sans-serif;
   font-size: 12px;
