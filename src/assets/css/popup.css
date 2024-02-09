@@ -1,70 +1,71 @@
 .popupbackground {
-    width: 100%;
-    height: 100%;
-    background-color: #202020e6;
-    position: fixed;
-    display: flex;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .popupcontainer {
-    width:350px;
-    max-width: 100%;
-    min-height: 10rem;
-    border-radius: 10px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 0 15px #77a1f0;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    justify-self: center;
-    align-self: center;
-    border: 3px solid #6495ED;
-  }
-  .popupcontainer .logo-header {
-    text-align: center;
-    padding: 15px;
-    background-color: #eee;
-    border-radius: 5px;
-    margin: 0;
-  }
-  .popupcontainer .logo-header img{ width: 180px; max-width: 100%; }
-  
-  .popupcontainer .message{
-      flex:50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 25px 0;
-      font-size: 27px; 
-      color: rgb(10, 10, 101);
-     
-  }
-  .popupcontainer .message p{ font-weight: 700; margin: 10px 0; }
+  width: 100%;
+  height: 100%;
+  background-color: #202020e6;
+  position: fixed;
+  display: flex;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+}
 
+.popupcontainer {
+  width: 350px;
+  max-width: 100%;
+  min-height: 10rem;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 15px #77a1f0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-self: center;
+  align-self: center;
+  border: 3px solid #6495ed;
+}
+.popupcontainer .logo-header {
+  text-align: center;
+  padding: 15px;
+  background-color: #eee;
+  border-radius: 5px;
+  margin: 0;
+}
+.popupcontainer .logo-header img {
+  width: 180px;
+  max-width: 100%;
+}
+
+.popupcontainer .message {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 25px 0;
+  font-size: 27px;
+  color: #c2114b;
+}
+.popupcontainer .message p {
+  font-weight: 700;
+  margin: 10px 0;
+}
 
 .dashed {
-    border-style: dashed;
-    border-width: 2px;
-    border-radius: 10px;
-    flex-direction: column;
-    display: flex;
-    padding: 0 10px 10px;
+  border-style: dashed;
+  border-width: 2px;
+  border-radius: 10px;
+  flex-direction: column;
+  display: flex;
+  padding: 0 10px 10px;
 }
 
 .containerBox {
   flex-direction: row;
   display: flex;
   justify-content: space-between;
-
 }
-
-
 
 .ridge {
   border-style: ridge;
@@ -74,7 +75,7 @@
   display: flex;
   padding: 0 10px 10px;
 }
-.chooseTemples .tempArrow{
+.chooseTemples .tempArrow {
   font-weight: 100 !important;
   margin: 10px 0 15px !important;
   font-size: 54px;
@@ -82,24 +83,27 @@
   line-height: 52px;
 }
 
-.chooseTemples .containerBox .ridge, .chooseTemples .containerBox .dashed{ width: 200px; max-width: 100%; }
+.chooseTemples .containerBox .ridge,
+.chooseTemples .containerBox .dashed {
+  width: 200px;
+  max-width: 100%;
+}
 
 .chooseTemples .logo-header h2 {
   font-size: 30px;
   margin: 5px 0 0;
-  color: #403F49;
+  color: #403f49;
 }
-.chooseTemples .logo-header p{
+.chooseTemples .logo-header p {
   margin: 5px 0 0;
-  color: #403F49;
+  color: #403f49;
   font-size: 15px;
 }
-
 
 .templatebg {
   width: 100%;
   height: 100%;
- 
+
   position: fixed;
   display: flex;
   z-index: 100;
@@ -108,22 +112,22 @@
 }
 
 .templatcontainer {
-    width:40%;
-    height: 40%;
-    max-width: 100%;
-    min-height: 10rem;
-    border-radius: 10px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 0 15px #070f1f;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    justify-self: center;
-    align-self: center;
-    border: 3px solid #6495ED;
+  width: 40%;
+  height: 40%;
+  max-width: 100%;
+  min-height: 10rem;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 15px #070f1f;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-self: center;
+  align-self: center;
+  border: 3px solid #6495ed;
 }
 
-.templatcontainer.chooseTemples{
+.templatcontainer.chooseTemples {
   box-shadow: 0 0 5px #0000003d;
   border: 0;
   padding: 15px;
@@ -131,15 +135,19 @@
   max-width: 100%;
   height: auto;
 }
-.chooseTemples .topTitle{
+.chooseTemples .topTitle {
   text-align: center;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.2px;
   font-size: 24px;
   margin: 5px 0 0;
   padding: 0;
 }
-.chooseTemples .header_pop{ text-align: center; border-bottom: 1px solid #505F7945; margin: 0 0 20px; }
+.chooseTemples .header_pop {
+  text-align: center;
+  border-bottom: 1px solid #505f7945;
+  margin: 0 0 20px;
+}
 
 .chooseTemples .header_pop > p {
   font-size: 14px;
@@ -147,20 +155,22 @@
   margin: 3px 0 10px;
   padding: 0;
 }
-.chooseTemples .message .ridge, .chooseTemples .message .dashed{ text-align: center; cursor: pointer; }
+.chooseTemples .message .ridge,
+.chooseTemples .message .dashed {
+  text-align: center;
+  cursor: pointer;
+}
 
-.chooseTemples .containerBox{ padding: 15px; margin: 0 0 20px; }
-
-
-
-
-
+.chooseTemples .containerBox {
+  padding: 15px;
+  margin: 0 0 20px;
+}
 
 @media only screen and (max-width: 600px) {
-
-  .chooseTemples .message { padding: 25px 0 0; }
-  .popuchooseTemples .containerBox { flex-direction: column; }
-
-
-
+  .chooseTemples .message {
+    padding: 25px 0 0;
+  }
+  .popuchooseTemples .containerBox {
+    flex-direction: column;
+  }
 }

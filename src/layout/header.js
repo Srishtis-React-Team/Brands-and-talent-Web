@@ -1,12 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../assets/css/dashboard.css";
+import { useNavigate } from "react-router";
 import { Route } from "react-router";
 import Register from "../auth/Register";
 const Header = () => {
+  const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [signupCategory, setSignupCategory] = useState("talent");
+  const [above_18, setAbove_18] = useState(false);
+  const [below_18, setBelow_18] = useState(false);
+  const [talent, setTalent] = useState(true);
+  const [brand, setBrand] = useState(false);
+  function userType(e) {
+    if (e == "talent") {
+      setTalent(true);
+      setSignupCategory("talent");
+    } else {
+      setTalent(false);
+    }
+    if (e == "brand") {
+      setBrand(true);
+      setSignupCategory("brand");
+    } else {
+      setBrand(false);
+    }
+  }
 
   const handleClick = () => {
     window.scrollTo(0, 0); // Scroll to top on link click
@@ -15,7 +36,12 @@ const Header = () => {
   return (
     <>
       <div className="mobile-navbar">
-        <div className="icon">
+        <div
+          className="icon"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           <img className="btLogo" src={btLogo}></img>
         </div>
         <div
@@ -65,15 +91,22 @@ const Header = () => {
           </div>
         </div>
         <div className="login-text">Login</div>
-        <div className="signup">
-          <NavLink to="/signup" onClick={handleClick}>
-            Sign up
-          </NavLink>
+        <div
+          className="signup"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Sign up
         </div>
       </div>
 
       <div className="header">
-        <div className="icon btn-logo">
+        <div
+          className="icon btn-logo"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           <img src={btLogo}></img>
         </div>
         <div className="menu-items">
@@ -128,13 +161,79 @@ const Header = () => {
               Login
             </NavLink>
           </div>
-          <div>
-            <NavLink to="/signup" className="signup" onClick={handleClick}>
-              Sign up
-            </NavLink>
+          <div
+            className="signup"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Sign up
           </div>
           <div className="gridLogo">
             <img src={gridLogo}></img>
+          </div>
+        </div>
+      </div>
+      {/* <NavLink to="/signup"  onClick={handleClick}></NavLink>            </NavLink> */}
+
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered  modal-lg">
+          <div className="modal-content ">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="modal-title">Welcome</div>
+              <div className="modal-description">
+                Welcome to our vibrant community! To tailor your experience,
+                we'd love to know more about you.
+              </div>
+              <div className="modal-buttons">
+                <div
+                  onClick={(e) => {
+                    userType("talent");
+                  }}
+                  className={talent ? "selected-register" : "choose-register"}
+                >
+                  I'm a Talent
+                </div>
+                <div
+                  onClick={(e) => {
+                    userType("brand");
+                  }}
+                  className={brand ? "selected-register" : "choose-register"}
+                >
+                  I'm a Brand
+                </div>
+              </div>
+              <div className="question-model">
+                Are you the star of the show or the one seeking brilliance?
+              </div>
+              <div className="register-modal">
+                <div
+                  className="register-btn"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  onClick={(e) => {
+                    navigate("/signup", {
+                      state: { signupCategory: signupCategory },
+                    });
+                  }}
+                >
+                  Register Now
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

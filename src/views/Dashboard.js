@@ -8,10 +8,6 @@ import { API } from "../config/api";
 import { NavLink } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
-  const uploadIcon = require("../assets/icons/upload.png");
-  const importIcon = require("../assets/icons/instagram.png");
-  const btLogo = require("../assets/icons/Group 56.png");
-  const searchLogo = require("../assets/icons/search (1).png");
   const starIcon = require("../assets/icons/star.png");
   const whiteStar = require("../assets/icons/white_star.png");
   const checkMark = require("../assets/icons/check-circle.png");
@@ -21,20 +17,23 @@ const Dashboard = () => {
   const female = require("../assets/images/female.png");
   const fashion = require("../assets/images/fashion.png");
   const sliderBackground = require("../assets/images/slider-background.png");
-  const fieldsBackground = require("../assets/images/fields-background.png");
   const adidasIcon = require("../assets/icons/6539fea9ad514fe89ff5d7fc_adidas.png");
   const ubisoftIcon = require("../assets/icons/6539fd74ad514fe89ff48cdd_ubisoft.png");
+  const mapIcon = require("../assets/icons/map-pin.png");
   const wppIcon = require("../assets/icons/651508c575f862fac120d7b1_wpp.webp");
   const lorealIcon = require("../assets/icons/6539e8f83c874a7714db103c_Loreal 1.webp");
   const havasIcon = require("../assets/icons/6539e8f8ac5a3259e7f64ef8_Havas_logo 3.webp");
   const joseIcon = require("../assets/icons/6539e8f8fe903bed35dc07f8_jose-cuervo-logo-black-and-white 1.webp");
   const calvinIcon = require("../assets/icons/6539ea694436eb9715c9cba3_image 10.png");
-  const socialIcons = require("../assets/icons/Social.png");
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
   const heartIcon = require("../assets/icons/heart.png");
   const chatIcon = require("../assets/icons/chat-icon.png");
   const favoruiteIcon = require("../assets/icons/favorite.png");
+  const locationIcon = require("../assets/icons/locationIcon.png");
+  const darkStar = require("../assets/icons/darkStar.png");
+  const brightStar = require("../assets/icons/brightStar.png");
+  const jobIcon = require("../assets/icons/jobIcon.png");
   const girl1 = require("../assets/images/girl1.png");
   const girl2 = require("../assets/images/girl2.png");
   const girl3 = require("../assets/images/girl3.png");
@@ -45,11 +44,6 @@ const Dashboard = () => {
   const girl8 = require("../assets/images/girl8.png");
   const girl9 = require("../assets/images/girl9.png");
   const girl10 = require("../assets/images/girl10.png");
-  const model1 = require("../assets/images/model1.png");
-  const model2 = require("../assets/images/model2.png");
-  const model3 = require("../assets/images/model3.png");
-  const model4 = require("../assets/images/model4.png");
-  const model5 = require("../assets/images/model5.png");
 
   const [artists, showArtists] = useState(true);
   const [photographers, showPhotographers] = useState(false);
@@ -57,7 +51,8 @@ const Dashboard = () => {
   const [influencers, setInfluencers] = useState(false);
   const [models, showModels] = useState(false);
   const [more, showMore] = useState(false);
-
+  const [above_18, setAbove_18] = useState(false);
+  const [below_18, setBelow_18] = useState(false);
   const [formOne_visibility, showFormOne] = useState(true);
   const [formTwo_visibility, showFormTwo] = useState(false);
   const [formThree_visibility, showForThree] = useState(false);
@@ -72,6 +67,20 @@ const Dashboard = () => {
   const [genderList, setGenderList] = useState([]);
   const [talentList, setTalentList] = useState([]);
   const [photoGraphersList, setphotoGraphersList] = useState([]);
+
+  function userType(e) {
+    if (e == "above_18") {
+      setAbove_18(true);
+    } else {
+      setAbove_18(false);
+    }
+    if (e == "below_18") {
+      setBelow_18(true);
+    } else {
+      setBelow_18(false);
+    }
+  }
+
   useEffect(() => {
     setTalentList([
       {
@@ -80,6 +89,8 @@ const Dashboard = () => {
         name: "Alexander",
         address: "Copenhagen, Denmark",
         isFavorite: false,
+        location: "Australia",
+        booked: "3 Jobs Booked",
         rating: 4,
       },
       {
@@ -87,6 +98,8 @@ const Dashboard = () => {
         photo: girl2,
         name: "william",
         address: "Copenhagen, Denmark",
+        location: "America",
+        booked: "3 Jobs Booked",
         isFavorite: false,
         rating: 3,
       },
@@ -95,6 +108,8 @@ const Dashboard = () => {
         photo: girl3,
         name: "Michael",
         address: "Pitsburg, Canada",
+        location: "Canada",
+        booked: "6 Jobs Booked",
         isFavorite: false,
         rating: 5,
       },
@@ -104,6 +119,8 @@ const Dashboard = () => {
         name: "Andrea",
         address: "North Carolina, USA",
         isFavorite: false,
+        location: "Russia",
+        booked: "150 Jobs Booked",
         rating: 1,
       },
       {
@@ -112,8 +129,80 @@ const Dashboard = () => {
         name: "Alexa",
         address: "South Carolina, USA",
         isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
         rating: 1,
       },
+      // {
+      //   id: 6,
+      //   photo: girl5,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 7,
+      //   photo: girl5,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 8,
+      //   photo: girl5,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 9,
+      //   photo: girl5,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 10,
+      //   photo: girl5,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 11,
+      //   photo: girl5,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 12,
+      //   photo: girl5,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
     ]);
     setphotoGraphersList([
       {
@@ -121,6 +210,8 @@ const Dashboard = () => {
         photo: girl6,
         name: "Alexander",
         address: "Copenhagen, Denmark",
+        location: "China",
+        booked: "8 Jobs Booked",
         isFavorite: false,
         rating: 4,
       },
@@ -130,6 +221,8 @@ const Dashboard = () => {
         name: "william",
         address: "Copenhagen, Denmark",
         isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
         rating: 3,
       },
       {
@@ -138,6 +231,8 @@ const Dashboard = () => {
         name: "Michael",
         address: "Pitsburg, Canada",
         isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
         rating: 5,
       },
       {
@@ -146,6 +241,8 @@ const Dashboard = () => {
         name: "Andrea",
         address: "North Carolina, USA",
         isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
         rating: 1,
       },
       {
@@ -154,8 +251,60 @@ const Dashboard = () => {
         name: "Alexa",
         address: "South Carolina, USA",
         isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
         rating: 1,
       },
+      // {
+      //   id: 6,
+      //   photo: girl10,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 7,
+      //   photo: girl10,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 8,
+      //   photo: girl10,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 9,
+      //   photo: girl10,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
+      // {
+      //   id: 10,
+      //   photo: girl10,
+      //   name: "Alexa",
+      //   address: "South Carolina, USA",
+      //   isFavorite: false,
+      //   location: "China",
+      //   booked: "8 Jobs Booked",
+      //   rating: 1,
+      // },
     ]);
     getDemo();
   }, []);
@@ -301,15 +450,13 @@ const Dashboard = () => {
                 lasting relationships. We put creators first. Sign up today and
                 start earning!
               </div>
-              <NavLink
-                className="joinnow-btn "
-                to="/signup"
-                onClick={handleClick}
+              <div
+                className="Join-wrapper center"
+                data-bs-toggle="modal"
+                data-bs-target="#verify_age"
               >
-                <div className="Join-wrapper center">
-                  <div className="joinnow-text">Join Now</div>
-                </div>
-              </NavLink>
+                <div className="joinnow-text">Join Now</div>
+              </div>
             </div>
             <div className="hire-talent-section">
               <div className="section-title">Hire Talent</div>
@@ -328,6 +475,57 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
+        <div
+          className="modal fade"
+          id="verify_age"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content ">
+              <div className="modal-header">
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                <div className="ageverify-title">Select Your Age Group</div>
+                <div className="modal-buttons ageverify-buttons">
+                  <div
+                    onClick={(e) => {
+                      navigate("/signup", {
+                        state: { signupCategory: "kids" },
+                      });
+                    }}
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    className="step-back"
+                  >
+                    13-17 Years
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      navigate("/signup", {
+                        state: { signupCategory: "adults" },
+                      });
+                    }}
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    className="step-continue"
+                  >
+                    18 Years or Older
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="tabs-section">
           <div className="title">Popular Talents</div>
           <div className="tabs">
@@ -389,6 +587,13 @@ const Dashboard = () => {
                 <div className="gallery-warpper">
                   <div className="gallery-position">
                     <img className="gallery-img" src={item.photo}></img>
+                    <div className="rating">
+                      <img src={brightStar}></img>
+                      <img src={brightStar}></img>
+                      <img src={brightStar}></img>
+                      <img src={darkStar}></img>
+                      <img src={darkStar}></img>
+                    </div>
                     {!item.isFavorite && (
                       <img
                         className="heart-icon"
@@ -408,11 +613,16 @@ const Dashboard = () => {
                     <div className="content">
                       <div className="name">{item.name}</div>
                       <div className="address">{item.address}</div>
-                    </div>
-                    <div className="rating">
-                      <img src={starIcon}></img>
-                      <img src={starIcon}></img>
-                      <img src={starIcon}></img>
+                      <div className="user-details">
+                        <div className="location-wrapper">
+                          <img src={locationIcon} alt="" />
+                          <div className="location-name">{item.location}</div>
+                        </div>
+                        <div className="location-wrapper">
+                          <img src={jobIcon} alt="" />
+                          <div className="location-name">{item.booked}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -447,11 +657,11 @@ const Dashboard = () => {
                       <div className="name">{item.name}</div>
                       <div className="address">{item.address}</div>
                     </div>
-                    <div className="rating">
+                    {/* <div className="rating">
                       <img src={starIcon}></img>
                       <img src={starIcon}></img>
                       <img src={starIcon}></img>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               );
@@ -485,11 +695,11 @@ const Dashboard = () => {
                       <div className="name">{item.name}</div>
                       <div className="address">{item.address}</div>
                     </div>
-                    <div className="rating">
+                    {/* <div className="rating">
                       <img src={starIcon}></img>
                       <img src={starIcon}></img>
                       <img src={starIcon}></img>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               );
@@ -523,11 +733,11 @@ const Dashboard = () => {
                       <div className="name">{item.name}</div>
                       <div className="address">{item.address}</div>
                     </div>
-                    <div className="rating">
+                    {/* <div className="rating">
                       <img src={starIcon}></img>
                       <img src={starIcon}></img>
                       <img src={starIcon}></img>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               );
@@ -561,11 +771,11 @@ const Dashboard = () => {
                       <div className="name">{item.name}</div>
                       <div className="address">{item.address}</div>
                     </div>
-                    <div className="rating">
+                    {/* <div className="rating">
                       <img src={starIcon}></img>
                       <img src={starIcon}></img>
                       <img src={starIcon}></img>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               );
@@ -653,11 +863,11 @@ const Dashboard = () => {
                     <div className="name">{item.name}</div>
                     <div className="address">{item.address}</div>
                   </div>
-                  <div className="rating">
+                  {/* <div className="rating">
                     <img src={starIcon}></img>
                     <img src={starIcon}></img>
                     <img src={starIcon}></img>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             );

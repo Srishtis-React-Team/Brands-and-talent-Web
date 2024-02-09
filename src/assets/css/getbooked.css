@@ -19,7 +19,7 @@
 }
 .review-title {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -29,27 +29,27 @@
 .review-date {
   text-align: end;
   color: #c2114b;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 }
 .review-content {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 25px; /* 192.308% */
 }
 .models-bio {
   padding: 40px;
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 28px; /* 186.667% */
 }
 .reviewer-section {
@@ -76,10 +76,10 @@
 .reviewer-name {
   padding-left: 8px;
   color: #181818;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 }
 .modal-profile-img {
@@ -93,7 +93,7 @@
 
 .model-name {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 27px;
   font-style: normal;
   font-weight: 500;
@@ -102,7 +102,7 @@
 
 .model-infos {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -117,7 +117,7 @@
 
 .location-text {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -153,10 +153,10 @@
 
 .message-wrapper > span {
   color: #fff;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 }
 
@@ -173,10 +173,10 @@
 
 .text-span {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 }
 
@@ -196,7 +196,7 @@
 
 .count-wrapper {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -205,7 +205,7 @@
 
 .count-wrapper > span {
   color: #c2114b;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -242,7 +242,7 @@
 
 .features-heading {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
@@ -253,10 +253,10 @@
 
 .features-value {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
   /* padding: 0px 0px 0px 90px; */
 }
@@ -374,7 +374,7 @@
 
 .social-count {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -384,10 +384,10 @@
 
 .followers-text {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 }
 
@@ -403,10 +403,10 @@
 
 .talent-details-wrapper > span {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 17px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
   padding-left: 10px;
 }
@@ -441,10 +441,10 @@
 }
 .invite-btn > div {
   color: #fff;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 19px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
   text-transform: capitalize;
   padding-left: 6px;
@@ -452,7 +452,7 @@
 
 .bio-text {
   color: #c2114b;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 19px;
   font-style: normal;
   font-weight: 500;
@@ -462,10 +462,10 @@
 .bio-info {
   color: #000;
   text-align: justify;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 28px; /* 186.667% */
   padding: 10px 0px;
 }
@@ -483,7 +483,7 @@
 
 .portofolio-title {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -657,7 +657,7 @@
 }
 .talent-rates > .title {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -668,7 +668,7 @@
 }
 .talent-rates > .name {
   color: #c2114b;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
@@ -677,10 +677,10 @@
 }
 .talent-rates > .value {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
   padding-bottom: 20px;
 }
@@ -702,7 +702,7 @@
 }
 .reviews-section > .rating .num {
   color: #fff;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 21px;
   font-style: normal;
   font-weight: 600;
@@ -719,7 +719,7 @@
 }
 .reviews-section > .content > .title {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
@@ -729,10 +729,10 @@
 }
 .reviews-section > .content > .description {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 20px; /* 142.857% */
 }
 
@@ -759,7 +759,7 @@
 }
 .booked-btn > .posted-jobs {
   color: #fff;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;

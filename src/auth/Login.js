@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 const Login = () => {
   const btLogo = require("../assets/icons/Group 56.png");
-  const uploadIcon = require("../assets/icons/upload.png");
   const importIcon = require("../assets/icons/instagram.png");
   const mailIcon = require("../assets/icons/mail.png");
   const lockiIcon = require("../assets/icons/lock.png");

@@ -12,27 +12,27 @@
 }
 .post-details > .likes {
   color: #373737;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 }
 .post-details > .date {
   color: #c2114b;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 }
 
 .post-content {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   text-align: start;
   padding-top: 10px;
 }

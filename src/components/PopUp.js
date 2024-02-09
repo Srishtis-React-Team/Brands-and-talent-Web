@@ -7,14 +7,13 @@ const PopUp = (props) => {
   return (
     <div className="popupbackground">
       <div className="popupcontainer">
-        <div className="logo-header">
+        {/* <div className="logo-header">
           <img
             src={btLogo}
-            style={{ height: "30px", width: "30px" }}
-            className="App-logo"
+            style={{ height: "50px", width: "50px" }}
             alt="logo"
           />
-        </div>
+        </div> */}
         <div className="message">
           <p>{props.message}</p>
         </div>
