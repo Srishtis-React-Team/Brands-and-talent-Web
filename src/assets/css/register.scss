@@ -5,6 +5,14 @@
   border-bottom: 1px solid #bab4b4;
 }
 
+.rdw-editor-wrapper {
+  box-sizing: content-box;
+  margin: 10px 0px;
+  width: 640px;
+  border-radius: 8px;
+  border: 1px dashed #aaaaaa;
+}
+
 .gig-content {
   display: flex;
   flex-direction: column;
@@ -14,11 +22,12 @@
 .gig-image {
   border-radius: 10px;
   margin-right: 20px;
+  width: 250px;
 }
 
 .gig-name {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   line-height: normal;
@@ -27,10 +36,10 @@
 
 .gig-description {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   padding: 30px 0px;
 }
 
@@ -41,6 +50,7 @@
 
 .gig-followers {
   display: flex;
+  padding-right: 15px;
 }
 
 .gig-logo {
@@ -61,7 +71,7 @@
 
 .followers-text {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -74,7 +84,7 @@
 
 .followers-count {
   color: #c2114b;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -89,7 +99,7 @@
 }
 
 .company {
-  width: 795px;
+  width: 650px;
 }
 
 .company {
@@ -116,26 +126,26 @@
 
 .name-wrapper {
   color: #fff;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 }
 
 .company-text {
   color: #181818;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
   padding-left: 6px;
 }
 
 .company-plan {
   color: #c2114b;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -159,7 +169,7 @@
 
 .inlcluded {
   color: #c2114b;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
@@ -181,7 +191,7 @@
 .include-text {
   padding-left: 8px;
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -226,7 +236,7 @@
 .done {
   color: #000;
   text-align: center;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -237,10 +247,10 @@
 .gmail-info {
   color: #000;
   text-align: center;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   padding-bottom: 25px;
   width: 550px;
 }
@@ -266,5 +276,28 @@
   font-weight: 500;
 }
 
-.register-modal {
+.gig-input {
+  display: none;
+}
+
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.image-preview > img {
+  width: 300px;
+}
+
+/* BRANDS FORM 3 STYLES */
+
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.brands-form-wrapper {
+  width: 640px;
 }

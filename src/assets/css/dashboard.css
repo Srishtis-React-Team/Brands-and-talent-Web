@@ -4,10 +4,101 @@
   box-sizing: border-box;
 }
 
-/* .dashboard-main {
-  position: relative;
-} */
+.btLogo {
+  cursor: pointer;
+}
 
+.select-text {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-left: 20px;
+  cursor: auto;
+}
+
+.select-text-only {
+  color: #000;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-left: 0px;
+  cursor: auto;
+  /* width: 380px; */
+}
+
+.absolute-input {
+  height: 55px;
+  border: none;
+  outline: none;
+}
+
+.select-wrapper {
+  display: flex;
+  align-items: center;
+  width: 600px;
+  height: 55px;
+  flex-shrink: 0;
+  background: #fff;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  margin: 8px 0px;
+}
+
+.email-input {
+  justify-content: unset;
+}
+
+label {
+  font-size: 14px;
+  color: rgb(175, 175, 175);
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 30px;
+  border-bottom: 1px solid rgb(173, 173, 173);
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: end;
+  border-top: 1px solid rgb(173, 173, 173);
+  padding: 20px 20px 0px 0px;
+}
+
+.dialog-body {
+  overflow: scroll;
+  height: 750px;
+  overflow: auto;
+}
+
+.modal-logo {
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+.step-wrapper {
+  display: flex;
+}
+
+.user-details {
+  display: flex;
+  padding-top: 8px;
+}
+.location-wrapper {
+  display: flex;
+  padding-right: 10px;
+}
+.location-wrapper > img {
+  width: 15px;
+  height: 15px;
+}
 .chatbot-icon {
   width: 60px;
   height: 60px;
@@ -17,9 +108,10 @@
   cursor: pointer;
   background-color: yellow;
   position: fixed;
-  top: 83%;
-  left: 92%;
+  top: 50%;
+  left: 94%;
   border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .user-icon {
@@ -54,7 +146,7 @@
 
 .brand-section > .brand-title {
   color: #fff;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-size: 53px;
   font-style: normal;
   font-weight: 700;
@@ -68,7 +160,7 @@
 
 .brand-section > .brand-description {
   color: #fff;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 18px;
   text-align: center;
 }
@@ -85,7 +177,8 @@ input[type="checkbox"]:checked {
 }
 
 .btn-logo {
-  padding-left: 25px;
+  padding-left: 100px;
+  cursor: pointer;
 }
 
 .box {
@@ -171,14 +264,33 @@ a {
   position: relative;
 }
 
+.rating {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 30px;
+  padding: 4px;
+  top: 160px;
+  right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rating > img {
+  width: 8px;
+  height: 8px;
+  margin: 0px 2px;
+}
+
 .card-title {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 19px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   padding: 20px 0px;
+  text-align: center;
   margin: 0 !important;
 }
 
@@ -194,13 +306,6 @@ a {
   align-items: center;
 }
 
-.modal-body {
-  height: 600px;
-}
-
-.modal-header {
-  width: 100%;
-}
 .absolute-input {
   height: 55px;
   border: none;
@@ -217,7 +322,7 @@ a {
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
   padding: 15px 0px;
 }
@@ -236,11 +341,6 @@ a {
 }
 
 @media (min-width: 480px) {
-  .modal-dialog {
-    max-width: 600px !important;
-    margin: 1.75rem auto;
-  }
-
   .mobile-navbar {
     display: none;
   }
@@ -264,75 +364,75 @@ a {
     border: none;
   }
 
-  .select-wrapper {
-    display: flex;
-    align-items: center;
-    width: 450px;
-    height: 55px;
-    flex-shrink: 0;
-    background: #fff;
-    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
-    padding: 20px;
-    margin: 8px 0px;
-  }
-
-  .email-input {
-    justify-content: unset;
-  }
-
   .select-text {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     padding-left: 20px;
     cursor: auto;
+    width: 100%;
+  }
+
+  .password-input {
+    width: unset !important;
   }
 
   .select-text-only {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     padding-left: 0px;
     cursor: auto;
-    /* width: 380px; */
+    width: 100%;
   }
 
   .step-back {
-    width: 150px;
-    height: 40px;
+    width: 180px;
+    height: 50px;
     flex-shrink: 0;
     border-radius: 245px;
     border: 1px solid #fff;
     background: #000;
     color: #fff;
-    font-family: sans-serif;
-    font-size: 17px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ageverify-buttons {
+    padding-bottom: 40px;
   }
 
   .step-continue {
-    width: 150px;
-    height: 40px;
+    width: 180px;
+    height: 50px;
     flex-shrink: 0;
     border-radius: 245px;
     border: 1px solid #fff;
     background: #c2114b;
     color: #fff;
-    font-family: sans-serif;
-    font-size: 17px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
   }
 
   .upload-step {
@@ -354,7 +454,7 @@ a {
 
   .upload-text {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -376,7 +476,7 @@ a {
 
   .import-text {
     color: #0e0e0e;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -384,54 +484,45 @@ a {
     padding-left: 20px;
   }
 
-  .step-selection {
-    width: 400px;
-    margin: auto;
-  }
-
   .step-description {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     padding: 10px 0px 30px 0px;
     text-align: center;
   }
   .step-title {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
     text-align: center;
-    padding: 20px 0px;
-    margin-top: 40px;
+    padding: 40px 0px;
   }
   .step-text {
     padding-left: 20px;
     border-left: 1px solid #d9d9d9;
     height: 47px;
     color: #060606;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 17px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 34px;
     text-transform: capitalize;
     display: flex;
     justify-content: flex-start;
     align-items: center;
   }
-  .modal-logo {
-    padding-right: 20px;
-  }
 
   .question-model {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -454,10 +545,10 @@ a {
     align-items: center;
     color: #fff;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 18px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 37px;
     cursor: pointer;
   }
@@ -472,10 +563,10 @@ a {
     margin-right: 25px;
     color: #fff;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 18px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 37px;
     cursor: pointer;
   }
@@ -490,10 +581,10 @@ a {
     align-items: center;
     color: #000;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 18px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 37px;
     cursor: pointer;
     margin-right: 25px;
@@ -506,16 +597,16 @@ a {
   .modal-description {
     color: #000;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 37px;
     padding: 20px 60px;
   }
   .modal-title {
     color: #c2114b;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 33px;
     font-style: normal;
     font-weight: 500;
@@ -523,6 +614,16 @@ a {
     text-align: center;
     padding: 20px 0px;
     margin-top: 50px;
+  }
+  .ageverify-title {
+    color: #c2114b;
+    font-family: "Open Sans", sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;
+    padding: 30px 0px 50px 0px;
   }
   .modal-wrapper {
     width: 100% !important;
@@ -538,10 +639,10 @@ a {
 
   .copyright-section > div {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
   .footer-title {
     color: #c2114b !important;
@@ -552,10 +653,10 @@ a {
   .company-info {
     width: 200px;
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     padding: 20px 0px 20px 0px;
   }
 
@@ -566,10 +667,10 @@ a {
   }
   .footer-wrapper > div {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     cursor: pointer;
   }
   .footer-section {
@@ -589,10 +690,10 @@ a {
     align-items: center;
     background: #090914;
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     border-radius: 100px;
     cursor: pointer;
   }
@@ -604,10 +705,10 @@ a {
     background: #c2114b !important;
     margin-right: 20px;
     color: #fff !important;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
   .form-fields {
     display: flex;
@@ -617,7 +718,7 @@ a {
   .form-title {
     color: #fff;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 22px;
     font-style: normal;
     font-weight: 600;
@@ -654,17 +755,17 @@ a {
   }
   .profile-info {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 13px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
   .profile-name {
     color: #fff;
     font-family: "sans-serif Slab";
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
   .profile-content {
     padding-left: 15px;
@@ -675,10 +776,10 @@ a {
   }
   .carousel-description {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 23px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
   .quote > img {
     width: 20px;
@@ -703,7 +804,7 @@ a {
   }
   .carousel-title {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 500;
@@ -723,10 +824,10 @@ a {
   .cards-description {
     color: #000;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 24px; /* 160% */
   }
 
@@ -734,27 +835,26 @@ a {
     border-radius: 104px;
     border: 1px solid #fff;
     background: #000;
-    width: 50px;
-    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 15px;
   }
   .cards-text {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     padding-top: 8px;
   }
   .count {
     color: #c2114b;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 33px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
   }
   .card-background {
@@ -803,16 +903,26 @@ a {
 
   .address {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 13px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
+  }
+
+  .location-name {
+    color: #000;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    padding: 0px 4px;
   }
 
   .name {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -870,22 +980,22 @@ a {
   .tabs > div {
     margin: 20px;
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     cursor: pointer;
   }
 
   .title {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
     text-align: center;
-    padding: 30px 0px;
+    padding: 30px 0px 15px 0px;
   }
 
   .white-joinnow > div {
@@ -920,19 +1030,19 @@ a {
     width: 422px;
     color: #fff;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 24px; /* 141.176% */
   }
 
   .section-title {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 33px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: normal;
     text-align: center;
   }
@@ -958,7 +1068,7 @@ a {
 
   .header {
     display: flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     align-items: center;
     height: 60px;
     top: 0;
@@ -979,20 +1089,24 @@ a {
 
   .menu-items > div {
     color: #000;
-    font-family: sans-serif;
     font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
     line-height: normal;
     cursor: pointer;
     padding-right: 30px;
     text-decoration: none;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
   }
 
   .header-functions {
     display: flex;
     align-items: center;
+    justify-content: end;
     width: 41%;
+    padding-right: 100px;
   }
 
   .header-functions > div {
@@ -1014,31 +1128,16 @@ a {
     border-radius: 140px;
     background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 86px;
     height: 40px;
-  }
-  .input-style::placeholder {
-    padding-left: 15px;
-    color: #fff !important;
-    font-family: sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-  }
-  ::placeholder {
-    color: #000000 !important;
-    opacity: 0.7 !important;
-    font-family: sans-serif;
-    font-size: 16px;
-    font-weight: 400;
   }
 }
 
@@ -1051,10 +1150,10 @@ a {
 
   .mobile-menu-items > div {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     cursor: pointer;
     padding-right: 30px;
@@ -1112,21 +1211,7 @@ a {
   #search-check {
     display: none;
   }
-  .input-style::placeholder {
-    padding-left: 15px;
-    color: #fff !important;
-    font-family: sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-  }
-  ::placeholder {
-    color: #000000 !important;
-    opacity: 0.7 !important;
-    font-family: sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-  }
+
   .fa-bars {
     cursor: pointer;
     font-size: 40px;
@@ -1159,10 +1244,10 @@ a {
 
   .login-text {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
   }
 
@@ -1170,10 +1255,10 @@ a {
     border-radius: 140px;
     background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     display: flex;
     justify-content: center;
@@ -1199,10 +1284,10 @@ a {
 
   .section-title {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 13px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: normal;
     text-align: center;
   }
@@ -1244,7 +1329,7 @@ a {
 
   .title {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
@@ -1263,10 +1348,10 @@ a {
   .tabs > div {
     margin: 10px;
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     cursor: pointer;
   }
 
@@ -1316,7 +1401,7 @@ a {
 
   .name {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -1325,10 +1410,10 @@ a {
 
   .address {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
   }
 
@@ -1368,41 +1453,30 @@ a {
   }
   .count {
     color: #c2114b;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 24px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
   }
   .cards-text {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     padding-top: 8px;
   }
 
-  .card-picture {
-    border-radius: 104px;
-    border: 1px solid #fff;
-    background: #000;
-    width: 50px;
-    height: 50px;
-    padding: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .cards-description {
     padding-bottom: 10px;
     color: #000;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 24px; /* 160% */
   }
   .case-images {
@@ -1417,7 +1491,7 @@ a {
   }
   .carousel-title {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 500;
@@ -1449,10 +1523,10 @@ a {
   }
   .carousel-description {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
   .box-two {
     display: none;
@@ -1471,15 +1545,15 @@ a {
     font-family: "sans-serif Slab";
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
 
   .profile-info {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
   .carousel-wrapper {
     display: flex;
@@ -1521,7 +1595,7 @@ a {
   .form-title {
     color: #fff;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -1543,10 +1617,10 @@ a {
     background: #c2114b !important;
     margin-right: 20px;
     color: #fff !important;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
   .subscribe-btn {
     display: flex;
@@ -1557,10 +1631,10 @@ a {
     align-items: center;
     background: #090914;
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     border-radius: 100px;
     cursor: pointer;
   }
@@ -1583,19 +1657,19 @@ a {
   }
   .footer-wrapper > div {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     cursor: pointer;
   }
   .company-info {
     width: 200px;
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     padding: 20px 0px 20px 0px;
   }
   .footer-title {
@@ -1613,14 +1687,14 @@ a {
 
   .copyright-section > div {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
   }
   .question-model {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -1644,10 +1718,10 @@ a {
     align-items: center;
     color: #fff;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 37px;
     cursor: pointer;
   }
@@ -1663,10 +1737,10 @@ a {
     align-items: center;
     color: #000;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     cursor: pointer;
     margin-right: 25px;
   }
@@ -1682,10 +1756,10 @@ a {
     margin-right: 25px;
     color: #fff;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 37px;
     cursor: pointer;
   }
@@ -1698,15 +1772,15 @@ a {
   .modal-description {
     color: #000;
     text-align: center;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     padding: 20px 60px;
   }
   .modal-title {
     color: #c2114b;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 500;
@@ -1727,10 +1801,10 @@ a {
     border-left: 1px solid #d9d9d9;
     height: 47px;
     color: #060606;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 17px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 34px;
     text-transform: capitalize;
     display: flex;
@@ -1739,7 +1813,7 @@ a {
   }
   .step-title {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -1751,17 +1825,13 @@ a {
 
   .step-description {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     padding: 10px 0px 30px 0px;
     text-align: center;
-  }
-  .step-selection {
-    width: 400px;
-    margin: auto;
   }
 
   .step2-selection {
@@ -1797,10 +1867,10 @@ a {
 
   .select-text {
     color: #000;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     padding-left: 20px;
     cursor: auto;
@@ -1815,10 +1885,10 @@ a {
     border: 1px solid #fff;
     background: #000;
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 17px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     cursor: pointer;
   }
@@ -1831,10 +1901,10 @@ a {
     border: 1px solid #fff;
     background: #c2114b;
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 17px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     cursor: pointer;
   }
@@ -1858,7 +1928,7 @@ a {
 
   .upload-text {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -1880,7 +1950,7 @@ a {
 
   .import-text {
     color: #0e0e0e;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -1894,7 +1964,7 @@ a {
 
   .brand-section > .brand-title {
     color: #fff;
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -1910,7 +1980,7 @@ a {
 
   .brand-section > .brand-description {
     color: #fff;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     text-align: center;
   }
@@ -1943,10 +2013,10 @@ a:hover {
 
 .email-info {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   padding-bottom: 6px;
 }
 
@@ -1956,7 +2026,7 @@ a:hover {
 }
 
 .signup-options > .google-media {
-  width: 215px;
+  width: 290px;
   height: 53px;
   flex-shrink: 0;
   display: flex;
@@ -1970,16 +2040,16 @@ a:hover {
 }
 .signup-options > .google-media > .media-text {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 17px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 34px; /* 200% */
   text-transform: capitalize;
   padding-left: 8px;
 }
 .signup-options > .fb-media {
-  width: 215px;
+  width: 290px;
   height: 53px;
   flex-shrink: 0;
   display: flex;
@@ -1993,10 +2063,10 @@ a:hover {
 
 .signup-options > .fb-media > .media-text {
   color: #fff;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 17px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 34px; /* 200% */
   text-transform: capitalize;
   padding-left: 8px;
@@ -2005,10 +2075,10 @@ a:hover {
 .signup-terms {
   color: #000;
   text-align: center;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   text-align: center;
   padding: 20px 0px;
   width: 375px;
@@ -2017,47 +2087,29 @@ a:hover {
 .signup-terms > span {
   color: #c2114b;
   text-align: center;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   cursor: pointer;
-}
-
-.form-label {
-  color: #808080;
-  font-family: sans-serif;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin: 0 !important;
 }
 
 .splitter {
   display: flex;
+  width: 770px;
 }
 
 .splitter-one {
   margin-right: 20px;
+  width: 350px;
 }
 .splitter-two {
-}
-.splited-input {
-  width: 215px;
-  margin-bottom: 20px;
-}
-.splited-input > input {
-  width: 210px !important;
-}
-
-.modal-content {
-  height: 100% !important;
+  width: 350px;
 }
 
 .profession-wrapper,
 .choose-pay {
-  width: 450px;
+  width: 640px;
 }
 
 .choose-pay {
@@ -2076,10 +2128,10 @@ a:hover {
 
 .pay-label {
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
   padding-left: 10px;
 }
@@ -2108,15 +2160,11 @@ input[type="radio"] {
 .upload-text {
   padding-left: 20px;
   color: #000;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 17px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
-}
-
-.form-group {
-  padding-bottom: 10px;
 }
 
 .pay-label {

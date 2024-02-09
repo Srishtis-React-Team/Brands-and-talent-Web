@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/dashboard.css";
-import "../assets/css/register.css";
+import "../assets/css/register.scss";
 import { useNavigate } from "react-router";
 import PopUp from "../components/PopUp";
-import Header from "../layout/header";
 import { useLocation } from "react-router-dom";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
+import { API } from "../config/api";
 import Select from "react-select";
-
+import { ApiHelper } from "../helpers/ApiHelper";
+import Axios from "axios";
+import draftToHtml from "draftjs-to-html";
+import { convertToRaw } from "draft-js";
+import KidsformOne from "./KidsformOne";
 const Register = () => {
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
@@ -18,7 +21,6 @@ const Register = () => {
   const cameraIcon = require("../assets/icons/cameraIcon.png");
   const fbLogo = require("../assets/icons/fbLogo.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
-  const uploadIcon = require("../assets/icons/upload.png");
   const importIcon = require("../assets/icons/instagram.png");
   const mailIcon = require("../assets/icons/mail.png");
   const lockiIcon = require("../assets/icons/lock.png");
@@ -31,8 +33,15 @@ const Register = () => {
   const bigTick = require("../assets/icons/bigTick.png");
   const gmailGrey = require("../assets/icons/gmailGrey.png");
   const model = require("../assets/images/model-profile.png");
+  const kidsImage = require("../assets/images/kidsImage.png");
 
-  const [registerModal, setRegisterModal] = useState(true);
+  const [loader, setLoader] = useState(false);
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const [kidsFormOne, setKidsFormOne] = useState(false);
+  const [kidsFormTwo, setKidsForTwo] = useState(false);
+
   const [ageForm_visiblity, showAgeForm] = useState(false);
   const [talentSignup, showTalentSignup] = useState(false);
   const [talentGmail, showTalentGmail] = useState(false);
@@ -44,31 +53,102 @@ const Register = () => {
   const [brands_form4, setBrands_form4] = useState(false);
   const [brands_form5, setBrands_form5] = useState(false);
   const [brands_form6, setBrands_form6] = useState(false);
+  const [brands_step, setBrands_step] = useState(Number);
   const [brandGmail, showBrandGmail] = useState(false);
   const [header, showHeader] = useState(true);
-  const [dob, setDOB] = useState("");
-  const [phone, setPhone] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [gender, setGenders] = useState("");
-  const [genderList, setGenderList] = useState([]);
-  const [talent, setTalent] = useState(true);
-  const [brand, setBrand] = useState(false);
-  const [above_18, setAbove_18] = useState(false);
-  const [below_18, setBelow_18] = useState(false);
-  const [profession, setProfession] = useState("");
+  const [gigPreview, setGigPreview] = useState("");
+  const [talentEmail, setTalentEmail] = useState("");
+  const [talentPassword, setTalentPassword] = useState("");
+  const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
+  const [brandName, setBrandName] = useState("");
+  const [brandEmail, setBrandEmail] = useState("");
+  const [brandPassword, setBrandPassword] = useState("");
+  const [brandPhone, setBrandPhone] = useState();
+  const [brandZipcode, setBrandZipcode] = useState();
+  const [enableTracking, setTrackingSystem] = useState("");
+  const [howHearAboutUs, sethowHearAboutUs] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [jobLocation, setJobLocation] = useState("");
+  const [jobAge, setJobAge] = useState();
+  const [jobGender, setJobGender] = useState("");
+  const [jobSocialFollowers, setJobSocialFollowers] = useState();
+  const [jobLanguages, setJobLanguages] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [jobRemote, setJobRemote] = useState("");
+  const [jobSummary, setJobSummary] = useState("");
+  const [jobYouWill, setJobYouWill] = useState("");
+  const [jobIdeallyWill, setJobIdeallyWill] = useState("");
+  const [jobAboutUs, setJobAboutUs] = useState("");
+  const [jobBenefits, setJobBenefits] = useState("");
+  const [jobPayInformation, setJobPayInformation] = useState("");
+  const [jobCurrency, setJobCurrency] = useState("");
+  const [jobFrequency, setJobFrequency] = useState("");
+  const [jobAmountType, setJobAmountType] = useState("");
+  const [jobMinPay, setJobMinPay] = useState();
+  const [jobMaxPay, setJobMaxPay] = useState();
+  const [jobImage, setJobImage] = useState("");
 
-  const handleClick = () => {
-    window.scrollTo(0, 0); // Scroll to top on link click
-  };
+  const location = useLocation();
+  const routeData = location.state;
+  console.log(routeData, "routeData");
 
   useEffect(() => {
-    setGenderList(["Male", "Female"]);
+    if (routeData.signupCategory == "kids") {
+      setKidsFormOne(true);
+      console.log("kids");
+    } else if (routeData.signupCategory == "brand") {
+      setBrands_step(1);
+    }
   }, []);
 
-  const handleSelectChange = (event) => {
-    setGenders(event.target.value);
-    const selectedName = event.target.options[event.target.selectedIndex].text;
-    // setRoomType(selectedName);
+  function brandClick(e) {
+    if (
+      routeData.signupCategory == "brand" &&
+      routeData.signupCategory != "talent"
+    ) {
+      if (e === "goTo-brandForm-one") {
+        setBrands_form1(true);
+      }
+      if (e === "goTo-brandForm-two") {
+        setBrands_form1(false);
+        setBrands_form2(true);
+      } else {
+        setBrands_form2(false);
+      }
+    }
+  }
+
+  function handleForms(e) {
+    if (
+      routeData.signupCategory == "talent" &&
+      routeData.signupCategory == "brand"
+    ) {
+    }
+  }
+
+  const selectTrackingSystem = (event) => {
+    setTrackingSystem(event.target.value);
+  };
+  const selecthowHearAboutUs = (event) => {
+    sethowHearAboutUs(event.target.value);
+  };
+  const selectJobGender = (event) => {
+    setJobGender(event.target.value);
+  };
+  const selectJobLanguages = (event) => {
+    setJobLanguages(event.target.value);
+  };
+  const selectJobType = (event) => {
+    setJobType(event.target.value);
+  };
+  const selectJobRemote = (event) => {
+    setJobRemote(event.target.value);
+  };
+  const selectJobCurrency = (event) => {
+    setJobCurrency(event.target.value);
+  };
+  const selectJobFrequency = (event) => {
+    setJobFrequency(event.target.value);
   };
 
   const professionList = [
@@ -83,461 +163,129 @@ const Register = () => {
     { value: "video Grapher", label: "Video Grapher", color: "#FF8B00" },
   ];
 
-  useEffect(() => {
-    setGenderList(["Male", "Female"]);
-  }, []);
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
+      uploadFile(fileData);
+    }
+  };
 
-  function ageCategory(e) {
-    if (e == "above_18") {
-      setAbove_18(true);
-    } else {
-      setAbove_18(false);
-    }
-    if (e == "below_18") {
-      setBelow_18(true);
-    } else {
-      setBelow_18(false);
-    }
-  }
+  const uploadFile = async (fileData) => {
+    setLoader(true);
+    const params = new FormData();
+    params.append("file", fileData);
+    /* await ApiHelper.post(API.uploadFile, params) */
+    await Axios.post(API.uploadFile, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((resData) => {
+        console.log(resData.data.data);
+        setGigPreview(resData.data.data.filename);
+        setJobImage(resData.data.data);
+        console.log(gigPreview, "gigPreview");
+        setMessage(resData.data.message);
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoader(false);
+        console.log(err);
+      });
+  };
 
-  function userType(e) {
-    if (e == "talent") {
-      setTalent(true);
-    } else {
-      setTalent(false);
-    }
-    if (e == "brand") {
-      setBrand(true);
-    } else {
-      setBrand(false);
-    }
-  }
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
-  function brandClick(e) {
-    if (brand === true && talent === false) {
-      if (e == "register-model") {
-        setRegisterModal(true);
-        setBrands_form1(false);
-      }
-      if (e == "brand-form1") {
-        setBrands_form1(true);
-      }
-      if (e == "brand-form2") {
-        setBrands_form1(false);
-        setBrands_form2(true);
-      } else {
-        setBrands_form2(false);
-      }
-      if (e == "brand-form3") {
-        setBrands_form3(true);
-      } else {
-        setBrands_form3(false);
-      }
-      if (e == "brand-form4") {
-        console.log("setBrands_form4");
-        setBrands_form4(true);
-      } else {
-        setBrands_form4(false);
-      }
-      if (e == "brand-form5") {
-        setBrands_form5(true);
-      } else {
-        setBrands_form5(false);
-      }
-      if (e == "brand-form6") {
-        setBrands_form6(true);
-      } else {
-        setBrands_form6(false);
-      }
-      if (e == "brand-gmail") {
-        showBrandGmail(true);
-      } else {
-        showBrandGmail(false);
-      }
-    }
-  }
+  const onEditorSummary = (editorState) => {
+    setJobSummary(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    setEditorState(editorState);
+  };
+  const onEditorYouWill = (editorState) => {
+    setJobYouWill(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    setEditorState(editorState);
+  };
+  const onEditorIdeally = (editorState) => {
+    setJobIdeallyWill(
+      draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    );
+    setEditorState(editorState);
+  };
+  const onEditorAboutUs = (editorState) => {
+    setJobAboutUs(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    setEditorState(editorState);
+  };
 
-  function handleForms(e) {
-    if (talent === true && brand === false) {
-      if (e === "register-model") {
-        setRegisterModal(true);
-        showTalentSignup(false);
-        showUnder18_formOne(false);
-      }
-      if (e == "age-form") {
-        setRegisterModal(false);
-        showHeader(true);
-        showAgeForm(true);
-      }
-      if (e == "talent-signup") {
-        showAgeForm(false);
-        showTalentSignup(true);
-      }
-      if (e == "talent-gmail") {
-        showTalentSignup(false);
-        showTalentGmail(true);
-      }
-      if (e == "under_18-formOne") {
-        showAgeForm(false);
-        showUnder18_formOne(true);
-        showUnder18_formTwo(false);
-      }
-      if (e == "under_18-formTwo") {
-        showUnder18_formOne(false);
-        showUnder18_formTwo(true);
-      }
-    }
-    if (brand === true && talent === false) {
-      if (e == "age-form") {
-        setRegisterModal(false);
-        setBrands_form1(true);
-        showHeader(true);
-      }
-    }
-  }
+  const brandSignup = async () => {
+    const formData = {
+      brandName: brandName,
+      brandEmail: brandEmail,
+      brandPassword: brandPassword,
+      brandPhone: brandPhone,
+      brandZipCode: brandZipcode,
+      enableTracking: enableTracking,
+      howHearAboutUs: howHearAboutUs,
+      jobTitle: jobTitle,
+      jobLocation: jobLocation,
+      jobAge: jobAge,
+      jobGender: jobGender,
+      jobSocialFollowers: jobSocialFollowers,
+      jobLanguages: jobLanguages,
+      jobType: jobType,
+      jobRemote: jobRemote,
+      jobSummary: jobSummary,
+      jobYouWill: jobYouWill,
+      jobIdeallyWill: jobIdeallyWill,
+      jobAboutUs: jobAboutUs,
+      jobBenefits: jobBenefits,
+      jobPayInformation: jobPayInformation,
+      jobCurrency: jobCurrency,
+      jobFrequency: jobFrequency,
+      jobAmountType: jobAmountType,
+      jobMinPay: jobMinPay,
+      jobMaxPay: jobMaxPay,
+      jobImage: jobImage,
+    };
+    console.log(formData, "formData brandSignup");
+    await ApiHelper.post(API.brandRegisteration, formData)
+      .then((resData) => {
+        console.log("brandRegisteration response", resData.data);
+        setMessage(resData.data.msg);
+        if (resData.data.status === true) {
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
-      {registerModal && (
-        <div className="register-modal">
-          <div className="modal-header header-wrapper">
-            <img className="modal-logo" src={btLogo}></img>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={() => {
-                navigate("/");
-              }}
-            ></button>
-          </div>
-          <div className="modal-title">Welcome</div>
-          <div className="modal-description">
-            Welcome to our vibrant community! To tailor your experience, we'd
-            love to know more about you.
-          </div>
-          <div className="modal-buttons">
-            <div
-              onClick={(e) => {
-                userType("talent");
-              }}
-              className={talent ? "selected-register" : "choose-register"}
-            >
-              I'm a Talent
-            </div>
-            <div
-              onClick={(e) => {
-                userType("brand");
-              }}
-              className={brand ? "selected-register" : "choose-register"}
-            >
-              I'm a Brand
-            </div>
-          </div>
-          <div className="question-model">
-            Are you the star of the show or the one seeking brilliance?
-          </div>
-          <div className="register-modal">
-            <div
-              className="register-btn"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              onClick={(e) => {
-                handleForms("age-form");
-              }}
-            >
-              Register Now
-            </div>
-          </div>
-        </div>
-      )}
-
-      {ageForm_visiblity && (
-        <div className="register-modal">
-          <div className="modal-header header-wrapper">
-            <img className="modal-logo" src={btLogo}></img>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={() => {
-                navigate("/");
-              }}
-            ></button>
-          </div>
-          <div className="modal-title">Age Verification</div>
-          <div className="modal-description">
-            We need to check how old you are,specify your age range.
-          </div>
-          <div className="modal-buttons ">
-            <div
-              onClick={(e) => {
-                ageCategory("below_18");
-              }}
-              className={
-                below_18
-                  ? "selected-register age-button"
-                  : "choose-register age-button"
-              }
-            >
-              I'm not yet 18
-            </div>
-            <div
-              onClick={(e) => {
-                ageCategory("above_18");
-              }}
-              className={
-                above_18
-                  ? "selected-register age-button"
-                  : "choose-register age-button"
-              }
-            >
-              I'm 18 years older
-            </div>
-          </div>
-          <div className="register-modal mt-5">
-            <div
-              className="register-btn"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              onClick={(e) => {
-                if (above_18 === true) {
-                  handleForms("talent-signup");
-                } else if (below_18 === true) {
-                  handleForms("under_18-formOne");
-                }
-              }}
-            >
-              Submit
-            </div>
-          </div>
-        </div>
-      )}
-
-      {talentSignup && (
-        <div className="modal-wrapper">
-          <div className="modal-content">
-            <div className="modal-header header-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
-              {/* <div className="step-text">Step 1 of 4</div> */}
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
-            </div>
-            <div className="modal-body modal-content ">
-              <div className="step-title">Sign up</div>
-              <div className="step-selection">
-                <div className="select-wrapper email-input">
-                  <img src={mailIcon}></img>
-                  <input
-                    type="password"
-                    className="select-text absolute-input"
-                    placeholder="Email"
-                  />
-                </div>
-                <div className="select-wrapper password-wrapper">
-                  <div>
-                    <img src={lockiIcon}></img>
-                    <input
-                      type="password"
-                      className="select-text absolute-input"
-                      placeholder="Password"
-                    />
-                  </div>
-                  <img src={eyeOff}></img>
-                </div>
-                <div className="select-wrapper password-wrapper">
-                  <div>
-                    <img src={lockiIcon}></img>
-                    <input
-                      type="password"
-                      className="select-text absolute-input"
-                      placeholder="Confirm-Password"
-                    />
-                  </div>
-                  <img src={eyeOff}></img>
-                </div>
-                <div className="stroke-wrapper">
-                  <div className="stroke-div"></div>
-                  <div className="or-signup">Or Signup with</div>
-                  <div className="stroke-div"></div>
-                </div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="step-back"
-                onClick={(e) => {
-                  handleForms("register-model");
-                  setTalent(true);
-                }}
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                className="step-continue"
-                onClick={(e) => {
-                  handleForms("talent-gmail");
-                }}
-              >
-                Continue
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {talentGmail && (
-        <>
-          <div>Gmail popup</div>
-          <button
-            type="button"
-            className="step-back"
-            onClick={(e) => {
-              handleForms("register-model");
-              setTalent(true);
-            }}
-          >
-            Back
-          </button>
-        </>
-      )}
-
-      {under18_formOne && (
-        <div className="modal-wrapper">
-          <div className="modal-content">
-            <div className="modal-header header-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
-              <div className="step-text">Step 1 of 2</div>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
-            </div>
-            <div className="modal-body modal-content ">
-              <div className="step-title">Under 18 Model Registration</div>
-              <div className="step-selection">
-                <div className="select-wrapper email-input">
-                  <img src={mailIcon}></img>
-                  <input
-                    type="password"
-                    className="select-text absolute-input"
-                    placeholder="Email"
-                  />
-                </div>
-                <div className="select-wrapper password-wrapper">
-                  <div>
-                    <img src={lockiIcon}></img>
-                    <input
-                      type="password"
-                      className="select-text absolute-input"
-                      placeholder="Password"
-                    />
-                  </div>
-                  <img src={eyeOff}></img>
-                </div>
-                <div className="select-wrapper password-wrapper">
-                  <div>
-                    <img src={lockiIcon}></img>
-                    <input
-                      type="password"
-                      className="select-text absolute-input"
-                      placeholder="Confirm-Password"
-                    />
-                  </div>
-                  <img src={eyeOff}></img>
-                </div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="step-back"
-                onClick={(e) => {
-                  handleForms("register-model");
-                  setTalent(true);
-                }}
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                className="step-continue"
-                onClick={(e) => {
-                  handleForms("under_18-formTwo");
-                }}
-              >
-                Continue
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {under18_formTwo && (
-        <div className="modal-wrapper">
-          <div className="modal-content">
-            <div className="modal-header header-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
-              <div className="step-text">Step 2 of 2</div>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
-            </div>
-            <div className="modal-body modal-content ">
-              <div className="step-title">Basic Plan</div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="step-back"
-                onClick={(e) => {
-                  handleForms("under_18-formOne");
-                  setTalent(true);
-                }}
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                className="step-continue"
-                onClick={(e) => {
-                  handleForms("under_18-formTwo");
-                }}
-              >
-                Pay Now
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {brands_form1 && (
-        <div className="modal-wrapper">
-          <div className="modal-content">
-            <div className="modal-header header-wrapper">
+      {brands_step === 1 && (
+        <div className="form-dialog">
+          <div className="header-wrapper">
+            <div className="step-wrapper">
               <img className="modal-logo" src={btLogo}></img>
               <div className="step-text">Step 1 of 5</div>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
             </div>
-            <div className="modal-body modal-content ">
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => {
+                navigate("/");
+              }}
+            ></button>
+          </div>
+          <div className="dialog-body">
+            <div className="brands-form-wrapper">
               <div className="step-title">Sign up</div>
               <div className="step-selection">
                 <div className="select-wrapper email-input">
@@ -546,14 +294,20 @@ const Register = () => {
                     type="text"
                     className="select-text absolute-input"
                     placeholder="Your Name"
+                    onChange={(e) => {
+                      setBrandName(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="select-wrapper email-input">
                   <img src={mailIcon}></img>
                   <input
-                    type="password"
+                    type="text"
                     className="select-text absolute-input"
                     placeholder="Gmail"
+                    onChange={(e) => {
+                      setBrandEmail(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="email-info">
@@ -564,8 +318,11 @@ const Register = () => {
                     <img src={lockiIcon}></img>
                     <input
                       type="password"
-                      className="select-text absolute-input"
+                      className="select-text absolute-input password-input"
                       placeholder="Password"
+                      onChange={(e) => {
+                        setBrandPassword(e.target.value);
+                      }}
                     />
                   </div>
                   <img src={eyeOff}></img>
@@ -592,375 +349,581 @@ const Register = () => {
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="step-back"
-                onClick={(e) => {
-                  brandClick("register-model");
-                  setBrand(true);
-                }}
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                className="step-continue"
-                onClick={(e) => {
-                  brandClick("brand-form2");
-                }}
-              >
-                Continue
-              </button>
-            </div>
+          </div>
+          <div className="dialog-footer">
+            <button
+              type="button"
+              onClick={() => {
+                navigate("/");
+              }}
+              className="step-back"
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              className="step-continue"
+              onClick={() => {
+                setBrands_step(2);
+              }}
+            >
+              Continue
+            </button>
           </div>
         </div>
       )}
-      {brands_form2 && (
-        <div className="modal-wrapper">
-          <div className="modal-content">
-            <div className="modal-header header-wrapper">
+      {brands_step === 2 && (
+        <div className="form-dialog">
+          <div className="header-wrapper">
+            <div className="step-wrapper">
               <img className="modal-logo" src={btLogo}></img>
               <div className="step-text">Step 2 of 5</div>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
             </div>
-            <div className="modal-body modal-content ">
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => {
+                navigate("/");
+              }}
+            ></button>
+          </div>
+          <div className="dialog-body">
+            <div className="brands-form-wrapper">
               <div className="step-title">Brand Details</div>
               <div className="step-selection">
-                <div className="select-wrapper email-input">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">
+                    Phone Number
+                  </label>
                   <input
                     type="text"
-                    className="select-text absolute-input"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    onChange={(e) => {
+                      setBrandPhone(e.target.value);
+                    }}
                     placeholder="Phone Number"
-                  />
+                  ></input>
                 </div>
-                <div className="select-wrapper email-input">
+
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">
+                    Zip Code
+                  </label>
                   <input
                     type="text"
-                    className="select-text absolute-input"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    onChange={(e) => {
+                      setBrandZipcode(e.target.value);
+                    }}
                     placeholder="Zip Code"
-                  />
+                  ></input>
                 </div>
-                <div className="select-wrapper email-input">
+
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">
+                    Do you use an applicant Tracking System?
+                  </label>
                   <select
-                    className="form-select step-select"
+                    class="form-select"
                     aria-label="Default select example"
+                    onChange={selectTrackingSystem}
                   >
-                    <option defaultValue>
-                      Do you use an applicant Tracking System?
+                    <option defaultValue value="yes">
+                      Yes
                     </option>
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+                    <option value="no">No</option>
                   </select>
                 </div>
-                <div className="select-wrapper email-input">
+
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">
+                    How did you hear about us?
+                  </label>
                   <select
-                    className="form-select step-select"
+                    class="form-select"
                     aria-label="Default select example"
+                    onChange={selecthowHearAboutUs}
                   >
-                    <option defaultValue>How did you hear about us?</option>
-                    <option value="true">Social Platforms</option>
-                    <option value="false">MySelf</option>
+                    <option defaultValue value="social platforms">
+                      Social Platforms
+                    </option>
+                    <option value="myself">MySelf</option>
                   </select>
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                onClick={(e) => {
-                  brandClick("brand-form1");
-                }}
-                className="step-back"
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                className="step-continue"
-                onClick={(e) => {
-                  brandClick("brand-form3");
-                }}
-              >
-                Continue
-              </button>
-            </div>
+          </div>
+          <div className="dialog-footer">
+            <button
+              type="button"
+              onClick={() => {
+                setBrands_step(1);
+              }}
+              className="step-back"
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              className="step-continue"
+              onClick={() => {
+                setBrands_step(3);
+              }}
+            >
+              Continue
+            </button>
           </div>
         </div>
       )}
-      {brands_form3 && (
-        <div className="modal-wrapper">
-          <div className="modal-content">
-            <div className="modal-header header-wrapper">
+      {brands_step === 3 && (
+        <div className="form-dialog">
+          <div className="header-wrapper">
+            <div className="step-wrapper">
               <img className="modal-logo" src={btLogo}></img>
               <div className="step-text">Step 3 of 5</div>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
             </div>
-            <div className="modal-body modal-content ">
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => {
+                navigate("/");
+              }}
+            ></button>
+          </div>
+          <div className="dialog-body">
+            <div className="brands-form-wrapper">
               <div className="step-title">Post Your Gig/Job</div>
-              <div className="step-selection">
-                <div className="form-group">
-                  <label className="form-label">Gig/Job Tittle</label>
-                  <div className="select-wrapper email-input">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">
+                  Tittle
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  onChange={(e) => {
+                    setJobTitle(e.target.value);
+                  }}
+                  placeholder="Enter tittle"
+                ></input>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">
+                  Location (Zip Code)
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  onChange={(e) => {
+                    setJobLocation(e.target.value);
+                  }}
+                  placeholder="Enter Location"
+                ></input>
+              </div>
+              <div className="splitter">
+                <div className="splitter-one">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Age
+                    </label>
                     <input
                       type="text"
-                      className="select-text-only absolute-input"
-                      placeholder="Enter tittle"
-                    />
+                      class="form-control"
+                      id="exampleFormControlInput1"
+                      onChange={(e) => {
+                        setJobAge(e.target.value);
+                      }}
+                      placeholder="Enter Age"
+                    ></input>
                   </div>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Location (Zip Code)</label>
-                  <div className="select-wrapper email-input">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Social Media Followers
+                    </label>
                     <input
                       type="text"
-                      className="select-text-only absolute-input"
-                      placeholder="Enter Location"
-                    />
+                      class="form-control"
+                      id="exampleFormControlInput1"
+                      onChange={(e) => {
+                        setJobSocialFollowers(e.target.value);
+                      }}
+                      placeholder="Followers"
+                    ></input>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Employment Type
+                    </label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      onChange={selectJobType}
+                    >
+                      <option defaultValue value="freelancer">
+                        Freelancer
+                      </option>
+                      <option value="regular">Regular</option>
+                    </select>
                   </div>
                 </div>
-                <div className="splitter">
-                  <div className="splitter-one">
-                    <label className="form-label">Age</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <input
-                        type="text"
-                        className="select-text-only absolute-input"
-                        placeholder="Age"
-                      />
-                    </div>
-                    <label className="form-label">Social Media Followers</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <input
-                        type="text"
-                        className="select-text-only absolute-input"
-                        placeholder="Followers"
-                      />
-                    </div>
-                    <label className="form-label">Employment Type</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <select
-                        className="form-select step-select"
-                        aria-label="Default select example"
-                      >
-                        <option defaultValue>Select Employment Type </option>
-                        <option value="true">Social Platforms</option>
-                        <option value="false">MySelf</option>
-                      </select>
-                    </div>
+                <div className="splitter-two">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Gender
+                    </label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      onChange={selectJobGender}
+                    >
+                      <option defaultValue value="male">
+                        Male
+                      </option>
+                      <option value="female">Female</option>
+                    </select>
                   </div>
-                  <div className="splitter-two">
-                    <label className="form-label">Social Media Followers</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <input
-                        type="text"
-                        className="select-text-only absolute-input"
-                        placeholder="Followers"
-                      />
-                    </div>
-                    <label className="form-label">Social Media Followers</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <input
-                        type="text"
-                        className="select-text-only absolute-input"
-                        placeholder="Followers"
-                      />
-                    </div>
-                    <label className="form-label">Employment Type</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <select
-                        className="form-select step-select"
-                        aria-label="Default select example"
-                      >
-                        <option defaultValue>Select Employment Type </option>
-                        <option value="true">Social Platforms</option>
-                        <option value="false">MySelf</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
 
-                {/* <Editor
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                /> */}
-                <label className="form-label pay-info">Benefits</label>
-                <div className="profession-wrapper benefits-dropdown">
-                  <Select
-                    defaultValue={[professionList[2], professionList[3]]}
-                    isMulti
-                    name="colors"
-                    options={professionList}
-                    valueField="value"
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                    onChange={(value) => setProfession(value)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label pay-info">Pay Information</label>
-                  <div className="choose-pay">
-                    <div className="radio-wrapper">
-                      <input
-                        type="radio"
-                        id="html"
-                        name="fav_language"
-                        value="HTML"
-                      ></input>
-                      <label className="pay-label" for="html">
-                        Paid collaboration
-                      </label>
-                    </div>
-                    <div className="radio-wrapper">
-                      <input
-                        type="radio"
-                        id="css"
-                        name="fav_language"
-                        value="CSS"
-                      ></input>
-                      <label className="pay-label" for="css">
-                        Product/ gift
-                      </label>
-                    </div>
-                    <div className="radio-wrapper">
-                      <input
-                        type="radio"
-                        id="javascript"
-                        name="fav_language"
-                        value="JavaScript"
-                      ></input>
-                      <label className="pay-label" for="javascript">
-                        Paid collaboration + Gift
-                      </label>
-                    </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Languages
+                    </label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      onChange={selectJobLanguages}
+                    >
+                      <option defaultValue value="english">
+                        English
+                      </option>
+                      <option value="french">French</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Remote Work?
+                    </label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      onChange={selectJobRemote}
+                    >
+                      <option defaultValue value="true">
+                        Yes
+                      </option>
+                      <option value="false">No</option>
+                    </select>
                   </div>
                 </div>
-                <div className="splitter">
-                  <div className="splitter-one">
-                    <label className="form-label">Currency</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <select
-                        className="form-select step-select"
-                        aria-label="Default select example"
-                      >
-                        <option defaultValue>Currency</option>
-                        <option value="true">USD</option>
-                        <option value="false">AUD</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="splitter-two">
-                    <label className="form-label">Frequency</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <select
-                        className="form-select step-select"
-                        aria-label="Default select example"
-                      >
-                        <option defaultValue>Frequency</option>
-                        <option value="true">Monthly</option>
-                        <option value="false">Annualy</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
+              </div>
+              <label className="form-label">Short gig/job summary</label>
+              <Editor
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onEditorSummary}
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "list",
+                    "textAlign",
+                    "history",
+                  ],
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                }}
+              />
+              <label className="form-label">You Will(Optional)</label>
+              <Editor
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onEditorYouWill}
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "list",
+                    "textAlign",
+                    "history",
+                  ],
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                }}
+              />
+              <label className="form-label">
+                Ideally You Will Have(Optional)
+              </label>
+              <Editor
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onEditorIdeally}
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "list",
+                    "textAlign",
+                    "history",
+                  ],
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                }}
+              />
+              <label className="form-label">About Us</label>
+              <Editor
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onEditorAboutUs}
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "list",
+                    "textAlign",
+                    "history",
+                  ],
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                }}
+              />
+              <label className="form-label pay-info">Benefits</label>
+              <div className="profession-wrapper benefits-dropdown">
+                <Select
+                  defaultValue={[professionList[2], professionList[3]]}
+                  isMulti
+                  name="colors"
+                  options={professionList}
+                  valueField="value"
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  onChange={(value) => setJobBenefits(value)}
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label pay-info">Pay Information</label>
                 <div className="choose-pay">
                   <div className="radio-wrapper">
                     <input
                       type="radio"
-                      id="fixed_amount"
-                      name="amounts"
-                      value="HTML"
+                      id="html"
+                      name="fav_language"
+                      value="paid collaboration"
+                      onChange={(e) => {
+                        setJobPayInformation(e.target.value);
+                      }}
                     ></input>
-                    <label className="pay-label" for="fixed_amount">
-                      Fixed Amount
+                    <label className="pay-label" htmlFor="html">
+                      Paid collaboration
                     </label>
                   </div>
                   <div className="radio-wrapper">
                     <input
                       type="radio"
-                      id="range"
-                      name="amounts"
-                      value="CSS"
+                      id="css"
+                      name="fav_language"
+                      value="product/ gift"
+                      onChange={(e) => {
+                        setJobPayInformation(e.target.value);
+                      }}
                     ></input>
-                    <label className="pay-label" for="range">
-                      Range Of Amounts
+                    <label className="pay-label" htmlFor="css">
+                      Product/ gift
+                    </label>
+                  </div>
+                  <div className="radio-wrapper">
+                    <input
+                      type="radio"
+                      id="javascript"
+                      name="fav_language"
+                      value="paid collaboration + gift"
+                      onChange={(e) => {
+                        setJobPayInformation(e.target.value);
+                      }}
+                    ></input>
+                    <label className="pay-label" htmlFor="javascript">
+                      Paid collaboration + Gift
                     </label>
                   </div>
                 </div>
-                <div className="splitter">
-                  <div className="splitter-one">
-                    <label className="form-label">Min Pay</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <input
-                        type="text"
-                        className="select-text-only absolute-input"
-                        placeholder="Followers"
-                      />
-                    </div>
-                  </div>
-                  <div className="splitter-two">
-                    <label className="form-label">Max Pay</label>
-                    <div className="select-wrapper email-input splited-input">
-                      <input
-                        type="text"
-                        className="select-text-only absolute-input"
-                        placeholder="Followers"
-                      />
-                    </div>
+              </div>
+              <div className="splitter">
+                <div className="splitter-one">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Currency
+                    </label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      onChange={selectJobCurrency}
+                    >
+                      <option defaultValue value="USD">
+                        USD
+                      </option>
+                      <option value="AUD">AUD</option>
+                    </select>
                   </div>
                 </div>
-                <div className="gig-upload">
-                  <div className="gig-img-wrapper">
-                    <img src={cameraIcon} alt="" />
-                    <div className="add-text">Add Image</div>
-                  </div>
-                  <div className="upload-text">
-                    Upload a Image For your Gig/Job
+                <div className="splitter-two">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Frequency
+                    </label>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      onChange={selectJobFrequency}
+                    >
+                      <option defaultValue value="monthly">
+                        Monthly
+                      </option>
+                      <option value="annually">Annualy</option>
+                    </select>
                   </div>
                 </div>
               </div>
+              <div className="choose-pay">
+                <div className="radio-wrapper">
+                  <input
+                    type="radio"
+                    id="fixed_amount"
+                    name="amounts"
+                    value="fixed amount"
+                    onChange={(e) => {
+                      setJobAmountType(e.target.value);
+                    }}
+                  ></input>
+                  <label className="pay-label" htmlFor="fixed_amount">
+                    Fixed Amount
+                  </label>
+                </div>
+                <div className="radio-wrapper">
+                  <input
+                    type="radio"
+                    id="range"
+                    name="amounts"
+                    value="range of amounts"
+                    onChange={(e) => {
+                      setJobAmountType(e.target.value);
+                    }}
+                  ></input>
+                  <label className="pay-label" htmlFor="range">
+                    Range Of Amounts
+                  </label>
+                </div>
+              </div>
+              <div className="splitter">
+                <div className="splitter-one">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Min Pay
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="exampleFormControlInput1"
+                      onChange={(e) => {
+                        setJobMinPay(e.target.value);
+                      }}
+                      placeholder="Min Pay Amount"
+                    ></input>
+                  </div>
+                </div>
+                <div className="splitter-two">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">
+                      Max Pay
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="exampleFormControlInput1"
+                      onChange={(e) => {
+                        setJobMaxPay(e.target.value);
+                      }}
+                      placeholder="Max Pay Amount"
+                    ></input>
+                  </div>
+                </div>
+              </div>
+              <div className="gig-upload">
+                <label className="gig-img-wrapper" htmlFor="input-file">
+                  <img src={cameraIcon} alt="" />
+                  <div className="add-text">Add Image</div>
+                </label>
+                <input
+                  className="gig-input"
+                  type="file"
+                  id="input-file"
+                  accept="image/*"
+                  onChange={onImageChange}
+                ></input>
+                <div className="upload-text">
+                  Upload a Image For your Gig/Job
+                </div>
+              </div>
+              {gigPreview && (
+                <div className="image-preview">
+                  <img src={API.userFilePath + gigPreview} />
+                </div>
+              )}
             </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                onClick={(e) => {
-                  brandClick("brand-form2");
-                }}
-                className="step-back"
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                className="step-continue"
-                onClick={(e) => {
-                  brandClick("brand-form4");
-                }}
-              >
-                Continue
-              </button>
-            </div>
+          </div>
+          <div className="dialog-footer">
+            <button
+              type="button"
+              onClick={() => {
+                setBrands_step(2);
+              }}
+              className="step-back"
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              className="step-continue"
+              onClick={() => {
+                setBrands_step(4);
+              }}
+            >
+              Continue
+            </button>
           </div>
         </div>
       )}
-      {brands_form4 && (
+      {brands_step === 4 && (
         <div className="modal-wrapper">
           <div className="modal-content">
             <div className="modal-header header-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
               <div className="step-text">Step 4 of 5</div>
               <button
                 type="button"
@@ -974,14 +937,20 @@ const Register = () => {
               <div className="step-title">Gig/Job Preview</div>
               <div className="gig-preview">
                 <div>
-                  <img className="gig-image" src={model} alt="" />
+                  {gigPreview && (
+                    <img
+                      className="gig-image"
+                      src={API.userFilePath + gigPreview}
+                      alt=""
+                    />
+                  )}
+                  {!gigPreview && (
+                    <img className="gig-image" src={model} alt="" />
+                  )}
                 </div>
                 <div className="gig-content">
-                  <div className="gig-name">Gig Name</div>
-                  <div className="gig-description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Cras blandit volutpat ipsum non.
-                  </div>
+                  <div className="gig-name">{jobTitle}</div>
+                  <div className="gig-description">{jobSummary}</div>
                   <div className="gig-infos">
                     <div className="gig-followers">
                       <div className="gig-logo">
@@ -989,7 +958,9 @@ const Register = () => {
                       </div>
                       <div className="gig-counts">
                         <div className="followers-text">Followers</div>
-                        <div className="followers-count">2000</div>
+                        <div className="followers-count">
+                          {jobSocialFollowers}
+                        </div>
                       </div>
                     </div>
                     <div className="gig-followers">
@@ -998,7 +969,7 @@ const Register = () => {
                       </div>
                       <div className="gig-counts">
                         <div className="followers-text">Age</div>
-                        <div className="followers-count">18-65</div>
+                        <div className="followers-count">{jobAge}</div>
                       </div>
                     </div>
                     <div className="gig-followers">
@@ -1007,7 +978,7 @@ const Register = () => {
                       </div>
                       <div className="gig-counts">
                         <div className="followers-text">Gender</div>
-                        <div className="followers-count">Male</div>
+                        <div className="followers-count">{jobGender}</div>
                       </div>
                     </div>
                     <div className="gig-followers">
@@ -1016,7 +987,7 @@ const Register = () => {
                       </div>
                       <div className="gig-counts">
                         <div className="followers-text">Location</div>
-                        <div className="followers-count">Australia</div>
+                        <div className="followers-count">{jobLocation}</div>
                       </div>
                     </div>
                   </div>
@@ -1025,16 +996,19 @@ const Register = () => {
               <div className="company">
                 <div className="company-name">
                   <div className="name-wrapper">S</div>
-                  <div className="company-text">SBM Communications</div>
+                  <div className="company-text">{brandName}</div>
                 </div>
-                <div className="company-plan">100$</div>
+                <div className="company-plan">
+                  {jobMaxPay}
+                  {jobCurrency}
+                </div>
               </div>
             </div>
             <div className="modal-footer">
               <button
                 type="button"
-                onClick={(e) => {
-                  brandClick("brand-form3");
+                onClick={() => {
+                  setBrands_step(3);
                 }}
                 className="step-back"
               >
@@ -1043,8 +1017,8 @@ const Register = () => {
               <button
                 type="button"
                 className="step-continue"
-                onClick={(e) => {
-                  brandClick("brand-form5");
+                onClick={() => {
+                  setBrands_step(5);
                 }}
               >
                 Continue
@@ -1053,11 +1027,17 @@ const Register = () => {
           </div>
         </div>
       )}
-      {brands_form5 && (
+      {brands_step === 5 && (
         <div className="modal-wrapper">
           <div className="modal-content">
             <div className="modal-header header-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
               <button
                 type="button"
                 className="btn-close"
@@ -1072,8 +1052,8 @@ const Register = () => {
             <div className="modal-footer">
               <button
                 type="button"
-                onClick={(e) => {
-                  brandClick("brand-form4");
+                onClick={() => {
+                  setBrands_step(4);
                 }}
                 className="step-back"
               >
@@ -1082,8 +1062,8 @@ const Register = () => {
               <button
                 type="button"
                 className="step-continue"
-                onClick={(e) => {
-                  brandClick("brand-form6");
+                onClick={() => {
+                  setBrands_step(6);
                 }}
               >
                 Continue
@@ -1092,11 +1072,17 @@ const Register = () => {
           </div>
         </div>
       )}
-      {brands_form6 && (
+      {brands_step === 6 && (
         <div className="modal-wrapper">
           <div className="modal-content">
             <div className="modal-header header-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
               <button
                 type="button"
                 className="btn-close"
@@ -1159,8 +1145,8 @@ const Register = () => {
             <div className="modal-footer">
               <button
                 type="button"
-                onClick={(e) => {
-                  brandClick("brand-form5");
+                onClick={() => {
+                  setBrands_step(5);
                 }}
                 className="step-back"
               >
@@ -1169,8 +1155,8 @@ const Register = () => {
               <button
                 type="button"
                 className="step-continue"
-                onClick={(e) => {
-                  brandClick("brand-gmail");
+                onClick={() => {
+                  setBrands_step(7);
                 }}
               >
                 Continue
@@ -1179,13 +1165,18 @@ const Register = () => {
           </div>
         </div>
       )}
-
-      {brandGmail && (
+      {brands_step === 7 && (
         <>
           <div className="modal-wrapper">
             <div className="modal-content">
               <div className="modal-header header-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
+                <img
+                  className="modal-logo"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  src={btLogo}
+                ></img>
                 <button
                   type="button"
                   className="btn-close"
@@ -1215,6 +1206,97 @@ const Register = () => {
           </div>
         </>
       )}
+
+      {kidsFormOne && (
+        <>
+          <div className="form-dialog">
+            <div className="header-wrapper">
+              <div className="step-wrapper">
+                <img className="modal-logo" src={btLogo}></img>
+                <div className="step-text">Step 1 of 2</div>
+              </div>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => {
+                  navigate("/");
+                }}
+              ></button>
+            </div>
+            <div className="dialog-body">
+              <KidsformOne />
+            </div>
+            <div className="dialog-footer">
+              <button
+                type="button"
+                onClick={(e) => {
+                  brandClick();
+                }}
+                className="step-back"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                className="step-continue"
+                onClick={(e) => {
+                  brandClick();
+                }}
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+      {kidsFormTwo && (
+        <div className="modal-wrapper">
+          <div className="modal-content">
+            <div className="modal-header header-wrapper">
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
+              <div className="step-text">Step 2 of 2</div>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => {
+                  navigate("/");
+                }}
+              ></button>
+            </div>
+            <div className="modal-body brands-preview-modal modal-content ">
+              <div className="step-title">Kids Form Two</div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                onClick={(e) => {
+                  brandClick();
+                }}
+                className="step-back"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                className="step-continue"
+                onClick={(e) => {
+                  brandClick();
+                }}
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };
