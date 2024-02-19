@@ -59,210 +59,144 @@ const Pricing = () => {
         </div>
       </section>
       {/* className={artists ? "active-tab" : null} */}
-      {pricingList.length && (
-        <div className="plans-section">
-          {pricingList.map((item, index) => {
-            return (
-              <div
-                className={
-                  index == 0
-                    ? "plans-wrapper free-plans"
-                    : "" || index == 1
-                    ? "plans-wrapper pro-plans"
-                    : "" || index == 2
-                    ? "plans-wrapper premium-plans"
-                    : ""
-                }
-              >
-                <div className="plan-name">
-                  {item.planname}
-                  <div
-                    className={
-                      index == 1
-                        ? "pro-gift"
-                        : "" || index == 2
-                        ? "premium-gift"
-                        : ""
-                    }
-                  >
-                    {item.gift}
-                  </div>
-                </div>
-                {item.planname == "Basic" && (
-                  <>
-                    <div className="plan-value">Free</div>
-                    <div className="plan-validity">Forever</div>
-                  </>
-                )}
-                {item.plan_type_annual.length >= 1 && (
-                  <>
-                    <div className="annual-wrapper">
-                      <input
-                        type="radio"
-                        name="click"
-                        value="save"
-                        CHECKED
-                        id={item.planname}
-                        className={
-                          item.planname == "Pro (Popular)"
-                            ? "pro-checkbox"
-                            : "premium-checkbox"
-                        }
-                      ></input>
-                      <label for={item.planname} className="annual">
-                        {item.period}
-                      </label>
+      <div className="plan-main">
+        {pricingList.length && (
+          <div className="plans-section">
+            {pricingList.map((item, index) => {
+              return (
+                <div
+                  className={
+                    index == 0
+                      ? "plans-wrapper free-plans"
+                      : "" || index == 1
+                      ? "plans-wrapper pro-plans"
+                      : "" || index == 2
+                      ? "plans-wrapper premium-plans"
+                      : ""
+                  }
+                >
+                  <div className="plan-name">
+                    {item.planname}
+                    <div
+                      className={
+                        index == 1
+                          ? "pro-gift"
+                          : "" || index == 2
+                          ? "premium-gift"
+                          : ""
+                      }
+                    >
+                      {item.gift}
                     </div>
-                    {item.plan_type_annual.map((item) => {
-                      return (
-                        <>
-                          <div className="plan-amounts">
-                            <div className="value-wrapper">
-                              <div className="previous-value">
-                                {item.beforeValue}
-                              </div>
-                              <div className="after-value">
-                                {item.afterDiscount}
-                              </div>
-                            </div>
-                            <div className="per-value">{item.amount}</div>
-                          </div>
-                          <div className="border-bottom"></div>
-                        </>
-                      );
-                    })}
-                    <div className="monthly-wrapper pt-3">
-                      <div>
+                  </div>
+                  {item.planname == "Basic" && (
+                    <>
+                      <div className="plan-value">Free</div>
+                      <div className="plan-validity">Forever</div>
+                    </>
+                  )}
+                  {item.plan_type_annual.length >= 1 && (
+                    <>
+                      <div className="annual-wrapper">
                         <input
                           type="radio"
                           name="click"
                           value="save"
                           CHECKED
-                          id={item._id}
+                          id={item.planname}
                           className={
                             item.planname == "Pro (Popular)"
                               ? "pro-checkbox"
                               : "premium-checkbox"
                           }
                         ></input>
-                        <label for={item._id} className="monthly">
-                          Monthly
+                        <label for={item.planname} className="annual">
+                          {item.period}
                         </label>
                       </div>
-                      {item.plan_type_monthly.map((item) => {
+                      {item.plan_type_annual.map((item) => {
                         return (
                           <>
-                            <div className="monthly-amount">{item.amount}</div>
+                            <div className="plan-amounts">
+                              <div className="value-wrapper">
+                                <div className="previous-value">
+                                  {item.beforeValue}
+                                </div>
+                                <div className="after-value">
+                                  {item.afterDiscount}
+                                </div>
+                              </div>
+                              <div className="per-value">{item.amount}</div>
+                            </div>
+                            <div className="border-bottom"></div>
                           </>
                         );
                       })}
-                    </div>
-                  </>
-                )}
-                <div
-                  className={
-                    index == 0
-                      ? "choose-btn free-btn"
-                      : "" || index == 1
-                      ? "choose-btn pro-btn"
-                      : "" || index == 2
-                      ? "choose-btn premium-btn"
-                      : ""
-                  }
-                >
-                  Choose plan
-                </div>
-                <div className="include">WHAT'S INCLUDED</div>
-                <div className="included-things">
-                  {item.data.map((item) => {
-                    return (
-                      <>
-                        <div className="plan-content">
-                          <div>
-                            <img src={greenTick} alt="" />
-                          </div>
-                          <div className="plan-content-text">{item}</div>
+                      <div className="monthly-wrapper pt-3">
+                        <div>
+                          <input
+                            type="radio"
+                            name="click"
+                            value="save"
+                            CHECKED
+                            id={item._id}
+                            className={
+                              item.planname == "Pro (Popular)"
+                                ? "pro-checkbox"
+                                : "premium-checkbox"
+                            }
+                          ></input>
+                          <label for={item._id} className="monthly">
+                            Monthly
+                          </label>
                         </div>
-                      </>
-                    );
-                  })}
+                        {item.plan_type_monthly.map((item) => {
+                          return (
+                            <>
+                              <div className="monthly-amount">
+                                {item.amount}
+                              </div>
+                            </>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+                  <div
+                    className={
+                      index == 0
+                        ? "choose-btn free-btn"
+                        : "" || index == 1
+                        ? "choose-btn pro-btn"
+                        : "" || index == 2
+                        ? "choose-btn premium-btn"
+                        : ""
+                    }
+                  >
+                    Choose plan
+                  </div>
+                  <div className="include">WHAT'S INCLUDED</div>
+                  <div className="included-things">
+                    {item.data.map((item) => {
+                      return (
+                        <>
+                          <div className="plan-content">
+                            <div>
+                              <img src={greenTick} alt="" />
+                            </div>
+                            <div className="plan-content-text">{item}</div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </div>
+                  <div className="learn-btn">Learn More</div>
                 </div>
-                <div className="learn-btn">Learn More</div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {/* <div className="plans-wrapper free-plans">
-          <div className="premium-text">Basic</div>
-          <div className="plan-value">Free</div>
-          <div className="plan-validity">Forever</div>
-          <div className="choose-btn free-btn">Choose plan</div>
-          <div className="include">WHAT'S INCLUDED</div>
-          <div className="included-things">
-            <div>1. Create a profile </div>
-            <div>2. Verified profile</div>
-            <div>3. portfolio</div>
-            <div>4. 3 photos</div>
-            <div>5. 1 videos</div>
-            <div>6. Bio</div>
-            <div>7. CV</div>
-            <div>8. Get Invited to a Job</div>
-            <div>9. Apply to unlimited jobs</div>
-            <div>10. Chat with thebrands (clients)directly</div>
+              );
+            })}
           </div>
-          <div className="learn-btn">Learn More</div>
-        </div>
-        <div className="plans-wrapper pro-plans">
-          <div className="plan-name">
-            Pro (Recommended)
-            <div className="pro-gift">Gift Subscription</div>
-          </div>
-          <div className="plan-value">$7 per / month</div>
-          <div className="save-plan">
-            Annual (save 22.2%) US$ 7/month <span>US$ 108</span>  US $84/year
-          </div>
-          <div className="choose-btn pro-btn">Choose plan</div>
-          <div className="include">WHAT'S INCLUDED</div>
-          <div className="included-things">
-            <div>1. Create a profile </div>
-            <div>2. Verified profile</div>
-            <div>3. portfolio</div>
-            <div>4. 20 photos</div>
-            <div>5. 6 videos</div>
-            <div>6. Bio</div>
-            <div>7. CV</div>
-            <div>8. Get Invited to a Job</div>
-            <div>9. Apply to unlimited jobs</div>
-            <div>10. Chat with thebrands (clients)directly</div>
-          </div>
-          <div className="learn-btn">Learn More</div>
-        </div>
-        <div className="plans-wrapper premium-plans">
-          <div className="plan-name">
-            Premium
-            <div className="premium-gift">Gift Subscription</div>
-          </div>
-          <div className="plan-value">$17 per / month</div>
-          <div className="save-plan">
-            Annual (save 29.2%) US$ 17/month <span>US$ 288</span>  US$ 204/year
-          </div>
-          <div className="choose-btn premium-btn">Choose plan</div>
-          <div className="include">WHAT'S INCLUDED</div>
-          <div className="included-things">
-            <div>1. Create a profile </div>
-            <div>2. Verified profile</div>
-            <div>3. portfolio</div>
-            <div>4. 20 photos</div>
-            <div>5. 6 videos</div>
-            <div>6. Bio</div>
-            <div>7. CV</div>
-            <div>8. Get Invited to a Job</div>
-            <div>9. Apply to unlimited jobs</div>
-            <div>10. Chat with thebrands (clients)directly</div>
-          </div>
-          <div className="learn-btn">Learn More</div>
-        </div> */}
+        )}
+      </div>
       <Footer />
     </>
   );

@@ -41,6 +41,7 @@ const Footer = () => {
           className="form-section"
           style={{
             backgroundImage: `url(${fieldsBackground})`,
+            backgroundRepeat: "round",
           }}
         >
           <div className="form-title">Get Discovered</div>

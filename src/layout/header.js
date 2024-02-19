@@ -4,7 +4,7 @@ import "../assets/css/dashboard.css";
 import { useNavigate } from "react-router";
 import { Route } from "react-router";
 import Register from "../auth/Register";
-const Header = () => {
+const Header = ({ sendMessageToParent }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
@@ -14,6 +14,11 @@ const Header = () => {
   const [below_18, setBelow_18] = useState(false);
   const [talent, setTalent] = useState(true);
   const [brand, setBrand] = useState(false);
+
+  const messageToSignup = () => {
+    // Call the function passed from the parent with a message
+  };
+
   function userType(e) {
     if (e == "talent") {
       setTalent(true);
@@ -28,6 +33,18 @@ const Header = () => {
       setBrand(false);
     }
   }
+
+  const handleRegister = () => {
+    if (brand === true) {
+      navigate("/signup", {
+        state: { signupCategory: signupCategory },
+      });
+    } else if (talent === true) {
+      setTimeout(() => {
+        sendMessageToParent("open-kids-form");
+      }, 800);
+    }
+  };
 
   const handleClick = () => {
     window.scrollTo(0, 0); // Scroll to top on link click
@@ -81,7 +98,21 @@ const Header = () => {
             </NavLink>
           </div>
         </div>
-        <div className="responsive-box">
+        <form class="d-flex search-bootstrap">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          ></input>
+          <button
+            class="btn btn-outline-success search-bootstrap-btn"
+            type="submit"
+          >
+            Search
+          </button>
+        </form>
+        {/* <div className="responsive-box">
           <input type="checkbox" id="search-check"></input>
           <div className="responsive-search-box">
             <input type="text" placeholder="Type here..."></input>
@@ -89,7 +120,7 @@ const Header = () => {
               <i className="fas fa-search"></i>
             </label>
           </div>
-        </div>
+        </div> */}
         <div className="login-text">Login</div>
         <div
           className="signup"
@@ -147,7 +178,21 @@ const Header = () => {
           </div>
         </div>
         <div className="header-functions">
-          <div className="box">
+          <form className="d-flex search-bootstrap">
+            <input
+              className="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            ></input>
+            <button
+              className="btn btn-outline-success search-bootstrap-btn"
+              type="submit"
+            >
+              Search
+            </button>
+          </form>
+          {/* <div className="box">
             <input type="checkbox" id="check"></input>
             <div className="search-box">
               <input type="text" placeholder="Type here..."></input>
@@ -155,7 +200,7 @@ const Header = () => {
                 <i className="fas fa-search"></i>
               </label>
             </div>
-          </div>
+          </div> */}
           <div className="">
             <NavLink to="/login" className="login-text" onClick={handleClick}>
               Login
@@ -225,9 +270,7 @@ const Header = () => {
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   onClick={(e) => {
-                    navigate("/signup", {
-                      state: { signupCategory: signupCategory },
-                    });
+                    handleRegister();
                   }}
                 >
                   Register Now
