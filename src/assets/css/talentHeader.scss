@@ -1,0 +1,88 @@
+.font-styles {
+  color: #000;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 160% */
+}
+
+.talent-header-main {
+  background-color: aqua;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  .talent-nav-logo {
+    padding: 0px 20px;
+    width: 20%;
+  }
+  .talent-menu {
+    display: flex;
+    align-items: center;
+    width: 20%;
+    .mydashboard {
+      font-size: 16px;
+      padding-left: 20px;
+      cursor: pointer;
+    }
+    .telent-menubar {
+      .fa-bars {
+        font-size: 18px;
+      }
+    }
+  }
+  .talent-navbar-functions {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 60%;
+    .talent-seacrh-bar {
+      width: 40%;
+    }
+    .talent-notification,
+    .talent-chat-icon {
+      padding: 0px 20px;
+      svg {
+        cursor: pointer;
+      }
+    }
+    .talent-profile-icon {
+      padding-right: 30px;
+      img {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+@media (max-width: 1500px) {
+  .search-bootstrap {
+    padding-right: 15px;
+    width: 100%;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .search-bootstrap {
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .search-bootstrap {
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .search-bootstrap {
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+}

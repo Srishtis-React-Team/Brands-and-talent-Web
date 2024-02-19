@@ -1,7 +1,12 @@
+.plan-main {
+  background-color: aqua;
+  margin: 0 auto;
+  width: 80%;
+}
 .plans-section {
-  padding: 60px;
+  padding: 60px 0px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .pro-checkbox[type="radio"] {
@@ -20,7 +25,7 @@
 .plan-content {
   display: flex;
   align-items: start;
-  padding: 10px 0px;
+  padding: 5px 0px;
 }
 
 .plan-content-text {
@@ -34,8 +39,9 @@
 }
 
 .plans-wrapper {
-  width: 350px;
+  width: 25%;
   height: 100%;
+  margin-right: 30px;
   /* height: 840px; */
   border-radius: 20px;
   background: #fff;
@@ -61,7 +67,7 @@
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 600;
   line-height: normal;
   letter-spacing: -0.333px;
   padding: 50px 0px 25px 0px;
@@ -93,7 +99,7 @@
 
 .choose-btn {
   cursor: pointer;
-  width: 250px;
+  width: 90%;
   height: 45px;
   flex-shrink: 0;
   border-radius: 60px;
@@ -133,7 +139,7 @@
   cursor: pointer;
   border-radius: 60px;
   background: #dddddd;
-  width: 250px;
+  width: 90%;
   height: 45px;
   flex-shrink: 0;
   color: #c2114b;
@@ -260,7 +266,7 @@
 }
 
 .border-bottom {
-  width: 300px;
+  width: 90%;
   height: 2px;
   background-color: #dddddd;
   text-align: center;
@@ -332,5 +338,58 @@
     display: flex;
     align-items: start;
     padding: 4px 0px;
+  }
+}
+
+/* 320px — 480px: Mobile devices */
+
+@media (min-width: 320px) and (max-width: 480px) {
+}
+/* 481px — 768px: iPads, Tablets */
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .plans-section {
+    padding: 60px 0px;
+    display: flex;
+    justify-content: flex-start;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  .plans-wrapper {
+    width: 80%;
+    margin-top: 20px;
+  }
+}
+/* 769px — 1024px: Small screens, laptops */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .plans-section {
+    padding: 60px 0px;
+    display: flex;
+    justify-content: flex-start;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+  }
+  .plans-wrapper {
+    width: 40%;
+    margin-top: 20px;
+  }
+}
+/* 1025px — 1200px: Desktops, large screens */
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .plans-section {
+    padding: 60px 0px;
+    display: flex;
+    justify-content: flex-start;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+  }
+  .plans-wrapper {
+    width: 40%;
+    margin-top: 20px;
   }
 }

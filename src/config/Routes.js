@@ -12,7 +12,7 @@ import HowItWorks from "../pages/how-it-works";
 import Register from "../auth/Register";
 import Login from "../auth/Login";
 import BrandDashboard from "../brand/pages/brand-dashboard";
-
+import TalentDashBoard from "../views/TalentDashBoard";
 function Routing() {
   return (
     <Routes>
@@ -28,6 +28,7 @@ function Routing() {
       <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/login" element={<Login />} />
       <Route path="/brand-dashboard" element={<BrandDashboard />} />
+      <Route path="/talent-dashboard" element={<TalentDashBoard />} />
     </Routes>
   );
 }

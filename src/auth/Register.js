@@ -14,6 +14,9 @@ import Axios from "axios";
 import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
 import KidsformOne from "./KidsformOne";
+import KidsFormThree from "./KidsFormThree";
+import OTPComponent from "./OTPComponent";
+import AdultsOTP from "./AdultsOTP";
 const Register = () => {
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
@@ -40,8 +43,10 @@ const Register = () => {
   const [message, setMessage] = useState("");
 
   const [kidsFormOne, setKidsFormOne] = useState(false);
-  const [kidsFormTwo, setKidsForTwo] = useState(false);
-
+  const [kidsFormTwo, setKidsFormTwo] = useState(false);
+  const [kidsFormThree, setKidsFormThree] = useState(false);
+  const [kidsFormFour, setKidsFormFour] = useState(false);
+  const [adults_step, setAdultsStep] = useState(Number);
   const [ageForm_visiblity, showAgeForm] = useState(false);
   const [talentSignup, showTalentSignup] = useState(false);
   const [talentGmail, showTalentGmail] = useState(false);
@@ -60,6 +65,9 @@ const Register = () => {
   const [talentEmail, setTalentEmail] = useState("");
   const [talentPassword, setTalentPassword] = useState("");
   const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
+  const [adultEmail, setAdultEmail] = useState("");
+  const [adultPassword, setAdultPassword] = useState("");
+  const [adultConfirmPassword, setAdultConfirmPassword] = useState("");
   const [brandName, setBrandName] = useState("");
   const [brandEmail, setBrandEmail] = useState("");
   const [brandPassword, setBrandPassword] = useState("");
@@ -87,24 +95,101 @@ const Register = () => {
   const [jobMinPay, setJobMinPay] = useState();
   const [jobMaxPay, setJobMaxPay] = useState();
   const [jobImage, setJobImage] = useState("");
+  const [kidsFormOneData, setKidsFormOneData] = useState("");
+  const [signupDisabled, setSignupDisabled] = useState(false);
+  const [parentData, setParentData] = useState();
+  const [adultSignUpData, setAdultSignUpData] = useState();
+  const [paymentStatus, setPaymentStatus] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChildData = (data) => {
+    console.log(data, "from child");
+    if (data.signupStatus === true) {
+      console.log("handleChildData true");
+      setSignupDisabled(true);
+      setParentData(data);
+      console.log(parentData, "parentData");
+    } else {
+      setSignupDisabled(false);
+    }
+  };
+
+  const handleAdultOtp = (data) => {
+    console.log(data, "from child");
+    if (data.signupStatus === true) {
+      console.log("handleAdultOtp true");
+      setAdultSignUpData(data);
+      console.log(adultSignUpData, "adultSignUpData");
+    } else {
+      setSignupDisabled(false);
+    }
+  };
+
+  const [dataFromChild, setDataFromChild] = useState("");
+  const handleDataFromChild = (data) => {
+    console.log(data, "payment sucess DATA");
+    if (data === "payment success") {
+      setPaymentStatus(true);
+    }
+    setDataFromChild(data);
+  };
+  const paymentSuccess = () => {
+    console.log("paymentSuccess");
+    console.log(paymentStatus, "paymentStatus");
+    if (paymentStatus === true) {
+      setKidsFormThree(false);
+      setKidsFormFour(true);
+    }
+  };
+
+  const [childData, setChildData] = useState("");
+  // Function to receive data from ChildComponent
+  const receiveDataFromChild = (dataFromChild) => {
+    console.log(dataFromChild, "dataFromChild");
+    setChildData(dataFromChild);
+    console.log(childData, "childData");
+    if (dataFromChild === "back") {
+      setKidsFormTwo(false);
+      setKidsFormOne(true);
+    }
+    if (dataFromChild === "verified") {
+      setKidsFormTwo(false);
+      setKidsFormThree(true);
+    }
+  };
+
+  const dataFromAdultOTP = (dataFromChild) => {
+    // console.log(dataFromChild, "dataFromChild");
+    // setChildData(dataFromChild);
+    // console.log(childData, "childData");
+    // if (dataFromChild === "back") {
+    //   setKidsFormTwo(false);
+    //   setKidsFormOne(true);
+    // }
+    // if (dataFromChild === "verified") {
+    //   setKidsFormTwo(false);
+    //   setKidsFormThree(true);
+    // }
+  };
 
   const location = useLocation();
   const routeData = location.state;
   console.log(routeData, "routeData");
 
   useEffect(() => {
-    if (routeData.signupCategory == "kids") {
+    if (routeData?.signupCategory == "kids") {
       setKidsFormOne(true);
-      console.log("kids");
-    } else if (routeData.signupCategory == "brand") {
+    } else if (routeData?.signupCategory == "brand") {
       setBrands_step(1);
+    } else if (routeData?.signupCategory == "adults") {
+      setAdultsStep(1);
     }
   }, []);
 
   function brandClick(e) {
     if (
-      routeData.signupCategory == "brand" &&
-      routeData.signupCategory != "talent"
+      routeData?.signupCategory == "brand" &&
+      routeData?.signupCategory != "kids"
     ) {
       if (e === "goTo-brandForm-one") {
         setBrands_form1(true);
@@ -118,11 +203,15 @@ const Register = () => {
     }
   }
 
-  function handleForms(e) {
+  function handleKidsForms(e) {
     if (
-      routeData.signupCategory == "talent" &&
-      routeData.signupCategory == "brand"
+      routeData.signupCategory == "kids" &&
+      routeData.signupCategory != "brand"
     ) {
+      if (e === "goto-kids-otp") {
+        setKidsFormTwo(true);
+        setKidsFormOne(false);
+      }
     }
   }
 
@@ -166,7 +255,6 @@ const Register = () => {
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
       uploadFile(fileData);
     }
   };
@@ -182,10 +270,8 @@ const Register = () => {
       },
     })
       .then((resData) => {
-        console.log(resData.data.data);
         setGigPreview(resData.data.data.filename);
         setJobImage(resData.data.data);
-        console.log(gigPreview, "gigPreview");
         setMessage(resData.data.message);
         setOpenPopUp(true);
         setTimeout(function() {
@@ -193,9 +279,7 @@ const Register = () => {
         }, 2000);
       })
       .catch((err) => {
-        console.log(err);
         setLoader(false);
-        console.log(err);
       });
   };
 
@@ -218,6 +302,11 @@ const Register = () => {
   const onEditorAboutUs = (editorState) => {
     setJobAboutUs(draftToHtml(convertToRaw(editorState.getCurrentContent())));
     setEditorState(editorState);
+  };
+
+  const openGmail = () => {
+    // Open Gmail in a new tab
+    window.open("https://mail.google.com/", "_blank");
   };
 
   const brandSignup = async () => {
@@ -250,10 +339,8 @@ const Register = () => {
       jobMaxPay: jobMaxPay,
       jobImage: jobImage,
     };
-    console.log(formData, "formData brandSignup");
     await ApiHelper.post(API.brandRegisteration, formData)
       .then((resData) => {
-        console.log("brandRegisteration response", resData.data);
         setMessage(resData.data.msg);
         if (resData.data.status === true) {
           setOpenPopUp(true);
@@ -262,9 +349,25 @@ const Register = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
+  };
+  const adultSignupSignUp = async () => {
+    const formData = {
+      adultEmail: adultEmail,
+      adultPassword: adultPassword,
+      adultConfirmPassword: adultConfirmPassword,
+    };
+    await ApiHelper.post(API.adultSignUp, formData)
+      .then((resData) => {
+        setMessage(resData.data.msg);
+        if (resData.data.status === true) {
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {});
   };
 
   return (
@@ -376,7 +479,13 @@ const Register = () => {
         <div className="form-dialog">
           <div className="header-wrapper">
             <div className="step-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
               <div className="step-text">Step 2 of 5</div>
             </div>
             <button
@@ -481,7 +590,13 @@ const Register = () => {
         <div className="form-dialog">
           <div className="header-wrapper">
             <div className="step-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
+              <img
+                onClick={() => {
+                  navigate("/");
+                }}
+                className="modal-logo"
+                src={btLogo}
+              ></img>
               <div className="step-text">Step 3 of 5</div>
             </div>
             <button
@@ -1212,7 +1327,13 @@ const Register = () => {
           <div className="form-dialog">
             <div className="header-wrapper">
               <div className="step-wrapper">
-                <img className="modal-logo" src={btLogo}></img>
+                <img
+                  className="modal-logo"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  src={btLogo}
+                ></img>
                 <div className="step-text">Step 1 of 2</div>
               </div>
               <button
@@ -1224,23 +1345,28 @@ const Register = () => {
               ></button>
             </div>
             <div className="dialog-body">
-              <KidsformOne />
+              <KidsformOne sendDataToParent={handleChildData} />
             </div>
             <div className="dialog-footer">
               <button
                 type="button"
                 onClick={(e) => {
-                  brandClick();
+                  navigate("/");
                 }}
                 className="step-back"
               >
                 Back
               </button>
+
               <button
+                className={
+                  !signupDisabled
+                    ? "step-continue disabled-continue"
+                    : "step-continue"
+                }
                 type="button"
-                className="step-continue"
                 onClick={(e) => {
-                  brandClick();
+                  handleKidsForms("goto-kids-otp");
                 }}
               >
                 Continue
@@ -1250,17 +1376,19 @@ const Register = () => {
         </>
       )}
       {kidsFormTwo && (
-        <div className="modal-wrapper">
-          <div className="modal-content">
-            <div className="modal-header header-wrapper">
-              <img
-                className="modal-logo"
-                onClick={() => {
-                  navigate("/");
-                }}
-                src={btLogo}
-              ></img>
-              <div className="step-text">Step 2 of 2</div>
+        <>
+          <div className="form-dialog">
+            <div className="header-wrapper">
+              <div className="step-wrapper">
+                <img
+                  className="modal-logo"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  src={btLogo}
+                ></img>
+                <div className="step-text">Step 2 of 4</div>
+              </div>
               <button
                 type="button"
                 className="btn-close"
@@ -1269,28 +1397,276 @@ const Register = () => {
                 }}
               ></button>
             </div>
-            <div className="modal-body brands-preview-modal modal-content ">
-              <div className="step-title">Kids Form Two</div>
+            <div className="dialog-body">
+              <OTPComponent
+                parentData={parentData}
+                sendDataToParent={dataFromAdultOTP}
+              />
             </div>
-            <div className="modal-footer">
+          </div>
+        </>
+      )}
+      {kidsFormThree && (
+        <>
+          <div className="form-dialog">
+            <div className="header-wrapper">
+              <div className="step-wrapper">
+                <img
+                  className="modal-logo"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  src={btLogo}
+                ></img>
+                <div className="step-text">Step 3 of 4</div>
+              </div>
               <button
                 type="button"
+                className="btn-close"
+                onClick={() => {
+                  navigate("/");
+                }}
+              ></button>
+            </div>
+            <div className="dialog-body">
+              <KidsFormThree
+                emailData={parentData}
+                onDataFromChild={handleDataFromChild}
+              />
+            </div>
+            <div className="dialog-footer">
+              {/* <button
+                type="button"
                 onClick={(e) => {
-                  brandClick();
+                  handleKidsForms("");
                 }}
                 className="step-back"
               >
                 Back
-              </button>
+              </button> */}
+
               <button
+                className={
+                  !signupDisabled
+                    ? "step-continue disabled-continue"
+                    : "step-continue"
+                }
                 type="button"
-                className="step-continue"
                 onClick={(e) => {
-                  brandClick();
+                  paymentSuccess();
                 }}
               >
-                Continue
+                Pay Now
               </button>
+            </div>
+          </div>
+        </>
+      )}
+      {kidsFormFour && (
+        <>
+          <div className="form-dialog">
+            <div className="header-wrapper">
+              <div className="step-wrapper">
+                <img
+                  className="modal-logo"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  src={btLogo}
+                ></img>
+                <div className="step-text">Step 4 of 4</div>
+              </div>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => {
+                  navigate("/");
+                }}
+              ></button>
+            </div>
+            <div className="dialog-body">
+              <div className="gmail-wrapper">
+                <div className="gmail-tick">
+                  <img src={bigTick} alt="" />
+                </div>
+                <div className="done">Done!</div>
+                <div className="gmail-info">
+                  Get ready to embark on your journey! Your account will be
+                  activated within the next 48 hours, unlocking a world of
+                  possibilities.
+                </div>
+                <div className="open-gmail" onClick={openGmail}>
+                  <img src={gmailGrey} alt="" />
+                  <div className="gmail-btn-text">Open Gmail</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {adults_step === 1 && (
+        <div className="form-dialog">
+          <div className="header-wrapper">
+            <div className="step-wrapper">
+              <img className="modal-logo" src={btLogo}></img>
+            </div>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => {
+                navigate("/");
+              }}
+            ></button>
+          </div>
+          <div className="dialog-body">
+            <div className="brands-form-wrapper">
+              <div className="step-title">Sign up</div>
+              <div className="step-selection">
+                <div className="select-wrapper email-input">
+                  <img className="user-icon" src={mailIcon}></img>
+                  <input
+                    type="text"
+                    className="select-text absolute-input"
+                    placeholder="Email"
+                    onChange={(e) => {
+                      setAdultEmail(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="select-wrapper email-input">
+                  <img src={lockiIcon}></img>
+                  <input
+                    type="password"
+                    className="select-text absolute-input"
+                    placeholder="Password"
+                    onChange={(e) => {
+                      setAdultPassword(e.target.value);
+                    }}
+                  />
+                  <img src={eyeOff}></img>
+                </div>
+
+                <div className="select-wrapper password-wrapper">
+                  <div>
+                    <img src={lockiIcon}></img>
+                    <input
+                      type="password"
+                      className="select-text absolute-input password-input"
+                      placeholder="Confirm-Password"
+                      onChange={(e) => {
+                        setAdultConfirmPassword(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <img src={eyeOff}></img>
+                </div>
+                <div className="stroke-wrapper">
+                  <div className="stroke-div"></div>
+                  <div className="or-signup">Or Signup with</div>
+                  <div className="stroke-div"></div>
+                </div>
+                <div className="signup-options">
+                  <div className="google-media">
+                    <img src={googleLogo} alt="" />
+                    <div className="media-text">Google</div>
+                  </div>
+                  <div className="fb-media">
+                    <img src={fbLogo} alt="" />
+                    <div className="media-text">Facebook</div>
+                  </div>
+                </div>
+                <div className="signup-terms">
+                  By registering you confirm that you accept the 
+                  <span>Terms & Conditions</span> and 
+                  <span>Privacy Policy</span>
+                </div>
+              </div>
+            </div>
+            <div className="signup-btn-section">
+              <div
+                className="signup-btn"
+                onClick={(e) => {
+                  adultSignupSignUp();
+                }}
+              >
+                {isLoading ? "Loading..." : "SignUp"}
+              </div>
+            </div>
+          </div>
+          <div className="dialog-footer">
+            <button
+              type="button"
+              onClick={() => {
+                navigate("/");
+              }}
+              className="step-back"
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              className="step-continue"
+              onClick={() => {
+                setAdultsStep(2);
+              }}
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      )}
+      {adults_step === 2 && (
+        <div className="form-dialog">
+          <div className="header-wrapper">
+            <div className="step-wrapper">
+              <img className="modal-logo" src={btLogo}></img>
+            </div>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => {
+                navigate("/");
+              }}
+            ></button>
+          </div>
+          <div className="dialog-body">
+            <AdultsOTP
+              parentData={parentData}
+              sendDataToParent={handleAdultOtp}
+            />
+          </div>
+        </div>
+      )}
+      {adults_step === 3 && (
+        <div className="form-dialog">
+          <div className="header-wrapper">
+            <div className="step-wrapper">
+              <img className="modal-logo" src={btLogo}></img>
+            </div>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => {
+                navigate("/");
+              }}
+            ></button>
+          </div>
+          <div className="dialog-body">
+            <div className="gmail-wrapper">
+              <div className="gmail-tick">
+                <img src={bigTick} alt="" />
+              </div>
+              <div className="done">Done!</div>
+              <div className="gmail-info">
+                Get ready to embark on your journey! Your account will be
+                activated within the next 48 hours, unlocking a world of
+                possibilities.
+              </div>
+              <div className="open-gmail" onClick={openGmail}>
+                <img src={gmailGrey} alt="" />
+                <div className="gmail-btn-text">Open Gmail</div>
+              </div>
             </div>
           </div>
         </div>

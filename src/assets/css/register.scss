@@ -7,8 +7,6 @@
 
 .rdw-editor-wrapper {
   box-sizing: content-box;
-  margin: 10px 0px;
-  width: 640px;
   border-radius: 8px;
   border: 1px dashed #aaaaaa;
 }
@@ -225,6 +223,7 @@
   align-items: center;
   flex-direction: column;
   padding: 30px;
+  margin-top: 120px;
 }
 
 .gmail-tick > img {
@@ -300,4 +299,5 @@
 }
 .brands-form-wrapper {
   width: 640px;
+  margin-top: 100px;
 }

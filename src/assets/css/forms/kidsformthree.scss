@@ -1,0 +1,66 @@
+.plan-main {
+  background-color: aqua;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.plans-section {
+  padding: 60px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.plans-wrapper {
+  width: 350px;
+  height: 100%;
+  /* height: 840px; */
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 2px 4px 24px 0px rgba(0, 0, 0, 0.25);
+  padding-bottom: 30px;
+  margin-right: 25px !important;
+  cursor: pointer;
+}
+
+.bordered {
+  border: 3px solid #c2114b !important;
+}
+
+.subscribe-wrapper {
+  border: none !important;
+}
+
+.choose-btn {
+  width: 140px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 245px;
+  border: 1px solid #fff;
+  background: #000;
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.subcribe-gift {
+  color: #c2114b !important;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.25px;
+  padding-top: 12px;
+}
+.disabled-plan {
+  opacity: 0.5;
+  cursor: unset !important;
+}

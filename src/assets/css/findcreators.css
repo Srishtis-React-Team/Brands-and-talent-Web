@@ -185,9 +185,6 @@
 }
 
 @media (min-width: 475px) {
-  .mobile-navbar {
-    display: none;
-  }
   .popular-header {
     width: 100%;
     height: 56px;
@@ -409,4 +406,8 @@ select {
 
 .select__multi-value__label {
   color: #fff !important;
+}
+
+.talents-profession {
+  width: 367px;
 }

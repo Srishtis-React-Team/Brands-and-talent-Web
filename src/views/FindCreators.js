@@ -190,7 +190,7 @@ const FindCreators = () => {
               </div>
               <div className="">
                 <div className="filter-items">Profession</div>
-                <div className="profession-wrapper">
+                <div className="profession-wrapper talents-profession">
                   <Select
                     defaultValue={[professionList[2], professionList[3]]}
                     isMulti
