@@ -93,20 +93,78 @@ const Header = ({ sendMessageToParent }) => {
             </NavLink>
           </div>
           <div>
-            <NavLink to="/resources" onClick={handleClick}>
-              Learn to Resources
-            </NavLink>
+            <a
+              className="dropdown-toggle"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              data-bs-auto-close="outside"
+            >
+              Resources
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a className="dropdown-item" href="#">
+                  About
+                </a>
+              </li>
+              <li className="">
+                <a
+                  className="dropdown-item dropdown-toggle"
+                  dropdown-toggle
+                  data-bs-toggle="dropdown"
+                >
+                  Blogs
+                </a>
+                <ul className="dropdown-menu mobile-blogs-menu">
+                  <li>
+                    <a href="" className="dropdown-item">
+                      Industry News & Insights
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" className="dropdown-item">
+                       Case Studies
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" className="dropdown-item">
+                      Talent Diaries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" className="dropdown-item">
+                       Talent Tips & Tricks
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" className="dropdown-item">
+                       Brand Tips & Tricks
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <hr className="dropdown-divider"></hr>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  Community guidelines
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-        <form class="d-flex search-bootstrap">
+        <form className="d-flex search-bootstrap">
           <input
-            class="form-control me-2"
+            className="form-control me-2"
             type="search"
             placeholder="Search"
             aria-label="Search"
           ></input>
           <button
-            class="btn btn-outline-success search-bootstrap-btn"
+            className="btn btn-outline-success search-bootstrap-btn"
             type="submit"
           >
             Search
@@ -172,9 +230,70 @@ const Header = ({ sendMessageToParent }) => {
             </NavLink>
           </div>
           <div>
-            <NavLink to="/resources" onClick={handleClick}>
+            {/* <NavLink to="/resources" onClick={handleClick}>
               Resources
-            </NavLink>
+            </NavLink> */}
+            <a
+              className="dropdown-toggle"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              data-bs-auto-close="outside"
+            >
+              Resources
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a className="dropdown-item" href="#">
+                  About
+                </a>
+              </li>
+              <li className="dropend ">
+                <a
+                  className="dropdown-item dropdown-toggle"
+                  dropdown-toggle
+                  data-bs-toggle="dropdown"
+                >
+                  Blogs
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <a href="" className="dropdown-item">
+                      Industry News & Insights
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" className="dropdown-item">
+                       Case Studies
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" className="dropdown-item">
+                      Talent Diaries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" className="dropdown-item">
+                       Talent Tips & Tricks
+                    </a>
+                  </li>
+                  <li>
+                    <a href="" className="dropdown-item">
+                       Brand Tips & Tricks
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <hr className="dropdown-divider"></hr>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  Community guidelines
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
         <div className="header-functions">

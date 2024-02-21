@@ -12,6 +12,7 @@ const AdultsOTP = ({ sendDataToParent, ...props }) => {
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
   const [registeredEmail, setRegisteredEmail] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [isVeryfying, setIsVeryfying] = useState(false);
   const sendData = () => {
     const data = "back";
     // Call the function passed from parent with data as argument
@@ -19,8 +20,8 @@ const AdultsOTP = ({ sendDataToParent, ...props }) => {
   };
 
   useEffect(() => {
-    console.log(props, "props");
-    setRegisteredEmail(props?.parentData?.email);
+    console.log(props, "props Adultotp");
+    setRegisteredEmail(props?.adultParentData?.data);
   }, [props]);
 
   const handleChange = (index, value) => {
@@ -48,14 +49,16 @@ const AdultsOTP = ({ sendDataToParent, ...props }) => {
   const otpVerification = async (newOTP) => {
     const formData = {
       otp: newOTP,
-      parentEmail: registeredEmail,
+      adultEmail: registeredEmail,
     };
-    console.log(formData, "formData otpVerification");
-    await ApiHelper.post(API.otpVerification, formData)
+    console.log(formData, "formData otpVerificationAdult");
+    setIsVeryfying(true);
+    await ApiHelper.post(API.otpVerificationAdult, formData)
       .then((resData) => {
-        console.log("otpVerification response", resData.data);
+        console.log("otpVerificationAdult response", resData.data);
         if (resData.data.status === true) {
           setMessage("Verification SuccessFull");
+          setIsVeryfying(false);
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -65,6 +68,7 @@ const AdultsOTP = ({ sendDataToParent, ...props }) => {
             sendDataToParent(successData);
           }, 1000);
         } else if (resData.data.status === false) {
+          setIsVeryfying(false);
           console.log("false called");
           setMessage("Enter Correct OTP");
           setOpenPopUp(true);
@@ -91,11 +95,10 @@ const AdultsOTP = ({ sendDataToParent, ...props }) => {
 
   const resendOtp = async (newOTP) => {
     const formData = {
-      parentEmail: registeredEmail,
+      adultEmail: registeredEmail,
     };
     setIsLoading(true);
-
-    await ApiHelper.post(API.otpResend, formData)
+    await ApiHelper.post(API.otpResendAdult, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage(resData.data.message);
@@ -145,7 +148,7 @@ const AdultsOTP = ({ sendDataToParent, ...props }) => {
             </form>
           </div>
           <div className="verify-otp" onClick={handleVerify}>
-            Verify Now
+            {isVeryfying ? "Verifying..." : "Verify Now"}
           </div>
           <div className="otp-info" onClick={otpResend}>
             If you didn’t receive a code?{" "}

@@ -269,7 +269,7 @@
 .gmail-btn-text {
   color: #fff;
   text-align: center;
-  font-family: Roboto;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -300,4 +300,92 @@
 .brands-form-wrapper {
   width: 640px;
   margin-top: 100px;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 3.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+.adult-signup-main {
+  // background-color: aqua;
+  width: 35%;
+}
+
+.adult-password-wrapper,
+.adult-confirm-password-wrapper {
+  position: relative;
+}
+
+.show-password-icon {
+  position: absolute;
+  top: 35%;
+  right: 10px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.show-confirm-password-icon {
+  position: absolute;
+  top: 35%;
+  right: 10px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.adult-signup-inputs {
+  height: 50px;
+}
+.signup-btn-section {
+  padding: 20px 0px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  .signup-btn {
+    background-color: #c2114b;
+    border-radius: 14px;
+    cursor: pointer;
+    padding: 6px 24px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+  }
+}
+
+// 320px — 480px: Mobile devices
+// 481px — 768px: iPads, Tablets
+// 769px — 1024px: Small screens, laptops
+// 1025px — 1200px: Desktops, large screens
+// 1201px and more —  Extra large screens, TV
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .adult-signup-main {
+    // background-color: aqua;
+    width: 50%;
+  }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .adult-signup-main {
+    // background-color: aqua;
+    width: 70%;
+  }
+}
+@media (min-width: 320px) and (max-width: 480px) {
+  .adult-signup-main {
+    // background-color: aqua;
+    width: 80%;
+  }
 }

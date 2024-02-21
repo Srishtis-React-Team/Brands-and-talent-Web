@@ -98,9 +98,19 @@ const Register = () => {
   const [kidsFormOneData, setKidsFormOneData] = useState("");
   const [signupDisabled, setSignupDisabled] = useState(false);
   const [parentData, setParentData] = useState();
+  const [adultParentData, setAdultParentData] = useState();
   const [adultSignUpData, setAdultSignUpData] = useState();
   const [paymentStatus, setPaymentStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const handleChildData = (data) => {
     console.log(data, "from child");
@@ -115,14 +125,22 @@ const Register = () => {
   };
 
   const handleAdultOtp = (data) => {
-    console.log(data, "from child");
-    if (data.signupStatus === true) {
-      console.log("handleAdultOtp true");
-      setAdultSignUpData(data);
-      console.log(adultSignUpData, "adultSignUpData");
-    } else {
-      setSignupDisabled(false);
+    console.log(data, "from Adult Otp");
+    console.log(typeof data, "from Adult Otp");
+    if (data === "back") {
+      setAdultsStep(1);
     }
+    if (data == "verified") {
+      console.log("sdsd");
+      setAdultsStep(3);
+    }
+    // if (data.signupStatus === true) {
+    //   console.log("handleAdultOtp true");
+    //   setAdultSignUpData(data);
+    //   console.log(adultSignUpData, "adultSignUpData");
+    // } else {
+    //   setSignupDisabled(false);
+    // }
   };
 
   const [dataFromChild, setDataFromChild] = useState("");
@@ -351,16 +369,30 @@ const Register = () => {
       })
       .catch((err) => {});
   };
-  const adultSignupSignUp = async () => {
+  const adultSignUp = async () => {
     const formData = {
       adultEmail: adultEmail,
-      adultPassword: adultPassword,
-      adultConfirmPassword: adultConfirmPassword,
+      talentPassword: adultPassword,
+      confirmPassword: adultConfirmPassword,
     };
+    setIsLoading(true);
     await ApiHelper.post(API.adultSignUp, formData)
       .then((resData) => {
-        setMessage(resData.data.msg);
         if (resData.data.status === true) {
+          setIsLoading(false);
+
+          setMessage("Registered SuccessFully!");
+          console.log(resData?.data, "resData?.data");
+          setAdultParentData(resData?.data);
+          console.log(adultParentData, "adultParentData");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+
+          setMessage("Error Occured Try Again!");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -1509,7 +1541,13 @@ const Register = () => {
         <div className="form-dialog">
           <div className="header-wrapper">
             <div className="step-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
             </div>
             <button
               type="button"
@@ -1520,77 +1558,99 @@ const Register = () => {
             ></button>
           </div>
           <div className="dialog-body">
-            <div className="brands-form-wrapper">
+            <div className="adult-signup-main">
               <div className="step-title">Sign up</div>
-              <div className="step-selection">
-                <div className="select-wrapper email-input">
-                  <img className="user-icon" src={mailIcon}></img>
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <div class="form-group has-search">
+                  <span class="fa fa-envelope form-control-feedback"></span>
                   <input
                     type="text"
-                    className="select-text absolute-input"
-                    placeholder="Email"
+                    class="form-control adult-signup-inputs"
+                    placeholder="Email "
                     onChange={(e) => {
                       setAdultEmail(e.target.value);
                     }}
-                  />
+                  ></input>
                 </div>
-                <div className="select-wrapper email-input">
-                  <img src={lockiIcon}></img>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Password</label>
+                <div class="form-group has-search adult-password-wrapper">
+                  <span class="fa fa-lock form-control-feedback"></span>
                   <input
-                    type="password"
-                    className="select-text absolute-input"
+                    type={showPassword ? "text" : "password"}
+                    class="form-control adult-signup-inputs"
                     placeholder="Password"
                     onChange={(e) => {
                       setAdultPassword(e.target.value);
                     }}
-                  />
-                  <img src={eyeOff}></img>
-                </div>
-
-                <div className="select-wrapper password-wrapper">
-                  <div>
-                    <img src={lockiIcon}></img>
-                    <input
-                      type="password"
-                      className="select-text absolute-input password-input"
-                      placeholder="Confirm-Password"
-                      onChange={(e) => {
-                        setAdultConfirmPassword(e.target.value);
-                      }}
-                    />
-                  </div>
-                  <img src={eyeOff}></img>
-                </div>
-                <div className="stroke-wrapper">
-                  <div className="stroke-div"></div>
-                  <div className="or-signup">Or Signup with</div>
-                  <div className="stroke-div"></div>
-                </div>
-                <div className="signup-options">
-                  <div className="google-media">
-                    <img src={googleLogo} alt="" />
-                    <div className="media-text">Google</div>
-                  </div>
-                  <div className="fb-media">
-                    <img src={fbLogo} alt="" />
-                    <div className="media-text">Facebook</div>
-                  </div>
-                </div>
-                <div className="signup-terms">
-                  By registering you confirm that you accept the 
-                  <span>Terms & Conditions</span> and 
-                  <span>Privacy Policy</span>
+                  ></input>
+                  {showPassword ? (
+                    <span
+                      class="fa fa-eye show-password-icon"
+                      onClick={togglePasswordVisibility}
+                    ></span>
+                  ) : (
+                    <span
+                      class="fa fa-eye-slash show-password-icon"
+                      onClick={togglePasswordVisibility}
+                    ></span>
+                  )}
                 </div>
               </div>
-            </div>
-            <div className="signup-btn-section">
-              <div
-                className="signup-btn"
-                onClick={(e) => {
-                  adultSignupSignUp();
-                }}
-              >
-                {isLoading ? "Loading..." : "SignUp"}
+              <div className="mb-1">
+                <label className="form-label">Confirm Password</label>
+                <div class="form-group has-search adult-confirm-password-wrapper">
+                  <span class="fa fa-lock form-control-feedback"></span>
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    class="form-control adult-signup-inputs"
+                    placeholder="Confirm Password"
+                    onChange={(e) => {
+                      setAdultConfirmPassword(e.target.value);
+                    }}
+                  ></input>
+                  {showConfirmPassword ? (
+                    <span
+                      class="fa fa-eye show-confirm-password-icon"
+                      onClick={toggleConfirmPasswordVisibility}
+                    ></span>
+                  ) : (
+                    <span
+                      class="fa fa-eye-slash show-confirm-password-icon"
+                      onClick={toggleConfirmPasswordVisibility}
+                    ></span>
+                  )}
+                </div>
+              </div>
+
+              <div className="stroke-wrapper">
+                <div className="stroke-div"></div>
+                <div className="or-signup">Or Signup with</div>
+                <div className="stroke-div"></div>
+              </div>
+              <div className="signup-options">
+                <div className="google-media">
+                  <img src={googleLogo} alt="" />
+                  <div className="media-text">Google</div>
+                </div>
+              </div>
+              <div className="signup-terms">
+                By registering you confirm that you accept the 
+                <span>Terms & Conditions</span> and 
+                <span>Privacy Policy</span>
+              </div>
+              <div className="signup-btn-section">
+                <div
+                  className="signup-btn"
+                  onClick={(e) => {
+                    adultSignUp();
+                  }}
+                >
+                  {isLoading ? "Loading..." : "SignUp"}
+                </div>
               </div>
             </div>
           </div>
@@ -1620,7 +1680,13 @@ const Register = () => {
         <div className="form-dialog">
           <div className="header-wrapper">
             <div className="step-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
             </div>
             <button
               type="button"
@@ -1632,7 +1698,7 @@ const Register = () => {
           </div>
           <div className="dialog-body">
             <AdultsOTP
-              parentData={parentData}
+              adultParentData={adultParentData}
               sendDataToParent={handleAdultOtp}
             />
           </div>
@@ -1642,7 +1708,13 @@ const Register = () => {
         <div className="form-dialog">
           <div className="header-wrapper">
             <div className="step-wrapper">
-              <img className="modal-logo" src={btLogo}></img>
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
             </div>
             <button
               type="button"
