@@ -107,10 +107,7 @@ const Resources = () => {
                 </div>
                 <div className="plan-details-wrapper">
                   <img src={checkIcon}></img>
-                  <span className="plan-details-content">
-                    {" "}
-                    magna vestibulum{" "}
-                  </span>
+                  <span className="plan-details-content">magna vestibulum</span>
                 </div>
               </div>
             </div>
@@ -126,52 +123,104 @@ const Resources = () => {
           </div>
         </div>
         <div className="faq-section">
-          <div className="faq-question-wrapper">
-            <div className="faq-question">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit?
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  Question 1
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse show"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <strong>This is the first item's accordion body.</strong> It
+                  is shown by default, until the collapse plugin adds the
+                  appropriate classes that we use to style each element. These
+                  classes control the overall appearance, as well as the showing
+                  and hiding via CSS transitions. You can modify any of this
+                  with custom CSS or overriding our default variables. It's also
+                  worth noting that just about any HTML can go within the{" "}
+                  <code>.accordion-body</code>, though the transition does limit
+                  overflow.
+                </div>
+              </div>
             </div>
-            <div
-              className="plus-icon"
-              onClick={(e) => {
-                handleForms("question_1");
-              }}
-            >
-              <img src={plus}></img>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo"
+                >
+                  Question 2
+                </button>
+              </h2>
+              <div
+                id="collapseTwo"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <strong>This is the second item's accordion body.</strong> It
+                  is hidden by default, until the collapse plugin adds the
+                  appropriate classes that we use to style each element. These
+                  classes control the overall appearance, as well as the showing
+                  and hiding via CSS transitions. You can modify any of this
+                  with custom CSS or overriding our default variables. It's also
+                  worth noting that just about any HTML can go within the{" "}
+                  <code>.accordion-body</code>, though the transition does limit
+                  overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseThree"
+                  aria-expanded="false"
+                  aria-controls="collapseThree"
+                >
+                  Question 3
+                </button>
+              </h2>
+              <div
+                id="collapseThree"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <strong>This is the third item's accordion body.</strong> It
+                  is hidden by default, until the collapse plugin adds the
+                  appropriate classes that we use to style each element. These
+                  classes control the overall appearance, as well as the showing
+                  and hiding via CSS transitions. You can modify any of this
+                  with custom CSS or overriding our default variables. It's also
+                  worth noting that just about any HTML can go within the{" "}
+                  <code>.accordion-body</code>, though the transition does limit
+                  overflow.
+                </div>
+              </div>
             </div>
           </div>
-          {question_1 && (
-            <div className="faq-answer space">
-              Phasellus vestibulum leo sed tincidunt pretium. In eget tortor
-              orci. Integer non nibh a libero interdum feugiat quis sed elit.
-              Curabitur imperdiet lacinia justo at cursus. Nam mauris lectus,
-              varius id orci et, condimentum ultricies felis. Pellentesque
-              commodo a massa et tempor. Interdum et malesuada fames ac ante
-              ipsum primis in faucibus.
-            </div>
-          )}
-          <div className="faq-question-wrapper">
-            <div className="faq-question">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit?
-            </div>
-            <div
-              className="plus-icon"
-              onClick={(e) => {
-                handleForms("question_2");
-              }}
-            >
-              <img src={plus}></img>
-            </div>
-          </div>
-          {question_2 && (
-            <div className="faq-answer space">
-              Phasellus vestibulum leo sed tincidunt pretium. In eget tortor
-              orci. Integer non nibh a libero interdum feugiat quis sed elit.
-              Curabitur imperdiet lacinia justo at cursus. Nam mauris lectus,
-              varius id orci et, condimentum ultricies felis. Pellentesque
-              commodo a massa et tempor. Interdum et malesuada fames ac ante
-              ipsum primis in faucibus.
-            </div>
-          )}
         </div>
       </div>
       <Footer />
