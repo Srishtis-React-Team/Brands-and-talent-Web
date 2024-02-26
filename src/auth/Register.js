@@ -41,11 +41,7 @@ const Register = () => {
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-
-  const [kidsFormOne, setKidsFormOne] = useState(false);
-  const [kidsFormTwo, setKidsFormTwo] = useState(false);
-  const [kidsFormThree, setKidsFormThree] = useState(false);
-  const [kidsFormFour, setKidsFormFour] = useState(false);
+  const [kids_step, setKidsStep] = useState(Number);
   const [adults_step, setAdultsStep] = useState(Number);
   const [ageForm_visiblity, showAgeForm] = useState(false);
   const [talentSignup, showTalentSignup] = useState(false);
@@ -97,6 +93,7 @@ const Register = () => {
   const [jobImage, setJobImage] = useState("");
   const [kidsFormOneData, setKidsFormOneData] = useState("");
   const [signupDisabled, setSignupDisabled] = useState(false);
+  const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
   const [parentData, setParentData] = useState();
   const [adultParentData, setAdultParentData] = useState();
   const [adultSignUpData, setAdultSignUpData] = useState();
@@ -155,8 +152,7 @@ const Register = () => {
     console.log("paymentSuccess");
     console.log(paymentStatus, "paymentStatus");
     if (paymentStatus === true) {
-      setKidsFormThree(false);
-      setKidsFormFour(true);
+      setKidsStep(4);
     }
   };
 
@@ -167,27 +163,23 @@ const Register = () => {
     setChildData(dataFromChild);
     console.log(childData, "childData");
     if (dataFromChild === "back") {
-      setKidsFormTwo(false);
-      setKidsFormOne(true);
+      setKidsStep(1);
     }
     if (dataFromChild === "verified") {
-      setKidsFormTwo(false);
-      setKidsFormThree(true);
+      setKidsStep(3);
     }
   };
 
-  const dataFromAdultOTP = (dataFromChild) => {
-    // console.log(dataFromChild, "dataFromChild");
-    // setChildData(dataFromChild);
-    // console.log(childData, "childData");
-    // if (dataFromChild === "back") {
-    //   setKidsFormTwo(false);
-    //   setKidsFormOne(true);
-    // }
-    // if (dataFromChild === "verified") {
-    //   setKidsFormTwo(false);
-    //   setKidsFormThree(true);
-    // }
+  const DataFromKidsOtp = (dataFromChild) => {
+    console.log(dataFromChild, "dataFromChild");
+    setChildData(dataFromChild);
+    console.log(childData, "childData");
+    if (dataFromChild === "back") {
+      setKidsStep(1);
+    }
+    if (dataFromChild === "verified") {
+      setKidsStep(3);
+    }
   };
 
   const location = useLocation();
@@ -196,7 +188,7 @@ const Register = () => {
 
   useEffect(() => {
     if (routeData?.signupCategory == "kids") {
-      setKidsFormOne(true);
+      setKidsStep(1);
     } else if (routeData?.signupCategory == "brand") {
       setBrands_step(1);
     } else if (routeData?.signupCategory == "adults") {
@@ -227,8 +219,7 @@ const Register = () => {
       routeData.signupCategory != "brand"
     ) {
       if (e === "goto-kids-otp") {
-        setKidsFormTwo(true);
-        setKidsFormOne(false);
+        setKidsStep(2);
       }
     }
   }
@@ -380,7 +371,7 @@ const Register = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-
+          setAdultSignupDisabled(true);
           setMessage("Registered SuccessFully!");
           console.log(resData?.data, "resData?.data");
           setAdultParentData(resData?.data);
@@ -391,7 +382,7 @@ const Register = () => {
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
-
+          setAdultSignupDisabled(false);
           setMessage("Error Occured Try Again!");
           setOpenPopUp(true);
           setTimeout(function() {
@@ -1354,7 +1345,7 @@ const Register = () => {
         </>
       )}
 
-      {kidsFormOne && (
+      {kids_step === 1 && (
         <>
           <div className="form-dialog">
             <div className="header-wrapper">
@@ -1407,7 +1398,7 @@ const Register = () => {
           </div>
         </>
       )}
-      {kidsFormTwo && (
+      {kids_step === 2 && (
         <>
           <div className="form-dialog">
             <div className="header-wrapper">
@@ -1432,13 +1423,13 @@ const Register = () => {
             <div className="dialog-body">
               <OTPComponent
                 parentData={parentData}
-                sendDataToParent={dataFromAdultOTP}
+                sendDataToParent={DataFromKidsOtp}
               />
             </div>
           </div>
         </>
       )}
-      {kidsFormThree && (
+      {kids_step === 3 && (
         <>
           <div className="form-dialog">
             <div className="header-wrapper">
@@ -1494,7 +1485,7 @@ const Register = () => {
           </div>
         </>
       )}
-      {kidsFormFour && (
+      {kids_step === 4 && (
         <>
           <div className="form-dialog">
             <div className="header-wrapper">
@@ -1666,7 +1657,11 @@ const Register = () => {
             </button>
             <button
               type="button"
-              className="step-continue"
+              className={
+                !adultSignupDisabled
+                  ? "step-continue disabled-continue"
+                  : "step-continue"
+              }
               onClick={() => {
                 setAdultsStep(2);
               }}

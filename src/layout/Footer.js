@@ -44,7 +44,7 @@ const Footer = () => {
             backgroundRepeat: "round",
           }}
         >
-          <div className="form-title">Get Discovered</div>
+          <div className="form-title get-discover">Get Discovered</div>
           <div className="form-fields">
             <input
               className="input-style form-control"

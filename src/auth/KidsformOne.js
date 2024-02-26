@@ -104,7 +104,15 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
   // Function to handle email input change
   const handleEmailChange = (e) => {
     const email = e.target.value;
@@ -706,7 +714,7 @@ const KidsformOne = ({ sendDataToParent }) => {
               </div>
               <div className="kids-form-row">
                 <div className="kids-form-section">
-                  <div className="mb-3">
+                  {/* <div className="mb-3">
                     <label className="form-label">Password</label>
                     <input
                       type="password"
@@ -719,10 +727,73 @@ const KidsformOne = ({ sendDataToParent }) => {
                       }}
                       placeholder="Enter Password"
                     ></input>
+                  </div> */}
+
+                  <div className="mb-3">
+                    <label className="form-label">Password</label>
+                    <div class="form-group has-search adult-password-wrapper">
+                      <span class="fa fa-lock form-control-feedback"></span>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        class="form-control adult-signup-inputs"
+                        placeholder="Password"
+                        onChange={(e) => {
+                          handlePasswordChange(e);
+                          setTalentPassword(e.target.value);
+                        }}
+                      ></input>
+                      {showPassword ? (
+                        <span
+                          class="fa fa-eye show-password-icon"
+                          onClick={togglePasswordVisibility}
+                        ></span>
+                      ) : (
+                        <span
+                          class="fa fa-eye-slash show-password-icon"
+                          onClick={togglePasswordVisibility}
+                        ></span>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="kids-form-section">
-                  <div className="mb-3">
+                  <div className="mb-1">
+                    <label className="form-label">Confirm Password</label>
+                    <div class="form-group has-search adult-confirm-password-wrapper">
+                      <span class="fa fa-lock form-control-feedback"></span>
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        className={`form-control adult-signup-inputs ${
+                          passwordMatch ? "" : "is-invalid"
+                        }`}
+                        placeholder="Confirm Password"
+                        onChange={(e) => {
+                          handleConfirmPasswordChange(e);
+                          setTalentConfirmPassword(e.target.value);
+                        }}
+                      ></input>
+                      {showConfirmPassword ? (
+                        <span
+                          class="fa fa-eye show-confirm-password-icon"
+                          onClick={toggleConfirmPasswordVisibility}
+                        ></span>
+                      ) : (
+                        <span
+                          class="fa fa-eye-slash show-confirm-password-icon"
+                          onClick={toggleConfirmPasswordVisibility}
+                        ></span>
+                      )}
+                    </div>
+                    {!passwordMatch &&
+                      talentConfirmPassword &&
+                      talentConfirmPassword.length && (
+                        <p className="password-wrong">
+                          Passwords does not match.
+                        </p>
+                      )}
+                  </div>
+
+                  {/* <div className="mb-3">
                     <label className="form-label">Confirm Password</label>
                     <input
                       type="password"
@@ -731,8 +802,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                       }`}
                       onChange={(e) => {
                         handleConfirmPasswordChange(e);
-                        // You can add your existing onChange logic here
-                        // Example: existingOnChangeFunction(e);
                         setTalentConfirmPassword(e.target.value);
                       }}
                       placeholder=" Confirm Password"
@@ -740,7 +809,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                     {!passwordMatch && talentConfirmPassword && (
                       <p className="password-wrong">Passwords do not match.</p>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="kids-form-row">

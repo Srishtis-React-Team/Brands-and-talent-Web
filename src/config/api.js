@@ -17,9 +17,11 @@ export const API = {
   otpVerificationAdult: BASEURL + "users/otpVerificationAdult",
   otpResend: BASEURL + "users/otpResend",
   otpResendAdult: BASEURL + "users/otpResendAdult",
+  forgotPassword: BASEURL + "users/forgotPassword",
+  resetPassword: BASEURL + "users/resetPassword",
 
   //login
-  kidsLogin: BASEURL + "users/kidsLogin",
+  talentLogin: BASEURL + "users/talentLogin",
 
   //pricing
   getPricingList: BASEURL + "pricing/pricingList",
@@ -27,4 +29,6 @@ export const API = {
 
   //common
   getFeatures: BASEURL + "features/getFeatures",
+  getRecentGigs: BASEURL + "gigs/recentGigs",
+  getTopBrands: BASEURL + "brands/topBrands",
 };

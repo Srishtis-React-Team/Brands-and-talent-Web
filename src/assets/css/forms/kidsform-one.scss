@@ -40,7 +40,8 @@
       }
       .selected-category {
         padding: 8px 16px;
-        background-color: rgb(0, 0, 0);
+        background-color: #c2114b;
+        // background-color: rgb(0, 0, 0);
         margin: 8px 8px 8px 0px;
         cursor: pointer;
         color: #fff;
@@ -89,6 +90,12 @@
   }
 }
 
+.password-wrong {
+  color: red;
+  padding: 4px 0px;
+  font-size: 14px;
+}
+
 // .kids-form-title::before,
 // .kids-form-title::after {
 //   display: inline-block;
@@ -116,7 +123,7 @@
   height: 30px;
 }
 .profession-checkbox {
-  max-width: 20px;
+  width: 20px;
   height: 20px;
 }
 .offer-wrapper {
@@ -234,7 +241,7 @@
     border: 1px solid rgb(179, 179, 179);
     display: flex;
     justify-content: space-between;
-    margin: 20px 0px;
+    margin: 10px 0px;
     align-items: center;
     padding: 15px;
     .connect-btn {

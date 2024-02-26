@@ -11,8 +11,11 @@ import PostJob from "../pages/PostJob";
 import HowItWorks from "../pages/how-it-works";
 import Register from "../auth/Register";
 import Login from "../auth/Login";
+import ForgotPassword from "../auth/forgotpassword";
 import BrandDashboard from "../brand/pages/brand-dashboard";
 import TalentDashBoard from "../views/TalentDashBoard";
+import ResetPassword from "../auth/ResetPassword";
+import PasswordSuccess from "../auth/PasswordSuccess";
 function Routing() {
   return (
     <Routes>
@@ -26,7 +29,10 @@ function Routing() {
       <Route path="/community-guidelines" element={<Guidelines />} />
       <Route path="/post-job" element={<PostJob />} />
       <Route path="/how-it-works" element={<HowItWorks />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/success-password" element={<PasswordSuccess />} />
       <Route path="/brand-dashboard" element={<BrandDashboard />} />
       <Route path="/talent-dashboard" element={<TalentDashBoard />} />
     </Routes>

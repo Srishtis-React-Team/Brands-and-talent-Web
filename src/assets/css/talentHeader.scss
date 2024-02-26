@@ -8,12 +8,18 @@
 }
 
 .talent-header-main {
-  background-color: aqua;
-  height: 60px;
+  // background-color: aqua;
+  height: 75px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  top: 0;
+  position: sticky;
+  width: 100%;
+  background-color: #fff;
+  z-index: 9;
+  border-bottom: 1px solid #d4d4d8;
   .talent-nav-logo {
     padding: 0px 20px;
     width: 20%;
