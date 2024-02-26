@@ -1,6 +1,5 @@
 .login-container {
-  width: 450px;
-  height: 520px;
+  width: 25%;
   border: 1px solid #aaa;
   border-radius: 26px;
   padding: 30px;
@@ -17,6 +16,28 @@
 }
 
 .login-inputs > input {
+}
+
+.forgot-info,
+.resend-forgot {
+  text-align: center;
+  padding-bottom: 10px;
+  color: #000;
+  font-family: "Open Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+}
+
+.resend-forgot {
+  padding: 15px 0px;
+}
+
+.resend-forgot > span {
+  color: blue;
+  text-decoration: underline;
 }
 
 .login-logo {
@@ -61,15 +82,26 @@
   text-align: left;
 }
 
+.iam-brand,
 .iam-talent {
-  padding-left: 15px;
+  padding: 5px;
+  color: #858585;
+}
+.iam-talent {
+  margin-left: 25px;
 }
 
 .selected {
-  color: #858585;
+  color: #c2114b;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 6px;
+  border-radius: 6px;
 }
-
+.login-input-containers {
+  width: 100%;
+}
 .login-btn {
+  width: 100%;
   border-radius: 245px;
   border: 1px solid #fff;
   background: #c2114b;
@@ -85,7 +117,7 @@
   align-items: center;
   padding: 10px 20px;
   margin: 10px 0px;
-  height: 58px;
+  height: 50px;
 }
 
 .gmail-options {
@@ -107,4 +139,40 @@
 
 .form-switch {
   margin: 0px 15px;
+}
+
+.success-text {
+  color: #c2114b;
+  font-size: 28px;
+}
+
+.success-info {
+  font-family: 18px;
+  padding: 30px 0px;
+  font-weight: 400;
+}
+
+// 320px — 480px: Mobile devices
+// 481px — 768px: iPads, Tablets
+// 769px — 1024px: Small screens, laptops
+// 1025px — 1200px: Desktops, large screens
+// 1201px and more —  Extra large screens, TV
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .login-container {
+    // background-color: aqua;
+    width: 50%;
+  }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .login-container {
+    // background-color: aqua;
+    width: 70%;
+  }
+}
+@media (min-width: 320px) and (max-width: 480px) {
+  .login-container {
+    // background-color: aqua;
+    width: 80%;
+  }
 }

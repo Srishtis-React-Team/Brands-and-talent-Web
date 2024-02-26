@@ -105,8 +105,10 @@ const Header = ({ sendMessageToParent }) => {
             </a>
             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a className="dropdown-item" href="#">
-                  About
+                <a className="dropdown-item">
+                  <NavLink to="/resources" onClick={handleClick}>
+                    About
+                  </NavLink>
                 </a>
               </li>
               <li className="">
@@ -149,9 +151,7 @@ const Header = ({ sendMessageToParent }) => {
                 <hr className="dropdown-divider"></hr>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Community guidelines
-                </a>
+                <a className="dropdown-item">Community guidelines</a>
               </li>
             </ul>
           </div>
@@ -185,7 +185,7 @@ const Header = ({ sendMessageToParent }) => {
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
-          Sign up
+          Sign up for free
         </div>
       </div>
 
@@ -245,8 +245,10 @@ const Header = ({ sendMessageToParent }) => {
             </a>
             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a className="dropdown-item" href="#">
-                  About
+                <a className="dropdown-item">
+                  <NavLink to="/resources" onClick={handleClick}>
+                    About
+                  </NavLink>
                 </a>
               </li>
               <li className="dropend ">
@@ -289,9 +291,7 @@ const Header = ({ sendMessageToParent }) => {
                 <hr className="dropdown-divider"></hr>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Community guidelines
-                </a>
+                <a className="dropdown-item">Community guidelines</a>
               </li>
             </ul>
           </div>
@@ -330,7 +330,7 @@ const Header = ({ sendMessageToParent }) => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
-            Sign up
+            Sign up for free
           </div>
           <div className="gridLogo">
             <img src={gridLogo}></img>

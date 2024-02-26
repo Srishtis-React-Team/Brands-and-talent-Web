@@ -1,0 +1,279 @@
+.container-fluid {
+  background-color: rgb(236, 236, 236);
+  padding: 30px;
+  .row {
+    // background-color: #ff2a2a;
+    .talent-column-one {
+      background-color: #ffffff;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      margin-right: 20px;
+      border-radius: 8px;
+      padding: 20px;
+      .recent-gigs-title {
+        color: #000;
+        font-family: "Open Sans", sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+      .recent-gigs-main {
+        // background-color: aqua;
+        .recent-gigs-wrapper {
+          padding: 30px 0px;
+          border-bottom: 1px solid gray;
+          .recent-setone {
+            display: flex;
+            .recent-img-div {
+              .recent-img {
+                border-radius: 16px;
+              }
+            }
+            .recent-gig-details {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              padding-left: 15px;
+              .recent-gig-company,
+              .recent-gig-description {
+                color: #000;
+                font-family: "Open Sans", sans-serif;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+              }
+              .recent-gig-name {
+                color: #000;
+                font-family: "Open Sans", sans-serif;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                padding: 15px 0px;
+              }
+              .recent-gig-description {
+                font-size: 14px;
+                font-weight: 400;
+              }
+            }
+          }
+          .recent-settwo {
+            display: flex;
+            padding: 20px 0px;
+            .recent-gigs-count-wrapper {
+              display: flex;
+              align-items: center;
+              padding-right: 30px;
+              .recent-gigs-logo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #ffffff;
+                border: 1px solid grey;
+                border-radius: 50%;
+                width: 46px;
+                height: 46px;
+              }
+              .recent-gig-count-details {
+                padding-left: 15px;
+                .recent-gigs-count {
+                  color: #c2114b;
+                  font-family: "Open Sans", sans-serif;
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 700;
+                  line-height: normal;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .talent-column-two {
+      background-color: #ffffff;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      border-radius: 8px;
+      padding: 30px;
+      .contact-section-main {
+        .contact-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 40px 30px 30px 30px;
+          border-bottom: 1px solid gray;
+          .contact-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #c2114b;
+            border-radius: 50%;
+            padding: 25px;
+          }
+          .contact-q,
+          .contact-description {
+            color: #000;
+            font-family: "Open Sans", sans-serif;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            padding: 15px 0px;
+            margin-bottom: 0px;
+          }
+          .contact-description {
+            font-size: 16px;
+            font-weight: 400;
+          }
+          .contact-btn {
+            height: 50px;
+            width: 100%;
+            background-color: #000;
+            color: #ffffff;
+            cursor: pointer;
+            font-family: "Open Sans", sans-serif;
+            font-size: 17px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+          }
+        }
+        .top-brands-section {
+          display: flex;
+          justify-content: space-between;
+          padding: 20px 0px;
+          .top-brands-title,
+          .view-all-brands {
+            color: #000;
+            font-family: "Open Sans", sans-serif;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            padding: 15px 0px;
+          }
+          .view-all-brands {
+            cursor: pointer;
+            color: gray;
+            font-size: 17px;
+          }
+        }
+        .top-brands-main {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+          .top-brands-wrapper {
+            width: 30%;
+            padding: 10px;
+            cursor: pointer;
+            .top-brand-img-wrapper {
+              .top-brand-img {
+                width: 100%;
+              }
+            }
+            .top-brands-name {
+              color: #000;
+              font-family: "Open Sans", sans-serif;
+              font-size: 15px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: normal;
+              word-break: break-all;
+              text-align: center;
+              padding-top: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.side-menu {
+  width: 25%;
+
+  .sidemnu-close {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 15px 15px;
+  }
+  .sidemenu-main {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    .talent-profile {
+      width: 80%;
+      background-color: rgb(228, 228, 228);
+      border-radius: 16px;
+      padding: 25px;
+      .talent-data-wrapper {
+        display: flex;
+        align-items: self-end;
+        .profile-img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          border: 1px solid #c2114b;
+          margin-right: 15px;
+        }
+        .talent-details {
+          .talent-name {
+            color: #000;
+            font-family: "Open Sans", sans-serif;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            text-align: center;
+          }
+        }
+      }
+      .talents-plan-info {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0px;
+        .talent-plan-name {
+          color: #000;
+          font-family: "Open Sans", sans-serif;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+          text-align: center;
+          span {
+            color: #c2114b;
+          }
+        }
+      }
+      .upgrade-btn {
+        height: 50px;
+        background-color: #c2114b;
+        cursor: pointer;
+        border-radius: 16px;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.modal-backdrop.show {
+  opacity: 0;
+}
+
+.offcanvas-start {
+  top: 75px;
+  left: 0;
+  width: 400px;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  transform: translateX(-100%);
+}

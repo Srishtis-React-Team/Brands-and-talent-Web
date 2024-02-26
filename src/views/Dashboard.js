@@ -66,6 +66,7 @@ const Dashboard = () => {
   const [gender, setGenders] = useState("");
   const [genderList, setGenderList] = useState([]);
   const [talentList, setTalentList] = useState([]);
+  const [caseList, setCaseList] = useState([]);
   const [photoGraphersList, setphotoGraphersList] = useState([]);
   const [messageFromHeader, setMessageFromHeader] = useState("");
 
@@ -202,6 +203,48 @@ const Dashboard = () => {
         isFavorite: false,
         location: "China",
         booked: "8 Jobs Booked",
+        rating: 1,
+      },
+    ]);
+    setCaseList([
+      {
+        id: 1,
+        photo: girl1,
+        name: "Alexander",
+        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
+        isFavorite: false,
+        location: "Australia",
+        booked: "3 Jobs Booked",
+        rating: 4,
+      },
+      {
+        id: 2,
+        photo: girl2,
+        name: "william",
+        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
+        location: "America",
+        booked: "3 Jobs Booked",
+        isFavorite: false,
+        rating: 3,
+      },
+      {
+        id: 3,
+        photo: girl3,
+        name: "Michael",
+        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
+        location: "Canada",
+        booked: "6 Jobs Booked",
+        isFavorite: false,
+        rating: 5,
+      },
+      {
+        id: 4,
+        photo: girl4,
+        name: "Andrea",
+        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
+        isFavorite: false,
+        location: "Russia",
+        booked: "150 Jobs Booked",
         rating: 1,
       },
     ]);
@@ -485,7 +528,7 @@ const Dashboard = () => {
                   });
                 }}
               >
-                <div className="joinnow-text">Join Now</div>
+                <div className="joinnow-text">Hire Now</div>
               </div>
             </div>
           </div>
@@ -550,7 +593,7 @@ const Dashboard = () => {
                 handleTabs("artists");
               }}
             >
-              Artists
+              Featured
             </div>
             <div
               className={photographers ? "active-tab" : null}
@@ -702,47 +745,16 @@ const Dashboard = () => {
         <div className="title">Case studies</div>
         <div className="gallery-section">
           <div className="gallery-main">
-            {talentList.map((item) => {
+            {caseList.map((item) => {
               return (
-                <div className="gallery-warpper">
+                <div className="case-warpper">
                   <div className="gallery-position">
-                    <img className="gallery-img" src={item.photo}></img>
-                    <div className="rating">
-                      <img src={brightStar}></img>
-                      <img src={brightStar}></img>
-                      <img src={brightStar}></img>
-                      <img src={darkStar}></img>
-                      <img src={darkStar}></img>
-                    </div>
-                    {!item.isFavorite && (
-                      <img
-                        className="heart-icon"
-                        src={heartIcon}
-                        onClick={() => addFavorite(item)}
-                      ></img>
-                    )}
-                    {item.isFavorite === true && (
-                      <img
-                        className="heart-icon"
-                        src={favoruiteIcon}
-                        onClick={() => removeFavorite(item)}
-                      ></img>
-                    )}
+                    <img className="case-img" src={item.photo}></img>
                   </div>
                   <div className="gallery-content">
                     <div className="content">
                       <div className="name">{item.name}</div>
                       <div className="address">{item.address}</div>
-                      <div className="user-details">
-                        <div className="location-wrapper">
-                          <img src={locationIcon} alt="" />
-                          <div className="location-name">{item.location}</div>
-                        </div>
-                        <div className="location-wrapper">
-                          <img src={jobIcon} alt="" />
-                          <div className="location-name">{item.booked}</div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -922,9 +934,9 @@ const Dashboard = () => {
         <Footer />
       </div>
       <div className="chat-section"></div>
-      {/* <div className="chatbot-icon">
+      <div className="chatbot-icon">
         <img src={chatIcon} alt="" />
-      </div> */}
+      </div>
     </>
   );
 };

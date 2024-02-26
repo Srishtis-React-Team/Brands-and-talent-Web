@@ -3,6 +3,7 @@ import "../assets/css/findcreators.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 import Select from "react-select";
+import RangeSlider from "../components/RangeSlider.js";
 const FindCreators = () => {
   const searchIcon = require("../assets/icons/search.png");
   const heartIcon = require("../assets/icons/heart.png");
@@ -24,7 +25,11 @@ const FindCreators = () => {
   const girl15 = require("../assets/images/girl15.png");
   const girl16 = require("../assets/images/girl16.png");
   const starIcon = require("../assets/icons/star.png");
-
+  const favoruiteIcon = require("../assets/icons/favorite.png");
+  const locationIcon = require("../assets/icons/locationIcon.png");
+  const darkStar = require("../assets/icons/darkStar.png");
+  const brightStar = require("../assets/icons/brightStar.png");
+  const jobIcon = require("../assets/icons/jobIcon.png");
   const [filterOpen, setFilterOpen] = useState(false);
   const [isClearable, setIsClearable] = useState(true);
   const [isSearchable, setIsSearchable] = useState(true);
@@ -41,42 +46,129 @@ const FindCreators = () => {
   const [state, setState] = useState("");
   const [ethnicity, setEthnicity] = useState("");
   const [talentList, setTalentList] = useState([]);
+  const [min, setMinAge] = useState([]);
+  const [max, setMaxAge] = useState([]);
 
   useEffect(() => {
     setTalentList([
       {
+        id: 1,
         photo: girl1,
         name: "Alexander",
         address: "Copenhagen, Denmark",
-        isFavorite: true,
+        isFavorite: false,
+        location: "Australia",
+        booked: "3 Jobs Booked",
         rating: 4,
       },
       {
+        id: 2,
         photo: girl2,
         name: "william",
         address: "Copenhagen, Denmark",
+        location: "America",
+        booked: "3 Jobs Booked",
         isFavorite: false,
         rating: 3,
       },
       {
+        id: 3,
         photo: girl3,
         name: "Michael",
         address: "Pitsburg, Canada",
+        location: "Canada",
+        booked: "6 Jobs Booked",
         isFavorite: false,
         rating: 5,
       },
       {
+        id: 4,
         photo: girl4,
         name: "Andrea",
         address: "North Carolina, USA",
         isFavorite: false,
+        location: "Russia",
+        booked: "150 Jobs Booked",
         rating: 1,
       },
       {
+        id: 5,
         photo: girl5,
         name: "Alexa",
         address: "South Carolina, USA",
         isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
+        rating: 1,
+      },
+      {
+        id: 6,
+        photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
+        rating: 1,
+      },
+      {
+        id: 7,
+        photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
+        rating: 1,
+      },
+      {
+        id: 8,
+        photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
+        rating: 1,
+      },
+      {
+        id: 9,
+        photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
+        rating: 1,
+      },
+      {
+        id: 10,
+        photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
+        rating: 1,
+      },
+      {
+        id: 11,
+        photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
+        rating: 1,
+      },
+      {
+        id: 12,
+        photo: girl5,
+        name: "Alexa",
+        address: "South Carolina, USA",
+        isFavorite: false,
+        location: "China",
+        booked: "8 Jobs Booked",
         rating: 1,
       },
     ]);
@@ -104,12 +196,12 @@ const FindCreators = () => {
 
   const genderList = [
     {
-      value: "male",
-      label: "Male",
+      value: "option 1",
+      label: "option 1",
       color: "#00B8D9",
       isFixed: true,
     },
-    { value: "female", label: "Female", color: "#5243AA" },
+    { value: "option 2", label: "option 2", color: "#5243AA" },
   ];
 
   const search = async () => {
@@ -129,6 +221,46 @@ const FindCreators = () => {
     // 👉️ [ {name: 'Carl', age: 30} ]
     console.log(filteredTalents, "Filtered Talent List");
     setTalentList(filteredTalents);
+  };
+
+  const addFavorite = (item) => {
+    console.log(item, "item");
+    const modifiedTalents = talentList.map((obj) => {
+      console.log(obj, "obj");
+      if (obj.id === item.id) {
+        return { ...obj, isFavorite: true };
+      }
+      return obj;
+    });
+    setTalentList(modifiedTalents);
+    console.log(modifiedTalents, "modifiedTalents");
+  };
+
+  const removeFavorite = (item) => {
+    console.log(item, "item");
+    const modifiedTalents = talentList.map((obj) => {
+      console.log(obj, "obj");
+      if (obj.id === item.id) {
+        return { ...obj, isFavorite: false };
+      }
+      return obj;
+    });
+    setTalentList(modifiedTalents);
+    console.log(modifiedTalents, "modifiedTalents");
+  };
+
+  const onRangeChange = (e) => {
+    console.log(Math.round(e.min), "e");
+    console.log(Math.round(e.max), "e");
+    setMinAge(Math.round(e.min));
+    setMaxAge(Math.round(e.max));
+  };
+
+  const onMinChange = (event) => {
+    setMinAge(event.target.value); // Update the state with the new value
+  };
+  const onMaxChange = (event) => {
+    setMaxAge(event.target.value); // Update the state with the new value
   };
 
   return (
@@ -156,180 +288,260 @@ const FindCreators = () => {
                 Filters
               </div>
             </div>
-            <div className={filterOpen ? "filter-content" : "hide-filter"}>
-              <div className="keyword-wrapper pt-4">
-                <div className="filter-items">Keyword</div>
-                <div className="filter-input-wrapper">
-                  <div>
-                    <img className="search-icon" src={searchIcon}></img>
-                  </div>
-                  <input
-                    className="keyword-input"
-                    placeholder="Search Keyword"
-                    onChange={(e) => {
-                      setSearchKeyword(e.target.value);
-                    }}
-                  ></input>
+            <div className="keyword-wrapper pt-4">
+              <div className="filter-items">Keyword</div>
+              <div className="filter-input-wrapper">
+                <div>
+                  <img className="search-icon" src={searchIcon}></img>
                 </div>
+                <input
+                  className="keyword-input"
+                  placeholder="Search Keyword"
+                  onChange={(e) => {
+                    setSearchKeyword(e.target.value);
+                  }}
+                ></input>
               </div>
-              <div className="search-words-section">
-                <div></div>
-                <div className="search-history">
-                  <div
-                    onClick={(e) => {
-                      setSelectedKeywords("creators");
-                    }}
-                  >
-                    creators*
-                  </div>
-                  <div>makeup artists*</div>
-                  <div>writers*</div>
-                  <div>beauticians*</div>
-                  <div>fitness*</div>
+            </div>
+            <div className="search-words-section">
+              <div></div>
+              <div className="search-history">
+                <div
+                  onClick={(e) => {
+                    setSelectedKeywords("creators");
+                  }}
+                >
+                  creators*
                 </div>
+                <div>makeup artists*</div>
+                <div>writers*</div>
+                <div>beauticians*</div>
+                <div>fitness*</div>
               </div>
-              <div className="">
-                <div className="filter-items">Profession</div>
-                <div className="profession-wrapper talents-profession">
-                  <Select
-                    defaultValue={[professionList[2], professionList[3]]}
-                    isMulti
-                    name="colors"
-                    options={professionList}
-                    valueField="value"
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                    onChange={(value) => setProfession(value)}
-                  />
-                </div>
+            </div>
+            <div className="profession-creator-wrapper">
+              <div className="filter-items">Profession</div>
+              <div className="profession-wrapper talents-profession">
+                <Select
+                  defaultValue={[professionList[2], professionList[3]]}
+                  isMulti
+                  name="colors"
+                  options={professionList}
+                  valueField="value"
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  onChange={(value) => setProfession(value)}
+                />
               </div>
-              <div className="keyword-wrapper">
-                <div className="filter-items">Gender</div>
-                <div className="">
-                  <Select
-                    className="basic-single"
-                    classNamePrefix="select"
-                    isClearable={isClearable}
-                    isRtl={isRtl}
-                    isSearchable={isSearchable}
-                    options={genderList}
-                    valueField="value"
-                    onChange={(value) => setGender(value.value)}
-                  />
-                </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Industry</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
               </div>
-              <div className="keyword-wrapper">
-                <div className="filter-items">Sub Category</div>
-                <div className="">
-                  <Select
-                    className="basic-single"
-                    classNamePrefix="select"
-                    defaultValue={professionList[0]}
-                    isDisabled={isDisabled}
-                    isLoading={isLoading}
-                    isClearable={isClearable}
-                    isRtl={isRtl}
-                    isSearchable={isSearchable}
-                    name="color"
-                    options={professionList}
-                  />
-                </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Location</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
               </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">City</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
+              </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Gender</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
+              </div>
+            </div>
+            <div className="keyword-wrapper">
               <div className="filter-items">Age</div>
-              <div className="input-items-wrapper">
-                <div>
-                  <input
-                    placeholder="Min"
-                    type="text"
-                    className="input-items-style form-control"
-                    onChange={(e) => {
-                      setAge(e.target.value);
-                    }}
-                  ></input>
-                </div>
-                <div>
-                  <input
-                    placeholder="Max"
-                    type="text"
-                    className="input-items-style  form-control"
-                    onChange={(e) => {
-                      setAge(e.target.value);
-                    }}
-                  ></input>
-                </div>
+              <div className="creators-filter-select">
+                <RangeSlider min={1} max={100} onChange={onRangeChange} />
+                {/* <p>
+                  Change in slider:
+                  {min},{max}
+                </p> */}
               </div>
-
-              <div className="keyword-wrapper">
-                <div className="filter-items">Country</div>
-                <div className="">
-                  <Select
-                    className="basic-single"
-                    classNamePrefix="select"
-                    defaultValue={professionList[0]}
-                    isDisabled={isDisabled}
-                    isLoading={isLoading}
-                    isClearable={isClearable}
-                    isRtl={isRtl}
-                    isSearchable={isSearchable}
-                    name="color"
-                    options={professionList}
-                  />
-                </div>
+            </div>
+            <div className="keyword-wrapper creator-age-main">
+              <div className="creators-filter-select creator-age-wrapper">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Min"
+                  value={`Min Age :${min}`}
+                  onChange={onMinChange}
+                  readOnly
+                ></input>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Max"
+                  value={`Max Age :${max}`}
+                  onChange={onMaxChange}
+                  readOnly
+                ></input>
               </div>
-              <div className="keyword-wrapper">
-                <div className="filter-items">State</div>
-                <div className="">
-                  <Select
-                    className="basic-single"
-                    classNamePrefix="select"
-                    defaultValue={professionList[0]}
-                    isDisabled={isDisabled}
-                    isLoading={isLoading}
-                    isClearable={isClearable}
-                    isRtl={isRtl}
-                    isSearchable={isSearchable}
-                    name="color"
-                    options={professionList}
-                  />
-                </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Ethnicity</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
               </div>
-              <div className="keyword-wrapper">
-                <div className="filter-items">Ethnicity</div>
-                <div className="">
-                  <Select
-                    className="basic-single"
-                    classNamePrefix="select"
-                    defaultValue={professionList[0]}
-                    isDisabled={isDisabled}
-                    isLoading={isLoading}
-                    isClearable={isClearable}
-                    isRtl={isRtl}
-                    isSearchable={isSearchable}
-                    name="color"
-                    options={professionList}
-                  />
-                </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Nationality</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
               </div>
-
-              <div className="submit-buttons">
-                <div
-                  className="reset-btn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    reset();
-                  }}
-                >
-                  Reset
-                </div>
-                <div
-                  className="search-btn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    search();
-                  }}
-                >
-                  Search
-                </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Language</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
+              </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Full Name</div>
+              <div className="creators-filter-select">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Full Name"
+                ></input>
+              </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Body Type</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
+              </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Hair Color</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
+              </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Height</div>
+              <div className="creators-filter-select">
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  isClearable={isClearable}
+                  isRtl={isRtl}
+                  isSearchable={isSearchable}
+                  options={genderList}
+                  valueField="value"
+                  onChange={(value) => setGender(value.value)}
+                />
+              </div>
+            </div>
+            <div className="submit-buttons">
+              <div
+                className="reset-btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  reset();
+                }}
+              >
+                Reset
+              </div>
+              <div
+                className="search-btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  search();
+                }}
+              >
+                Search
               </div>
             </div>
           </div>
@@ -340,17 +552,42 @@ const FindCreators = () => {
                   <div className="gallery-warpper">
                     <div className="gallery-position">
                       <img className="gallery-img" src={item.photo}></img>
-                      <img className="heart-icon" src={heartIcon}></img>
+                      <div className="rating">
+                        <img src={brightStar}></img>
+                        <img src={brightStar}></img>
+                        <img src={brightStar}></img>
+                        <img src={darkStar}></img>
+                        <img src={darkStar}></img>
+                      </div>
+                      {!item.isFavorite && (
+                        <img
+                          className="heart-icon"
+                          src={heartIcon}
+                          onClick={() => addFavorite(item)}
+                        ></img>
+                      )}
+                      {item.isFavorite === true && (
+                        <img
+                          className="heart-icon"
+                          src={favoruiteIcon}
+                          onClick={() => removeFavorite(item)}
+                        ></img>
+                      )}
                     </div>
                     <div className="gallery-content">
                       <div className="content">
                         <div className="name">{item.name}</div>
                         <div className="address">{item.address}</div>
-                      </div>
-                      <div className="rating">
-                        <img src={starIcon}></img>
-                        <img src={starIcon}></img>
-                        <img src={starIcon}></img>
+                        <div className="user-details">
+                          <div className="location-wrapper">
+                            <img src={locationIcon} alt="" />
+                            <div className="location-name">{item.location}</div>
+                          </div>
+                          <div className="location-wrapper">
+                            <img src={jobIcon} alt="" />
+                            <div className="location-name">{item.booked}</div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

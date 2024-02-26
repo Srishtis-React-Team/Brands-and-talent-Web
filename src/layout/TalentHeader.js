@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/talentHeader.scss";
 import { useNavigate } from "react-router";
-const TalentHeader = ({ sendMessageToParent }) => {
+const TalentHeader = ({ toggleMenu }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const model1 = require("../assets/images/girl1.png");
@@ -12,9 +12,15 @@ const TalentHeader = ({ sendMessageToParent }) => {
     <>
       <div className="talent-header-main">
         <div className="talent-nav-logo">
-          <img src={btLogo} alt="" />
+          <img
+            src={btLogo}
+            alt=""
+            onClick={() => {
+              navigate("/");
+            }}
+          />
         </div>
-        <div className="talent-menu">
+        <div className="talent-menu" onClick={toggleMenu}>
           <div className="telent-menubar">
             <i className="fa-solid fa-bars"></i>
           </div>
