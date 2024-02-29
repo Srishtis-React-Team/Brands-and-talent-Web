@@ -4,6 +4,13 @@
   box-sizing: border-box;
 }
 
+.header-items {
+  flex: 1 1;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
 .btLogo {
   cursor: pointer;
 }
@@ -208,12 +215,12 @@ label {
 
 .join-talent-section {
   /* background-color: blue; */
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0px 30px;
 }
-
 .hire-talent-section {
   /* background-color: rgb(26, 26, 0); */
   width: 50%;
@@ -228,7 +235,6 @@ input[type="checkbox"]:checked {
 }
 
 .btn-logo {
-  padding-left: 100px;
   cursor: pointer;
 }
 
@@ -744,7 +750,6 @@ a {
   }
   .form-section {
     border-radius: 20px;
-    width: 80%;
     min-height: 250px;
     /* background-color: #C2114B; */
     display: flex;
@@ -2026,7 +2031,6 @@ input[type="radio"] {
   display: flex;
   align-items: center;
   justify-content: end;
-  width: 41%;
   padding-right: 10px;
 }
 
@@ -2152,10 +2156,12 @@ input[type="radio"] {
   }
 
   .join-talent-section {
+    /* background-color: blue; */
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-bottom: 30px;
+    align-items: center;
+    padding: 0px 30px;
   }
 
   .hire-talent-section {

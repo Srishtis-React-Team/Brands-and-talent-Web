@@ -493,154 +493,178 @@ const Dashboard = () => {
     <>
       <div className="dashboard-main">
         <Header sendMessageToParent={handleMessageFromHeader} />
-        <div className="section-1">
-          <div className="brand-section">
-            <p className="brand-title">
-              <span>C</span>onnecting <span>B</span>rands and <span>T</span>
-              alent
-            </p>
-            <p className="brand-description">
-              No Middle Man. No Commisions. No Hidden Fees
-            </p>
-          </div>
-          <div className="brand-options">
-            <div className="join-talent-section">
-              <div className="section-title">Get Booked</div>
-              <div className="section-description">
-                Get discovered by top brands, set your own rates, and keep 100%
-                of your earnings. Chat directly with brands you love and build
-                lasting relationships. We put creators first. Sign up today and
-                start earning!
+
+        <section className="section-1">
+          <div className="container">
+            <div className="row banner-content">
+              <div className="col-lg-12">
+                <div className="brand-section flex-column">
+                  <p className="brand-title">
+                    <span>C</span>onnecting <span>B</span>rands and{" "}
+                    <span>T</span>
+                    alent
+                  </p>
+                  <p className="brand-description">
+                    No Middle Man. No Commisions. No Hidden Fees
+                  </p>
+                </div>
               </div>
-              <div
-                className="Join-wrapper center"
-                data-bs-toggle="modal"
-                data-bs-target="#verify_age"
-              >
-                <div className="joinnow-text">Join Now</div>
+              <div className="col-lg-6">
+                <div className="brand-section">
+                  <div className="join-talent-section">
+                    <div className="section-title">Get Booked</div>
+                    <div className="section-description">
+                      Get discovered by top brands, set your own rates, and keep
+                      100% of your earnings. Chat directly with brands you love
+                      and build lasting relationships. We put creators first.
+                      Sign up today and start earning!
+                    </div>
+                    <div
+                      className="Join-wrapper center"
+                      data-bs-toggle="modal"
+                      data-bs-target="#verify_age"
+                    >
+                      <div className="joinnow-text">Join Now</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="brand-options">
+                  <div className="hire-talent-section">
+                    <div className="section-title">Hire Talent</div>
+                    <div className="section-description brand-secription">
+                      Skip the search, skip the stress. Hire dream talent in
+                      minutes.
+                    </div>
+                    <div
+                      className="hire-wrapper center"
+                      onClick={(e) => {
+                        navigate("/signup", {
+                          state: { signupCategory: "brand" },
+                        });
+                      }}
+                    >
+                      <div className="joinnow-text">Hire Now</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="hire-talent-section">
-              <div className="section-title">Hire Talent</div>
-              <div className="section-description brand-secription">
-                Skip the search, skip the stress. Hire dream talent in minutes.
-              </div>
+          </div>
+        </section>
+
+        {/* <div className="section-1">
+          <div className="brand-section"></div>
+          <div className="brand-options"></div>
+        </div> */}
+
+        <div className="container">
+          <div className="tabs-section">
+            <div className="title">Popular Talents</div>
+            <div className="tabs">
               <div
-                className="hire-wrapper center"
+                className={artists ? "active-tab" : null}
                 onClick={(e) => {
-                  navigate("/signup", {
-                    state: { signupCategory: "brand" },
-                  });
+                  handleTabs("artists");
                 }}
               >
-                <div className="joinnow-text">Hire Now</div>
+                Featured
+              </div>
+              <div
+                className={photographers ? "active-tab" : null}
+                onClick={(e) => {
+                  handleTabs("photographers");
+                }}
+              >
+                Photographers
+              </div>
+              <div
+                className={actors ? "active-tab" : null}
+                onClick={(e) => {
+                  handleTabs("actors");
+                }}
+              >
+                Actors
+              </div>
+              <div
+                className={influencers ? "active-tab" : null}
+                onClick={(e) => {
+                  handleTabs("influencers");
+                }}
+              >
+                Influencers
+              </div>
+              <div
+                className={models ? "active-tab" : null}
+                onClick={(e) => {
+                  handleTabs("models");
+                }}
+              >
+                Models
+              </div>
+              <div
+                className={more ? "active-tab more-text" : "more-text"}
+                onClick={(e) => {
+                  handleTabs("more");
+                }}
+              >
+                More
               </div>
             </div>
           </div>
         </div>
 
-        <div className="tabs-section">
-          <div className="title">Popular Talents</div>
-          <div className="tabs">
-            <div
-              className={artists ? "active-tab" : null}
-              onClick={(e) => {
-                handleTabs("artists");
-              }}
-            >
-              Featured
-            </div>
-            <div
-              className={photographers ? "active-tab" : null}
-              onClick={(e) => {
-                handleTabs("photographers");
-              }}
-            >
-              Photographers
-            </div>
-            <div
-              className={actors ? "active-tab" : null}
-              onClick={(e) => {
-                handleTabs("actors");
-              }}
-            >
-              Actors
-            </div>
-            <div
-              className={influencers ? "active-tab" : null}
-              onClick={(e) => {
-                handleTabs("influencers");
-              }}
-            >
-              Influencers
-            </div>
-            <div
-              className={models ? "active-tab" : null}
-              onClick={(e) => {
-                handleTabs("models");
-              }}
-            >
-              Models
-            </div>
-            <div
-              className={more ? "active-tab more-text" : "more-text"}
-              onClick={(e) => {
-                handleTabs("more");
-              }}
-            >
-              More
-            </div>
-          </div>
-        </div>
-
-        <div className="gallery-section">
-          <div className="gallery-main">
-            {talentList.map((item) => {
-              return (
-                <div className="gallery-warpper">
-                  <div className="gallery-position">
-                    <img className="gallery-img" src={item.photo}></img>
-                    <div className="rating">
-                      <img src={brightStar}></img>
-                      <img src={brightStar}></img>
-                      <img src={brightStar}></img>
-                      <img src={darkStar}></img>
-                      <img src={darkStar}></img>
+        <div className="container">
+          <div className="gallery-section">
+            <div className="gallery-main">
+              {talentList.map((item) => {
+                return (
+                  <div className="gallery-warpper">
+                    <div className="gallery-position">
+                      <img className="gallery-img" src={item.photo}></img>
+                      <div className="rating">
+                        <img src={brightStar}></img>
+                        <img src={brightStar}></img>
+                        <img src={brightStar}></img>
+                        <img src={darkStar}></img>
+                        <img src={darkStar}></img>
+                      </div>
+                      {!item.isFavorite && (
+                        <img
+                          className="heart-icon"
+                          src={heartIcon}
+                          onClick={() => addFavorite(item)}
+                        ></img>
+                      )}
+                      {item.isFavorite === true && (
+                        <img
+                          className="heart-icon"
+                          src={favoruiteIcon}
+                          onClick={() => removeFavorite(item)}
+                        ></img>
+                      )}
                     </div>
-                    {!item.isFavorite && (
-                      <img
-                        className="heart-icon"
-                        src={heartIcon}
-                        onClick={() => addFavorite(item)}
-                      ></img>
-                    )}
-                    {item.isFavorite === true && (
-                      <img
-                        className="heart-icon"
-                        src={favoruiteIcon}
-                        onClick={() => removeFavorite(item)}
-                      ></img>
-                    )}
-                  </div>
-                  <div className="gallery-content">
-                    <div className="content">
-                      <div className="name">{item.name}</div>
-                      <div className="address">{item.address}</div>
-                      <div className="user-details">
-                        <div className="location-wrapper">
-                          <img src={locationIcon} alt="" />
-                          <div className="location-name">{item.location}</div>
-                        </div>
-                        <div className="location-wrapper">
-                          <img src={jobIcon} alt="" />
-                          <div className="location-name">{item.booked}</div>
+                    <div className="gallery-content">
+                      <div className="content">
+                        <div className="name">{item.name}</div>
+                        <div className="address">{item.address}</div>
+                        <div className="user-details">
+                          <div className="location-wrapper">
+                            <img src={locationIcon} alt="" />
+                            <div className="location-name">{item.location}</div>
+                          </div>
+                          <div className="location-wrapper">
+                            <img src={jobIcon} alt="" />
+                            <div className="location-name">{item.booked}</div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -649,74 +673,87 @@ const Dashboard = () => {
             <div>Find More</div>
           </div>
         </div>
+
         <div className="title">Our Community</div>
-        <div className="cards">
-          <div className="community-card-wrapper card-background">
-            <div className="count">5,258,451</div>
-            <div className="cards-text">Models in community</div>
-          </div>
-          <div className="community-card-wrapper  card-background">
-            <div className="count">5,258,451</div>
-            <div className="cards-text">Industry Professionals</div>
-          </div>
-          <div className="community-card-wrapper  card-background">
-            <div className="count">5,258,451</div>
-            <div className="cards-text">Agencies</div>
+
+        <div className="container">
+          <div className="cards">
+            <div className="community-card-wrapper card-background">
+              <div className="count">5,258,451</div>
+              <div className="cards-text">Models in community</div>
+            </div>
+            <div className="community-card-wrapper  card-background">
+              <div className="count">5,258,451</div>
+              <div className="cards-text">Industry Professionals</div>
+            </div>
+            <div className="community-card-wrapper  card-background">
+              <div className="count">5,258,451</div>
+              <div className="cards-text">Agencies</div>
+            </div>
           </div>
         </div>
+
         <div className="title">Products and Services</div>
-        <div className="cards">
-          <div className="card-wrapper ">
-            <div className="card-picture">
-              <img src={checkMark}></img>
+
+        <div className="container">
+          <div className="cards">
+            <div className="card-wrapper ">
+              <div className="card-picture">
+                <img src={checkMark}></img>
+              </div>
+              <div className="card-title">Talent Marketplace</div>
+              <div className="cards-description">
+                A platform where talents can create a profile, showcase their
+                work, and connect with...
+              </div>
             </div>
-            <div className="card-title">Talent Marketplace</div>
-            <div className="cards-description">
-              A platform where talents can create a profile, showcase their
-              work, and connect with...
+            <div className="card-wrapper">
+              <div className="card-picture">
+                <img src={lockIcon}></img>
+              </div>
+              <div className="card-title">Hire Talent</div>
+              <div className="cards-description">
+                The platform will help brands find, attract, and hire the best
+                talent as per their ...
+              </div>
             </div>
-          </div>
-          <div className="card-wrapper">
-            <div className="card-picture">
-              <img src={lockIcon}></img>
-            </div>
-            <div className="card-title">Hire Talent</div>
-            <div className="cards-description">
-              The platform will help brands find, attract, and hire the best
-              talent as per their ...
-            </div>
-          </div>
-          <div className="card-wrapper">
-            <div className="card-picture">
-              <img src={whiteStar}></img>
-            </div>
-            <div className="card-title">Find Jobs</div>
-            <div className="cards-description">
-              Talent can  build and manage their personal brands and will have a
-              unique url ...
+            <div className="card-wrapper">
+              <div className="card-picture">
+                <img src={whiteStar}></img>
+              </div>
+              <div className="card-title">Find Jobs</div>
+              <div className="cards-description">
+                Talent can  build and manage their personal brands and will have
+                a unique url ...
+              </div>
             </div>
           </div>
         </div>
+
         <div className="title">Case studies</div>
-        <div className="gallery-section">
-          <div className="gallery-main">
-            {caseList.map((item) => {
-              return (
-                <div className="case-warpper">
-                  <div className="gallery-position">
-                    <img className="case-img" src={item.photo}></img>
-                  </div>
-                  <div className="gallery-content">
-                    <div className="content">
-                      <div className="name">{item.name}</div>
-                      <div className="address">{item.address}</div>
+
+        <div className="container">
+          <div className="gallery-section">
+            <div className="gallery-main">
+              {caseList.map((item) => {
+                return (
+                  <div className="case-warpper">
+                    <div className="gallery-position">
+                      <img className="case-img" src={item.photo}></img>
+                    </div>
+                    <div className="gallery-content">
+                      <div className="content">
+                        <div className="name">{item.name}</div>
+                        <div className="address">{item.address}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
+
         <div className="center">
           <div className="Join-wrapper center">
             <div>Find More</div>
@@ -862,30 +899,35 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
+
         <div className="title brands-row-title">Trusted by renowned brands</div>
-        <div className="brands-section">
-          <div>
-            <img src={adidasIcon}></img>
-          </div>
-          <div>
-            <img src={ubisoftIcon}></img>
-          </div>
-          <div>
-            <img src={wppIcon}></img>
-          </div>
-          <div>
-            <img src={lorealIcon}></img>
-          </div>
-          <div>
-            <img src={joseIcon}></img>
-          </div>
-          <div>
-            <img src={calvinIcon}></img>
-          </div>
-          <div>
-            <img src={havasIcon}></img>
+
+        <div className="container">
+          <div className="brands-section">
+            <div>
+              <img src={adidasIcon}></img>
+            </div>
+            <div>
+              <img src={ubisoftIcon}></img>
+            </div>
+            <div>
+              <img src={wppIcon}></img>
+            </div>
+            <div>
+              <img src={lorealIcon}></img>
+            </div>
+            <div>
+              <img src={joseIcon}></img>
+            </div>
+            <div>
+              <img src={calvinIcon}></img>
+            </div>
+            <div>
+              <img src={havasIcon}></img>
+            </div>
           </div>
         </div>
+
         <Footer />
       </div>
       <div className="chat-section"></div>

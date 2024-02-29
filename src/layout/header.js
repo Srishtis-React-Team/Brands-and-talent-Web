@@ -198,112 +198,114 @@ const Header = ({ sendMessageToParent }) => {
       </div>
 
       <div className="header">
-        <div
-          className="icon btn-logo"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          <img src={btLogo}></img>
-        </div>
-        <div className="menu-items">
-          <div>
-            <NavLink to="/" onClick={handleClick}>
-              Home
-            </NavLink>
+        <div className="container d-flex align-items-center justify-content-between">
+          <div
+            className="icon btn-logo"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <img src={btLogo}></img>
           </div>
-          <div>
-            <NavLink to="/post-job" onClick={handleClick}>
-              Post a Job
-            </NavLink>
-          </div>
-          <div>
-            <NavLink to="/find-creators" onClick={handleClick}>
-              Find Talent
-            </NavLink>
-          </div>
-          {/* <div>
+          <div className="header-items">
+            <div className=" menu-items">
+              <div>
+                <NavLink to="/" onClick={handleClick}>
+                  Home
+                </NavLink>
+              </div>
+              <div>
+                <NavLink to="/post-job" onClick={handleClick}>
+                  Post a Job
+                </NavLink>
+              </div>
+              <div>
+                <NavLink to="/find-creators" onClick={handleClick}>
+                  Find Talent
+                </NavLink>
+              </div>
+              {/* <div>
             <NavLink to="/get-booked" onClick={handleClick}>
               Get Booked
             </NavLink>
           </div> */}
-          <div>
-            <NavLink to="/how-it-works" onClick={handleClick}>
-              How It Works
-            </NavLink>
-          </div>
-          <div>
-            <NavLink to="/pricing" onClick={handleClick}>
-              Pricing
-            </NavLink>
-          </div>
-          <div>
-            {/* <NavLink to="/resources" onClick={handleClick}>
+              <div>
+                <NavLink to="/how-it-works" onClick={handleClick}>
+                  How It Works
+                </NavLink>
+              </div>
+              <div>
+                <NavLink to="/pricing" onClick={handleClick}>
+                  Pricing
+                </NavLink>
+              </div>
+              <div>
+                {/* <NavLink to="/resources" onClick={handleClick}>
               Resources
             </NavLink> */}
-            <a
-              className="dropdown-toggle"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              data-bs-auto-close="outside"
-            >
-              Resources
-            </a>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <NavLink to="/resources" onClick={handleClick}>
-                  <a className="dropdown-item">About</a>
-                </NavLink>
-              </li>
-              <li className="dropend ">
                 <a
-                  className="dropdown-item dropdown-toggle"
-                  dropdown-toggle
+                  className="dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
                   data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  data-bs-auto-close="outside"
                 >
-                  Blogs
+                  Resources
                 </a>
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>
-                    <a href="" className="dropdown-item">
-                      Industry News & Insights
+                    <NavLink to="/resources" onClick={handleClick}>
+                      <a className="dropdown-item">About</a>
+                    </NavLink>
+                  </li>
+                  <li className="dropend ">
+                    <a
+                      className="dropdown-item dropdown-toggle"
+                      dropdown-toggle
+                      data-bs-toggle="dropdown"
+                    >
+                      Blogs
                     </a>
+                    <ul className="dropdown-menu">
+                      <li>
+                        <a href="" className="dropdown-item">
+                          Industry News & Insights
+                        </a>
+                      </li>
+                      <li>
+                        <a href="" className="dropdown-item">
+                           Case Studies
+                        </a>
+                      </li>
+                      <li>
+                        <a href="" className="dropdown-item">
+                          Talent Diaries
+                        </a>
+                      </li>
+                      <li>
+                        <a href="" className="dropdown-item">
+                           Talent Tips & Tricks
+                        </a>
+                      </li>
+                      <li>
+                        <a href="" className="dropdown-item">
+                           Brand Tips & Tricks
+                        </a>
+                      </li>
+                    </ul>
                   </li>
                   <li>
-                    <a href="" className="dropdown-item">
-                       Case Studies
-                    </a>
+                    <hr className="dropdown-divider"></hr>
                   </li>
                   <li>
-                    <a href="" className="dropdown-item">
-                      Talent Diaries
-                    </a>
-                  </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Talent Tips & Tricks
-                    </a>
-                  </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Brand Tips & Tricks
-                    </a>
+                    <a className="dropdown-item">Community guidelines</a>
                   </li>
                 </ul>
-              </li>
-              <li>
-                <hr className="dropdown-divider"></hr>
-              </li>
-              <li>
-                <a className="dropdown-item">Community guidelines</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="header-functions">
-          {/* <div className="box">
+              </div>
+            </div>
+            <div className="header-functions">
+              {/* <div className="box">
             <input type="checkbox" id="check"></input>
             <div className="search-box">
               <input type="text" placeholder="Type here..."></input>
@@ -312,62 +314,68 @@ const Header = ({ sendMessageToParent }) => {
               </label>
             </div>
           </div> */}
-          <div
-            className=""
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasTop"
-            aria-controls="offcanvasTop"
-          >
-            <i className="fas fa-search"></i>
-          </div>
+              <div
+                className=""
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasTop"
+                aria-controls="offcanvasTop"
+              >
+                <i className="fas fa-search"></i>
+              </div>
 
-          <div
-            className="offcanvas offcanvas-top search-canvas-top"
-            tabindex="-1"
-            id="offcanvasTop"
-            aria-labelledby="offcanvasTopLabel"
-          >
-            <div className="offcanvas-header">
-              <h5 id="offcanvasTopLabel">Search Anything</h5>
-              <button
-                type="button"
-                className="btn-close text-reset"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="offcanvas-body">
-              <form className="d-flex search-bootstrap">
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                ></input>
-                <button
-                  className="btn btn-outline-success search-bootstrap-btn"
-                  type="submit"
+              <div
+                className="offcanvas offcanvas-top search-canvas-top"
+                tabindex="-1"
+                id="offcanvasTop"
+                aria-labelledby="offcanvasTopLabel"
+              >
+                <div className="offcanvas-header">
+                  <h5 id="offcanvasTopLabel">Search Anything</h5>
+                  <button
+                    type="button"
+                    className="btn-close text-reset"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="offcanvas-body">
+                  <form className="d-flex search-bootstrap">
+                    <input
+                      className="form-control me-2"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    ></input>
+                    <button
+                      className="btn btn-outline-success search-bootstrap-btn"
+                      type="submit"
+                    >
+                      Search
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <div className="">
+                <NavLink
+                  to="/login"
+                  className="login-text"
+                  onClick={handleClick}
                 >
-                  Search
-                </button>
-              </form>
+                  Login
+                </NavLink>
+              </div>
+              <div
+                className="signup"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Sign up for free
+              </div>
+              <div className="gridLogo">
+                <img src={gridLogo}></img>
+              </div>
             </div>
-          </div>
-
-          <div className="">
-            <NavLink to="/login" className="login-text" onClick={handleClick}>
-              Login
-            </NavLink>
-          </div>
-          <div
-            className="signup"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            Sign up for free
-          </div>
-          <div className="gridLogo">
-            <img src={gridLogo}></img>
           </div>
         </div>
       </div>
