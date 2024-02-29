@@ -99,11 +99,11 @@ const ResetPassword = () => {
           <div className="forgot-info">Please enter your New Password</div>
           <div className="mb-3 login-input-containers ">
             <label className="form-label">New Password</label>
-            <div class="form-group has-search adult-password-wrapper">
-              <span class="fa fa-lock form-control-feedback"></span>
+            <div className="form-group has-search adult-password-wrapper">
+              <span className="fa fa-lock form-control-feedback"></span>
               <input
                 type={showPassword ? "text" : "password"}
-                class="form-control adult-signup-inputs"
+                className="form-control adult-signup-inputs"
                 placeholder="Password"
                 onChange={(e) => {
                   handlePasswordChange(e);
@@ -111,12 +111,12 @@ const ResetPassword = () => {
               ></input>
               {showPassword ? (
                 <span
-                  class="fa fa-eye show-password-icon"
+                  className="fa fa-eye show-password-icon"
                   onClick={togglePasswordVisibility}
                 ></span>
               ) : (
                 <span
-                  class="fa fa-eye-slash show-password-icon"
+                  className="fa fa-eye-slash show-password-icon"
                   onClick={togglePasswordVisibility}
                 ></span>
               )}
@@ -124,8 +124,8 @@ const ResetPassword = () => {
           </div>
           <div className="mb-1 login-input-containers ">
             <label className="form-label">Confirm Password</label>
-            <div class="form-group has-search adult-confirm-password-wrapper">
-              <span class="fa fa-lock form-control-feedback"></span>
+            <div className="form-group has-search adult-confirm-password-wrapper">
+              <span className="fa fa-lock form-control-feedback"></span>
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 className={`form-control adult-signup-inputs ${
@@ -138,12 +138,12 @@ const ResetPassword = () => {
               ></input>
               {showConfirmPassword ? (
                 <span
-                  class="fa fa-eye show-confirm-password-icon"
+                  className="fa fa-eye show-confirm-password-icon"
                   onClick={toggleConfirmPasswordVisibility}
                 ></span>
               ) : (
                 <span
-                  class="fa fa-eye-slash show-confirm-password-icon"
+                  className="fa fa-eye-slash show-confirm-password-icon"
                   onClick={toggleConfirmPasswordVisibility}
                 ></span>
               )}

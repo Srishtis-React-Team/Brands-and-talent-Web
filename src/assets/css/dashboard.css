@@ -4,10 +4,28 @@
   box-sizing: border-box;
 }
 
+.header-items {
+  flex: 1 1;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
 .btLogo {
   cursor: pointer;
 }
 
+.hideAll {
+  display: none;
+}
+.showAll {
+  display: flex;
+}
+
+.search-canvas-top {
+  width: 100%;
+  height: 175px;
+}
 .case-img {
   width: 100%;
   border-radius: 18px;
@@ -89,7 +107,7 @@ label {
   border-top: 1px solid rgb(173, 173, 173);
   display: flex;
   justify-content: end;
-  padding: 20px 20px 20px 0;
+  padding: 10px 10px 10px 0;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -134,8 +152,8 @@ label {
   cursor: pointer;
   background-color: yellow;
   position: fixed;
-  top: 92%;
-  left: 94%;
+  top: 75%;
+  left: 90%;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
@@ -197,12 +215,12 @@ label {
 
 .join-talent-section {
   /* background-color: blue; */
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0px 30px;
 }
-
 .hire-talent-section {
   /* background-color: rgb(26, 26, 0); */
   width: 50%;
@@ -217,7 +235,6 @@ input[type="checkbox"]:checked {
 }
 
 .btn-logo {
-  padding-left: 100px;
   cursor: pointer;
 }
 
@@ -733,7 +750,6 @@ a {
   }
   .form-section {
     border-radius: 20px;
-    width: 80%;
     min-height: 250px;
     /* background-color: #C2114B; */
     display: flex;
@@ -1113,6 +1129,23 @@ a {
     font-variation-settings: "wdth" 100;
   }
 
+  .dropdown-item {
+    color: #000;
+    font-size: 12px;
+    line-height: normal;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+  }
+
+  .dropdown-item:hover {
+    background-color: #ff8fb4;
+  }
+
   .gridLogo {
     width: 40px;
     height: 40px;
@@ -1135,8 +1168,8 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20%;
     height: 40px;
+    padding: 15px;
   }
 }
 
@@ -1998,7 +2031,6 @@ input[type="radio"] {
   display: flex;
   align-items: center;
   justify-content: end;
-  width: 41%;
   padding-right: 10px;
 }
 
@@ -2124,10 +2156,12 @@ input[type="radio"] {
   }
 
   .join-talent-section {
+    /* background-color: blue; */
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-bottom: 30px;
+    align-items: center;
+    padding: 0px 30px;
   }
 
   .hire-talent-section {
@@ -2286,7 +2320,6 @@ input[type="radio"] {
     justify-content: space-around;
     flex-direction: column;
     width: 40%;
-    background-color: #1976d2;
   }
 
   .case-warpper {
@@ -2398,7 +2431,7 @@ input[type="radio"] {
   }
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1200px) {
   .mobile-nav-content > div {
     margin: 12px 0px;
   }
@@ -2594,3 +2627,9 @@ input[type="radio"] {
 #search-check {
   display: none;
 } */
+
+/* 320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */

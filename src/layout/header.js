@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import "../assets/css/dashboard.css";
 import { useNavigate } from "react-router";
@@ -41,9 +41,16 @@ const Header = ({ sendMessageToParent }) => {
       });
     } else if (talent === true) {
       setTimeout(() => {
-        sendMessageToParent("open-kids-form");
+        // sendMessageToParent("open-kids-form");
+        openModal();
       }, 800);
     }
+  };
+
+  const modalRef = useRef(null);
+  const openModal = () => {
+    const modal = new window.bootstrap.Modal(modalRef.current);
+    modal.show();
   };
 
   const handleClick = () => {
@@ -64,6 +71,7 @@ const Header = ({ sendMessageToParent }) => {
         <div
           onClick={() => {
             setMenuOpen(!menuOpen);
+            // sendMessageToParent({ menuStatus: menuOpen });
           }}
           className="menu-icon"
         >
@@ -190,128 +198,114 @@ const Header = ({ sendMessageToParent }) => {
       </div>
 
       <div className="header">
-        <div
-          className="icon btn-logo"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          <img src={btLogo}></img>
-        </div>
-        <div className="menu-items">
-          <div>
-            <NavLink to="/" onClick={handleClick}>
-              Home
-            </NavLink>
+        <div className="container d-flex align-items-center justify-content-between">
+          <div
+            className="icon btn-logo"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <img src={btLogo}></img>
           </div>
-          <div>
-            <NavLink to="/post-job" onClick={handleClick}>
-              Post a Job
-            </NavLink>
-          </div>
-          <div>
-            <NavLink to="/find-creators" onClick={handleClick}>
-              Find Talent
-            </NavLink>
-          </div>
-          {/* <div>
+          <div className="header-items">
+            <div className=" menu-items">
+              <div>
+                <NavLink to="/" onClick={handleClick}>
+                  Home
+                </NavLink>
+              </div>
+              <div>
+                <NavLink to="/post-job" onClick={handleClick}>
+                  Post a Job
+                </NavLink>
+              </div>
+              <div>
+                <NavLink to="/find-creators" onClick={handleClick}>
+                  Find Talent
+                </NavLink>
+              </div>
+              {/* <div>
             <NavLink to="/get-booked" onClick={handleClick}>
               Get Booked
             </NavLink>
           </div> */}
-          <div>
-            <NavLink to="/how-it-works" onClick={handleClick}>
-              How It Works
-            </NavLink>
-          </div>
-          <div>
-            <NavLink to="/pricing" onClick={handleClick}>
-              Pricing
-            </NavLink>
-          </div>
-          <div>
-            {/* <NavLink to="/resources" onClick={handleClick}>
+              <div>
+                <NavLink to="/how-it-works" onClick={handleClick}>
+                  How It Works
+                </NavLink>
+              </div>
+              <div>
+                <NavLink to="/pricing" onClick={handleClick}>
+                  Pricing
+                </NavLink>
+              </div>
+              <div>
+                {/* <NavLink to="/resources" onClick={handleClick}>
               Resources
             </NavLink> */}
-            <a
-              className="dropdown-toggle"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              data-bs-auto-close="outside"
-            >
-              Resources
-            </a>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <a className="dropdown-item">
-                  <NavLink to="/resources" onClick={handleClick}>
-                    About
-                  </NavLink>
-                </a>
-              </li>
-              <li className="dropend ">
                 <a
-                  className="dropdown-item dropdown-toggle"
-                  dropdown-toggle
+                  className="dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
                   data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  data-bs-auto-close="outside"
                 >
-                  Blogs
+                  Resources
                 </a>
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>
-                    <a href="" className="dropdown-item">
-                      Industry News & Insights
+                    <NavLink to="/resources" onClick={handleClick}>
+                      <a className="dropdown-item">About</a>
+                    </NavLink>
+                  </li>
+                  <li className="dropend ">
+                    <a
+                      className="dropdown-item dropdown-toggle"
+                      dropdown-toggle
+                      data-bs-toggle="dropdown"
+                    >
+                      Blogs
                     </a>
+                    <ul className="dropdown-menu">
+                      <li>
+                        <a href="" className="dropdown-item">
+                          Industry News & Insights
+                        </a>
+                      </li>
+                      <li>
+                        <a href="" className="dropdown-item">
+                           Case Studies
+                        </a>
+                      </li>
+                      <li>
+                        <a href="" className="dropdown-item">
+                          Talent Diaries
+                        </a>
+                      </li>
+                      <li>
+                        <a href="" className="dropdown-item">
+                           Talent Tips & Tricks
+                        </a>
+                      </li>
+                      <li>
+                        <a href="" className="dropdown-item">
+                           Brand Tips & Tricks
+                        </a>
+                      </li>
+                    </ul>
                   </li>
                   <li>
-                    <a href="" className="dropdown-item">
-                       Case Studies
-                    </a>
+                    <hr className="dropdown-divider"></hr>
                   </li>
                   <li>
-                    <a href="" className="dropdown-item">
-                      Talent Diaries
-                    </a>
-                  </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Talent Tips & Tricks
-                    </a>
-                  </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Brand Tips & Tricks
-                    </a>
+                    <a className="dropdown-item">Community guidelines</a>
                   </li>
                 </ul>
-              </li>
-              <li>
-                <hr className="dropdown-divider"></hr>
-              </li>
-              <li>
-                <a className="dropdown-item">Community guidelines</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="header-functions">
-          <form className="d-flex search-bootstrap">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            ></input>
-            <button
-              className="btn btn-outline-success search-bootstrap-btn"
-              type="submit"
-            >
-              Search
-            </button>
-          </form>
-          {/* <div className="box">
+              </div>
+            </div>
+            <div className="header-functions">
+              {/* <div className="box">
             <input type="checkbox" id="check"></input>
             <div className="search-box">
               <input type="text" placeholder="Type here..."></input>
@@ -320,20 +314,68 @@ const Header = ({ sendMessageToParent }) => {
               </label>
             </div>
           </div> */}
-          <div className="">
-            <NavLink to="/login" className="login-text" onClick={handleClick}>
-              Login
-            </NavLink>
-          </div>
-          <div
-            className="signup"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            Sign up for free
-          </div>
-          <div className="gridLogo">
-            <img src={gridLogo}></img>
+              <div
+                className=""
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasTop"
+                aria-controls="offcanvasTop"
+              >
+                <i className="fas fa-search"></i>
+              </div>
+
+              <div
+                className="offcanvas offcanvas-top search-canvas-top"
+                tabindex="-1"
+                id="offcanvasTop"
+                aria-labelledby="offcanvasTopLabel"
+              >
+                <div className="offcanvas-header">
+                  <h5 id="offcanvasTopLabel">Search Anything</h5>
+                  <button
+                    type="button"
+                    className="btn-close text-reset"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="offcanvas-body">
+                  <form className="d-flex search-bootstrap">
+                    <input
+                      className="form-control me-2"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    ></input>
+                    <button
+                      className="btn btn-outline-success search-bootstrap-btn"
+                      type="submit"
+                    >
+                      Search
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <div className="">
+                <NavLink
+                  to="/login"
+                  className="login-text"
+                  onClick={handleClick}
+                >
+                  Login
+                </NavLink>
+              </div>
+              <div
+                className="signup"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Sign up for free
+              </div>
+              <div className="gridLogo">
+                <img src={gridLogo}></img>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -393,6 +435,57 @@ const Header = ({ sendMessageToParent }) => {
                   }}
                 >
                   Register Now
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        ref={modalRef}
+        className="modal fade"
+        id="verify_age"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="ageverify-title">Select Your Age Group</div>
+              <div className="modal-buttons ageverify-buttons">
+                <div
+                  onClick={(e) => {
+                    navigate("/signup", {
+                      state: { signupCategory: "kids" },
+                    });
+                  }}
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  className="step-back"
+                >
+                  13-17 Years
+                </div>
+                <div
+                  onClick={(e) => {
+                    navigate("/signup", {
+                      state: { signupCategory: "adults" },
+                    });
+                  }}
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  className="step-continue"
+                >
+                  18 Years or Older
                 </div>
               </div>
             </div>

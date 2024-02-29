@@ -91,11 +91,11 @@ const ForgotPassword = () => {
           </div>
           <div className="mb-3 login-input-containers">
             <label className="form-label">Email</label>
-            <div class="form-group has-search">
-              <span class="fa fa-envelope form-control-feedback"></span>
+            <div className="form-group has-search">
+              <span className="fa fa-envelope form-control-feedback"></span>
               <input
                 type="text"
-                class="form-control adult-signup-inputs"
+                className="form-control adult-signup-inputs"
                 placeholder="Email "
                 onChange={(e) => {
                   setTalentEmail(e.target.value);

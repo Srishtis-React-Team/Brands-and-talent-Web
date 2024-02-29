@@ -4,6 +4,8 @@ import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 import Select from "react-select";
 import RangeSlider from "../components/RangeSlider.js";
+import { ApiHelper } from "../helpers/ApiHelper.js";
+import { API } from "../config/api.js";
 const FindCreators = () => {
   const searchIcon = require("../assets/icons/search.png");
   const heartIcon = require("../assets/icons/heart.png");
@@ -50,132 +52,25 @@ const FindCreators = () => {
   const [max, setMaxAge] = useState([]);
 
   useEffect(() => {
-    setTalentList([
-      {
-        id: 1,
-        photo: girl1,
-        name: "Alexander",
-        address: "Copenhagen, Denmark",
-        isFavorite: false,
-        location: "Australia",
-        booked: "3 Jobs Booked",
-        rating: 4,
-      },
-      {
-        id: 2,
-        photo: girl2,
-        name: "william",
-        address: "Copenhagen, Denmark",
-        location: "America",
-        booked: "3 Jobs Booked",
-        isFavorite: false,
-        rating: 3,
-      },
-      {
-        id: 3,
-        photo: girl3,
-        name: "Michael",
-        address: "Pitsburg, Canada",
-        location: "Canada",
-        booked: "6 Jobs Booked",
-        isFavorite: false,
-        rating: 5,
-      },
-      {
-        id: 4,
-        photo: girl4,
-        name: "Andrea",
-        address: "North Carolina, USA",
-        isFavorite: false,
-        location: "Russia",
-        booked: "150 Jobs Booked",
-        rating: 1,
-      },
-      {
-        id: 5,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Jobs Booked",
-        rating: 1,
-      },
-      {
-        id: 6,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Jobs Booked",
-        rating: 1,
-      },
-      {
-        id: 7,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Jobs Booked",
-        rating: 1,
-      },
-      {
-        id: 8,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Jobs Booked",
-        rating: 1,
-      },
-      {
-        id: 9,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Jobs Booked",
-        rating: 1,
-      },
-      {
-        id: 10,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Jobs Booked",
-        rating: 1,
-      },
-      {
-        id: 11,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Jobs Booked",
-        rating: 1,
-      },
-      {
-        id: 12,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Jobs Booked",
-        rating: 1,
-      },
-    ]);
+    getTalentList();
   }, []);
 
   const clear = () => {
     setSearchKeyword("");
+  };
+
+  const getTalentList = async () => {
+    await ApiHelper.get(API.getTalentList)
+      .then((resData) => {
+        if (resData) {
+          setTalentList(resData.data.data);
+        }
+        console.log("talentList", resData.data.data);
+        console.log("talentList", talentList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const reset = async () => {
@@ -551,7 +446,10 @@ const FindCreators = () => {
                 return (
                   <div className="gallery-warpper">
                     <div className="gallery-position">
-                      <img className="gallery-img" src={item.photo}></img>
+                      <img
+                        className="gallery-img"
+                        src={API.userFilePath + item.image}
+                      ></img>
                       <div className="rating">
                         <img src={brightStar}></img>
                         <img src={brightStar}></img>
@@ -576,16 +474,25 @@ const FindCreators = () => {
                     </div>
                     <div className="gallery-content">
                       <div className="content">
-                        <div className="name">{item.name}</div>
-                        <div className="address">{item.address}</div>
+                        <div className="name">
+                          {item?.childFirstName
+                            ? `${item?.childFirstName}`
+                            : "Elizabeth"}
+                        </div>
+                        <div className="address">
+                          {" "}
+                          {item?.childLocation
+                            ? `${item?.childLocation}`
+                            : "Australia"}{" "}
+                        </div>
                         <div className="user-details">
                           <div className="location-wrapper">
                             <img src={locationIcon} alt="" />
-                            <div className="location-name">{item.location}</div>
+                            <div className="location-name">New York</div>
                           </div>
                           <div className="location-wrapper">
                             <img src={jobIcon} alt="" />
-                            <div className="location-name">{item.booked}</div>
+                            <div className="location-name">10 Jobs Booked</div>
                           </div>
                         </div>
                       </div>

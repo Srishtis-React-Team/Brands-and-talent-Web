@@ -523,13 +523,13 @@ const Register = () => {
             <div className="brands-form-wrapper">
               <div className="step-title">Brand Details</div>
               <div className="step-selection">
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">
+                <div className="mb-3">
+                  <label for="exampleFormControlInput1" className="form-label">
                     Phone Number
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="exampleFormControlInput1"
                     onChange={(e) => {
                       setBrandPhone(e.target.value);
@@ -538,13 +538,13 @@ const Register = () => {
                   ></input>
                 </div>
 
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">
+                <div className="mb-3">
+                  <label for="exampleFormControlInput1" className="form-label">
                     Zip Code
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="exampleFormControlInput1"
                     onChange={(e) => {
                       setBrandZipcode(e.target.value);
@@ -553,12 +553,12 @@ const Register = () => {
                   ></input>
                 </div>
 
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">
+                <div className="mb-3">
+                  <label for="exampleFormControlInput1" className="form-label">
                     Do you use an applicant Tracking System?
                   </label>
                   <select
-                    class="form-select"
+                    className="form-select"
                     aria-label="Default select example"
                     onChange={selectTrackingSystem}
                   >
@@ -569,12 +569,12 @@ const Register = () => {
                   </select>
                 </div>
 
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">
+                <div className="mb-3">
+                  <label for="exampleFormControlInput1" className="form-label">
                     How did you hear about us?
                   </label>
                   <select
-                    class="form-select"
+                    className="form-select"
                     aria-label="Default select example"
                     onChange={selecthowHearAboutUs}
                   >
@@ -633,13 +633,13 @@ const Register = () => {
           <div className="dialog-body">
             <div className="brands-form-wrapper">
               <div className="step-title">Post Your Gig/Job</div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">
+              <div className="mb-3">
+                <label for="exampleFormControlInput1" className="form-label">
                   Tittle
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="exampleFormControlInput1"
                   onChange={(e) => {
                     setJobTitle(e.target.value);
@@ -647,13 +647,13 @@ const Register = () => {
                   placeholder="Enter tittle"
                 ></input>
               </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">
+              <div className="mb-3">
+                <label for="exampleFormControlInput1" className="form-label">
                   Location (Zip Code)
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="exampleFormControlInput1"
                   onChange={(e) => {
                     setJobLocation(e.target.value);
@@ -663,13 +663,16 @@ const Register = () => {
               </div>
               <div className="splitter">
                 <div className="splitter-one">
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Age
                     </label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       id="exampleFormControlInput1"
                       onChange={(e) => {
                         setJobAge(e.target.value);
@@ -677,13 +680,16 @@ const Register = () => {
                       placeholder="Enter Age"
                     ></input>
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Social Media Followers
                     </label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       id="exampleFormControlInput1"
                       onChange={(e) => {
                         setJobSocialFollowers(e.target.value);
@@ -691,12 +697,15 @@ const Register = () => {
                       placeholder="Followers"
                     ></input>
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Employment Type
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
                       onChange={selectJobType}
                     >
@@ -708,12 +717,15 @@ const Register = () => {
                   </div>
                 </div>
                 <div className="splitter-two">
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Gender
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
                       onChange={selectJobGender}
                     >
@@ -724,12 +736,15 @@ const Register = () => {
                     </select>
                   </div>
 
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Languages
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
                       onChange={selectJobLanguages}
                     >
@@ -739,12 +754,15 @@ const Register = () => {
                       <option value="french">French</option>
                     </select>
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Remote Work?
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
                       onChange={selectJobRemote}
                     >
@@ -908,12 +926,15 @@ const Register = () => {
               </div>
               <div className="splitter">
                 <div className="splitter-one">
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Currency
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
                       onChange={selectJobCurrency}
                     >
@@ -925,12 +946,15 @@ const Register = () => {
                   </div>
                 </div>
                 <div className="splitter-two">
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Frequency
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
                       onChange={selectJobFrequency}
                     >
@@ -974,13 +998,16 @@ const Register = () => {
               </div>
               <div className="splitter">
                 <div className="splitter-one">
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Min Pay
                     </label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       id="exampleFormControlInput1"
                       onChange={(e) => {
                         setJobMinPay(e.target.value);
@@ -990,13 +1017,16 @@ const Register = () => {
                   </div>
                 </div>
                 <div className="splitter-two">
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">
+                  <div className="mb-3">
+                    <label
+                      for="exampleFormControlInput1"
+                      className="form-label"
+                    >
                       Max Pay
                     </label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       id="exampleFormControlInput1"
                       onChange={(e) => {
                         setJobMaxPay(e.target.value);
@@ -1553,11 +1583,11 @@ const Register = () => {
               <div className="step-title">Sign up</div>
               <div className="mb-3">
                 <label className="form-label">Email</label>
-                <div class="form-group has-search">
-                  <span class="fa fa-envelope form-control-feedback"></span>
+                <div className="form-group has-search">
+                  <span className="fa fa-envelope form-control-feedback"></span>
                   <input
                     type="text"
-                    class="form-control adult-signup-inputs"
+                    className="form-control adult-signup-inputs"
                     placeholder="Email "
                     onChange={(e) => {
                       setAdultEmail(e.target.value);
@@ -1568,11 +1598,11 @@ const Register = () => {
 
               <div className="mb-3">
                 <label className="form-label">Password</label>
-                <div class="form-group has-search adult-password-wrapper">
-                  <span class="fa fa-lock form-control-feedback"></span>
+                <div className="form-group has-search adult-password-wrapper">
+                  <span className="fa fa-lock form-control-feedback"></span>
                   <input
                     type={showPassword ? "text" : "password"}
-                    class="form-control adult-signup-inputs"
+                    className="form-control adult-signup-inputs"
                     placeholder="Password"
                     onChange={(e) => {
                       setAdultPassword(e.target.value);
@@ -1580,12 +1610,12 @@ const Register = () => {
                   ></input>
                   {showPassword ? (
                     <span
-                      class="fa fa-eye show-password-icon"
+                      className="fa fa-eye show-password-icon"
                       onClick={togglePasswordVisibility}
                     ></span>
                   ) : (
                     <span
-                      class="fa fa-eye-slash show-password-icon"
+                      className="fa fa-eye-slash show-password-icon"
                       onClick={togglePasswordVisibility}
                     ></span>
                   )}
@@ -1593,11 +1623,11 @@ const Register = () => {
               </div>
               <div className="mb-1">
                 <label className="form-label">Confirm Password</label>
-                <div class="form-group has-search adult-confirm-password-wrapper">
-                  <span class="fa fa-lock form-control-feedback"></span>
+                <div className="form-group has-search adult-confirm-password-wrapper">
+                  <span className="fa fa-lock form-control-feedback"></span>
                   <input
                     type={showConfirmPassword ? "text" : "password"}
-                    class="form-control adult-signup-inputs"
+                    className="form-control adult-signup-inputs"
                     placeholder="Confirm Password"
                     onChange={(e) => {
                       setAdultConfirmPassword(e.target.value);
@@ -1605,12 +1635,12 @@ const Register = () => {
                   ></input>
                   {showConfirmPassword ? (
                     <span
-                      class="fa fa-eye show-confirm-password-icon"
+                      className="fa fa-eye show-confirm-password-icon"
                       onClick={toggleConfirmPasswordVisibility}
                     ></span>
                   ) : (
                     <span
-                      class="fa fa-eye-slash show-confirm-password-icon"
+                      className="fa fa-eye-slash show-confirm-password-icon"
                       onClick={toggleConfirmPasswordVisibility}
                     ></span>
                   )}

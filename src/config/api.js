@@ -19,6 +19,7 @@ export const API = {
   otpResendAdult: BASEURL + "users/otpResendAdult",
   forgotPassword: BASEURL + "users/forgotPassword",
   resetPassword: BASEURL + "users/resetPassword",
+  checkProfileStatus: BASEURL + "users/checkProfileStatus/",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
@@ -31,4 +32,5 @@ export const API = {
   getFeatures: BASEURL + "features/getFeatures",
   getRecentGigs: BASEURL + "gigs/recentGigs",
   getTopBrands: BASEURL + "brands/topBrands",
+  getTalentList: BASEURL + "users/talentList",
 };
