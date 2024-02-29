@@ -69,6 +69,7 @@ const Dashboard = () => {
   const [caseList, setCaseList] = useState([]);
   const [photoGraphersList, setphotoGraphersList] = useState([]);
   const [messageFromHeader, setMessageFromHeader] = useState("");
+  const [hideAll, setHideAll] = useState(false);
 
   function userType(e) {
     if (e == "above_18") {
@@ -472,8 +473,12 @@ const Dashboard = () => {
   }
 
   const handleMessageFromHeader = (message) => {
+    console.log(message, "message from header");
     if (message === "open-kids-form") {
       openModal();
+    }
+    if (message.menuStatus === false) {
+      setHideAll(true);
     }
     setMessageFromHeader(message);
   };
@@ -529,56 +534,6 @@ const Dashboard = () => {
                 }}
               >
                 <div className="joinnow-text">Hire Now</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          ref={modalRef}
-          className="modal fade"
-          id="verify_age"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content ">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                <div className="ageverify-title">Select Your Age Group</div>
-                <div className="modal-buttons ageverify-buttons">
-                  <div
-                    onClick={(e) => {
-                      navigate("/signup", {
-                        state: { signupCategory: "kids" },
-                      });
-                    }}
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    className="step-back"
-                  >
-                    13-17 Years
-                  </div>
-                  <div
-                    onClick={(e) => {
-                      navigate("/signup", {
-                        state: { signupCategory: "adults" },
-                      });
-                    }}
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    className="step-continue"
-                  >
-                    18 Years or Older
-                  </div>
-                </div>
               </div>
             </div>
           </div>

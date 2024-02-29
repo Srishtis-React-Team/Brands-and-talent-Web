@@ -172,6 +172,7 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const handleProfessionChange = (selectedOptions) => {
     setSelectedProfessions(selectedOptions);
+    console.log(selectedOptions, "selectedOptions");
   };
 
   const handleDetailChange = (index, field, value) => {
@@ -191,9 +192,44 @@ const KidsformOne = ({ sendDataToParent }) => {
     }
   }, [portofolioFile, features]);
 
+  const handlePortofolioDrop = (e) => {
+    e.preventDefault();
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    console.log(droppedFiles[0], "droppedFiles");
+    uploadFile(droppedFiles[0]);
+    // setFiles(droppedFiles);
+  };
+
+  const handlePortofolioDragOver = (e) => {
+    e.preventDefault();
+  };
+  const handleVideoDrop = (e) => {
+    e.preventDefault();
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    console.log(droppedFiles[0], "droppedFiles");
+    uploadVideoudio(droppedFiles[0]);
+    // setFiles(droppedFiles);
+  };
+
+  const handleVideoDragOver = (e) => {
+    e.preventDefault();
+  };
+  const handleResumeDrop = (e) => {
+    e.preventDefault();
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    console.log(droppedFiles[0], "droppedFiles");
+    uploadResume(droppedFiles[0]);
+    // setFiles(droppedFiles);
+  };
+
+  const handleResumeDragOver = (e) => {
+    e.preventDefault();
+  };
+
   const portofolioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
       uploadFile(fileData);
     }
   };
@@ -206,6 +242,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   const resumeUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
+      console.log(fileData, "fileData resume");
       uploadResume(fileData);
     }
   };
@@ -290,7 +327,6 @@ const KidsformOne = ({ sendDataToParent }) => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        console.log(fileObj, "fileObj");
         setVideoAudioFile((prevFiles) => [...prevFiles, fileObj]);
         setOpenPopUp(true);
         setTimeout(function() {
@@ -321,8 +357,6 @@ const KidsformOne = ({ sendDataToParent }) => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        console.log(fileObj, "fileObj uploadResume");
-
         setResumeFile((prevFiles) => [...prevFiles, fileObj]);
 
         setOpenPopUp(true);
@@ -425,20 +459,16 @@ const KidsformOne = ({ sendDataToParent }) => {
       .then((resData) => {
         if (resData) {
           setCountryList(resData.data.data);
-          console.log(resData.data, "country");
-          console.log(countryList, "countryList");
         }
       })
       .catch((err) => {});
   };
 
   const handleSelectedCountry = (country) => {
-    console.log(country, "country");
     setCountry(country?.value);
     getStates(country?.value);
   };
   const handleSelectedState = (state) => {
-    console.log(state, "state");
     setState(state?.label);
   };
 
@@ -450,8 +480,6 @@ const KidsformOne = ({ sendDataToParent }) => {
       .then((resData) => {
         if (resData) {
           setStateList(resData.data.data);
-          console.log(resData.data, "country");
-          console.log(stateList, "stateList");
         }
       })
       .catch((err) => {});
@@ -501,7 +529,6 @@ const KidsformOne = ({ sendDataToParent }) => {
     setIsLoading(true);
     await ApiHelper.post(API.kidsSignUp, formData)
       .then((resData) => {
-        console.log(resData);
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Registered SuccessFully!");
@@ -521,7 +548,6 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const passData = (status, data) => {
-    console.log(kidsSignupResponse, "kidsSignupResponse");
     sendDataToParent({
       signupStatus: status,
       email: data,
@@ -537,7 +563,6 @@ const KidsformOne = ({ sendDataToParent }) => {
       window.open("your-image-url", "_blank");
     } else if (option === "delete") {
       // Code to delete the image
-      console.log("Image deleted!");
     }
 
     // Hide the options after selection
@@ -545,7 +570,6 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleView = (imageUrl) => {
-    console.log(imageUrl, "imageUrl");
     let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
     window.open(viewImage, "_blank");
   };
@@ -669,7 +693,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                     <input
                       type="number"
                       className="form-control"
-                      maxlength="15"
+                      maxLength="15"
                       pattern="[0-9]{15}"
                       onChange={(e) => {
                         setParentMobile(e.target.value);
@@ -731,11 +755,11 @@ const KidsformOne = ({ sendDataToParent }) => {
 
                   <div className="mb-3">
                     <label className="form-label">Password</label>
-                    <div class="form-group has-search adult-password-wrapper">
-                      <span class="fa fa-lock form-control-feedback"></span>
+                    <div className="form-group has-search adult-password-wrapper">
+                      <span className="fa fa-lock form-control-feedback"></span>
                       <input
                         type={showPassword ? "text" : "password"}
-                        class="form-control adult-signup-inputs"
+                        className="form-control adult-signup-inputs"
                         placeholder="Password"
                         onChange={(e) => {
                           handlePasswordChange(e);
@@ -744,12 +768,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                       ></input>
                       {showPassword ? (
                         <span
-                          class="fa fa-eye show-password-icon"
+                          className="fa fa-eye show-password-icon"
                           onClick={togglePasswordVisibility}
                         ></span>
                       ) : (
                         <span
-                          class="fa fa-eye-slash show-password-icon"
+                          className="fa fa-eye-slash show-password-icon"
                           onClick={togglePasswordVisibility}
                         ></span>
                       )}
@@ -759,8 +783,8 @@ const KidsformOne = ({ sendDataToParent }) => {
                 <div className="kids-form-section">
                   <div className="mb-1">
                     <label className="form-label">Confirm Password</label>
-                    <div class="form-group has-search adult-confirm-password-wrapper">
-                      <span class="fa fa-lock form-control-feedback"></span>
+                    <div className="form-group has-search adult-confirm-password-wrapper">
+                      <span className="fa fa-lock form-control-feedback"></span>
                       <input
                         type={showConfirmPassword ? "text" : "password"}
                         className={`form-control adult-signup-inputs ${
@@ -774,12 +798,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                       ></input>
                       {showConfirmPassword ? (
                         <span
-                          class="fa fa-eye show-confirm-password-icon"
+                          className="fa fa-eye show-confirm-password-icon"
                           onClick={toggleConfirmPasswordVisibility}
                         ></span>
                       ) : (
                         <span
-                          class="fa fa-eye-slash show-confirm-password-icon"
+                          className="fa fa-eye-slash show-confirm-password-icon"
                           onClick={toggleConfirmPasswordVisibility}
                         ></span>
                       )}
@@ -896,7 +920,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                     <div className="offer-wrapper">
                       <input
                         className="profession-checkbox"
-                        id="offer"
+                        id={profession.label}
                         type="checkbox"
                         checked={profession.openToOffers || false}
                         onChange={(e) =>
@@ -907,7 +931,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                           )
                         }
                       />
-                      <label className="form-label offer-label" htmlFor="offer">
+                      <label
+                        className="form-label offer-label"
+                        htmlFor={profession.label}
+                      >
                         Open to Offers / Happy to negotiate
                       </label>
                     </div>
@@ -1109,7 +1136,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                     <input
                       type="number"
                       className="form-control"
-                      minlength="15"
+                      minLength="15"
                       onChange={(e) => {
                         setKidsPhone(e.target.value);
                       }}
@@ -1195,8 +1222,11 @@ const KidsformOne = ({ sendDataToParent }) => {
               </div>
 
               <div className="kids-form-title">Portofolio</div>
-
-              <div className="cv-section">
+              <div
+                className="cv-section"
+                onDrop={handlePortofolioDrop}
+                onDragOver={handlePortofolioDragOver}
+              >
                 <label className="upload-backdrop" htmlFor="portofolio">
                   <img src={uploadIcon} alt="" />
                 </label>
@@ -1293,7 +1323,11 @@ const KidsformOne = ({ sendDataToParent }) => {
                 </>
               )}
 
-              <div className="cv-section">
+              <div
+                className="cv-section"
+                onDrop={handleVideoDrop}
+                onDragOver={handleVideoDragOver}
+              >
                 <label className="upload-backdrop" htmlFor="video-audio">
                   <img src={uploadIcon} alt="" />
                 </label>
@@ -1385,7 +1419,11 @@ const KidsformOne = ({ sendDataToParent }) => {
                 </>
               )}
               <div className="kids-form-title">CV</div>
-              <div className="cv-section">
+              <div
+                className="cv-section"
+                onDrop={handleResumeDrop}
+                onDragOver={handleResumeDragOver}
+              >
                 <label className="upload-backdrop" htmlFor="cv-input">
                   <img src={uploadIcon} alt="" />
                 </label>
@@ -1774,6 +1812,87 @@ const KidsformOne = ({ sendDataToParent }) => {
                   onChange={verificationUpload}
                 />
               </div>
+
+              {verificationID && (
+                <>
+                  {verificationID.map((item, index) => {
+                    return (
+                      <>
+                        <div key={index} className="uploaded-file-wrapper">
+                          <div className="file-section">
+                            {item.type === "image" && (
+                              <div className="fileType">
+                                <img src={imageType} alt="" />
+                              </div>
+                            )}
+                            {item.type === "audio" && (
+                              <div className="fileType">
+                                <img src={audiotype} alt="" />
+                              </div>
+                            )}
+                            {item.type === "video" && (
+                              <div className="fileType">
+                                <img src={videoType} alt="" />
+                              </div>
+                            )}
+                            {item.type === "document" && (
+                              <div className="fileType">
+                                <img src={docsIcon} alt="" />
+                              </div>
+                            )}
+                            <div className="fileName">{item.title}</div>
+                          </div>
+                          <div className="file-options">
+                            <div className="sucess-tick">
+                              <img src={greenTickCircle} alt="" />
+                            </div>
+                            <div className="option-menu">
+                              <div className="dropdown">
+                                <img
+                                  onClick={() => setShowOptions(!showOptions)}
+                                  src={elipsis}
+                                  alt=""
+                                  className="dropdown-toggle elipsis-icon"
+                                  type="button"
+                                  id="dropdownMenuButton"
+                                  data-bs-toggle="dropdown"
+                                  aria-expanded="false"
+                                />
+                                <ul
+                                  className="dropdown-menu"
+                                  aria-labelledby="dropdownMenuButton"
+                                >
+                                  <li>
+                                    <a
+                                      className="dropdown-item"
+                                      onClick={() => handleView(item)}
+                                      id="view"
+                                    >
+                                      View
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a
+                                      className="dropdown-item"
+                                      onClick={() =>
+                                        handlePortofolioDelete(item)
+                                      }
+                                      id="delete"
+                                    >
+                                      Delete
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })}
+                </>
+              )}
+
               <div className="verification-status">Not Verified</div>
               <div className="signup-btn-section">
                 <div

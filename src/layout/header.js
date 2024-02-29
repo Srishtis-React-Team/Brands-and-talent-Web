@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import "../assets/css/dashboard.css";
 import { useNavigate } from "react-router";
@@ -41,9 +41,16 @@ const Header = ({ sendMessageToParent }) => {
       });
     } else if (talent === true) {
       setTimeout(() => {
-        sendMessageToParent("open-kids-form");
+        // sendMessageToParent("open-kids-form");
+        openModal();
       }, 800);
     }
+  };
+
+  const modalRef = useRef(null);
+  const openModal = () => {
+    const modal = new window.bootstrap.Modal(modalRef.current);
+    modal.show();
   };
 
   const handleClick = () => {
@@ -64,6 +71,7 @@ const Header = ({ sendMessageToParent }) => {
         <div
           onClick={() => {
             setMenuOpen(!menuOpen);
+            // sendMessageToParent({ menuStatus: menuOpen });
           }}
           className="menu-icon"
         >
@@ -245,11 +253,9 @@ const Header = ({ sendMessageToParent }) => {
             </a>
             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a className="dropdown-item">
-                  <NavLink to="/resources" onClick={handleClick}>
-                    About
-                  </NavLink>
-                </a>
+                <NavLink to="/resources" onClick={handleClick}>
+                  <a className="dropdown-item">About</a>
+                </NavLink>
               </li>
               <li className="dropend ">
                 <a
@@ -297,20 +303,6 @@ const Header = ({ sendMessageToParent }) => {
           </div>
         </div>
         <div className="header-functions">
-          <form className="d-flex search-bootstrap">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            ></input>
-            <button
-              className="btn btn-outline-success search-bootstrap-btn"
-              type="submit"
-            >
-              Search
-            </button>
-          </form>
           {/* <div className="box">
             <input type="checkbox" id="check"></input>
             <div className="search-box">
@@ -320,6 +312,48 @@ const Header = ({ sendMessageToParent }) => {
               </label>
             </div>
           </div> */}
+          <div
+            className=""
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasTop"
+            aria-controls="offcanvasTop"
+          >
+            <i className="fas fa-search"></i>
+          </div>
+
+          <div
+            className="offcanvas offcanvas-top search-canvas-top"
+            tabindex="-1"
+            id="offcanvasTop"
+            aria-labelledby="offcanvasTopLabel"
+          >
+            <div className="offcanvas-header">
+              <h5 id="offcanvasTopLabel">Search Anything</h5>
+              <button
+                type="button"
+                className="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="offcanvas-body">
+              <form className="d-flex search-bootstrap">
+                <input
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                ></input>
+                <button
+                  className="btn btn-outline-success search-bootstrap-btn"
+                  type="submit"
+                >
+                  Search
+                </button>
+              </form>
+            </div>
+          </div>
+
           <div className="">
             <NavLink to="/login" className="login-text" onClick={handleClick}>
               Login
@@ -393,6 +427,57 @@ const Header = ({ sendMessageToParent }) => {
                   }}
                 >
                   Register Now
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        ref={modalRef}
+        className="modal fade"
+        id="verify_age"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="ageverify-title">Select Your Age Group</div>
+              <div className="modal-buttons ageverify-buttons">
+                <div
+                  onClick={(e) => {
+                    navigate("/signup", {
+                      state: { signupCategory: "kids" },
+                    });
+                  }}
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  className="step-back"
+                >
+                  13-17 Years
+                </div>
+                <div
+                  onClick={(e) => {
+                    navigate("/signup", {
+                      state: { signupCategory: "adults" },
+                    });
+                  }}
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  className="step-continue"
+                >
+                  18 Years or Older
                 </div>
               </div>
             </div>

@@ -29,6 +29,7 @@ const Login = () => {
   // Get the current URL
   const url = window.location.href;
   const queryString = url.split("?")[1];
+  console.log(queryString);
   console.log("Search queryString:", typeof queryString);
   const navigate = useNavigate();
   useEffect(() => {
@@ -63,14 +64,14 @@ const Login = () => {
     setIsLoading(true);
     await ApiHelper.post(API.talentLogin, formData)
       .then((resData) => {
-        console.log("talentLogin response", resData.data);
+        console.log("talentLogin response", resData.data.data.user._id);
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Logged In SuccessFully!");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-dashboard`);
+            navigate(`/talent-dashboard?${resData.data.data.user._id}`);
           }, 1000);
         } else if (resData.data.status === false) {
           console.log("false called");
@@ -126,11 +127,11 @@ const Login = () => {
           </div> */}
           <div className="mb-3 login-input-containers">
             <label className="form-label">Email</label>
-            <div class="form-group has-search">
-              <span class="fa fa-envelope form-control-feedback"></span>
+            <div className="form-group has-search">
+              <span className="fa fa-envelope form-control-feedback"></span>
               <input
                 type="text"
-                class="form-control adult-signup-inputs"
+                className="form-control adult-signup-inputs"
                 placeholder="Email "
                 onChange={(e) => {
                   setTalentEmail(e.target.value);
@@ -140,11 +141,11 @@ const Login = () => {
           </div>
           <div className="mb-3 login-input-containers">
             <label className="form-label">Password</label>
-            <div class="form-group has-search adult-password-wrapper">
-              <span class="fa fa-lock form-control-feedback"></span>
+            <div className="form-group has-search adult-password-wrapper">
+              <span className="fa fa-lock form-control-feedback"></span>
               <input
                 type={showPassword ? "text" : "password"}
-                class="form-control adult-signup-inputs"
+                className="form-control adult-signup-inputs"
                 placeholder="Password"
                 onChange={(e) => {
                   setTalentPassword(e.target.value);
@@ -152,12 +153,12 @@ const Login = () => {
               ></input>
               {showPassword ? (
                 <span
-                  class="fa fa-eye show-password-icon"
+                  className="fa fa-eye show-password-icon"
                   onClick={togglePasswordVisibility}
                 ></span>
               ) : (
                 <span
-                  class="fa fa-eye-slash show-password-icon"
+                  className="fa fa-eye-slash show-password-icon"
                   onClick={togglePasswordVisibility}
                 ></span>
               )}
