@@ -6,7 +6,11 @@ import Select from "react-select";
 import RangeSlider from "../components/RangeSlider.js";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
+import { useNavigate } from "react-router-dom";
+
 const FindCreators = () => {
+  const navigate = useNavigate();
+
   const searchIcon = require("../assets/icons/search.png");
   const heartIcon = require("../assets/icons/heart.png");
   const gents = require("../assets/images/gents.png");
@@ -129,6 +133,10 @@ const FindCreators = () => {
     });
     setTalentList(modifiedTalents);
     console.log(modifiedTalents, "modifiedTalents");
+  };
+  const openTalent = (item) => {
+    console.log(item, "item");
+    navigate("/talent", { state: { talentData: item } });
   };
 
   const removeFavorite = (item) => {
@@ -444,11 +452,14 @@ const FindCreators = () => {
             <div className="gallery-section filtered-gallery">
               {talentList.map((item) => {
                 return (
-                  <div className="gallery-warpper">
+                  <div
+                    className="gallery-warpper"
+                    onClick={() => openTalent(item)}
+                  >
                     <div className="gallery-position">
                       <img
                         className="gallery-img"
-                        src={API.userFilePath + item.image}
+                        src={API.userFilePath + item.image.fileData}
                       ></img>
                       <div className="rating">
                         <img src={brightStar}></img>
@@ -480,10 +491,22 @@ const FindCreators = () => {
                             : "Elizabeth"}
                         </div>
                         <div className="address">
-                          {" "}
-                          {item?.childLocation
-                            ? `${item?.childLocation}`
-                            : "Australia"}{" "}
+                          {item.profession && (
+                            <>
+                              {item.profession.map((item, index) => {
+                                return (
+                                  <>
+                                    <span key={index}>
+                                      {item.value}
+                                      {index !== item?.profession?.length - 1
+                                        ? ","
+                                        : ""}
+                                    </span>
+                                  </>
+                                );
+                              })}
+                            </>
+                          )}
                         </div>
                         <div className="user-details">
                           <div className="location-wrapper">

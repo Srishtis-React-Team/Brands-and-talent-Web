@@ -266,6 +266,18 @@
   }
 }
 
+.features-section {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  .features-input-wrapper {
+    margin-right: 20px;
+    min-width: 30% !important;
+    .features-select {
+    }
+  }
+}
+
 .modal-backdrop.show {
   // opacity: 0;
 }
@@ -493,8 +505,9 @@
 }
 
 .add-more-services {
+  padding: 20px 0px;
   .add-more-services-btn {
-    padding: 10px 30px;
+    padding: 10px 15px;
     text-align: center;
     color: #ffffff;
     font-family: "Open Sans", sans-serif;
@@ -504,19 +517,8 @@
     line-height: normal;
     background-color: #000;
     border-radius: 6px;
-    width: 40%;
+    width: 30%;
     cursor: pointer;
-  }
-}
-
-.features-section {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  .features-input-wrapper {
-    margin-right: 20px;
-    .features-select {
-    }
   }
 }
 

@@ -3,15 +3,15 @@ import "../assets/css/findcreators.css";
 import "../assets/css/getbooked.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
-import CardCarousel from "./CardCarousel.js";
-import PhotosCarousel from "./PhotosCarousel.js";
-
-import axios from "axios";
-import $ from "jquery";
+import { useLocation } from "react-router-dom";
+import { ApiHelper } from "../helpers/ApiHelper.js";
+import { API } from "../config/api.js";
 const GetBooked = () => {
   const [data, setData] = useState([]);
+  const location = useLocation();
+  const { talentData } = location.state;
+  console.log(talentData, "talentData");
 
-  useEffect(() => {}, []);
   const girl1 = require("../assets/images/girl.png");
   const model = require("../assets/images/model-profile.png");
   const model1 = require("../assets/images/model1.png");
@@ -57,6 +57,21 @@ const GetBooked = () => {
   const [reviews, setReviews] = useState(false);
   const [bio, showBio] = useState(false);
   const [test, setTest] = useState("");
+
+  useEffect(() => {
+    unifiedDataFetch();
+  }, []);
+
+  const unifiedDataFetch = async () => {
+    await ApiHelper.get(`${API.unifiedDataFetch}`)
+      .then((resData) => {
+        if (resData) {
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const photosList = [
     {
@@ -140,19 +155,6 @@ const GetBooked = () => {
       showBio(false);
     }
   }
-
-  function prev() {
-    document.getElementById("slider-container").scrollLeft -= 270;
-  }
-
-  function next() {
-    document.getElementById("slider-container").scrollLeft += 270;
-  }
-
-  $(".slide img").on("click", function () {
-    $(this).toggleClass("zoomed");
-    $(".overlay").toggleClass("active");
-  });
 
   useEffect(() => {
     setData([

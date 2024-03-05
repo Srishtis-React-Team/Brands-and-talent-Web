@@ -4,6 +4,11 @@
     display: flex;
     .kids-img {
       // max-width: 20%;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      height: 100%;
     }
     .kids-form {
       padding-left: 50px;
@@ -231,6 +236,7 @@
     width: 100%;
     .features-input-wrapper {
       margin-right: 20px;
+      min-width: 20%;
       .features-select {
       }
     }
@@ -440,4 +446,20 @@
 
 .elipsis-icon {
   padding: 10px;
+}
+.disabledButton {
+  opacity: 0.5; /* You can adjust the opacity or add other styles as needed */
+  cursor: not-allowed;
+  /* Add any other styles you want to apply to the disabled button */
+}
+
+.invalid-fields {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #dc3545;
+}
+
+.mandatory {
+  color: #dc3545;
 }

@@ -471,7 +471,7 @@ const Header = ({ sendMessageToParent }) => {
                   }}
                   data-bs-dismiss="modal"
                   aria-label="Close"
-                  className="step-back"
+                  className="kids-select-btn"
                 >
                   13-17 Years
                 </div>
@@ -483,7 +483,7 @@ const Header = ({ sendMessageToParent }) => {
                   }}
                   data-bs-dismiss="modal"
                   aria-label="Close"
-                  className="step-continue"
+                  className="adults-select-btn"
                 >
                   18 Years or Older
                 </div>

@@ -13,9 +13,9 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import Axios from "axios";
 import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
-import KidsformOne from "./KidsformOne";
-import KidsFormThree from "./KidsFormThree";
 import OTPComponent from "./OTPComponent";
+import KidsFormTwo from "./KidsFormTwo";
+
 import AdultsOTP from "./AdultsOTP";
 const Register = () => {
   const navigate = useNavigate();
@@ -188,7 +188,8 @@ const Register = () => {
 
   useEffect(() => {
     if (routeData?.signupCategory == "kids") {
-      setKidsStep(1);
+      navigate(`/talent-login-basic-details`);
+      // setKidsStep(1);
     } else if (routeData?.signupCategory == "brand") {
       setBrands_step(1);
     } else if (routeData?.signupCategory == "adults") {
@@ -1375,189 +1376,6 @@ const Register = () => {
         </>
       )}
 
-      {kids_step === 1 && (
-        <>
-          <div className="form-dialog">
-            <div className="header-wrapper">
-              <div className="step-wrapper">
-                <img
-                  className="modal-logo"
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                  src={btLogo}
-                ></img>
-                <div className="step-text">Step 1 of 2</div>
-              </div>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
-            </div>
-            <div className="dialog-body">
-              <KidsformOne sendDataToParent={handleChildData} />
-            </div>
-            <div className="dialog-footer">
-              <button
-                type="button"
-                onClick={(e) => {
-                  navigate("/");
-                }}
-                className="step-back"
-              >
-                Back
-              </button>
-
-              <button
-                className={
-                  !signupDisabled
-                    ? "step-continue disabled-continue"
-                    : "step-continue"
-                }
-                type="button"
-                onClick={(e) => {
-                  handleKidsForms("goto-kids-otp");
-                }}
-              >
-                Continue
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-      {kids_step === 2 && (
-        <>
-          <div className="form-dialog">
-            <div className="header-wrapper">
-              <div className="step-wrapper">
-                <img
-                  className="modal-logo"
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                  src={btLogo}
-                ></img>
-                <div className="step-text">Step 2 of 4</div>
-              </div>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
-            </div>
-            <div className="dialog-body">
-              <OTPComponent
-                parentData={parentData}
-                sendDataToParent={DataFromKidsOtp}
-              />
-            </div>
-          </div>
-        </>
-      )}
-      {kids_step === 3 && (
-        <>
-          <div className="form-dialog">
-            <div className="header-wrapper">
-              <div className="step-wrapper">
-                <img
-                  className="modal-logo"
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                  src={btLogo}
-                ></img>
-                <div className="step-text">Step 3 of 4</div>
-              </div>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
-            </div>
-            <div className="dialog-body">
-              <KidsFormThree
-                emailData={parentData}
-                onDataFromChild={handleDataFromChild}
-              />
-            </div>
-            <div className="dialog-footer">
-              {/* <button
-                type="button"
-                onClick={(e) => {
-                  handleKidsForms("");
-                }}
-                className="step-back"
-              >
-                Back
-              </button> */}
-
-              <button
-                className={
-                  !signupDisabled
-                    ? "step-continue disabled-continue"
-                    : "step-continue"
-                }
-                type="button"
-                onClick={(e) => {
-                  paymentSuccess();
-                }}
-              >
-                Pay Now
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-      {kids_step === 4 && (
-        <>
-          <div className="form-dialog">
-            <div className="header-wrapper">
-              <div className="step-wrapper">
-                <img
-                  className="modal-logo"
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                  src={btLogo}
-                ></img>
-                <div className="step-text">Step 4 of 4</div>
-              </div>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => {
-                  navigate("/");
-                }}
-              ></button>
-            </div>
-            <div className="dialog-body">
-              <div className="gmail-wrapper">
-                <div className="gmail-tick">
-                  <img src={bigTick} alt="" />
-                </div>
-                <div className="done">Done!</div>
-                <div className="gmail-info">
-                  Get ready to embark on your journey! Your account will be
-                  activated within the next 48 hours, unlocking a world of
-                  possibilities.
-                </div>
-                <div className="open-gmail" onClick={openGmail}>
-                  <img src={gmailGrey} alt="" />
-                  <div className="gmail-btn-text">Open Gmail</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-
       {adults_step === 1 && (
         <div className="form-dialog">
           <div className="header-wrapper">
@@ -1775,63 +1593,3 @@ const Register = () => {
 };
 
 export default Register;
-
-{
-  /* <div className="modal-wrapper">
-<div className="modal-content">
-  <div className="modal-header header-wrapper">
-    <img className="modal-logo" src={btLogo}></img>
-    <div className="step-text">Step 1 of 4</div>
-    <button
-      type="button"
-      className="btn-close"
-      onClick={() => {
-        navigate("/");
-      }}
-    ></button>
-  </div>
-  <div className="modal-body modal-content ">
-    <div className="step-title">Which one are you?</div>
-    <div className="step-description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    </div>
-    <div className="step-selection">
-      <div className="select-wrapper">
-        <input type="checkbox" id="aspiring"></input>
-        <label htmlFor="aspiring" className="select-text">
-          Aspiring Talent
-        </label>
-      </div>
-      <div className="select-wrapper">
-        <input type="checkbox" id="professional"></input>
-        <label htmlFor="professional" className="select-text">
-          Professional Talent
-        </label>
-      </div>
-      <div className="select-wrapper">
-        <input type="checkbox" id="other-talent"></input>
-        <label htmlFor="other-talent" className="select-text">
-          Talent (Actor, dancer, musician, sports person, etc)
-        </label>
-      </div>
-    </div>
-  </div>
-  <div className="modal-footer">
-    <button
-      type="button"
-      className="step-back"
-      
-    >
-      Back
-    </button>
-    <button
-      type="button"
-      className="step-continue"
-    
-    >
-      Continue
-    </button>
-  </div>
-</div>
-</div> */
-}
