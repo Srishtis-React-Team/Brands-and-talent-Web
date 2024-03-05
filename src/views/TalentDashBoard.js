@@ -221,6 +221,17 @@ const TalentDashBoard = () => {
     modal.hide();
   };
 
+  const updateAdultSignup = () => {
+    closeAdultsSignupModal();
+    setMessage("Updated SuccessFully!");
+    setTimeout(function() {
+      setOpenPopUp(true);
+    }, 1000);
+    setTimeout(function() {
+      setOpenPopUp(false);
+    }, 2000);
+  };
+
   const professionList = [
     { value: "Actor", label: "Photographer" },
     { value: "Model", label: "Beauticians" },
@@ -1884,7 +1895,7 @@ const TalentDashBoard = () => {
               <div
                 className="doit-btn"
                 onClick={() => {
-                  // adultsSignupFunction();
+                  updateAdultSignup();
                 }}
                 data-bs-dismiss="modal"
                 aria-label="Close"
@@ -2060,6 +2071,7 @@ const TalentDashBoard = () => {
           </div>
         </div>
       </div>
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };

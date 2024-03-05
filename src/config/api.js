@@ -20,17 +20,20 @@ export const API = {
   forgotPassword: BASEURL + "users/forgotPassword",
   resetPassword: BASEURL + "users/resetPassword",
   checkProfileStatus: BASEURL + "users/checkProfileStatus/",
+  editKids: BASEURL + "users/editKids/",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
 
   //pricing
   getPricingList: BASEURL + "pricing/pricingList",
-  subscriptionPlan: BASEURL + "users/subscriptionPlan",
+  subscriptionPlan: BASEURL + "users/subscriptionPlan/",
 
   //common
   getFeatures: BASEURL + "features/getFeatures",
   getRecentGigs: BASEURL + "gigs/recentGigs",
   getTopBrands: BASEURL + "brands/topBrands",
   getTalentList: BASEURL + "users/talentList",
+  getKidsData: BASEURL + "users/kidsFetch/",
+  unifiedDataFetch: BASEURL + "users/unifiedDataFetch/",
 };

@@ -498,7 +498,7 @@ const Dashboard = () => {
           <div className="container">
             <div className="row banner-content">
               <div className="col-lg-12">
-                <div className="brand-section flex-column">
+                <div className="brand-section flex-column banner-title-section">
                   <p className="brand-title">
                     <span>C</span>onnecting <span>B</span>rands and{" "}
                     <span>T</span>
@@ -519,6 +519,23 @@ const Dashboard = () => {
                       and build lasting relationships. We put creators first.
                       Sign up today and start earning!
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="brand-options">
+                  <div className="hire-talent-section">
+                    <div className="section-title">Hire Talent</div>
+                    <div className="section-description brand-secription">
+                      Skip the search, skip the stress. Hire dream talent in
+                      minutes.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="brand-section">
+                  <div className="join-talent-section">
                     <div
                       className="Join-wrapper center"
                       data-bs-toggle="modal"
@@ -532,11 +549,6 @@ const Dashboard = () => {
               <div className="col-lg-6">
                 <div className="brand-options">
                   <div className="hire-talent-section">
-                    <div className="section-title">Hire Talent</div>
-                    <div className="section-description brand-secription">
-                      Skip the search, skip the stress. Hire dream talent in
-                      minutes.
-                    </div>
                     <div
                       className="hire-wrapper center"
                       onClick={(e) => {
