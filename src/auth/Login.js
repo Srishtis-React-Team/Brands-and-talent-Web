@@ -25,18 +25,24 @@ const Login = () => {
   const [paramsValue, setParamsValue] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
 
-  // Get the current URL
-  const url = window.location.href;
-  const queryString = url.split("?")[1];
-  console.log(queryString);
-  console.log("Search queryString:", typeof queryString);
+  // Function to set user ID
+  const setUserIdLocalStorage = (userId) => {
+    localStorage.setItem("userId", userId);
+    setUserId(userId);
+  };
+
+  // Function to get user ID
+  const getUserIdLocalStorage = () => {
+    return localStorage.getItem("userId");
+  };
+
   const navigate = useNavigate();
   useEffect(() => {
-    if (queryString) {
-      setParamsValue(queryString);
-      console.log(paramsValue, "paramsValue");
-      setSelectedItem(paramsValue);
+    const storedUserId = localStorage.getItem("userId");
+    if (storedUserId) {
+      setUserId(storedUserId);
     }
   }, [paramsValue]);
 
@@ -71,7 +77,8 @@ const Login = () => {
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-dashboard?${resData.data.data.user._id}`);
+            navigate(`/talent-dashboard?`);
+            setUserIdLocalStorage(resData.data.data.user._id);
           }, 1000);
         } else if (resData.data.status === false) {
           console.log("false called");

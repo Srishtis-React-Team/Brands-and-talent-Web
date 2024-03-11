@@ -1,8 +1,8 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useRef } from "react-router-dom";
 import Dashboard from "../views/Dashboard";
 import FindCreators from "../views/FindCreators";
-import GetBooked from "../views/GetBooked";
+import TalentProfile from "../views/TalentProfile";
 import Pricing from "../views/pricing";
 import Resources from "../views/resources";
 import About from "../pages/About";
@@ -20,12 +20,16 @@ import KidsformOne from "../auth/KidsformOne";
 import KidsFormTwo from "../auth/KidsFormTwo";
 import KidsFormThree from "../auth/KidsFormThree";
 import KidsFormFour from "../auth/KidsFormFour";
+import AdultFormOne from "../views/Adult forms/AdultFormOne";
+import AdultFormTwo from "../views/Adult forms/AdultFormTwo";
+import AdultFormThree from "../views/Adult forms/AdultFormThree";
+
 function Routing() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/find-creators" element={<FindCreators />} />
-      <Route path="/talent" element={<GetBooked />} />
+      <Route path="/talent-profile" element={<TalentProfile />} />
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/resources" element={<Resources />} />
       <Route path="/signup" element={<Register />} />
@@ -39,10 +43,13 @@ function Routing() {
       <Route path="/success-password" element={<PasswordSuccess />} />
       <Route path="/brand-dashboard" element={<BrandDashboard />} />
       <Route path="/talent-dashboard" element={<TalentDashBoard />} />
-      <Route path="/talent-login-basic-details" element={<KidsformOne />} />
-      <Route path="/talent-login-plan-details" element={<KidsFormTwo />} />
-      <Route path="/talent-login-files-details" element={<KidsFormThree />} />
-      <Route path="/talent-login-files-success" element={<KidsFormFour />} />
+      <Route path="/talent-signup-basic-details" element={<KidsformOne />} />
+      <Route path="/talent-signup-plan-details" element={<KidsFormTwo />} />
+      <Route path="/talent-signup-files-details" element={<KidsFormThree />} />
+      <Route path="/talent-signup-files-success" element={<KidsFormFour />} />
+      <Route path="/adult-signup-basic-details" element={<AdultFormOne />} />
+      <Route path="/adult-signup-service-details" element={<AdultFormTwo />} />
+      <Route path="/adult-signup-files-details" element={<AdultFormThree />} />
     </Routes>
   );
 }

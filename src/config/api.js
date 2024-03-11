@@ -21,6 +21,7 @@ export const API = {
   resetPassword: BASEURL + "users/resetPassword",
   checkProfileStatus: BASEURL + "users/checkProfileStatus/",
   editKids: BASEURL + "users/editKids/",
+  updateAdults: BASEURL + "users/updateAdults/",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
@@ -36,4 +37,5 @@ export const API = {
   getTalentList: BASEURL + "users/talentList",
   getKidsData: BASEURL + "users/kidsFetch/",
   unifiedDataFetch: BASEURL + "users/unifiedDataFetch/",
+  getTalentById: BASEURL + "users/getTalentById/",
 };

@@ -68,6 +68,19 @@ const Header = ({ sendMessageToParent }) => {
         >
           <img className="btLogo" src={btLogo}></img>
         </div>
+
+        <div className="">
+          <NavLink to="/login" className="login-text" onClick={handleClick}>
+            Login
+          </NavLink>
+        </div>
+        <div
+          className="signup"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Sign up for free
+        </div>
         <div
           onClick={() => {
             setMenuOpen(!menuOpen);
@@ -187,14 +200,6 @@ const Header = ({ sendMessageToParent }) => {
             </label>
           </div>
         </div> */}
-        <div className="login-text">Login</div>
-        <div
-          className="signup"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          Sign up for free
-        </div>
       </div>
 
       <div className="header">

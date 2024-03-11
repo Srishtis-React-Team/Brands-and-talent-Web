@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 const FindCreators = () => {
   const navigate = useNavigate();
-
   const searchIcon = require("../assets/icons/search.png");
   const heartIcon = require("../assets/icons/heart.png");
   const gents = require("../assets/images/gents.png");
@@ -136,7 +135,7 @@ const FindCreators = () => {
   };
   const openTalent = (item) => {
     console.log(item, "item");
-    navigate("/talent", { state: { talentData: item } });
+    navigate("/talent-profile", { state: { talentData: item } });
   };
 
   const removeFavorite = (item) => {
@@ -459,7 +458,7 @@ const FindCreators = () => {
                     <div className="gallery-position">
                       <img
                         className="gallery-img"
-                        src={API.userFilePath + item.image.fileData}
+                        src={API.userFilePath + item?.image?.fileData}
                       ></img>
                       <div className="rating">
                         <img src={brightStar}></img>
@@ -486,8 +485,8 @@ const FindCreators = () => {
                     <div className="gallery-content">
                       <div className="content">
                         <div className="name">
-                          {item?.childFirstName
-                            ? `${item?.childFirstName}`
+                          {item?.preferredChildFirstname
+                            ? `${item?.preferredChildFirstname}`
                             : "Elizabeth"}
                         </div>
                         <div className="address">

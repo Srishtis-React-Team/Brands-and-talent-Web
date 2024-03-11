@@ -5,7 +5,7 @@
 }
 
 .banner-title-section {
-  padding-bottom: 60px;
+  padding-bottom: 35px;
 }
 
 .form-section {
@@ -1218,6 +1218,79 @@ a {
 }
 
 @media (max-width: 480px) {
+  .kids-select-btn {
+    width: 45%;
+    height: 40px;
+    border-radius: 25px;
+    border: 1px solid #fff;
+    background: #000;
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .adults-select-btn {
+    width: 45%;
+    height: 40px;
+    border-radius: 25px;
+    border: 1px solid #fff;
+    background: #c2114b;
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ageverify-buttons {
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: space-evenly !important;
+  }
+
+  .step-continue {
+    width: 140px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 245px;
+    border: 1px solid #fff;
+    background: #c2114b;
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+  }
+
+  .ageverify-title {
+    color: #c2114b;
+    font-family: "Open Sans", sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;
+    padding: 20px 0px 30px 0px;
+  }
+
   .login-text {
     color: #000;
     font-family: "Open Sans", sans-serif;
@@ -2057,6 +2130,7 @@ input[type="radio"] {
   justify-content: space-between;
   padding: 30px 30px;
   border-bottom: 1px solid rgb(173, 173, 173);
+  align-items: center;
 }
 .header {
   display: flex;
@@ -2205,7 +2279,7 @@ input[type="radio"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0px 30px;
+    padding: 0px 0px 20px 0px;
   }
 
   .hire-talent-section {
@@ -2495,18 +2569,19 @@ input[type="radio"] {
     display: flex;
     flex-direction: column;
     padding-left: 25px;
-    position: absolute;
-    background: antiquewhite;
+    position: fixed;
+    background: #ffffff;
     width: 100%;
     bottom: 0;
-    top: 30px;
-    height: 100%;
-    z-index: 1;
+    top: 82px;
+    height: 100vh;
+    z-index: 9;
   }
 
   .mobile-navbar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     position: -webkit-sticky !important;
     position: sticky !important;
     top: 0;
@@ -2526,14 +2601,14 @@ input[type="radio"] {
   .mobile-menu-items > div {
     color: #000;
     font-family: "Open Sans", sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 500;
     line-height: normal;
     cursor: pointer;
     padding-right: 30px;
     text-decoration: none;
-    margin: 20px 0px;
+    margin: 30px 0px;
   }
 
   .signup,
@@ -2544,7 +2619,7 @@ input[type="radio"] {
     font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 500;
     line-height: normal;
     display: unset;
     justify-content: unset;
@@ -2687,3 +2762,25 @@ input[type="radio"] {
 769px — 1024px: Small screens, laptops
 1025px — 1200px: Desktops, large screens
 1201px and more —  Extra large screens, TV */
+
+/* .section-1 {
+  align-items: center;
+  background: linear-gradient(180deg,#0000 37.11%,#000);
+  background-image: url(/project/brandsandtalent/static/media/banner.f99c542a30d750bf22ca.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.section-1 {
+  background: linear-gradient(180deg,#0000 37.11%,#000);
+  background-image: url(http://localhost:3000/static/media/banner.f99c542a30d750bf22ca.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-evenly;
+  width: 100%;
+} */
