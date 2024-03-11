@@ -18,9 +18,6 @@ const KidsformOne = ({ sendDataToParent }) => {
   const urlParams = new URLSearchParams(paramsValues);
   const userId = urlParams.get("userId");
   const userEmail = urlParams.get("userEmail");
-  console.log(userId, "userId");
-  console.log(userEmail, "userEmail");
-
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const kidsImage = require("../assets/images/kidsImage.png");
@@ -181,7 +178,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   ];
 
   const onEditorSummary = (editorState) => {
-    console.log([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
+    console.log(editorState, "editorState");
     setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
     setEditorState(editorState);
   };
@@ -210,9 +207,7 @@ const KidsformOne = ({ sendDataToParent }) => {
     await ApiHelper.post(`${API.getKidsData}${userId}`)
       .then((resData) => {
         if (resData.data.status === true) {
-          console.log(resData.data.data);
           setKidsFillData(resData.data.data);
-          console.log(kidsFillData, "kidsFillData");
           setParentFirstName(resData?.data?.data?.parentFirstName);
           setParentLastName(resData?.data?.data?.parentLastName);
           setParentEmail(resData?.data?.data?.parentEmail);
@@ -220,6 +215,12 @@ const KidsformOne = ({ sendDataToParent }) => {
           setAddress(resData?.data?.data?.parentAddress);
           setKidsLegalFirstName(resData?.data?.data?.childFirstName);
           setKidsLegalLastName(resData?.data?.data?.childLastName);
+          setDob(resData?.data?.data?.childDob);
+          handleSelectedCountry({
+            value: resData?.data?.data?.parentCountry,
+            label: resData?.data?.data?.parentCountry,
+            key: 0,
+          });
           setKidsPreferedFirstName(
             resData?.data?.data?.preferredChildFirstname
           );
@@ -233,13 +234,12 @@ const KidsformOne = ({ sendDataToParent }) => {
           setKidsPhone(resData?.data?.data?.childPhone);
           setKidsLocation(resData?.data?.data?.childLocation);
           setKidsCity(resData?.data?.data?.childCity);
-          console.log(resData?.data?.data?.childAboutYou, "aboutdsdsdf");
           setAboutYou(resData?.data?.data?.childAboutYou);
           setSelectedCategories([
             ...selectedCategories,
             ...resData.data.data?.relevantCategories,
           ]);
-          console.log(selectedCategories, "selectedCategories");
+          setAboutYou(resData.data.data?.childAboutYou);
         }
       })
       .catch((err) => {});
@@ -247,6 +247,7 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const handleSelectedCountry = (event) => {
     console.log(event, "event");
+    console.log(event?.value, "event?.value");
     setCountry(event?.value);
     getStates(event?.value);
     console.log(country, "country");
@@ -332,31 +333,60 @@ const KidsformOne = ({ sendDataToParent }) => {
         childAboutYou: aboutYou,
       };
       setIsLoading(true);
-      await ApiHelper.post(API.kidsSignUp, formData)
-        .then((resData) => {
-          console.log(resData, "resData");
-          if (resData.data.status === true) {
+      console.log(userId, "userId");
+      if (!userId) {
+        console.log("signup block");
+        await ApiHelper.post(API.kidsSignUp, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setIsLoading(false);
+              setMessage("Registered SuccessFully!");
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+                navigate(
+                  `/talent-signup-plan-details?userId=${resData.data.data["userId"]}&userEmail=${resData.data.data["email"]}`
+                );
+              }, 1000);
+            } else if (resData.data.status === false) {
+              setIsLoading(false);
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {
             setIsLoading(false);
-            setMessage("Registered SuccessFully!");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-              navigate(
-                `/talent-login-plan-details?userId=${resData.data.data["userId"]}&userEmail=${resData.data.data["email"]}`
-              );
-            }, 1000);
-          } else if (resData.data.status === false) {
+          });
+      } else if (userId) {
+        console.log("edit block");
+        await ApiHelper.post(`${API.editKids}${userId}`, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setIsLoading(false);
+              setMessage("Updated SuccessFully!");
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+                navigate(
+                  `/talent-signup-plan-details?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
+                );
+              }, 1000);
+            } else if (resData.data.status === false) {
+              setIsLoading(false);
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {
             setIsLoading(false);
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
-        });
+          });
+      }
     }
   };
 
@@ -1020,6 +1050,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                     <div className="rich-editor">
                       <label className="form-label">About You</label>
                       <Editor
+                        editorState={editorState}
                         editorStyle={{ height: "170px", overflow: "hidden" }}
                         toolbarClassName="toolbarClassName"
                         wrapperClassName="wrapperClassName"

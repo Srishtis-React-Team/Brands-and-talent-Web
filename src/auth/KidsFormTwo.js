@@ -61,7 +61,7 @@ const KidsFormTwo = () => {
       });
   };
   const choosePlan = async (index) => {
-    navigate(`/talent-login-files-details?userId=${userId}`);
+    navigate(`/talent-signup-files-details?userId=${userId}`);
   };
 
   const handleRadioChange = (event, plan, type) => {
@@ -70,7 +70,7 @@ const KidsFormTwo = () => {
   };
 
   const goBack = () => {
-    navigate(`/talent-login-basic-details?userId=${userId}`);
+    navigate(`/talent-signup-basic-details?userId=${userId}`);
   };
 
   return (

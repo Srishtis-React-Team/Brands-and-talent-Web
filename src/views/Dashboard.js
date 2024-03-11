@@ -616,7 +616,7 @@ const Dashboard = () => {
                 Models
               </div>
               <div
-                className={more ? "active-tab more-text" : "more-text"}
+                className="more-text"
                 onClick={(e) => {
                   handleTabs("more");
                 }}

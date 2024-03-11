@@ -25,74 +25,74 @@ const CardCarousel = () => {
     <>
       <div className="App">
         <Carousel breakPoints={breakPoints}>
-          <div className="carousel-post-wrapper">
-            <img className="carousel-img" src={model2}></img>
-            <div className="post-details">
+          <div className="talents-carousel-post-wrapper">
+            <img className="talents-carousel-img" src={model2}></img>
+            <div className="talents-post-details">
               <img src={instaLogo}></img>
-              <div className="likes">234 Likes 340 comments</div>
-              <div className="date">23 Nov 2023</div>
+              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="talents-date">23 Nov 2023</div>
             </div>
-            <div className="post-content">
+            <div className="talents-post-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing consectet
               elit...
             </div>
           </div>
-          <div className="carousel-post-wrapper">
-            <img className="carousel-img" src={model3}></img>
-            <div className="post-details">
+          <div className="talents-carousel-post-wrapper">
+            <img className="talents-carousel-img" src={model3}></img>
+            <div className="talents-post-details">
               <img src={instaLogo}></img>
-              <div className="likes">234 Likes 340 comments</div>
-              <div className="date">23 Nov 2023</div>
+              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="talents-date">23 Nov 2023</div>
             </div>
-            <div className="post-content">
+            <div className="talents-post-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing consectet
               elit...
             </div>
           </div>
-          <div className="carousel-post-wrapper">
-            <img className="carousel-img" src={model4}></img>
-            <div className="post-details">
+          <div className="talents-carousel-post-wrapper">
+            <img className="talents-carousel-img" src={model4}></img>
+            <div className="talents-post-details">
               <img src={instaLogo}></img>
-              <div className="likes">234 Likes 340 comments</div>
-              <div className="date">23 Nov 2023</div>
+              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="talents-date">23 Nov 2023</div>
             </div>
-            <div className="post-content">
+            <div className="talents-post-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing consectet
               elit...
             </div>
           </div>
-          <div className="carousel-post-wrapper">
-            <img className="carousel-img" src={model5}></img>
-            <div className="post-details">
+          <div className="talents-carousel-post-wrapper">
+            <img className="talents-carousel-img" src={model5}></img>
+            <div className="talents-post-details">
               <img src={instaLogo}></img>
-              <div className="likes">234 Likes 340 comments</div>
-              <div className="date">23 Nov 2023</div>
+              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="talents-date">23 Nov 2023</div>
             </div>
-            <div className="post-content">
+            <div className="talents-post-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing consectet
               elit...
             </div>
           </div>
-          <div className="carousel-post-wrapper">
-            <img className="carousel-img" src={model6}></img>
-            <div className="post-details">
+          <div className="talents-carousel-post-wrapper">
+            <img className="talents-carousel-img" src={model6}></img>
+            <div className="talents-post-details">
               <img src={instaLogo}></img>
-              <div className="likes">234 Likes 340 comments</div>
-              <div className="date">23 Nov 2023</div>
+              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="talents-date">23 Nov 2023</div>
             </div>
-            <div className="post-content">
+            <div className="talents-post-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing consectet
               elit...
             </div>
           </div>
-          <div className="carousel-post-wrapper">
-            <img className="carousel-img" src={model7}></img>
-            <div className="post-details">
+          <div className="talents-carousel-post-wrapper">
+            <img className="talents-carousel-img" src={model7}></img>
+            <div className="talents-post-details">
               <img src={instaLogo}></img>
-              <div className="likes">234 Likes 340 comments</div>
-              <div className="date">23 Nov 2023</div>
+              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="talents-date">23 Nov 2023</div>
             </div>
-            <div className="post-content">
+            <div className="talents-post-content">
               Lorem ipsum dolor sit amet, consectetur adipiscing consectet
               elit...
             </div>

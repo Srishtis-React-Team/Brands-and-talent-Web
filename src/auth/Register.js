@@ -188,7 +188,7 @@ const Register = () => {
 
   useEffect(() => {
     if (routeData?.signupCategory == "kids") {
-      navigate(`/talent-login-basic-details`);
+      navigate(`/talent-signup-basic-details`);
       // setKidsStep(1);
     } else if (routeData?.signupCategory == "brand") {
       setBrands_step(1);
@@ -391,7 +391,15 @@ const Register = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+        setAdultSignupDisabled(false);
+        setMessage("Error Occured Try Again!");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 1000);
+      });
   };
 
   return (

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import "../assets/css/forms/kidsformthree.scss";
+import React, { useState, useEffect } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
@@ -7,36 +6,41 @@ import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
 import Select from "react-select";
 import Axios from "axios";
-import { API } from "../config/api";
-import PopUp from "../components/PopUp";
-import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
+import { API } from "../../config/api";
+import { ApiHelper } from "../../helpers/ApiHelper";
+import PopUp from "../../components/PopUp";
+import "../../assets/css/talent-dashboard.scss";
 
-const KidsFormThree = ({ onDataFromChild, ...props }) => {
-  const navigate = useNavigate();
-  const btLogo = require("../assets/icons/Group 56.png");
-  const uploadIcon = require("../assets/icons/uploadIcon.png");
-  const imageType = require("../assets/icons/imageType.png");
-  const videoType = require("../assets/icons/videoType.png");
-  const audiotype = require("../assets/icons/audiotype.png");
-  const idCard = require("../assets/icons/id-card.png");
-  const elipsis = require("../assets/icons/elipsis.png");
-  const greenTickCircle = require("../assets/icons/small-green-tick.png");
-  const fbLogo = require("../assets/icons/social-media-icons/fbLogo.png");
-  const instagram = require("../assets/icons/social-media-icons/instagram.png");
-  const threads = require("../assets/icons/social-media-icons/thread-fill.png");
-  const tikTok = require("../assets/icons/social-media-icons/tikTok.png");
-  const xTwitter = require("../assets/icons/social-media-icons/xTwitter.png");
-  const youTube = require("../assets/icons/social-media-icons/youTube.png");
-  const linkdin = require("../assets/icons/social-media-icons/linkdin.png");
-  const docsIcon = require("../assets/icons/docsIcon.png");
+const AdultFormThree = () => {
   const [profileFile, setProfileFile] = useState(null);
-  const [portofolioFile, setPortofolioFile] = useState([]);
-  const [resumeFile, setResumeFile] = useState([]);
-  const [videoAUdioFile, setVideoAudioFile] = useState([]);
+  const btLogo = require("../../assets/icons/Group 56.png");
+  const [loader, setLoader] = useState(false);
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
+  const adultsBanner = require("../../assets/images/adultsBanner.png");
+  const uploadIcon = require("../../assets/icons/uploadIcon.png");
+  const imageType = require("../../assets/icons/imageType.png");
+  const videoType = require("../../assets/icons/videoType.png");
+  const audiotype = require("../../assets/icons/audiotype.png");
+  const idCard = require("../../assets/icons/id-card.png");
+  const elipsis = require("../../assets/icons/elipsis.png");
+  const greenTickCircle = require("../../assets/icons/small-green-tick.png");
+  const fbLogo = require("../../assets/icons/social-media-icons/fbLogo.png");
+  const instagram = require("../../assets/icons/social-media-icons/instagram.png");
+  const threads = require("../../assets/icons/social-media-icons/thread-fill.png");
+  const tikTok = require("../../assets/icons/social-media-icons/tikTok.png");
+  const xTwitter = require("../../assets/icons/social-media-icons/xTwitter.png");
+  const youTube = require("../../assets/icons/social-media-icons/youTube.png");
+  const linkdin = require("../../assets/icons/social-media-icons/linkdin.png");
+  const docsIcon = require("../../assets/icons/docsIcon.png");
   const [featuresList, setFeaturesList] = useState([]);
   const [features, setFeature] = useState([]);
+  const [portofolioFile, setPortofolioFile] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [resumeFile, setResumeFile] = useState([]);
+  const [videoAUdioFile, setVideoAudioFile] = useState([]);
+  const [showOptions, setShowOptions] = useState(false);
   const [instagramFollowers, setInstagramFollowers] = useState("");
   const [facebookFollowers, setfacebookFollowers] = useState("");
   const [xtwitterFollowers, setXtwitterFollowers] = useState("");
@@ -46,18 +50,76 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [youtubesFollowers, setYoutubesFollowers] = useState("");
   const [idType, setIdType] = useState("");
   const [verificationID, setVerificationID] = useState("");
-  const [loader, setLoader] = useState(false);
-  const [openPopUp, setOpenPopUp] = useState(false);
-  const [message, setMessage] = useState("");
-  const kidsImage = require("../assets/images/kidsImage.png");
-  const paramsValues = window.location.search;
-  const urlParams = new URLSearchParams(paramsValues);
-  const userId = urlParams.get("userId");
-  console.log(userId, "userId");
+  const url = window.location.href;
+  let queryString = url.split("?")[1];
+  console.log(" queryString:", queryString);
+  console.log("Search queryString:", typeof queryString);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    getFeatures();
-  }, [profileFile]);
+  const getFeatures = async () => {
+    await ApiHelper.get(API.getFeatures)
+      .then((resData) => {
+        if (resData) {
+          setFeaturesList(resData.data.data[0].features);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const handleFeaturesChange = (label, value) => {
+    const updatedValues = [...features];
+    const index = updatedValues.findIndex((item) => item.label === label);
+    if (index !== -1) {
+      updatedValues[index] = { label, value };
+    } else {
+      updatedValues.push({ label, value });
+    }
+    setFeature(updatedValues);
+    // Call your API here with the updated selectedValues array
+    // Example:
+    // callYourApi(selectedValues);
+  };
+
+  const updateAdultSignup = async () => {
+    let formData = {
+      image: profileFile,
+      cv: resumeFile,
+      portfolio: portofolioFile,
+      videosAndAudios: videoAUdioFile,
+      instaFollowers: instagramFollowers,
+      tiktokFollowers: tiktoksFollowers,
+      twitterFollowers: xtwitterFollowers,
+      youtubeFollowers: youtubesFollowers,
+      facebookFollowers: facebookFollowers,
+      linkedinFollowers: linkedinFollowers,
+      threadsFollowers: threadsFollowers,
+      idType: idType,
+      verificationId: verificationID,
+      features: features,
+    };
+    await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Updated SuccessFully!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            navigate(`/talent?${queryString}`);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
 
   const handleProfileDrop = (e) => {
     e.preventDefault();
@@ -70,6 +132,12 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const handleProfileDragOver = (e) => {
     e.preventDefault();
   };
+
+  // Function to handle deleting image
+  const handleProfileDelete = () => {
+    setProfileFile(null);
+  };
+
   const handlePortofolioDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
@@ -104,13 +172,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     e.preventDefault();
   };
 
-  const profileUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
-      uploadProfile(fileData);
-    }
-  };
   const portofolioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
@@ -139,6 +200,14 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     }
   };
 
+  // const uploadedFiles = Array.from(event.target.files);
+  // const updatedFiles = uploadedFiles.map((file, index) => ({
+  //   id: index + 1,
+  //   title: file.name,
+  //   apiresponse: null, // Placeholder for API response
+  // }));
+  // setPortofolioFiles([...portofolioFiles, ...updatedFiles]);
+
   const getFileType = (fileType) => {
     // Extract main category from MIME type
     if (fileType.startsWith("image/")) {
@@ -151,6 +220,14 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       return "pdf";
     } else {
       return "other";
+    }
+  };
+
+  const profileUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
+      uploadProfile(fileData);
     }
   };
 
@@ -186,6 +263,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         setLoader(false);
       });
   };
+
   const uploadFile = async (fileData) => {
     setLoader(true);
     const params = new FormData();
@@ -207,7 +285,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           type: resData?.data?.data?.filetype,
         };
         setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
-        console.log(portofolioFile, "portofolioFile");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -309,29 +386,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       });
   };
 
-  const [showOptions, setShowOptions] = useState(false);
-
-  const handleOptionClick = (option) => {
-    // Handle the option click here
-    if (option === "view") {
-      // Code to view the image in a new window
-      window.open("your-image-url", "_blank");
-    } else if (option === "delete") {
-      // Code to delete the image
-    }
-
-    // Hide the options after selection
-    setShowOptions(false);
-  };
-
   const handleView = (imageUrl) => {
     let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
     window.open(viewImage, "_blank");
-  };
-
-  // Function to handle deleting image
-  const handleProfileDelete = () => {
-    setProfileFile(null);
   };
 
   // Function to handle deleting image
@@ -365,105 +422,41 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     });
   };
 
-  const getFeatures = async () => {
-    await ApiHelper.get(API.getFeatures)
-      .then((resData) => {
-        if (resData) {
-          setFeaturesList(resData.data.data[0].features);
-        }
-      })
-      .catch((err) => {});
-  };
-
-  const handleFeaturesChange = (label, value) => {
-    const updatedValues = [...features];
-    const index = updatedValues.findIndex((item) => item.label === label);
-    if (index !== -1) {
-      updatedValues[index] = { label, value };
-    } else {
-      updatedValues.push({ label, value });
-    }
-    setFeature(updatedValues);
-    // Call your API here with the updated selectedValues array
-    // Example:
-    // callYourApi(selectedValues);
-  };
-
-  const editKids = async () => {
-    // navigate(`/talent-signup-files-success`);
-    const formData = {
-      image: profileFile,
-      cv: resumeFile,
-      portfolio: portofolioFile,
-      videosAndAudios: videoAUdioFile,
-      instaFollowers: instagramFollowers,
-      tiktokFollowers: tiktoksFollowers,
-      twitterFollowers: xtwitterFollowers,
-      youtubeFollowers: youtubesFollowers,
-      facebookFollowers: facebookFollowers,
-      linkedinFollowers: linkedinFollowers,
-      threadsFollowers: threadsFollowers,
-      idType: idType,
-      verificationId: verificationID,
-      features: features,
-    };
-    setIsLoading(true);
-    await ApiHelper.post(`${API.editKids}${userId}`, formData)
-      .then((resData) => {
-        console.log(resData, "resData");
-        if (resData.data.status === true) {
-          setIsLoading(false);
-          setMessage("Registered SuccessFully!");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            navigate(`/talent-signup-files-success`);
-          }, 1000);
-        } else {
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
-  };
-
-  const goBack = () => {
-    navigate(`/talent-signup-plan-details?userId=${userId}`);
-  };
+  useEffect(() => {
+    getFeatures();
+  }, []);
 
   return (
     <>
-      <div className="form-dialog">
-        <div className="header-wrapper">
-          <div className="step-wrapper">
-            <img
-              className="modal-logo"
+      <>
+        <div className="form-dialog">
+          <div className="header-wrapper">
+            <div className="step-wrapper">
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
+              <div className="step-text">Step 1 of 3</div>
+            </div>
+            <button
+              type="button"
+              className="btn-close"
               onClick={() => {
                 navigate("/");
               }}
-              src={btLogo}
-            ></img>
-            <div className="step-text">Step 3 of 4</div>
+            ></button>
           </div>
-          <button
-            type="button"
-            className="btn-close"
-            onClick={() => {
-              navigate("/");
-            }}
-          ></button>
-        </div>
-        <div className="dialog-body">
-          <div className="kidsform-one">
-            <div className="kids-wrapper">
-              <div className="kids-img">
-                <img src={kidsImage} alt="" />
-              </div>
-              <div className="kids-form">
-                <div className="kids-description">
-                  Upload Your Files & Connect With your social media accounts
+          <div className="dialog-body">
+            <div className="kidsform-one">
+              <div className="adult-form-wrapper">
+                <div className="adult-img-img">
+                  <img src={adultsBanner} alt="" />
                 </div>
-                <div className="kids-main">
+                <div className="adult-main">
+                  <div className="adults-form-title">Complete your Profile</div>
                   <div className="kids-form-title">Profile Picture</div>
                   <div
                     className="cv-section"
@@ -544,7 +537,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div className="kids-form-title">Portofolio</div>
+                  <div className="adults-titles">Portofolio</div>
                   <div
                     className="cv-section"
                     onDrop={handlePortofolioDrop}
@@ -559,6 +552,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       id="portofolio"
                       accept="image/*"
                       onChange={portofolioUpload}
+                      multiple
                     />
                     <div className="upload-text">Upload Your Photos</div>
                     <div className="upload-info">
@@ -661,6 +655,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       className="select-cv-input"
                       id="video-audio"
                       accept="audio/*,video/*"
+                      multiple
                       onChange={videoAudioUpload}
                     />
                     <div className="upload-text">Videos & Audios</div>
@@ -743,7 +738,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       })}
                     </>
                   )}
-                  <div className="kids-form-title">CV</div>
+                  <div className="adults-titles">CV</div>
                   <div
                     className="cv-section"
                     onDrop={handleResumeDrop}
@@ -757,6 +752,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       className="select-cv-input"
                       id="cv-input"
                       accept="*/*"
+                      multiple
                       onChange={resumeUpload}
                     />
                     <div className="upload-text"> Upload CV</div>
@@ -846,7 +842,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div className="kids-form-title">Features (Optional)</div>
+                  <div className="adults-titles">Features (Optional)</div>
 
                   <div className="features-section">
                     {featuresList && (
@@ -889,7 +885,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     )}
                   </div>
 
-                  <div className="kids-form-title">
+                  <div className="adults-titles">
                     Explore Your Social Media Presence
                   </div>
 
@@ -1237,33 +1233,33 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="dialog-footer">
-          <button
-            type="button"
-            onClick={(e) => {
-              goBack();
-            }}
-            className="step-back"
-          >
-            Back
-          </button>
+          <div className="dialog-footer">
+            <button
+              type="button"
+              onClick={(e) => {
+                navigate("/adult-signup-service-details");
+              }}
+              className="step-back"
+            >
+              Back
+            </button>
 
-          <button
-            className="step-continue"
-            type="button"
-            onClick={(e) => {
-              editKids();
-            }}
-          >
-            {isLoading ? "Loading..." : "Submit"}
-          </button>
+            <button
+              className="step-continue"
+              type="button"
+              onClick={() => {
+                updateAdultSignup();
+              }}
+            >
+              {isLoading ? "Loading..." : "Continue"}
+            </button>
+          </div>
         </div>
-      </div>
+      </>
 
       {openPopUp && <PopUp message={message} />}
     </>
   );
 };
 
-export default KidsFormThree;
+export default AdultFormThree;

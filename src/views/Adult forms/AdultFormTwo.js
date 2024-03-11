@@ -1,0 +1,451 @@
+import React, { useState, useEffect } from "react";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import { convertToRaw } from "draft-js";
+import Select from "react-select";
+import Axios from "axios";
+import { useNavigate } from "react-router";
+import { API } from "../../config/api";
+import { ApiHelper } from "../../helpers/ApiHelper";
+import "../../assets/css/talent-dashboard.scss";
+import "../../assets/css/forms/kidsform-one.scss";
+import PopUp from "../../components/PopUp";
+import { event } from "jquery";
+const AdultFormTwo = () => {
+  const btLogo = require("../../assets/icons/Group 56.png");
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
+  const adultsBanner = require("../../assets/images/adultsBanner.png");
+  const uploadIcon = require("../../assets/icons/uploadIcon.png");
+  const imageType = require("../../assets/icons/imageType.png");
+  const videoType = require("../../assets/icons/videoType.png");
+  const audiotype = require("../../assets/icons/audiotype.png");
+  const idCard = require("../../assets/icons/id-card.png");
+  const elipsis = require("../../assets/icons/elipsis.png");
+  const greenTickCircle = require("../../assets/icons/small-green-tick.png");
+  const fbLogo = require("../../assets/icons/social-media-icons/fbLogo.png");
+  const instagram = require("../../assets/icons/social-media-icons/instagram.png");
+  const threads = require("../../assets/icons/social-media-icons/thread-fill.png");
+  const tikTok = require("../../assets/icons/social-media-icons/tikTok.png");
+  const xTwitter = require("../../assets/icons/social-media-icons/xTwitter.png");
+  const youTube = require("../../assets/icons/social-media-icons/youTube.png");
+  const linkdin = require("../../assets/icons/social-media-icons/linkdin.png");
+  const docsIcon = require("../../assets/icons/docsIcon.png");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const url = window.location.href;
+  let queryString = url.split("?")[1];
+  console.log(" queryString:", queryString);
+  const navigate = useNavigate();
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  const onEditorSummary = (editorState) => {
+    // setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
+    setEditorState(editorState);
+  };
+
+  const handleSubmit = async () => {
+    let formData = {
+      services: inputs,
+    };
+    await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Updated SuccessFully!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            navigate(`/adult-signup-files-details?${queryString}`);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const [inputs, setInputs] = useState([
+    {
+      serviceName: "",
+      serviceAmount: "",
+      serviceDuration: "",
+      editorState: "",
+      files: [],
+    },
+  ]);
+
+  const handleFileChange = (index, event) => {
+    console.log("handleFileChange");
+    console.log(index, "index file");
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      uploadProfile(fileData, (fileObj) => {
+        setInputs((prevInputs) => {
+          const newInputs = [...prevInputs];
+          newInputs[index]["files"] = [
+            ...(newInputs[index]["files"] || []),
+            fileObj,
+          ];
+          console.log(newInputs, "newInputs");
+          return newInputs;
+        });
+      });
+    }
+  };
+
+  const handleInputChange = (index, key, value) => {
+    console.log(index, "index handleInputChange");
+    const newInputs = [...inputs];
+    newInputs[index][key] = value;
+    setInputs(newInputs);
+  };
+
+  const handleEditorStateChange = (index, editorState) => {
+    console.log(index, "index handleEditorStateChange");
+    const newInputs = [...inputs];
+    newInputs[index]["editorState"] = [
+      draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    ];
+    setInputs(newInputs);
+  };
+
+  const handleAddMore = () => {
+    setInputs([
+      ...inputs,
+      {
+        serviceName: "",
+        serviceAmount: "",
+        serviceDuration: "",
+        editorState: "",
+        files: [],
+      },
+    ]);
+
+    console.log(inputs, "inputs");
+  };
+
+  const serviceFilesUpload = () => {};
+
+  const uploadProfile = async (fileData, callback) => {
+    // Your upload logic remains the same
+    const params = new FormData();
+    params.append("file", fileData);
+    params.append("fileName", fileData.name);
+    try {
+      const resData = await Axios.post(API.uploadFile, params, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      let fileObj = {
+        id: resData.data.data.fileId,
+        title: fileData.name,
+        fileData: resData.data.data.filename,
+        type: resData?.data?.data?.filetype,
+      };
+      callback(fileObj); // Call the callback with the uploaded file object
+    } catch (err) {
+      console.error("Error uploading file:", err);
+    }
+  };
+
+  const handleView = (imageUrl) => {
+    let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
+    window.open(viewImage, "_blank");
+  };
+
+  // Function to handle deleting image
+  const handleServiceFilesDelete = (item, index) => {};
+
+  useEffect(() => {}, []);
+
+  return (
+    <>
+      <>
+        <div className="form-dialog">
+          <div className="header-wrapper">
+            <div className="step-wrapper">
+              <img
+                className="modal-logo"
+                onClick={() => {
+                  navigate("/");
+                }}
+                src={btLogo}
+              ></img>
+              <div className="step-text">Step 2 of 3</div>
+            </div>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => {
+                navigate("/");
+              }}
+            ></button>
+          </div>
+          <div className="dialog-body">
+            <div className="kidsform-one" style={{ width: "100%" }}>
+              <div className="adult-form-wrapper">
+                <div className="adult-img-img">
+                  <img src={adultsBanner} alt="" />
+                </div>
+                <div className="adult-main">
+                  <div className="adults-form-title">Complete your Profile</div>
+                  <div>
+                    {inputs.map((input, serviceIndex) => (
+                      <>
+                        <div className="adults-titles">
+                          {inputs.length > 1 && serviceIndex === 0
+                            ? "Services"
+                            : `Services (set ${serviceIndex + 1})`}
+                        </div>
+                        <div key={serviceIndex}>
+                          <div className="">
+                            <div className="">
+                              <div className="mb-3">
+                                <label className="form-label">
+                                  Service name
+                                </label>
+                                <input
+                                  value={input.serviceName}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      serviceIndex,
+                                      "serviceName",
+                                      e.target.value
+                                    )
+                                  }
+                                  type="text"
+                                  name="serviceName"
+                                  className="form-control"
+                                  placeholder="Enter Service Heading"
+                                ></input>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="kids-form-row">
+                            <div className="kids-form-section">
+                              <div className="mb-3">
+                                <label className="form-label">Amount</label>
+                                <input
+                                  type="number"
+                                  name="amount"
+                                  value={input.serviceAmount}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      serviceIndex,
+                                      "serviceAmount",
+                                      e.target.value
+                                    )
+                                  }
+                                  className="form-control"
+                                  placeholder="Enter Amount In $"
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="kids-form-section">
+                              <div className="mb-3">
+                                <label className="form-label">Duration</label>
+                                <input
+                                  type="text"
+                                  name="duration"
+                                  value={input.serviceDuration}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      serviceIndex,
+                                      "serviceDuration",
+                                      e.target.value
+                                    )
+                                  }
+                                  className="form-control"
+                                  placeholder="Duration In Months"
+                                ></input>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="adults-titles">Features</div>
+                          <div className="rich-editor">
+                            <label className="form-label">Features</label>
+                            <Editor
+                              editorStyle={{
+                                height: "170px",
+                                overflow: "hidden",
+                              }}
+                              value={input.editorState}
+                              onEditorStateChange={(editorState) =>
+                                handleEditorStateChange(
+                                  serviceIndex,
+                                  editorState
+                                )
+                              }
+                              toolbar={{
+                                options: [
+                                  "inline",
+                                  "blockType",
+                                  "fontSize",
+                                  "list",
+                                  "textAlign",
+                                  "history",
+                                ],
+                                inline: { inDropdown: true },
+                                list: { inDropdown: true },
+                                textAlign: { inDropdown: true },
+                                link: { inDropdown: true },
+                                history: { inDropdown: true },
+                              }}
+                            />
+                          </div>
+                          <div className="cv-section">
+                            <label
+                              className="upload-backdrop"
+                              htmlFor={serviceIndex}
+                            >
+                              <img src={uploadIcon} alt="" />
+                            </label>
+                            <input
+                              type="file"
+                              className="select-cv-input"
+                              id={serviceIndex}
+                              accept="image/*"
+                              onChange={(e) =>
+                                handleFileChange(serviceIndex, e)
+                              }
+                            />
+                            <div className="upload-text">
+                              Upload Your Photos
+                            </div>
+                            <div className="upload-info">
+                              Drag and drop your photos/work samples here.
+                            </div>
+                          </div>
+                          {/* Display uploaded files for this input */}
+                          {input.files.map((file, fileIndex) => (
+                            <div
+                              key={fileIndex}
+                              className="uploaded-file-wrapper"
+                            >
+                              <div className="file-section">
+                                {file.type === "image" && (
+                                  <div className="fileType">
+                                    <img src={imageType} alt="" />
+                                  </div>
+                                )}
+                                {file.type === "audio" && (
+                                  <div className="fileType">
+                                    <img src={audiotype} alt="" />
+                                  </div>
+                                )}
+                                {file.type === "video" && (
+                                  <div className="fileType">
+                                    <img src={videoType} alt="" />
+                                  </div>
+                                )}
+                                {file.type === "document" && (
+                                  <div className="fileType">
+                                    <img src={docsIcon} alt="" />
+                                  </div>
+                                )}
+                                <div className="fileName">{file.title}</div>
+                              </div>
+                              <div className="file-options">
+                                <div className="sucess-tick">
+                                  <img src={greenTickCircle} alt="" />
+                                </div>
+                                <div className="option-menu">
+                                  <div className="dropdown">
+                                    <img
+                                      onClick={() =>
+                                        setShowOptions(!showOptions)
+                                      }
+                                      src={elipsis}
+                                      alt=""
+                                      className="dropdown-toggle elipsis-icon"
+                                      type="button"
+                                      id="dropdownMenuButton"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    />
+                                    <ul
+                                      className="dropdown-menu"
+                                      aria-labelledby="dropdownMenuButton"
+                                    >
+                                      <li>
+                                        <a
+                                          className="dropdown-item"
+                                          onClick={() => handleView(file)}
+                                          id="view"
+                                        >
+                                          View
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a
+                                          className="dropdown-item"
+                                          id="delete"
+                                        >
+                                          Delete
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ))}
+                  </div>
+
+                  <div className="add-more-services">
+                    <div
+                      onClick={handleAddMore}
+                      className="add-more-services-btn"
+                    >
+                      Add More Services
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="dialog-footer">
+            <button
+              type="button"
+              onClick={(e) => {
+                navigate("/adult-signup-basic-details");
+              }}
+              className="step-back"
+            >
+              Back
+            </button>
+
+            <button
+              className="step-continue"
+              type="button"
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              {isLoading ? "Loading..." : "Continue"}
+            </button>
+          </div>
+        </div>
+      </>
+
+      {openPopUp && <PopUp message={message} />}
+    </>
+  );
+};
+
+export default AdultFormTwo;

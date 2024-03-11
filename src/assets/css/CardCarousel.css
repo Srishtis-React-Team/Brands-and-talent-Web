@@ -1,16 +1,16 @@
-/* .carousel-img {
+.talents-carousel-img {
   border-radius: 10px 10px 0px 0px;
   width: 275px;
   height: 147px;
   flex-shrink: 0;
 }
 
-.post-details {
+.talents-post-details {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.post-details > .likes {
+.talents-post-details > .talents-likes {
   color: #373737;
   font-family: "Open Sans", sans-serif;
   font-size: 12px;
@@ -18,7 +18,7 @@
   font-weight: 300;
   line-height: normal;
 }
-.post-details > .date {
+.talents-post-details > .talents-date {
   color: #c2114b;
   font-family: "Open Sans", sans-serif;
   font-size: 12px;
@@ -27,7 +27,7 @@
   line-height: normal;
 }
 
-.post-content {
+.talents-post-content {
   color: #000;
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
@@ -37,7 +37,7 @@
   padding-top: 10px;
 }
 
-.carousel-post-wrapper {
+.talents-carousel-post-wrapper {
   padding: 20px;
   height: 250px;
   width: 100%;
@@ -53,4 +53,4 @@
 .glAxCh {
   background-color: #c2114b !important;
   box-shadow: 0 0 1px 3px rgb(0 0 0) !important;
-} */
+}

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "../assets/css/findcreators.css";
-import "../assets/css/getbooked.css";
+import "../assets/css/talent-profile.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 import { useLocation } from "react-router-dom";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
-const GetBooked = () => {
-  const [data, setData] = useState([]);
-  const location = useLocation();
-  const { talentData } = location.state;
-  console.log(talentData, "talentData");
+import PhotosCarousel from "./PhotosCarousel.js";
+import CardCarousel from "./CardCarousel.js";
+const TalentProfile = () => {
+  // const location = useLocation();
+  // const { talentData } = location.state;
+  // console.log(talentData, "talentData");
 
   const girl1 = require("../assets/images/girl.png");
   const model = require("../assets/images/model-profile.png");
@@ -38,6 +39,7 @@ const GetBooked = () => {
   const pinkStar = require("../assets/icons/pink-star.png");
   const greyStar = require("../assets/icons/grey-star.png");
   const darkStar = require("../assets/icons/darkStar.png");
+  const blackstar = require("../assets/icons/blackstar.png");
   const instaLogo = require("../assets/icons/insta.png");
   const xLogo = require("../assets/icons/twitter_x.png");
   const userFill = require("../assets/icons/userFill.png");
@@ -48,7 +50,11 @@ const GetBooked = () => {
   const check = require("../assets/icons/check.png");
   const fbIcon = require("../assets/icons/facebook logo_icon.png");
   const linkdin = require("../assets/icons/linkdin_icon.png");
+  const twitterLogo = require("../assets/icons/twitterLogo.png");
+  const youtubeLogo = require("../assets/icons/youtubeLogo.png");
+  const threadLogo = require("../assets/icons/threadLogo.png");
   const tiktok = require("../assets/icons/tiktok_social media_icon.png");
+  const blueShield = require("../assets/icons/blue-shield.png");
 
   const [portofolio, showPortofolio] = useState(true);
   const [photos, showPhotos] = useState(false);
@@ -57,51 +63,29 @@ const GetBooked = () => {
   const [reviews, setReviews] = useState(false);
   const [bio, showBio] = useState(false);
   const [test, setTest] = useState("");
+  const [data, setData] = useState([]);
+  const [talentData, setTalentData] = useState([]);
+
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    unifiedDataFetch();
-  }, []);
+    const storedUserId = localStorage.getItem("userId");
+    setUserId(storedUserId);
+    getTalentById(userId);
+  }, [userId]);
 
-  const unifiedDataFetch = async () => {
-    await ApiHelper.get(`${API.unifiedDataFetch}`)
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${userId}`)
       .then((resData) => {
         if (resData) {
+          setTalentData(resData.data.data);
+          console.log(resData.data.data, "resData.data");
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  const photosList = [
-    {
-      photo: model1,
-    },
-    {
-      photo: model2,
-    },
-    {
-      photo: model3,
-    },
-    {
-      photo: model4,
-    },
-    {
-      photo: model5,
-    },
-    {
-      photo: model6,
-    },
-    {
-      photo: model7,
-    },
-    {
-      photo: model8,
-    },
-    {
-      photo: model9,
-    },
-  ];
 
   const reviewsList = [
     {
@@ -156,44 +140,6 @@ const GetBooked = () => {
     }
   }
 
-  useEffect(() => {
-    setData([
-      {
-        _id: "6581594628ccd5fc45f027e0",
-        email: "aiswrya@gmail.com",
-        password:
-          "$2a$10$KWp5g7TyUYHzccm/vHCzg.ewDhRyxdQn7XH2NCe2BFVM5cFzZEAfu",
-        isActive: true,
-        ethnicity: "white/Caucasian",
-        height: "170cm",
-        hairColour: "Brown",
-        hairType: "Wavy",
-        build: "Ferite",
-        skinType: "Regular",
-        skinTone: "Olive",
-        eyeColour: "Brown",
-        hairLength: "Long",
-        chest: "82cm",
-        waist: "64cm",
-        hipSize: "84cm",
-        dressSize: "64cm",
-        shoeSize: "64cm",
-        braSize: "64cm",
-        transgender: "No",
-        sexuality: "Straight",
-        maritalStatus: "Long term Relationship",
-        children: "None",
-        pets: "None",
-        diet: "None",
-        created: "2023-12-19T08:50:14.498Z",
-        createdAt: "2023-12-19T08:50:14.532Z",
-        updatedAt: "2023-12-19T08:50:14.532Z",
-        __v: 0,
-      },
-    ]);
-    console.log(data, "features data useeffect");
-  }, [test]);
-
   return (
     <>
       <Header />
@@ -211,82 +157,133 @@ const GetBooked = () => {
         <div className="talent-wrapper">
           <div className="talent-backdrop">
             <img className="talent-img-backdrop" src={model9}></img>
-            <img className="talent-img" src={girl1}></img>
-          </div>
-          <div className="talent-name">
-            <div className="model-name">Elizabeth</div>
+            <img
+              className="talent-img"
+              src={`${API.userFilePath}${talentData?.image?.fileData}`}
+            ></img>
             <div className="talent-status">
               <span>
-                <img src={darkStar}></img>
+                <img src={blackstar}></img>
               </span>
-              Pro
+              <span>Pro</span>
             </div>
           </div>
-          <div className="talents-social-wrapper mt-4">
-            <div className="talents-social">
-              <span className="insta-backdrop">
-                <img src={instaLogo}></img>
-              </span>
-              <soan className="social-count">15.6k</soan>
-              <div className="followers-text">Followers</div>
-            </div>
-            <div className="talents-social">
-              <img src={fbIcon}></img>
-              <soan className="social-count">9.6k</soan>
-              <div className="followers-text">Followers</div>
-            </div>
-            <div className="talents-social">
-              <img src={tiktok}></img>
-              <soan className="social-count">9.6k</soan>
-              <div className="followers-text">Followers</div>
-            </div>
-            <div className="talents-social">
-              <img src={linkdin}></img>
-              <soan className="social-count">9.6k</soan>
-              <div className="followers-text">Followers</div>
-            </div>
-          </div>
-          <div className="talent-details">
-            <div className="talent-details-wrapper">
-              <div className="logo-fill">
-                <img className="talent-logo" src={checkShield}></img>
+          <div className="individual-talents-details">
+            <div className="talent-name">
+              <div className="model-name">{`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}</div>
+              <div className="talent-verified">
+                <span className="blue-shield-wrapper">
+                  <img className="blue-shield" src={blueShield}></img>
+                </span>
+                Verified
               </div>
-              <span>Verified</span>
             </div>
-            <div className="talent-details-wrapper">
-              <div className="logo-fill">
-                <img className="talent-logo" src={pinkStar}></img>
+            <div className="talent-details">
+              <div className="talent-details-wrapper">
+                <div className="logo-fill">
+                  <img className="talent-logo" src={pinkStar}></img>
+                </div>
+                <span>5.0 (45 jobs completed)</span>
               </div>
-              <span>5.0 (45 jobs completed)</span>
-            </div>
-            <div className="talent-details-wrapper">
-              <div className="logo-fill">
-                <img className="talent-logo" src={mapFill}></img>
+              <div className="talent-details-wrapper">
+                <div className="logo-fill">
+                  <img className="talent-logo" src={mapFill}></img>
+                </div>
+                <span>Lorem ipsum dolor sit</span>
               </div>
-              <span>Lorem ipsum dolor sit</span>
-            </div>
-            <div className="talent-details-wrapper">
-              <div className="logo-fill">
-                <img className="talent-logo" src={userFill}></img>
+              <div className="talent-details-wrapper">
+                <div className="logo-fill">
+                  <img className="talent-logo" src={userFill}></img>
+                </div>
+                {talentData &&
+                  talentData.profession &&
+                  talentData.profession.map((item, index) => (
+                    <span key={index}>{item.value}</span>
+                  ))}
               </div>
-              <span>Actor, Model, Creator</span>
             </div>
-          </div>
-          <div className="invite-btn">
-            <img src={whitePlus}></img>
-            <div>Invite to Job</div>
-          </div>
-          <div className="talent-rates">
-            <div className="title">Vlada D Rates</div>
-            <div className="name">Actor</div>
-            <div className="value">$100 per hour (Negotiable)</div>
-            <div className="value">$100 per hour (Negotiable)</div>
-            <div className="name">Model</div>
-            <div className="value">$100 per hour (Negotiable)</div>
-            <div className="value">$100 per hour (Negotiable)</div>
-            <div className="name">Creator</div>
-            <div className="value">$100 per hour (Negotiable)</div>
-            <div className="value">$100 per hour (Negotiable)</div>
+            <div className="talents-social-wrapper mt-4">
+              <div className="talents-social">
+                <span className="insta-backdrop">
+                  <img src={instaLogo}></img>
+                </span>
+                <span className="social-count">
+                  {talentData?.instaFollowers}
+                </span>
+                <div className="followers-text">Followers</div>
+              </div>
+              <div className="talents-social">
+                <img src={fbIcon}></img>
+                <span className="social-count">
+                  {talentData?.facebookFollowers}
+                </span>
+                <div className="followers-text">Followers</div>
+              </div>
+              <div className="talents-social">
+                <img src={tiktok}></img>
+                <span className="social-count">
+                  {talentData?.tiktokFollowers}
+                </span>
+                <div className="followers-text">Followers</div>
+              </div>
+              <div className="talents-social">
+                <img src={linkdin}></img>
+                <span className="social-count">
+                  {talentData?.linkedinFollowers}
+                </span>
+                <div className="followers-text">Followers</div>
+              </div>
+              <div className="talents-social">
+                <img src={twitterLogo}></img>
+                <span className="social-count">
+                  {talentData?.twitterFollowers}
+                </span>
+                <div className="followers-text">Followers</div>
+              </div>
+              <div className="talents-social">
+                <img src={threadLogo}></img>
+                <span className="social-count">
+                  {talentData?.threadsFollowers}
+                </span>
+                <div className="followers-text">Followers</div>
+              </div>
+              <div className="talents-social">
+                <img src={youtubeLogo}></img>
+                <span className="social-count">
+                  {talentData?.youtubeFollowers}
+                </span>
+                <div className="followers-text">Followers</div>
+              </div>
+            </div>
+
+            <div className="invite-btn">
+              <img src={whitePlus}></img>
+              <div>Invite to Job</div>
+            </div>
+
+            <div className="message-now">
+              <img src={message}></img>
+              <div className="message-now-text">Message Now</div>
+            </div>
+            <div className="talent-rates">
+              <div className="title">
+                {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
+                Rates
+              </div>
+              {talentData &&
+                talentData.profession &&
+                talentData.profession.map((item, index) => (
+                  <>
+                    <div className="name">{item?.value}</div>
+                    <div className="value">
+                      $ {item?.perHourSalary} per hour (Negotiable)
+                    </div>
+                    <div className="value">
+                      $ {item?.perDaySalary} per day (Negotiable)
+                    </div>
+                  </>
+                ))}
+            </div>
           </div>
         </div>
         <div className="talent-info-section">
@@ -366,18 +363,20 @@ const GetBooked = () => {
                   <div className="portofolio-title">Photos</div>
                   <div className="view-all">View All</div>
                 </div>
-                <div className="photos-slider">{/* <PhotosCarousel /> */}</div>
+                <div className="photos-slider">
+                  <PhotosCarousel />
+                </div>
                 <div className="portofolio-section">
                   <div className="portofolio-title">Social media posts</div>
                   <div className="view-all">View All</div>
                 </div>
-                {/* <CardCarousel /> */}
+                <CardCarousel />
                 <div className="portofolio-section">
                   <div className="portofolio-title">Reviews</div>
                   <div className="view-all">View All</div>
                 </div>
                 <div className="reviews-section">
-                  <div className="rating">
+                  <div className="rating-talent">
                     <div className="num">4.5</div>
                     <img src={white_star}></img>
                   </div>
@@ -453,13 +452,13 @@ const GetBooked = () => {
             )}
             {videos && (
               <div className="models-photos">
-                {photosList.map((item) => {
+                {/* {photosList.map((item) => {
                   return (
                     <div className="model-picture-wrapper">
                       <img className="model-picture" src={item.photo}></img>
                     </div>
                   );
-                })}
+                })} */}
               </div>
             )}
             {features && (
@@ -565,7 +564,7 @@ const GetBooked = () => {
             )}
             {reviews && (
               <div className="model-reviews">
-                {reviewsList.map((item) => {
+                {/* {reviewsList.map((item) => {
                   return (
                     <div className="model-review-wrapper">
                       <div className="review-date">{item.date}</div>
@@ -586,14 +585,28 @@ const GetBooked = () => {
                       </div>
                     </div>
                   );
-                })}
+                })} */}
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* <div className="model-profile">
+      <div className="center">
+        <div className="Join-wrapper center">
+          <div>Find More</div>
+        </div>
+      </div>
+
+      <Footer />
+    </>
+  );
+};
+
+export default TalentProfile;
+
+{
+  /* <div className="model-profile">
         <div>
           <img className="modal-profile-img" src={model}></img>
         </div>
@@ -640,17 +653,5 @@ const GetBooked = () => {
             </span>
           </div>
         </div>
-      </div> */}
-
-      <div className="center">
-        <div className="Join-wrapper center">
-          <div>Find More</div>
-        </div>
-      </div>
-
-      <Footer />
-    </>
-  );
-};
-
-export default GetBooked;
+      </div> */
+}
