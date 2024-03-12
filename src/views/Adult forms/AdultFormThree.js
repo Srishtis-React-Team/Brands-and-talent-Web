@@ -105,7 +105,7 @@ const AdultFormThree = () => {
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent?${queryString}`);
+            navigate(`/talent-profile?${queryString}`);
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);

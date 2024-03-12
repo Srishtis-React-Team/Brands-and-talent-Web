@@ -5,6 +5,7 @@ import Footer from "../layout/Footer";
 import { useNavigate } from "react-router";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
+import PopUp from "../components/PopUp";
 import { NavLink } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -44,12 +45,15 @@ const Dashboard = () => {
   const girl8 = require("../assets/images/girl8.png");
   const girl9 = require("../assets/images/girl9.png");
   const girl10 = require("../assets/images/girl10.png");
-
-  const [artists, showArtists] = useState(true);
-  const [photographers, showPhotographers] = useState(false);
-  const [actors, showActors] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
+  const [All, showAll] = useState(true);
+  const [Actor, showActor] = useState(false);
+  const [Model, showModel] = useState(false);
   const [influencers, setInfluencers] = useState(false);
-  const [models, showModels] = useState(false);
+  const [Director, showDirector] = useState(false);
+  const [Singer, showSinger] = useState(false);
   const [more, showMore] = useState(false);
   const [above_18, setAbove_18] = useState(false);
   const [below_18, setBelow_18] = useState(false);
@@ -67,6 +71,7 @@ const Dashboard = () => {
   const [genderList, setGenderList] = useState([]);
   const [talentList, setTalentList] = useState([]);
   const [caseList, setCaseList] = useState([]);
+  const [talentsList, setTalentsList] = useState([]);
   const [photoGraphersList, setphotoGraphersList] = useState([]);
   const [messageFromHeader, setMessageFromHeader] = useState("");
   const [hideAll, setHideAll] = useState(false);
@@ -84,7 +89,31 @@ const Dashboard = () => {
     }
   }
 
+  const getByProfession = async (e) => {
+    let formData = {
+      type: e,
+    };
+    await ApiHelper.post(API.getByProfession, formData)
+      .then((resData) => {
+        if (resData) {
+          setTalentsList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+  const getTalentList = async () => {
+    await ApiHelper.get(API.getTalentList)
+      .then((resData) => {
+        if (resData) {
+          console.log(resData, "resData");
+          setTalentsList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
   useEffect(() => {
+    getTalentList();
     setTalentList([
       {
         id: 1,
@@ -368,17 +397,21 @@ const Dashboard = () => {
     window.scrollTo(0, 0); // Scroll to top on link click
   };
 
-  const addFavorite = (item) => {
-    console.log(item, "item");
-    const modifiedTalents = talentList.map((obj) => {
-      console.log(obj, "obj");
-      if (obj.id === item.id) {
-        return { ...obj, isFavorite: true };
-      }
-      return obj;
-    });
-    setTalentList(modifiedTalents);
-    console.log(modifiedTalents, "modifiedTalents");
+  const addFavorite = async (data) => {
+    const formData = {
+      type: data?.type,
+    };
+    await ApiHelper.post(`${API.setUserFavorite}${data._id}`, formData)
+      .then((resData) => {
+        if (resData.status === false) {
+        }
+        setMessage("You Need To Register First");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 1000);
+      })
+      .catch((err) => {});
   };
 
   const removeFavorite = (item) => {
@@ -440,35 +473,42 @@ const Dashboard = () => {
   }
 
   function handleTabs(e) {
-    if (e == "artists") {
-      showArtists(true);
+    if (e === "All") {
+      getTalentList();
+      showAll(true);
     } else {
-      showArtists(false);
+      showAll(false);
     }
-    if (e == "photographers") {
-      showPhotographers(true);
-    } else {
-      showPhotographers(false);
-    }
-    if (e == "actors") {
-      showActors(true);
-    } else {
-      showActors(false);
-    }
-    if (e == "influencers") {
-      setInfluencers(true);
-    } else {
-      setInfluencers(false);
-    }
-    if (e == "models") {
-      showModels(true);
-    } else {
-      showModels(false);
+    if (e !== "All") {
+      getByProfession(e);
     }
     if (e == "more") {
-      showMore(true);
+      navigate(`/find-creators`);
+    }
+    if (e == "Actor") {
+      showActor(true);
     } else {
-      showMore(false);
+      showActor(false);
+    }
+    if (e == "Model") {
+      showModel(true);
+    } else {
+      showModel(false);
+    }
+    if (e == "Actor") {
+      showActor(true);
+    } else {
+      showActor(false);
+    }
+    if (e == "Director") {
+      showDirector(true);
+    } else {
+      showDirector(false);
+    }
+    if (e == "Singer") {
+      showSinger(true);
+    } else {
+      showSinger(false);
     }
   }
 
@@ -576,44 +616,44 @@ const Dashboard = () => {
             <div className="title">Popular Talents</div>
             <div className="tabs">
               <div
-                className={artists ? "active-tab" : null}
+                className={All ? "active-tab" : null}
                 onClick={(e) => {
-                  handleTabs("artists");
+                  handleTabs("All");
                 }}
               >
-                Featured
+                All Talents
               </div>
               <div
-                className={photographers ? "active-tab" : null}
+                className={Actor ? "active-tab" : null}
                 onClick={(e) => {
-                  handleTabs("photographers");
+                  handleTabs("Actor");
                 }}
               >
-                Photographers
+                Actor
               </div>
               <div
-                className={actors ? "active-tab" : null}
+                className={Director ? "active-tab" : null}
                 onClick={(e) => {
-                  handleTabs("actors");
+                  handleTabs("Director");
                 }}
               >
-                Actors
+                Director
               </div>
               <div
-                className={influencers ? "active-tab" : null}
+                className={Singer ? "active-tab" : null}
                 onClick={(e) => {
-                  handleTabs("influencers");
+                  handleTabs("Singer");
                 }}
               >
-                Influencers
+                Singer
               </div>
               <div
-                className={models ? "active-tab" : null}
+                className={Model ? "active-tab" : null}
                 onClick={(e) => {
-                  handleTabs("models");
+                  handleTabs("Model");
                 }}
               >
-                Models
+                Model
               </div>
               <div
                 className="more-text"
@@ -630,11 +670,14 @@ const Dashboard = () => {
         <div className="container">
           <div className="gallery-section">
             <div className="gallery-main">
-              {talentList.map((item) => {
+              {talentsList.map((item) => {
                 return (
                   <div className="gallery-warpper">
                     <div className="gallery-position">
-                      <img className="gallery-img" src={item.photo}></img>
+                      <img
+                        className="gallery-img"
+                        src={`${API.userFilePath}${item.image?.fileData}`}
+                      ></img>
                       <div className="rating">
                         <img src={brightStar}></img>
                         <img src={brightStar}></img>
@@ -659,16 +702,29 @@ const Dashboard = () => {
                     </div>
                     <div className="gallery-content">
                       <div className="content">
-                        <div className="name">{item.name}</div>
-                        <div className="address">{item.address}</div>
+                        <div className="name">
+                          {item?.preferredChildFirstname
+                            ? `${item?.preferredChildFirstname}`
+                            : "Elizabeth"}
+                        </div>
+                        <div className="address">
+                          {item.profession.map((profession, index) => (
+                            <React.Fragment key={index}>
+                              {profession.value}
+                              {index !== item.profession.length - 1 && ","}
+                            </React.Fragment>
+                          ))}
+                        </div>
                         <div className="user-details">
                           <div className="location-wrapper">
                             <img src={locationIcon} alt="" />
-                            <div className="location-name">{item.location}</div>
+                            <div className="location-name">
+                              {item?.parentCountry}
+                            </div>
                           </div>
                           <div className="location-wrapper">
                             <img src={jobIcon} alt="" />
-                            <div className="location-name">{item.booked}</div>
+                            <div className="location-name">25 Jobs Booked</div>
                           </div>
                         </div>
                       </div>
@@ -946,6 +1002,7 @@ const Dashboard = () => {
       <div className="chatbot-icon">
         <img src={chatIcon} alt="" />
       </div>
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };

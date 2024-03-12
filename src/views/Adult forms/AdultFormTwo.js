@@ -278,7 +278,6 @@ const AdultFormTwo = () => {
                             <label className="form-label">Features</label>
                             <Editor
                               editorStyle={{
-                                height: "170px",
                                 overflow: "hidden",
                               }}
                               value={input.editorState}

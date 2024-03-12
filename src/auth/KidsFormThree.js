@@ -869,7 +869,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   }
                                 >
                                   <option value="" disabled selected>
-                                    Select {item.label}
+                                    {item.label}
                                   </option>
                                   {item.options.map((item, index) => {
                                     return (
@@ -1239,7 +1239,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           </div>
         </div>
         <div className="dialog-footer">
-          <button
+          {/* <button
             type="button"
             onClick={(e) => {
               goBack();
@@ -1247,7 +1247,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
             className="step-back"
           >
             Back
-          </button>
+          </button> */}
 
           <button
             className="step-continue"

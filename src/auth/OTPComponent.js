@@ -3,26 +3,31 @@ import "../assets/css/forms/otp.scss";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
-const OTPComponent = ({ sendDataToParent, ...props }) => {
+import { useNavigate } from "react-router-dom";
+
+const OTPComponent = () => {
+  const navigate = useNavigate();
+
   const btLogo = require("../assets/icons/Group 56.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
-  const [registeredEmail, setRegisteredEmail] = useState();
   const [isLoading, setIsLoading] = useState(false);
-
-  const sendData = () => {
-    const data = "back";
-    // Call the function passed from parent with data as argument
-    sendDataToParent(data);
-  };
+  const [userId, setUserId] = useState(null);
+  const [emailID, setEmailID] = useState(null);
 
   useEffect(() => {
-    console.log(props, "props");
-    setRegisteredEmail(props.parentData.email);
-  }, [props]);
+    const storedUserId = localStorage.getItem("userId");
+    const storedEmailID = localStorage.getItem("emailID");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+    if (storedEmailID) {
+      setEmailID(storedEmailID);
+    }
+  }, []);
 
   const handleChange = (index, value) => {
     const newOtp = [...otp];
@@ -49,7 +54,7 @@ const OTPComponent = ({ sendDataToParent, ...props }) => {
   const otpVerification = async (newOTP) => {
     const formData = {
       otp: newOTP,
-      parentEmail: registeredEmail,
+      parentEmail: emailID,
     };
     console.log(formData, "formData otpVerification");
     await ApiHelper.post(API.otpVerification, formData)
@@ -63,7 +68,7 @@ const OTPComponent = ({ sendDataToParent, ...props }) => {
           }, 1000);
           setTimeout(function() {
             let successData = "verified";
-            sendDataToParent(successData);
+            navigate(`/talent-dashboard`);
           }, 1000);
         } else if (resData.data.status === false) {
           console.log("false called");
@@ -92,7 +97,7 @@ const OTPComponent = ({ sendDataToParent, ...props }) => {
 
   const resendOtp = async (newOTP) => {
     const formData = {
-      parentEmail: registeredEmail,
+      parentEmail: emailID,
     };
     setIsLoading(true);
 
@@ -129,7 +134,7 @@ const OTPComponent = ({ sendDataToParent, ...props }) => {
             <span>Verification</span>
           </div>
           <div className="otp-enter">Please enter the code we just send to</div>
-          <div className="otp-mail">{registeredEmail}</div>
+          <div className="otp-mail">{emailID}</div>
           <div className="otp-boxes">
             <form action="" className="mt-5 otp-form">
               {otp.map((digit, index) => (
@@ -152,7 +157,7 @@ const OTPComponent = ({ sendDataToParent, ...props }) => {
             If you didn’t receive a code?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
           </div>
-          <div className="otp-back" onClick={sendData}>
+          <div className="otp-back" onClick={() => navigate(`/login`)}>
             Back
           </div>
         </div>

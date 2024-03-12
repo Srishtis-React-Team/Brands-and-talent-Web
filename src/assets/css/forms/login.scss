@@ -43,14 +43,32 @@
 .login-logo {
   position: absolute;
   background-color: #fff;
-  top: 155px;
+  top: 126px;
+  padding: 0px 20px;
+}
+.forgot-logo {
+  position: absolute;
+  background-color: #fff;
+  top: 50px;
+  padding: 0px 20px;
+}
+.reset-logo {
+  position: absolute;
+  background-color: #fff;
+  top: 50px;
+  padding: 0px 20px;
+}
+.success-pass-logo {
+  position: absolute;
+  background-color: #fff;
+  top: 50px;
   padding: 0px 20px;
 }
 
 .login-main {
   display: flex;
   justify-content: center;
-  margin-top: 175px;
+  margin-top: 70px;
 }
 
 .choose-who {

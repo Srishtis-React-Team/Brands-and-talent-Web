@@ -13,7 +13,7 @@
 }
 
 .otp-container {
-  width: 100%;
+  width: 25%;
   height: 100%;
   border: 1px solid #aaa;
   border-radius: 26px;
@@ -27,7 +27,7 @@
 .otp-logo {
   position: absolute;
   background-color: #fff;
-  top: 185px;
+  top: 80px;
   padding: 0px 20px;
 }
 
@@ -121,4 +121,18 @@
 .disabled-otp {
   background: #ccc; /* Change the background color for disabled state */
   cursor: not-allowed; /* Change cursor for disabled state */
+}
+
+@media (max-width: 480px) {
+  .otp-container {
+    width: 90%;
+    height: 98%;
+    border: 1px solid #aaa;
+    border-radius: 26px;
+    padding: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

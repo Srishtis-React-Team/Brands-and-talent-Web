@@ -48,7 +48,7 @@ const PasswordSuccess = () => {
             Back To Login
           </div>
         </div>
-        <div className="login-logo">
+        <div className="success-pass-logo">
           <img src={btLogo} alt="" />
         </div>
       </div>

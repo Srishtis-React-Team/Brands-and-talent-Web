@@ -23,7 +23,7 @@ import KidsFormFour from "../auth/KidsFormFour";
 import AdultFormOne from "../views/Adult forms/AdultFormOne";
 import AdultFormTwo from "../views/Adult forms/AdultFormTwo";
 import AdultFormThree from "../views/Adult forms/AdultFormThree";
-
+import OTPComponent from "../auth/OTPComponent";
 function Routing() {
   return (
     <Routes>
@@ -33,6 +33,7 @@ function Routing() {
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/resources" element={<Resources />} />
       <Route path="/signup" element={<Register />} />
+      <Route path="/otp" element={<OTPComponent />} />
       <Route path="/about-us" element={<About />} />
       <Route path="/community-guidelines" element={<Guidelines />} />
       <Route path="/post-job" element={<PostJob />} />

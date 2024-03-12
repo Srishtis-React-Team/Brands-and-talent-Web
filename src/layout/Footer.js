@@ -3,7 +3,9 @@ import "../assets/css/dashboard.css";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate, useOutletContext } from "react-router";
-
+import PopUp from "../components/PopUp";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../config/api";
 const Footer = () => {
   const navigate = useNavigate();
   const fieldsBackground = require("../assets/images/fields-background.png");
@@ -11,7 +13,9 @@ const Footer = () => {
   const socialIcons = require("../assets/icons/Social.png");
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-
+  const [loader, setLoader] = useState(false);
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
   const clear = () => {
     setFirstName("");
     setEmail("");
@@ -19,11 +23,28 @@ const Footer = () => {
 
   const subscribe = async () => {
     const formData = {
-      firstName: firstName,
       email: email,
     };
-    console.log(formData, "formData subscribe form");
     clear();
+    await ApiHelper.post(API.subscriptionStatus, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("Subscribed SuccessFully! Check Your Email Inbox");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleClick = () => {
@@ -185,6 +206,7 @@ const Footer = () => {
           </div>
         </section>
       </div>
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };
