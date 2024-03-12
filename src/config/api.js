@@ -38,4 +38,8 @@ export const API = {
   getKidsData: BASEURL + "users/kidsFetch/",
   unifiedDataFetch: BASEURL + "users/unifiedDataFetch/",
   getTalentById: BASEURL + "users/getTalentById/",
+  talentFilterData: BASEURL + "users/talentFilterData",
+  getByProfession: BASEURL + "users/getByProfession",
+  setUserFavorite: BASEURL + "users/setUserFavorite/",
+  subscriptionStatus: BASEURL + "users/subscriptionStatus/",
 };

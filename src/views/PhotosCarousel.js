@@ -20,12 +20,6 @@ const PhotosCarousel = () => {
 
   const [userId, setUserId] = useState(null);
 
-  useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    setUserId(storedUserId);
-    fetchPhotos();
-  }, [userId]);
-
   const servicesList = [
     {
       image: "model1",
@@ -56,8 +50,12 @@ const PhotosCarousel = () => {
   const fetchPhotos = async () => {
     await ApiHelper.post(`${API.unifiedDataFetch}${userId}/1`)
       .then((resData) => {
-        if (resData) {
-          setPhotosList(resData.data.data);
+        console.log(resData, "resData photos");
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setPhotosList(resData.data.data);
+          }
+          console.log(photosList, "photosList");
         }
       })
       .catch((err) => {
@@ -65,84 +63,37 @@ const PhotosCarousel = () => {
       });
   };
 
-  // const [slideIndex, setSlideIndex] = useState(0);
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    setUserId(storedUserId);
+  }, []);
 
-  // useEffect(() => {
-  //   showDivs(slideIndex);
-  // }, [slideIndex]);
+  useEffect(() => {
+    if (userId) {
+      fetchPhotos();
+    }
+  }, [userId]);
 
-  // function plusDivs(n) {
-  //   setSlideIndex((prevIndex) => {
-  //     let newIndex = prevIndex + n;
-  //     if (newIndex >= imageList.length) {
-  //       return 0; // Loop back to the beginning
-  //     }
-  //     if (newIndex < 0) {
-  //       return imageList.length - 1; // Loop to the end
-  //     }
-  //     return newIndex;
-  //   });
-  // }
-
-  // function showDivs(n) {
-  //   const x = document.getElementsByClassName("talents-photos-wrapper");
-  //   if (x && x.length > 0) {
-  //     let newIndex = n;
-  //     if (n >= x.length) {
-  //       newIndex = 0;
-  //     }
-  //     if (n < 0) {
-  //       newIndex = x.length - 1;
-  //     }
-  //     for (let i = 0; i < x.length; i++) {
-  //       x[i].style.display = "none";
-  //     }
-  //     x[newIndex].style.display = "block";
-  //   }
-  // }
-
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(photosList, "photosList");
+  }, [photosList]);
 
   return (
     <>
-      {/* <div className="talent-photos-section">
-        {imageList.map((imageArray, index) => (
-          <div
-            key={index}
-            className={`talents-photos-wrapper ${
-              index === slideIndex ? "active" : ""
-            }`}
-            style={{ display: index === slideIndex ? "block" : "none" }}
-          >
-            {imageArray.map((imageSrc, idx) => (
-              <img
-                className="talent-photos-style"
-                key={idx}
-                src={imageSrc}
-                alt={`Model ${idx + 1}`}
-              />
-            ))}
-          </div>
-        ))}
-        <div className="photos-navigation-prev" onClick={() => plusDivs(-1)}>
-          <i class="fa-solid fa-chevron-left"></i>
-        </div>
-        <div className="photos-navigation-next" onClick={() => plusDivs(1)}>
-          <i class="fa-solid fa-chevron-right"></i>
-        </div>
-      </div> */}
       <OwlCarousel
         className="owl-theme photos-carousel-owl"
-        loop
+        // loop
         margin={10}
         nav
-        items={6}
+        items={photosList?.length === 1 ? 1 : 5}
       >
         {photosList &&
-          photosList.map((image) => {
+          photosList.map((image, index) => {
+            // console.log(photosList, "photosList map");
+            console.log(image, "image");
             return (
               <>
-                <div class="item">
+                <div className="item" key={index}>
                   <img
                     className="talents-profile-slider-image"
                     src={`${API.userFilePath}${image}`}

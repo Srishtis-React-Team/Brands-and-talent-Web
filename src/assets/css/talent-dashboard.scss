@@ -401,7 +401,7 @@
 }
 .profession-input {
   max-width: 200px;
-  margin-right: 15px !important;
+  margin-right: 15px;
 }
 .offer-wrapper {
   display: flex;
@@ -630,8 +630,111 @@
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .add-more-services {
+    padding: 20px 0px;
+    margin-bottom: 100px;
+  }
+  .add-more-services .add-more-services-btn {
+    width: 60%;
+  }
+
+  .cv-section {
+    margin: 15px 0px;
+  }
+  .rich-editor {
+    margin-bottom: 30px !important;
+  }
+
+  .upload-info {
+    text-align: center;
+    padding: 15px;
+  }
+
+  .recent-setone {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .recent-gig-company {
+    padding-top: 10px;
+  }
+  .talent-column-one {
+    margin: 15px;
+    width: 90%;
+  }
+  .talent-column-two {
+    margin: 15px;
+    width: 90%;
+  }
+  .recent-settwo {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 0px;
+    .recent-gigs-count-wrapper {
+      margin: 10px;
+    }
+  }
+
+  .talent-popup-title {
+    font-size: 17px;
+  }
+
+  .talent-popup-enter {
+    font-size: 18px;
+    padding: 20px 0px;
+  }
+  .talent-popup-span {
+    color: #c2114b;
+    font-size: 18px;
+    padding: 25px 0px;
+  }
+
+  .talent-popup-description {
+    font-size: 16px;
+    padding: 20px 0px;
+  }
+
+  .doitnow-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    .doit-one {
+      width: 100%;
+      padding-right: 40px;
+    }
+    .doit-two {
+      width: 100%;
+    }
+  }
+  .adult-img-img {
+    display: none;
+  }
+  .dynamic-profession {
+    flex-wrap: wrap;
+  }
+  .profession-input {
+    margin-right: 0px;
+  }
+  .rich-editor {
+    margin-bottom: 100px;
+  }
+  .profession-content-section {
+    margin-bottom: 10px;
+  }
+  .profession-input {
+    max-width: 160px;
+  }
+  .adult-form-wrapper {
+    margin: 20px 25px;
+    display: flex;
+    flex-direction: column;
+  }
   .adult-main {
     width: 100%;
+    padding-left: 0px;
     .kids-form-row {
       display: flex;
       justify-content: unset;

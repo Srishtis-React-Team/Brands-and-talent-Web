@@ -236,8 +236,7 @@
     flex-wrap: wrap;
     width: 100%;
     .features-input-wrapper {
-      margin-right: 20px;
-      min-width: 20%;
+      margin-right: 10px;
       .features-select {
       }
     }
@@ -269,8 +268,6 @@
       .media-text {
         padding-left: 15px;
         width: 100%;
-        .followers-count-input {
-        }
       }
     }
   }
@@ -355,6 +352,23 @@
 /* 320px — 480px: Mobile devices */
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .features-section {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    .features-input-wrapper {
+      margin-right: 10px;
+      width: 45%;
+    }
+  }
+
+  .uploaded-file-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 10px 0px !important;
+    width: 100%;
+  }
   .kids-main {
     width: 100%;
     .kids-form-row {
@@ -372,6 +386,7 @@
     align-items: center;
     justify-content: space-around;
     width: 100%;
+    margin-bottom: 100px !important;
     .id-text {
       padding: 26px 0px;
     }
@@ -463,4 +478,8 @@
 
 .mandatory {
   color: #dc3545;
+}
+
+.upload-info {
+  text-align: center;
 }

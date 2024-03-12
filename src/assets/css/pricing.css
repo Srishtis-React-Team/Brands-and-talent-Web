@@ -1,7 +1,7 @@
 .plan-main {
   /* background-color: aqua; */
   margin: 0 auto;
-  width: 80%;
+  width: 95%;
 }
 .plans-section {
   padding: 60px 0px;
@@ -300,9 +300,9 @@
   padding-left: 8px;
 }
 
-@media (max-width: 475px) {
+@media (max-width: 480px) {
   .plans-section {
-    margin: 30px;
+    margin: 20px;
     padding: 0px;
     display: flex;
     flex-direction: column;
@@ -312,7 +312,7 @@
   }
   .plan-name {
     font-size: 16px;
-    padding: 20px 0px 15px 0px;
+    padding: 20px 0px;
   }
   .plan-validity {
     font-size: 14px;
@@ -347,10 +347,7 @@
   .plans-section {
     padding: 10px 0px;
     display: flex;
-    /* justify-content: flex-start; */
-    /* align-items: center; */
     flex-wrap: wrap;
-    /* flex-direction: column; */
   }
   .plans-wrapper {
     width: 100%;

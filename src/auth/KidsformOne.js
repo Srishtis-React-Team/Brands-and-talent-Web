@@ -73,13 +73,25 @@ const KidsformOne = ({ sendDataToParent }) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [age, setAge] = useState("");
   useEffect(() => {
     getCountries();
     if (userId) {
       getKidsData();
     }
   }, []);
+
+  // Function to handle date picker change
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value; // Assuming your date picker provides the selected date
+    setDob(selectedDate); // Set the DOB in state
+    // Calculate age
+    const dobDate = new Date(selectedDate);
+    const today = new Date();
+    const diff = today - dobDate;
+    const ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)); // Calculating age in years
+    setAge(String(ageInYears)); // Set the age in state
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -147,10 +159,10 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const professionList = [
-    { value: "Actor", label: "Photographer" },
-    { value: "Model", label: "Beauticians" },
-    { value: "Director", label: "Artists" },
-    { value: "Singer", label: "Video Grapher" },
+    { value: "Actor", label: "Actor" },
+    { value: "Model", label: "Model" },
+    { value: "Director", label: "Director" },
+    { value: "Singer", label: "Singer" },
   ];
 
   const categoryList = [
@@ -240,6 +252,7 @@ const KidsformOne = ({ sendDataToParent }) => {
             ...resData.data.data?.relevantCategories,
           ]);
           setAboutYou(resData.data.data?.childAboutYou);
+          setAge(resData.data.data?.age);
         }
       })
       .catch((err) => {});
@@ -331,6 +344,7 @@ const KidsformOne = ({ sendDataToParent }) => {
         childLocation: kidsLocation,
         childCity: kidsCity,
         childAboutYou: aboutYou,
+        age: age,
       };
       setIsLoading(true);
       console.log(userId, "userId");
@@ -951,7 +965,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             className="form-control"
                             value={dateOfBirth}
                             onChange={(e) => {
-                              setDob(e.target.value);
+                              handleDateChange(e);
                             }}
                             placeholder=""
                           ></input>
@@ -1051,7 +1065,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                       <label className="form-label">About You</label>
                       <Editor
                         editorState={editorState}
-                        editorStyle={{ height: "170px", overflow: "hidden" }}
+                        editorStyle={{ overflow: "hidden" }}
                         toolbarClassName="toolbarClassName"
                         wrapperClassName="wrapperClassName"
                         editorClassName="editorClassName"

@@ -156,7 +156,7 @@ const ResetPassword = () => {
             {isLoading ? "Loading..." : "Submit"}
           </div>
         </div>
-        <div className="login-logo">
+        <div className="reset-logo">
           <img src={btLogo} alt="" />
         </div>
       </div>

@@ -104,7 +104,6 @@ const TalentDashBoard = () => {
     setUserId(storedUserId);
 
     if (userId) {
-      alert("called");
       checkProfileStatus();
     }
   }, [userId]);
@@ -264,9 +263,9 @@ const TalentDashBoard = () => {
           </div>
         </div>
       </div>
-      <div className="container-fluid">
+      <div className="container-fluid my-4">
         <div className="row justify-content-center">
-          <div className="talent-column-one col-lg-8 mr-2">
+          <div className="talent-column-one col-lg-8">
             <div className="recent-gigs-title">Most Recent Gigs</div>
             {gigsList.length && (
               <div className="recent-gigs-main">

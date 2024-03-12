@@ -109,11 +109,11 @@ const ForgotPassword = () => {
           >
             {isLoading ? "Loading..." : "Continue"}
           </div>
-          <div className="resend-forgot" onClick={() => resend()}>
+          {/* <div className="resend-forgot" onClick={() => resend()}>
             If you didn’t receive a code? <span>Resend</span>
-          </div>
+          </div> */}
         </div>
-        <div className="login-logo">
+        <div className="forgot-logo">
           <img src={btLogo} alt="" />
         </div>
       </div>

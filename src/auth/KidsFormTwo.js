@@ -43,22 +43,36 @@ const KidsFormTwo = () => {
   };
 
   const subscriptionPlan = async (index) => {
+    console.log(selectedPlan, "selectedPlan");
     console.log(index);
     setSelectedIndex(index);
-    const formData = {
-      parentEmail: userEmail,
-      subscriptionPlan: selectedPlan,
-    };
-    console.log(formData, "formData subscription");
-    await ApiHelper.post(`${API.subscriptionPlan}${userId}`, formData)
-      .then((resData) => {
-        if (resData) {
-          console.log(resData.data, "resData subscriptionPlan");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!selectedPlan) {
+      setMessage("Please Choose Annual Or Monthly");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 1000);
+    } else if (selectedPlan) {
+      const formData = {
+        parentEmail: userEmail,
+        subscriptionPlan: selectedPlan,
+      };
+      console.log(formData, "formData subscription");
+      await ApiHelper.post(`${API.subscriptionPlan}${userId}`, formData)
+        .then((resData) => {
+          if (resData) {
+            console.log(resData.data, "resData subscriptionPlan");
+            setMessage("Plan Selected SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   const choosePlan = async (index) => {
     navigate(`/talent-signup-files-details?userId=${userId}`);
@@ -110,15 +124,14 @@ const KidsFormTwo = () => {
                         }
                         style={{
                           border:
-                            selectedIndex === index
+                            selectedPlan && selectedIndex === index
                               ? "4px solid #c2114b"
                               : "none",
                         }}
                       >
-                        <div className="plan-name">
-                          {item.planname}
-                          <div className="subcribe-gift">{item.gift}</div>
-                        </div>
+                        <div className="plan-name">{item.planname}</div>
+                        <div className="subcribe-gift">{item.gift}</div>
+
                         {item.planname == "Basic" && (
                           <>
                             <div className="plan-value">Free</div>
@@ -200,7 +213,8 @@ const KidsFormTwo = () => {
                             </div>
                           </>
                         )}
-                        <div
+
+                        <button
                           className={
                             index === 0
                               ? "choose-btn disabled-plan"
@@ -209,9 +223,10 @@ const KidsFormTwo = () => {
                           onClick={(e) => {
                             subscriptionPlan(index);
                           }}
+                          disabled={index === 0}
                         >
                           Choose plan
-                        </div>
+                        </button>
                         <div
                           className={
                             index === 0 ? "include disabled-plan" : "include"

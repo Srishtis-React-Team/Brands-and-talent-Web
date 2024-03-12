@@ -53,6 +53,7 @@ const AdultFormOne = () => {
   const [resumeFile, setResumeFile] = useState([]);
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
+  const [age, setAge] = useState("");
 
   const [adultsPreferedFirstName, setAdultsPreferedFirstName] = useState("");
   const [adultsPreferedLastName, setAdultsPreferedLastName] = useState("");
@@ -84,11 +85,15 @@ const AdultFormOne = () => {
   const [idType, setIdType] = useState("");
   const [verificationID, setVerificationID] = useState("");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const url = window.location.href;
-  let queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
-  console.log("Search queryString:", typeof queryString);
   const navigate = useNavigate();
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    getFeatures();
+    const storedUserId = localStorage.getItem("userId");
+    console.log(storedUserId, "storedUserId");
+    setUserId(storedUserId);
+  }, [userId]);
 
   const getFeatures = async () => {
     await ApiHelper.get(API.getFeatures)
@@ -100,18 +105,16 @@ const AdultFormOne = () => {
       .catch((err) => {});
   };
 
-  const handleFeaturesChange = (label, value) => {
-    const updatedValues = [...features];
-    const index = updatedValues.findIndex((item) => item.label === label);
-    if (index !== -1) {
-      updatedValues[index] = { label, value };
-    } else {
-      updatedValues.push({ label, value });
-    }
-    setFeature(updatedValues);
-    // Call your API here with the updated selectedValues array
-    // Example:
-    // callYourApi(selectedValues);
+  // Function to handle date picker change
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value; // Assuming your date picker provides the selected date
+    setDob(selectedDate); // Set the DOB in state
+    // Calculate age
+    const dobDate = new Date(selectedDate);
+    const today = new Date();
+    const diff = today - dobDate;
+    const ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)); // Calculating age in years
+    setAge(String(ageInYears)); // Set the age in state
   };
 
   const updateAdultSignup = async () => {
@@ -133,29 +136,33 @@ const AdultFormOne = () => {
       childLocation: adultsLocation,
       childCity: adultsCity,
       childAboutYou: aboutYou,
+      age: age,
     };
-    await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
+
+    if (userId) {
+      await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Updated SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              navigate(`/adult-signup-service-details?${userId}`);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
           setIsLoading(false);
-          setMessage("Updated SuccessFully!");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            navigate(`/adult-signup-service-details?${queryString}`);
-          }, 1000);
-        } else if (resData.data.status === false) {
-          setIsLoading(false);
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
+        });
+    }
   };
 
   const professionList = [
@@ -236,92 +243,12 @@ const AdultFormOne = () => {
     setEditorState(editorState);
   };
 
-  const handleProfileDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadFile(droppedFiles[0]);
-    // setFiles(droppedFiles);
-  };
-
-  const handleProfileDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  // Function to handle deleting image
-  const handleProfileDelete = () => {
-    setProfileFile(null);
-  };
-
-  const handlePortofolioDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadFile(droppedFiles[0]);
-    // setFiles(droppedFiles);
-  };
-
-  const handlePortofolioDragOver = (e) => {
-    e.preventDefault();
-  };
-  const handleVideoDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadVideoudio(droppedFiles[0]);
-    // setFiles(droppedFiles);
-  };
-
-  const handleVideoDragOver = (e) => {
-    e.preventDefault();
-  };
-  const handleResumeDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadResume(droppedFiles[0]);
-    // setFiles(droppedFiles);
-  };
-
-  const handleResumeDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const portofolioUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
-      uploadFile(fileData);
-    }
-  };
-  const videoAudioUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      uploadVideoudio(fileData);
-    }
-  };
-  const resumeUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData resume");
-      uploadResume(fileData);
-    }
-  };
-
   const verificationUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
       uploadVerificationID(fileData);
     }
   };
-
-  // const uploadedFiles = Array.from(event.target.files);
-  // const updatedFiles = uploadedFiles.map((file, index) => ({
-  //   id: index + 1,
-  //   title: file.name,
-  //   apiresponse: null, // Placeholder for API response
-  // }));
-  // setPortofolioFiles([...portofolioFiles, ...updatedFiles]);
 
   const getFileType = (fileType) => {
     // Extract main category from MIME type
@@ -338,138 +265,6 @@ const AdultFormOne = () => {
     }
   };
 
-  const profileUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
-      uploadProfile(fileData);
-    }
-  };
-
-  const uploadProfile = async (fileData) => {
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        setMessage(resData.data.message);
-        let fileObj = {
-          id: resData.data.data.fileId,
-          title: fileData.name,
-          fileData: resData.data.data.filename,
-          type: resData?.data?.data?.filetype,
-        };
-        console.log(fileObj, "fileObj profileFile");
-        setProfileFile(fileObj);
-        console.log(profileFile, "profileFile");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
-
-  const uploadFile = async (fileData) => {
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        setMessage(resData.data.message);
-        let fileObj = {
-          id: resData.data.data.fileId,
-          title: fileData.name,
-          fileData: resData.data.data.filename,
-          type: resData?.data?.data?.filetype,
-        };
-        setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
-  const uploadVideoudio = async (fileData) => {
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        setMessage(resData.data.message);
-        let fileObj = {
-          id: resData.data.data.fileId,
-          title: fileData.name,
-          fileData: resData.data.data.filename,
-          type: resData?.data?.data?.filetype,
-        };
-        setVideoAudioFile((prevFiles) => [...prevFiles, fileObj]);
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
-  const uploadResume = async (fileData) => {
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        setMessage(resData.data.message);
-        let fileObj = {
-          id: resData.data.data.fileId,
-          title: fileData.name,
-          fileData: resData.data.data.filename,
-          type: resData?.data?.data?.filetype,
-        };
-        setResumeFile((prevFiles) => [...prevFiles, fileObj]);
-
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
   const uploadVerificationID = async (fileData) => {
     setLoader(true);
     const params = new FormData();
@@ -536,10 +331,6 @@ const AdultFormOne = () => {
       return updatedImages;
     });
   };
-
-  useEffect(() => {
-    getFeatures();
-  }, []);
 
   return (
     <>
@@ -818,7 +609,7 @@ const AdultFormOne = () => {
                           type="date"
                           className="form-control"
                           onChange={(e) => {
-                            setDob(e.target.value);
+                            handleDateChange(e);
                           }}
                           placeholder=""
                         ></input>
@@ -914,7 +705,7 @@ const AdultFormOne = () => {
                   <div className="rich-editor">
                     <label className="form-label">About You</label>
                     <Editor
-                      editorStyle={{ height: "170px", overflow: "hidden" }}
+                      editorStyle={{ overflow: "hidden" }}
                       toolbarClassName="toolbarClassName"
                       wrapperClassName="wrapperClassName"
                       editorClassName="editorClassName"

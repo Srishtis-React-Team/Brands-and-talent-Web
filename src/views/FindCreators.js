@@ -51,15 +51,48 @@ const FindCreators = () => {
   const [state, setState] = useState("");
   const [ethnicity, setEthnicity] = useState("");
   const [talentList, setTalentList] = useState([]);
-  const [min, setMinAge] = useState([]);
-  const [max, setMaxAge] = useState([]);
-
-  useEffect(() => {
-    getTalentList();
-  }, []);
+  const [min, setMinAge] = useState("0");
+  const [max, setMaxAge] = useState("100");
+  const [loader, setLoader] = useState(false);
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [languages, setLanguages] = useState("");
+  const [maritalStatus, setMaritalStatus] = useState("");
+  const [industry, setIndustry] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [featuresListSelect, selectFeaturesList] = useState([]);
+  const [featuresList, setFeaturesList] = useState([]);
+  const [features, setFeature] = useState([]);
 
   const clear = () => {
     setSearchKeyword("");
+  };
+
+  const getFeatures = async () => {
+    await ApiHelper.get(API.getFeatures)
+      .then((resData) => {
+        if (resData) {
+          setFeaturesList(resData.data.data[0].features);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const handleFeaturesChange = (label, value) => {
+    const updatedValues = [...features];
+    const index = updatedValues.findIndex((item) => item.label === label);
+    if (index !== -1) {
+      updatedValues[index] = { label, value };
+    } else {
+      updatedValues.push({ label, value });
+    }
+    setFeature(updatedValues);
+    // Call your API here with the updated selectedValues array
+    // Example:
+    // callYourApi(selectedValues);
   };
 
   const getTalentList = async () => {
@@ -81,15 +114,10 @@ const FindCreators = () => {
   };
 
   const professionList = [
-    {
-      value: "photographer",
-      label: "Photographer",
-      color: "#00B8D9",
-      isFixed: true,
-    },
-    { value: "beauticians", label: "Beauticians", color: "#5243AA" },
-    { value: "artists", label: "Artists", color: "#FF5630", isFixed: true },
-    { value: "video Grapher", label: "Video Grapher", color: "#FF8B00" },
+    { value: "Actor", label: "Actor" },
+    { value: "Model", label: "Model" },
+    { value: "Director", label: "Director" },
+    { value: "Singer", label: "Singer" },
   ];
 
   const genderList = [
@@ -102,23 +130,18 @@ const FindCreators = () => {
     { value: "option 2", label: "option 2", color: "#5243AA" },
   ];
 
-  const search = async () => {
-    console.log(profession, "profession");
-    console.log(gender, "gender");
-    console.log(age, "age");
-    console.log(selectedKeyword, "selectedKeyword");
-    console.log(searchKeyword, "searchKeyword");
+  const getCountries = async () => {
+    await ApiHelper.get(API.listCountries)
+      .then((resData) => {
+        if (resData) {
+          setCountryList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
 
-    let filteredTalents = talentList.filter((element) => {
-      // 👇️ using AND (&&) operator
-      return (
-        element.name === searchKeyword || element.address === searchKeyword
-      );
-    });
-
-    // 👉️ [ {name: 'Carl', age: 30} ]
-    console.log(filteredTalents, "Filtered Talent List");
-    setTalentList(filteredTalents);
+  const selectGender = (event) => {
+    setGender(event.target.value);
   };
 
   const addFavorite = (item) => {
@@ -136,6 +159,10 @@ const FindCreators = () => {
   const openTalent = (item) => {
     console.log(item, "item");
     navigate("/talent-profile", { state: { talentData: item } });
+  };
+
+  const handleSelectedState = (state) => {
+    setState(state?.label);
   };
 
   const removeFavorite = (item) => {
@@ -158,12 +185,117 @@ const FindCreators = () => {
     setMaxAge(Math.round(e.max));
   };
 
+  const handleSelectedCountry = (event) => {
+    console.log(event, "event");
+    console.log(event?.value, "event?.value");
+    setCountry(event?.value);
+    getStates(event?.value);
+    console.log(country, "country");
+  };
+
+  const selectIndustry = (event) => {
+    setIndustry(event.target.value);
+  };
+  const selectEthnicity = (event) => {
+    setEthnicity(event.target.value);
+  };
+  const selectLanguage = (event) => {
+    setLanguages(event.target.value);
+  };
+  const selectNationality = (event) => {
+    setNationality(event.target.value);
+  };
+  const selectMaritalStatus = (event) => {
+    setMaritalStatus(event.target.value);
+  };
+
+  const getStates = async (data) => {
+    const formData = {
+      countryName: data,
+    };
+    await ApiHelper.post(API.listStates, formData)
+      .then((resData) => {
+        if (resData) {
+          setStateList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
   const onMinChange = (event) => {
     setMinAge(event.target.value); // Update the state with the new value
   };
   const onMaxChange = (event) => {
     setMaxAge(event.target.value); // Update the state with the new value
   };
+
+  const search = async () => {
+    const formData = {
+      profession: profession,
+      parentCountry: country,
+      childCity: state,
+      gender: gender,
+      childEthnicity: ethnicity,
+      languages: languages,
+      childFirstName: fullName,
+      parentFirstName: fullName,
+      minAge: min,
+      maxAge: max,
+      industry: industry,
+      searchTerm: searchKeyword,
+      selectedTerms: selectedKeyword,
+      features: features,
+      childEthnicity: ethnicity,
+    };
+    console.log(formData, "formData talentFilterData");
+    setIsLoading(true);
+    await ApiHelper.post(API.talentFilterData, formData)
+      .then((resData) => {
+        console.log("talentFilterData response", resData.data.data.user._id);
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Filtered SuccessFully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setMessage("Error Occured Try Again");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getCountries();
+    getTalentList();
+    getFeatures();
+    setProfession([professionList[2], professionList[3]]);
+
+    selectFeaturesList([
+      {
+        label: "HairColour",
+        type: "select",
+        options: ["red", "black", "brown"],
+      },
+      {
+        label: "Height",
+        type: "select",
+        options: ["168.2 cm", "176.6 cm"],
+      },
+      {
+        label: "BodyType",
+        type: "select",
+        options: ["small", "fat"],
+      },
+    ]);
+  }, []);
 
   return (
     <>
@@ -239,30 +371,34 @@ const FindCreators = () => {
             <div className="keyword-wrapper">
               <div className="filter-items">Industry</div>
               <div className="creators-filter-select">
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
-                />
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={selectIndustry}
+                >
+                  <option value="" disabled selected>
+                    Select Industry
+                  </option>
+                  <option defaultValue value="model">
+                    Models
+                  </option>
+                  <option value="actor">Actors</option>
+                </select>
               </div>
             </div>
             <div className="keyword-wrapper">
               <div className="filter-items">Location</div>
               <div className="creators-filter-select">
                 <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
+                  placeholder="Select country..."
+                  options={countryList.map((country, index) => ({
+                    value: country,
+                    label: country,
+                    key: index,
+                  }))}
+                  value={country?.value}
+                  onChange={handleSelectedCountry}
+                  isSearchable={true}
                 />
               </div>
             </div>
@@ -270,35 +406,40 @@ const FindCreators = () => {
               <div className="filter-items">City</div>
               <div className="creators-filter-select">
                 <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
+                  placeholder="Select state..."
+                  options={stateList.map((state) => ({
+                    value: state.stateId, // or whatever unique identifier you want to use
+                    label: state.name,
+                  }))}
+                  value={state?.label}
+                  onChange={handleSelectedState}
+                  isSearchable={true}
                 />
               </div>
             </div>
             <div className="keyword-wrapper">
               <div className="filter-items">Gender</div>
               <div className="creators-filter-select">
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
-                />
+                <label className="form-label">Gender</label>
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={selectGender}
+                  value={gender}
+                >
+                  <option value="" disabled selected>
+                    Select Gender
+                  </option>
+                  <option defaultValue value="male">
+                    Male
+                  </option>
+                  <option value="female">Female</option>
+                </select>
               </div>
             </div>
             <div className="keyword-wrapper">
               <div className="filter-items">Age</div>
-              <div className="creators-filter-select">
+              <div className="creators-filter-select creators-filter-select-range">
                 <RangeSlider min={1} max={100} onChange={onRangeChange} />
                 {/* <p>
                   Change in slider:
@@ -310,7 +451,7 @@ const FindCreators = () => {
               <div className="creators-filter-select creator-age-wrapper">
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control range-inputs"
                   placeholder="Min"
                   value={`Min Age :${min}`}
                   onChange={onMinChange}
@@ -318,7 +459,7 @@ const FindCreators = () => {
                 ></input>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control range-inputs"
                   placeholder="Max"
                   value={`Max Age :${max}`}
                   onChange={onMaxChange}
@@ -329,46 +470,58 @@ const FindCreators = () => {
             <div className="keyword-wrapper">
               <div className="filter-items">Ethnicity</div>
               <div className="creators-filter-select">
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
-                />
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={selectEthnicity}
+                  value={ethnicity}
+                >
+                  <option value="" disabled selected>
+                    Select Ethnicity
+                  </option>
+                  <option defaultValue value="forward">
+                    Forward
+                  </option>
+                  <option value="backword">Backword</option>
+                </select>
               </div>
             </div>
             <div className="keyword-wrapper">
               <div className="filter-items">Nationality</div>
               <div className="creators-filter-select">
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
-                />
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={selectNationality}
+                  value={nationality}
+                >
+                  <option value="" disabled selected>
+                    Select Nationality
+                  </option>
+                  <option defaultValue value="asian">
+                    Asian
+                  </option>
+                  <option value="african">African</option>
+                </select>
               </div>
             </div>
             <div className="keyword-wrapper">
               <div className="filter-items">Language</div>
               <div className="creators-filter-select">
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
-                />
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={selectLanguage}
+                  value={languages}
+                >
+                  <option value="" disabled selected>
+                    Select Language
+                  </option>
+                  <option defaultValue value="english">
+                    English
+                  </option>
+                  <option value="spanish">Spanish</option>
+                </select>
               </div>
             </div>
             <div className="keyword-wrapper">
@@ -378,54 +531,50 @@ const FindCreators = () => {
                   type="text"
                   className="form-control"
                   placeholder="Full Name"
+                  onChange={(e) => {
+                    setFullName(e.target.value);
+                  }}
                 ></input>
               </div>
             </div>
-            <div className="keyword-wrapper">
-              <div className="filter-items">Body Type</div>
-              <div className="creators-filter-select">
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
-                />
-              </div>
-            </div>
-            <div className="keyword-wrapper">
-              <div className="filter-items">Hair Color</div>
-              <div className="creators-filter-select">
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
-                />
-              </div>
-            </div>
-            <div className="keyword-wrapper">
-              <div className="filter-items">Height</div>
-              <div className="creators-filter-select">
-                <Select
-                  className="basic-single"
-                  classNamePrefix="select"
-                  isClearable={isClearable}
-                  isRtl={isRtl}
-                  isSearchable={isSearchable}
-                  options={genderList}
-                  valueField="value"
-                  onChange={(value) => setGender(value.value)}
-                />
-              </div>
-            </div>
+
+            {featuresListSelect && (
+              <>
+                {featuresListSelect.map((item, index) => {
+                  return (
+                    <>
+                      <div className="keyword-wrapper">
+                        <div className="filter-items"> {item.label}</div>
+
+                        <div className="creators-filter-select">
+                          <select
+                            className="form-select features-select"
+                            aria-label="Default select example"
+                            onChange={(e) =>
+                              handleFeaturesChange(item.label, e.target.value)
+                            }
+                          >
+                            <option value="" disabled selected>
+                              {item.label}
+                            </option>
+                            {item.options.map((item, index) => {
+                              return (
+                                <>
+                                  <option defaultValue value="1">
+                                    {item}
+                                  </option>
+                                </>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+              </>
+            )}
+
             <div className="submit-buttons">
               <div
                 className="reset-btn"
@@ -449,7 +598,7 @@ const FindCreators = () => {
           </div>
           <div className="models-images">
             <div className="gallery-section filtered-gallery">
-              {talentList.map((item) => {
+              {talentList?.map((item) => {
                 return (
                   <div
                     className="gallery-warpper"
@@ -457,10 +606,10 @@ const FindCreators = () => {
                   >
                     <div className="gallery-position">
                       <img
-                        className="gallery-img"
+                        className="find-talent-image"
                         src={API.userFilePath + item?.image?.fileData}
                       ></img>
-                      <div className="rating">
+                      <div className="find-talentrating">
                         <img src={brightStar}></img>
                         <img src={brightStar}></img>
                         <img src={brightStar}></img>
@@ -469,14 +618,14 @@ const FindCreators = () => {
                       </div>
                       {!item.isFavorite && (
                         <img
-                          className="heart-icon"
+                          className="favoruite-find-talent"
                           src={heartIcon}
                           onClick={() => addFavorite(item)}
                         ></img>
                       )}
                       {item.isFavorite === true && (
                         <img
-                          className="heart-icon"
+                          className="favoruite-find-talent"
                           src={favoruiteIcon}
                           onClick={() => removeFavorite(item)}
                         ></img>
@@ -510,7 +659,9 @@ const FindCreators = () => {
                         <div className="user-details">
                           <div className="location-wrapper">
                             <img src={locationIcon} alt="" />
-                            <div className="location-name">New York</div>
+                            <div className="location-name">
+                              {item?.parentCountry}
+                            </div>
                           </div>
                           <div className="location-wrapper">
                             <img src={jobIcon} alt="" />

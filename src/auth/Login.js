@@ -4,7 +4,7 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
-
+import Header from "../layout/header";
 const Login = () => {
   const btLogo = require("../assets/icons/Group 56.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
@@ -26,12 +26,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(null);
-
-  // Function to set user ID
-  const setUserIdLocalStorage = (userId) => {
-    localStorage.setItem("userId", userId);
-    setUserId(userId);
-  };
+  const [emailID, setEmailID] = useState(null);
 
   // Function to get user ID
   const getUserIdLocalStorage = () => {
@@ -41,8 +36,13 @@ const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
+    const storedEmailID = localStorage.getItem("emailID");
+
     if (storedUserId) {
       setUserId(storedUserId);
+    }
+    if (storedEmailID) {
+      setEmailID(storedEmailID);
     }
   }, [paramsValue]);
 
@@ -72,13 +72,14 @@ const Login = () => {
       .then((resData) => {
         console.log("talentLogin response", resData.data.data.user._id);
         if (resData.data.status === true) {
+          console.log("called");
           setIsLoading(false);
           setMessage("Logged In SuccessFully!");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-dashboard?`);
-            setUserIdLocalStorage(resData.data.data.user._id);
+            navigate(`/otp`);
+            setUserIdLocalStorage(resData.data.data);
           }, 1000);
         } else if (resData.data.status === false) {
           console.log("false called");
@@ -94,8 +95,17 @@ const Login = () => {
       });
   };
 
+  // Function to set user ID
+  const setUserIdLocalStorage = (data) => {
+    console.log(data, "data otp");
+    localStorage.setItem("userId", data?.user?._id);
+    localStorage.setItem("emailID", data?.email);
+    setUserId(userId);
+  };
+
   return (
     <>
+      <Header />
       <div className="login-main">
         <div className="login-container">
           <div className="choose-who">

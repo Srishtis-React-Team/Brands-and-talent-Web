@@ -55,6 +55,8 @@ const TalentProfile = () => {
   const threadLogo = require("../assets/icons/threadLogo.png");
   const tiktok = require("../assets/icons/tiktok_social media_icon.png");
   const blueShield = require("../assets/icons/blue-shield.png");
+  const greenTickCircle = require("../assets/icons/grey-filled-circle.png");
+  const elipsis = require("../assets/icons/elipsis.png");
 
   const [portofolio, showPortofolio] = useState(true);
   const [photos, showPhotos] = useState(false);
@@ -65,14 +67,98 @@ const TalentProfile = () => {
   const [test, setTest] = useState("");
   const [data, setData] = useState([]);
   const [talentData, setTalentData] = useState([]);
+  const [photosList, setPhotosList] = useState([]);
+  const [videoAudioList, setVideoAudioList] = useState([]);
+  const [featuresList, setFeaturesList] = useState([]);
+  const [cvList, setCvList] = useState([]);
 
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     setUserId(storedUserId);
-    getTalentById(userId);
+    if (userId) {
+      getTalentById(userId);
+    }
   }, [userId]);
+
+  useEffect(() => {
+    if (userId) {
+      fetchPhotos();
+      fetchVideoAudios();
+      fetchFeatures();
+      fetchCV();
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    console.log(photosList, "photosList");
+  }, [photosList]);
+  useEffect(() => {
+    console.log(videoAudioList, "videoAudioList");
+  }, [videoAudioList]);
+  useEffect(() => {
+    console.log(featuresList, "featuresList");
+  }, [featuresList]);
+  useEffect(() => {
+    console.log(cvList, "cvList");
+  }, [cvList]);
+
+  const fetchPhotos = async () => {
+    await ApiHelper.post(`${API.unifiedDataFetch}${userId}/1`)
+      .then((resData) => {
+        console.log(resData, "resData photos");
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setPhotosList(resData.data.data);
+          }
+          console.log(photosList, "photosList");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const fetchVideoAudios = async () => {
+    await ApiHelper.post(`${API.unifiedDataFetch}${userId}/2`)
+      .then((resData) => {
+        console.log(resData, "resData videos");
+        if (resData.data.status === true) {
+          console.log(
+            resData.data.data[0].videosAndAudios,
+            "resData.data.data[0].videosAndAudios"
+          );
+          setVideoAudioList(resData.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const fetchFeatures = async () => {
+    await ApiHelper.post(`${API.unifiedDataFetch}${userId}/4`)
+      .then((resData) => {
+        console.log(resData, "resData features");
+        if (resData.data.status === true) {
+          setFeaturesList(resData.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const fetchCV = async () => {
+    await ApiHelper.post(`${API.unifiedDataFetch}${userId}/3`)
+      .then((resData) => {
+        console.log(resData, "resData cv");
+        if (resData.data.status === true) {
+          setCvList(resData.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${userId}`)
@@ -85,6 +171,11 @@ const TalentProfile = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleView = (imageUrl) => {
+    let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
+    window.open(viewImage, "_blank");
   };
 
   const reviewsList = [
@@ -139,6 +230,24 @@ const TalentProfile = () => {
       showBio(false);
     }
   }
+
+  const [selectedPDF, setSelectedPDF] = useState(null);
+
+  const openPDFModal = (pdfSrc) => {
+    setSelectedPDF(pdfSrc);
+    const modal = document.getElementById("pdfModal");
+    modal.classList.add("show");
+    modal.style.display = "block";
+    document.body.classList.add("modal-open");
+  };
+
+  const closePDFModal = () => {
+    setSelectedPDF(null);
+    const modal = document.getElementById("pdfModal");
+    modal.classList.remove("show");
+    modal.style.display = "none";
+    document.body.classList.remove("modal-open");
+  };
 
   return (
     <>
@@ -274,12 +383,14 @@ const TalentProfile = () => {
                 talentData.profession &&
                 talentData.profession.map((item, index) => (
                   <>
-                    <div className="name">{item?.value}</div>
-                    <div className="value">
-                      $ {item?.perHourSalary} per hour (Negotiable)
-                    </div>
-                    <div className="value">
-                      $ {item?.perDaySalary} per day (Negotiable)
+                    <div key={index}>
+                      <div className="name">{item?.value}</div>
+                      <div className="value">
+                        $ {item?.perHourSalary} per hour (Negotiable)
+                      </div>
+                      <div className="value">
+                        $ {item?.perDaySalary} per day (Negotiable)
+                      </div>
                     </div>
                   </>
                 ))}
@@ -402,178 +513,132 @@ const TalentProfile = () => {
             {photos && (
               <div className="models-photos">
                 <section className="photos-gallery">
-                  <div className="photos-gallery-image">
-                    <img src={model}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model2}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model3}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model4}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model5}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model6}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model7}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model8}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model9}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model10}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model11}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model12}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model13}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model14}></img>
-                  </div>
-                  <div className="photos-gallery-image">
-                    <img src={model15}></img>
-                  </div>
+                  {photosList &&
+                    photosList.map((image, index) => {
+                      console.log(image, "image");
+                      return (
+                        <>
+                          <div className="photos-gallery-image" key={index}>
+                            <img
+                              className=""
+                              src={`${API.userFilePath}${image}`}
+                              alt=""
+                            />
+                          </div>
+                        </>
+                      );
+                    })}
                 </section>
               </div>
             )}
             {videos && (
               <div className="models-photos">
-                {/* {photosList.map((item) => {
+                {/* {videoAudioList.map((item, index) => {
                   return (
-                    <div className="model-picture-wrapper">
-                      <img className="model-picture" src={item.photo}></img>
+                    <div className="model-picture-wrapper" key={index}>
+                      <img
+                        className="model-picture"
+                        src={`${API.userFilePath}${item}`}
+                      ></img>
                     </div>
                   );
                 })} */}
+
+                {videoAudioList.map((item) => (
+                  <div className="item model-picture-wrapper" key={item.id}>
+                    {item.type === "video" && (
+                      <video controls>
+                        <source
+                          src={`${API.userFilePath}${item.fileData}`}
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                    {item.type === "audio" && (
+                      <audio controls>
+                        <source
+                          src={`${API.userFilePath}${item.fileData}`}
+                          type="audio/mp3"
+                        />
+                        Your browser does not support the audio tag.
+                      </audio>
+                    )}
+                    <p>{item.title}</p>
+                  </div>
+                ))}
               </div>
             )}
             {features && (
-              <div className="features-section">
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
+              <>
+                <div className="table-container">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td className="left-column">
+                          <table>
+                            <tbody>
+                              {featuresList
+                                ?.slice(0, Math.ceil(featuresList?.length / 2))
+                                .map((feature, index) => (
+                                  <tr key={feature.label}>
+                                    <td>{feature.label}</td>
+                                    <td>{feature.value}</td>
+                                  </tr>
+                                ))}
+                            </tbody>
+                          </table>
+                        </td>
+                        <td className="right-column">
+                          <table>
+                            <tbody>
+                              {featuresList
+                                ?.slice(Math.ceil(featuresList?.length / 2))
+                                .map((feature, index) => (
+                                  <tr key={feature.label}>
+                                    <td>{feature.label}</td>
+                                    <td>{feature.value}</td>
+                                  </tr>
+                                ))}
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Height</div>
-                  <div className="features-value">{data[0].height}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Hair Color</div>
-                  <div className="features-value">{data[0].hairColour}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Hair Type</div>
-                  <div className="features-value">{data[0].hairType}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Build</div>
-                  <div className="features-value">{data[0].build}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Skin Type</div>
-                  <div className="features-value">{data[0].skinType}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Skin Tone</div>
-                  <div className="features-value">{data[0].skinTone}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Eye Color</div>
-                  <div className="features-value">{data[0].eyeColour}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-                <div className="features-wrapper">
-                  <div className="features-heading">Ethnicity</div>
-                  <div className="features-value">{data[0].ethnicity}</div>
-                </div>
-              </div>
+              </>
             )}
             {bio && (
-              <div className="models-bio">
-                I'm a fashion, fitness and lifestyle influencer/content creator
-                based in Melbourne. Australia. I am personable, have great
-                attention to detail and pride myself on being a coffee snob! I
-                love to share my understated but elegant personal style with my
-                followers. In particular I enjoy putting together simple,
-                minimalist and wearable outfits. I also really enjoy
-                cooking/baking and indulging in cruelty free skincare and
-                makeup. I started my Instagram page with the vision of sharing
-                my style tips and snippets of my lifestyle with a wider
-                audience. I have already collaborated with a variety of brands,
-                from jewelry to wellness and skincare. I'm looking forward to
-                collaborating on many more quality campaigns. I have an
-                understated and elegant style. I the ability to manage tight
-                deadlines and give my best to every project that I am a part of.
-                I like meeting new people and I'm looking forward to
-                collaborating with a lot of lovely brands and people on a
-                personal and professional level.
+              <div>
+                {cvList.map((pdf) => (
+                  <>
+                    <div className="cv-card" key={pdf.title}>
+                      <i class="fa-solid fa-file"></i>
+                      <div className="fileName">{pdf.title}</div>
+                      <button
+                        className="view-cv"
+                        onClick={() => handleView(pdf)}
+                      >
+                        View
+                      </button>
+                    </div>
+                  </>
+                ))}
               </div>
             )}
             {reviews && (
               <div className="model-reviews">
-                {/* {reviewsList.map((item) => {
+                {reviewsList?.map((item, index) => {
                   return (
-                    <div className="model-review-wrapper">
+                    <div className="model-review-wrapper" key={index}>
                       <div className="review-date">{item.date}</div>
                       <div className="review-title">{item.title}</div>
                       <div className="review-content">{item.description}</div>
                       <div className="reviewer-section">
                         <div className="reviewers-rating">
-                          {item.rating.map((item) => {
-                            return <img src={pinkStar}></img>;
+                          {item.rating.map((item, index) => {
+                            return <img key={index} src={pinkStar}></img>;
                           })}
                         </div>
                         <div className="reviewer-details">
@@ -585,7 +650,7 @@ const TalentProfile = () => {
                       </div>
                     </div>
                   );
-                })} */}
+                })}
               </div>
             )}
           </div>
