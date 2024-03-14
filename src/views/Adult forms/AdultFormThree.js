@@ -55,6 +55,15 @@ const AdultFormThree = () => {
   console.log(" queryString:", queryString);
   console.log("Search queryString:", typeof queryString);
   const navigate = useNavigate();
+  const [updateDisabled, setUpdateDisabled] = useState(false);
+
+  useEffect(() => {}, [updateDisabled]);
+
+  useEffect(() => {
+    if (profileFile) {
+      setUpdateDisabled(true);
+    }
+  }, [profileFile]);
 
   const getFeatures = async () => {
     await ApiHelper.get(API.getFeatures)
@@ -101,6 +110,7 @@ const AdultFormThree = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
+          updateProfileStatus();
           setMessage("Updated SuccessFully!");
           setOpenPopUp(true);
           setTimeout(function() {
@@ -116,6 +126,13 @@ const AdultFormThree = () => {
           }, 1000);
         }
       })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+  const updateProfileStatus = async () => {
+    await ApiHelper.post(`${API.updateProfileStatus}${queryString}`)
+      .then((resData) => {})
       .catch((err) => {
         setIsLoading(false);
       });
@@ -457,7 +474,9 @@ const AdultFormThree = () => {
                 </div>
                 <div className="adult-main">
                   <div className="adults-form-title">Complete your Profile</div>
-                  <div className="kids-form-title">Profile Picture</div>
+                  <div className="kids-form-title">
+                    Profile Picture <span className="astrix">*</span>
+                  </div>
                   <div
                     className="cv-section"
                     onDrop={handleProfileDrop}
@@ -1245,10 +1264,15 @@ const AdultFormThree = () => {
             </button>
 
             <button
-              className="step-continue"
-              type="button"
-              onClick={() => {
-                updateAdultSignup();
+              className={
+                !updateDisabled
+                  ? "step-continue disabled-continue"
+                  : "step-continue"
+              }
+              onClick={(e) => {
+                if (updateDisabled === true) {
+                  updateAdultSignup();
+                }
               }}
             >
               {isLoading ? "Loading..." : "Continue"}

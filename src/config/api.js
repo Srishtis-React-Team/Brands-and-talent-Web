@@ -22,6 +22,7 @@ export const API = {
   checkProfileStatus: BASEURL + "users/checkProfileStatus/",
   editKids: BASEURL + "users/editKids/",
   updateAdults: BASEURL + "users/updateAdults/",
+  updateProfileStatus: BASEURL + "users/updateProfileStatus/",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",

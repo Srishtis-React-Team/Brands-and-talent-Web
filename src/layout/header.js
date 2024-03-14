@@ -69,26 +69,28 @@ const Header = ({ sendMessageToParent }) => {
           <img className="btLogo" src={btLogo}></img>
         </div>
 
-        <div className="">
-          <NavLink to="/login" className="login-text" onClick={handleClick}>
-            Login
-          </NavLink>
-        </div>
-        <div
-          className="signup"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          Sign up for free
-        </div>
-        <div
-          onClick={() => {
-            setMenuOpen(!menuOpen);
-            // sendMessageToParent({ menuStatus: menuOpen });
-          }}
-          className="menu-icon"
-        >
-          <i className="fa-solid fa-bars"></i>
+        <div className="mobile-nav-functions">
+          <div className="">
+            <NavLink to="/login" className="login-text " onClick={handleClick}>
+              Login
+            </NavLink>
+          </div>
+          <div
+            className="signup mobile-signup"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Sign up for free
+          </div>
+          <div
+            onClick={() => {
+              setMenuOpen(!menuOpen);
+              // sendMessageToParent({ menuStatus: menuOpen });
+            }}
+            className="menu-icon"
+          >
+            <i className="fa-solid fa-bars"></i>
+          </div>
         </div>
       </div>
       <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
@@ -99,13 +101,18 @@ const Header = ({ sendMessageToParent }) => {
             </NavLink>
           </div>
           <div>
-            <NavLink to="/find-creators" onClick={handleClick}>
-              Find Creators
+            <NavLink to="/" onClick={handleClick}>
+              Post a Job
             </NavLink>
           </div>
           <div>
-            <NavLink to="/get-booked" onClick={handleClick}>
-              Get Booked
+            <NavLink to="/find-creators" onClick={handleClick}>
+              Find Talent
+            </NavLink>
+          </div>
+          <div>
+            <NavLink to="/how-it-works" onClick={handleClick}>
+              How It Works
             </NavLink>
           </div>
           <div>
@@ -203,7 +210,7 @@ const Header = ({ sendMessageToParent }) => {
       </div>
 
       <div className="header">
-        <div className="container d-flex align-items-center justify-content-between">
+        <div className="container-fluid header-container d-flex align-items-center justify-content-between">
           <div
             className="icon btn-logo"
             onClick={() => {

@@ -4,7 +4,7 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
-
+import Header from "../layout/header";
 const ForgotPassword = () => {
   const btLogo = require("../assets/icons/Group 56.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
@@ -79,10 +79,12 @@ const ForgotPassword = () => {
 
   return (
     <>
+      <Header />
+
       <div className="login-main">
         <div className="login-container">
           <div className="otp-title">
-            <span className="bold-otp">Forgot</span>
+            <span className="">Forgot</span>
             <span>Password</span>
           </div>
           <div className="forgot-info">
@@ -109,9 +111,9 @@ const ForgotPassword = () => {
           >
             {isLoading ? "Loading..." : "Continue"}
           </div>
-          {/* <div className="resend-forgot" onClick={() => resend()}>
+          <div className="resend-forgot" onClick={() => resend()}>
             If you didn’t receive a code? <span>Resend</span>
-          </div> */}
+          </div>
         </div>
         <div className="forgot-logo">
           <img src={btLogo} alt="" />
