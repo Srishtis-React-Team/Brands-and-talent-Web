@@ -4,6 +4,7 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
+import Header from "../layout/header";
 
 const ResetPassword = () => {
   const btLogo = require("../assets/icons/Group 56.png");
@@ -91,6 +92,7 @@ const ResetPassword = () => {
 
   return (
     <>
+      <Header />
       <div className="login-main">
         <div className="login-container">
           <div className="otp-title">

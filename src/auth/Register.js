@@ -1362,7 +1362,7 @@ const Register = () => {
                   }}
                 ></button>
               </div>
-              <div className="modal-body trial-model modal-content ">
+              <div className="modal-body trial-model modal-content gmail-page-body">
                 <div className="gmail-wrapper">
                   <div className="gmail-tick">
                     <img src={bigTick} alt="" />
@@ -1575,7 +1575,7 @@ const Register = () => {
               }}
             ></button>
           </div>
-          <div className="dialog-body">
+          <div className="dialog-body gmail-page-body">
             <div className="gmail-wrapper">
               <div className="gmail-tick">
                 <img src={bigTick} alt="" />

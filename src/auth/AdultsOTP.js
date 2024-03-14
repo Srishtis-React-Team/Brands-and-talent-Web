@@ -125,7 +125,7 @@ const AdultsOTP = ({ sendDataToParent, ...props }) => {
   return (
     <>
       <div className="otp-main">
-        <div className="otp-container">
+        <div className="adults-otp-container">
           <div className="otp-title">
             <span className="bold-otp">OTP</span>
             <span>Verification</span>
@@ -158,7 +158,7 @@ const AdultsOTP = ({ sendDataToParent, ...props }) => {
             Back
           </div>
         </div>
-        <div className="otp-logo">
+        <div className="adult-otp-logo">
           <img src={btLogo} alt="" />
         </div>
       </div>

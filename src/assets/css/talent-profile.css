@@ -9,7 +9,6 @@
     border: 1px solid #000;
     background: #fff;
     height: 100%;
-    position: relative;
   }
 
   .talent-info-section {
@@ -33,7 +32,6 @@
     border: 1px solid #000;
     background: #fff;
     height: 100%;
-    position: relative;
   }
 
   .talent-info-section {
@@ -56,7 +54,6 @@
     border: 1px solid #000;
     background: #fff;
     height: 100%;
-    position: relative;
   }
 
   .talent-info-section {
@@ -80,7 +77,6 @@
     border: 1px solid #000;
     background: #fff;
     height: 100%;
-    position: relative;
   }
 
   .talent-info-section {
@@ -390,7 +386,7 @@
 }
 
 .talent-info-wrapper {
-  padding: 25px;
+  /* padding: 30px; */
 }
 
 .talent-img-backdrop {
@@ -401,24 +397,24 @@
 }
 
 .talent-backdrop {
-  height: 290px;
+  position: relative;
 }
 
 .talent-img {
-  width: 190px;
-  height: 190px;
+  width: 50%;
+  height: 90%;
   position: absolute;
   border-radius: 50%;
   border: 2px solid #c2114b;
-  top: 6%;
-  left: 18%;
+  top: 50%;
+  left: 25%;
 }
 
-.talent-name {
+.individual-talent-name {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0px 0px 0px;
+  padding: 120px 0px 0px 0px;
 }
 
 .talent-status {
@@ -426,14 +422,13 @@
   border-radius: 130px;
   background: #fdae20;
   padding: 10px;
-  width: 87px;
-  height: 42px;
+  width: 22%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 114px;
-  top: 245px;
+  left: 39%;
+  top: 125%;
 }
 
 .talent-status > span {
@@ -919,7 +914,7 @@
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
   }
-  .talent-name {
+  .individual-talent-name {
     display: block;
     /* justify-content: center;
     align-items: center;
@@ -938,14 +933,17 @@
     padding: 10px 0px;
   }
   .talent-status {
-    left: 158px;
-    top: 440px;
+    left: 39%;
+    top: 125%;
+    width: 22%;
   }
   .talent-backdrop {
-    height: 340px;
+    position: relative;
   }
   .talent-img {
-    top: 30%;
+    width: 50%;
+    height: 90%;
+    top: 50%;
     left: 25%;
   }
   .reviews-section {
@@ -1081,4 +1079,55 @@
   font-size: 40px;
   color: #c2114b;
   padding: 20px 0px;
+}
+
+.bio-wrapper {
+  padding: 30px 30px 10px 30px;
+}
+
+.talent-all-details-wrapper {
+  padding: 30px;
+}
+
+.individual-talent-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgb(189, 189, 189);
+  padding-bottom: 4px;
+}
+
+.individual-talent-tab {
+  margin-left: 50px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 160px;
+  padding: 15px;
+}
+
+.individual-talent-tab-first {
+  margin-left: 0px !important;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 165px;
+  padding: 15px;
+}
+
+.individual-talent-tab-first-active-tab {
+  height: 40px;
+  border-top-right-radius: 140px;
+  border-bottom-right-radius: 140px;
+  background: #000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff !important;
+  max-width: 165px;
+  padding: 15px;
 }

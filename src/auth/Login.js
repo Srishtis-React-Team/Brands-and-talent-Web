@@ -70,7 +70,7 @@ const Login = () => {
     setIsLoading(true);
     await ApiHelper.post(API.talentLogin, formData)
       .then((resData) => {
-        console.log("talentLogin response", resData.data.data.user._id);
+        console.log("talentLogin response", resData);
         if (resData.data.status === true) {
           console.log("called");
           setIsLoading(false);
@@ -78,9 +78,14 @@ const Login = () => {
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/otp`);
             setUserIdLocalStorage(resData.data.data);
           }, 1000);
+          if (resData.data.type === "adult") {
+            console.log("adult block");
+            navigate(`/talent-dashboard`);
+          } else if (resData.data.type === "kids") {
+            navigate(`/otp`);
+          }
         } else if (resData.data.status === false) {
           console.log("false called");
           setMessage(resData.data.message);

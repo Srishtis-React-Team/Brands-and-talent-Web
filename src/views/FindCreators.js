@@ -118,6 +118,9 @@ const FindCreators = () => {
     { value: "Model", label: "Model" },
     { value: "Director", label: "Director" },
     { value: "Singer", label: "Singer" },
+    { value: "Dancer", label: "Dancer" },
+    { value: "Reader", label: "Reader" },
+    { value: "Writer", label: "Writer" },
   ];
 
   const genderList = [
@@ -272,6 +275,18 @@ const FindCreators = () => {
       });
   };
 
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "unset", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "200px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
+
   useEffect(() => {
     getCountries();
     getTalentList();
@@ -365,6 +380,7 @@ const FindCreators = () => {
                   className="basic-multi-select"
                   classNamePrefix="select"
                   onChange={(value) => setProfession(value)}
+                  styles={customStyles}
                 />
               </div>
             </div>
@@ -597,91 +613,80 @@ const FindCreators = () => {
             </div>
           </div>
           <div className="models-images">
-            <div className="gallery-section filtered-gallery">
-              {talentList?.map((item) => {
-                return (
-                  <div
-                    className="gallery-warpper"
-                    onClick={() => openTalent(item)}
-                  >
-                    <div className="gallery-position">
-                      <img
-                        className="find-talent-image"
-                        src={API.userFilePath + item?.image?.fileData}
-                      ></img>
-                      <div className="find-talentrating">
-                        <img src={brightStar}></img>
-                        <img src={brightStar}></img>
-                        <img src={brightStar}></img>
-                        <img src={darkStar}></img>
-                        <img src={darkStar}></img>
+            <div className="gallery-section">
+              <div className="gallery-main p-0 m-0">
+                {talentList?.map((item) => {
+                  return (
+                    <div className="gallery-wrapper">
+                      <div className="">
+                        <img
+                          className="gallery-img"
+                          src={`${API.userFilePath}${item.image?.fileData}`}
+                        ></img>
+                        <div className="rating">
+                          <img src={brightStar}></img>
+                          <img src={brightStar}></img>
+                          <img src={brightStar}></img>
+                          <img src={darkStar}></img>
+                          <img src={darkStar}></img>
+                        </div>
+                        {!item.isFavorite && (
+                          <img
+                            className="heart-icon"
+                            src={heartIcon}
+                            onClick={() => addFavorite(item)}
+                          ></img>
+                        )}
+                        {item.isFavorite === true && (
+                          <img
+                            className="heart-icon"
+                            src={favoruiteIcon}
+                            onClick={() => removeFavorite(item)}
+                          ></img>
+                        )}
                       </div>
-                      {!item.isFavorite && (
-                        <img
-                          className="favoruite-find-talent"
-                          src={heartIcon}
-                          onClick={() => addFavorite(item)}
-                        ></img>
-                      )}
-                      {item.isFavorite === true && (
-                        <img
-                          className="favoruite-find-talent"
-                          src={favoruiteIcon}
-                          onClick={() => removeFavorite(item)}
-                        ></img>
-                      )}
-                    </div>
-                    <div className="gallery-content">
-                      <div className="content">
-                        <div className="name">
-                          {item?.preferredChildFirstname
-                            ? `${item?.preferredChildFirstname}`
-                            : "Elizabeth"}
-                        </div>
-                        <div className="address">
-                          {item.profession && (
-                            <>
-                              {item.profession.map((item, index) => {
-                                return (
-                                  <>
-                                    <span key={index}>
-                                      {item.value}
-                                      {index !== item?.profession?.length - 1
-                                        ? ","
-                                        : ""}
-                                    </span>
-                                  </>
-                                );
-                              })}
-                            </>
-                          )}
-                        </div>
-                        <div className="user-details">
-                          <div className="location-wrapper">
-                            <img src={locationIcon} alt="" />
-                            <div className="location-name">
-                              {item?.parentCountry}
+                      <div className="gallery-content">
+                        <div className="content">
+                          <div className="name">
+                            {item?.preferredChildFirstname
+                              ? `${item?.preferredChildFirstname}`
+                              : "Elizabeth"}
+                          </div>
+                          <div className="address">
+                            {item.profession?.map((profession, index) => (
+                              <React.Fragment key={index}>
+                                {profession.value}
+                                {index !== item.profession.length - 1 && ","}
+                              </React.Fragment>
+                            ))}
+                          </div>
+                          <div className="user-details">
+                            <div className="location-wrapper">
+                              <img src={locationIcon} alt="" />
+                              <div className="location-name">
+                                {item?.parentCountry}
+                              </div>
+                            </div>
+                            <div className="location-wrapper">
+                              <img src={jobIcon} alt="" />
+                              <div className="location-name">
+                                25 Jobs Booked
+                              </div>
                             </div>
                           </div>
-                          <div className="location-wrapper">
-                            <img src={jobIcon} alt="" />
-                            <div className="location-name">10 Jobs Booked</div>
-                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="center">
-              <div className="Join-wrapper center">
-                <div>Find More</div>
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
       </section>
+      <div className="find-more">
+        <div>Find More</div>
+      </div>
       <Footer />
     </>
   );

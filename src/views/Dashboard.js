@@ -24,6 +24,7 @@ const Dashboard = () => {
   const wppIcon = require("../assets/icons/651508c575f862fac120d7b1_wpp.webp");
   const lorealIcon = require("../assets/icons/6539e8f83c874a7714db103c_Loreal 1.webp");
   const havasIcon = require("../assets/icons/6539e8f8ac5a3259e7f64ef8_Havas_logo 3.webp");
+  const americanExpress = require("../assets/icons/American-Express-Color.png");
   const joseIcon = require("../assets/icons/6539e8f8fe903bed35dc07f8_jose-cuervo-logo-black-and-white 1.webp");
   const calvinIcon = require("../assets/icons/6539ea694436eb9715c9cba3_image 10.png");
   const roundProfile = require("../assets/icons/round-profile.png");
@@ -416,7 +417,7 @@ const Dashboard = () => {
 
   const removeFavorite = (item) => {
     console.log(item, "item");
-    const modifiedTalents = talentList.map((obj) => {
+    const modifiedTalents = talentList?.map((obj) => {
       console.log(obj, "obj");
       if (obj.id === item.id) {
         return { ...obj, isFavorite: false };
@@ -535,12 +536,12 @@ const Dashboard = () => {
         <Header sendMessageToParent={handleMessageFromHeader} />
 
         <section className="section-1">
-          <div className="container">
+          <div className="container-fluid">
             <div className="row banner-content">
               <div className="col-lg-12">
                 <div className="brand-section flex-column banner-title-section">
                   <p className="brand-title">
-                    <span>C</span>onnecting <span>B</span>rands and{" "}
+                    <span>C</span>onnecting <span>B</span>rands and
                     <span>T</span>
                     alent
                   </p>
@@ -550,55 +551,39 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="col-lg-6">
-                <div className="brand-section">
-                  <div className="join-talent-section">
-                    <div className="section-title">Get Booked</div>
-                    <div className="section-description">
-                      Get discovered by top brands, set your own rates, and keep
-                      100% of your earnings. Chat directly with brands you love
-                      and build lasting relationships. We put creators first.
-                      Sign up today and start earning!
-                    </div>
+                <div className="brand-options">
+                  <div className="section-title">Get Booked</div>
+                  <div className="section-description brand-secription">
+                    Get discovered by top brands, set your own rates, and keep
+                    100% of your earnings. Chat directly with brands you love
+                    and build lasting relationships. We put creators first. Sign
+                    up today and start earning!
+                  </div>
+                  <div
+                    className="Join-now-wrapper"
+                    data-bs-toggle="modal"
+                    data-bs-target="#verify_age"
+                  >
+                    <div className="joinnow-text">Join Now</div>
                   </div>
                 </div>
               </div>
               <div className="col-lg-6">
                 <div className="brand-options">
-                  <div className="hire-talent-section">
-                    <div className="section-title">Hire Talent</div>
-                    <div className="section-description brand-secription">
-                      Skip the search, skip the stress. Hire dream talent in
-                      minutes.
-                    </div>
+                  <div className="section-title">Hire Talent</div>
+                  <div className="section-description brand-secription">
+                    Skip the search, skip the stress. Hire dream talent in
+                    minutes.
                   </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="brand-section">
-                  <div className="join-talent-section">
-                    <div
-                      className="Join-wrapper center"
-                      data-bs-toggle="modal"
-                      data-bs-target="#verify_age"
-                    >
-                      <div className="joinnow-text">Join Now</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="brand-options">
-                  <div className="hire-talent-section">
-                    <div
-                      className="hire-wrapper center"
-                      onClick={(e) => {
-                        navigate("/signup", {
-                          state: { signupCategory: "brand" },
-                        });
-                      }}
-                    >
-                      <div className="joinnow-text">Hire Now</div>
-                    </div>
+                  <div
+                    className="hire-wrapper center"
+                    onClick={(e) => {
+                      navigate("/signup", {
+                        state: { signupCategory: "brand" },
+                      });
+                    }}
+                  >
+                    <div className="joinnow-text">Hire Now</div>
                   </div>
                 </div>
               </div>
@@ -611,7 +596,7 @@ const Dashboard = () => {
           <div className="brand-options"></div>
         </div> */}
 
-        <div className="container">
+        <div className="container-fluid">
           <div className="tabs-section">
             <div className="title">Popular Talents</div>
             <div className="tabs">
@@ -667,13 +652,13 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="container">
+        <div className="container-fluid">
           <div className="gallery-section">
             <div className="gallery-main">
-              {talentsList.map((item) => {
+              {talentsList?.map((item) => {
                 return (
-                  <div className="gallery-warpper">
-                    <div className="gallery-position">
+                  <div className="gallery-wrapper">
+                    <div className="">
                       <img
                         className="gallery-img"
                         src={`${API.userFilePath}${item.image?.fileData}`}
@@ -708,7 +693,7 @@ const Dashboard = () => {
                             : "Elizabeth"}
                         </div>
                         <div className="address">
-                          {item.profession.map((profession, index) => (
+                          {item.profession?.map((profession, index) => (
                             <React.Fragment key={index}>
                               {profession.value}
                               {index !== item.profession.length - 1 && ","}
@@ -736,15 +721,13 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="center">
-          <div className="Join-wrapper center">
-            <div>Find More</div>
-          </div>
+        <div className="find-more">
+          <div>Find More</div>
         </div>
 
         <div className="title">Our Community</div>
 
-        <div className="container">
+        <div className="-fluid">
           <div className="cards">
             <div className="community-card-wrapper card-background">
               <div className="count">5,258,451</div>
@@ -763,7 +746,7 @@ const Dashboard = () => {
 
         <div className="title">Products and Services</div>
 
-        <div className="container">
+        <div className="container-fluid">
           <div className="cards">
             <div className="card-wrapper ">
               <div className="card-picture">
@@ -800,19 +783,19 @@ const Dashboard = () => {
 
         <div className="title">Case studies</div>
 
-        <div className="container">
+        <div className="container-fluid">
           <div className="gallery-section">
-            <div className="gallery-main">
-              {caseList.map((item) => {
+            <div className="case-study-main">
+              {caseList?.map((item) => {
                 return (
-                  <div className="case-warpper">
-                    <div className="gallery-position">
+                  <div className="case-wrapper">
+                    <div className="">
                       <img className="case-img" src={item.photo}></img>
                     </div>
                     <div className="gallery-content">
                       <div className="content">
-                        <div className="name">{item.name}</div>
-                        <div className="address">{item.address}</div>
+                        <div className="case-study-name">{item.name}</div>
+                        <div className="case-study-address">{item.address}</div>
                       </div>
                     </div>
                   </div>
@@ -822,11 +805,13 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="center">
-          <div className="Join-wrapper center">
-            <div>Find More</div>
-          </div>
+        <div className="find-more">
+          <div>Find More</div>
         </div>
+
+        {/* data-bs-ride="carousel" <= under id="carouselExampleControls"
+            className="carousel slide" */}
+
         <div
           style={{
             backgroundImage: `url(${sliderBackground})`,
@@ -834,11 +819,7 @@ const Dashboard = () => {
           className="carousel-section"
         >
           <div className="carousel-title center">Success Stories</div>
-          <div
-            id="carouselExampleControls"
-            className="carousel slide"
-            data-bs-ride="carousel"
-          >
+          <div id="carouselExampleControls" className="carousel slide">
             <div className="carousel-inner">
               <div className="carousel-item active">
                 <div className="carousel-wrapper">
@@ -970,13 +951,16 @@ const Dashboard = () => {
 
         <div className="title brands-row-title">Trusted by renowned brands</div>
 
-        <div className="container">
+        <div className="container-fluid">
           <div className="brands-section">
             <div>
               <img src={adidasIcon}></img>
             </div>
             <div>
               <img src={ubisoftIcon}></img>
+            </div>
+            <div>
+              <img src={americanExpress}></img>
             </div>
             <div>
               <img src={wppIcon}></img>

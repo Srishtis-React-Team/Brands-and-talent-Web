@@ -5,7 +5,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
-const PhotosCarousel = () => {
+const PhotosCarousel = ({ talentData }) => {
   const model1 = require("../assets/images/model1.png");
   const model2 = require("../assets/images/model2.png");
   const model3 = require("../assets/images/model3.png");
@@ -20,35 +20,8 @@ const PhotosCarousel = () => {
 
   const [userId, setUserId] = useState(null);
 
-  const servicesList = [
-    {
-      image: "model1",
-      amount: "from US $2300",
-      title: "Full Branding Package",
-      description: "lorem ipsumssfd sdsds sfsssads asdadasd",
-      duration: "within-2months",
-      concepts: "3 Conscepts, 2 Revisions",
-    },
-    {
-      image: "model1",
-      amount: "from US $2300",
-      title: "Full Branding Package",
-      description: "lorem ipsumssfd sdsds sfsssads asdadasd",
-      duration: "within-2months",
-      concepts: "3 Conscepts, 2 Revisions",
-    },
-    {
-      image: "model1",
-      amount: "from US $2300",
-      title: "Full Branding Package",
-      description: "lorem ipsumssfd sdsds sfsssads asdadasd",
-      duration: "within-2months",
-      concepts: "3 Conscepts, 2 Revisions",
-    },
-  ];
-
   const fetchPhotos = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${userId}/1`)
+    await ApiHelper.post(`${API.unifiedDataFetch}${talentData?._id}/1`)
       .then((resData) => {
         console.log(resData, "resData photos");
         if (resData.data.status === true) {
@@ -69,10 +42,10 @@ const PhotosCarousel = () => {
   }, []);
 
   useEffect(() => {
-    if (userId) {
+    if (talentData?._id) {
       fetchPhotos();
     }
-  }, [userId]);
+  }, [talentData?._id]);
 
   useEffect(() => {
     console.log(photosList, "photosList");
@@ -88,7 +61,7 @@ const PhotosCarousel = () => {
         items={photosList?.length === 1 ? 1 : 5}
       >
         {photosList &&
-          photosList.map((image, index) => {
+          photosList?.map((image, index) => {
             // console.log(photosList, "photosList map");
             console.log(image, "image");
             return (

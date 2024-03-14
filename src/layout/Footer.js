@@ -11,6 +11,11 @@ const Footer = () => {
   const fieldsBackground = require("../assets/images/fields-background.png");
   const btLogo = require("../assets/icons/Group 56.png");
   const socialIcons = require("../assets/icons/Social.png");
+  const fbBlack = require("../assets/icons/social-media-icons/fb-black.png");
+  const twitterBlack = require("../assets/icons/social-media-icons/twitter-black.png");
+  const githubBlack = require("../assets/icons/social-media-icons/github-black.png");
+  const instaBlack = require("../assets/icons/social-media-icons/insta-black.png");
+
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [loader, setLoader] = useState(false);
@@ -57,16 +62,10 @@ const Footer = () => {
 
   return (
     <>
-      <div className="container">
-        <section className="main-form">
-          <div
-            className="form-section"
-            style={{
-              backgroundImage: `url(${fieldsBackground})`,
-              backgroundRepeat: "round",
-            }}
-          >
-            <div className="form-title get-discover">Get Discovered</div>
+      <div className="container-fluid">
+        <div className="main-footer-wrapper">
+          <section className="main-footer-form">
+            <div className="get-discover">Get Discovered</div>
             <div className="form-fields">
               <input
                 className="input-style form-control"
@@ -94,8 +93,8 @@ const Footer = () => {
                 Subscribe Now
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
         <section>
           <div className="footer-section">
             <div className="footer-wrapper">
@@ -108,7 +107,10 @@ const Footer = () => {
                 sed.
               </div>
               <div className="social-medias">
-                <img src={socialIcons}></img>
+                <img src={twitterBlack}></img>
+                <img src={fbBlack}></img>
+                <img src={instaBlack}></img>
+                <img src={githubBlack}></img>
               </div>
             </div>
             <div className="footer-wrapper">

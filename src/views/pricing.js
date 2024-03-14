@@ -10,6 +10,7 @@ const Pricing = () => {
   const [plan2_Selected, selectPlan2] = useState(true);
   const [plan3_Selected, selectPlan3] = useState(false);
   const greenTick = require("../assets/icons/greenTick.png");
+  const [pricing, setPricing] = useState("");
 
   useEffect(() => {
     getPricingList();
@@ -26,6 +27,10 @@ const Pricing = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const selectPricing = (event) => {
+    setPricing(event.target.value);
   };
 
   function handleForms(e) {
@@ -59,6 +64,26 @@ const Pricing = () => {
         </div>
       </section>
       {/* className={artists ? "active-tab" : null} */}
+
+      <div className="select-plan-main">
+        <div className="select-pricing-title">Filter</div>
+        <div className="select-pricing">
+          <select
+            className="form-select select-pricing-select"
+            aria-label="Default select example"
+            onChange={selectPricing}
+            value={pricing}
+          >
+            <option value="" disabled selected>
+              For Talents
+            </option>
+            <option defaultValue value="forward">
+              For Brands
+            </option>
+          </select>
+        </div>
+      </div>
+
       <div className="plan-main">
         {pricingList.length && (
           <div className="plans-section">

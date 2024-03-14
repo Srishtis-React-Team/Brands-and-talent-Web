@@ -8,11 +8,14 @@ import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import PhotosCarousel from "./PhotosCarousel.js";
 import CardCarousel from "./CardCarousel.js";
+import ServicesCarousel from "./ServicesCarousel.js";
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
+import sample from "./sample.pdf";
+
 const TalentProfile = () => {
   // const location = useLocation();
   // const { talentData } = location.state;
   // console.log(talentData, "talentData");
-
   const girl1 = require("../assets/images/girl.png");
   const model = require("../assets/images/model-profile.png");
   const model1 = require("../assets/images/model1.png");
@@ -57,7 +60,12 @@ const TalentProfile = () => {
   const blueShield = require("../assets/icons/blue-shield.png");
   const greenTickCircle = require("../assets/icons/grey-filled-circle.png");
   const elipsis = require("../assets/icons/elipsis.png");
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState();
 
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
   const [portofolio, showPortofolio] = useState(true);
   const [photos, showPhotos] = useState(false);
   const [videos, showVideos] = useState(false);
@@ -74,12 +82,17 @@ const TalentProfile = () => {
 
   const [userId, setUserId] = useState(null);
 
+  const location = useLocation();
+  const selecteTalent = location.state && location.state.talentData;
+
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     setUserId(storedUserId);
     if (userId) {
-      getTalentById(userId);
+      getTalentById();
     }
+
+    console.log(`${API.userFilePath}${talentData?.cv[0]?.fileData}`, "pdfurl");
   }, [userId]);
 
   useEffect(() => {
@@ -105,7 +118,7 @@ const TalentProfile = () => {
   }, [cvList]);
 
   const fetchPhotos = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${userId}/1`)
+    await ApiHelper.post(`${API.unifiedDataFetch}${selecteTalent._id}/1`)
       .then((resData) => {
         console.log(resData, "resData photos");
         if (resData.data.status === true) {
@@ -120,7 +133,7 @@ const TalentProfile = () => {
       });
   };
   const fetchVideoAudios = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${userId}/2`)
+    await ApiHelper.post(`${API.unifiedDataFetch}${selecteTalent._id}/2`)
       .then((resData) => {
         console.log(resData, "resData videos");
         if (resData.data.status === true) {
@@ -136,7 +149,7 @@ const TalentProfile = () => {
       });
   };
   const fetchFeatures = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${userId}/4`)
+    await ApiHelper.post(`${API.unifiedDataFetch}${selecteTalent._id}/4`)
       .then((resData) => {
         console.log(resData, "resData features");
         if (resData.data.status === true) {
@@ -148,7 +161,7 @@ const TalentProfile = () => {
       });
   };
   const fetchCV = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${userId}/3`)
+    await ApiHelper.post(`${API.unifiedDataFetch}${selecteTalent._id}/3`)
       .then((resData) => {
         console.log(resData, "resData cv");
         if (resData.data.status === true) {
@@ -161,7 +174,7 @@ const TalentProfile = () => {
   };
 
   const getTalentById = async () => {
-    await ApiHelper.post(`${API.getTalentById}${userId}`)
+    await ApiHelper.post(`${API.getTalentById}${selecteTalent._id}`)
       .then((resData) => {
         if (resData) {
           setTalentData(resData.data.data);
@@ -254,10 +267,11 @@ const TalentProfile = () => {
       <Header />
       <section>
         <div className="popular-header">
-          <div className="header-title">Popular Models</div>
+          <div className="header-title">Profile</div>
           <div className="header-menu">
             <div>Home</div>
-            <div>Models</div>
+            <div>Talents</div>
+            <div>Profile</div>
           </div>
         </div>
       </section>
@@ -278,7 +292,7 @@ const TalentProfile = () => {
             </div>
           </div>
           <div className="individual-talents-details">
-            <div className="talent-name">
+            <div className="individual-talent-name">
               <div className="model-name">{`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}</div>
               <div className="talent-verified">
                 <span className="blue-shield-wrapper">
@@ -399,36 +413,40 @@ const TalentProfile = () => {
         </div>
         <div className="talent-info-section">
           <div className="talent-info-wrapper">
-            <div className="bio-text">Bio</div>
-            <div className="bio-info">
-              I'm a fashion, fitness and lifestyle influencer/content creator
-              based in Melbourne. Australia. I am personable, have great
-              attention to detail and pride myself on being a coffee snob! I
-              love to share my understated but elegant personal style with my
-              followers. In particular I enjoy putting together simple,
-              minimalist and wearable outfits. I also really enjoy
-              cooking/baking and indulging in cruelty free skincare and makeup.
-              I started my Instagram page with the vision of sharing my style
-              tips and snippets of my lifestyle with a wider audience. I have
-              already collaborated with a variety of brands, from jewelry to
-              wellness and skincare. I'm looking forward to collaborating on
-              many more quality campaigns. I have an understated and elegant
-              style. I the ability to manage tight deadlines and give my best to
-              every project that I am a part of. I like meeting new people and
-              I'm looking forward to collaborating with a lot of lovely brands
-              and people on a personal and professional level.
+            <div className="bio-wrapper">
+              <div className="bio-text">Bio</div>
+
+              {talentData?.childAboutYou?.map((htmlContent, index) => (
+                <div
+                  key={index}
+                  dangerouslySetInnerHTML={{ __html: htmlContent }}
+                />
+              ))}
+
+              {/* <div className="bio-info">
+                dangerouslySetInnerHTML={{ __html: talentData?.childAboutYou }}
+              </div> */}
             </div>
-            <div className="tabs profile-tabs">
+
+            <div className="individual-talent-tabs">
               <div
-                className={portofolio ? "active-tab" : null}
+                className={
+                  portofolio
+                    ? "individual-talent-tab-first-active-tab  individual-talent-tab-first"
+                    : "individual-talent-tab-first"
+                }
                 onClick={(e) => {
                   handleForms("portofolio");
                 }}
               >
-                Porfolio
+                Profile & Overview
               </div>
               <div
-                className={photos ? "active-tab" : null}
+                className={
+                  photos
+                    ? "active-tab individual-talent-tab"
+                    : "individual-talent-tab"
+                }
                 onClick={(e) => {
                   handleForms("photos");
                 }}
@@ -436,7 +454,11 @@ const TalentProfile = () => {
                 Photos
               </div>
               <div
-                className={videos ? "active-tab" : null}
+                className={
+                  videos
+                    ? "active-tab individual-talent-tab"
+                    : "individual-talent-tab"
+                }
                 onClick={(e) => {
                   handleForms("videos");
                 }}
@@ -444,7 +466,11 @@ const TalentProfile = () => {
                 Videos & Audios
               </div>
               <div
-                className={features ? "active-tab" : null}
+                className={
+                  features
+                    ? "active-tab individual-talent-tab"
+                    : "individual-talent-tab"
+                }
                 onClick={(e) => {
                   handleForms("features");
                 }}
@@ -452,7 +478,11 @@ const TalentProfile = () => {
                 Features
               </div>
               <div
-                className={reviews ? "active-tab" : null}
+                className={
+                  reviews
+                    ? "active-tab individual-talent-tab"
+                    : "individual-talent-tab"
+                }
                 onClick={(e) => {
                   handleForms("reviews");
                 }}
@@ -460,7 +490,11 @@ const TalentProfile = () => {
                 Reviews
               </div>
               <div
-                className={bio ? "active-tab" : null}
+                className={
+                  bio
+                    ? "active-tab individual-talent-tab"
+                    : "individual-talent-tab"
+                }
                 onClick={(e) => {
                   handleForms("bio");
                 }}
@@ -468,72 +502,76 @@ const TalentProfile = () => {
                 CV
               </div>
             </div>
-            {portofolio && (
-              <>
-                <div className="portofolio-section">
-                  <div className="portofolio-title">Photos</div>
-                  <div className="view-all">View All</div>
-                </div>
-                <div className="photos-slider">
-                  <PhotosCarousel />
-                </div>
-                <div className="portofolio-section">
-                  <div className="portofolio-title">Social media posts</div>
-                  <div className="view-all">View All</div>
-                </div>
-                <CardCarousel />
-                <div className="portofolio-section">
-                  <div className="portofolio-title">Reviews</div>
-                  <div className="view-all">View All</div>
-                </div>
-                <div className="reviews-section">
-                  <div className="rating-talent">
-                    <div className="num">4.5</div>
-                    <img src={white_star}></img>
+
+            <div className="talent-all-details-wrapper">
+              {portofolio && (
+                <>
+                  <div className="portofolio-section">
+                    <div className="portofolio-title">Photos</div>
+                    <div className="view-all">View All</div>
                   </div>
-                  <div className="content">
-                    <div className="title">
-                      Studio Shoot for Unrecognisable Ecommerce
+                  <div className="photos-slider">
+                    <PhotosCarousel talentData={talentData} />
+                  </div>
+                  <div className="portofolio-section">
+                    <div className="portofolio-title">Social media posts</div>
+                    <div className="view-all">View All</div>
+                  </div>
+                  <CardCarousel />
+                  <div className="portofolio-section">
+                    <div className="portofolio-title">Reviews</div>
+                    <div className="view-all">View All</div>
+                  </div>
+                  <div className="reviews-section">
+                    <div className="rating-talent">
+                      <div className="num">4.5</div>
+                      <img src={white_star}></img>
                     </div>
-                    <div className="description">
-                      Kate is a delight to work with, beautiful both punctual &
-                      professional. She knew exactly what was required and
-                      everything was effortless.
+                    <div className="content">
+                      <div className="title">
+                        Studio Shoot for Unrecognisable Ecommerce
+                      </div>
+                      <div className="description">
+                        Kate is a delight to work with, beautiful both punctual
+                        & professional. She knew exactly what was required and
+                        everything was effortless.
+                      </div>
+                    </div>
+                    <div className="booked-btn">
+                      <div className="wrapper">
+                        <img src={check}></img>
+                      </div>
+                      <div className="posted-jobs">24 Jobs Booked</div>
                     </div>
                   </div>
-                  <div className="booked-btn">
-                    <div className="wrapper">
-                      <img src={check}></img>
-                    </div>
-                    <div className="posted-jobs">24 Jobs Booked</div>
-                  </div>
+
+                  <ServicesCarousel talentData={talentData} />
+                </>
+              )}
+              {photos && (
+                <div className="models-photos">
+                  <section className="photos-gallery">
+                    {photosList &&
+                      photosList.map((image, index) => {
+                        console.log(image, "image");
+                        return (
+                          <>
+                            <div className="photos-gallery-image" key={index}>
+                              <img
+                                className=""
+                                src={`${API.userFilePath}${image}`}
+                                alt=""
+                              />
+                            </div>
+                          </>
+                        );
+                      })}
+                  </section>
                 </div>
-              </>
-            )}
-            {photos && (
-              <div className="models-photos">
-                <section className="photos-gallery">
-                  {photosList &&
-                    photosList.map((image, index) => {
-                      console.log(image, "image");
-                      return (
-                        <>
-                          <div className="photos-gallery-image" key={index}>
-                            <img
-                              className=""
-                              src={`${API.userFilePath}${image}`}
-                              alt=""
-                            />
-                          </div>
-                        </>
-                      );
-                    })}
-                </section>
-              </div>
-            )}
-            {videos && (
-              <div className="models-photos">
-                {/* {videoAudioList.map((item, index) => {
+              )}
+              {videos && (
+                <div className="models-photos">
+                  {/* {videoAudioList.map((item, index) => {
                   return (
                     <div className="model-picture-wrapper" key={index}>
                       <img
@@ -544,124 +582,144 @@ const TalentProfile = () => {
                   );
                 })} */}
 
-                {videoAudioList.map((item) => (
-                  <div className="item model-picture-wrapper" key={item.id}>
-                    {item.type === "video" && (
-                      <video controls>
-                        <source
-                          src={`${API.userFilePath}${item.fileData}`}
-                          type="video/mp4"
-                        />
-                        Your browser does not support the video tag.
-                      </video>
-                    )}
-                    {item.type === "audio" && (
-                      <audio controls>
-                        <source
-                          src={`${API.userFilePath}${item.fileData}`}
-                          type="audio/mp3"
-                        />
-                        Your browser does not support the audio tag.
-                      </audio>
-                    )}
-                    <p>{item.title}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-            {features && (
-              <>
-                <div className="table-container">
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td className="left-column">
-                          <table>
-                            <tbody>
-                              {featuresList
-                                ?.slice(0, Math.ceil(featuresList?.length / 2))
-                                .map((feature, index) => (
-                                  <tr key={feature.label}>
-                                    <td>{feature.label}</td>
-                                    <td>{feature.value}</td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </td>
-                        <td className="right-column">
-                          <table>
-                            <tbody>
-                              {featuresList
-                                ?.slice(Math.ceil(featuresList?.length / 2))
-                                .map((feature, index) => (
-                                  <tr key={feature.label}>
-                                    <td>{feature.label}</td>
-                                    <td>{feature.value}</td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            )}
-            {bio && (
-              <div>
-                {cvList.map((pdf) => (
-                  <>
-                    <div className="cv-card" key={pdf.title}>
-                      <i class="fa-solid fa-file"></i>
-                      <div className="fileName">{pdf.title}</div>
-                      <button
-                        className="view-cv"
-                        onClick={() => handleView(pdf)}
-                      >
-                        View
-                      </button>
+                  {videoAudioList.map((item) => (
+                    <div className="item model-picture-wrapper" key={item.id}>
+                      {item.type === "video" && (
+                        <video controls>
+                          <source
+                            src={`${API.userFilePath}${item.fileData}`}
+                            type="video/mp4"
+                          />
+                          Your browser does not support the video tag.
+                        </video>
+                      )}
+                      {item.type === "audio" && (
+                        <audio controls>
+                          <source
+                            src={`${API.userFilePath}${item.fileData}`}
+                            type="audio/mp3"
+                          />
+                          Your browser does not support the audio tag.
+                        </audio>
+                      )}
+                      <p>{item.title}</p>
                     </div>
-                  </>
-                ))}
-              </div>
-            )}
-            {reviews && (
-              <div className="model-reviews">
-                {reviewsList?.map((item, index) => {
-                  return (
-                    <div className="model-review-wrapper" key={index}>
-                      <div className="review-date">{item.date}</div>
-                      <div className="review-title">{item.title}</div>
-                      <div className="review-content">{item.description}</div>
-                      <div className="reviewer-section">
-                        <div className="reviewers-rating">
-                          {item.rating.map((item, index) => {
-                            return <img key={index} src={pinkStar}></img>;
-                          })}
-                        </div>
-                        <div className="reviewer-details">
-                          <div className="initial center">S</div>
-                          <div className="reviewer-name">
-                            {item.reviewer_name}
+                  ))}
+                </div>
+              )}
+              {features && (
+                <>
+                  <div className="table-container">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td className="left-column">
+                            <table>
+                              <tbody>
+                                {featuresList
+                                  ?.slice(
+                                    0,
+                                    Math.ceil(featuresList?.length / 2)
+                                  )
+                                  .map((feature, index) => (
+                                    <tr key={feature.label}>
+                                      <td>{feature.label}</td>
+                                      <td>{feature.value}</td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td className="right-column">
+                            <table>
+                              <tbody>
+                                {featuresList
+                                  ?.slice(Math.ceil(featuresList?.length / 2))
+                                  .map((feature, index) => (
+                                    <tr key={feature.label}>
+                                      <td>{feature.label}</td>
+                                      <td>{feature.value}</td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              )}
+              {bio && (
+                <div>
+                  {cvList.map((pdf) => {
+                    return (
+                      <>
+                        <>
+                          <div className="cv-card" key={pdf.title}>
+                            <p>
+                              Page {pageNumber} of {numPages}
+                            </p>
+                            <i class="fa-solid fa-file"></i>
+                            <div className="fileName">{pdf.title}</div>
+                            <button
+                              className="view-cv"
+                              onClick={() => handleView(pdf)}
+                            >
+                              View
+                            </button>
+                          </div>
+                        </>
+                      </>
+                    );
+                  })}
+                </div>
+              )}
+              {reviews && (
+                <div className="model-reviews">
+                  {reviewsList?.map((item, index) => {
+                    return (
+                      <div className="model-review-wrapper" key={index}>
+                        <div className="review-date">{item.date}</div>
+                        <div className="review-title">{item.title}</div>
+                        <div className="review-content">{item.description}</div>
+                        <div className="reviewer-section">
+                          <div className="reviewers-rating">
+                            {item.rating.map((item, index) => {
+                              return <img key={index} src={pinkStar}></img>;
+                            })}
+                          </div>
+                          <div className="reviewer-details">
+                            <div className="initial center">S</div>
+                            <div className="reviewer-name">
+                              {item.reviewer_name}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="center">
-        <div className="Join-wrapper center">
-          <div>Find More</div>
-        </div>
+      <div className="find-more">
+        <div>Find More</div>
       </div>
+
+      <Document
+        file={`${API.userFilePath}${talentData?.cv[0]?.fileData}`}
+        onLoadSuccess={onDocumentLoadSuccess}
+      >
+        {Array(numPages)
+          .fill()
+          .map((_, i) => (
+            <Page pageNumber={i + 1} />
+          ))}
+      </Document>
 
       <Footer />
     </>

@@ -13,7 +13,7 @@ const CardCarousel = () => {
   const model7 = require("../assets/images/model7.png");
   const model8 = require("../assets/images/model8.png");
   const model9 = require("../assets/images/model9.png");
-  const instaLogo = require("../assets/icons/instagram.png");
+  const instaLogo = require("../assets/icons/social-media-icons/instagram.png");
 
   const breakPoints = [
     { width: 1, itemsToShow: 1 },

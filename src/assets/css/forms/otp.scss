@@ -24,10 +24,28 @@
   align-items: center;
 }
 
+.adults-otp-container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #aaa;
+  border-radius: 26px;
+  padding: 30px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .otp-logo {
   position: absolute;
   background-color: #fff;
   top: 80px;
+  padding: 0px 20px;
+}
+.adult-otp-logo {
+  position: absolute;
+  background-color: #fff;
+  top: 22%;
   padding: 0px 20px;
 }
 

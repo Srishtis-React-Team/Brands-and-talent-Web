@@ -3,8 +3,26 @@
   margin: 0 auto;
   width: 95%;
 }
+
+.select-plan-main {
+  margin: 60px 235px 10px;
+  display: flex;
+  align-items: center;
+}
+.select-pricing {
+  width: 20%;
+}
+
+.select-pricing-title {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  padding-right: 25px;
+}
 .plans-section {
-  padding: 60px 0px;
+  padding: 10px 0px;
   display: flex;
   justify-content: center;
 }
@@ -300,47 +318,6 @@
   padding-left: 8px;
 }
 
-@media (max-width: 480px) {
-  .plans-section {
-    margin: 20px;
-    padding: 0px;
-    display: flex;
-    flex-direction: column;
-  }
-  .plans-wrapper:not(:first-child) {
-    margin-top: 18px;
-  }
-  .plan-name {
-    font-size: 16px;
-    padding: 20px 0px;
-  }
-  .plan-validity {
-    font-size: 14px;
-    padding-bottom: 0px;
-  }
-  .choose-btn {
-    width: 200px;
-    height: 40px;
-    font-size: 15px;
-    margin: 15px auto;
-  }
-
-  .include {
-    font-size: 12px;
-    font-weight: 600;
-    padding: 10px 0px 0px 20px;
-    text-align: left;
-  }
-  .included-things {
-    padding: 14px;
-  }
-  .plan-content {
-    display: flex;
-    align-items: start;
-    padding: 4px 0px;
-  }
-}
-
 /* 320px — 480px: Mobile devices */
 
 @media (min-width: 320px) and (max-width: 480px) {
@@ -400,5 +377,59 @@
   .plans-wrapper {
     width: 40%;
     margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .select-pricing {
+    width: 80%;
+  }
+  .select-pricing-title {
+    padding-bottom: 15px;
+  }
+  .select-plan-main {
+    margin: 60px 20px 10px;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .plans-section {
+    margin: 20px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+  }
+  .plans-wrapper:not(:first-child) {
+    margin-top: 18px;
+  }
+  .plan-name {
+    font-size: 16px;
+    padding: 20px 0px;
+  }
+  .plan-validity {
+    font-size: 14px;
+    padding-bottom: 0px;
+  }
+  .choose-btn {
+    width: 200px;
+    height: 40px;
+    font-size: 15px;
+    margin: 15px auto;
+  }
+
+  .include {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 0px 0px 20px;
+    text-align: left;
+  }
+  .included-things {
+    padding: 14px;
+  }
+  .plan-content {
+    display: flex;
+    align-items: start;
+    padding: 4px 0px;
   }
 }

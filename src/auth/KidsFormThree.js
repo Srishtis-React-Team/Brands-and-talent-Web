@@ -52,11 +52,20 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const kidsImage = require("../assets/images/kidsImage.png");
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
+  const [updateDisabled, setUpdateDisabled] = useState(false);
+
   const userId = urlParams.get("userId");
   console.log(userId, "userId");
 
   useEffect(() => {
     getFeatures();
+  }, []);
+  useEffect(() => {}, [updateDisabled]);
+  useEffect(() => {
+    getFeatures();
+    if (profileFile) {
+      setUpdateDisabled(true);
+    }
   }, [profileFile]);
 
   const handleProfileDrop = (e) => {
@@ -176,6 +185,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         };
         console.log(fileObj, "fileObj profileFile");
         setProfileFile(fileObj);
+
         console.log(profileFile, "profileFile");
         setOpenPopUp(true);
         setTimeout(function() {
@@ -464,7 +474,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   Upload Your Files & Connect With your social media accounts
                 </div>
                 <div className="kids-main">
-                  <div className="kids-form-title">Profile Picture</div>
+                  <div className="kids-form-title">
+                    Profile Picture <span className="astrix">*</span>
+                  </div>
                   <div
                     className="cv-section"
                     onDrop={handleProfileDrop}
@@ -1250,10 +1262,16 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           </button> */}
 
           <button
-            className="step-continue"
             type="button"
+            className={
+              !updateDisabled
+                ? "step-continue disabled-continue"
+                : "step-continue"
+            }
             onClick={(e) => {
-              editKids();
+              if (updateDisabled === true) {
+                editKids();
+              }
             }}
           >
             {isLoading ? "Loading..." : "Submit"}
