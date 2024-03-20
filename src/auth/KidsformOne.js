@@ -12,6 +12,8 @@ import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import ReactFlagsSelect from "react-flags-select";
 import { useNavigate } from "react-router";
+import nationalityOptions from "../components/nationalities";
+import languageOptions from "../components/languages";
 
 const KidsformOne = ({ sendDataToParent }) => {
   const paramsValues = window.location.search;
@@ -23,9 +25,24 @@ const KidsformOne = ({ sendDataToParent }) => {
   const kidsImage = require("../assets/images/kidsImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
+  const [updateDisabled, setUpdateDisabled] = useState(false);
+
   const [showError, setShowError] = useState(false);
   const [kidsFillData, setKidsFillData] = useState(null);
   const [parentFirstNameError, setparentFirstNameError] = useState(false);
+  const [parentMobileError, setParentMobileError] = useState(false);
+  const [parentCountryError, setParentCountryError] = useState(false);
+  const [stateError, setStateError] = useState(false);
+  const [cityError, setCityError] = useState(false);
+  const [professionError, setProfessionError] = useState(false);
+  const [categoryError, setCategoryError] = useState(false);
+  const [preferedNameError, setPreferedNameError] = useState(false);
+  const [maritalError, setMaritalError] = useState(false);
+  const [nationalityError, setNationalityError] = useState(false);
+  const [ethnicityError, setEthnicityError] = useState(false);
+  const [dobError, setDobError] = useState(false);
+  const [languageError, setLanguageError] = useState(false);
+  const [addressError, setAddressError] = useState(false);
   const [parentLastNameError, setparentLastNameError] = useState(false);
   const [parentEmailError, setparentEmailError] = useState(false);
   const [talentPasswordError, settalentPasswordError] = useState(false);
@@ -65,6 +82,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [relevantCategories, setRelevantCategories] = useState([]);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
   const [talentPassword, setTalentPassword] = useState("");
   const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
@@ -74,12 +92,46 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [age, setAge] = useState("");
+
+  const ethnicityOptions = [
+    "South Asian",
+    "Indian/Pakistani",
+    "South East Asian",
+    "Khmer",
+    "Vietnamese",
+    "Indonesian",
+    "Thai",
+    "Middle-East",
+    "Black",
+    "African",
+    "Latino/Hispanic",
+    "Russian",
+    "Ukrainian",
+    "Nordic",
+    "Scandinavian",
+    "European",
+    "Italian",
+  ];
+
+  const gendersOptions = [
+    "Man",
+    "Woman",
+    "Non binary",
+    "Transgender Woman",
+    "Transgender Man",
+    "Agender",
+    "Other",
+    "Prefer not to say",
+  ];
+
   useEffect(() => {
     getCountries();
     if (userId) {
       getKidsData();
     }
   }, []);
+
+  useEffect(() => {}, [updateDisabled]);
 
   // Function to handle date picker change
   const handleDateChange = (e) => {
@@ -118,7 +170,9 @@ const KidsformOne = ({ sendDataToParent }) => {
   // Function to handle country selection
 
   const selectEthnicity = (event) => {
+    console.log(event.target.value, "selectEthnicity");
     setEthnicity(event.target.value);
+    setEthnicityError(false);
   };
   const selectGender = (event) => {
     setGender(event.target.value);
@@ -126,32 +180,39 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
   const selectLanguage = (event) => {
     setLanguages(event.target.value);
+    setLanguageError(false);
   };
   const selectNationality = (event) => {
     setNationality(event.target.value);
+    setNationalityError(false);
   };
   const selectMaritalStatus = (event) => {
     setMaritalStatus(event.target.value);
+    setMaritalError(false);
   };
 
   const handlePasswordChange = (e) => {
     setTalentPassword(e.target.value);
     setPasswordMatch(e.target.value === talentConfirmPassword);
+    settalentPasswordError(false);
   };
 
   const handleConfirmPasswordChange = (e) => {
     setTalentConfirmPassword(e.target.value);
     setPasswordMatch(e.target.value === talentPassword);
+    settalentConfirmPasswordError(false);
   };
 
   const handleProfessionChange = (selectedOptions) => {
     setSelectedProfessions(selectedOptions);
+    setProfessionError(false);
   };
 
   const handleDetailChange = (index, field, value) => {
     const updatedSelectedProfessions = [...selectedProfessions];
     updatedSelectedProfessions[index][field] = value;
     setSelectedProfessions(updatedSelectedProfessions);
+    setProfessionError(false);
   };
 
   const handleSubmit = () => {
@@ -159,34 +220,67 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const professionList = [
-    { value: "Actor", label: "Actor" },
     { value: "Model", label: "Model" },
-    { value: "Director", label: "Director" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Creator", label: "Creator" },
+    { value: "Stylist", label: "Stylist" },
+    { value: "Photographer", label: "Photographer" },
+    { value: "Videographer", label: "Videographer" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Actor", label: "Actor" },
     { value: "Singer", label: "Singer" },
+    { value: "Writer", label: "Writer" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "RJ", label: "RJ" },
+    { value: "DJ", label: "DJ" },
+    { value: "VJ", label: "VJ" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Yoga Teacher", label: "Yoga Teacher" },
+    { value: "Webapp Developer", label: "Webapp Developer" },
+    { value: "Virtual Assistant", label: "Virtual Assistant" },
+    { value: "AI Influencer", label: "AI Influencer" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Other", label: "Other" },
   ];
 
   const categoryList = [
-    "Actor",
-    "Model",
-    "Director",
-    "Singer",
     "Fashion",
-    "Food",
-    "Beauty",
+    "Parenting and family",
+    "Sports/Martial Arts/Dance",
+    "Arts and photography",
+    "Videography",
+    "Music",
+    "Comedy/Entertainment",
+    "Education",
+    "Transportation",
+    "Food and beverage",
+    "Finance",
+    "Beauty/Cosmetics",
     "Luxury",
     "Business and Technology",
-    "Artist",
-    "Mummy & Parenting",
-    "Travel",
-    "Health & Fitness",
+    "Travel/Tourism",
+    "Health/Wellness/Fitness",
     "Home and Gardening",
-    "Eco & Sustainability",
-    "Music",
-    "Movies/Films",
+    "Eco-friendly/Nature/Sustainability",
+    "Diversity and inclusion",
+    "Outdoor and nature",
+    "Content Creation",
     "Lifestyle",
     "Celebrity",
-    "Content Creation",
-    "Virtual Assistant",
+    "Animals/Pets",
+    "Web3",
+    "Home and DIY",
+    "Anime/Memes",
+    "Website/Mobile Applications",
+    "Gaming",
+    "Lifecoach/Relationships",
+    "Cosplay/Memes",
+    "Other",
   ];
 
   const onEditorSummary = (editorState) => {
@@ -196,6 +290,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   function chooseCategory(category) {
+    setCategoryError(false);
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -259,6 +354,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleSelectedCountry = (event) => {
+    setParentCountryError(false);
     console.log(event, "event");
     console.log(event?.value, "event?.value");
     setCountry(event?.value);
@@ -266,7 +362,16 @@ const KidsformOne = ({ sendDataToParent }) => {
     console.log(country, "country");
   };
   const handleSelectedState = (state) => {
+    setStateError(false);
     setState(state?.label);
+    getCities({
+      countryName: country,
+      stateName: state?.label,
+    });
+  };
+  const handleSelectedCity = (state) => {
+    setKidsCity(state?.label);
+    setCityError(false);
   };
 
   const getStates = async (data) => {
@@ -281,13 +386,20 @@ const KidsformOne = ({ sendDataToParent }) => {
       })
       .catch((err) => {});
   };
+  const getCities = async (data) => {
+    const formData = data;
+    await ApiHelper.post(API.listCity, formData)
+      .then((resData) => {
+        if (resData) {
+          setCityList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
 
   const kidsSignUp = async () => {
     if (parentFirstName === "") {
       setparentFirstNameError(true);
-    }
-    if (parentLastName === "") {
-      setparentLastNameError(true);
     }
     if (parentEmail === "") {
       setparentEmailError(true);
@@ -301,21 +413,92 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (kidsLegalFirstName === "") {
       setkidsLegalFirstNameError(true);
     }
-    if (kidsLegalLastName === "") {
-      setkidsLegalLastNameError(true);
-    }
     if (gender === "") {
       setgenderError(true);
     }
+    if (parentMobile === "") {
+      setParentMobileError(true);
+    }
+    if (country === "") {
+      setParentCountryError(true);
+    }
+    if (state === "") {
+      setStateError(true);
+    }
+    if (kidsCity === "") {
+      setCityError(true);
+    }
+    if (address === "") {
+      setAddressError(true);
+    }
+    if (selectedProfessions.length === 0) {
+      setProfessionError(true);
+    }
+    if (selectedCategories.length === 0) {
+      setCategoryError(true);
+    }
+    if (kidsPreferedFirstName === "") {
+      setPreferedNameError(true);
+    }
+    if (kidsPreferedFirstName === "") {
+      setPreferedNameError(true);
+    }
+    if (nationality === "") {
+      setNationalityError(true);
+    }
+    if (ethnicity === "") {
+      setEthnicityError(true);
+    }
+    if (languages === "") {
+      setLanguageError(true);
+    }
+    if (maritalStatus === "") {
+      setMaritalError(true);
+    }
+    if (dateOfBirth === "") {
+      setDobError(true);
+    }
+    console.log(parentFirstName !== "", "parentFirstName");
+    console.log(parentEmail !== "", "parentEmail");
+    console.log(talentPassword !== "", "talentPassword");
+    console.log(talentConfirmPassword !== "", "talentConfirmPassword");
+    console.log(kidsLegalFirstName !== "", "kidsLegalFirstName");
+    console.log(gender !== "", "gender");
+    console.log(parentMobile !== "", "parentMobile");
+    console.log(country !== "", "country");
+    console.log(state !== "", "state");
+    console.log(kidsCity !== "", "kidsCity");
+    console.log(address !== "", "address");
+    console.log(selectedProfessions.length === 0, "selectedProfessions");
+    console.log(selectedProfessions, "selectedProfessions");
+    console.log(selectedCategories.length === 0, "selectedCategories");
+    console.log(selectedCategories, "selectedCategories");
+    console.log(kidsPreferedFirstName !== "", "kidsPreferedFirstName");
+    console.log(nationality !== "", "nationality");
+    console.log(ethnicity !== "", "ethnicity");
+    console.log(languages !== "", "languages");
+    console.log(maritalStatus !== "", "maritalStatus");
+    console.log(dateOfBirth !== "", "dateOfBirth");
     if (
-      parentFirstName !== "" ||
-      parentLastName !== "" ||
-      parentEmail !== "" ||
-      talentPassword !== "" ||
-      talentConfirmPassword !== "" ||
-      kidsLegalFirstName !== "" ||
-      kidsLegalLastName !== "" ||
-      gender !== ""
+      parentFirstName !== "" &&
+      parentEmail !== "" &&
+      talentPassword !== "" &&
+      talentConfirmPassword !== "" &&
+      kidsLegalFirstName !== "" &&
+      gender !== "" &&
+      parentMobile !== "" &&
+      country !== "" &&
+      state !== "" &&
+      kidsCity !== "" &&
+      address !== "" &&
+      selectedProfessions.length !== 0 &&
+      selectedCategories.length !== 0 &&
+      kidsPreferedFirstName !== "" &&
+      nationality !== "" &&
+      ethnicity !== "" &&
+      languages !== "" &&
+      maritalStatus !== "" &&
+      dateOfBirth !== ""
     ) {
       const formData = {
         parentFirstName: parentFirstName,
@@ -358,9 +541,7 @@ const KidsformOne = ({ sendDataToParent }) => {
               setOpenPopUp(true);
               setTimeout(function() {
                 setOpenPopUp(false);
-                navigate(
-                  `/talent-signup-plan-details?userId=${resData.data.data["userId"]}&userEmail=${resData.data.data["email"]}`
-                );
+                navigate(`/talent-otp?${resData.data.data}`);
               }, 1000);
             } else if (resData.data.status === false) {
               setIsLoading(false);
@@ -417,7 +598,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                 }}
                 src={btLogo}
               ></img>
-              <div className="step-text">Step 1 of 4</div>
+              <div className="step-text">Step 1 of 5</div>
             </div>
             <button
               type="button"
@@ -473,11 +654,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                           </label>
                           <input
                             type="text"
-                            className={`form-control ${
-                              parentFirstNameError
-                                ? "is-invalid"
-                                : "form-control"
-                            }`}
+                            className="form-control"
                             value={parentFirstName}
                             onChange={(e) => {
                               setParentFirstName(e.target.value);
@@ -516,7 +693,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                           <input
                             type="email"
                             className={`form-control ${
-                              isValidEmail ? "" : "is-invalid"
+                              !isValidEmail ? "is-invalid" : "form-control"
                             }`}
                             onChange={handleEmailChange}
                             placeholder="Enter E-mail"
@@ -536,7 +713,9 @@ const KidsformOne = ({ sendDataToParent }) => {
                       </div>
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">Mobile No.</label>
+                          <label className="form-label">
+                            Mobile No. <span className="mandatory">*</span>
+                          </label>
                           <input
                             type="number"
                             className="form-control"
@@ -545,16 +724,24 @@ const KidsformOne = ({ sendDataToParent }) => {
                             value={parentMobile}
                             onChange={(e) => {
                               setParentMobile(e.target.value);
+                              setParentMobileError(false);
                             }}
                             placeholder=" Mobile No."
                           ></input>
+                          {parentMobileError && (
+                            <div className="invalid-fields">
+                              Please enter Mobile Number
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
                     <div className="kids-form-row">
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">Country</label>
+                          <label className="form-label">
+                            Country<span className="mandatory">*</span>
+                          </label>
                           <Select
                             placeholder="Search country..."
                             options={countryList.map((country, index) => ({
@@ -566,11 +753,18 @@ const KidsformOne = ({ sendDataToParent }) => {
                             onChange={handleSelectedCountry}
                             isSearchable={true}
                           />
+                          {parentCountryError && (
+                            <div className="invalid-fields">
+                              Please Select Country
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">State</label>
+                          <label className="form-label">
+                            State<span className="mandatory">*</span>
+                          </label>
                           <Select
                             placeholder="Select state..."
                             options={stateList.map((state) => ({
@@ -581,6 +775,60 @@ const KidsformOne = ({ sendDataToParent }) => {
                             onChange={handleSelectedState}
                             isSearchable={true}
                           />
+                          {stateError && (
+                            <div className="invalid-fields">
+                              Please Select State
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="kids-form-row">
+                      <div className="kids-form-section">
+                        <div className="mb-3">
+                          <label className="form-label">
+                            City<span className="mandatory">*</span>
+                          </label>
+                          <Select
+                            placeholder="Select City..."
+                            options={cityList.map((city) => ({
+                              value: city.cityId, // or whatever unique identifier you want to use
+                              label: city.name,
+                            }))}
+                            value={kidsCity?.label}
+                            onChange={handleSelectedCity}
+                            isSearchable={true}
+                          />
+                          {cityError && (
+                            <div className="invalid-fields">
+                              Please Select City
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="kids-form-section">
+                        <div className="mb-3">
+                          <label
+                            htmlFor="exampleFormControlTextarea1"
+                            className="form-label"
+                          >
+                            Address<span className="mandatory">*</span>
+                          </label>
+                          <textarea
+                            className="form-control address-textarea"
+                            id="exampleFormControlTextarea1"
+                            value={address}
+                            rows="3"
+                            onChange={(e) => {
+                              setAddress(e.target.value);
+                              setAddressError(false);
+                            }}
+                          ></textarea>
+                          {addressError && (
+                            <div className="invalid-fields">
+                              Please Enter Address
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -631,9 +879,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             <span className="fa fa-lock form-control-feedback"></span>
                             <input
                               type={showConfirmPassword ? "text" : "password"}
-                              className={`form-control adult-signup-inputs ${
-                                passwordMatch ? "" : "is-invalid"
-                              }`}
+                              className="form-control adult-signup-inputs"
                               placeholder="Confirm Password"
                               onChange={(e) => {
                                 handleConfirmPasswordChange(e);
@@ -668,33 +914,14 @@ const KidsformOne = ({ sendDataToParent }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label
-                            htmlFor="exampleFormControlTextarea1"
-                            className="form-label"
-                          >
-                            Address
-                          </label>
-                          <textarea
-                            className="form-control address-textarea"
-                            id="exampleFormControlTextarea1"
-                            value={address}
-                            rows="3"
-                            onChange={(e) => {
-                              setAddress(e.target.value);
-                            }}
-                          ></textarea>
-                        </div>
-                      </div>
-                    </div>
+
                     <div className="kids-form-title">Your Child Details</div>
                     <div className="kids-form-row">
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label pay-info">
                             Profession (choose any 4)
+                            <span className="mandatory">*</span>
                           </label>
                           <div>
                             <Select
@@ -706,6 +933,11 @@ const KidsformOne = ({ sendDataToParent }) => {
                               classNamePrefix="select"
                               onChange={handleProfessionChange}
                             />
+                            {professionError && (
+                              <div className="invalid-fields">
+                                Please Choose Profession
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -776,7 +1008,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                     </div>
                     <div className="kids-form-title">
                       Please select the top 4 categories relevant to your
-                      profile.
+                      profile.<span className="mandatory">*</span>
                     </div>
                     <div className="category-list">
                       {categoryList.map((category, index) => (
@@ -795,12 +1027,17 @@ const KidsformOne = ({ sendDataToParent }) => {
                         </div>
                       ))}
                     </div>
+                    {categoryError && (
+                      <div className="invalid-fields">
+                        Please Choose Categories
+                      </div>
+                    )}
                     <div className="kids-form-title">Personal Details</div>
                     <div className="kids-form-row">
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">
-                            Legal First Name{" "}
+                            Legal First Name
                             <span className="mandatory">*</span>
                           </label>
                           <input
@@ -840,6 +1077,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                         <div className="mb-3">
                           <label className="form-label">
                             Prefered First Name
+                            <span className="mandatory">*</span>
                           </label>
                           <input
                             type="text"
@@ -847,9 +1085,15 @@ const KidsformOne = ({ sendDataToParent }) => {
                             value={kidsPreferedFirstName}
                             onChange={(e) => {
                               setKidsPreferedFirstName(e.target.value);
+                              setPreferedNameError(false);
                             }}
                             placeholder="Enter Prefered First Name"
                           ></input>
+                          {preferedNameError && (
+                            <div className="invalid-fields">
+                              Please Enter Prefered First Name
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="kids-form-section">
@@ -884,10 +1128,11 @@ const KidsformOne = ({ sendDataToParent }) => {
                             <option value="" disabled selected>
                               Select Gender
                             </option>
-                            <option defaultValue value="male">
-                              Male
-                            </option>
-                            <option value="female">Female</option>
+                            {gendersOptions.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
+                              </option>
+                            ))}
                           </select>
                           {genderError && (
                             <div className="invalid-fields">
@@ -898,7 +1143,9 @@ const KidsformOne = ({ sendDataToParent }) => {
                       </div>
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">Marital Status</label>
+                          <label className="form-label">
+                            Marital Status <span className="mandatory">*</span>
+                          </label>
                           <select
                             className="form-select"
                             aria-label="Default select example"
@@ -913,32 +1160,47 @@ const KidsformOne = ({ sendDataToParent }) => {
                             </option>
                             <option value="unmarried">UnMarried</option>
                           </select>
+                          {maritalError && (
+                            <div className="invalid-fields">
+                              Please Select Marital Status
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
                     <div className="kids-form-row">
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">Ethnicity</label>
+                          <label className="form-label">
+                            Ethnicity <span className="mandatory">*</span>
+                          </label>
                           <select
                             className="form-select"
                             aria-label="Default select example"
                             onChange={selectEthnicity}
                             value={ethnicity}
                           >
-                            <option value="" disabled selected>
+                            <option value="" disabled>
                               Select Ethnicity
                             </option>
-                            <option defaultValue value="forward">
-                              Forward
-                            </option>
-                            <option value="backword">Backword</option>
+                            {ethnicityOptions.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
+                              </option>
+                            ))}
                           </select>
+                          {ethnicityError && (
+                            <div className="invalid-fields">
+                              Please Select Ethnicity
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">Nationality</label>
+                          <label className="form-label">
+                            Nationality <span className="mandatory">*</span>
+                          </label>
                           <select
                             className="form-select"
                             aria-label="Default select example"
@@ -948,32 +1210,48 @@ const KidsformOne = ({ sendDataToParent }) => {
                             <option value="" disabled selected>
                               Select Nationality
                             </option>
-                            <option defaultValue value="asian">
-                              Asian
-                            </option>
-                            <option value="african">African</option>
+                            {nationalityOptions.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
+                              </option>
+                            ))}
                           </select>
+                          {nationalityError && (
+                            <div className="invalid-fields">
+                              Please Select Nationality
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
                     <div className="kids-form-row">
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">Date Of Birth</label>
+                          <label className="form-label">
+                            Date Of Birth <span className="mandatory">*</span>
+                          </label>
                           <input
                             type="date"
                             className="form-control"
                             value={dateOfBirth}
                             onChange={(e) => {
                               handleDateChange(e);
+                              setDobError(false);
                             }}
                             placeholder=""
                           ></input>
+                          {dobError && (
+                            <div className="invalid-fields">
+                              Please Select Date Of Birth
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">Language</label>
+                          <label className="form-label">
+                            Language <span className="mandatory">*</span>
+                          </label>
                           <select
                             className="form-select"
                             aria-label="Default select example"
@@ -983,11 +1261,17 @@ const KidsformOne = ({ sendDataToParent }) => {
                             <option value="" disabled selected>
                               Select Language
                             </option>
-                            <option defaultValue value="english">
-                              English
-                            </option>
-                            <option value="spanish">Spanish</option>
+                            {languageOptions.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
+                              </option>
+                            ))}
                           </select>
+                          {languageError && (
+                            <div className="invalid-fields">
+                              Please Select Language
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1043,20 +1327,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                           ></input>
                         </div>
                       </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label className="form-label">City</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={kidsCity}
-                            onChange={(e) => {
-                              setKidsCity(e.target.value);
-                            }}
-                            placeholder="City"
-                          ></input>
-                        </div>
-                      </div>
                     </div>
 
                     <div className="kids-form-title">Bio</div>
@@ -1104,8 +1374,8 @@ const KidsformOne = ({ sendDataToParent }) => {
             </button>
 
             <button
-              className="step-continue"
               type="button"
+              className="step-continue"
               onClick={(e) => {
                 kidsSignUp();
               }}

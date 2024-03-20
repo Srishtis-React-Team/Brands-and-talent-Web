@@ -8,6 +8,7 @@ export const API = {
   uploadFile: BASEURL + "admin/fileUpload",
   listCountries: BASEURL + "admin/listCountries",
   listStates: BASEURL + "admin/listLocation",
+  listCity: BASEURL + "admin/listCity",
 
   //Registration
   brandRegisteration: BASEURL + "brands/brandsRegister",
@@ -19,10 +20,11 @@ export const API = {
   otpResendAdult: BASEURL + "users/otpResendAdult",
   forgotPassword: BASEURL + "users/forgotPassword",
   resetPassword: BASEURL + "users/resetPassword",
-  checkProfileStatus: BASEURL + "users/checkProfileStatus/",
   editKids: BASEURL + "users/editKids/",
   updateAdults: BASEURL + "users/updateAdults/",
+  checkProfileStatus: BASEURL + "users/checkProfileStatus/",
   updateProfileStatus: BASEURL + "users/updateProfileStatus/",
+  loginTemplate: BASEURL + "users/loginTemplate",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
@@ -33,7 +35,7 @@ export const API = {
 
   //common
   getFeatures: BASEURL + "features/getFeatures",
-  getRecentGigs: BASEURL + "gigs/recentGigs",
+  getRecentGigs: BASEURL + "gigs/getAllJobs",
   getTopBrands: BASEURL + "brands/topBrands",
   getTalentList: BASEURL + "users/talentList",
   getKidsData: BASEURL + "users/kidsFetch/",
@@ -43,4 +45,5 @@ export const API = {
   getByProfession: BASEURL + "users/getByProfession",
   setUserFavorite: BASEURL + "users/setUserFavorite/",
   subscriptionStatus: BASEURL + "users/subscriptionStatus/",
+  setUserFavorite: BASEURL + "users/setUserFavorite/",
 };

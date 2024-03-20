@@ -421,14 +421,33 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
         console.log(resData, "resData");
+        console.log(resData.data, "resData.data");
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Registered SuccessFully!");
+          setMessage("Registered SuccessFully Check Your Email");
           setOpenPopUp(true);
+          loginTemplate(resData?.data?.data?.email);
           setTimeout(function() {
             setOpenPopUp(false);
             navigate(`/talent-signup-files-success`);
           }, 1000);
+        } else {
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+  const loginTemplate = async (email) => {
+    // navigate(`/talent-signup-files-success`);
+    const formData = {
+      parentEmail: email,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(API.loginTemplate, formData)
+      .then((resData) => {
+        console.log(resData, "resData");
+        if (resData.data.status === true) {
         } else {
         }
       })
@@ -453,7 +472,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 3 of 4</div>
+            <div className="step-text">Step 5 of 5</div>
           </div>
           <button
             type="button"
@@ -570,6 +589,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       className="select-cv-input"
                       id="portofolio"
                       accept="image/*"
+                      multiple
                       onChange={portofolioUpload}
                     />
                     <div className="upload-text">Upload Your Photos</div>
@@ -901,218 +921,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     )}
                   </div>
 
-                  <div className="kids-form-title">
-                    Explore Your Social Media Presence
-                  </div>
-
-                  <div className="explore-info">
-                    If you want to display your actual follower count, please
-                    connect with your social media. Otherwise, manually enter
-                    your followers count
-                  </div>
-
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={instagram} alt="" />
-                          <div className="media-text">Instagram</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={fbLogo} alt="" />
-                          <div className="media-text">FaceBook</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={tikTok} alt="" />
-                          <div className="media-text">TikTok</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={linkdin} alt="" />
-                          <div className="media-text">Linkedin</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={xTwitter} alt="" />
-                          <div className="media-text">Twitter</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
-                          <div className="media-text">Threads</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
-                          <div className="media-text">Threads</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="Or-seperator">Or</div>
-
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={instagram} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="text"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setInstagramFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={fbLogo} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="text"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setfacebookFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={tikTok} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="text"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setTiktoksFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={linkdin} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="text"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setlinkedinFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={xTwitter} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="text"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setXtwitterFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="text"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setThreadsFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={youTube} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="text"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setYoutubesFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="kids-form-title">ID Verification</div>
 
                   <div className="id-verify-info">
@@ -1134,6 +942,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                             setIdType(e.target.value);
                           }}
                         >
+                          <option defaultValue value="universal_id">
+                            Universal ID
+                          </option>
                           <option defaultValue value="licence">
                             Licence
                           </option>

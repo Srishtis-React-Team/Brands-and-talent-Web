@@ -99,7 +99,7 @@ const KidsFormTwo = () => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 2 of 4</div>
+            <div className="step-text">Step 4 of 5</div>
           </div>
           <button
             type="button"
@@ -113,7 +113,7 @@ const KidsFormTwo = () => {
           <div className="subscribe-form">
             <div className="subscriptions-wrapper">
               {pricingList.length && (
-                <div className="plans-section" s>
+                <div className="plans-section kids-pan-section">
                   {pricingList.map((item, index) => {
                     return (
                       <div

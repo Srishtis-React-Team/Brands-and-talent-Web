@@ -995,7 +995,7 @@ const AdultFormThree = () => {
                           <img src={instagram} alt="" />
                           <div className="media-text">
                             <input
-                              type="text"
+                              type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setInstagramFollowers(e.target.value);
@@ -1012,7 +1012,7 @@ const AdultFormThree = () => {
                           <img src={fbLogo} alt="" />
                           <div className="media-text">
                             <input
-                              type="text"
+                              type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setfacebookFollowers(e.target.value);
@@ -1031,7 +1031,7 @@ const AdultFormThree = () => {
                           <img src={tikTok} alt="" />
                           <div className="media-text">
                             <input
-                              type="text"
+                              type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setTiktoksFollowers(e.target.value);
@@ -1048,7 +1048,7 @@ const AdultFormThree = () => {
                           <img src={linkdin} alt="" />
                           <div className="media-text">
                             <input
-                              type="text"
+                              type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setlinkedinFollowers(e.target.value);
@@ -1067,7 +1067,7 @@ const AdultFormThree = () => {
                           <img src={xTwitter} alt="" />
                           <div className="media-text">
                             <input
-                              type="text"
+                              type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setXtwitterFollowers(e.target.value);
@@ -1084,7 +1084,7 @@ const AdultFormThree = () => {
                           <img className="thread-fill" src={threads} alt="" />
                           <div className="media-text">
                             <input
-                              type="text"
+                              type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setThreadsFollowers(e.target.value);
@@ -1103,7 +1103,7 @@ const AdultFormThree = () => {
                           <img src={youTube} alt="" />
                           <div className="media-text">
                             <input
-                              type="text"
+                              type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setYoutubesFollowers(e.target.value);
@@ -1137,6 +1137,9 @@ const AdultFormThree = () => {
                             setIdType(e.target.value);
                           }}
                         >
+                          <option defaultValue value="universal_id">
+                            Universal ID
+                          </option>
                           <option defaultValue value="licence">
                             Licence
                           </option>

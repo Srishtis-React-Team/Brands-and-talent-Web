@@ -658,18 +658,18 @@ const Dashboard = () => {
               {talentsList?.map((item) => {
                 return (
                   <div className="gallery-wrapper">
-                    <div className="">
+                    <div className="gallery-top">
                       <img
                         className="gallery-img"
                         src={`${API.userFilePath}${item.image?.fileData}`}
                       ></img>
-                      <div className="rating">
+                      {/* <div className="rating">
                         <img src={brightStar}></img>
                         <img src={brightStar}></img>
                         <img src={brightStar}></img>
                         <img src={darkStar}></img>
                         <img src={darkStar}></img>
-                      </div>
+                      </div> */}
                       {!item.isFavorite && (
                         <img
                           className="heart-icon"
@@ -704,7 +704,9 @@ const Dashboard = () => {
                           <div className="location-wrapper">
                             <img src={locationIcon} alt="" />
                             <div className="location-name">
-                              {item?.parentCountry}
+                              {item?.parentCountry
+                                ? item?.parentCountry
+                                : "cambodia"}
                             </div>
                           </div>
                           <div className="location-wrapper">
@@ -731,15 +733,15 @@ const Dashboard = () => {
           <div className="cards">
             <div className="community-card-wrapper card-background">
               <div className="count">5,258,451</div>
-              <div className="cards-text">Models in community</div>
+              <div className="cards-text">Talents in community</div>
             </div>
             <div className="community-card-wrapper  card-background">
               <div className="count">5,258,451</div>
-              <div className="cards-text">Industry Professionals</div>
+              <div className="cards-text">Brands Professionals</div>
             </div>
             <div className="community-card-wrapper  card-background">
               <div className="count">5,258,451</div>
-              <div className="cards-text">Agencies</div>
+              <div className="cards-text">Brands</div>
             </div>
           </div>
         </div>
@@ -792,8 +794,8 @@ const Dashboard = () => {
                     <div className="">
                       <img className="case-img" src={item.photo}></img>
                     </div>
-                    <div className="gallery-content">
-                      <div className="content">
+                    <div className="case-gallery-content">
+                      <div className="">
                         <div className="case-study-name">{item.name}</div>
                         <div className="case-study-address">{item.address}</div>
                       </div>

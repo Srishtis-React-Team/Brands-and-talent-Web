@@ -5,7 +5,7 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
-const OTPComponent = () => {
+const KidsOTP = () => {
   const navigate = useNavigate();
 
   const btLogo = require("../assets/icons/Group 56.png");
@@ -15,22 +15,20 @@ const OTPComponent = () => {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [emailID, setEmailID] = useState(null);
-
+  //   const [userId, setUserId] = useState(null);
+  //   const [emailID, setEmailID] = useState(null);
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
-
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    const storedEmailID = localStorage.getItem("emailID");
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-    if (storedEmailID) {
-      setEmailID(storedEmailID);
-    }
+    // const storedUserId = localStorage.getItem("userId");
+    // const storedEmailID = localStorage.getItem("emailID");
+    // if (storedUserId) {
+    //   setUserId(storedUserId);
+    // }
+    // if (storedEmailID) {
+    //   setEmailID(storedEmailID);
+    // }
   }, []);
 
   const handleChange = (index, value) => {
@@ -58,12 +56,10 @@ const OTPComponent = () => {
   const otpVerification = async (newOTP) => {
     const formData = {
       otp: newOTP,
-      adultEmail: queryString,
+      parentEmail: queryString,
     };
-    setIsLoading(true);
-
     console.log(formData, "formData otpVerification");
-    await ApiHelper.post(API.otpVerificationAdult, formData)
+    await ApiHelper.post(API.otpVerification, formData)
       .then((resData) => {
         console.log("otpVerification response", resData.data);
         if (resData.data.status === true) {
@@ -72,16 +68,16 @@ const OTPComponent = () => {
           setTimeout(function() {
             setOpenPopUp(false);
           }, 1000);
-          setIsLoading(false);
           setTimeout(function() {
             let successData = "verified";
-            navigate(`/adult-success`);
+            navigate(
+              `/talent-social-media-connections?${resData.data.data["userId"]}`
+            );
           }, 1000);
         } else if (resData.data.status === false) {
           console.log("false called");
           setMessage("Enter Correct OTP");
           setOpenPopUp(true);
-          setIsLoading(false);
           setTimeout(function() {
             setOpenPopUp(false);
           }, 1000);
@@ -135,7 +131,6 @@ const OTPComponent = () => {
 
   return (
     <>
-      {/* <Header /> */}
       <div className="header-wrapper">
         <div className="step-wrapper">
           <img
@@ -145,6 +140,7 @@ const OTPComponent = () => {
             }}
             src={btLogo}
           ></img>
+          <div className="step-text">Step 2 of 5</div>
         </div>
         <button
           type="button"
@@ -154,7 +150,12 @@ const OTPComponent = () => {
           }}
         ></button>
       </div>
-      <div className="adult-otp-main">
+      <div
+        className="otp-main"
+        style={{
+          marginTop: "100px",
+        }}
+      >
         <div className="otp-container">
           <div className="otp-title">
             <span className="bold-otp">OTP</span>
@@ -178,7 +179,7 @@ const OTPComponent = () => {
             </form>
           </div>
           <div className="verify-otp" onClick={handleVerify}>
-            {isLoading ? "Loading..." : "Verify Now"}
+            Verify Now
           </div>
           <div className="otp-info" onClick={otpResend}>
             If you didn’t receive a code?{" "}
@@ -188,7 +189,12 @@ const OTPComponent = () => {
             Back
           </div>
         </div>
-        <div className="adult-otp-logo">
+        <div
+          className="otp-logo"
+          style={{
+            top: "21%",
+          }}
+        >
           <img src={btLogo} alt="" />
         </div>
       </div>
@@ -197,4 +203,4 @@ const OTPComponent = () => {
   );
 };
 
-export default OTPComponent;
+export default KidsOTP;

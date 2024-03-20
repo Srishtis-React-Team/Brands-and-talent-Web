@@ -53,76 +53,45 @@ const ServicesCarousel = ({ talentData }) => {
 
   return (
     <>
-      <div className="portofolio-section">
-        <div className="portofolio-title">Services</div>
-        <div className="view-all">View All</div>
-      </div>
+      {servicesList && servicesList.length > 0 && (
+        <div className="portofolio-section">
+          <div className="portofolio-title">Services</div>
+          <div className="view-all">View All</div>
+        </div>
+      )}
+
       <div className="service-list-main">
-        {servicesList?.map((item, index) => {
-          console.log(item, "item");
-          return (
-            <>
-              <div className="service-list-wrapper" key={index}>
-                <div className="service-list-image">
-                  <img
-                    src={`${API.userFilePath}${item?.files[0]?.fileData}`}
-                    alt=""
-                  />
-                  <div className="service-list-content">
-                    <div className="starting-amount">From US $2500</div>
-                    <div className="service-title">{item?.serviceName}</div>
-                    <div
-                      className="service-description"
-                      dangerouslySetInnerHTML={{ __html: item?.editorState }}
+        {servicesList &&
+          servicesList.length > 0 &&
+          servicesList?.map((item, index) => {
+            console.log(item, "item");
+            return (
+              <>
+                <div className="service-list-wrapper" key={index}>
+                  <div className="service-list-image">
+                    <img
+                      src={`${API.userFilePath}${item?.files[0]?.fileData}`}
+                      alt=""
                     />
-                    <div className="service-duration">
-                      <div>With In 2 Months</div>
-                      <div>3 Concepts, 2 Revisions</div>
+                    <div className="service-list-content">
+                      <div className="starting-amount">From US $2500</div>
+                      <div className="service-title">{item?.serviceName}</div>
+                      <div
+                        className="service-description"
+                        dangerouslySetInnerHTML={{ __html: item?.editorState }}
+                      />
+                      <div className="service-duration">
+                        <div>With In 2 Months</div>
+                        <div>3 Concepts, 2 Revisions</div>
+                      </div>
                     </div>
+
+                    <div className="enquire-btn">Inquire Now</div>
                   </div>
-
-                  <div className="enquire-btn">Inquire Now</div>
                 </div>
-              </div>
-            </>
-          );
-        })}
-      </div>
-
-      <div className="portofolio-section">
-        <div className="portofolio-title">Videos & Audios</div>
-        <div className="view-all">View All</div>
-      </div>
-
-      <div className="service-list-main">
-        {videoAudioList.map((item) => (
-          <div className="item model-picture-wrapper" key={item.id}>
-            {item.type === "video" && (
-              <video controls>
-                <source
-                  src={`${API.userFilePath}${item.fileData}`}
-                  type="video/mp4"
-                />
-                Your browser does not support the video tag.
-              </video>
-            )}
-            {item.type === "audio" && (
-              <audio controls>
-                <source
-                  src={`${API.userFilePath}${item.fileData}`}
-                  type="audio/mp3"
-                />
-                Your browser does not support the audio tag.
-              </audio>
-            )}
-            <p>{item.title}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="portofolio-section">
-        <div className="portofolio-title">CV</div>
-        <div className="view-all">View All</div>
+              </>
+            );
+          })}
       </div>
     </>
   );

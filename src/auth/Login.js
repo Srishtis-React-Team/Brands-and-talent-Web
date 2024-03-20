@@ -18,7 +18,7 @@ const Login = () => {
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [selectedItem, setSelectedItem] = useState("brand");
+  const [selectedItem, setSelectedItem] = useState("talent");
   const [talentName, setTalentName] = useState("");
   const [talentPassword, setTalentPassword] = useState("");
   const [talentEmail, setTalentEmail] = useState("");
@@ -28,7 +28,34 @@ const Login = () => {
   const [userId, setUserId] = useState(null);
   const [emailID, setEmailID] = useState(null);
 
-  // Function to get user ID
+  const [userType, setUserType] = useState("");
+  const [currentUser_id, setCUrrentUserID] = useState("");
+
+  useEffect(() => {
+    const extractValuesFromURL = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const talentParam = urlParams.get("type");
+      const userIDParam = urlParams.get("user_id");
+      console.log("Talent param:", talentParam);
+      console.log("User ID param:", userIDParam);
+      if (talentParam) {
+        setUserType(talentParam);
+      }
+      if (userIDParam) {
+        setCUrrentUserID(userIDParam);
+      }
+    };
+
+    extractValuesFromURL();
+  }, []); // Empty dependency array ensures the effect runs only once on component mount
+  useEffect(() => {
+    console.log(userType, "userType");
+  }, [userType]); // Log userType when it changes
+
+  useEffect(() => {
+    console.log(currentUser_id, "currentUser_id");
+  }, [currentUser_id]); // Log currentUser_id when it changes
+
   const getUserIdLocalStorage = () => {
     return localStorage.getItem("userId");
   };
@@ -82,9 +109,10 @@ const Login = () => {
           }, 1000);
           if (resData.data.type === "adult") {
             console.log("adult block");
-            navigate(`/talent-dashboard`);
+            navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
           } else if (resData.data.type === "kids") {
-            navigate(`/otp`);
+            navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+            // navigate(`/otp?${resData?.data?.data?.email}`);
           }
         } else if (resData.data.status === false) {
           console.log("false called");
@@ -105,6 +133,7 @@ const Login = () => {
     console.log(data, "data otp");
     localStorage.setItem("userId", data?.user?._id);
     localStorage.setItem("emailID", data?.email);
+    localStorage.setItem("token", data?.token);
     setUserId(userId);
   };
 

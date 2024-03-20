@@ -56,10 +56,10 @@ const Pricing = () => {
       <Header />
       <section>
         <div className="popular-header">
-          <div className="header-title">Popular Models</div>
+          <div className="header-title">Popular Talents</div>
           <div className="header-menu">
             <div>Home</div>
-            <div>Models</div>
+            <div>Talents</div>
           </div>
         </div>
       </section>

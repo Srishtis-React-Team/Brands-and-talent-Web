@@ -193,7 +193,8 @@ const Register = () => {
     } else if (routeData?.signupCategory == "brand") {
       setBrands_step(1);
     } else if (routeData?.signupCategory == "adults") {
-      setAdultsStep(1);
+      // setAdultsStep(1);
+      navigate(`/adult-signup`);
     }
   }, []);
 

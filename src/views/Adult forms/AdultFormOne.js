@@ -12,6 +12,8 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import PopUp from "../../components/PopUp";
 import "../../assets/css/talent-dashboard.scss";
 import "../../assets/css/forms/kidsform-one.scss";
+import nationalityOptions from "../../components/nationalities";
+import languageOptions from "../../components/languages";
 
 const AdultFormOne = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,7 +56,9 @@ const AdultFormOne = () => {
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [age, setAge] = useState("");
-
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
   const [adultsPreferedFirstName, setAdultsPreferedFirstName] = useState("");
   const [adultsPreferedLastName, setAdultsPreferedLastName] = useState("");
   const [adultsLegalFirstName, setAdultsLegalFirstName] = useState("");
@@ -62,9 +66,11 @@ const AdultFormOne = () => {
   const [adultsPhone, setAdultsPhone] = useState("");
   const [adultsEmail, setAdultsEmail] = useState("");
   const [adultsLocation, setAdultsLocation] = useState("");
-  const [adultsCity, setAdultsCity] = useState("");
+  const [kidsCity, setKidsCity] = useState("");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [nationality, setNationality] = useState("");
@@ -90,10 +96,93 @@ const AdultFormOne = () => {
 
   useEffect(() => {
     getFeatures();
+    getCountries();
+
     const storedUserId = localStorage.getItem("userId");
     console.log(storedUserId, "storedUserId");
     setUserId(storedUserId);
   }, [userId]);
+
+  const handleSelectedCountry = (event) => {
+    console.log(event, "event");
+    console.log(event?.value, "event?.value");
+    setCountry(event?.value);
+    getStates(event?.value);
+    console.log(country, "country");
+  };
+  const handleSelectedState = (state) => {
+    setState(state?.label);
+    getCities({
+      countryName: country,
+      stateName: state?.label,
+    });
+  };
+  const handleSelectedCity = (state) => {
+    setKidsCity(state?.label);
+  };
+  const getCountries = async () => {
+    await ApiHelper.get(API.listCountries)
+      .then((resData) => {
+        if (resData) {
+          setCountryList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const getStates = async (data) => {
+    const formData = {
+      countryName: data,
+    };
+    await ApiHelper.post(API.listStates, formData)
+      .then((resData) => {
+        if (resData) {
+          setStateList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+  const getCities = async (data) => {
+    const formData = data;
+    await ApiHelper.post(API.listCity, formData)
+      .then((resData) => {
+        if (resData) {
+          setCityList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const ethnicityOptions = [
+    "South Asian",
+    "Indian/Pakistani",
+    "South East Asian",
+    "Khmer",
+    "Vietnamese",
+    "Indonesian",
+    "Thai",
+    "Middle-East",
+    "Black",
+    "African",
+    "Latino/Hispanic",
+    "Russian",
+    "Ukrainian",
+    "Nordic",
+    "Scandinavian",
+    "European",
+    "Italian",
+  ];
+
+  const gendersOptions = [
+    "Man",
+    "Woman",
+    "Non binary",
+    "Transgender Woman",
+    "Transgender Man",
+    "Agender",
+    "Other",
+    "Prefer not to say",
+  ];
 
   const getFeatures = async () => {
     await ApiHelper.get(API.getFeatures)
@@ -134,7 +223,10 @@ const AdultFormOne = () => {
       childPhone: adultsPhone,
       contactEmail: kidsEmail,
       childLocation: adultsLocation,
-      childCity: adultsCity,
+      parentCountry: country,
+      parentState: state,
+      parentAddress: address,
+      childCity: kidsCity,
       childAboutYou: aboutYou,
       age: age,
     };
@@ -166,10 +258,32 @@ const AdultFormOne = () => {
   };
 
   const professionList = [
-    { value: "Actor", label: "Photographer" },
-    { value: "Model", label: "Beauticians" },
-    { value: "Director", label: "Artists" },
-    { value: "Singer", label: "Video Grapher" },
+    { value: "Model", label: "Model" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Creator", label: "Creator" },
+    { value: "Stylist", label: "Stylist" },
+    { value: "Photographer", label: "Photographer" },
+    { value: "Videographer", label: "Videographer" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Actor", label: "Actor" },
+    { value: "Singer", label: "Singer" },
+    { value: "Writer", label: "Writer" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "RJ", label: "RJ" },
+    { value: "DJ", label: "DJ" },
+    { value: "VJ", label: "VJ" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Yoga Teacher", label: "Yoga Teacher" },
+    { value: "Webapp Developer", label: "Webapp Developer" },
+    { value: "Virtual Assistant", label: "Virtual Assistant" },
+    { value: "AI Influencer", label: "AI Influencer" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Other", label: "Other" },
   ];
 
   const handleProfessionChange = (selectedOptions) => {
@@ -184,27 +298,38 @@ const AdultFormOne = () => {
   };
 
   const categoryList = [
-    "Actor",
-    "Model",
-    "Director",
-    "Singer",
     "Fashion",
-    "Food",
-    "Beauty",
+    "Parenting and family",
+    "Sports/Martial Arts/Dance",
+    "Arts and photography",
+    "Videography",
+    "Music",
+    "Comedy/Entertainment",
+    "Education",
+    "Transportation",
+    "Food and beverage",
+    "Finance",
+    "Beauty/Cosmetics",
     "Luxury",
     "Business and Technology",
-    "Artist",
-    "Mummy & Parenting",
-    "Travel",
-    "Health & Fitness",
+    "Travel/Tourism",
+    "Health/Wellness/Fitness",
     "Home and Gardening",
-    "Eco & Sustainability",
-    "Music",
-    "Movies/Films",
+    "Eco-friendly/Nature/Sustainability",
+    "Diversity and inclusion",
+    "Outdoor and nature",
+    "Content Creation",
     "Lifestyle",
     "Celebrity",
-    "Content Creation",
-    "Virtual Assistant",
+    "Animals/Pets",
+    "Web3",
+    "Home and DIY",
+    "Anime/Memes",
+    "Website/Mobile Applications",
+    "Gaming",
+    "Lifecoach/Relationships",
+    "Cosplay/Memes",
+    "Other",
   ];
 
   function chooseCategory(category) {
@@ -528,6 +653,75 @@ const AdultFormOne = () => {
                   <div className="kids-form-row">
                     <div className="kids-form-section">
                       <div className="mb-3">
+                        <label className="form-label">Country</label>
+                        <Select
+                          placeholder="Search country..."
+                          options={countryList.map((country, index) => ({
+                            value: country,
+                            label: country,
+                            key: index,
+                          }))}
+                          value={country?.value}
+                          onChange={handleSelectedCountry}
+                          isSearchable={true}
+                        />
+                      </div>
+                    </div>
+                    <div className="kids-form-section">
+                      <div className="mb-3">
+                        <label className="form-label">State</label>
+                        <Select
+                          placeholder="Select state..."
+                          options={stateList.map((state) => ({
+                            value: state.stateId, // or whatever unique identifier you want to use
+                            label: state.name,
+                          }))}
+                          value={state?.label}
+                          onChange={handleSelectedState}
+                          isSearchable={true}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="kids-form-row">
+                    <div className="kids-form-section">
+                      <div className="mb-3">
+                        <label className="form-label">City</label>
+                        <Select
+                          placeholder="Select City..."
+                          options={cityList.map((city) => ({
+                            value: city.cityId, // or whatever unique identifier you want to use
+                            label: city.name,
+                          }))}
+                          value={kidsCity?.label}
+                          onChange={handleSelectedCity}
+                          isSearchable={true}
+                        />
+                      </div>
+                    </div>
+                    <div className="kids-form-section">
+                      <div className="mb-3">
+                        <label
+                          htmlFor="exampleFormControlTextarea1"
+                          className="form-label"
+                        >
+                          Address
+                        </label>
+                        <textarea
+                          className="form-control address-textarea"
+                          id="exampleFormControlTextarea1"
+                          value={address}
+                          rows="3"
+                          onChange={(e) => {
+                            setAddress(e.target.value);
+                          }}
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="kids-form-row">
+                    <div className="kids-form-section">
+                      <div className="mb-3">
                         <label className="form-label">Gender</label>
                         <select
                           className="form-select"
@@ -537,10 +731,11 @@ const AdultFormOne = () => {
                           <option value="" disabled selected>
                             Select Gender
                           </option>
-                          <option defaultValue value="male">
-                            Male
-                          </option>
-                          <option value="female">Female</option>
+                          {gendersOptions.map((option, index) => (
+                            <option key={index} value={option}>
+                              {option}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -575,10 +770,11 @@ const AdultFormOne = () => {
                           <option value="" disabled selected>
                             Select Ethnicity
                           </option>
-                          <option defaultValue value="forward">
-                            Forward
-                          </option>
-                          <option value="backword">Backword</option>
+                          {ethnicityOptions.map((option, index) => (
+                            <option key={index} value={option}>
+                              {option}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -593,10 +789,11 @@ const AdultFormOne = () => {
                           <option value="" disabled selected>
                             Select Nationality
                           </option>
-                          <option defaultValue value="asian">
-                            Asian
-                          </option>
-                          <option value="african">African</option>
+                          {nationalityOptions.map((option, index) => (
+                            <option key={index} value={option}>
+                              {option}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -626,10 +823,11 @@ const AdultFormOne = () => {
                           <option value="" disabled selected>
                             Select Language
                           </option>
-                          <option defaultValue value="english">
-                            English
-                          </option>
-                          <option value="spanish">Spanish</option>
+                          {languageOptions.map((option, index) => (
+                            <option key={index} value={option}>
+                              {option}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -682,19 +880,6 @@ const AdultFormOne = () => {
                             setAdultsLocation(e.target.value);
                           }}
                           placeholder="Enter Location"
-                        ></input>
-                      </div>
-                    </div>
-                    <div className="kids-form-section">
-                      <div className="mb-3">
-                        <label className="form-label">City</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          onChange={(e) => {
-                            setAdultsCity(e.target.value);
-                          }}
-                          placeholder="City"
                         ></input>
                       </div>
                     </div>
