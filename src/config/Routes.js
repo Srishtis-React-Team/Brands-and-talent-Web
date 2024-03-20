@@ -24,6 +24,11 @@ import AdultFormOne from "../views/Adult forms/AdultFormOne";
 import AdultFormTwo from "../views/Adult forms/AdultFormTwo";
 import AdultFormThree from "../views/Adult forms/AdultFormThree";
 import OTPComponent from "../auth/OTPComponent";
+import KidsOTP from "../auth/KidsOTP";
+import KidsSocialMedias from "../auth/KidsSocialMedias";
+import AdultSignup from "../auth/AdultSignup";
+import AdultsOTP from "../auth/AdultsOTP";
+import AdultSuccess from "../auth/AdultSuccess";
 function Routing() {
   return (
     <Routes>
@@ -45,12 +50,20 @@ function Routing() {
       <Route path="/brand-dashboard" element={<BrandDashboard />} />
       <Route path="/talent-dashboard" element={<TalentDashBoard />} />
       <Route path="/talent-signup-basic-details" element={<KidsformOne />} />
+      <Route path="/talent-otp" element={<KidsOTP />} />
+      <Route
+        path="/talent-social-media-connections"
+        element={<KidsSocialMedias />}
+      />
       <Route path="/talent-signup-plan-details" element={<KidsFormTwo />} />
       <Route path="/talent-signup-files-details" element={<KidsFormThree />} />
       <Route path="/talent-signup-files-success" element={<KidsFormFour />} />
       <Route path="/adult-signup-basic-details" element={<AdultFormOne />} />
       <Route path="/adult-signup-service-details" element={<AdultFormTwo />} />
       <Route path="/adult-signup-files-details" element={<AdultFormThree />} />
+      <Route path="/adult-signup" element={<AdultSignup />} />
+      <Route path="/otp-verification" element={<OTPComponent />} />
+      <Route path="/adult-success" element={<AdultSuccess />} />
     </Routes>
   );
 }

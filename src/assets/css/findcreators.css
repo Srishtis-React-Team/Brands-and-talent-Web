@@ -126,7 +126,7 @@
   }
   .filter-input-wrapper {
     border-radius: 5px;
-    border: 0.5px solid rgba(0, 0, 0, 0.65);
+    border: 0.5px solid #ced4da;
     background: rgba(0, 0, 0, 0);
     width: 70%;
     height: 39px;
@@ -142,8 +142,7 @@
     border: none;
     outline: none;
     padding-left: 10px;
-    width: 160px;
-    opacity: 0.4;
+    width: 100%;
   }
   .check-section {
     display: flex;
@@ -466,7 +465,7 @@ select {
   }
   .filter-input-wrapper {
     border-radius: 5px;
-    border: 0.5px solid rgba(0, 0, 0, 0.65);
+    border: 0.5px solid #ced4da;
     background: rgba(0, 0, 0, 0);
     /* width: 200px; */
     height: 39px;
@@ -552,4 +551,38 @@ select {
   .creators-filter-select-range {
     margin: 20px 0px;
   }
+}
+
+.find-creator-name {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 6px 6px;
+}
+
+.find-creator-address {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 6px 6px;
+}
+
+.find-creator-location-name {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 6px 6px;
+}
+
+.keyword-input::placeholder {
+  color: #000;
 }

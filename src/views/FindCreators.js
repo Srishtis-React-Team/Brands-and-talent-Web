@@ -66,6 +66,8 @@ const FindCreators = () => {
   const [featuresListSelect, selectFeaturesList] = useState([]);
   const [featuresList, setFeaturesList] = useState([]);
   const [features, setFeature] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [kidsCity, setKidsCity] = useState("");
 
   const clear = () => {
     setSearchKeyword("");
@@ -115,7 +117,7 @@ const FindCreators = () => {
 
   const professionList = [
     { value: "Actor", label: "Actor" },
-    { value: "Model", label: "Model" },
+    { value: "Talents", label: "Talents" },
     { value: "Director", label: "Director" },
     { value: "Singer", label: "Singer" },
     { value: "Dancer", label: "Dancer" },
@@ -147,17 +149,32 @@ const FindCreators = () => {
     setGender(event.target.value);
   };
 
-  const addFavorite = (item) => {
-    console.log(item, "item");
-    const modifiedTalents = talentList.map((obj) => {
-      console.log(obj, "obj");
-      if (obj.id === item.id) {
-        return { ...obj, isFavorite: true };
-      }
-      return obj;
-    });
-    setTalentList(modifiedTalents);
-    console.log(modifiedTalents, "modifiedTalents");
+  const addFavorite = async (item) => {
+    console.log(item);
+    const formData = {
+      type: item?.type,
+      user: item?._id,
+    };
+    const loggedID = localStorage.getItem("userId");
+    await ApiHelper.post(`${API.setUserFavorite}${loggedID}`, formData, true)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("Subscribed SuccessFully! Check Your Email Inbox");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const openTalent = (item) => {
     console.log(item, "item");
@@ -166,6 +183,10 @@ const FindCreators = () => {
 
   const handleSelectedState = (state) => {
     setState(state?.label);
+    getCities({
+      countryName: country,
+      stateName: state?.label,
+    });
   };
 
   const removeFavorite = (item) => {
@@ -225,6 +246,17 @@ const FindCreators = () => {
       .catch((err) => {});
   };
 
+  const getCities = async (data) => {
+    const formData = data;
+    await ApiHelper.post(API.listCity, formData)
+      .then((resData) => {
+        if (resData) {
+          setCityList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
   const onMinChange = (event) => {
     setMinAge(event.target.value); // Update the state with the new value
   };
@@ -236,7 +268,9 @@ const FindCreators = () => {
     const formData = {
       profession: profession,
       parentCountry: country,
-      childCity: state,
+      parentCountry: country,
+      parentState: state,
+      childCity: kidsCity,
       gender: gender,
       childEthnicity: ethnicity,
       languages: languages,
@@ -287,6 +321,10 @@ const FindCreators = () => {
     }),
   };
 
+  const handleSelectedCity = (state) => {
+    setKidsCity(state?.label);
+  };
+
   useEffect(() => {
     getCountries();
     getTalentList();
@@ -317,10 +355,10 @@ const FindCreators = () => {
       <Header />
       <section>
         <div className="popular-header">
-          <div className="header-title">Popular Models</div>
+          <div className="header-title">Popular Talents</div>
           <div className="header-menu">
             <div>Home</div>
-            <div>Models</div>
+            <div>Talents</div>
           </div>
         </div>
       </section>
@@ -346,6 +384,7 @@ const FindCreators = () => {
                 <input
                   className="keyword-input"
                   placeholder="Search Keyword"
+                  value={selectedKeyword}
                   onChange={(e) => {
                     setSearchKeyword(e.target.value);
                   }}
@@ -360,12 +399,36 @@ const FindCreators = () => {
                     setSelectedKeywords("creators");
                   }}
                 >
-                  creators*
+                  reators*
                 </div>
-                <div>makeup artists*</div>
-                <div>writers*</div>
-                <div>beauticians*</div>
-                <div>fitness*</div>
+                <div
+                  onClick={(e) => {
+                    setSelectedKeywords("makeup artists");
+                  }}
+                >
+                  makeup artists*
+                </div>
+                <div
+                  onClick={(e) => {
+                    setSelectedKeywords("writers");
+                  }}
+                >
+                  writers*
+                </div>
+                <div
+                  onClick={(e) => {
+                    setSelectedKeywords("beauticians");
+                  }}
+                >
+                  *
+                </div>
+                <div
+                  onClick={(e) => {
+                    setSelectedKeywords("fitness");
+                  }}
+                >
+                  fitness*
+                </div>
               </div>
             </div>
             <div className="profession-creator-wrapper">
@@ -396,14 +459,14 @@ const FindCreators = () => {
                     Select Industry
                   </option>
                   <option defaultValue value="model">
-                    Models
+                    Talents
                   </option>
                   <option value="actor">Actors</option>
                 </select>
               </div>
             </div>
             <div className="keyword-wrapper">
-              <div className="filter-items">Location</div>
+              <div className="filter-items">Country</div>
               <div className="creators-filter-select">
                 <Select
                   placeholder="Select country..."
@@ -419,7 +482,7 @@ const FindCreators = () => {
               </div>
             </div>
             <div className="keyword-wrapper">
-              <div className="filter-items">City</div>
+              <div className="filter-items">State</div>
               <div className="creators-filter-select">
                 <Select
                   placeholder="Select state..."
@@ -429,6 +492,21 @@ const FindCreators = () => {
                   }))}
                   value={state?.label}
                   onChange={handleSelectedState}
+                  isSearchable={true}
+                />
+              </div>
+            </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">City</div>
+              <div className="creators-filter-select">
+                <Select
+                  placeholder="Select City..."
+                  options={stateList.map((state) => ({
+                    value: state.stateId, // or whatever unique identifier you want to use
+                    label: state.name,
+                  }))}
+                  value={state?.label}
+                  onChange={handleSelectedCity}
                   isSearchable={true}
                 />
               </div>
@@ -645,14 +723,17 @@ const FindCreators = () => {
                           ></img>
                         )}
                       </div>
-                      <div className="gallery-content">
+                      <div className="">
                         <div className="content">
-                          <div className="name">
+                          <div
+                            className="find-creator-name"
+                            onClick={() => openTalent(item)}
+                          >
                             {item?.preferredChildFirstname
                               ? `${item?.preferredChildFirstname}`
                               : "Elizabeth"}
                           </div>
-                          <div className="address">
+                          <div className="find-creator-address ">
                             {item.profession?.map((profession, index) => (
                               <React.Fragment key={index}>
                                 {profession.value}
@@ -663,13 +744,13 @@ const FindCreators = () => {
                           <div className="user-details">
                             <div className="location-wrapper">
                               <img src={locationIcon} alt="" />
-                              <div className="location-name">
+                              <div className="find-creator-location-name ">
                                 {item?.parentCountry}
                               </div>
                             </div>
                             <div className="location-wrapper">
                               <img src={jobIcon} alt="" />
-                              <div className="location-name">
+                              <div className="find-creator-location-name">
                                 25 Jobs Booked
                               </div>
                             </div>

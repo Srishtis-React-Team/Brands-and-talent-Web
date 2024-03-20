@@ -5,7 +5,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
-const PhotosCarousel = ({ talentData }) => {
+const PhotosCarousel = ({ photosList }) => {
   const model1 = require("../assets/images/model1.png");
   const model2 = require("../assets/images/model2.png");
   const model3 = require("../assets/images/model3.png");
@@ -16,40 +16,7 @@ const PhotosCarousel = ({ talentData }) => {
   const model8 = require("../assets/images/model8.png");
   const model9 = require("../assets/images/model9.png");
   const instaLogo = require("../assets/icons/instagram.png");
-  const [photosList, setPhotosList] = useState([]);
-
   const [userId, setUserId] = useState(null);
-
-  const fetchPhotos = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${talentData?._id}/1`)
-      .then((resData) => {
-        console.log(resData, "resData photos");
-        if (resData.data.status === true) {
-          if (resData.data.data) {
-            setPhotosList(resData.data.data);
-          }
-          console.log(photosList, "photosList");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    setUserId(storedUserId);
-  }, []);
-
-  useEffect(() => {
-    if (talentData?._id) {
-      fetchPhotos();
-    }
-  }, [talentData?._id]);
-
-  useEffect(() => {
-    console.log(photosList, "photosList");
-  }, [photosList]);
 
   return (
     <>
@@ -61,7 +28,8 @@ const PhotosCarousel = ({ talentData }) => {
         items={photosList?.length === 1 ? 1 : 5}
       >
         {photosList &&
-          photosList?.map((image, index) => {
+          photosList.length > 0 &&
+          photosList.map((image, index) => {
             // console.log(photosList, "photosList map");
             console.log(image, "image");
             return (

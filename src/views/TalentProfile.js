@@ -9,8 +9,7 @@ import { API } from "../config/api.js";
 import PhotosCarousel from "./PhotosCarousel.js";
 import CardCarousel from "./CardCarousel.js";
 import ServicesCarousel from "./ServicesCarousel.js";
-import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
-import sample from "./sample.pdf";
+import PdfModal from "../components/PdfModal.js";
 
 const TalentProfile = () => {
   // const location = useLocation();
@@ -43,7 +42,7 @@ const TalentProfile = () => {
   const greyStar = require("../assets/icons/grey-star.png");
   const darkStar = require("../assets/icons/darkStar.png");
   const blackstar = require("../assets/icons/blackstar.png");
-  const instaLogo = require("../assets/icons/insta.png");
+  const instaLogo = require("../assets/icons/social-media-icons/instagram.png");
   const xLogo = require("../assets/icons/twitter_x.png");
   const userFill = require("../assets/icons/userFill.png");
   const mapFill = require("../assets/icons/mapFill.png");
@@ -62,16 +61,19 @@ const TalentProfile = () => {
   const elipsis = require("../assets/icons/elipsis.png");
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState();
-
+  const [showModal, setShowModal] = useState(false);
+  const pdfUrl =
+    "https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/72e654db-4dd1-4663-89d8-52db0df93ca4.pdf";
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
   const [portofolio, showPortofolio] = useState(true);
+  const [services, showServices] = useState(false);
   const [photos, showPhotos] = useState(false);
   const [videos, showVideos] = useState(false);
   const [features, showFeatures] = useState(false);
   const [reviews, setReviews] = useState(false);
-  const [bio, showBio] = useState(false);
+  const [CV, showCV] = useState(false);
   const [test, setTest] = useState("");
   const [data, setData] = useState([]);
   const [talentData, setTalentData] = useState([]);
@@ -83,7 +85,13 @@ const TalentProfile = () => {
   const [userId, setUserId] = useState(null);
 
   const location = useLocation();
-  const selecteTalent = location.state && location.state.talentData;
+  const selectedTalent = location.state && location.state.talentData;
+
+  console.log(selectedTalent, "selectedTalent");
+
+  const url = window.location.href;
+  const queryString = url.split("?")[1];
+  console.log(" queryString:", queryString);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -91,8 +99,6 @@ const TalentProfile = () => {
     if (userId) {
       getTalentById();
     }
-
-    console.log(`${API.userFilePath}${talentData?.cv[0]?.fileData}`, "pdfurl");
   }, [userId]);
 
   useEffect(() => {
@@ -118,7 +124,11 @@ const TalentProfile = () => {
   }, [cvList]);
 
   const fetchPhotos = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${selecteTalent._id}/1`)
+    await ApiHelper.post(
+      `${API.unifiedDataFetch}${
+        selectedTalent?._id ? selectedTalent?._id : queryString
+      }/1`
+    )
       .then((resData) => {
         console.log(resData, "resData photos");
         if (resData.data.status === true) {
@@ -133,7 +143,11 @@ const TalentProfile = () => {
       });
   };
   const fetchVideoAudios = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${selecteTalent._id}/2`)
+    await ApiHelper.post(
+      `${API.unifiedDataFetch}${
+        selectedTalent?._id ? selectedTalent?._id : queryString
+      }/2`
+    )
       .then((resData) => {
         console.log(resData, "resData videos");
         if (resData.data.status === true) {
@@ -149,7 +163,11 @@ const TalentProfile = () => {
       });
   };
   const fetchFeatures = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${selecteTalent._id}/4`)
+    await ApiHelper.post(
+      `${API.unifiedDataFetch}${
+        selectedTalent?._id ? selectedTalent?._id : queryString
+      }/4`
+    )
       .then((resData) => {
         console.log(resData, "resData features");
         if (resData.data.status === true) {
@@ -161,7 +179,11 @@ const TalentProfile = () => {
       });
   };
   const fetchCV = async () => {
-    await ApiHelper.post(`${API.unifiedDataFetch}${selecteTalent._id}/3`)
+    await ApiHelper.post(
+      `${API.unifiedDataFetch}${
+        selectedTalent?._id ? selectedTalent?._id : queryString
+      }/3`
+    )
       .then((resData) => {
         console.log(resData, "resData cv");
         if (resData.data.status === true) {
@@ -174,7 +196,11 @@ const TalentProfile = () => {
   };
 
   const getTalentById = async () => {
-    await ApiHelper.post(`${API.getTalentById}${selecteTalent._id}`)
+    await ApiHelper.post(
+      `${API.getTalentById}${
+        selectedTalent?._id ? selectedTalent?._id : queryString
+      }`
+    )
       .then((resData) => {
         if (resData) {
           setTalentData(resData.data.data);
@@ -212,6 +238,11 @@ const TalentProfile = () => {
 
   function handleForms(e) {
     setTest("features set");
+    if (e == "services") {
+      showServices(true);
+    } else {
+      showServices(false);
+    }
     if (e == "portofolio") {
       showPortofolio(true);
     } else {
@@ -237,10 +268,10 @@ const TalentProfile = () => {
     } else {
       setReviews(false);
     }
-    if (e == "bio") {
-      showBio(true);
+    if (e == "CV") {
+      showCV(true);
     } else {
-      showBio(false);
+      showCV(false);
     }
   }
 
@@ -327,55 +358,71 @@ const TalentProfile = () => {
             </div>
             <div className="talents-social-wrapper mt-4">
               <div className="talents-social">
-                <span className="insta-backdrop">
-                  <img src={instaLogo}></img>
-                </span>
-                <span className="social-count">
-                  {talentData?.instaFollowers}
-                </span>
-                <div className="followers-text">Followers</div>
+                <img src={instaLogo}></img>
+                <div className="social-followers-count-section">
+                  <div className="social-count">
+                    {talentData?.instaFollowers}
+                  </div>
+                  <div className="followers-text">Followers</div>
+                </div>
               </div>
               <div className="talents-social">
                 <img src={fbIcon}></img>
-                <span className="social-count">
-                  {talentData?.facebookFollowers}
-                </span>
-                <div className="followers-text">Followers</div>
+                <div className="social-followers-count-section">
+                  <div className="social-count">
+                    {talentData?.facebookFollowers}
+                  </div>
+                  <div className="followers-text">Followers</div>
+                </div>
               </div>
               <div className="talents-social">
                 <img src={tiktok}></img>
-                <span className="social-count">
-                  {talentData?.tiktokFollowers}
-                </span>
-                <div className="followers-text">Followers</div>
+
+                <div className="social-followers-count-section">
+                  <div className="social-count">
+                    {talentData?.tiktokFollowers}
+                  </div>
+                  <div className="followers-text">Followers</div>
+                </div>
               </div>
               <div className="talents-social">
                 <img src={linkdin}></img>
-                <span className="social-count">
-                  {talentData?.linkedinFollowers}
-                </span>
-                <div className="followers-text">Followers</div>
+                <div className="social-followers-count-section">
+                  <div className="social-count">
+                    {talentData?.linkedinFollowers}
+                  </div>
+                  <div className="followers-text">Followers</div>
+                </div>
               </div>
               <div className="talents-social">
                 <img src={twitterLogo}></img>
-                <span className="social-count">
-                  {talentData?.twitterFollowers}
-                </span>
-                <div className="followers-text">Followers</div>
+
+                <div className="social-followers-count-section">
+                  <div className="social-count">
+                    {talentData?.twitterFollowers}
+                  </div>
+                  <div className="followers-text">Followers</div>
+                </div>
               </div>
               <div className="talents-social">
                 <img src={threadLogo}></img>
-                <span className="social-count">
-                  {talentData?.threadsFollowers}
-                </span>
-                <div className="followers-text">Followers</div>
+
+                <div className="social-followers-count-section">
+                  <div className="social-count">
+                    {talentData?.threadsFollowers}
+                  </div>
+                  <div className="followers-text">Followers</div>
+                </div>
               </div>
               <div className="talents-social">
                 <img src={youtubeLogo}></img>
-                <span className="social-count">
-                  {talentData?.youtubeFollowers}
-                </span>
-                <div className="followers-text">Followers</div>
+
+                <div className="social-followers-count-section">
+                  <div className="social-count">
+                    {talentData?.youtubeFollowers}
+                  </div>
+                  <div className="followers-text">Followers</div>
+                </div>
               </div>
             </div>
 
@@ -398,12 +445,15 @@ const TalentProfile = () => {
                 talentData.profession.map((item, index) => (
                   <>
                     <div key={index}>
-                      <div className="name">{item?.value}</div>
-                      <div className="value">
-                        $ {item?.perHourSalary} per hour (Negotiable)
+                      <div className="talent-profession-name">
+                        {item?.value}
                       </div>
-                      <div className="value">
-                        $ {item?.perDaySalary} per day (Negotiable)
+                      <div className="talent-profession-value">
+                        $ {item?.perHourSalary} per hour{" "}
+                        <span>(Negotiable)</span>
+                      </div>
+                      <div className="talent-profession-value">
+                        $ {item?.perDaySalary} per day <span>(Negotiable)</span>
                       </div>
                     </div>
                   </>
@@ -455,6 +505,18 @@ const TalentProfile = () => {
               </div>
               <div
                 className={
+                  services
+                    ? "active-tab individual-talent-tab"
+                    : "individual-talent-tab"
+                }
+                onClick={(e) => {
+                  handleForms("services");
+                }}
+              >
+                Services
+              </div>
+              <div
+                className={
                   videos
                     ? "active-tab individual-talent-tab"
                     : "individual-talent-tab"
@@ -491,12 +553,12 @@ const TalentProfile = () => {
               </div>
               <div
                 className={
-                  bio
+                  CV
                     ? "active-tab individual-talent-tab"
                     : "individual-talent-tab"
                 }
                 onClick={(e) => {
-                  handleForms("bio");
+                  handleForms("CV");
                 }}
               >
                 CV
@@ -508,10 +570,19 @@ const TalentProfile = () => {
                 <>
                   <div className="portofolio-section">
                     <div className="portofolio-title">Photos</div>
-                    <div className="view-all">View All</div>
+                    <div
+                      className="view-all"
+                      onClick={(e) => {
+                        handleForms("photos");
+                      }}
+                    >
+                      View All
+                    </div>
                   </div>
                   <div className="photos-slider">
-                    <PhotosCarousel talentData={talentData} />
+                    {photosList && photosList.length > 0 && (
+                      <PhotosCarousel photosList={photosList} />
+                    )}
                   </div>
                   <div className="portofolio-section">
                     <div className="portofolio-title">Social media posts</div>
@@ -546,6 +617,70 @@ const TalentProfile = () => {
                   </div>
 
                   <ServicesCarousel talentData={talentData} />
+
+                  <div className="portofolio-section">
+                    <div className="portofolio-title">Videos & Audios</div>
+                    <div className="view-all">View All</div>
+                  </div>
+
+                  <div className="service-list-main">
+                    {videoAudioList.map((item) => (
+                      <div className="item model-picture-wrapper" key={item.id}>
+                        {item.type === "video" && (
+                          <video controls>
+                            <source
+                              src={`${API.userFilePath}${item.fileData}`}
+                              type="video/mp4"
+                            />
+                            Your browser does not support the video tag.
+                          </video>
+                        )}
+                        {item.type === "audio" && (
+                          <audio controls>
+                            <source
+                              src={`${API.userFilePath}${item.fileData}`}
+                              type="audio/mp3"
+                            />
+                            Your browser does not support the audio tag.
+                          </audio>
+                        )}
+                        <p>{item.title}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="portofolio-section">
+                    <div className="portofolio-title">CV</div>
+                    <div className="view-all">View All</div>
+                  </div>
+
+                  <div className="cvlist-wrapper">
+                    {cvList.map((pdf) => {
+                      console.log(pdf, "pdf");
+                      return (
+                        <>
+                          <>
+                            <div className="cv-card" key={pdf.title}>
+                              <i class="fa-solid fa-file"></i>
+                              <div className="fileName">{pdf.title}</div>
+                              <button
+                                className="view-cv"
+                                onClick={() => setShowModal(true)}
+                              >
+                                View PDF
+                              </button>
+                              {showModal && (
+                                <PdfModal
+                                  pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
+                                  onHide={() => setShowModal(false)}
+                                />
+                              )}
+                            </div>
+                          </>
+                        </>
+                      );
+                    })}
+                  </div>
                 </>
               )}
               {photos && (
@@ -585,7 +720,7 @@ const TalentProfile = () => {
                   {videoAudioList.map((item) => (
                     <div className="item model-picture-wrapper" key={item.id}>
                       {item.type === "video" && (
-                        <video controls>
+                        <video className="video-style" controls>
                           <source
                             src={`${API.userFilePath}${item.fileData}`}
                             type="video/mp4"
@@ -606,6 +741,11 @@ const TalentProfile = () => {
                     </div>
                   ))}
                 </div>
+              )}
+              {services && (
+                <>
+                  <ServicesCarousel talentData={talentData} />
+                </>
               )}
               {features && (
                 <>
@@ -650,24 +790,27 @@ const TalentProfile = () => {
                   </div>
                 </>
               )}
-              {bio && (
+              {CV && (
                 <div>
                   {cvList.map((pdf) => {
                     return (
                       <>
                         <>
                           <div className="cv-card" key={pdf.title}>
-                            <p>
-                              Page {pageNumber} of {numPages}
-                            </p>
                             <i class="fa-solid fa-file"></i>
                             <div className="fileName">{pdf.title}</div>
                             <button
                               className="view-cv"
-                              onClick={() => handleView(pdf)}
+                              onClick={() => setShowModal(true)}
                             >
-                              View
+                              View PDF
                             </button>
+                            {showModal && (
+                              <PdfModal
+                                pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
+                                onHide={() => setShowModal(false)}
+                              />
+                            )}
                           </div>
                         </>
                       </>
@@ -709,17 +852,6 @@ const TalentProfile = () => {
       <div className="find-more">
         <div>Find More</div>
       </div>
-
-      <Document
-        file={`${API.userFilePath}${talentData?.cv[0]?.fileData}`}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        {Array(numPages)
-          .fill()
-          .map((_, i) => (
-            <Page pageNumber={i + 1} />
-          ))}
-      </Document>
 
       <Footer />
     </>

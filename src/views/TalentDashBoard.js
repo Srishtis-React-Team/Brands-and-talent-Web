@@ -92,6 +92,10 @@ const TalentDashBoard = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [userId, setUserId] = useState(null);
 
+  const url = window.location.href;
+  const queryString = url.split("?")[1];
+  console.log(" queryString:", queryString);
+
   useEffect(() => {
     const offcanvas = new window.bootstrap.Offcanvas(offcanvasRef.current);
     offcanvasRef.current.addEventListener("hidden.bs.offcanvas", () => {
@@ -109,7 +113,7 @@ const TalentDashBoard = () => {
   }, [userId]);
 
   const checkProfileStatus = async () => {
-    await ApiHelper.post(`${API.checkProfileStatus}${userId}`)
+    await ApiHelper.post(`${API.checkProfileStatus}${queryString}`)
       .then((resData) => {
         if (resData.data.profileStatus === false) {
           openDoItNowModal();
