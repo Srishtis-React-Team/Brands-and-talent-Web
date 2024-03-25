@@ -42,7 +42,7 @@ const KidsFormFour = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 4 of 4</div>
+            {/* <div className="step-text">Step 6 of 6</div> */}
           </div>
           <button
             type="button"

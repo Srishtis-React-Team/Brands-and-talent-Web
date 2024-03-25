@@ -9,6 +9,9 @@ export const API = {
   listCountries: BASEURL + "admin/listCountries",
   listStates: BASEURL + "admin/listLocation",
   listCity: BASEURL + "admin/listCity",
+  getAllCitiesList: BASEURL + "admin/getAllCitiesList",
+  getAllStatesList: BASEURL + "admin/getAllStatesList",
+  chatbot: BASEURL + "admin/chatbot",
 
   //Registration
   brandRegisteration: BASEURL + "brands/brandsRegister",
@@ -44,6 +47,7 @@ export const API = {
   talentFilterData: BASEURL + "users/talentFilterData",
   getByProfession: BASEURL + "users/getByProfession",
   setUserFavorite: BASEURL + "users/setUserFavorite/",
+  removeFavorite: BASEURL + "users/removeFavorite/",
   subscriptionStatus: BASEURL + "users/subscriptionStatus/",
   setUserFavorite: BASEURL + "users/setUserFavorite/",
 };

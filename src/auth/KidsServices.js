@@ -7,32 +7,32 @@ import { convertToRaw } from "draft-js";
 import Select from "react-select";
 import Axios from "axios";
 import { useNavigate } from "react-router";
-import { API } from "../../config/api";
-import { ApiHelper } from "../../helpers/ApiHelper";
-import "../../assets/css/talent-dashboard.scss";
-import "../../assets/css/forms/kidsform-one.scss";
-import PopUp from "../../components/PopUp";
+import { API } from "../config/api";
+import { ApiHelper } from "../helpers/ApiHelper";
+import "../assets/css/talent-dashboard.scss";
+import "../assets/css/forms/kidsform-one.scss";
+import PopUp from "../components/PopUp";
 import { event } from "jquery";
-const AdultFormTwo = () => {
-  const btLogo = require("../../assets/icons/Group 56.png");
+const KidsServices = () => {
+  const btLogo = require("../assets/icons/Group 56.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const adultsBanner = require("../../assets/images/adultsBanner.png");
-  const uploadIcon = require("../../assets/icons/uploadIcon.png");
-  const imageType = require("../../assets/icons/imageType.png");
-  const videoType = require("../../assets/icons/videoType.png");
-  const audiotype = require("../../assets/icons/audiotype.png");
-  const idCard = require("../../assets/icons/id-card.png");
-  const elipsis = require("../../assets/icons/elipsis.png");
-  const greenTickCircle = require("../../assets/icons/small-green-tick.png");
-  const fbLogo = require("../../assets/icons/social-media-icons/fbLogo.png");
-  const instagram = require("../../assets/icons/social-media-icons/instagram.png");
-  const threads = require("../../assets/icons/social-media-icons/thread-fill.png");
-  const tikTok = require("../../assets/icons/social-media-icons/tikTok.png");
-  const xTwitter = require("../../assets/icons/social-media-icons/xTwitter.png");
-  const youTube = require("../../assets/icons/social-media-icons/youTube.png");
-  const linkdin = require("../../assets/icons/social-media-icons/linkdin.png");
-  const docsIcon = require("../../assets/icons/docsIcon.png");
+  const adultsBanner = require("../assets/images/adultsBanner.png");
+  const uploadIcon = require("../assets/icons/uploadIcon.png");
+  const imageType = require("../assets/icons/imageType.png");
+  const videoType = require("../assets/icons/videoType.png");
+  const audiotype = require("../assets/icons/audiotype.png");
+  const idCard = require("../assets/icons/id-card.png");
+  const elipsis = require("../assets/icons/elipsis.png");
+  const greenTickCircle = require("../assets/icons/small-green-tick.png");
+  const fbLogo = require("../assets/icons/social-media-icons/fbLogo.png");
+  const instagram = require("../assets/icons/social-media-icons/instagram.png");
+  const threads = require("../assets/icons/social-media-icons/thread-fill.png");
+  const tikTok = require("../assets/icons/social-media-icons/tikTok.png");
+  const xTwitter = require("../assets/icons/social-media-icons/xTwitter.png");
+  const youTube = require("../assets/icons/social-media-icons/youTube.png");
+  const linkdin = require("../assets/icons/social-media-icons/linkdin.png");
+  const docsIcon = require("../assets/icons/docsIcon.png");
   const [isLoading, setIsLoading] = useState(false);
   const [loader, setLoader] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -51,17 +51,17 @@ const AdultFormTwo = () => {
     let formData = {
       services: inputs,
     };
-    await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
+    await ApiHelper.post(`${API.editKids}${queryString}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Updated SuccessFully!");
+          setMessage("Updated SuccessFully Check Your Email");
           setOpenPopUp(true);
-          updateProfileStatus();
+          loginTemplate(resData?.data?.data?.email);
 
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-profile?${queryString}`);
+            navigate(`/talent-signup-files-success`);
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -77,9 +77,19 @@ const AdultFormTwo = () => {
       });
   };
 
-  const updateProfileStatus = async () => {
-    await ApiHelper.post(`${API.updateProfileStatus}${queryString}`)
-      .then((resData) => {})
+  const loginTemplate = async (email) => {
+    // navigate(`/talent-signup-files-success`);
+    const formData = {
+      parentEmail: email,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(API.loginTemplate, formData)
+      .then((resData) => {
+        console.log(resData, "resData");
+        if (resData.data.status === true) {
+        } else {
+        }
+      })
       .catch((err) => {
         setIsLoading(false);
       });
@@ -193,7 +203,7 @@ const AdultFormTwo = () => {
                 }}
                 src={btLogo}
               ></img>
-              <div className="step-text">Step 3 of 3</div>
+              <div className="step-text">Step 6 of 6</div>
             </div>
             <button
               type="button"
@@ -457,4 +467,4 @@ const AdultFormTwo = () => {
   );
 };
 
-export default AdultFormTwo;
+export default KidsServices;

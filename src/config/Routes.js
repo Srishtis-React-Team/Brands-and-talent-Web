@@ -29,6 +29,7 @@ import KidsSocialMedias from "../auth/KidsSocialMedias";
 import AdultSignup from "../auth/AdultSignup";
 import AdultsOTP from "../auth/AdultsOTP";
 import AdultSuccess from "../auth/AdultSuccess";
+import KidsServices from "../auth/KidsServices";
 function Routing() {
   return (
     <Routes>
@@ -58,6 +59,7 @@ function Routing() {
       <Route path="/talent-signup-plan-details" element={<KidsFormTwo />} />
       <Route path="/talent-signup-files-details" element={<KidsFormThree />} />
       <Route path="/talent-signup-files-success" element={<KidsFormFour />} />
+      <Route path="/talent-signup-service-details" element={<KidsServices />} />
       <Route path="/adult-signup-basic-details" element={<AdultFormOne />} />
       <Route path="/adult-signup-service-details" element={<AdultFormTwo />} />
       <Route path="/adult-signup-files-details" element={<AdultFormThree />} />

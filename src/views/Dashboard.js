@@ -7,6 +7,7 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { NavLink } from "react-router-dom";
+import ChatBot from "../components/ChatBot";
 const Dashboard = () => {
   const navigate = useNavigate();
   const starIcon = require("../assets/icons/star.png");
@@ -50,6 +51,7 @@ const Dashboard = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [All, showAll] = useState(true);
+  const [featuredMembers, setFeaturedMembers] = useState(false);
   const [Actor, showActor] = useState(false);
   const [Model, showModel] = useState(false);
   const [influencers, setInfluencers] = useState(false);
@@ -496,6 +498,11 @@ const Dashboard = () => {
     } else {
       showModel(false);
     }
+    if (e == "featured-members") {
+      setFeaturedMembers(true);
+    } else {
+      setFeaturedMembers(false);
+    }
     if (e == "Actor") {
       showActor(true);
     } else {
@@ -598,7 +605,7 @@ const Dashboard = () => {
 
         <div className="container-fluid">
           <div className="tabs-section">
-            <div className="title">Popular Talents</div>
+            <div className="title">Popular Talent</div>
             <div className="tabs">
               <div
                 className={All ? "active-tab" : null}
@@ -607,6 +614,14 @@ const Dashboard = () => {
                 }}
               >
                 All Talents
+              </div>
+              <div
+                className={featuredMembers ? "active-tab" : null}
+                onClick={(e) => {
+                  handleTabs("featured-members");
+                }}
+              >
+                Featured Members
               </div>
               <div
                 className={Actor ? "active-tab" : null}
@@ -984,9 +999,8 @@ const Dashboard = () => {
 
         <Footer />
       </div>
-      <div className="chat-section"></div>
-      <div className="chatbot-icon">
-        <img src={chatIcon} alt="" />
+      <div className="chat-section">
+        <ChatBot />
       </div>
       {openPopUp && <PopUp message={message} />}
     </>

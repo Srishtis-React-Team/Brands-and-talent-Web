@@ -34,6 +34,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [resumeFile, setResumeFile] = useState([]);
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [aboutYou, setAboutYou] = useState([]);
+
   const [featuresList, setFeaturesList] = useState([]);
   const [features, setFeature] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,13 +63,21 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   useEffect(() => {
     getFeatures();
   }, []);
-  useEffect(() => {}, [updateDisabled]);
   useEffect(() => {
     getFeatures();
-    if (profileFile) {
+    console.log(profileFile, "profileFile");
+    console.log(portofolioFile, "portofolioFile");
+    console.log(portofolioFile.length, "portofolioFile.length");
+    if (profileFile === null || portofolioFile.length === 0) {
       setUpdateDisabled(true);
+    } else if (profileFile !== null || portofolioFile.length !== 0) {
+      setUpdateDisabled(false);
     }
-  }, [profileFile]);
+  }, [profileFile, portofolioFile]);
+
+  useEffect(() => {
+    console.log(updateDisabled, "updateDisabled");
+  }, [updateDisabled]);
 
   const handleProfileDrop = (e) => {
     e.preventDefault();
@@ -74,6 +85,12 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     console.log(droppedFiles[0], "droppedFiles");
     uploadFile(droppedFiles[0]);
     // setFiles(droppedFiles);
+  };
+
+  const onEditorSummary = (editorState) => {
+    console.log(editorState, "editorState");
+    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
+    setEditorState(editorState);
   };
 
   const handleProfileDragOver = (e) => {
@@ -416,6 +433,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       idType: idType,
       verificationId: verificationID,
       features: features,
+      childAboutYou: aboutYou,
     };
     setIsLoading(true);
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
@@ -424,30 +442,12 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         console.log(resData.data, "resData.data");
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Registered SuccessFully Check Your Email");
+          setMessage("Updated SuccessFully");
           setOpenPopUp(true);
-          loginTemplate(resData?.data?.data?.email);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-signup-files-success`);
+            navigate(`/talent-signup-service-details?${userId}`);
           }, 1000);
-        } else {
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
-  };
-  const loginTemplate = async (email) => {
-    // navigate(`/talent-signup-files-success`);
-    const formData = {
-      parentEmail: email,
-    };
-    setIsLoading(true);
-    await ApiHelper.post(API.loginTemplate, formData)
-      .then((resData) => {
-        console.log(resData, "resData");
-        if (resData.data.status === true) {
         } else {
         }
       })
@@ -472,7 +472,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 5 of 5</div>
+            <div className="step-text">Step 5 of 6</div>
           </div>
           <button
             type="button"
@@ -575,7 +575,38 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div className="kids-form-title">Portofolio</div>
+                  <div className="kids-form-title">Bio</div>
+
+                  <div className="rich-editor">
+                    <label className="form-label">About You</label>
+                    <Editor
+                      editorState={editorState}
+                      editorStyle={{ overflow: "hidden" }}
+                      toolbarClassName="toolbarClassName"
+                      wrapperClassName="wrapperClassName"
+                      editorClassName="editorClassName"
+                      onEditorStateChange={onEditorSummary}
+                      toolbar={{
+                        options: [
+                          "inline",
+                          "blockType",
+                          "fontSize",
+                          "list",
+                          "textAlign",
+                          "history",
+                        ],
+                        inline: { inDropdown: true },
+                        list: { inDropdown: true },
+                        textAlign: { inDropdown: true },
+                        link: { inDropdown: true },
+                        history: { inDropdown: true },
+                      }}
+                    />
+                  </div>
+
+                  <div className="kids-form-title">
+                    Portofolio <span className="astrix">*</span>
+                  </div>
                   <div
                     className="cv-section"
                     onDrop={handlePortofolioDrop}
@@ -943,12 +974,12 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                           }}
                         >
                           <option defaultValue value="universal_id">
-                            Universal ID
+                            National ID/Citizenship Card
                           </option>
                           <option defaultValue value="licence">
                             Licence
                           </option>
-                          <option value="passport">PassPort</option>
+                          <option value="passport">Passport</option>
                         </select>
                       </div>
                     </div>
@@ -1075,17 +1106,17 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           <button
             type="button"
             className={
-              !updateDisabled
+              updateDisabled
                 ? "step-continue disabled-continue"
                 : "step-continue"
             }
             onClick={(e) => {
-              if (updateDisabled === true) {
+              if (updateDisabled === false) {
                 editKids();
               }
             }}
           >
-            {isLoading ? "Loading..." : "Submit"}
+            {isLoading ? "Loading..." : "Continue"}
           </button>
         </div>
       </div>

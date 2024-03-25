@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsform-one.scss";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
+
 import Select from "react-select";
 import Axios from "axios";
 import { API } from "../config/api";
@@ -53,7 +49,6 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [kidsLegalLastNameError, setkidsLegalLastNameError] = useState(false);
   const [genderError, setgenderError] = useState(false);
   const [message, setMessage] = useState("");
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedProfessions, setSelectedProfessions] = useState([]);
   const [parentFirstName, setParentFirstName] = useState("");
@@ -67,9 +62,6 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [kidsPreferedLastName, setKidsPreferedLastName] = useState("");
   const [kidsLegalFirstName, setKidsLegalFirstName] = useState("");
   const [kidsLegalLastName, setKidsLegalLastName] = useState("");
-  const [kidsPhone, setKidsPhone] = useState("");
-  const [kidsEmail, setKidsEmail] = useState("");
-  const [kidsLocation, setKidsLocation] = useState("");
   const [kidsCity, setKidsCity] = useState("");
   const [gender, setGender] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
@@ -162,7 +154,7 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const handleKidsEmailChange = (e) => {
     const email = e.target.value;
-    setKidsEmail(e.target.value);
+    // setKidsEmail(e.target.value);
     // Validate email using regex
     setIsValidEmail(emailRegex.test(email));
   };
@@ -283,12 +275,6 @@ const KidsformOne = ({ sendDataToParent }) => {
     "Other",
   ];
 
-  const onEditorSummary = (editorState) => {
-    console.log(editorState, "editorState");
-    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
-    setEditorState(editorState);
-  };
-
   function chooseCategory(category) {
     setCategoryError(false);
     if (selectedCategories.includes(category)) {
@@ -337,11 +323,10 @@ const KidsformOne = ({ sendDataToParent }) => {
           setNationality(resData?.data?.data?.childNationality);
           setMaritalStatus(resData?.data?.data?.maritalStatus);
           setEthnicity(resData?.data?.data?.childEthnicity);
-          setKidsEmail(resData?.data?.data?.childEmail);
-          setKidsPhone(resData?.data?.data?.childPhone);
-          setKidsLocation(resData?.data?.data?.childLocation);
+          // setKidsEmail(resData?.data?.data?.childEmail);
+          // setKidsPhone(resData?.data?.data?.childPhone);
+          // setKidsLocation(resData?.data?.data?.childLocation);
           setKidsCity(resData?.data?.data?.childCity);
-          setAboutYou(resData?.data?.data?.childAboutYou);
           setSelectedCategories([
             ...selectedCategories,
             ...resData.data.data?.relevantCategories,
@@ -522,9 +507,6 @@ const KidsformOne = ({ sendDataToParent }) => {
         childEthnicity: ethnicity,
         languages: languages,
         childDob: dateOfBirth,
-        childPhone: kidsPhone,
-        childEmail: kidsEmail,
-        childLocation: kidsLocation,
         childCity: kidsCity,
         childAboutYou: aboutYou,
         age: age,
@@ -598,7 +580,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                 }}
                 src={btLogo}
               ></img>
-              <div className="step-text">Step 1 of 5</div>
+              <div className="step-text">Step 1 of 6</div>
             </div>
             <button
               type="button"
@@ -1275,88 +1257,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-title">Contact Details</div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label className="form-label">Phone</label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            minLength="15"
-                            value={kidsPhone}
-                            onChange={(e) => {
-                              setKidsPhone(e.target.value);
-                            }}
-                            placeholder="Enter Phone number"
-                          ></input>
-                        </div>
-                      </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label className="form-label">Email</label>
-                          <input
-                            type="email"
-                            className={`form-control ${
-                              isValidEmail ? "" : "is-invalid"
-                            }`}
-                            onChange={handleKidsEmailChange}
-                            value={kidsEmail}
-                            placeholder="Enter E-mail"
-                          />
-                          {!isValidEmail && (
-                            <div className="invalid-feedback">
-                              Please enter a valid email address.
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label className="form-label">Location</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            onChange={(e) => {
-                              setKidsLocation(e.target.value);
-                            }}
-                            value={kidsLocation}
-                            placeholder="Enter Location"
-                          ></input>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="kids-form-title">Bio</div>
-
-                    <div className="rich-editor">
-                      <label className="form-label">About You</label>
-                      <Editor
-                        editorState={editorState}
-                        editorStyle={{ overflow: "hidden" }}
-                        toolbarClassName="toolbarClassName"
-                        wrapperClassName="wrapperClassName"
-                        editorClassName="editorClassName"
-                        onEditorStateChange={onEditorSummary}
-                        toolbar={{
-                          options: [
-                            "inline",
-                            "blockType",
-                            "fontSize",
-                            "list",
-                            "textAlign",
-                            "history",
-                          ],
-                          inline: { inDropdown: true },
-                          list: { inDropdown: true },
-                          textAlign: { inDropdown: true },
-                          link: { inDropdown: true },
-                          history: { inDropdown: true },
-                        }}
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
@@ -1372,7 +1272,6 @@ const KidsformOne = ({ sendDataToParent }) => {
             >
               Back
             </button>
-
             <button
               type="button"
               className="step-continue"
