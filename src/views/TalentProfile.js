@@ -361,7 +361,9 @@ const TalentProfile = () => {
                 <img src={instaLogo}></img>
                 <div className="social-followers-count-section">
                   <div className="social-count">
-                    {talentData?.instaFollowers}
+                    {talentData?.instaFollowers
+                      ? talentData.instaFollowers
+                      : "N/A"}
                   </div>
                   <div className="followers-text">Followers</div>
                 </div>
@@ -370,17 +372,20 @@ const TalentProfile = () => {
                 <img src={fbIcon}></img>
                 <div className="social-followers-count-section">
                   <div className="social-count">
-                    {talentData?.facebookFollowers}
+                    {talentData?.facebookFollowers
+                      ? talentData.facebookFollowers
+                      : "N/A"}
                   </div>
                   <div className="followers-text">Followers</div>
                 </div>
               </div>
               <div className="talents-social">
                 <img src={tiktok}></img>
-
                 <div className="social-followers-count-section">
                   <div className="social-count">
-                    {talentData?.tiktokFollowers}
+                    {talentData?.tiktokFollowers
+                      ? talentData.tiktokFollowers
+                      : "N/A"}
                   </div>
                   <div className="followers-text">Followers</div>
                 </div>
@@ -389,7 +394,9 @@ const TalentProfile = () => {
                 <img src={linkdin}></img>
                 <div className="social-followers-count-section">
                   <div className="social-count">
-                    {talentData?.linkedinFollowers}
+                    {talentData?.linkedinFollowers
+                      ? talentData.linkedinFollowers
+                      : "N/A"}
                   </div>
                   <div className="followers-text">Followers</div>
                 </div>
@@ -399,7 +406,9 @@ const TalentProfile = () => {
 
                 <div className="social-followers-count-section">
                   <div className="social-count">
-                    {talentData?.twitterFollowers}
+                    {talentData?.twitterFollowers
+                      ? talentData.twitterFollowers
+                      : "N/A"}
                   </div>
                   <div className="followers-text">Followers</div>
                 </div>
@@ -409,7 +418,9 @@ const TalentProfile = () => {
 
                 <div className="social-followers-count-section">
                   <div className="social-count">
-                    {talentData?.threadsFollowers}
+                    {talentData?.threadsFollowers
+                      ? talentData.threadsFollowers
+                      : "N/A"}
                   </div>
                   <div className="followers-text">Followers</div>
                 </div>
@@ -419,7 +430,9 @@ const TalentProfile = () => {
 
                 <div className="social-followers-count-section">
                   <div className="social-count">
-                    {talentData?.youtubeFollowers}
+                    {talentData?.youtubeFollowers
+                      ? talentData.youtubeFollowers
+                      : "N/A"}
                   </div>
                   <div className="followers-text">Followers</div>
                 </div>
@@ -446,14 +459,13 @@ const TalentProfile = () => {
                   <>
                     <div key={index}>
                       <div className="talent-profession-name">
-                        {item?.value}
+                        {item?.value} <span>(Negotiable)</span>
                       </div>
                       <div className="talent-profession-value">
                         $ {item?.perHourSalary} per hour{" "}
-                        <span>(Negotiable)</span>
                       </div>
                       <div className="talent-profession-value">
-                        $ {item?.perDaySalary} per day <span>(Negotiable)</span>
+                        $ {item?.perDaySalary} per day
                       </div>
                     </div>
                   </>
@@ -489,7 +501,7 @@ const TalentProfile = () => {
                   handleForms("portofolio");
                 }}
               >
-                Profile & Overview
+                Profile Overview
               </div>
               <div
                 className={
@@ -501,20 +513,23 @@ const TalentProfile = () => {
                   handleForms("photos");
                 }}
               >
-                Photos
+                Portofolio
               </div>
-              <div
-                className={
-                  services
-                    ? "active-tab individual-talent-tab"
-                    : "individual-talent-tab"
-                }
-                onClick={(e) => {
-                  handleForms("services");
-                }}
-              >
-                Services
-              </div>
+              {talentData && talentData?.services?.length > 0 && (
+                <div
+                  className={
+                    services
+                      ? "active-tab individual-talent-tab"
+                      : "individual-talent-tab"
+                  }
+                  onClick={(e) => {
+                    handleForms("services");
+                  }}
+                >
+                  Services
+                </div>
+              )}
+
               <div
                 className={
                   videos
@@ -569,7 +584,7 @@ const TalentProfile = () => {
               {portofolio && (
                 <>
                   <div className="portofolio-section">
-                    <div className="portofolio-title">Photos</div>
+                    <div className="portofolio-title">Portofolio</div>
                     <div
                       className="view-all"
                       onClick={(e) => {
@@ -627,7 +642,7 @@ const TalentProfile = () => {
                     {videoAudioList.map((item) => (
                       <div className="item model-picture-wrapper" key={item.id}>
                         {item.type === "video" && (
-                          <video controls>
+                          <video className="video-style " controls>
                             <source
                               src={`${API.userFilePath}${item.fileData}`}
                               type="video/mp4"

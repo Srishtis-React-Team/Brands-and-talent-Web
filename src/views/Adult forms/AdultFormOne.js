@@ -240,7 +240,7 @@ const AdultFormOne = () => {
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
-              navigate(`/adult-signup-service-details?${userId}`);
+              navigate(`/adult-signup-files-details?${userId}`);
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);

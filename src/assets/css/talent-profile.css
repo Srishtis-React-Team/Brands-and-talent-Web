@@ -1158,12 +1158,12 @@
   padding: 12px 0px;
 }
 
-.talent-profession-value > span {
-  color: #afafaf;
+.talent-profession-name > span {
+  color: #838383;
   font-family: "Open Sans", sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
   padding: 12px 0px;
 }

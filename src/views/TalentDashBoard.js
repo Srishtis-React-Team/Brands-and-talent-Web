@@ -261,7 +261,7 @@ const TalentDashBoard = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               >
-                Do it Now
+                Update Profile Now
               </div>
             </div>
           </div>

@@ -110,12 +110,11 @@ const AdultFormThree = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          updateProfileStatus();
           setMessage("Updated SuccessFully!");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-profile?${queryString}`);
+            navigate(`/adult-signup-service-details?${queryString}`);
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -126,13 +125,6 @@ const AdultFormThree = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        setIsLoading(false);
-      });
-  };
-  const updateProfileStatus = async () => {
-    await ApiHelper.post(`${API.updateProfileStatus}${queryString}`)
-      .then((resData) => {})
       .catch((err) => {
         setIsLoading(false);
       });
@@ -456,7 +448,7 @@ const AdultFormThree = () => {
                 }}
                 src={btLogo}
               ></img>
-              <div className="step-text">Step 1 of 3</div>
+              <div className="step-text">Step 2 of 3</div>
             </div>
             <button
               type="button"

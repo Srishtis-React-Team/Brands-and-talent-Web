@@ -7,7 +7,9 @@ import RangeSlider from "../components/RangeSlider.js";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import { useNavigate } from "react-router-dom";
-
+import nationalityOptions from "../components/nationalities.js";
+import languageOptions from "../components/languages.js";
+import PopUp from "../components/PopUp.js";
 const FindCreators = () => {
   const navigate = useNavigate();
   const searchIcon = require("../assets/icons/search.png");
@@ -68,10 +70,133 @@ const FindCreators = () => {
   const [features, setFeature] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [kidsCity, setKidsCity] = useState("");
+  const [stateError, setStateError] = useState(false);
+  const [cityError, setCityError] = useState(false);
 
   const clear = () => {
     setSearchKeyword("");
+    setSelectedKeywords("");
+    setProfession("");
+    setGender("");
+    setSubCategory("");
+    setAge("");
+    setCountry(null);
+    setState("");
+    setEthnicity("");
+    setTalentList([]);
+    setMinAge("0");
+    setMaxAge("100");
+    setLanguages("");
+    setMaritalStatus("");
+    setIndustry("");
+    setNationality("");
+    setFullName("");
+    setFeature([]);
+    // window.location.reload();
   };
+
+  const customNoOptionsMessageState = ({ inputValue }) =>
+    inputValue ? "No States Available" : "Choose Country First";
+  const customNoOptionsMessageCity = ({ inputValue }) =>
+    inputValue ? "No States Available" : "Choose City First";
+
+  const keywordsList = [
+    "Celebrity",
+    "Creator",
+    "Stylist",
+    "Photographer",
+    "Videographer",
+  ];
+
+  const ethnicityOptions = [
+    "South Asian",
+    "Indian/Pakistani",
+    "South East Asian",
+    "Khmer",
+    "Vietnamese",
+    "Indonesian",
+    "Thai",
+    "Middle-East",
+    "Black",
+    "African",
+    "Latino/Hispanic",
+    "Russian",
+    "Ukrainian",
+    "Nordic",
+    "Scandinavian",
+    "European",
+    "Italian",
+  ];
+
+  const industryList = [
+    "Fashion",
+    "Parenting and family",
+    "Sports/Martial Arts/Dance",
+    "Arts and photography",
+    "Videography",
+    "Music",
+    "Comedy/Entertainment",
+    "Education",
+    "Transportation",
+    "Food and beverage",
+    "Finance",
+    "Beauty/Cosmetics",
+    "Luxury",
+    "Business and Technology",
+    "Travel/Tourism",
+    "Health/Wellness/Fitness",
+    "Home and Gardening",
+    "Eco-friendly/Nature/Sustainability",
+    "Diversity and inclusion",
+    "Outdoor and nature",
+    "Content Creation",
+    "Lifestyle",
+    "Celebrity",
+    "Animals/Pets",
+    "Web3",
+    "Home and DIY",
+    "Anime/Memes",
+    "Website/Mobile Applications",
+    "Gaming",
+    "Lifecoach/Relationships",
+    "Cosplay/Memes",
+    "Other",
+  ];
+
+  // const industryList = [
+  //   "Animal",
+  //   "Arts and Entertainment",
+  //   "Automotive",
+  //   "Business",
+  //   "Construction",
+  //   "Education",
+  //   "Energy and Environment",
+  //   "Engineering",
+  //   "Finance and Insurance",
+  //   "Food",
+  //   "Government",
+  //   "Healthcare",
+  //   "Legal",
+  //   "Manufacturing",
+  //   "Personal Care",
+  //   "Real Estate",
+  //   "Retail",
+  //   "Technology",
+  //   "Transportation and Storage",
+  //   "Travel",
+  //   "N/A",
+  // ];
+
+  const gendersOptions = [
+    "Man",
+    "Woman",
+    "Non binary",
+    "Transgender Woman",
+    "Transgender Man",
+    "Agender",
+    "Other",
+    "Prefer not to say",
+  ];
 
   const getFeatures = async () => {
     await ApiHelper.get(API.getFeatures)
@@ -116,13 +241,32 @@ const FindCreators = () => {
   };
 
   const professionList = [
+    { value: "Model", label: "Model" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Creator", label: "Creator" },
+    { value: "Stylist", label: "Stylist" },
+    { value: "Photographer", label: "Photographer" },
+    { value: "Videographer", label: "Videographer" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
     { value: "Actor", label: "Actor" },
-    { value: "Talents", label: "Talents" },
-    { value: "Director", label: "Director" },
     { value: "Singer", label: "Singer" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Reader", label: "Reader" },
     { value: "Writer", label: "Writer" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "RJ", label: "RJ" },
+    { value: "DJ", label: "DJ" },
+    { value: "VJ", label: "VJ" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Yoga Teacher", label: "Yoga Teacher" },
+    { value: "Webapp Developer", label: "Webapp Developer" },
+    { value: "Virtual Assistant", label: "Virtual Assistant" },
+    { value: "AI Influencer", label: "AI Influencer" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Other", label: "Other" },
   ];
 
   const genderList = [
@@ -159,13 +303,14 @@ const FindCreators = () => {
     await ApiHelper.post(`${API.setUserFavorite}${loggedID}`, formData, true)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Subscribed SuccessFully! Check Your Email Inbox");
+          setMessage("Added The Talent To Your Favorites ");
           setOpenPopUp(true);
+          getTalentList();
           setTimeout(function() {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
-          setMessage(resData.data.message);
+          setMessage("Please Login First");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -189,17 +334,34 @@ const FindCreators = () => {
     });
   };
 
-  const removeFavorite = (item) => {
-    console.log(item, "item");
-    const modifiedTalents = talentList.map((obj) => {
-      console.log(obj, "obj");
-      if (obj.id === item.id) {
-        return { ...obj, isFavorite: false };
-      }
-      return obj;
-    });
-    setTalentList(modifiedTalents);
-    console.log(modifiedTalents, "modifiedTalents");
+  const removeFavorite = async (item) => {
+    console.log(item);
+    const formData = {
+      type: item?.type,
+      user: item?._id,
+    };
+    const loggedID = localStorage.getItem("userId");
+    await ApiHelper.post(`${API.removeFavorite}${loggedID}`, formData, true)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("Removed Talent From Favorites");
+          setOpenPopUp(true);
+          getTalentList();
+
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const onRangeChange = (e) => {
@@ -271,11 +433,12 @@ const FindCreators = () => {
       parentCountry: country,
       parentState: state,
       childCity: kidsCity,
-      gender: gender,
+      childGender: gender,
       childEthnicity: ethnicity,
       languages: languages,
-      childFirstName: fullName,
-      parentFirstName: fullName,
+      childNationality: nationality,
+      preferredChildFirstname: fullName,
+      preferredChildLastName: fullName,
       minAge: min,
       maxAge: max,
       industry: industry,
@@ -288,16 +451,18 @@ const FindCreators = () => {
     setIsLoading(true);
     await ApiHelper.post(API.talentFilterData, formData)
       .then((resData) => {
-        console.log("talentFilterData response", resData.data.data.user._id);
+        console.log("talentFilterData response", resData);
         if (resData.data.status === true) {
+          console.log(resData?.data?.data, "filtered talents");
           setIsLoading(false);
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
+          setTalentList(resData?.data?.data);
           setTimeout(function() {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
-          setMessage("Error Occured Try Again");
+          setMessage("No Matching Users Found");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -384,7 +549,7 @@ const FindCreators = () => {
                 <input
                   className="keyword-input"
                   placeholder="Search Keyword"
-                  value={selectedKeyword}
+                  value={searchKeyword}
                   onChange={(e) => {
                     setSearchKeyword(e.target.value);
                   }}
@@ -394,43 +559,43 @@ const FindCreators = () => {
             <div className="search-words-section">
               <div></div>
               <div className="search-history">
-                <div
-                  onClick={(e) => {
-                    setSelectedKeywords("creators");
-                  }}
-                >
-                  reators*
-                </div>
-                <div
-                  onClick={(e) => {
-                    setSelectedKeywords("makeup artists");
-                  }}
-                >
-                  makeup artists*
-                </div>
-                <div
-                  onClick={(e) => {
-                    setSelectedKeywords("writers");
-                  }}
-                >
-                  writers*
-                </div>
-                <div
-                  onClick={(e) => {
-                    setSelectedKeywords("beauticians");
-                  }}
-                >
-                  *
-                </div>
-                <div
-                  onClick={(e) => {
-                    setSelectedKeywords("fitness");
-                  }}
-                >
-                  fitness*
-                </div>
+                {keywordsList &&
+                  keywordsList.length > 0 &&
+                  keywordsList.map((item, index) => {
+                    return (
+                      <>
+                        <div
+                          className={
+                            selectedKeyword === item
+                              ? "selected-word-style"
+                              : ""
+                          }
+                          onClick={(e) => {
+                            setSelectedKeywords(item);
+                          }}
+                        >
+                          {item}*
+                        </div>
+                      </>
+                    );
+                  })}
               </div>
             </div>
+            <div className="keyword-wrapper">
+              <div className="filter-items">Full Name</div>
+              <div className="creators-filter-select">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Full Name"
+                  onChange={(e) => {
+                    setFullName(e.target.value);
+                  }}
+                  value={fullName}
+                ></input>
+              </div>
+            </div>
+
             <div className="profession-creator-wrapper">
               <div className="filter-items">Profession</div>
               <div className="profession-wrapper talents-profession">
@@ -448,20 +613,22 @@ const FindCreators = () => {
               </div>
             </div>
             <div className="keyword-wrapper">
-              <div className="filter-items">Industry</div>
+              <div className="filter-items">Category</div>
               <div className="creators-filter-select">
                 <select
                   className="form-select"
                   aria-label="Default select example"
                   onChange={selectIndustry}
+                  value={industry}
                 >
                   <option value="" disabled selected>
-                    Select Industry
+                    Select Category
                   </option>
-                  <option defaultValue value="model">
-                    Talents
-                  </option>
-                  <option value="actor">Actors</option>
+                  {industryList.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -475,7 +642,7 @@ const FindCreators = () => {
                     label: country,
                     key: index,
                   }))}
-                  value={country?.value}
+                  value={country ? { value: country, label: country } : null}
                   onChange={handleSelectedCountry}
                   isSearchable={true}
                 />
@@ -490,9 +657,10 @@ const FindCreators = () => {
                     value: state.stateId, // or whatever unique identifier you want to use
                     label: state.name,
                   }))}
-                  value={state?.label}
+                  value={state ? { value: state, label: state } : null}
                   onChange={handleSelectedState}
                   isSearchable={true}
+                  noOptionsMessage={customNoOptionsMessageState}
                 />
               </div>
             </div>
@@ -501,13 +669,14 @@ const FindCreators = () => {
               <div className="creators-filter-select">
                 <Select
                   placeholder="Select City..."
-                  options={stateList.map((state) => ({
-                    value: state.stateId, // or whatever unique identifier you want to use
-                    label: state.name,
+                  options={cityList.map((city) => ({
+                    value: city.cityId, // or whatever unique identifier you want to use
+                    label: city.name,
                   }))}
-                  value={state?.label}
+                  value={kidsCity ? { value: kidsCity, label: kidsCity } : null}
                   onChange={handleSelectedCity}
                   isSearchable={true}
+                  noOptionsMessage={customNoOptionsMessageCity}
                 />
               </div>
             </div>
@@ -524,10 +693,11 @@ const FindCreators = () => {
                   <option value="" disabled selected>
                     Select Gender
                   </option>
-                  <option defaultValue value="male">
-                    Male
-                  </option>
-                  <option value="female">Female</option>
+                  {gendersOptions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -573,10 +743,11 @@ const FindCreators = () => {
                   <option value="" disabled selected>
                     Select Ethnicity
                   </option>
-                  <option defaultValue value="forward">
-                    Forward
-                  </option>
-                  <option value="backword">Backword</option>
+                  {ethnicityOptions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -592,10 +763,11 @@ const FindCreators = () => {
                   <option value="" disabled selected>
                     Select Nationality
                   </option>
-                  <option defaultValue value="asian">
-                    Asian
-                  </option>
-                  <option value="african">African</option>
+                  {nationalityOptions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -611,28 +783,16 @@ const FindCreators = () => {
                   <option value="" disabled selected>
                     Select Language
                   </option>
-                  <option defaultValue value="english">
-                    English
-                  </option>
-                  <option value="spanish">Spanish</option>
+                  {languageOptions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
-            <div className="keyword-wrapper">
-              <div className="filter-items">Full Name</div>
-              <div className="creators-filter-select">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Full Name"
-                  onChange={(e) => {
-                    setFullName(e.target.value);
-                  }}
-                ></input>
-              </div>
-            </div>
 
-            {featuresListSelect && (
+            {/* {featuresListSelect && (
               <>
                 {featuresListSelect.map((item, index) => {
                   return (
@@ -647,6 +807,7 @@ const FindCreators = () => {
                             onChange={(e) =>
                               handleFeaturesChange(item.label, e.target.value)
                             }
+                            value={features}
                           >
                             <option value="" disabled selected>
                               {item.label}
@@ -667,7 +828,7 @@ const FindCreators = () => {
                   );
                 })}
               </>
-            )}
+            )} */}
 
             <div className="submit-buttons">
               <div
@@ -729,9 +890,7 @@ const FindCreators = () => {
                             className="find-creator-name"
                             onClick={() => openTalent(item)}
                           >
-                            {item?.preferredChildFirstname
-                              ? `${item?.preferredChildFirstname}`
-                              : "Elizabeth"}
+                            {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                           </div>
                           <div className="find-creator-address ">
                             {item.profession?.map((profession, index) => (
@@ -768,6 +927,8 @@ const FindCreators = () => {
       <div className="find-more">
         <div>Find More</div>
       </div>
+      {openPopUp && <PopUp message={message} />}
+
       <Footer />
     </>
   );

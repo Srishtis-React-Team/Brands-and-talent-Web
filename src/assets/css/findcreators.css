@@ -47,8 +47,9 @@
     padding-left: 15px;
   }
   .filter-section {
-    margin-top: 60px;
+    padding: 60px 0px;
     display: flex;
+    background-color: #f8f8f8;
     justify-content: center;
   }
 
@@ -93,11 +94,13 @@
 
   .filter-wrapper {
     width: 25%;
-    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
-    border-radius: 12px;
-    padding: 15px 30px;
     display: flex;
     flex-direction: column;
+    background-color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-right: 20px;
+    border-radius: 8px;
+    padding: 30px;
   }
 
   .filter-content {
@@ -216,6 +219,11 @@
   }
   .models-images {
     width: 65%;
+    background-color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-right: 20px;
+    border-radius: 8px;
+    padding: 30px;
   }
 }
 
@@ -585,4 +593,9 @@ select {
 
 .keyword-input::placeholder {
   color: #000;
+}
+
+.selected-word-style {
+  color: #c2114b !important;
+  font-weight: 700 !important;
 }
