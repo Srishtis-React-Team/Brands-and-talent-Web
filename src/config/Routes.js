@@ -30,6 +30,9 @@ import AdultSignup from "../auth/AdultSignup";
 import AdultsOTP from "../auth/AdultsOTP";
 import AdultSuccess from "../auth/AdultSuccess";
 import KidsServices from "../auth/KidsServices";
+import UpdateAdultPassword from "../auth/UpdateAdultPassword";
+import BrandSignup from "../auth/brand-forms/brandSignup";
+import BrandFirstGig from "../auth/brand-forms/brandFirstGig";
 function Routing() {
   return (
     <Routes>
@@ -66,6 +69,9 @@ function Routing() {
       <Route path="/adult-signup" element={<AdultSignup />} />
       <Route path="/otp-verification" element={<OTPComponent />} />
       <Route path="/adult-success" element={<AdultSuccess />} />
+      <Route path="/update-talent-password" element={<UpdateAdultPassword />} />
+      <Route path="/brand-signup" element={<BrandSignup />} />
+      <Route path="/brand-firstGig" element={<BrandFirstGig />} />
     </Routes>
   );
 }

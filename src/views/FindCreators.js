@@ -72,6 +72,59 @@ const FindCreators = () => {
   const [kidsCity, setKidsCity] = useState("");
   const [stateError, setStateError] = useState(false);
   const [cityError, setCityError] = useState(false);
+  const [keywordsList, setkeywordsList] = useState([]);
+  const [currentUserData, steCurrentUserData] = useState([]);
+
+  const searchInputChange = async (e) => {
+    setSearchKeyword(e.target.value);
+    const fromData = {
+      searchedKeyword: e.target.value,
+      user_id: "66011fa38f101e4792acabce",
+      type: "kids",
+    };
+    await ApiHelper.get(API.postUserSearchKeyword)
+      .then((resData) => {
+        if (resData) {
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const getUserSearchKeyword = async () => {
+    await ApiHelper.get(API.getUserSearchKeyword)
+      .then((resData) => {
+        if (resData) {
+          setkeywordsList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    checkUserStatus();
+    console.log(currentUserData, "currentUserData");
+  }, []);
+
+  const checkUserStatus = async () => {
+    const formData = {
+      user_id: "65fbf4bcd8acb33fc6a706f7",
+    };
+    await ApiHelper.post(API.checkUserStatus, formData)
+      .then((resData) => {
+        if (resData) {
+          steCurrentUserData(resData.data.data);
+        }
+        console.log("checkUserStatus", resData.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getUserSearchKeyword();
+    console.log(keywordsList, "keywordsList");
+  }, [keywordsList]);
 
   const clear = () => {
     setSearchKeyword("");
@@ -99,14 +152,6 @@ const FindCreators = () => {
     inputValue ? "No States Available" : "Choose Country First";
   const customNoOptionsMessageCity = ({ inputValue }) =>
     inputValue ? "No States Available" : "Choose City First";
-
-  const keywordsList = [
-    "Celebrity",
-    "Creator",
-    "Stylist",
-    "Photographer",
-    "Videographer",
-  ];
 
   const ethnicityOptions = [
     "South Asian",
@@ -550,9 +595,7 @@ const FindCreators = () => {
                   className="keyword-input"
                   placeholder="Search Keyword"
                   value={searchKeyword}
-                  onChange={(e) => {
-                    setSearchKeyword(e.target.value);
-                  }}
+                  onChange={searchInputChange}
                 ></input>
               </div>
             </div>

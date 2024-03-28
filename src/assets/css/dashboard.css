@@ -156,7 +156,7 @@ label {
 
 .dialog-body {
   overflow: scroll;
-  height: 760px;
+  /* height: 760px; */
   overflow: auto;
 }
 
@@ -616,7 +616,7 @@ a {
     font-weight: 600;
     line-height: normal;
     text-align: center;
-    padding: 40px 0px;
+    padding: 15px 0px;
   }
   .step-text {
     padding-left: 20px;
@@ -1263,6 +1263,7 @@ a:hover {
 .signup-options {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .signup-options > .google-media {
@@ -1319,20 +1320,37 @@ a:hover {
   font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 500;
   text-align: center;
-  padding: 20px 0px;
+  padding: 20px 0px 0px 8px;
   width: 100%;
   margin: 0 auto;
   line-height: 25px;
+  text-align: center;
 }
-.signup-terms > span {
+
+.signup-terms-linetwo {
+  color: #000;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  text-align: center;
+  padding: 0px 0px;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 25px;
+  text-align: center;
+}
+
+.signup-terms-linetwo > span {
   color: #c2114b;
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -1422,9 +1440,12 @@ input[type="radio"] {
 .header-wrapper {
   display: flex;
   justify-content: space-between;
-  padding: 30px 30px;
+  padding: 15px 30px;
   border-bottom: 1px solid rgb(173, 173, 173);
   align-items: center;
+  /* position: fixed;
+  top: 0;
+  width: 100%; */
 }
 .header {
   display: flex;
@@ -1471,6 +1492,18 @@ input[type="radio"] {
 /* 320px — 480px: Mobile devices */
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .signup-terms {
+    font-size: 13px;
+  }
+
+  .signup-terms-linetwo {
+    font-size: 13px;
+  }
+
+  .signup-terms-linetwo > span {
+    font-size: 13px;
+  }
+
   .case-warpper {
     width: 80%;
   }
@@ -2832,7 +2865,6 @@ input[type="radio"] {
     line-height: normal;
     text-align: center;
     padding: 20px 0px;
-    margin-top: 40px;
   }
 
   .step-description {

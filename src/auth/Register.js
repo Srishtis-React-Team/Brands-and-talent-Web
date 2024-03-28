@@ -191,7 +191,7 @@ const Register = () => {
       navigate(`/talent-signup-basic-details`);
       // setKidsStep(1);
     } else if (routeData?.signupCategory == "brand") {
-      setBrands_step(1);
+      navigate(`/brand-firstGig`);
     } else if (routeData?.signupCategory == "adults") {
       // setAdultsStep(1);
       navigate(`/adult-signup`);
@@ -601,7 +601,7 @@ const Register = () => {
             <button
               type="button"
               onClick={() => {
-                setBrands_step(1);
+                navigate(`/brand-firstGig`);
               }}
               className="step-back"
             >

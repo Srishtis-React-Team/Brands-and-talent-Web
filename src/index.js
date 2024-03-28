@@ -3,13 +3,18 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 // basename="/project/brandsandtalent/"basename="/project/brandsandtalent/"
 // https://hybrid.sicsglobal.com/project/brandsandtalent/
 // "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent/",
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
+      <App />
+    </GoogleOAuthProvider>
+    ;
   </BrowserRouter>,
   document.getElementById("root")
 );

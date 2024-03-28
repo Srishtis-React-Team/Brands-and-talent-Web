@@ -49,6 +49,8 @@ const AdultFormThree = () => {
   const [tiktoksFollowers, setTiktoksFollowers] = useState("");
   const [youtubesFollowers, setYoutubesFollowers] = useState("");
   const [idType, setIdType] = useState("");
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [aboutYou, setAboutYou] = useState([]);
   const [verificationID, setVerificationID] = useState("");
   const url = window.location.href;
   let queryString = url.split("?")[1];
@@ -57,13 +59,23 @@ const AdultFormThree = () => {
   const navigate = useNavigate();
   const [updateDisabled, setUpdateDisabled] = useState(false);
 
-  useEffect(() => {}, [updateDisabled]);
+  useEffect(() => {
+    getFeatures();
+  }, []);
+  useEffect(() => {
+    console.log(profileFile, "profileFile");
+    console.log(portofolioFile, "portofolioFile");
+    console.log(portofolioFile.length, "portofolioFile.length");
+    if (profileFile === null || portofolioFile.length === 0) {
+      setUpdateDisabled(true);
+    } else if (profileFile !== null || portofolioFile.length !== 0) {
+      setUpdateDisabled(false);
+    }
+  }, [profileFile, portofolioFile]);
 
   useEffect(() => {
-    if (profileFile) {
-      setUpdateDisabled(true);
-    }
-  }, [profileFile]);
+    console.log(updateDisabled, "updateDisabled");
+  }, [updateDisabled]);
 
   const getFeatures = async () => {
     await ApiHelper.get(API.getFeatures)
@@ -73,6 +85,11 @@ const AdultFormThree = () => {
         }
       })
       .catch((err) => {});
+  };
+
+  const onEditorSummary = (editorState) => {
+    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
+    setEditorState(editorState);
   };
 
   const handleFeaturesChange = (label, value) => {
@@ -104,6 +121,7 @@ const AdultFormThree = () => {
       threadsFollowers: threadsFollowers,
       idType: idType,
       verificationId: verificationID,
+      childAboutYou: aboutYou,
       features: features,
     };
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
@@ -431,10 +449,6 @@ const AdultFormThree = () => {
     });
   };
 
-  useEffect(() => {
-    getFeatures();
-  }, []);
-
   return (
     <>
       <>
@@ -548,7 +562,37 @@ const AdultFormThree = () => {
                     </>
                   )}
 
-                  <div className="adults-titles">Portofolio</div>
+                  <div className="adults-titles">Bio</div>
+
+                  <div className="rich-editor">
+                    <label className="form-label">About You</label>
+                    <Editor
+                      editorStyle={{ overflow: "hidden" }}
+                      toolbarClassName="toolbarClassName"
+                      wrapperClassName="wrapperClassName"
+                      editorClassName="editorClassName"
+                      onEditorStateChange={onEditorSummary}
+                      toolbar={{
+                        options: [
+                          "inline",
+                          "blockType",
+                          "fontSize",
+                          "list",
+                          "textAlign",
+                          "history",
+                        ],
+                        inline: { inDropdown: true },
+                        list: { inDropdown: true },
+                        textAlign: { inDropdown: true },
+                        link: { inDropdown: true },
+                        history: { inDropdown: true },
+                      }}
+                    />
+                  </div>
+
+                  <div className="adults-titles">
+                    Portofolio<span className="astrix">*</span>
+                  </div>
                   <div
                     className="cv-section"
                     onDrop={handlePortofolioDrop}
@@ -1260,12 +1304,12 @@ const AdultFormThree = () => {
 
             <button
               className={
-                !updateDisabled
+                updateDisabled
                   ? "step-continue disabled-continue"
                   : "step-continue"
               }
               onClick={(e) => {
-                if (updateDisabled === true) {
+                if (updateDisabled === false) {
                   updateAdultSignup();
                 }
               }}

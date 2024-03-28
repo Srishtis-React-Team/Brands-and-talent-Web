@@ -1,9 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
 import Select from "react-select";
 import Axios from "axios";
 import { useNavigate } from "react-router";
@@ -67,7 +62,6 @@ const AdultFormOne = () => {
   const [adultsEmail, setAdultsEmail] = useState("");
   const [adultsLocation, setAdultsLocation] = useState("");
   const [kidsCity, setKidsCity] = useState("");
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [address, setAddress] = useState("");
@@ -80,7 +74,6 @@ const AdultFormOne = () => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [kidsEmail, setKidsEmail] = useState("");
-  const [aboutYou, setAboutYou] = useState([]);
   const [instagramFollowers, setInstagramFollowers] = useState("");
   const [facebookFollowers, setfacebookFollowers] = useState("");
   const [xtwitterFollowers, setXtwitterFollowers] = useState("");
@@ -227,7 +220,6 @@ const AdultFormOne = () => {
       parentState: state,
       parentAddress: address,
       childCity: kidsCity,
-      childAboutYou: aboutYou,
       age: age,
     };
 
@@ -362,10 +354,6 @@ const AdultFormOne = () => {
     setKidsEmail(e.target.value);
     // Validate email using regex
     setIsValidEmail(emailRegex.test(email));
-  };
-  const onEditorSummary = (editorState) => {
-    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
-    setEditorState(editorState);
   };
 
   const verificationUpload = (event) => {
@@ -883,34 +871,6 @@ const AdultFormOne = () => {
                         ></input>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="adults-titles">Bio</div>
-
-                  <div className="rich-editor">
-                    <label className="form-label">About You</label>
-                    <Editor
-                      editorStyle={{ overflow: "hidden" }}
-                      toolbarClassName="toolbarClassName"
-                      wrapperClassName="wrapperClassName"
-                      editorClassName="editorClassName"
-                      onEditorStateChange={onEditorSummary}
-                      toolbar={{
-                        options: [
-                          "inline",
-                          "blockType",
-                          "fontSize",
-                          "list",
-                          "textAlign",
-                          "history",
-                        ],
-                        inline: { inDropdown: true },
-                        list: { inDropdown: true },
-                        textAlign: { inDropdown: true },
-                        link: { inDropdown: true },
-                        history: { inDropdown: true },
-                      }}
-                    />
                   </div>
                 </div>
               </div>

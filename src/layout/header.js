@@ -435,7 +435,9 @@ const Header = ({ sendMessageToParent }) => {
                 </div>
               </div>
               <div className="question-model">
-                Are you the star of the show or the one seeking brilliance?
+                {talent &&
+                  "Are you the star of the show or the one seeking brilliance?"}
+                {brand && "I am Looking for talent"}
               </div>
               <div className="register-modal">
                 <div
