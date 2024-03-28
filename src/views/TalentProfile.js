@@ -515,20 +515,18 @@ const TalentProfile = () => {
               >
                 Portofolio
               </div>
-              {talentData && talentData?.services?.length > 0 && (
-                <div
-                  className={
-                    services
-                      ? "active-tab individual-talent-tab"
-                      : "individual-talent-tab"
-                  }
-                  onClick={(e) => {
-                    handleForms("services");
-                  }}
-                >
-                  Services
-                </div>
-              )}
+              <div
+                className={
+                  services
+                    ? "active-tab individual-talent-tab"
+                    : "individual-talent-tab"
+                }
+                onClick={(e) => {
+                  handleForms("services");
+                }}
+              >
+                Services
+              </div>
 
               <div
                 className={
@@ -676,7 +674,7 @@ const TalentProfile = () => {
                         <>
                           <>
                             <div className="cv-card" key={pdf.title}>
-                              <i class="fa-solid fa-file"></i>
+                              <i className="fa-solid fa-file"></i>
                               <div className="fileName">{pdf.title}</div>
                               <button
                                 className="view-cv"
@@ -812,7 +810,7 @@ const TalentProfile = () => {
                       <>
                         <>
                           <div className="cv-card" key={pdf.title}>
-                            <i class="fa-solid fa-file"></i>
+                            <i className="fa-solid fa-file"></i>
                             <div className="fileName">{pdf.title}</div>
                             <button
                               className="view-cv"

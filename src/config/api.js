@@ -12,6 +12,7 @@ export const API = {
   getAllCitiesList: BASEURL + "admin/getAllCitiesList",
   getAllStatesList: BASEURL + "admin/getAllStatesList",
   chatbot: BASEURL + "admin/chatbot",
+  chatbot: BASEURL + "admin/chatbot",
 
   //Registration
   brandRegisteration: BASEURL + "brands/brandsRegister",
@@ -28,6 +29,9 @@ export const API = {
   checkProfileStatus: BASEURL + "users/checkProfileStatus/",
   updateProfileStatus: BASEURL + "users/updateProfileStatus/",
   loginTemplate: BASEURL + "users/loginTemplate",
+  checkUserStatus: BASEURL + "users/checkUserStatus",
+  updateAdultPassword: BASEURL + "users/updateAdultPassword",
+  socialSignup: BASEURL + "users/socialSignup",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
@@ -50,4 +54,9 @@ export const API = {
   removeFavorite: BASEURL + "users/removeFavorite/",
   subscriptionStatus: BASEURL + "users/subscriptionStatus/",
   setUserFavorite: BASEURL + "users/setUserFavorite/",
+
+  //keyword
+  postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",
+  getUserSearchKeyword: BASEURL + "keyword/getUserSearchKeyword/",
+  deleteUserSearchKeyword: BASEURL + "keyword/deleteUserSearchKeyword/",
 };

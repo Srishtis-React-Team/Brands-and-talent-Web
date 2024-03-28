@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../assets/css/dashboard.css";
-import "../assets/css/register.scss";
+import "../../assets/css/dashboard.css";
+import "../../assets/css/register.scss";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
-import { API } from "../config/api";
-import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../../config/api";
+import { ApiHelper } from "../../helpers/ApiHelper";
 import Axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import Spinner from "../components/Spinner";
-import PopUp from "../components/PopUp";
+import Spinner from "../../components/Spinner";
+import PopUp from "../../components/PopUp";
 import { LoginSocialFacebook } from "reactjs-social-login";
 import { FacebookLoginButton } from "react-social-login-buttons";
-const AdultSignup = () => {
+const BrandSignup = () => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/icons/Group 56.png");
-  const fbLogo = require("../assets/icons/fbLogo.png");
-  const googleLogo = require("../assets/icons/googleLogo.png");
-  const kidsImage = require("../assets/images/kidsImage.png");
+  const btLogo = require("../../assets/icons/Group 56.png");
+  const fbLogo = require("../../assets/icons/fbLogo.png");
+  const googleLogo = require("../../assets/icons/googleLogo.png");
+  const kidsImage = require("../../assets/images/kidsImage.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
@@ -174,6 +174,7 @@ const AdultSignup = () => {
               }}
               src={btLogo}
             ></img>
+            <div className="step-text">Step 2 of 5</div>
           </div>
           <button
             type="button"
@@ -185,8 +186,7 @@ const AdultSignup = () => {
         </div>
         <div className="dialog-body">
           <div className="adult-signup-main">
-            <div className="step-title">Sign up</div>
-
+            <div className="step-title">Brands Sign up</div>
             <div className="mb-3">
               <label className="form-label">
                 Email<span className="mandatory">*</span>
@@ -352,7 +352,7 @@ const AdultSignup = () => {
               adultSignUp();
             }}
           >
-            Continue
+            Get Started
           </button>
         </div>
       </div>
@@ -362,4 +362,4 @@ const AdultSignup = () => {
   );
 };
 
-export default AdultSignup;
+export default BrandSignup;
