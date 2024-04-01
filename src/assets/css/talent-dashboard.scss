@@ -281,7 +281,7 @@
 }
 
 .offcanvas-start {
-  top: 75px;
+  // top: 75px;
   left: 0;
   width: 400px;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
@@ -826,3 +826,7 @@
 .elipsis-icon {
   padding: 10px;
 }
+
+// .modal-backdrop.show {
+//   opacity: 0.5 !important;
+// }

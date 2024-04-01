@@ -857,7 +857,7 @@ const AdultFormOne = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
+                  <div className="kids-form-row mb-5">
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="form-label">Location</label>

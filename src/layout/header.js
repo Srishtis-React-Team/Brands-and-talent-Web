@@ -431,7 +431,7 @@ const Header = ({ sendMessageToParent }) => {
                   }}
                   className={brand ? "selected-register" : "choose-register"}
                 >
-                  I'm a Brand
+                  I'm a Brand/Agency/Client
                 </div>
               </div>
               <div className="question-model">

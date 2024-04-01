@@ -52,7 +52,10 @@ const KidsFormFour = ({ onDataFromChild, ...props }) => {
             }}
           ></button>
         </div>
-        <div className="dialog-body gmail-page-body">
+        <div
+          className="dialog-body gmail-page-body"
+          style={{ height: "850px" }}
+        >
           <div className="gmail-wrapper">
             <div className="gmail-tick">
               <img src={bigTick} alt="" />

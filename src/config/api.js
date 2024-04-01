@@ -15,7 +15,7 @@ export const API = {
   chatbot: BASEURL + "admin/chatbot",
 
   //Registration
-  brandRegisteration: BASEURL + "brands/brandsRegister",
+  brandsRegister: BASEURL + "brands/brandsRegister",
   kidsSignUp: BASEURL + "users/kidsSignUp ",
   adultSignUp: BASEURL + "users/adultSignUp ",
   otpVerification: BASEURL + "users/otpVerification",
@@ -32,6 +32,11 @@ export const API = {
   checkUserStatus: BASEURL + "users/checkUserStatus",
   updateAdultPassword: BASEURL + "users/updateAdultPassword",
   socialSignup: BASEURL + "users/socialSignup",
+
+  //brands
+  socailSignUpBrands: BASEURL + "brands/socailSignUpBrands",
+  otpVerificationBrands: BASEURL + "brands/otpVerificationBrands",
+  editBrands: BASEURL + "brands/editBrands/",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",

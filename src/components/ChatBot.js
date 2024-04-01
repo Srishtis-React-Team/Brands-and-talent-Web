@@ -10,6 +10,24 @@ const ChatBot = () => {
   const smallChat = require("../assets/icons/smallChat.png");
   const closeIcon = require("../assets/icons/close-icon.png");
   const [inputHeight, setInputHeight] = useState(0);
+
+  const generateSessionId = () => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const length = 20; // You can adjust the length of the session ID as needed
+    let sessionId = "";
+    for (let i = 0; i < length; i++) {
+      sessionId += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return sessionId;
+  };
+
+  // Example usage
+  const sessionId = generateSessionId();
+  console.log(sessionId); // Output a random session ID
+
   const [messages, setMessages] = useState([
     {
       role: "bot",
@@ -35,6 +53,7 @@ const ChatBot = () => {
     chatInputRef.current.value = "";
     let formData = {
       message: message,
+      sessionId: generateSessionId(),
     };
     await ApiHelper.post(API.chatbot, formData)
       .then((resData) => {

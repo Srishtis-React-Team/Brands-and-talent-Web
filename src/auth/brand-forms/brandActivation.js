@@ -1,0 +1,138 @@
+import React, { useState, useEffect, useRef } from "react";
+import "../../assets/css/dashboard.css";
+import "../../assets/css/register.scss";
+import { useNavigate } from "react-router";
+import { useLocation } from "react-router-dom";
+import { API } from "../../config/api";
+import { ApiHelper } from "../../helpers/ApiHelper";
+import Axios from "axios";
+import Spinner from "../../components/Spinner";
+import PopUp from "../../components/PopUp";
+const BrandActivation = () => {
+  const navigate = useNavigate();
+  const btLogo = require("../../assets/icons/Group 56.png");
+  const trialIcon = require("../../assets/icons/trial-icon.png");
+  const greenTick = require("../../assets/icons/greenTick.png");
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const [receivedData, setReceivedData] = useState(null);
+  const [loader, setLoader] = useState(false);
+
+  useEffect(() => {
+    console.log(receivedData, "receivedData");
+  }, [receivedData]);
+  useEffect(() => {
+    // Check if data is passed through state
+    if (location.state && location.state.data) {
+      setReceivedData(location.state.data);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    //code for google auth
+    console.log(openPopUp, "openPopUp");
+  }, [openPopUp]);
+
+  const brandsSignup = async () => {
+    navigate("/brand-dashboard", {
+      state: { data: receivedData },
+    });
+  };
+
+  return (
+    <>
+      <div className="form-dialog">
+        <div className="header-wrapper">
+          <div className="step-wrapper">
+            <img
+              className="modal-logo"
+              onClick={() => {
+                navigate("/");
+              }}
+              src={btLogo}
+            ></img>
+            <div className="step-text">Step 6 of 6</div>
+          </div>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => {
+              navigate("/");
+            }}
+          ></button>
+        </div>
+        <div className="dialog-body" style={{ height: "75vh" }}>
+          <div className="trial-page">
+            <div className="trial-wrapper">
+              <div className="trial-title">Trial Version Activated</div>
+              <div className="inlcluded">WHAT’S INCLUDED</div>
+              <div className="included-content">
+                <div className="">
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">Create 1  free job posts</div>
+                  </div>
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">2 days Job Post approval</div>
+                  </div>
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">
+                      View & Manage Job Applications
+                    </div>
+                  </div>
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">Bookmark Talent</div>
+                  </div>
+                </div>
+                <div className="include-wrapper">
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">Email and chat support</div>
+                  </div>
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">
+                      Pay the Talent Your Way: Transfer, Gift, or Both
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="trialing">
+              <img src={trialIcon} alt="" />
+            </div>
+          </div>
+        </div>
+        <div className="dialog-footer">
+          {/* <button
+            type="button"
+            onClick={() => {
+              navigate("/");
+            }}
+            className="step-back"
+          >
+            Back
+          </button> */}
+          <button
+            type="button"
+            className="step-continue"
+            onClick={(e) => {
+              brandsSignup();
+            }}
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+      {isLoading && <Spinner />}
+      {openPopUp && <PopUp message={message} />}
+    </>
+  );
+};
+
+export default BrandActivation;

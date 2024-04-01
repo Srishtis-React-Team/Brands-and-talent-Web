@@ -1086,7 +1086,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div className="verification-status">Not Verified</div>
+                  <div className="verification-status mb-5">Not Verified</div>
                 </div>
               </div>
             </div>

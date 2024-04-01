@@ -145,6 +145,7 @@ const OTPComponent = () => {
             }}
             src={btLogo}
           ></img>
+          <div className="step-text">Step 2 of 3</div>
         </div>
         <button
           type="button"
@@ -156,10 +157,7 @@ const OTPComponent = () => {
       </div>
       <div className="adult-otp-main">
         <div className="otp-container">
-          <div className="otp-title">
-            <span className="bold-otp">OTP</span>
-            <span>Verification</span>
-          </div>
+          <div className="otp-title">OTP Verification</div>
           <div className="otp-enter">Please enter the code we just send to</div>
           <div className="otp-mail">{queryString}</div>
           <div className="otp-boxes">

@@ -480,7 +480,7 @@ const AdultFormThree = () => {
                 </div>
                 <div className="adult-main">
                   <div className="adults-form-title">Complete your Profile</div>
-                  <div className="kids-form-title">
+                  <div className="adults-titles">
                     Profile Picture <span className="astrix">*</span>
                   </div>
                   <div
@@ -563,8 +563,7 @@ const AdultFormThree = () => {
                   )}
 
                   <div className="adults-titles">Bio</div>
-
-                  <div className="rich-editor">
+                  <div className="rich-editor mb-5">
                     <label className="form-label">About You</label>
                     <Editor
                       editorStyle={{ overflow: "hidden" }}
@@ -1162,7 +1161,7 @@ const AdultFormThree = () => {
                     security
                   </div>
 
-                  <div className="kids-form-row">
+                  <div className="kids-form-row mb-5">
                     <div className="kids-form-section">
                       <div className="mb-3 mt-3">
                         <label className="form-label">ID Type</label>
@@ -1286,7 +1285,7 @@ const AdultFormThree = () => {
                     </>
                   )}
 
-                  <div className="verification-status">Not Verified</div>
+                  <div className="verification-status mb-5">Not Verified</div>
                 </div>
               </div>
             </div>

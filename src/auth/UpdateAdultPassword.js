@@ -54,8 +54,9 @@ const UpdateAdultPassword = (props) => {
       const formData = {
         user_id: receivedData?.user_id,
         talentPassword: adultPassword,
-        parentEmail: receivedData?.email,
+        adultEmail: receivedData?.email,
       };
+      setIsLoading(true);
       await ApiHelper.post(API.updateAdultPassword, formData)
         .then((resData) => {
           if (resData.data.status === true) {
@@ -65,8 +66,8 @@ const UpdateAdultPassword = (props) => {
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
-            }, 1000);
-            navigate(`/otp-verification?${receivedData?.email}`);
+              navigate(`/otp-verification?${receivedData?.email}`);
+            }, 2000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
             setMessage("Error Occured Try Again!");
@@ -108,7 +109,7 @@ const UpdateAdultPassword = (props) => {
             }}
           ></button>
         </div>
-        <div className="dialog-body">
+        <div className="dialog-body" style={{ height: "75vh" }}>
           <div className="adult-signup-main">
             <div className="step-title">Update Password</div>
             <div className="mb-3">
@@ -123,6 +124,7 @@ const UpdateAdultPassword = (props) => {
                   placeholder="Password"
                   onChange={(e) => {
                     setAdultPassword(e.target.value);
+                    setPasswordError(false);
                   }}
                 ></input>
                 {passwordError && (
@@ -153,6 +155,7 @@ const UpdateAdultPassword = (props) => {
                   placeholder="Confirm Password"
                   onChange={(e) => {
                     setAdultConfirmPassword(e.target.value);
+                    setConfirmPasswordError(false);
                   }}
                 ></input>
                 {confirmPasswordError && (
@@ -196,7 +199,7 @@ const UpdateAdultPassword = (props) => {
           </button>
         </div>
       </div>
-      ;{openPopUp && <PopUp message={message} />}
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };
