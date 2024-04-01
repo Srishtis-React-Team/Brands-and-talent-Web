@@ -1,0 +1,167 @@
+.brands-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 101;
+  box-shadow: 0px 4px 4px rgba(201, 201, 201, 0.5);
+}
+
+.brands-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #ffffff;
+}
+
+.header__container {
+  height: 3.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.brand-sidebar {
+  position: fixed;
+  // left: -100%;
+  top: 3.5rem;
+  width: 8%;
+  height: 100%;
+  padding: 3rem 0.5rem;
+  background-color: #ffffff;
+  z-index: 100;
+  transition: left 0.4s;
+}
+
+.brand-sidebar::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: #ffffff;
+}
+
+.brand-sidebar-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  padding-bottom: 3rem;
+  height: 100%;
+}
+
+.brand-main-container {
+  padding-left: 390px;
+  padding-top: 6rem;
+  transition: padding 0.4s;
+  background-color: #eeeeee;
+}
+
+/* Show sidebar */
+.show-sidebar {
+  left: 0;
+}
+
+/* Reduce sidebar */
+.show-sidebar {
+  width: 20%;
+}
+
+.show-sidebar .brand-main-container {
+  padding-left: 300px;
+}
+
+.main-pd {
+  padding-left: 120px;
+}
+
+.header__toggle {
+  cursor: pointer;
+}
+
+.brand-profile-not-sidemenu {
+  display: none;
+}
+
+.not-sidebar .brand-profile-not-sidemenu {
+  display: block;
+}
+.not-sidebar .talent-profile {
+  display: none;
+}
+
+.profile-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid #c2114b;
+  margin-right: 15px;
+}
+
+.brand_sidebar__content {
+  .sidemenu-main {
+    display: flex;
+    justify-content: center;
+    .talent-profile {
+      width: 80%;
+      background-color: rgb(228, 228, 228);
+      border-radius: 16px;
+      padding: 25px;
+      .talent-data-wrapper {
+        display: flex;
+        align-items: start;
+        .profile-img {
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          border: 1px solid #c2114b;
+          margin-right: 15px;
+        }
+        .talent-details {
+          .talent-name {
+            color: #000;
+            font-family: "Open Sans", sans-serif;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            text-align: center;
+          }
+        }
+      }
+      .talents-plan-info {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0px;
+        .talent-plan-name {
+          color: #000;
+          font-family: "Open Sans", sans-serif;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+          text-align: center;
+          span {
+            color: #c2114b;
+          }
+        }
+      }
+      .upgrade-btn {
+        height: 40px;
+        background-color: #c2114b;
+        cursor: pointer;
+        border-radius: 12px;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

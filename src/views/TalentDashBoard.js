@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import "../assets/css/talent-dashboard.scss";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";

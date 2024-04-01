@@ -304,7 +304,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
+                  <div className="kids-form-row mb-5">
                     <div className="kids-form-section">
                       <div className="media-wrapper">
                         <div className="media-info">

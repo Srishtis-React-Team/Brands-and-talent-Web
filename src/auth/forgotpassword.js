@@ -83,10 +83,7 @@ const ForgotPassword = () => {
 
       <div className="login-main">
         <div className="login-container">
-          <div className="otp-title">
-            <span className="">Forgot</span>
-            <span>Password</span>
-          </div>
+          <div className="otp-title">Forgot Password</div>
           <div className="forgot-info">
             Please enter your email , we will send verification code to your
             email.

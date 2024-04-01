@@ -13,13 +13,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  position: fixed;
   top: 0;
-  position: sticky;
+  left: 0;
   width: 100%;
-  background-color: #fff;
-  z-index: 9;
-  border-bottom: 1px solid #d4d4d8;
+  background-color: #ffffff;
+  z-index: 101;
+  box-shadow: 0px 4px 4px rgba(201, 201, 201, 0.5);
+
   .talent-nav-logo {
     padding: 0px 20px;
     cursor: pointer;
@@ -66,6 +67,16 @@
     }
   }
 }
+
+// .talent-header-main {
+//   content: "";
+//   position: absolute;
+//   left: 0;
+//   bottom: 0;
+//   width: 100%;
+//   height: 1px;
+//   background-color: #ffffff;
+// }
 
 // @media (max-width: 1500px) {
 //   .search-bootstrap {

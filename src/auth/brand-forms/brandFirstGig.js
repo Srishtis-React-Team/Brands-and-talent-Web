@@ -18,17 +18,30 @@ const BrandFirstGig = () => {
   const [position, setPosition] = useState("");
   const [positionError, setPositionError] = useState(false);
 
+  const positionOptions = [
+    "1 job",
+    "2 to 3 jobs",
+    "4 to 10 jobs",
+    "11 to 20 jobs",
+    "21 to 50 jobs",
+    "50 to 100 jobs",
+    "100 to 250 jobs",
+    "250+ jobs",
+  ];
+
   useEffect(() => {
     //code for google auth
     console.log(openPopUp, "openPopUp");
   }, [openPopUp]);
 
-  const adultSignUp = async () => {
+  const brandsSignup = async () => {
     if (position === "") {
       setPositionError(true);
     }
     if (position) {
-      navigate(`/brand-signup}`);
+      navigate("/brand-signup", {
+        state: { data: position },
+      });
     }
   };
 
@@ -49,7 +62,7 @@ const BrandFirstGig = () => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 1 of 5</div>
+            <div className="step-text">Step 1 of 6</div>
           </div>
           <button
             type="button"
@@ -59,7 +72,7 @@ const BrandFirstGig = () => {
             }}
           ></button>
         </div>
-        <div className="dialog-body">
+        <div className="dialog-body" style={{ height: "75vh" }}>
           <div className="adult-signup-main">
             <div className="step-title mb-3">Post Your First Gig/Job Now</div>
             <div className="mb-3">
@@ -72,6 +85,11 @@ const BrandFirstGig = () => {
                 <option value="" disabled selected>
                   How Many Positions are you looking to staff?
                 </option>
+                {positionOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
               </select>
               {positionError && (
                 <div className="invalid-fields">Please Select position</div>
@@ -93,7 +111,7 @@ const BrandFirstGig = () => {
             type="button"
             className="step-continue"
             onClick={(e) => {
-              adultSignUp();
+              brandsSignup();
             }}
           >
             Get Started

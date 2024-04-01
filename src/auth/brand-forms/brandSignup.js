@@ -8,10 +8,10 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import Axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
 import { LoginSocialFacebook } from "reactjs-social-login";
 import { FacebookLoginButton } from "react-social-login-buttons";
+import MyFacebookLoginButton from "../facebookButton";
 const BrandSignup = () => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/icons/Group 56.png");
@@ -33,11 +33,22 @@ const BrandSignup = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [googleUser, setGoogleUser] = useState();
-
+  const location = useLocation();
+  const [receivedData, setReceivedData] = useState(null);
   useEffect(() => {
     //code for google auth
     console.log(openPopUp, "openPopUp");
   }, [openPopUp]);
+
+  useEffect(() => {
+    console.log(receivedData, "receivedData");
+  }, [receivedData]);
+  useEffect(() => {
+    // Check if data is passed through state
+    if (location.state && location.state.data) {
+      setReceivedData(location.state.data);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     //code for google auth
@@ -59,19 +70,19 @@ const BrandSignup = () => {
     let formData;
     if (mediaType == "google") {
       formData = {
-        adultEmail: response?.email,
+        brandEmail: response?.email,
         googleId: response?.sub,
         provider: "google",
       };
     } else if (mediaType == "facebook") {
       formData = {
-        adultEmail: response?.data?.email,
+        brandEmail: response?.data?.email,
         facebookId: response?.data?.id,
         provider: "facebook",
       };
     }
     setIsLoading(true);
-    await ApiHelper.post(API.socialSignup, formData)
+    await ApiHelper.post(API.socailSignUpBrands, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           // alert("dfd");
@@ -82,10 +93,11 @@ const BrandSignup = () => {
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
+            navigate("/update-talent-password", {
+              state: { data: resData.data },
+            });
           }, 1000);
-          navigate("/update-talent-password", {
-            state: { data: resData.data },
-          });
+
           setIsLoading(false);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -102,11 +114,11 @@ const BrandSignup = () => {
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
-        }, 1000);
+        }, 2000);
       });
   };
 
-  const adultSignUp = async () => {
+  const brandSignUp = async () => {
     if (adultEmail === "") {
       setEmailError(true);
     }
@@ -125,25 +137,26 @@ const BrandSignup = () => {
       adultConfirmPassword !== ""
     ) {
       const formData = {
-        adultEmail: adultEmail,
-        talentPassword: adultPassword,
+        brandName: adultName,
+        brandEmail: adultEmail,
+        brandPassword: adultPassword,
         confirmPassword: adultConfirmPassword,
+        position: receivedData,
       };
-      // setIsLoading(true);
-      await ApiHelper.post(API.adultSignUp, formData)
+      setIsLoading(true);
+      await ApiHelper.post(API.brandsRegister, formData)
         .then((resData) => {
           if (resData.data.status === true) {
             console.log(resData.data);
-            // setIsLoading(false);
+            setIsLoading(false);
             setMessage("Registered SuccessFully!");
-            navigate(`/otp-verification?${resData?.data?.data}`);
-            //   setAdultParentData(resData?.data);
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
-            }, 1000);
+              navigate(`/otp-verification-brands?${resData?.data?.data}`);
+            }, 2000);
           } else if (resData.data.status === false) {
-            // setIsLoading(false);
+            setIsLoading(false);
             setMessage("Error Occured Try Again!");
             setOpenPopUp(true);
             setTimeout(function() {
@@ -174,7 +187,7 @@ const BrandSignup = () => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 2 of 5</div>
+            <div className="step-text">Step 2 of 6</div>
           </div>
           <button
             type="button"
@@ -184,7 +197,14 @@ const BrandSignup = () => {
             }}
           ></button>
         </div>
-        <div className="dialog-body">
+        <div
+          className="dialog-body"
+          style={{
+            paddingBottom: "100px",
+            paddingTop: "45px",
+            height: "unset",
+          }}
+        >
           <div className="adult-signup-main">
             <div className="step-title">Brands Sign up</div>
             <div className="mb-3">
@@ -318,7 +338,7 @@ const BrandSignup = () => {
                   console.log(error, "error");
                 }}
               >
-                <FacebookLoginButton></FacebookLoginButton>
+                <MyFacebookLoginButton />
               </LoginSocialFacebook>
 
               {/* <div className="google-media">
@@ -339,7 +359,7 @@ const BrandSignup = () => {
           <button
             type="button"
             onClick={() => {
-              navigate("/");
+              navigate("/brand-firstGig");
             }}
             className="step-back"
           >
@@ -349,14 +369,14 @@ const BrandSignup = () => {
             type="button"
             className="step-continue"
             onClick={(e) => {
-              adultSignUp();
+              brandSignUp();
             }}
           >
-            Get Started
+            {isLoading ? "Loading..." : "Sign Up"}
           </button>
         </div>
       </div>
-      {isLoading && <Spinner />}
+
       {openPopUp && <PopUp message={message} />}
     </>
   );

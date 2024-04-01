@@ -1,34 +1,36 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../assets/css/forms/otp.scss";
-import { ApiHelper } from "../helpers/ApiHelper";
-import { API } from "../config/api";
-import PopUp from "../components/PopUp";
+import "../../assets/css/forms/otp.scss";
+import { ApiHelper } from "../../helpers/ApiHelper";
+import { API } from "../../config/api";
+import PopUp from "../../components/PopUp";
 import { useNavigate } from "react-router-dom";
-import Header from "../layout/header";
-const KidsOTP = () => {
+import Header from "../../layout/header";
+const BrandsOtp = () => {
   const navigate = useNavigate();
 
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../../assets/icons/Group 56.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
   const [isLoading, setIsLoading] = useState(false);
-  //   const [userId, setUserId] = useState(null);
-  //   const [emailID, setEmailID] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [emailID, setEmailID] = useState(null);
+
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
+
   useEffect(() => {
-    // const storedUserId = localStorage.getItem("userId");
-    // const storedEmailID = localStorage.getItem("emailID");
-    // if (storedUserId) {
-    //   setUserId(storedUserId);
-    // }
-    // if (storedEmailID) {
-    //   setEmailID(storedEmailID);
-    // }
+    const storedUserId = localStorage.getItem("userId");
+    const storedEmailID = localStorage.getItem("emailID");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+    if (storedEmailID) {
+      setEmailID(storedEmailID);
+    }
   }, []);
 
   const handleChange = (index, value) => {
@@ -56,10 +58,12 @@ const KidsOTP = () => {
   const otpVerification = async (newOTP) => {
     const formData = {
       otp: newOTP,
-      parentEmail: queryString,
+      brandEmail: queryString,
     };
+    setIsLoading(true);
+    navigate(`/brand-details`);
     console.log(formData, "formData otpVerification");
-    await ApiHelper.post(API.otpVerification, formData)
+    await ApiHelper.post(API.otpVerificationBrands, formData)
       .then((resData) => {
         console.log("otpVerification response", resData.data);
         if (resData.data.status === true) {
@@ -68,16 +72,18 @@ const KidsOTP = () => {
           setTimeout(function() {
             setOpenPopUp(false);
           }, 1000);
+          setIsLoading(false);
           setTimeout(function() {
             let successData = "verified";
-            navigate(
-              `/talent-social-media-connections?${resData.data.data["userId"]}`
-            );
+            navigate("/brand-details", {
+              state: { data: resData?.data?.data },
+            });
           }, 1000);
         } else if (resData.data.status === false) {
           console.log("false called");
           setMessage("Enter Correct OTP");
           setOpenPopUp(true);
+          setIsLoading(false);
           setTimeout(function() {
             setOpenPopUp(false);
           }, 1000);
@@ -131,6 +137,7 @@ const KidsOTP = () => {
 
   return (
     <>
+      {/* <Header /> */}
       <div className="header-wrapper">
         <div className="step-wrapper">
           <img
@@ -140,7 +147,7 @@ const KidsOTP = () => {
             }}
             src={btLogo}
           ></img>
-          <div className="step-text">Step 2 of 6</div>
+          <div className="step-text">Step 3 of 6</div>
         </div>
         <button
           type="button"
@@ -150,12 +157,7 @@ const KidsOTP = () => {
           }}
         ></button>
       </div>
-      <div
-        className="otp-main"
-        style={{
-          marginTop: "100px",
-        }}
-      >
+      <div className="adult-otp-main">
         <div className="otp-container">
           <div className="otp-title">OTP Verification</div>
           <div className="otp-enter">Please enter the code we just send to</div>
@@ -176,7 +178,7 @@ const KidsOTP = () => {
             </form>
           </div>
           <div className="verify-otp" onClick={handleVerify}>
-            Verify Now
+            {isLoading ? "Loading..." : "Verify Now"}
           </div>
           <div className="otp-info" onClick={otpResend}>
             If you didn’t receive a code?{" "}
@@ -186,12 +188,7 @@ const KidsOTP = () => {
             Back
           </div>
         </div>
-        <div
-          className="otp-logo"
-          style={{
-            top: "21%",
-          }}
-        >
+        <div className="adult-otp-logo">
           <img src={btLogo} alt="" />
         </div>
       </div>
@@ -200,4 +197,4 @@ const KidsOTP = () => {
   );
 };
 
-export default KidsOTP;
+export default BrandsOtp;

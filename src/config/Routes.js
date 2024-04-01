@@ -33,6 +33,10 @@ import KidsServices from "../auth/KidsServices";
 import UpdateAdultPassword from "../auth/UpdateAdultPassword";
 import BrandSignup from "../auth/brand-forms/brandSignup";
 import BrandFirstGig from "../auth/brand-forms/brandFirstGig";
+import BrandsOtp from "../auth/brand-forms/brandsOtp";
+import BrandDetails from "../auth/brand-forms/brandDetails";
+import BrandLogo from "../auth/brand-forms/brandLogo";
+import BrandActivation from "../auth/brand-forms/brandActivation";
 function Routing() {
   return (
     <Routes>
@@ -68,10 +72,14 @@ function Routing() {
       <Route path="/adult-signup-files-details" element={<AdultFormThree />} />
       <Route path="/adult-signup" element={<AdultSignup />} />
       <Route path="/otp-verification" element={<OTPComponent />} />
+      <Route path="/otp-verification-brands" element={<BrandsOtp />} />
       <Route path="/adult-success" element={<AdultSuccess />} />
       <Route path="/update-talent-password" element={<UpdateAdultPassword />} />
       <Route path="/brand-signup" element={<BrandSignup />} />
       <Route path="/brand-firstGig" element={<BrandFirstGig />} />
+      <Route path="/brand-details" element={<BrandDetails />} />
+      <Route path="/brand-logo" element={<BrandLogo />} />
+      <Route path="/brand-activated" element={<BrandActivation />} />
     </Routes>
   );
 }

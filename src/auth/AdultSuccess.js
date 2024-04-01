@@ -22,7 +22,12 @@ const AdultSuccess = () => {
     // Open Gmail in a new tab
     window.open("https://mail.google.com/", "_blank");
   };
-  const handleRadioChange = () => {};
+  const back = () => {
+    navigate("/");
+  };
+  const close = () => {
+    navigate("/");
+  };
 
   return (
     <>
@@ -32,21 +37,24 @@ const AdultSuccess = () => {
             <img
               className="modal-logo"
               onClick={() => {
-                navigate("/");
+                back();
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 4 of 4</div>
+            <div className="step-text">Step 3 of 3</div>
           </div>
           <button
             type="button"
             className="btn-close"
             onClick={() => {
-              navigate("/");
+              close();
             }}
           ></button>
         </div>
-        <div className="dialog-body gmail-page-body">
+        <div
+          className="dialog-body gmail-page-body"
+          style={{ height: "850px" }}
+        >
           <div className="gmail-wrapper">
             <div className="gmail-tick">
               <img src={bigTick} alt="" />
