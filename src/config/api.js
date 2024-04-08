@@ -37,6 +37,11 @@ export const API = {
   socailSignUpBrands: BASEURL + "brands/socailSignUpBrands",
   otpVerificationBrands: BASEURL + "brands/otpVerificationBrands",
   editBrands: BASEURL + "brands/editBrands/",
+  createJob: BASEURL + "gigs/createJob",
+  draftJob: BASEURL + "gigs/draftJob",
+  getAllJobs: BASEURL + "gigs/getAllJobs",
+  getJobsByID: BASEURL + "gigs/getJobsByID/",
+  getDraftJobsByID: BASEURL + "gigs/getDraftJobsByID/",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",

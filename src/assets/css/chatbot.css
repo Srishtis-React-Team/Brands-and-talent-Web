@@ -288,6 +288,7 @@ body.show-chatbot .chatbot {
   display: flex;
   align-items: center;
   justify-content: end;
+  margin: 15px 0px;
 }
 
 .sender-message-wrapper {

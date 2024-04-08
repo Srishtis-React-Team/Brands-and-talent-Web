@@ -69,7 +69,7 @@ const Footer = () => {
             <div className="form-fields">
               <input
                 className="input-style form-control"
-                placeholder="First Name"
+                placeholder="Full name"
                 value={firstName}
                 onChange={(e) => {
                   setFirstName(e.target.value);

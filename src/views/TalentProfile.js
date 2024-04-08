@@ -459,7 +459,7 @@ const TalentProfile = () => {
                   <>
                     <div key={index}>
                       <div className="talent-profession-name">
-                        {item?.value} <span>(Negotiable)</span>
+                        {item?.value} <span>(Rates Are Negotiable)</span>
                       </div>
                       <div className="talent-profession-value">
                         $ {item?.perHourSalary} per hour{" "}

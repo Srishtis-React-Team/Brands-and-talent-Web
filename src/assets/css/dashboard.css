@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
+.dashboard-main {
+  /* scroll-behavior: none !important; */
+}
+
 * {
   box-sizing: border-box;
 }
@@ -3013,4 +3017,9 @@ input[type="radio"] {
     width: 100%;
     align-items: center;
   }
+}
+
+.rdw-list-dropdown,
+.rdw-text-align-dropdown {
+  z-index: 0 !important;
 }

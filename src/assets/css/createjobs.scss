@@ -1,0 +1,135 @@
+.screening-questions-label {
+  display: flex;
+  align-items: center;
+  margin-right: 20px !important;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.screening-checkbox {
+  margin-right: 8px !important;
+}
+
+.add-more-questions {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+
+.add-more-questions-text {
+  color: #c2114b;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-left: 15px;
+}
+
+.compensation-radios {
+  display: flex;
+  // align-items: center;
+}
+
+.compensation-labels {
+  display: flex;
+  align-items: center;
+  margin-right: 30px !important;
+  cursor: pointer;
+}
+
+.application-condition-wrapper {
+  border: 1px solid #999999;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.application-condition-radios {
+  display: flex;
+  //   align-items: center;
+  padding: 10px 0px;
+}
+
+.easy-apply-description {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.create-job-buttons {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.createjob-btn {
+  width: 20%;
+  height: 40px;
+  border-radius: 140px;
+  background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+}
+.createjob-btn {
+  background: #c2114b;
+  margin-left: 15px;
+}
+
+.skills-section {
+  margin: 10px 0px;
+  display: flex;
+  align-items: center;
+  .skills-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #c2114b;
+    padding: 10px;
+    border-radius: 3px;
+    .skill-text {
+      color: #ffffff;
+      font-family: "Open Sans", sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+    }
+    .bi-x {
+      color: #ffffff;
+      cursor: pointer;
+      padding-left: 5px;
+    }
+  }
+  .skills-wrapper:not(:first-child) {
+    margin-left: 10px;
+  }
+}
+
+.duplicatejob-instruction {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 10px 0px;
+}
+
+// .toolbarClassName {
+//   background-color: aqua;
+// }
+// .wrapperClassName {
+//   background-color: rgb(0, 218, 18);
+// }
+.editorClassName {
+  // background-color: rgb(25, 0, 255);
+  // height: 30%;
+}

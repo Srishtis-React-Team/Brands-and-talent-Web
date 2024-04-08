@@ -553,7 +553,7 @@ const Dashboard = () => {
                     alent
                   </p>
                   <p className="brand-description">
-                    No Middle Man. No Commisions. No Hidden Fees
+                    No No Middlemen. No commissions. No Hidden Fees
                   </p>
                 </div>
               </div>
