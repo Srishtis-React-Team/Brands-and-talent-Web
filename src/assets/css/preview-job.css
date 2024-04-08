@@ -1,0 +1,29 @@
+.preview-section-one {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-create {
+  display: flex;
+  align-items: center;
+  width: 20%;
+}
+
+.bi-arrow-left-circle-fill {
+  color: #c2114b;
+  padding-right: 15px;
+}
+
+.back-to {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor: pointer;
+}
+.back-to:hover {
+  color: #c2114b;
+}

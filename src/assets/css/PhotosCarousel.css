@@ -3,6 +3,8 @@
 }
 
 .talents-profile-slider-image {
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
 }
 
 .photos-carousel-owl {
@@ -18,4 +20,17 @@
 .talents-profile-slider-image {
   max-width: 300px; /* Ensure the image does not exceed its container's width */
   max-height: 300px; /* Ensure the image does not exceed its container's height */
+}
+
+.carousel-talent-name {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  background-color: #ffffff;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding: 16px;
 }

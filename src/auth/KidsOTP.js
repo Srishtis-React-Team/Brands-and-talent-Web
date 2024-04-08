@@ -189,7 +189,7 @@ const KidsOTP = () => {
         <div
           className="otp-logo"
           style={{
-            top: "21%",
+            top: "18%",
           }}
         >
           <img src={btLogo} alt="" />

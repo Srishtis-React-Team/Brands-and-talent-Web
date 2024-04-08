@@ -37,6 +37,8 @@ import BrandsOtp from "../auth/brand-forms/brandsOtp";
 import BrandDetails from "../auth/brand-forms/brandDetails";
 import BrandLogo from "../auth/brand-forms/brandLogo";
 import BrandActivation from "../auth/brand-forms/brandActivation";
+import PreviewJob from "../brand/pages/PreviewJob";
+
 function Routing() {
   return (
     <Routes>
@@ -80,6 +82,7 @@ function Routing() {
       <Route path="/brand-details" element={<BrandDetails />} />
       <Route path="/brand-logo" element={<BrandLogo />} />
       <Route path="/brand-activated" element={<BrandActivation />} />
+      <Route path="/preview-job" element={<PreviewJob />} />
     </Routes>
   );
 }

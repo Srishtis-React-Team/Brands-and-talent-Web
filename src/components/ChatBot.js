@@ -10,6 +10,7 @@ const ChatBot = () => {
   const smallChat = require("../assets/icons/smallChat.png");
   const closeIcon = require("../assets/icons/close-icon.png");
   const [inputHeight, setInputHeight] = useState(0);
+  const [newSectionID, setNewSectionID] = useState(null);
 
   const generateSessionId = () => {
     const characters =
@@ -24,10 +25,6 @@ const ChatBot = () => {
     return sessionId;
   };
 
-  // Example usage
-  const sessionId = generateSessionId();
-  console.log(sessionId); // Output a random session ID
-
   const [messages, setMessages] = useState([
     {
       role: "bot",
@@ -40,6 +37,12 @@ const ChatBot = () => {
   const chatInputRef = useRef(null);
 
   useEffect(() => {
+    console.log(newSectionID, "newSectionID");
+    if (newSectionID === null) {
+      setNewSectionID(generateSessionId());
+    }
+  }, [newSectionID]);
+  useEffect(() => {
     setInputHeight(chatInputRef.current.scrollHeight);
   }, []);
 
@@ -51,30 +54,32 @@ const ChatBot = () => {
     const message = chatInputRef.current.value.trim();
     if (!message) return;
     chatInputRef.current.value = "";
-    let formData = {
-      message: message,
-      sessionId: generateSessionId(),
-    };
-    await ApiHelper.post(API.chatbot, formData)
-      .then((resData) => {
-        console.log(resData, "resData");
-        if (resData) {
-          console.log(resData.data.message, "message");
+
+    if (newSectionID != null) {
+      let formData = {
+        message: message,
+        sessionId: newSectionID,
+      };
+      await ApiHelper.post(API.chatbot, formData)
+        .then((resData) => {
+          console.log(resData, "resData");
+          if (resData) {
+            console.log(resData.data.message, "message");
+            setMessages([...messages, { role: "bot", content: resData.data }]);
+            var elem = document.getElementById("message-box");
+            elem.scrollTop = elem.scrollHeight;
+          }
+        })
+        .catch((err) => {
           setMessages([
             ...messages,
-            { role: "bot", content: resData.data.message },
+            {
+              role: "bot",
+              content: "Oops! Something went wrong. Please try again.",
+            },
           ]);
-        }
-      })
-      .catch((err) => {
-        setMessages([
-          ...messages,
-          {
-            role: "bot",
-            content: "Oops! Something went wrong. Please try again.",
-          },
-        ]);
-      });
+        });
+    }
   };
 
   // const fetchResponse = (message) => {
@@ -164,7 +169,7 @@ const ChatBot = () => {
             <div className="chatbot-support">Support Agent</div>
           </div>
         </div>
-        <ul className="chatbox">
+        <ul className="chatbox" id="message-box">
           {messages.map((message, index) => (
             <div key={index}>
               {message?.content?.userMsg && (

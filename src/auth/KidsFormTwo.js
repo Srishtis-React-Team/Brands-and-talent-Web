@@ -109,7 +109,7 @@ const KidsFormTwo = () => {
             }}
           ></button>
         </div>
-        <div className="dialog-body">
+        <div className="dialog-body" style={{ marginBottom: "50px" }}>
           <div className="subscribe-form">
             <div className="subscriptions-wrapper">
               {pricingList.length && (
