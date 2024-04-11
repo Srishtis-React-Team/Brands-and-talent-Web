@@ -324,7 +324,7 @@ input[type="checkbox"]:checked {
 a.active {
   cursor: pointer;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   color: #c2114b !important;
   font-family: "Open Sans", sans-serif;

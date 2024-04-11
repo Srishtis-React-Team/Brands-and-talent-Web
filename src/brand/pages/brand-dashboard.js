@@ -6,6 +6,8 @@ import CreateJobs from "./CreateJobs";
 import DuplicateJobs from "./DuplicateJobs";
 import BrandHome from "./BrandHome";
 import PreviewJob from "./PreviewJob";
+import ListJobs from "./ListJobs";
+import BrandTalents from "./BrandTalents";
 const BrandDashboard = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const girl1 = require("../../assets/images/girl1.png");
@@ -15,12 +17,12 @@ const BrandDashboard = () => {
   const menu_5 = require("../../assets/icons/sidemenu/heart.png");
   const menu_6 = require("../../assets/icons/sidemenu/help-circle.png");
   const menu_4 = require("../../assets/icons/sidemenu/users.png");
-  const [sideMenu_1, setMenu_1] = useState(false);
-  const [sideMenu_2, setMenu_2] = useState(true);
-  const [sideMenu_3, setMenu_3] = useState(false);
-  const [sideMenu_4, setMenu_4] = useState(false);
-  const [sideMenu_5, setMenu_5] = useState(false);
-  const [sideMenu_6, setMenu_6] = useState(false);
+  const [createJob, setCreateJob] = useState(true);
+  const [viewDashboard, setViewDashboard] = useState(false);
+  const [myJobs, setMyJobs] = useState(false);
+  const [viewTalents, setViewTalents] = useState(false);
+  const [viewFavorites, setViewFavorites] = useState(false);
+  const [viewHelp, setViewHelp] = useState(false);
   const [previewPage, setPreviewPage] = useState(false);
   const [homePageData, setHomePageData] = useState("");
   const [createJobData, setCreateJobData] = useState("");
@@ -30,25 +32,36 @@ const BrandDashboard = () => {
     setHomePageData(additionalData);
   };
 
+  const handlePreviewData = (buttonName, additionalData) => {
+    console.log(additionalData, "additionalData");
+    setHomePageData(additionalData);
+  };
+
   const handleCreateJobData = (data) => {
     setCreateJobData(data);
   };
 
   useEffect(() => {
+    console.log(myJobs, "myJobs");
+  }, [myJobs]);
+  useEffect(() => {
+    console.log(viewJobID, "viewJobID");
+  }, [viewJobID]);
+
+  useEffect(() => {
     console.log(homePageData, "homePageData");
     if (homePageData === "create-job" || homePageData === "start-now") {
-      setMenu_1(true);
-      setMenu_2(false);
+      setMenu("create-job");
+      setSelectedTab("create-job");
     }
   }, [homePageData]);
 
   useEffect(() => {
     console.log(createJobData, "createJobData");
     if (createJobData?.jobId && createJobData?.condition == "preview") {
+      console.log(createJobData, "createJobData");
       setViewJobID(createJobData?.jobId);
-      setPreviewPage(true);
-      setMenu_1(false);
-      setMenu_2(false);
+      setMenu("preview-page");
     }
   }, [createJobData]);
 
@@ -57,35 +70,40 @@ const BrandDashboard = () => {
   };
   const setMenu = (e) => {
     console.log(e, "e");
-    if (e === "one") {
-      setMenu_1(true);
+    if (e === "preview-page") {
+      setPreviewPage(true);
     } else {
-      setMenu_1(false);
+      setPreviewPage(false);
     }
-    if (e === "two") {
-      setMenu_2(true);
+    if (e === "create-job") {
+      setCreateJob(true);
     } else {
-      setMenu_2(false);
+      setCreateJob(false);
     }
-    if (e === "three") {
-      setMenu_3(true);
+    if (e === "view-dashboard") {
+      setViewDashboard(true);
     } else {
-      setMenu_3(false);
+      setViewDashboard(false);
     }
-    if (e === "four") {
-      setMenu_4(true);
+    if (e === "my-jobs") {
+      setMyJobs(true);
     } else {
-      setMenu_4(false);
+      setMyJobs(false);
     }
-    if (e === "five") {
-      setMenu_5(true);
+    if (e === "view-talents") {
+      setViewTalents(true);
     } else {
-      setMenu_5(false);
+      setViewTalents(false);
     }
-    if (e === "six") {
-      setMenu_6(true);
+    if (e === "view-favorites") {
+      setViewFavorites(true);
     } else {
-      setMenu_6(false);
+      setViewFavorites(false);
+    }
+    if (e === "view-help") {
+      setViewHelp(true);
+    } else {
+      setViewHelp(false);
     }
   };
 
@@ -133,21 +151,21 @@ const BrandDashboard = () => {
           <div className="brand-profile-not-sidemenu mt-5">
             <i
               className={
-                sideMenu_1
+                createJob
                   ? "sidemenu-icons active-sidemenu-icons  bi bi-plus-square-fill mt-4"
                   : "sidemenu-icons bi bi-plus-square-fill  mt-4"
               }
               onClick={(e) => {
-                setMenu("one");
+                setMenu("create-job");
               }}
             ></i>
           </div>
           <div
             className={
-              sideMenu_1 ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
+              createJob ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
             }
             onClick={(e) => {
-              setMenu("one");
+              setMenu("create-job");
             }}
           >
             <i
@@ -159,21 +177,21 @@ const BrandDashboard = () => {
           <div className="brand-profile-not-sidemenu mt-5">
             <i
               className={
-                sideMenu_2
+                viewDashboard
                   ? "sidemenu-icons active-sidemenu-icons bi bi-speedometer mt-4"
                   : "sidemenu-icons bi bi-speedometer mt-4"
               }
               onClick={(e) => {
-                setMenu("two");
+                setMenu("view-dashboard");
               }}
             ></i>
           </div>
           <div
             className={
-              sideMenu_2 ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
+              viewDashboard ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
             }
             onClick={(e) => {
-              setMenu("two");
+              setMenu("view-dashboard");
             }}
           >
             <i style={{ paddingLeft: "15px" }} class="bi bi-speedometer "></i>
@@ -183,21 +201,21 @@ const BrandDashboard = () => {
           <div className="brand-profile-not-sidemenu mt-5">
             <i
               className={
-                sideMenu_3
+                myJobs
                   ? "sidemenu-icons active-sidemenu-icons bi bi-person-workspace mt-4"
                   : "sidemenu-icons bi bi-person-workspace mt-4"
               }
               onClick={(e) => {
-                setMenu("three");
+                setMenu("my-jobs");
               }}
             ></i>
           </div>
           <div
             className={
-              sideMenu_3 ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
+              myJobs ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
             }
             onClick={(e) => {
-              setMenu("three");
+              setMenu("my-jobs");
             }}
           >
             <i
@@ -210,21 +228,21 @@ const BrandDashboard = () => {
           <div className="brand-profile-not-sidemenu mt-5">
             <i
               className={
-                sideMenu_4
+                viewTalents
                   ? "sidemenu-icons active-sidemenu-icons bi bi-people-fill mt-4"
                   : "sidemenu-icons bi bi-people-fill mt-4"
               }
               onClick={(e) => {
-                setMenu("four");
+                setMenu("view-talents");
               }}
             ></i>
           </div>
           <div
             className={
-              sideMenu_4 ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
+              viewTalents ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
             }
             onClick={(e) => {
-              setMenu("four");
+              setMenu("view-talents");
             }}
           >
             <i style={{ paddingLeft: "15px" }} class="bi bi-people-fill"></i>
@@ -234,21 +252,21 @@ const BrandDashboard = () => {
           <div className="brand-profile-not-sidemenu mt-5">
             <i
               className={
-                sideMenu_5
+                viewFavorites
                   ? "sidemenu-icons active-sidemenu-icons bi bi-heart-fill mt-4"
                   : "sidemenu-icons bi bi-heart-fill mt-4"
               }
               onClick={(e) => {
-                setMenu("five");
+                setMenu("view-favorites");
               }}
             ></i>
           </div>
           <div
             className={
-              sideMenu_5 ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
+              viewFavorites ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
             }
             onClick={(e) => {
-              setMenu("five");
+              setMenu("view-favorites");
             }}
           >
             <i style={{ paddingLeft: "15px" }} class="bi bi-heart-fill"></i>
@@ -257,21 +275,21 @@ const BrandDashboard = () => {
           <div className="brand-profile-not-sidemenu mt-5">
             <i
               className={
-                sideMenu_6
+                viewHelp
                   ? "sidemenu-icons active-sidemenu-icons bi  bi-info-circle-fill mt-4"
                   : "sidemenu-icons bi-info-circle-fill mt-4"
               }
               onClick={(e) => {
-                setMenu("six");
+                setMenu("view-help");
               }}
             ></i>
           </div>
           <div
             className={
-              sideMenu_6 ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
+              viewHelp ? "sidemenu-active mt-4" : "brand-menu-wrapper mt-4"
             }
             onClick={(e) => {
-              setMenu("six");
+              setMenu("view-help");
             }}
           >
             <i
@@ -287,46 +305,12 @@ const BrandDashboard = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        {sideMenu_1 && (
-          <div className="brand-content-main">
-            <div className="create-job-title">Create Gig/Job</div>
-            <div className="create-job-toggle">
-              <div className="radio-toggles">
-                <input
-                  type="radio"
-                  id="newjob"
-                  name="radio-options"
-                  value="create-job"
-                  onChange={handleJobTabs}
-                  className="job-toggle-inputs"
-                  checked={selectedTab == "create-job"}
-                ></input>
-                <label className="create-job-toggle-label" htmlFor="newjob">
-                  Create a new job
-                </label>
-                <input
-                  type="radio"
-                  id="duplicate"
-                  name="radio-options"
-                  value="duplicate-job"
-                  className="job-toggle-inputs"
-                  onChange={handleJobTabs}
-                  checked={selectedTab == "duplicate-job"}
-                ></input>
-                <label className="create-job-toggle-label" htmlFor="duplicate">
-                  Duplicate Existing Jobs
-                </label>
-                <div className="slide-item"></div>
-              </div>
-            </div>
-            {selectedTab === "create-job" && (
-              <CreateJobs onButtonClick={handleCreateJobData} />
-            )}
-            {selectedTab === "duplicate-job" && <DuplicateJobs />}
-          </div>
+        {viewDashboard && <BrandHome onButtonClick={handleHomeData} />}
+        {previewPage && (
+          <PreviewJob data={viewJobID} onButtonClick={handlePreviewData} />
         )}
-        {sideMenu_2 && <BrandHome onButtonClick={handleHomeData} />}
-        {previewPage && <PreviewJob data={viewJobID} />}
+        {myJobs && <ListJobs />}
+        {viewTalents && <BrandTalents />}
       </main>
     </>
   );

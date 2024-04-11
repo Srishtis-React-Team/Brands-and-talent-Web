@@ -6,7 +6,6 @@ import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
-import Select from "react-select";
 import Axios from "axios";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
@@ -15,6 +14,7 @@ import ReactFlagsSelect from "react-flags-select";
 import { useNavigate } from "react-router";
 import nationalityOptions from "../../components/nationalities";
 import languageOptions from "../../components/languages";
+import Select from "react-select";
 
 const DuplicateJobs = ({ sendDataToParent }) => {
   const paramsValues = window.location.search;
@@ -38,30 +38,63 @@ const DuplicateJobs = ({ sendDataToParent }) => {
   const [jobTitleError, setjobTitleError] = useState(false);
   const [jobTitle, setjobTitle] = useState("");
   const [message, setMessage] = useState("");
+  const [allJobsList, setAllJobsList] = useState([]);
+  const [selectedJobID, setSelectedJobID] = useState(null);
+
+  // handle onChange event of the dropdown
+  const handleChange = (e) => {
+    console.log(e, "selectedJobID");
+    setSelectedJobID(e?.value);
+  };
+
+  // handle custom filter
+  const filterOption = (option, inputValue) => {
+    // return option.allJobsList.jobTitle
+    //   .toLowerCase()
+    //   .includes(inputValue.toLowerCase());
+  };
+
+  const getAllJobs = async (filterJob) => {
+    await ApiHelper.get(`${API.getAllJobs}`)
+      .then((resData) => {
+        console.log(resData.data.data, "getJobsList");
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setAllJobsList(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getAllJobs();
+  }, []);
 
   return (
     <>
       <>
         <div className="dialog-body ">
-          <div className="kidsform-one w-100 p-2">
+          <div className="kidsform-one w-100  p-2">
             <div className="kids-main">
-              <div className="kids-form-row">
+              <div style={{ height: "500px" }} className="kids-form-row">
                 <div className="w-100">
                   <div className="mb-4">
                     <label className="form-label">
                       Enter a Previous Job Title
                       <span className="mandatory">*</span>
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={jobTitle}
-                      onChange={(e) => {
-                        setjobTitle(e.target.value);
-                        setjobTitleError(false);
-                      }}
-                      placeholder="Start Typing Previous Job Title, Location Or Company"
-                    ></input>
+                    <Select
+                      placeholder="Select City..."
+                      options={allJobsList.map((job) => ({
+                        value: job._id, // or whatever unique identifier you want to use
+                        label: job.jobTitle,
+                      }))}
+                      onChange={handleChange}
+                      isSearchable={true}
+                    />
                     {jobTitleError && (
                       <div className="invalid-fields">
                         Please enter job Title

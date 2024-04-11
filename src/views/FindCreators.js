@@ -344,8 +344,17 @@ const FindCreators = () => {
       type: item?.type,
       user: item?._id,
     };
-    const loggedID = localStorage.getItem("userId");
-    await ApiHelper.post(`${API.setUserFavorite}${loggedID}`, formData, true)
+    let brandId = localStorage.getItem("brandId");
+    let talentId = localStorage.getItem("userId");
+    console.log(brandId, "userid");
+    console.log(talentId, "userid");
+    let loggidInID;
+    if (brandId) {
+      loggidInID = brandId;
+    } else if (talentId) {
+      loggidInID = talentId;
+    }
+    await ApiHelper.post(`${API.setUserFavorite}${loggidInID}`, formData, true)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage("Added The Talent To Your Favorites ");
@@ -385,8 +394,17 @@ const FindCreators = () => {
       type: item?.type,
       user: item?._id,
     };
-    const loggedID = localStorage.getItem("userId");
-    await ApiHelper.post(`${API.removeFavorite}${loggedID}`, formData, true)
+    let brandId = localStorage.getItem("brandId");
+    let talentId = localStorage.getItem("userId");
+    console.log(brandId, "userid");
+    console.log(talentId, "userid");
+    let loggidInID;
+    if (brandId) {
+      loggidInID = brandId;
+    } else if (talentId) {
+      loggidInID = talentId;
+    }
+    await ApiHelper.post(`${API.removeFavorite}${loggidInID}`, formData, true)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage("Removed Talent From Favorites");
