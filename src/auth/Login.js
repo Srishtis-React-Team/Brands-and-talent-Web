@@ -53,6 +53,10 @@ const Login = () => {
   }, [userType]); // Log userType when it changes
 
   useEffect(() => {
+    console.log(selectedItem, "selectedItem");
+  }, [selectedItem]);
+
+  useEffect(() => {
     console.log(currentUser_id, "currentUser_id");
   }, [currentUser_id]); // Log currentUser_id when it changes
 
@@ -89,51 +93,93 @@ const Login = () => {
   };
 
   const login = async (enteredOTP) => {
-    const formData = {
-      email: talentEmail,
-      password: talentPassword,
-    };
-    console.log(formData, "formData talentLogin");
-    setIsLoading(true);
-    await ApiHelper.post(API.talentLogin, formData)
-      .then((resData) => {
-        console.log("talentLogin response", resData);
-        if (resData.data.status === true) {
-          console.log("called");
-          setIsLoading(false);
-          setMessage("Logged In SuccessFully!");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            setUserIdLocalStorage(resData.data.data);
-          }, 1000);
-          if (resData.data.type === "adult") {
-            console.log("adult block");
-            navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-          } else if (resData.data.type === "kids") {
-            navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-            // navigate(`/otp?${resData?.data?.data?.email}`);
+    if (selectedItem === "brand") {
+      const formData = {
+        brandEmail: talentEmail,
+        brandPassword: talentPassword,
+      };
+      console.log(formData, "formData talentLogin");
+      setIsLoading(true);
+      await ApiHelper.post(API.brandsLogin, formData)
+        .then((resData) => {
+          console.log("talentLogin response", resData);
+          if (resData.data.status === true) {
+            console.log("called");
+            setIsLoading(false);
+            setMessage("Logged In SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              setBrandsLocalStorage(resData.data);
+              navigate(`/talent-dashboard`);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            console.log("false called");
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
           }
-        } else if (resData.data.status === false) {
-          console.log("false called");
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (selectedItem === "talent") {
+      const formData = {
+        email: talentEmail,
+        password: talentPassword,
+      };
+      console.log(formData, "formData talentLogin");
+      setIsLoading(true);
+      await ApiHelper.post(API.talentLogin, formData)
+        .then((resData) => {
+          console.log("talentLogin response", resData);
+          if (resData.data.status === true) {
+            console.log("called");
+            setIsLoading(false);
+            setMessage("Logged In SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              setTalentLocalStorage(resData.data.data);
+            }, 1000);
+            if (resData.data.type === "adult") {
+              console.log("adult block");
+              navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+            } else if (resData.data.type === "kids") {
+              navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+              // navigate(`/otp?${resData?.data?.data?.email}`);
+            }
+          } else if (resData.data.status === false) {
+            console.log("false called");
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   // Function to set user ID
-  const setUserIdLocalStorage = (data) => {
+  const setTalentLocalStorage = (data) => {
     console.log(data, "data otp");
     localStorage.setItem("userId", data?.user?._id);
     localStorage.setItem("emailID", data?.email);
     localStorage.setItem("token", data?.token);
+    setUserId(userId);
+  };
+
+  const setBrandsLocalStorage = (data) => {
+    console.log(data, "data otp");
+    localStorage.setItem("brandId", data?.data?._id);
+    localStorage.setItem("brandEmail", data?.data?.brandEmail);
+    localStorage.setItem("brandToken", data?.token);
     setUserId(userId);
   };
 

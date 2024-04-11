@@ -37,14 +37,12 @@ export const API = {
   socailSignUpBrands: BASEURL + "brands/socailSignUpBrands",
   otpVerificationBrands: BASEURL + "brands/otpVerificationBrands",
   editBrands: BASEURL + "brands/editBrands/",
-  createJob: BASEURL + "gigs/createJob",
-  draftJob: BASEURL + "gigs/draftJob",
-  getAllJobs: BASEURL + "gigs/getAllJobs",
-  getJobsByID: BASEURL + "gigs/getJobsByID/",
-  getDraftJobsByID: BASEURL + "gigs/getDraftJobsByID/",
+  favouritesList: BASEURL + "brands/favouritesList",
+  favouritesList: BASEURL + "brands/favouritesList",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
+  brandsLogin: BASEURL + "brands/brandsLogin",
 
   //pricing
   getPricingList: BASEURL + "pricing/pricingList",
@@ -69,4 +67,18 @@ export const API = {
   postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",
   getUserSearchKeyword: BASEURL + "keyword/getUserSearchKeyword/",
   deleteUserSearchKeyword: BASEURL + "keyword/deleteUserSearchKeyword/",
+
+  //jobs
+  createJob: BASEURL + "gigs/createJob",
+  draftJob: BASEURL + "gigs/draftJob",
+  getAllJobs: BASEURL + "gigs/getAllJobs",
+  getJobsByID: BASEURL + "gigs/getJobsByID/",
+  getAnyJobById: BASEURL + "gigs/getAnyJobById/",
+  getDraftJobsByID: BASEURL + "gigs/getDraftJobsByID/",
+  getBrandDraftJobsByID: BASEURL + "gigs/getBrandDraftJobsByID/",
+  getBrandPostedJobsByID: BASEURL + "gigs/getBrandPostedJobsByID/",
+  postJobByDraft: BASEURL + "gigs/postJobByDraft/",
+  deleteJob: BASEURL + "gigs/deleteJob",
+  editDraft: BASEURL + "gigs/editDraft/",
+  editJob: BASEURL + "gigs/editJob/",
 };

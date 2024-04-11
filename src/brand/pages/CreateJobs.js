@@ -5,7 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
+import { convertToRaw, ContentState, convertFromHTML } from "draft-js";
 import Select from "react-select";
 import Axios from "axios";
 import { API } from "../../config/api";
@@ -17,20 +17,17 @@ import nationalityOptions from "../../components/nationalities";
 import languageOptions from "../../components/languages";
 import currencyList from "../../components/currency";
 import compensationType from "../../components/compensationType";
+import BrandHeader from "./BrandHeader";
+import BrandSideMenu from "./BrandSideMenu";
+import { useLocation } from "react-router-dom";
 
-const CreateJobs = ({ onButtonClick }) => {
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = ""; // This line is necessary for Chrome
-      return ""; // This line is necessary for Firefox
-    };
+const CreateJobs = () => {
+  const toggleMenu = () => {
+    setShowSidebar(!showSidebar);
+  };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
+  const location = useLocation();
+  let { editData } = location.state || {};
 
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
@@ -50,6 +47,305 @@ const CreateJobs = ({ onButtonClick }) => {
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [updateDisabled, setUpdateDisabled] = useState(false);
+  const [jobTitleError, setjobTitleError] = useState(false);
+  const [jobTitle, setjobTitle] = useState("");
+  const [message, setMessage] = useState("");
+  const [allJobsList, setAllJobsList] = useState([]);
+  const [selectedJobID, setSelectedJobID] = useState(null);
+  const [editJobData, setEditJobData] = useState(null);
+  const [brandId, setBrandId] = useState(null);
+
+  useEffect(() => {
+    console.log(editData, "editData");
+    if (editData?.value && editData?.type) {
+      getJobsByID(editData?.value, editData?.type);
+    }
+  }, [editData]);
+
+  const updateJobFormDatas = (editData) => {
+    if (editData != null) {
+      const jobDescriptionhtmlContent = editData?.jobDescription[0];
+      const jobDescriptionContentBlocks = convertFromHTML(
+        jobDescriptionhtmlContent
+      );
+      const jobDescriptionContentState = ContentState.createFromBlockArray(
+        jobDescriptionContentBlocks
+      );
+      const updateJobDescription = EditorState.createWithContent(
+        jobDescriptionContentState
+      );
+      setEditorStateJobDescription(updateJobDescription);
+      setJobDescription(editData?.jobDescription);
+      //////
+      const jobRequirementshtmlContent = editData?.additionalRequirements[0];
+      const jobRequirementsContentBlocks = convertFromHTML(
+        jobRequirementshtmlContent
+      );
+      const jobRequirementsContentState = ContentState.createFromBlockArray(
+        jobRequirementsContentBlocks
+      );
+      const updatejobRequirements = EditorState.createWithContent(
+        jobRequirementsContentState
+      );
+      setEditorStateJobRequirements(updatejobRequirements);
+      setJobRequirements(editData?.additionalRequirements);
+      ////////////
+
+      const whyWorkWithUsContent = editData?.whyWorkWithUs[0];
+      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+        whyWorkWithUsContentBlocks
+      );
+      const updatewhyWorkWithUs = EditorState.createWithContent(
+        whyWorkWithUsContentState
+      );
+      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+      setWhyWorkWithUs(editData?.whyWorkWithUs);
+      //////////
+
+      const hiringCompanyDescriptionContent =
+        editData?.hiringCompanyDescription[0];
+      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+        hiringCompanyDescriptionContent
+      );
+      const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
+        hiringCompanyDescriptionContentBlocks
+      );
+      const hiringCompanyDescription = EditorState.createWithContent(
+        hiringCompanyDescriptionContentState
+      );
+      setEditorStateClientDescription(hiringCompanyDescription);
+      setClientDescription(editData?.hiringCompanyDescription);
+      //////////////////
+      setjobTitle(editData?.jobTitle);
+      setAgeRange(editData?.age);
+      setzipCode(editData?.jobLocation);
+      setstreetAddress(editData?.streetAddress);
+      setworkPlaceType(editData?.workplaceType);
+      setjobType(editData?.jobType);
+      setGender(editData?.gender);
+      setNationality(editData?.nationality);
+      setLanguages(editData?.languages);
+      setWhyWorkWithUs(editData?.whyWorkWithUs);
+      setSelectedApplyOption(editData?.selectedApplyOption);
+      setHiringCompany(editData?.hiringCompany);
+      setSkills(editData?.skills);
+      setSelectedBenefits(editData?.benefits);
+      setSelectedApplyOption(editData?.howLikeToApply);
+      setPortofolioFile(editData?.workSamples);
+      if (editData?.questions && editData?.questions?.length > 0) {
+        setShowQuestions(true);
+        setQuestions(editData?.questions);
+      }
+
+      if (editData?.compensation.hasOwnProperty("collaboration_gift")) {
+        setCompensationChange("collaboration_gift");
+        setType(editData?.compensation?.collaboration_gift?.type);
+        setCurrency(editData?.compensation?.collaboration_gift?.currency);
+        setProductName(
+          editData?.compensation?.collaboration_gift?.product_name
+        );
+        setValueUSD(editData?.compensation?.collaboration_gift?.amount_value);
+      } else if (editData?.compensation.hasOwnProperty("paid_collaboration")) {
+        setCompensationChange("paid_collaboration");
+        setType(editData?.compensation?.paid_collaboration?.type);
+        setCurrency(editData?.compensation?.paid_collaboration?.currency);
+      } else if (editData?.compensation.hasOwnProperty("product_gift")) {
+        setCompensationChange("product_gift");
+        setProductName(editData?.compensation?.product_gift?.product_name);
+        setValueUSD(editData?.compensation?.product_gift?.amount_value);
+      }
+      if (editData?.paymentType?.label === "range") {
+        setSelectedPaymentOption("range");
+        setMinPay(editData?.paymentType?.minPay);
+        setMaxPay(editData?.paymentType?.maxPay);
+      } else if (editData?.paymentType?.label === "fixed") {
+        setSelectedPaymentOption("fixed");
+        setAmount(editData?.paymentType?.amount);
+      }
+    } else {
+    }
+  };
+
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+  }, [brandId]);
+
+  // handle onChange event of the dropdown
+  const handleChange = (e) => {
+    console.log(e, "selectedJobID");
+    setSelectedJobID(e?.value);
+    getJobsByID(e?.value, e?.type);
+  };
+
+  const getJobsByID = async (jobId, type) => {
+    if (type == "Posted") {
+      await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+        .then((resData) => {
+          console.log(resData.data.data, "getJobsList");
+          if (resData.data.status === true) {
+            if (resData.data.data) {
+              setEditJobData(resData.data.data, "resData.data.data");
+              updateJobFormDatas(resData.data.data);
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (type == "Draft") {
+      await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+        .then((resData) => {
+          console.log(resData.data.data, "getJobsList");
+          if (resData.data.status === true) {
+            if (resData.data.data) {
+              setEditJobData(resData.data.data, "resData.data.data");
+              updateJobFormDatas(resData.data.data);
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  useEffect(() => {
+    console.log(editJobData, "editJobData");
+  }, [editJobData]);
+
+  const duplicateJob = () => {
+    if (editJobData != null) {
+      const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
+      const jobDescriptionContentBlocks = convertFromHTML(
+        jobDescriptionhtmlContent
+      );
+      const jobDescriptionContentState = ContentState.createFromBlockArray(
+        jobDescriptionContentBlocks
+      );
+      const updateJobDescription = EditorState.createWithContent(
+        jobDescriptionContentState
+      );
+      setEditorStateJobDescription(updateJobDescription);
+      setJobDescription(editJobData?.jobDescription);
+      //////
+      const jobRequirementshtmlContent = editJobData?.additionalRequirements[0];
+      const jobRequirementsContentBlocks = convertFromHTML(
+        jobRequirementshtmlContent
+      );
+      const jobRequirementsContentState = ContentState.createFromBlockArray(
+        jobRequirementsContentBlocks
+      );
+      const updatejobRequirements = EditorState.createWithContent(
+        jobRequirementsContentState
+      );
+      setEditorStateJobRequirements(updatejobRequirements);
+      setJobRequirements(editJobData?.additionalRequirements);
+      ////////////
+
+      const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
+      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+        whyWorkWithUsContentBlocks
+      );
+      const updatewhyWorkWithUs = EditorState.createWithContent(
+        whyWorkWithUsContentState
+      );
+      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
+      //////////
+
+      const hiringCompanyDescriptionContent =
+        editJobData?.hiringCompanyDescription[0];
+      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+        hiringCompanyDescriptionContent
+      );
+      const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
+        hiringCompanyDescriptionContentBlocks
+      );
+      const hiringCompanyDescription = EditorState.createWithContent(
+        hiringCompanyDescriptionContentState
+      );
+      setEditorStateClientDescription(hiringCompanyDescription);
+      setClientDescription(editJobData?.hiringCompanyDescription);
+      //////////////////
+      setSelectedTab("create-job");
+      setjobTitle(editJobData?.jobTitle);
+      setAgeRange(editJobData?.age);
+      setzipCode(editJobData?.jobLocation);
+      setstreetAddress(editJobData?.streetAddress);
+      setworkPlaceType(editJobData?.workplaceType);
+      setjobType(editJobData?.jobType);
+      setGender(editJobData?.gender);
+      setNationality(editJobData?.nationality);
+      setLanguages(editJobData?.languages);
+      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
+      setSelectedApplyOption(editJobData?.selectedApplyOption);
+      setHiringCompany(editJobData?.hiringCompany);
+      setSkills(editJobData?.skills);
+      setSelectedBenefits(editJobData?.benefits);
+      setSelectedApplyOption(editJobData?.howLikeToApply);
+      setPortofolioFile(editJobData?.workSamples);
+      if (editJobData?.questions && editJobData?.questions?.length > 0) {
+        setShowQuestions(true);
+        setQuestions(editJobData?.questions);
+      }
+
+      if (editJobData?.compensation.hasOwnProperty("collaboration_gift")) {
+        setCompensationChange("collaboration_gift");
+        setType(editJobData?.compensation?.collaboration_gift?.type);
+        setCurrency(editJobData?.compensation?.collaboration_gift?.currency);
+        setProductName(
+          editJobData?.compensation?.collaboration_gift?.product_name
+        );
+        setValueUSD(
+          editJobData?.compensation?.collaboration_gift?.amount_value
+        );
+      } else if (
+        editJobData?.compensation.hasOwnProperty("paid_collaboration")
+      ) {
+        setCompensationChange("paid_collaboration");
+        setType(editJobData?.compensation?.paid_collaboration?.type);
+        setCurrency(editJobData?.compensation?.paid_collaboration?.currency);
+      } else if (editJobData?.compensation.hasOwnProperty("product_gift")) {
+        setCompensationChange("product_gift");
+        setProductName(editJobData?.compensation?.product_gift?.product_name);
+        setValueUSD(editJobData?.compensation?.product_gift?.amount_value);
+      }
+      if (editJobData?.paymentType?.label === "range") {
+        setSelectedPaymentOption("range");
+        setMinPay(editJobData?.paymentType?.minPay);
+        setMaxPay(editJobData?.paymentType?.maxPay);
+      } else if (editJobData?.paymentType?.label === "fixed") {
+        setSelectedPaymentOption("fixed");
+        setAmount(editJobData?.paymentType?.amount);
+      }
+    } else {
+    }
+  };
+
+  const getAllJobs = async (filterJob) => {
+    await ApiHelper.get(`${API.getAllJobs}`)
+      .then((resData) => {
+        console.log(resData.data.data, "getJobsList");
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setAllJobsList(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getAllJobs();
+  }, []);
+
+  const [showSidebar, setShowSidebar] = useState(true);
+
   const [editorStateJobDescription, setEditorStateJobDescription] = useState(
     EditorState.createEmpty()
   );
@@ -65,7 +361,6 @@ const CreateJobs = ({ onButtonClick }) => {
   ] = useState(EditorState.createEmpty());
   const [showError, setShowError] = useState(false);
   const [kidsFillData, setKidsFillData] = useState(null);
-  const [jobTitleError, setjobTitleError] = useState(false);
   const [streetAddressError, setstreetAddressError] = useState(false);
   const [parentCountryError, setParentCountryError] = useState(false);
   const [stateError, setStateError] = useState(false);
@@ -88,10 +383,8 @@ const CreateJobs = ({ onButtonClick }) => {
   const [kidsLegalFirstNameError, setkidsLegalFirstNameError] = useState(false);
   const [kidsLegalLastNameError, setkidsLegalLastNameError] = useState(false);
   const [workPlaceTypeError, setworkPlaceTypeError] = useState(false);
-  const [message, setMessage] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedProfessions, setSelectedProfessions] = useState([]);
-  const [jobTitle, setjobTitle] = useState("");
   const [ageRange, setAgeRange] = useState("");
   const [parentLastName, setParentLastName] = useState("");
   const [zipCode, setzipCode] = useState("");
@@ -125,7 +418,6 @@ const CreateJobs = ({ onButtonClick }) => {
   const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [isValidEmail, setIsValidEmail] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -140,14 +432,17 @@ const CreateJobs = ({ onButtonClick }) => {
     setSelectedApplyOption(e.target.value);
   };
 
-  const [selectedOption, setSelectedOption] = useState("Paid collaboration");
+  const [selectedOption, setCompensationChange] = useState(
+    "paid_collaboration"
+  );
   const [type, setType] = useState("");
   const [currency, setCurrency] = useState("");
   const [productName, setProductName] = useState("");
   const [valueUSD, setValueUSD] = useState("");
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+  const compensationChange = (event) => {
+    console.log(event.target.value, "compensationChange");
+    setCompensationChange(event.target.value);
   };
 
   const handleTypeChange = (event) => {
@@ -169,29 +464,29 @@ const CreateJobs = ({ onButtonClick }) => {
   const handleCompensationSubmit = () => {
     let data = {};
     switch (selectedOption) {
-      case "Paid collaboration":
+      case "paid_collaboration":
         data = {
-          "Paid collaboration": {
-            type,
-            currency,
+          paid_collaboration: {
+            type: type,
+            currency: currency,
           },
         };
         break;
-      case "Product/ gift":
+      case "product_gift":
         data = {
-          "Product/ gift": {
-            "Product Name": productName,
-            "Value (USD)": valueUSD,
+          product_gift: {
+            product_name: productName,
+            amount_value: valueUSD,
           },
         };
         break;
-      case "Paid collaboration + Gift":
+      case "collaboration_gift":
         data = {
-          "Paid collaboration + Gift": {
-            type,
-            currency,
-            "Product Name": productName,
-            "Value (USD)": valueUSD,
+          collaboration_gift: {
+            type: type,
+            currency: currency,
+            product_name: productName,
+            amount_value: valueUSD,
           },
         };
         break;
@@ -578,11 +873,81 @@ const CreateJobs = ({ onButtonClick }) => {
       .catch((err) => {});
   };
 
+  const updateJob = async () => {
+    const formData = {
+      _id: editData?.value,
+      jobTitle: jobTitle,
+      jobLocation: zipCode,
+      streetAddress: streetAddress,
+      workplaceType: workPlaceType,
+      jobType: jobType,
+      jobDescription: jobDescription,
+      skills: skills,
+      additionalRequirements: jobRequirements,
+      age: ageRange,
+      gender: gender,
+      nationality: nationality,
+      languages: languages,
+      questions: questions,
+      benefits: selectedBenefits,
+      compensation: handleCompensationSubmit(),
+      jobCurrency: currency,
+      paymentType: paymentOptionValue(),
+      hiringCompany: hiringCompany,
+      whyWorkWithUs: whyWorkWithUs,
+      hiringCompanyDescription: clientDescription,
+      howLikeToApply: selectedApplyOption,
+      workSamples: portofolioFile,
+    };
+    if (editData?.type == "Draft") {
+      await ApiHelper.post(`${API.editDraft}${editData?.value}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setMessage("Job Updated SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              navigate("/preview-job", {
+                state: {
+                  jobId: resData?.data?.data?._id,
+                },
+              });
+            }, 2000);
+          } else if (resData.data.status === false) {
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {});
+    } else if (editData?.type == "Posted") {
+      await ApiHelper.post(`${API.editJob}${editData?.value}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setMessage("Job Updated SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              navigate("/preview-job", {
+                state: {
+                  jobId: resData?.data?.data?._id,
+                },
+              });
+            }, 2000);
+          } else if (resData.data.status === false) {
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {});
+    }
+  };
   const createGigs = async () => {
-    onButtonClick({
-      jobId: "66100a6ce451e6c6782921b3",
-      condition: "preview",
-    });
     if (jobTitle === "") {
       setjobTitleError(true);
     }
@@ -621,7 +986,6 @@ const CreateJobs = ({ onButtonClick }) => {
       jobType !== ""
     ) {
     }
-
     const formData = {
       jobTitle: jobTitle,
       jobLocation: zipCode,
@@ -645,37 +1009,33 @@ const CreateJobs = ({ onButtonClick }) => {
       hiringCompanyDescription: clientDescription,
       howLikeToApply: selectedApplyOption,
       workSamples: portofolioFile,
-      jobImage: profileFile,
+      brandId: brandId,
     };
     console.log(formData, "CREATEJOB_PAYLOAD");
-    setIsLoading(true);
-    // await ApiHelper.post(API.draftJob, formData)
-    //   .then((resData) => {
-    //     console.log(resData.data.data._id, "draftedData");
-    //     if (resData.data.status === true) {
-    //       setIsLoading(false);
-    //       setMessage("Job Created SuccessFully!");
-    //       setOpenPopUp(true);
-    //       setTimeout(function() {
-    //         setOpenPopUp(false);
-    //         onButtonClick({
-    //           jobId: "66100a6ce451e6c6782921b3",
-    //           condition: "preview",
-    //         });
-    //         // navigate(`/preview-job?${resData?.data?.data?._id}`);
-    //       }, 1000);
-    //     } else if (resData.data.status === false) {
-    //       setIsLoading(false);
-    //       setMessage(resData.data.message);
-    //       setOpenPopUp(true);
-    //       setTimeout(function() {
-    //         setOpenPopUp(false);
-    //       }, 1000);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setIsLoading(false);
-    //   });
+    await ApiHelper.post(API.draftJob, formData)
+      .then((resData) => {
+        console.log(resData, "draftedData");
+        console.log(resData.data.data._id, "draftedData");
+        if (resData.data.status === true) {
+          setMessage("Job Created SuccessFully!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            navigate("/preview-job", {
+              state: {
+                jobId: resData?.data?.data?._id,
+              },
+            });
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {});
   };
 
   const handlePortofolioDrop = (e) => {
@@ -846,20 +1206,17 @@ const CreateJobs = ({ onButtonClick }) => {
     console.log("paymentOptionValue");
     if (selectedPaymentOption === "fixed") {
       const data = {
-        fixedAmount: {
-          amount: amount,
-        },
+        label: "fixed",
+        amount: amount,
       };
       return data;
-
       // Perform API call with data
       console.log(data);
     } else {
       const data = {
-        rangeOfAmounts: {
-          minPay: minPay,
-          maxPay: maxPay,
-        },
+        label: "range",
+        minPay: minPay,
+        maxPay: maxPay,
       };
       console.log(data, "datapaymentType");
       // Perform API call with data
@@ -894,1035 +1251,1180 @@ const CreateJobs = ({ onButtonClick }) => {
     setSkills(newSkills);
   };
 
+  const [selectedTab, setSelectedTab] = useState("create-job");
+
+  const handleJobTabs = (e) => {
+    console.log(e.target.value, "e.target.value");
+    setSelectedTab(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log(showQuestions, "showQuestions");
+  }, [showQuestions]);
+
   return (
     <>
       <>
-        <div className="dialog-body ">
-          <div className="kidsform-one w-100 p-2">
-            <div className="kids-main">
-              <div className="kids-form-row">
-                <div className="w-100">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Gig/Job Title
-                      <span className="mandatory">*</span>
+        <BrandHeader toggleMenu={toggleMenu} />
+        <div
+          id="sidebarBrand"
+          className={`brand-sidebar ${
+            showSidebar ? "show-sidebar" : "not-sidebar"
+          }`}
+        >
+          <BrandSideMenu />
+        </div>
+        <main
+          id="mainBrand"
+          className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
+        >
+          <div className="brand-content-main">
+            <div className="create-job-title">
+              {editData?.value && "Edit Gig/Job"}
+              {!editData?.value && editJobData == null && "Create Gig/Job"}
+              {editJobData != null && !editData?.value && "Duplicate Gig/Job"}
+            </div>
+            <div className="create-job-toggle">
+              <div className="radio-toggles">
+                <input
+                  type="radio"
+                  id="newjob"
+                  name="radio-options"
+                  value="create-job"
+                  onChange={handleJobTabs}
+                  className="job-toggle-inputs"
+                  checked={selectedTab == "create-job"}
+                ></input>
+                {editData?.value && (
+                  <>
+                    <label className="create-job-toggle-label" htmlFor="newjob">
+                      Edit Job
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={jobTitle}
-                      onChange={(e) => {
-                        setjobTitle(e.target.value);
-                        setjobTitleError(false);
-                      }}
-                      placeholder="Enter Title"
-                    ></input>
-                    {jobTitleError && (
-                      <div className="invalid-fields">
-                        Please enter job Title
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="kids-form-row">
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Job Location (Zip Code)
-                      <span className="mandatory">*</span>
+                  </>
+                )}
+                {!editData?.value && editJobData == null && (
+                  <>
+                    <label className="create-job-toggle-label" htmlFor="newjob">
+                      Create New Job
                     </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      maxLength={6}
-                      onChange={(e) => {
-                        setzipCode(e.target.value);
-                        setzipCodeError(false);
-                      }}
-                      placeholder="Enter Zipcode"
-                      value={zipCode}
-                    />
-                    {zipCodeError && (
-                      <div className="invalid-fields">
-                        Please enter Zip Code.
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Street Address <span className="mandatory">*</span>
+                  </>
+                )}
+                {editJobData != null && !editData?.value && (
+                  <>
+                    <label className="create-job-toggle-label" htmlFor="newjob">
+                      Duplicate Job
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={streetAddress}
-                      onChange={(e) => {
-                        setstreetAddress(e.target.value);
-                        setstreetAddressError(false);
-                      }}
-                      placeholder="Street Address"
-                    ></input>
-                    {streetAddressError && (
-                      <div className="invalid-fields">
-                        Please enter Street Address
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+                  </>
+                )}
 
-              <div className="kids-form-row">
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Work Place Type <span className="mandatory">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      aria-label="Default select example"
-                      onChange={selectworkPlaceType}
-                      value={workPlaceType}
-                    >
-                      <option value="" disabled selected>
-                        Select Work Place Type
-                      </option>
-                      <option value="onsite" defaultValue>
-                        On Site
-                      </option>
-                      <option value="remote">Remote</option>
-                    </select>
-                    {workPlaceTypeError && (
-                      <div className="invalid-fields">
-                        Please Select Work Place Type
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Job Type <span className="mandatory">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      aria-label="Default select example"
-                      onChange={selectjobType}
-                      value={jobType}
-                    >
-                      <option value="" disabled selected>
-                        Select Job Type
-                      </option>
-                      {jobTypeOptions.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                    {jobTypeError && (
-                      <div className="invalid-fields">
-                        Please Select Job Type
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="rich-editor mb-4">
-                <label className="form-label">Gig/Job Description</label>
-                <Editor
-                  editorState={editorStateJobDescription}
-                  editorStyle={{ overflow: "hidden" }}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  onEditorStateChange={onEditorJobDescription}
-                  toolbar={{
-                    options: [
-                      "inline",
-                      "blockType",
-                      "fontSize",
-                      "list",
-                      "textAlign",
-                      "history",
-                    ],
-                    inline: { inDropdown: true },
-                    list: { inDropdown: true },
-                    textAlign: { inDropdown: true },
-                    link: { inDropdown: true },
-                    history: { inDropdown: true },
-                  }}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="form-label pay-info">
-                  Profession/Skills (optional)
-                  <span className="mandatory">*</span>
+                <input
+                  type="radio"
+                  id="duplicate"
+                  name="radio-options"
+                  value="duplicate-job"
+                  className="job-toggle-inputs"
+                  onChange={handleJobTabs}
+                  checked={selectedTab == "duplicate-job"}
+                ></input>
+                <label className="create-job-toggle-label" htmlFor="duplicate">
+                  Duplicate Existing Jobs
                 </label>
-
-                <div className="mb-3">
-                  <div className="form-group has-search">
-                    <span className="fa fa-search form-control-feedback"></span>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Search For Skills"
-                      value={inputValue}
-                      onChange={handleInputChange}
-                      onKeyDown={handleKeyDown}
-                    />
-                  </div>
-                </div>
-
-                <div className="skills-section">
-                  {skills.map((skill, index) => (
-                    <div className="skills-wrapper" key={index}>
-                      <div className="skill-text"> {skill}</div>
-                      <i class="bi bi-x" onClick={() => removeSkill(index)}></i>
-                    </div>
-                  ))}
-                </div>
+                <div className="slide-item"></div>
               </div>
-
-              <div className="rich-editor mb-4">
-                <label className="form-label">
-                  Additional RequireMents (Optional)
-                </label>
-                <Editor
-                  editorState={editorStateJobRequirements}
-                  editorStyle={{ overflow: "hidden" }}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  onEditorStateChange={onEditorRequirements}
-                  toolbar={{
-                    options: [
-                      "inline",
-                      "blockType",
-                      "fontSize",
-                      "list",
-                      "textAlign",
-                      "history",
-                    ],
-                    inline: { inDropdown: true },
-                    list: { inDropdown: true },
-                    textAlign: { inDropdown: true },
-                    link: { inDropdown: true },
-                    history: { inDropdown: true },
-                  }}
-                />
-              </div>
-
-              <div className="kids-form-row">
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Age <span className="mandatory">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      aria-label="Default select example"
-                      onChange={selectAge}
-                      value={ageRange}
-                    >
-                      <option value="" disabled selected>
-                        Select Age
-                      </option>
-                      {ageList.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                    {ageRangeError && (
-                      <div className="invalid-fields">Please Select Age</div>
-                    )}
-                  </div>
-                </div>
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Gender <span className="mandatory">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      aria-label="Default select example"
-                      onChange={selectGender}
-                      value={gender}
-                    >
-                      <option value="" disabled selected>
-                        Select Gender
-                      </option>
-                      {gendersOptions.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                    {genderError && (
-                      <div className="invalid-fields">Please Select Gender</div>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="kids-form-row mb-2">
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Nationality <span className="mandatory">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      aria-label="Default select example"
-                      onChange={selectNationality}
-                      value={nationality}
-                    >
-                      <option value="" disabled selected>
-                        Select Nationality
-                      </option>
-                      {nationalityOptions.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                    {nationalityError && (
-                      <div className="invalid-fields">
-                        Please Select Nationality
+            </div>
+            {selectedTab === "create-job" && (
+              <>
+                <div className="dialog-body ">
+                  <div className="kidsform-one w-100 p-2">
+                    <div className="kids-main">
+                      <div className="kids-form-row">
+                        <div className="w-100">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Gig/Job Title
+                              <span className="mandatory">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={jobTitle}
+                              onChange={(e) => {
+                                setjobTitle(e.target.value);
+                                setjobTitleError(false);
+                              }}
+                              placeholder="Enter Title"
+                            ></input>
+                            {jobTitleError && (
+                              <div className="invalid-fields">
+                                Please enter job Title
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </div>
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Language <span className="mandatory">*</span>
-                    </label>
-                    <select
-                      className="form-select"
-                      aria-label="Default select example"
-                      onChange={selectLanguage}
-                      value={languages}
-                    >
-                      <option value="" disabled selected>
-                        Select Language
-                      </option>
-                      {languageOptions.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                    {languageError && (
-                      <div className="invalid-fields">
-                        Please Select Language
+                      <div className="kids-form-row">
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Job Location
+                              <span className="mandatory">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              onChange={(e) => {
+                                setzipCode(e.target.value);
+                                setzipCodeError(false);
+                              }}
+                              placeholder="Enter City, State, ZipCode"
+                              value={zipCode}
+                            />
+                            {zipCodeError && (
+                              <div className="invalid-fields">
+                                Please enter Zip Code.
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Street Address{" "}
+                              <span className="mandatory">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={streetAddress}
+                              onChange={(e) => {
+                                setstreetAddress(e.target.value);
+                                setstreetAddressError(false);
+                              }}
+                              placeholder="Street Address"
+                            ></input>
+                            {streetAddressError && (
+                              <div className="invalid-fields">
+                                Please enter Street Address
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </div>
-              </div>
 
-              <div className="mb-2">
-                <label className="screening-questions-label mb-4">
-                  <input
-                    type="checkbox"
-                    className="screening-checkbox profession-checkbox"
-                    onChange={handleCheckboxChange}
-                  />
-                  Add Screening Questions (optional)
-                </label>
+                      <div className="kids-form-row">
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Work Place Type{" "}
+                              <span className="mandatory">*</span>
+                            </label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              onChange={selectworkPlaceType}
+                              value={workPlaceType}
+                            >
+                              <option value="" disabled selected>
+                                Select Work Place Type
+                              </option>
+                              <option value="onsite" defaultValue>
+                                On Site
+                              </option>
+                              <option value="remote">Remote</option>
+                            </select>
+                            {workPlaceTypeError && (
+                              <div className="invalid-fields">
+                                Please Select Work Place Type
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Job Type <span className="mandatory">*</span>
+                            </label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              onChange={selectjobType}
+                              value={jobType}
+                            >
+                              <option value="" disabled selected>
+                                Select Job Type
+                              </option>
+                              {jobTypeOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                            {jobTypeError && (
+                              <div className="invalid-fields">
+                                Please Select Job Type
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
 
-                {showQuestions && (
-                  <div className="kids-form-section">
-                    {questions.map((question, index) => (
-                      <div className="mb-4" key={index}>
-                        <label className="form-label ">{`Question ${index +
-                          1}:`}</label>
-                        <input
-                          type="text"
-                          className="form-control "
-                          placeholder={`Enter Question ${index + 1}`}
-                          value={question}
-                          id={`question${index + 1}`}
-                          onChange={(event) =>
-                            handleQuestionChange(index, event)
-                          }
+                      <div className="rich-editor mb-4">
+                        <label className="form-label">
+                          Gig/Job Description
+                        </label>
+                        <Editor
+                          editorState={editorStateJobDescription}
+                          editorStyle={{ overflow: "hidden" }}
+                          toolbarClassName="toolbarClassName"
+                          wrapperClassName="wrapperClassName"
+                          editorClassName="editorClassName"
+                          onEditorStateChange={onEditorJobDescription}
+                          toolbar={{
+                            options: [
+                              "inline",
+                              "blockType",
+                              "fontSize",
+                              "list",
+                              "textAlign",
+                              "history",
+                            ],
+                            inline: { inDropdown: true },
+                            list: { inDropdown: true },
+                            textAlign: { inDropdown: true },
+                            link: { inDropdown: true },
+                            history: { inDropdown: true },
+                          }}
                         />
                       </div>
-                    ))}
-                    <div
-                      className="add-more-questions "
-                      onClick={handleAddQuestion}
-                    >
-                      <i class="bi bi-plus-square-fill"></i>
 
-                      <div className="add-more-questions-text"> Add More</div>
-                    </div>
-                  </div>
-                )}
-              </div>
+                      <div className="mb-4">
+                        <label className="form-label pay-info">
+                          Profession/Skills (optional)
+                          <span className="mandatory">*</span>
+                        </label>
 
-              <div className="mb-2">
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="form-label">
-                      Benefits <span className="mandatory">*</span>
-                    </label>
-                    <div className="benefits-wrapper">
-                      {benefitsList.map((benefit, index) => (
-                        <label
-                          className="screening-questions-label"
-                          key={index}
-                          htmlFor={benefit.id}
-                        >
+                        <div className="mb-3">
+                          <div className="form-group ">
+                            {/* has-search <span className="fa fa-search form-control-feedback"></span> */}
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Add Your Skills"
+                              value={inputValue}
+                              onChange={handleInputChange}
+                              onKeyDown={handleKeyDown}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="skills-section">
+                          {skills.map((skill, index) => (
+                            <div className="skills-wrapper" key={index}>
+                              <div className="skill-text"> {skill}</div>
+                              <i
+                                class="bi bi-x"
+                                onClick={() => removeSkill(index)}
+                              ></i>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="rich-editor mb-4">
+                        <label className="form-label">
+                          Additional RequireMents (Optional)
+                        </label>
+                        <Editor
+                          editorState={editorStateJobRequirements}
+                          editorStyle={{ overflow: "hidden" }}
+                          toolbarClassName="toolbarClassName"
+                          wrapperClassName="wrapperClassName"
+                          editorClassName="editorClassName"
+                          onEditorStateChange={onEditorRequirements}
+                          toolbar={{
+                            options: [
+                              "inline",
+                              "blockType",
+                              "fontSize",
+                              "list",
+                              "textAlign",
+                              "history",
+                            ],
+                            inline: { inDropdown: true },
+                            list: { inDropdown: true },
+                            textAlign: { inDropdown: true },
+                            link: { inDropdown: true },
+                            history: { inDropdown: true },
+                          }}
+                        />
+                      </div>
+
+                      <div className="kids-form-row">
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Age <span className="mandatory">*</span>
+                            </label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              onChange={selectAge}
+                              value={ageRange}
+                            >
+                              <option value="" disabled selected>
+                                Select Age
+                              </option>
+                              {ageList.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                            {ageRangeError && (
+                              <div className="invalid-fields">
+                                Please Select Age
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Gender <span className="mandatory">*</span>
+                            </label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              onChange={selectGender}
+                              value={gender}
+                            >
+                              <option value="" disabled selected>
+                                Select Gender
+                              </option>
+                              {gendersOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                            {genderError && (
+                              <div className="invalid-fields">
+                                Please Select Gender
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="kids-form-row mb-2">
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Nationality <span className="mandatory">*</span>
+                            </label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              onChange={selectNationality}
+                              value={nationality}
+                            >
+                              <option value="" disabled selected>
+                                Select Nationality
+                              </option>
+                              {nationalityOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                            {nationalityError && (
+                              <div className="invalid-fields">
+                                Please Select Nationality
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Language <span className="mandatory">*</span>
+                            </label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              onChange={selectLanguage}
+                              value={languages}
+                            >
+                              <option value="" disabled selected>
+                                Select Language
+                              </option>
+                              {languageOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                            {languageError && (
+                              <div className="invalid-fields">
+                                Please Select Language
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mb-2">
+                        <label className="screening-questions-label mb-4">
                           <input
                             type="checkbox"
                             className="screening-checkbox profession-checkbox"
-                            id={benefit.id}
-                            value={benefit.name}
-                            checked={selectedBenefits.includes(benefit.name)}
-                            onChange={handleBenefits}
+                            onChange={handleCheckboxChange}
+                            checked={showQuestions === true}
                           />
-                          {benefit.name}
+                          Add Screening Questions (optional)
                         </label>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div className="mb-2">
-                <div className="kids-form-section">
-                  <div className="mb-3">
-                    <label className="form-label">
-                      Compensation <span className="mandatory">*</span>
-                    </label>
-                    <div className="compensation-radios mb-2">
-                      <label className="compensation-labels">
-                        <input
-                          className="screening-checkbox profession-checkbox"
-                          type="radio"
-                          value="Paid collaboration"
-                          checked={selectedOption === "Paid collaboration"}
-                          onChange={handleOptionChange}
-                        />
-                        Paid collaboration
-                      </label>
-                      <label className="compensation-labels">
-                        <input
-                          className="screening-checkbox profession-checkbox"
-                          type="radio"
-                          value="Product/ gift"
-                          checked={selectedOption === "Product/ gift"}
-                          onChange={handleOptionChange}
-                        />
-                        Product/ gift
-                      </label>
-                      <label className="compensation-labels">
-                        <input
-                          className="screening-checkbox profession-checkbox"
-                          type="radio"
-                          value="Paid collaboration + Gift"
-                          checked={
-                            selectedOption === "Paid collaboration + Gift"
-                          }
-                          onChange={handleOptionChange}
-                        />
-                        Paid collaboration + Gift
-                      </label>
-                    </div>
-                    <div className="mt-3">
-                      {selectedOption === "Paid collaboration" && (
-                        <div className="kids-form-row">
+                        {showQuestions && (
                           <div className="kids-form-section">
-                            <div className="mb-4">
-                              <label className="form-label">Type</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                onChange={handleTypeChange}
-                                value={type}
-                              >
-                                <option value="" disabled selected>
-                                  Select Type
-                                </option>
-                                {compensationType.map((option, index) => (
-                                  <option key={index} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </div>
-                          <div className="kids-form-section">
-                            <div className="mb-4">
-                              <label className="form-label">Currency</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                value={currency}
-                                onChange={handleCurrencyChange}
-                              >
-                                <option value="" disabled selected>
-                                  Select Currency
-                                </option>
-                                {currencyList.map((option, index) => (
-                                  <option key={index} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                      {selectedOption === "Product/ gift" && (
-                        <div className="kids-form-row">
-                          <div className="kids-form-section">
-                            <div className="mb-4">
-                              <label className="form-label">Product</label>
-
-                              <input
-                                type="text"
-                                className="form-control"
-                                value={productName}
-                                onChange={handleProductNameChange}
-                                placeholder="Enter Product Name"
-                              ></input>
-                            </div>
-                          </div>
-                          <div className="kids-form-section">
-                            <div className="mb-4">
-                              <label className="form-label">
-                                What is the value of the product (USD)
-                              </label>
-
-                              <input
-                                type="text"
-                                className="form-control"
-                                value={valueUSD}
-                                onChange={handleValueUSDChange}
-                                placeholder="Enter Value"
-                              ></input>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                      {selectedOption === "Paid collaboration + Gift" && (
-                        <>
-                          <div className="kids-form-row">
-                            <div className="kids-form-section">
-                              <div className="mb-4">
-                                <label className="form-label">Type</label>
-                                <select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  onChange={handleTypeChange}
-                                  value={type}
-                                >
-                                  <option value="" disabled selected>
-                                    Select Type
-                                  </option>
-                                  {compensationType.map((option, index) => (
-                                    <option key={index} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </div>
-                            <div className="kids-form-section">
-                              <div className="mb-4">
-                                <label className="form-label">Currency</label>
-                                <select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  value={currency}
-                                  onChange={handleCurrencyChange}
-                                >
-                                  <option value="" disabled selected>
-                                    Select Currency
-                                  </option>
-                                  {currencyList.map((option, index) => (
-                                    <option key={index} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="kids-form-row">
-                            <div className="kids-form-section">
-                              <div className="mb-4">
-                                <label className="form-label">Product</label>
+                            {questions.map((question, index) => (
+                              <div className="mb-4" key={index}>
+                                <label className="form-label ">{`Question ${index +
+                                  1}:`}</label>
                                 <input
                                   type="text"
-                                  className="form-control"
-                                  value={productName}
-                                  onChange={handleProductNameChange}
-                                  placeholder="Enter Product Name"
-                                ></input>
+                                  className="form-control "
+                                  placeholder={`Enter Question ${index + 1}`}
+                                  value={question}
+                                  id={`question${index + 1}`}
+                                  onChange={(event) =>
+                                    handleQuestionChange(index, event)
+                                  }
+                                />
+                              </div>
+                            ))}
+                            <div
+                              className="add-more-questions "
+                              onClick={handleAddQuestion}
+                            >
+                              <i class="bi bi-plus-square-fill"></i>
+
+                              <div className="add-more-questions-text">
+                                {" "}
+                                Add More
                               </div>
                             </div>
-                            <div className="kids-form-section">
-                              <div className="mb-4">
-                                <label className="form-label">
-                                  What is the value of the product (USD)
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="mb-2">
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Benefits <span className="mandatory">*</span>
+                            </label>
+                            <div className="benefits-wrapper">
+                              {benefitsList.map((benefit, index) => (
+                                <label
+                                  className="screening-questions-label"
+                                  key={index}
+                                  htmlFor={benefit.id}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    className="screening-checkbox profession-checkbox"
+                                    id={benefit.id}
+                                    value={benefit.name}
+                                    checked={selectedBenefits.includes(
+                                      benefit.name
+                                    )}
+                                    onChange={handleBenefits}
+                                  />
+                                  {benefit.name}
                                 </label>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
+                      <div className=" seperate-jobform-section">
+                        <div className="kids-form-section">
+                          <div className="mb-3">
+                            <label className="form-label">
+                              Compensation <span className="mandatory">*</span>
+                            </label>
+                            <div className="compensation-radios mb-2">
+                              <label
+                                className="compensation-labels"
+                                htmlFor="paid-collab"
+                              >
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  value={valueUSD}
-                                  onChange={handleValueUSDChange}
-                                  placeholder="Enter Value"
-                                ></input>
+                                  id="paid-collab"
+                                  className="screening-checkbox profession-checkbox"
+                                  type="radio"
+                                  value="paid_collaboration"
+                                  checked={
+                                    selectedOption === "paid_collaboration"
+                                  }
+                                  onChange={compensationChange}
+                                />
+                                paid_collaboration
+                              </label>
+                              <label
+                                className="compensation-labels"
+                                htmlFor="product-gift"
+                              >
+                                <input
+                                  id="product-gift"
+                                  className="screening-checkbox profession-checkbox"
+                                  type="radio"
+                                  value="product_gift"
+                                  checked={selectedOption === "product_gift"}
+                                  onChange={compensationChange}
+                                />
+                                product_gift
+                              </label>
+                              <label
+                                className="compensation-labels"
+                                htmlFor="collab-gift"
+                              >
+                                <input
+                                  id="collab-gift"
+                                  className="screening-checkbox profession-checkbox"
+                                  type="radio"
+                                  value="collaboration_gift"
+                                  checked={
+                                    selectedOption === "collaboration_gift"
+                                  }
+                                  onChange={compensationChange}
+                                />
+                                Paid Collaboration + Gift
+                              </label>
+                            </div>
+                            <div className="mt-3">
+                              {selectedOption === "paid_collaboration" && (
+                                <div className="kids-form-row">
+                                  <div className="kids-form-section">
+                                    <div className="mb-4">
+                                      <label className="form-label">Type</label>
+                                      <select
+                                        className="form-select"
+                                        aria-label="Default select example"
+                                        onChange={handleTypeChange}
+                                        value={type}
+                                      >
+                                        <option value="" disabled selected>
+                                          Select Type
+                                        </option>
+                                        {compensationType.map(
+                                          (option, index) => (
+                                            <option key={index} value={option}>
+                                              {option}
+                                            </option>
+                                          )
+                                        )}
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className="kids-form-section">
+                                    <div className="mb-4">
+                                      <label className="form-label">
+                                        Currency
+                                      </label>
+                                      <select
+                                        className="form-select"
+                                        aria-label="Default select example"
+                                        value={currency}
+                                        onChange={handleCurrencyChange}
+                                      >
+                                        <option value="" disabled selected>
+                                          Select Currency
+                                        </option>
+                                        {currencyList.map((option, index) => (
+                                          <option
+                                            key={index}
+                                            value={option?.value}
+                                          >
+                                            {option?.title}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              {selectedOption === "product_gift" && (
+                                <div className="kids-form-row">
+                                  <div className="kids-form-section">
+                                    <div className="mb-4">
+                                      <label className="form-label">
+                                        Product
+                                      </label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        value={productName}
+                                        onChange={handleProductNameChange}
+                                        placeholder="Enter Product Name"
+                                      ></input>
+                                    </div>
+                                  </div>
+                                  <div className="kids-form-section">
+                                    <div className="mb-4">
+                                      <label className="form-label">
+                                        What is the value of the product (USD)
+                                      </label>
+                                      <input
+                                        type="number"
+                                        className="form-control"
+                                        value={valueUSD}
+                                        onChange={handleValueUSDChange}
+                                        placeholder="Enter Value"
+                                      ></input>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              {selectedOption === "collaboration_gift" && (
+                                <>
+                                  <div className="kids-form-row">
+                                    <div className="kids-form-section">
+                                      <div className="mb-4">
+                                        <label className="form-label">
+                                          Type
+                                        </label>
+                                        <select
+                                          className="form-select"
+                                          aria-label="Default select example"
+                                          onChange={handleTypeChange}
+                                          value={type}
+                                        >
+                                          <option value="" disabled selected>
+                                            Select Type
+                                          </option>
+                                          {compensationType.map(
+                                            (option, index) => (
+                                              <option
+                                                key={index}
+                                                value={option}
+                                              >
+                                                {option}
+                                              </option>
+                                            )
+                                          )}
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div className="kids-form-section">
+                                      <div className="mb-4">
+                                        <label className="form-label">
+                                          Currency
+                                        </label>
+                                        <select
+                                          className="form-select"
+                                          aria-label="Default select example"
+                                          value={currency}
+                                          onChange={handleCurrencyChange}
+                                        >
+                                          <option value="" disabled selected>
+                                            Select Currency
+                                          </option>
+                                          {currencyList.map((option, index) => (
+                                            <option
+                                              key={index}
+                                              value={option?.value}
+                                            >
+                                              {option?.title}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="kids-form-row">
+                                    <div className="kids-form-section">
+                                      <div className="mb-4">
+                                        <label className="form-label">
+                                          Product
+                                        </label>
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          value={productName}
+                                          onChange={handleProductNameChange}
+                                          placeholder="Enter Product Name"
+                                        ></input>
+                                      </div>
+                                    </div>
+                                    <div className="kids-form-section">
+                                      <div className="mb-4">
+                                        <label className="form-label">
+                                          What is the value of the product (USD)
+                                        </label>
+
+                                        <input
+                                          type="number"
+                                          className="form-control"
+                                          value={valueUSD}
+                                          onChange={handleValueUSDChange}
+                                          placeholder="Enter Value"
+                                        ></input>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className=" seperate-jobform-section">
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="compensation-labels form-label">
+                              Payment type <span className="mandatory">*</span>
+                            </label>
+                            <div className="compensation-radios mb-2">
+                              <input
+                                type="radio"
+                                className="screening-checkbox profession-checkbox"
+                                value="fixed"
+                                checked={selectedPaymentOption === "fixed"}
+                                onChange={handlePaymentOptionChange}
+                                id="fixed_amount"
+                              />
+                              <label
+                                htmlFor="fixed_amount"
+                                className="compensation-labels"
+                              >
+                                Fixed Amount
+                              </label>
+                              <input
+                                className="screening-checkbox profession-checkbox"
+                                type="radio"
+                                value="range"
+                                checked={selectedPaymentOption === "range"}
+                                onChange={handlePaymentOptionChange}
+                                id="range_amount"
+                              />
+                              <label
+                                className="compensation-labels"
+                                htmlFor="range_amount"
+                              >
+                                Range of Amounts
+                              </label>
+                            </div>
+                            <div>
+                              {selectedPaymentOption === "fixed" && (
+                                <div style={{ width: "49%" }}>
+                                  <label>Amount:</label>
+                                  <input
+                                    className="form-control"
+                                    type="number"
+                                    value={amount}
+                                    onChange={handleAmountChange}
+                                  />
+                                </div>
+                              )}
+
+                              {selectedPaymentOption === "range" && (
+                                <div className="kids-form-row">
+                                  <div className="kids-form-section">
+                                    <div className="mb-4">
+                                      <label className="form-label">
+                                        Min Pay
+                                      </label>
+                                      <input
+                                        type="number"
+                                        className="form-control"
+                                        value={minPay}
+                                        onChange={handleMinPayChange}
+                                        placeholder="Enter Min Pay"
+                                      ></input>
+                                    </div>
+                                  </div>
+                                  <div className="kids-form-section">
+                                    <div className="mb-4">
+                                      <label className="form-label">
+                                        Max Pay
+                                      </label>
+                                      <input
+                                        type="number"
+                                        className="form-control"
+                                        value={maxPay}
+                                        onChange={handleMaxPayChange}
+                                        placeholder="Enter Max Pay"
+                                      ></input>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="kids-form-section">
+                        <div className="mb-4">
+                          <label className="form-label">
+                            Hiring Company/Client
+                          </label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={selectHiringCompany}
+                            value={hiringCompany}
+                          >
+                            <option value="" disabled selected>
+                              Select
+                            </option>
+                            {companyList.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="rich-editor mb-4">
+                        <label className="form-label">Why Work With Us</label>
+                        <Editor
+                          editorState={editorStateWhyWorkWithUs}
+                          editorStyle={{ overflow: "hidden" }}
+                          toolbarClassName="toolbarClassName"
+                          wrapperClassName="wrapperClassName"
+                          editorClassName="editorClassName"
+                          onEditorStateChange={onEditorWhyWorkWithUS}
+                          toolbar={{
+                            options: [
+                              "inline",
+                              "blockType",
+                              "fontSize",
+                              "list",
+                              "textAlign",
+                              "history",
+                            ],
+                            inline: { inDropdown: true },
+                            list: { inDropdown: true },
+                            textAlign: { inDropdown: true },
+                            link: { inDropdown: true },
+                            history: { inDropdown: true },
+                          }}
+                        />
+                      </div>
+                      <div className="rich-editor mb-4">
+                        <label className="form-label">
+                          Hiring Company/Client Description
+                        </label>
+                        <Editor
+                          editorState={editorStateClientDescription}
+                          editorStyle={{ overflow: "hidden" }}
+                          toolbarClassName="toolbarClassName"
+                          wrapperClassName="wrapperClassName"
+                          editorClassName="editorClassName"
+                          onEditorStateChange={onEditorClientDescription}
+                          toolbar={{
+                            options: [
+                              "inline",
+                              "blockType",
+                              "fontSize",
+                              "list",
+                              "textAlign",
+                              "history",
+                            ],
+                            inline: { inDropdown: true },
+                            list: { inDropdown: true },
+                            textAlign: { inDropdown: true },
+                            link: { inDropdown: true },
+                            history: { inDropdown: true },
+                          }}
+                        />
+                      </div>
+
+                      <div className="kids-form-section">
+                        <div className="mb-4">
+                          <label className="form-label">
+                            How You would like to recieve Application{" "}
+                          </label>
+                          <div className="application-condition-wrapper">
+                            <div className="application-condition-radios">
+                              <input
+                                type="radio"
+                                id="easy_apply"
+                                name="applyGroup"
+                                className="screening-checkbox profession-checkbox"
+                                value="easy-apply"
+                                checked={selectedApplyOption == "easy-apply"}
+                                onChange={handleApplyOption}
+                              />
+                              <label
+                                className="compensation-labels form-label"
+                                htmlFor="easy_apply"
+                              >
+                                Easy Apply
+                              </label>
+                            </div>
+                            <div className="easy-apply-description">
+                              (Easy apply option makes it easier for
+                              applications to share thier profile and apply with
+                              a one click. Select "Easy Apply" If you would like
+                              to receive and manage applications directly
+                              through your dashboard on this plaform.)
+                            </div>
+                          </div>
+                          <div className="application-condition-wrapper">
+                            <div className="application-condition-radios">
+                              <input
+                                type="radio"
+                                id="how_apply"
+                                name="applyGroup"
+                                className="screening-checkbox profession-checkbox"
+                                value="how_to_apply"
+                                checked={selectedApplyOption == "how_to_apply"}
+                                onChange={handleApplyOption}
+                              />
+                              <label
+                                className="compensation-labels form-label"
+                                htmlFor="how_apply"
+                              >
+                                How to apply
+                              </label>
+                            </div>
+                            <div className="easy-apply-description">
+                              (If you would like to receive and manage
+                              applications outside this plaform, type the
+                              application instructions below)
+                            </div>
+                            <div className="how-to-apply-steps">
+                              <div>
+                                1. To submit your application, kindly email your
+                                portfolio
+                              </div>
+                              <div>
+                                2. Applicants will be considered on a rolling
+                                basis.
                               </div>
                             </div>
                           </div>
+                        </div>
+                      </div>
+
+                      <div
+                        className="cv-section"
+                        onDrop={handlePortofolioDrop}
+                        onDragOver={handlePortofolioDragOver}
+                      >
+                        <label className="upload-backdrop" htmlFor="portofolio">
+                          <img src={uploadIcon} alt="" />
+                        </label>
+                        <input
+                          type="file"
+                          className="select-cv-input"
+                          id="portofolio"
+                          accept="image/*"
+                          multiple
+                          onChange={portofolioUpload}
+                        />
+                        <div className="upload-text">
+                          Attach a project brief [optional]
+                        </div>
+                        <div className="upload-info">
+                          Drag and drop your photos/work samples here.
+                        </div>
+                      </div>
+
+                      {portofolioFile && (
+                        <>
+                          {portofolioFile.map((item, index) => {
+                            return (
+                              <>
+                                <div
+                                  key={index}
+                                  className="uploaded-file-wrapper"
+                                >
+                                  <div className="file-section">
+                                    {item.type === "image" && (
+                                      <div className="fileType">
+                                        <img src={imageType} alt="" />
+                                      </div>
+                                    )}
+                                    {item.type === "audio" && (
+                                      <div className="fileType">
+                                        <img src={audiotype} alt="" />
+                                      </div>
+                                    )}
+                                    {item.type === "video" && (
+                                      <div className="fileType">
+                                        <img src={videoType} alt="" />
+                                      </div>
+                                    )}
+                                    {item.type === "document" && (
+                                      <div className="fileType">
+                                        <img src={docsIcon} alt="" />
+                                      </div>
+                                    )}
+                                    <div className="fileName">{item.title}</div>
+                                  </div>
+                                  <div className="file-options">
+                                    <div className="sucess-tick">
+                                      <img src={greenTickCircle} alt="" />
+                                    </div>
+                                    <div className="option-menu">
+                                      <div className="dropdown">
+                                        <img
+                                          onClick={() =>
+                                            setShowOptions(!showOptions)
+                                          }
+                                          src={elipsis}
+                                          alt=""
+                                          className="dropdown-toggle elipsis-icon"
+                                          type="button"
+                                          id="dropdownMenuButton"
+                                          data-bs-toggle="dropdown"
+                                          aria-expanded="false"
+                                        />
+                                        <ul
+                                          className="dropdown-menu"
+                                          aria-labelledby="dropdownMenuButton"
+                                        >
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              onClick={() => handleView(item)}
+                                              id="view"
+                                            >
+                                              View
+                                            </a>
+                                          </li>
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              onClick={() =>
+                                                handlePortofolioDelete(item)
+                                              }
+                                              id="delete"
+                                            >
+                                              Delete
+                                            </a>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })}
                         </>
                       )}
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div className="mb-2">
-                <div className="kids-form-section">
-                  <div className="mb-4">
-                    <label className="compensation-labels form-label">
-                      Payment type <span className="mandatory">*</span>
-                    </label>
-                    <div className="compensation-radios mb-2">
-                      <input
-                        type="radio"
-                        className="screening-checkbox profession-checkbox"
-                        value="fixed"
-                        checked={selectedPaymentOption === "fixed"}
-                        onChange={handlePaymentOptionChange}
-                        id="fixed_amount"
-                      />
-                      <label
-                        htmlFor="fixed_amount"
-                        className="compensation-labels"
-                      >
-                        Fixed Amount
-                      </label>
-                      <input
-                        className="screening-checkbox profession-checkbox"
-                        type="radio"
-                        value="range"
-                        checked={selectedPaymentOption === "range"}
-                        onChange={handlePaymentOptionChange}
-                        id="range_amount"
-                      />
-                      <label
-                        className="compensation-labels"
-                        htmlFor="range_amount"
-                      >
-                        Range of Amounts
-                      </label>
-                    </div>
-                    <div>
-                      {selectedPaymentOption === "fixed" && (
-                        <div style={{ width: "49%" }}>
-                          <label>Amount:</label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            value={amount}
-                            onChange={handleAmountChange}
-                          />
-                        </div>
-                      )}
-
-                      {selectedPaymentOption === "range" && (
-                        <div className="kids-form-row">
-                          <div className="kids-form-section">
-                            <div className="mb-4">
-                              <label className="form-label">Min Pay</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                value={minPay}
-                                onChange={handleMinPayChange}
-                                placeholder="Enter Min Pay"
-                              ></input>
-                            </div>
-                          </div>
-                          <div className="kids-form-section">
-                            <div className="mb-4">
-                              <label className="form-label">Max Pay</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                value={maxPay}
-                                onChange={handleMaxPayChange}
-                                placeholder="Enter Max Pay"
-                              ></input>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="kids-form-section">
-                <div className="mb-4">
-                  <label className="form-label">Hiring Company/Client</label>
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    onChange={selectHiringCompany}
-                    value={hiringCompany}
-                  >
-                    <option value="" disabled selected>
-                      Select
-                    </option>
-                    {companyList.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="rich-editor mb-4">
-                <label className="form-label">Why Work With Us</label>
-                <Editor
-                  editorState={editorStateWhyWorkWithUs}
-                  editorStyle={{ overflow: "hidden" }}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  onEditorStateChange={onEditorWhyWorkWithUS}
-                  toolbar={{
-                    options: [
-                      "inline",
-                      "blockType",
-                      "fontSize",
-                      "list",
-                      "textAlign",
-                      "history",
-                    ],
-                    inline: { inDropdown: true },
-                    list: { inDropdown: true },
-                    textAlign: { inDropdown: true },
-                    link: { inDropdown: true },
-                    history: { inDropdown: true },
-                  }}
-                />
-              </div>
-              <div className="rich-editor mb-4">
-                <label className="form-label">
-                  Hiring Company/Client Description
-                </label>
-                <Editor
-                  editorState={editorStateClientDescription}
-                  editorStyle={{ overflow: "hidden" }}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  onEditorStateChange={onEditorClientDescription}
-                  toolbar={{
-                    options: [
-                      "inline",
-                      "blockType",
-                      "fontSize",
-                      "list",
-                      "textAlign",
-                      "history",
-                    ],
-                    inline: { inDropdown: true },
-                    list: { inDropdown: true },
-                    textAlign: { inDropdown: true },
-                    link: { inDropdown: true },
-                    history: { inDropdown: true },
-                  }}
-                />
-              </div>
-
-              <div className="kids-form-section">
-                <div className="mb-4">
-                  <label className="form-label">
-                    How You would like to recieve Application{" "}
-                  </label>
-                  <div className="application-condition-wrapper">
-                    <div className="application-condition-radios">
-                      <input
-                        type="radio"
-                        id="easy_apply"
-                        name="applyGroup"
-                        className="screening-checkbox profession-checkbox"
-                        value="easy-apply"
-                        checked={selectedApplyOption == "easy-apply"}
-                        onChange={handleApplyOption}
-                      />
-                      <label
-                        className="compensation-labels form-label"
-                        htmlFor="easy_apply"
-                      >
-                        Easy Apply
-                      </label>
-                    </div>
-                    <div className="easy-apply-description">
-                      (Easy apply option makes it easier for applications to
-                      share thier profile and apply with a one click. Select
-                      "Easy Apply" If you would like to receive and manage
-                      applications directly through your dashboard on this
-                      plaform.)
-                    </div>
-                  </div>
-                  <div className="application-condition-wrapper">
-                    <div className="application-condition-radios">
-                      <input
-                        type="radio"
-                        id="how_apply"
-                        name="applyGroup"
-                        className="screening-checkbox profession-checkbox"
-                        value="how_to_apply"
-                        onChange={handleApplyOption}
-                      />
-                      <label
-                        className="compensation-labels form-label"
-                        htmlFor="how_apply"
-                      >
-                        How to apply
-                      </label>
-                    </div>
-                    <div className="easy-apply-description">
-                      (If you would like to receive and manage applications
-                      outside this plaform, type the application instructions
-                      below)
-                    </div>
-                    <div className="how-to-apply-steps">
-                      <div>
-                        1. To submit your application, kindly email your
-                        portfolio
+                      <div className="job-post-terms">
+                        By clicking Save & Post Now, I agree that Brands&talent
+                        may publish and/or distribute my job advertisement on
+                        its site and through its distribution partners.
                       </div>
-                      <div>
-                        2. Applicants will be considered on a rolling basis.
+
+                      <div className="create-job-buttons my-4">
+                        <div
+                          onClick={(e) => {
+                            e.preventDefault();
+                            createGigs();
+                          }}
+                          className="save-draft-button"
+                        >
+                          Save Draft
+                        </div>
+                        {editData?.value && (
+                          <>
+                            <div
+                              className="createjob-btn"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                updateJob();
+                              }}
+                            >
+                              Update Job
+                            </div>
+                          </>
+                        )}
+                        {!editData?.value && (
+                          <>
+                            <div
+                              className="createjob-btn"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                createGigs();
+                              }}
+                            >
+                              Preview & Post
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div
-                className="cv-section"
-                onDrop={handlePortofolioDrop}
-                onDragOver={handlePortofolioDragOver}
-              >
-                <label className="upload-backdrop" htmlFor="portofolio">
-                  <img src={uploadIcon} alt="" />
-                </label>
-                <input
-                  type="file"
-                  className="select-cv-input"
-                  id="portofolio"
-                  accept="image/*"
-                  multiple
-                  onChange={portofolioUpload}
-                />
-                <div className="upload-text">
-                  Attach a project brief [optional]
-                </div>
-                <div className="upload-info">
-                  Drag and drop your photos/work samples here.
-                </div>
-              </div>
-
-              {portofolioFile && (
-                <>
-                  {portofolioFile.map((item, index) => {
-                    return (
-                      <>
-                        <div key={index} className="uploaded-file-wrapper">
-                          <div className="file-section">
-                            {item.type === "image" && (
-                              <div className="fileType">
-                                <img src={imageType} alt="" />
+              </>
+            )}
+            {selectedTab === "duplicate-job" && (
+              <>
+                <div className="dialog-body ">
+                  <div className="kidsform-one w-100  p-2">
+                    <div className="kids-main">
+                      <div
+                        style={{ height: "500px" }}
+                        className="kids-form-row"
+                      >
+                        <div className="w-100">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Enter a Previous Job Title
+                              <span className="mandatory">*</span>
+                            </label>
+                            <Select
+                              placeholder="Select Previous Job..."
+                              options={allJobsList.map((job) => ({
+                                value: job._id, // or whatever unique identifier you want to use
+                                label: job.jobTitle,
+                                type: job?.type,
+                              }))}
+                              onChange={handleChange}
+                              isSearchable={true}
+                            />
+                            {jobTitleError && (
+                              <div className="invalid-fields">
+                                Please enter job Title
                               </div>
                             )}
-                            {item.type === "audio" && (
-                              <div className="fileType">
-                                <img src={audiotype} alt="" />
-                              </div>
-                            )}
-                            {item.type === "video" && (
-                              <div className="fileType">
-                                <img src={videoType} alt="" />
-                              </div>
-                            )}
-                            {item.type === "document" && (
-                              <div className="fileType">
-                                <img src={docsIcon} alt="" />
-                              </div>
-                            )}
-                            <div className="fileName">{item.title}</div>
-                          </div>
-                          <div className="file-options">
-                            <div className="sucess-tick">
-                              <img src={greenTickCircle} alt="" />
-                            </div>
-                            <div className="option-menu">
-                              <div className="dropdown">
-                                <img
-                                  onClick={() => setShowOptions(!showOptions)}
-                                  src={elipsis}
-                                  alt=""
-                                  className="dropdown-toggle elipsis-icon"
-                                  type="button"
-                                  id="dropdownMenuButton"
-                                  data-bs-toggle="dropdown"
-                                  aria-expanded="false"
-                                />
-                                <ul
-                                  className="dropdown-menu"
-                                  aria-labelledby="dropdownMenuButton"
-                                >
-                                  <li>
-                                    <a
-                                      className="dropdown-item"
-                                      onClick={() => handleView(item)}
-                                      id="view"
-                                    >
-                                      View
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a
-                                      className="dropdown-item"
-                                      onClick={() =>
-                                        handlePortofolioDelete(item)
-                                      }
-                                      id="delete"
-                                    >
-                                      Delete
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
+                            <div className="duplicatejob-instruction">
+                              Important: Posting an exact copy of an active job
+                              in the same or nearby location will be rejected by
+                              the job boards.
                             </div>
                           </div>
                         </div>
-                      </>
-                    );
-                  })}
-                </>
-              )}
-
-              <div
-                className="cv-section"
-                onDrop={handleProfileDrop}
-                onDragOver={handleProfileDragOver}
-              >
-                <label className="upload-backdrop" htmlFor="profile-image">
-                  <img src={uploadIcon} alt="" />
-                </label>
-                <input
-                  type="file"
-                  className="select-cv-input"
-                  id="profile-image"
-                  accept="image/*"
-                  onChange={profileUpload}
-                />
-                <div className="upload-text">
-                  Upload a Image For your Gig/Job
-                </div>
-                <div className="upload-info">Drag and drop your File here.</div>
-              </div>
-              {profileFile && (
-                <>
-                  <div className="uploaded-file-wrapper">
-                    <div className="file-section">
-                      {profileFile.type === "image" && (
-                        <div className="fileType">
-                          <img src={imageType} alt="" />
-                        </div>
-                      )}
-                      <div className="fileName">{profileFile.title}</div>
-                    </div>
-                    <div className="file-options">
-                      <div className="sucess-tick">
-                        <img src={greenTickCircle} alt="" />
                       </div>
-                      <div className="option-menu">
-                        <div className="dropdown">
-                          <img
-                            onClick={() => setShowOptions(!showOptions)}
-                            src={elipsis}
-                            alt=""
-                            className="dropdown-toggle elipsis-icon"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          />
-                          <ul
-                            className="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <li>
-                              <a
-                                className="dropdown-item"
-                                onClick={() => handleView(profileFile)}
-                                id="view"
-                              >
-                                View
-                              </a>
-                            </li>
-                            <li>
-                              <a
-                                className="dropdown-item"
-                                onClick={() => handleProfileDelete(profileFile)}
-                                id="delete"
-                              >
-                                Delete
-                              </a>
-                            </li>
-                          </ul>
+
+                      <div className="create-job-buttons my-4">
+                        <div
+                          className="createjob-btn"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            duplicateJob();
+                          }}
+                        >
+                          Duplicate Job
                         </div>
                       </div>
                     </div>
                   </div>
-                </>
-              )}
-
-              <div className="job-post-terms">
-                By clicking Save & Post Now, I agree that Brands&talent may
-                publish and/or distribute my job advertisement on its site and
-                through its distribution partners.
-              </div>
-
-              <div className="create-job-buttons my-4">
-                <div
-                  onClick={(e) => {
-                    e.preventDefault();
-                  }}
-                >
-                  Save Draft
                 </div>
-                <div
-                  className="createjob-btn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    createGigs();
-                  }}
-                >
-                  Preview & Post
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
-        </div>
+        </main>
       </>
 
       {openPopUp && <PopUp message={message} />}

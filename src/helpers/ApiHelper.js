@@ -24,8 +24,17 @@ export let ApiHelper = {
     let headers = {
       "Content-Type": "application/json",
     };
-    const token = localStorage.getItem("token");
-    console.log(token, "token");
+    let token;
+    let talentToken = localStorage.getItem("token");
+    let brandToken = localStorage.getItem("brandToken");
+    if (talentToken) {
+      token = talentToken;
+    }
+    if (brandToken) {
+      token = brandToken;
+    }
+    console.log(brandToken, "brandToken");
+    console.log(token, "tokenAPiHelper");
     if (tokenNeed) {
       headers["x-access-token"] = token;
     }

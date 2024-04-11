@@ -678,16 +678,16 @@ const TalentProfile = () => {
                               <div className="fileName">{pdf.title}</div>
                               <button
                                 className="view-cv"
-                                onClick={() => setShowModal(true)}
+                                onClick={() => handleView(pdf)}
                               >
                                 View PDF
                               </button>
-                              {showModal && (
+                              {/* {showModal && (
                                 <PdfModal
                                   pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
                                   onHide={() => setShowModal(false)}
                                 />
-                              )}
+                              )} */}
                             </div>
                           </>
                         </>
@@ -814,16 +814,16 @@ const TalentProfile = () => {
                             <div className="fileName">{pdf.title}</div>
                             <button
                               className="view-cv"
-                              onClick={() => setShowModal(true)}
+                              onClick={() => handleView(pdf)}
                             >
                               View PDF
                             </button>
-                            {showModal && (
+                            {/* {showModal && (
                               <PdfModal
                                 pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
                                 onHide={() => setShowModal(false)}
                               />
-                            )}
+                            )} */}
                           </div>
                         </>
                       </>

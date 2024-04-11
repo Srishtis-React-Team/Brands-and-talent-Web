@@ -59,10 +59,11 @@
 
 .brand-main-container {
   padding-left: 365px;
-  padding-top: 80px;
+  padding-top: 100px;
   transition: padding 0.4s;
   background-color: #eeeeee;
   padding-bottom: 30px;
+  // height: 100vh;
 }
 
 /* Show sidebar */
@@ -177,9 +178,11 @@
   padding: 4px 12px;
   cursor: pointer;
   border: 1px solid #000;
+  justify-content: start !important;
   border-radius: 25px;
+  color: #c2114b;
   .brand-menu-text {
-    color: #000;
+    color: #c2114b;
     font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
@@ -188,6 +191,9 @@
     text-align: center;
     padding-left: 10px;
   }
+}
+.brand-menu-text:hover {
+  color: #c2114b;
 }
 
 .not-sidebar .brand-profile-not-sidemenu {
@@ -206,7 +212,7 @@
 }
 
 .brand-content-main {
-  padding: 15px 40px;
+  padding: 30px;
   border-radius: 16px;
   background-color: #ffffff;
   width: 99%;
@@ -217,7 +223,7 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    padding: 20px 0px;
+    padding: 10px 0px;
     width: 100%;
   }
 }

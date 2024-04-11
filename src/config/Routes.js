@@ -12,7 +12,6 @@ import HowItWorks from "../pages/how-it-works";
 import Register from "../auth/Register";
 import Login from "../auth/Login";
 import ForgotPassword from "../auth/forgotpassword";
-import BrandDashboard from "../brand/pages/brand-dashboard";
 import TalentDashBoard from "../views/TalentDashBoard";
 import ResetPassword from "../auth/ResetPassword";
 import PasswordSuccess from "../auth/PasswordSuccess";
@@ -38,7 +37,12 @@ import BrandDetails from "../auth/brand-forms/brandDetails";
 import BrandLogo from "../auth/brand-forms/brandLogo";
 import BrandActivation from "../auth/brand-forms/brandActivation";
 import PreviewJob from "../brand/pages/PreviewJob";
-
+import BrandHome from "../brand/pages/BrandHome";
+import ListJobs from "../brand/pages/ListJobs";
+import CreateJobs from "../brand/pages/CreateJobs";
+import BrandTalents from "../brand/pages/BrandTalents";
+import BrandFavorites from "../brand/pages/BrandFavorites";
+import BrandHelp from "../brand/pages/BrandHelp";
 function Routing() {
   return (
     <Routes>
@@ -57,7 +61,6 @@ function Routing() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/success-password" element={<PasswordSuccess />} />
-      <Route path="/brand-dashboard" element={<BrandDashboard />} />
       <Route path="/talent-dashboard" element={<TalentDashBoard />} />
       <Route path="/talent-signup-basic-details" element={<KidsformOne />} />
       <Route path="/talent-otp" element={<KidsOTP />} />
@@ -82,6 +85,12 @@ function Routing() {
       <Route path="/brand-details" element={<BrandDetails />} />
       <Route path="/brand-logo" element={<BrandLogo />} />
       <Route path="/brand-activated" element={<BrandActivation />} />
+      <Route path="/brand-dashboard" element={<BrandHome />} />
+      <Route path="/list-jobs" element={<ListJobs />} />
+      <Route path="/create-jobs" element={<CreateJobs />} />
+      <Route path="/find-talents" element={<BrandTalents />} />
+      <Route path="/favorite-talents" element={<BrandFavorites />} />
+      <Route path="/brand-help" element={<BrandHelp />} />
       <Route path="/preview-job" element={<PreviewJob />} />
     </Routes>
   );
