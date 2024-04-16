@@ -133,6 +133,7 @@ const CreateJobs = () => {
       setSelectedBenefits(editData?.benefits);
       setSelectedApplyOption(editData?.howLikeToApply);
       setPortofolioFile(editData?.workSamples);
+      setJobCurrency(editData?.jobCurrency);
       if (editData?.questions && editData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editData?.questions);
@@ -166,11 +167,6 @@ const CreateJobs = () => {
     } else {
     }
   };
-
-  useEffect(() => {
-    setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
-  }, [brandId]);
 
   // handle onChange event of the dropdown
   const handleChange = (e) => {
@@ -287,6 +283,7 @@ const CreateJobs = () => {
       setSelectedBenefits(editJobData?.benefits);
       setSelectedApplyOption(editJobData?.howLikeToApply);
       setPortofolioFile(editJobData?.workSamples);
+      setJobCurrency(jobCurrency);
       if (editJobData?.questions && editJobData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editJobData?.questions);
@@ -325,8 +322,8 @@ const CreateJobs = () => {
     }
   };
 
-  const getAllJobs = async (filterJob) => {
-    await ApiHelper.get(`${API.getAllJobs}`)
+  const getAllJobs = async (id) => {
+    await ApiHelper.get(`${API.getAllJobs}${id}`)
       .then((resData) => {
         console.log(resData.data.data, "getJobsList");
         if (resData.data.status === true) {
@@ -341,8 +338,12 @@ const CreateJobs = () => {
   };
 
   useEffect(() => {
-    getAllJobs();
-  }, []);
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+    if (brandId && brandId != null) {
+      getAllJobs(brandId);
+    }
+  }, [brandId]);
 
   const [showSidebar, setShowSidebar] = useState(true);
 
@@ -369,6 +370,7 @@ const CreateJobs = () => {
   const [categoryError, setCategoryError] = useState(false);
   const [preferedNameError, setPreferedNameError] = useState(false);
   const [jobTypeError, setjobTypeError] = useState(false);
+  const [jobCurrencyError, setJobCurrencyError] = useState(false);
   const [nationalityError, setNationalityError] = useState(false);
   const [ethnicityError, setEthnicityError] = useState(false);
   const [ageRangeError, setAgeRangeError] = useState(false);
@@ -423,6 +425,7 @@ const CreateJobs = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [age, setAge] = useState("");
   const [portofolioFile, setPortofolioFile] = useState([]);
+  const [jobCurrency, setJobCurrency] = useState("");
 
   const [selectedApplyOption, setSelectedApplyOption] = useState("easy-apply");
   const [hiringCompany, setHiringCompany] = useState("");
@@ -451,6 +454,10 @@ const CreateJobs = () => {
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
+  };
+
+  const selectJobCurrency = (event) => {
+    setJobCurrency(event.target.value);
   };
 
   const handleProductNameChange = (event) => {
@@ -874,77 +881,124 @@ const CreateJobs = () => {
   };
 
   const updateJob = async () => {
-    const formData = {
-      _id: editData?.value,
-      jobTitle: jobTitle,
-      jobLocation: zipCode,
-      streetAddress: streetAddress,
-      workplaceType: workPlaceType,
-      jobType: jobType,
-      jobDescription: jobDescription,
-      skills: skills,
-      additionalRequirements: jobRequirements,
-      age: ageRange,
-      gender: gender,
-      nationality: nationality,
-      languages: languages,
-      questions: questions,
-      benefits: selectedBenefits,
-      compensation: handleCompensationSubmit(),
-      jobCurrency: currency,
-      paymentType: paymentOptionValue(),
-      hiringCompany: hiringCompany,
-      whyWorkWithUs: whyWorkWithUs,
-      hiringCompanyDescription: clientDescription,
-      howLikeToApply: selectedApplyOption,
-      workSamples: portofolioFile,
-    };
-    if (editData?.type == "Draft") {
-      await ApiHelper.post(`${API.editDraft}${editData?.value}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            setMessage("Job Updated SuccessFully!");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-              navigate("/preview-job", {
-                state: {
-                  jobId: resData?.data?.data?._id,
-                },
-              });
-            }, 2000);
-          } else if (resData.data.status === false) {
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {});
-    } else if (editData?.type == "Posted") {
-      await ApiHelper.post(`${API.editJob}${editData?.value}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            setMessage("Job Updated SuccessFully!");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-              navigate("/preview-job", {
-                state: {
-                  jobId: resData?.data?.data?._id,
-                },
-              });
-            }, 2000);
-          } else if (resData.data.status === false) {
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {});
+    if (jobTitle === "") {
+      setjobTitleError(true);
+    }
+    if (zipCode === "") {
+      setzipCodeError(true);
+    }
+    if (workPlaceType === "") {
+      setworkPlaceTypeError(true);
+    }
+    if (streetAddress === "") {
+      setstreetAddressError(true);
+    }
+    if (selectedProfessions.length === 0) {
+      setProfessionError(true);
+    }
+    if (nationality === "") {
+      setNationalityError(true);
+    }
+    if (languages === "") {
+      setLanguageError(true);
+    }
+    if (ageRange === "") {
+      setAgeRangeError(true);
+    }
+    if (jobType === "") {
+      setjobTypeError(true);
+    }
+    if (gender === "") {
+      setGenderError(true);
+    }
+    if (jobCurrency === "") {
+      setJobCurrencyError(true);
+    }
+    if (
+      jobTitle !== "" &&
+      zipCode !== "" &&
+      workPlaceType !== "" &&
+      streetAddress !== "" &&
+      jobType !== "" &&
+      skills !== "" &&
+      ageRange !== "" &&
+      gender !== "" &&
+      nationality !== "" &&
+      languages !== "" &&
+      jobCurrency !== ""
+    ) {
+      const formData = {
+        _id: editData?.value,
+        jobTitle: jobTitle,
+        jobLocation: zipCode,
+        streetAddress: streetAddress,
+        workplaceType: workPlaceType,
+        jobType: jobType,
+        jobDescription: jobDescription,
+        skills: skills,
+        additionalRequirements: jobRequirements,
+        age: ageRange,
+        gender: gender,
+        nationality: nationality,
+        languages: languages,
+        questions: questions,
+        benefits: selectedBenefits,
+        compensation: handleCompensationSubmit(),
+        jobCurrency: jobCurrency,
+        paymentType: paymentOptionValue(),
+        hiringCompany: hiringCompany,
+        whyWorkWithUs: whyWorkWithUs,
+        hiringCompanyDescription: clientDescription,
+        howLikeToApply: selectedApplyOption,
+        workSamples: portofolioFile,
+      };
+      if (editData?.type == "Draft") {
+        await ApiHelper.post(`${API.editDraft}${editData?.value}`, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setMessage("Job Updated SuccessFully!");
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+                navigate("/preview-job", {
+                  state: {
+                    jobId: resData?.data?.data?._id,
+                  },
+                });
+              }, 2000);
+            } else if (resData.data.status === false) {
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {});
+      } else if (editData?.type == "Posted") {
+        await ApiHelper.post(`${API.editJob}${editData?.value}`, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setMessage("Job Updated SuccessFully!");
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+                navigate("/preview-job", {
+                  state: {
+                    jobId: resData?.data?.data?._id,
+                  },
+                });
+              }, 2000);
+            } else if (resData.data.status === false) {
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {});
+      }
     }
   };
   const createGigs = async () => {
@@ -978,64 +1032,73 @@ const CreateJobs = () => {
     if (gender === "") {
       setGenderError(true);
     }
+    if (jobCurrency === "") {
+      setJobCurrencyError(true);
+    }
     if (
       jobTitle !== "" &&
       zipCode !== "" &&
       workPlaceType !== "" &&
       streetAddress !== "" &&
-      jobType !== ""
+      jobType !== "" &&
+      skills !== "" &&
+      ageRange !== "" &&
+      gender !== "" &&
+      nationality !== "" &&
+      languages !== "" &&
+      jobCurrency !== ""
     ) {
+      const formData = {
+        jobTitle: jobTitle,
+        jobLocation: zipCode,
+        streetAddress: streetAddress,
+        workplaceType: workPlaceType,
+        jobType: jobType,
+        jobDescription: jobDescription,
+        skills: skills,
+        additionalRequirements: jobRequirements,
+        age: ageRange,
+        gender: gender,
+        nationality: nationality,
+        languages: languages,
+        questions: questions,
+        benefits: selectedBenefits,
+        compensation: handleCompensationSubmit(),
+        jobCurrency: jobCurrency,
+        paymentType: paymentOptionValue(),
+        hiringCompany: hiringCompany,
+        whyWorkWithUs: whyWorkWithUs,
+        hiringCompanyDescription: clientDescription,
+        howLikeToApply: selectedApplyOption,
+        workSamples: portofolioFile,
+        brandId: brandId,
+      };
+      console.log(formData, "CREATEJOB_PAYLOAD");
+      await ApiHelper.post(API.draftJob, formData)
+        .then((resData) => {
+          console.log(resData, "draftedData");
+          console.log(resData.data.data._id, "draftedData");
+          if (resData.data.status === true) {
+            setMessage("Job Created SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              navigate("/preview-job", {
+                state: {
+                  jobId: resData?.data?.data?._id,
+                },
+              });
+            }, 2000);
+          } else if (resData.data.status === false) {
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {});
     }
-    const formData = {
-      jobTitle: jobTitle,
-      jobLocation: zipCode,
-      streetAddress: streetAddress,
-      workplaceType: workPlaceType,
-      jobType: jobType,
-      jobDescription: jobDescription,
-      skills: skills,
-      additionalRequirements: jobRequirements,
-      age: ageRange,
-      gender: gender,
-      nationality: nationality,
-      languages: languages,
-      questions: questions,
-      benefits: selectedBenefits,
-      compensation: handleCompensationSubmit(),
-      jobCurrency: currency,
-      paymentType: paymentOptionValue(),
-      hiringCompany: hiringCompany,
-      whyWorkWithUs: whyWorkWithUs,
-      hiringCompanyDescription: clientDescription,
-      howLikeToApply: selectedApplyOption,
-      workSamples: portofolioFile,
-      brandId: brandId,
-    };
-    console.log(formData, "CREATEJOB_PAYLOAD");
-    await ApiHelper.post(API.draftJob, formData)
-      .then((resData) => {
-        console.log(resData, "draftedData");
-        console.log(resData.data.data._id, "draftedData");
-        if (resData.data.status === true) {
-          setMessage("Job Created SuccessFully!");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            navigate("/preview-job", {
-              state: {
-                jobId: resData?.data?.data?._id,
-              },
-            });
-          }, 2000);
-        } else if (resData.data.status === false) {
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {});
   };
 
   const handlePortofolioDrop = (e) => {
@@ -1522,7 +1585,7 @@ const CreateJobs = () => {
                             <div className="skills-wrapper" key={index}>
                               <div className="skill-text"> {skill}</div>
                               <i
-                                class="bi bi-x"
+                                className="bi bi-x"
                                 onClick={() => removeSkill(index)}
                               ></i>
                             </div>
@@ -1705,7 +1768,7 @@ const CreateJobs = () => {
                               className="add-more-questions "
                               onClick={handleAddQuestion}
                             >
-                              <i class="bi bi-plus-square-fill"></i>
+                              <i className="bi bi-plus-square-fill"></i>
 
                               <div className="add-more-questions-text">
                                 {" "}
@@ -2017,7 +2080,7 @@ const CreateJobs = () => {
                             </div>
                             <div>
                               {selectedPaymentOption === "fixed" && (
-                                <div style={{ width: "49%" }}>
+                                <div className="amount-wrapper-job">
                                   <label>Amount:</label>
                                   <input
                                     className="form-control"
@@ -2062,6 +2125,37 @@ const CreateJobs = () => {
                               )}
                             </div>
                           </div>
+                        </div>
+                      </div>
+
+                      <div className="kids-form-section">
+                        <div className="mb-4">
+                          <label className="form-label">
+                            Currency <span className="mandatory">*</span>
+                          </label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={(e) => {
+                              setJobCurrency(e.target.value);
+                              setJobCurrencyError(false);
+                            }}
+                            value={jobCurrency}
+                          >
+                            <option value="" disabled selected>
+                              Select Your Currency
+                            </option>
+                            {currencyList.map((option, index) => (
+                              <option key={index} value={option?.value}>
+                                {option?.title}
+                              </option>
+                            ))}
+                          </select>
+                          {jobCurrencyError && (
+                            <div className="invalid-fields">
+                              Please Select Currency
+                            </div>
+                          )}
                         </div>
                       </div>
 

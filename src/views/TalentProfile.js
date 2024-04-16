@@ -680,7 +680,7 @@ const TalentProfile = () => {
                                 className="view-cv"
                                 onClick={() => handleView(pdf)}
                               >
-                                View PDF
+                                View
                               </button>
                               {/* {showModal && (
                                 <PdfModal

@@ -496,7 +496,7 @@
   display: flex;
 }
 .fileName {
-  padding-left: 10px;
+  padding: 0px 15px;
 }
 .option-menu {
   padding: 0px 10px;
@@ -830,3 +830,8 @@
 // .modal-backdrop.show {
 //   opacity: 0.5 !important;
 // }
+
+.talent-dashboard-main {
+  padding: 80px 30px;
+  background-color: #eee;
+}

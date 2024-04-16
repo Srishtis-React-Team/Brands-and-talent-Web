@@ -40,6 +40,7 @@ const DuplicateJobs = ({ sendDataToParent }) => {
   const [message, setMessage] = useState("");
   const [allJobsList, setAllJobsList] = useState([]);
   const [selectedJobID, setSelectedJobID] = useState(null);
+  const [brandId, setBrandId] = useState(null);
 
   // handle onChange event of the dropdown
   const handleChange = (e) => {
@@ -54,8 +55,17 @@ const DuplicateJobs = ({ sendDataToParent }) => {
     //   .includes(inputValue.toLowerCase());
   };
 
-  const getAllJobs = async (filterJob) => {
-    await ApiHelper.get(`${API.getAllJobs}`)
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+    if (brandId && brandId != null) {
+      getAllJobs(brandId);
+    }
+  }, [brandId]);
+
+  const getAllJobs = async (id) => {
+    console.log(id, "getAllJobsID");
+    await ApiHelper.get(`${API.getAllJobs}${id}`)
       .then((resData) => {
         console.log(resData.data.data, "getJobsList");
         if (resData.data.status === true) {
@@ -68,10 +78,6 @@ const DuplicateJobs = ({ sendDataToParent }) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    getAllJobs();
-  }, []);
 
   return (
     <>

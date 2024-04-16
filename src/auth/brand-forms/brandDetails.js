@@ -93,9 +93,12 @@ const BrandDetails = () => {
             console.log(resData.data);
             // setIsLoading(false);
             setMessage("Registered SuccessFully!");
+            setTalentLocalStorage(resData.data.data);
+
             navigate("/brand-logo", {
               state: { data: receivedData },
             });
+
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
@@ -118,6 +121,14 @@ const BrandDetails = () => {
           }, 1000);
         });
     }
+  };
+
+  // Function to set user ID
+  const setTalentLocalStorage = (data) => {
+    console.log(data, "data otp");
+    localStorage.setItem("brandId", data?.brand_id);
+    // localStorage.setItem("emailID", data?.email);
+    // localStorage.setItem("token", data?.token);
   };
 
   const selectHearAbout = (event) => {

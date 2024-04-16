@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/forms/kidsform-one.scss";
 import "../../assets/css/createjobs.scss";
 import "../../assets/css/talent-profile.css";
+import "../../assets/css/findcreators.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
@@ -83,6 +84,7 @@ const BrandTalents = () => {
   const [keywordsList, setkeywordsList] = useState([]);
   const [currentUserData, steCurrentUserData] = useState([]);
   const [showSidebar, setShowSidebar] = useState(true);
+  const [brandId, setBrandId] = useState(null);
 
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -90,24 +92,46 @@ const BrandTalents = () => {
 
   const searchInputChange = async (e) => {
     setSearchKeyword(e.target.value);
+  };
+
+  const postKeyword = async (e) => {
     const fromData = {
-      searchedKeyword: e.target.value,
-      user_id: "66011fa38f101e4792acabce",
-      type: "kids",
+      searchedKeyword: searchKeyword,
+      user_id: brandId,
     };
-    await ApiHelper.get(API.postUserSearchKeyword)
+    await ApiHelper.post(API.postUserSearchKeyword, fromData)
       .then((resData) => {
-        if (resData) {
+        if (resData.data.status === true) {
+          getUserSearchKeyword();
+          search();
         }
       })
       .catch((err) => {});
   };
 
   const getUserSearchKeyword = async () => {
-    await ApiHelper.get(API.getUserSearchKeyword)
+    await ApiHelper.get(`${API.getUserSearchKeyword}${brandId}`)
       .then((resData) => {
         if (resData) {
           setkeywordsList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const deleteKeyword = async (e) => {
+    const formData = {
+      searchedKeyword: e,
+    };
+    await ApiHelper.post(`${API.deleteUserSearchKeyword}`, formData)
+      .then((resData) => {
+        if (resData) {
+          setMessage("Removed SuccessFully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getUserSearchKeyword();
+          }, 800);
         }
       })
       .catch((err) => {});
@@ -138,6 +162,11 @@ const BrandTalents = () => {
     getUserSearchKeyword();
     console.log(keywordsList, "keywordsList");
   }, [keywordsList]);
+
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+  }, [brandId]);
 
   const clear = () => {
     setSearchKeyword("");
@@ -608,41 +637,52 @@ const BrandTalents = () => {
                   <div className="keyword-wrapper pt-4">
                     <div className="filter-items">Keyword</div>
                     <div className="filter-input-wrapper">
-                      <div>
-                        <img className="search-icon" src={searchIcon}></img>
-                      </div>
                       <input
                         className="keyword-input"
                         placeholder="Search Keyword"
                         value={searchKeyword}
                         onChange={searchInputChange}
                       ></input>
+                      <div onClick={postKeyword}>
+                        <i className="search-icon bi bi-search"></i>
+                      </div>
                     </div>
                   </div>
                   <div className="search-words-section">
                     <div></div>
-                    <div className="search-history">
-                      {keywordsList &&
-                        keywordsList.length > 0 &&
-                        keywordsList.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className={
-                                  selectedKeyword === item
-                                    ? "selected-word-style"
-                                    : ""
-                                }
-                                onClick={(e) => {
-                                  setSelectedKeywords(item);
-                                }}
-                              >
-                                {item}*
-                              </div>
-                            </>
-                          );
-                        })}
-                    </div>
+                    {keywordsList && keywordsList.length > 0 && (
+                      <>
+                        <div className="search-history">
+                          {keywordsList &&
+                            keywordsList.length > 0 &&
+                            keywordsList.map((item, index) => {
+                              return (
+                                <>
+                                  <div className="searched-word-wrapper">
+                                    <div
+                                      key={index}
+                                      className="selected-word-style"
+                                      onClick={(e) => {
+                                        setSelectedKeywords(item);
+                                        setSearchKeyword(item);
+                                      }}
+                                    >
+                                      {item}
+                                    </div>
+                                    <div
+                                      onClick={(e) => {
+                                        deleteKeyword(item);
+                                      }}
+                                    >
+                                      <i className="bi bi-x cancel-icon"></i>
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })}
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="keyword-wrapper">
                     <div className="filter-items">Full Name</div>

@@ -103,5 +103,11 @@
 //   }
 // }
 
-// @media (min-width: 320px) and (max-width: 480px) {
-// }
+@media (min-width: 320px) and (max-width: 768px) {
+  .mydashboard {
+    display: none;
+  }
+  .talent-header-main .talent-menu {
+    padding-left: 20px;
+  }
+}

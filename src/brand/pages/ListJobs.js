@@ -19,6 +19,15 @@ import { NavLink } from "react-router-dom";
 import Modal from "react-modal";
 
 const ListJobs = () => {
+  const [brandId, setBrandId] = useState(null);
+
+  useEffect(() => {
+    const storedBrandId = localStorage.getItem("brandId");
+    if (storedBrandId !== null) {
+      setBrandId(storedBrandId);
+    }
+  }, []);
+
   const navigate = useNavigate();
 
   const customStylesAlert = {
@@ -39,6 +48,7 @@ const ListJobs = () => {
     jobType: "",
     label: "",
   });
+  const jobImage = require("../../assets/icons/jobImage.png");
   const [showSidebar, setShowSidebar] = useState(true);
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -47,7 +57,6 @@ const ListJobs = () => {
   const [draftJobs, showDraftJobs] = useState(false);
   const [postedJobs, showPostedJobs] = useState(false);
   const [allJobsList, setAllJobsList] = useState([]);
-  const [brandId, setBrandId] = useState(null);
 
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -107,9 +116,9 @@ const ListJobs = () => {
             setOpenPopUp(false);
             console.log(resData?.data?.response?.type, "resData?.data");
             if (resData?.data?.response?.type == "Draft") {
-              getAllJobs("draft-jobs");
+              getAllJobs("draft-jobs", brandId);
             } else if (resData?.data?.response?.type == "Posted") {
-              getAllJobs("posted-jobs");
+              getAllJobs("posted-jobs", brandId);
             }
           }, 1000);
         }
@@ -119,47 +128,24 @@ const ListJobs = () => {
       });
   };
 
-  const getAllJobs = async (filterJob) => {
-    let apiUrl;
-    if (filterJob == "all-jobs") {
-      apiUrl = `${API.getAllJobs}`;
-    } else if (filterJob == "draft-jobs") {
-      apiUrl = `${API.getBrandDraftJobsByID}${brandId}`;
-    } else if (filterJob == "posted-jobs") {
-      apiUrl = `${API.getBrandPostedJobsByID}${brandId}`;
+  useEffect(() => {
+    console.log(allJobs, "allJobsdf");
+    if (allJobs && brandId != null) {
+      console.log(brandId, "allJobsdf brandId");
+      console.log("allJobsdfCAlled");
+      getAllJobs("all-jobs", brandId);
     }
-    console.log(apiUrl, "apiUrl");
-    await ApiHelper.get(apiUrl)
-      .then((resData) => {
-        console.log(resData.data.data, "getJobsList");
-        if (resData.data.status === true) {
-          if (resData.data.data) {
-            setAllJobsList(resData.data.data, "resData.data.data");
-          }
-        } else if (resData.data.status === false) {
-          setAllJobsList(resData.data.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  }, [allJobs, brandId]);
 
   useEffect(() => {
-    if (allJobs) {
-      getAllJobs("all-jobs");
-    }
-  }, [allJobs]);
-
-  useEffect(() => {
-    if (draftJobs) {
-      getAllJobs("draft-jobs");
+    if (draftJobs && brandId != null) {
+      getAllJobs("draft-jobs", brandId);
     }
   }, [draftJobs]);
 
   useEffect(() => {
-    if (postedJobs) {
-      getAllJobs("posted-jobs");
+    if (postedJobs && brandId != null) {
+      getAllJobs("posted-jobs", brandId);
     }
   }, [postedJobs]);
 
@@ -190,10 +176,39 @@ const ListJobs = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
-  }, [brandId]);
+  function PreviewJob(jobId) {
+    navigate("/preview-job", {
+      state: {
+        jobId: jobId,
+      },
+    });
+  }
+
+  const getAllJobs = async (filterJob, id) => {
+    let apiUrl;
+    if (filterJob == "all-jobs") {
+      apiUrl = `${API.getAllJobs}${id}`;
+    } else if (filterJob == "draft-jobs") {
+      apiUrl = `${API.getBrandDraftJobsByID}${id}`;
+    } else if (filterJob == "posted-jobs") {
+      apiUrl = `${API.getBrandPostedJobsByID}${id}`;
+    }
+    console.log(apiUrl, "apiUrl");
+    await ApiHelper.get(apiUrl)
+      .then((resData) => {
+        console.log(resData.data.data, "getJobsList");
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setAllJobsList(resData.data.data, "resData.data.data");
+          }
+        } else if (resData.data.status === false) {
+          setAllJobsList(resData.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -208,6 +223,7 @@ const ListJobs = () => {
           <BrandSideMenu />
         </div>
         <main
+          style={allJobsList.length === 0 ? { height: "100vh" } : {}}
           id="mainBrand"
           className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
         >
@@ -353,9 +369,9 @@ const ListJobs = () => {
                                 </div>
                                 <div className="job-card-buttons">
                                   <div className="manage-dropdown">
-                                    <div class="dropdown">
+                                    <div className="dropdown">
                                       <button
-                                        class="btn manage-btn dropdown-toggle"
+                                        className="btn manage-btn dropdown-toggle"
                                         type="button"
                                         id="dropdownMenuButton1"
                                         data-bs-toggle="dropdown"
@@ -364,12 +380,12 @@ const ListJobs = () => {
                                         Manage
                                       </button>
                                       <ul
-                                        class="dropdown-menu"
+                                        className="dropdown-menu"
                                         aria-labelledby="dropdownMenuButton1"
                                       >
                                         <li>
                                           <a
-                                            class="dropdown-item"
+                                            className="dropdown-item"
                                             onClick={(e) => {
                                               setAlertpop({
                                                 status: true,
@@ -384,7 +400,7 @@ const ListJobs = () => {
                                         </li>
                                         <li>
                                           <a
-                                            class="dropdown-item"
+                                            className="dropdown-item"
                                             onClick={(e) => {
                                               setAlertpop({
                                                 status: true,
@@ -414,7 +430,7 @@ const ListJobs = () => {
                                           });
                                         }}
                                       >
-                                        <i class="bi bi-briefcase-fill post-work-icon"></i>
+                                        <i className="bi bi-briefcase-fill post-work-icon"></i>
                                         <div className="post-campaign-text">
                                           Post Job
                                         </div>
@@ -430,7 +446,7 @@ const ListJobs = () => {
                                           PreviewJob(job?._id);
                                         }}
                                       >
-                                        <i class="bi bi-eye-fill post-work-icon"></i>
+                                        <i className="bi bi-eye-fill post-work-icon"></i>
                                         <div className="preview-campaign-text">
                                           Preview Job
                                         </div>
@@ -491,21 +507,22 @@ const ListJobs = () => {
           <div className="alertBox">
             <div className="col-md-12  mx-5">
               <div className="alert-icon-section">
-                <i class="alert-icon bi bi-exclamation-triangle-fill"></i>
+                <img src={jobImage} alt="" />
+                {/* <i className="alert-icon bi bi-exclamation-triangle-fill"></i> */}
               </div>
               {alertpop?.label == "edit" && (
                 <>
-                  <h5>Do you want to Edit this Job ? </h5>
+                  <h5>Are you sure you want to Edit this Job ? </h5>
                 </>
               )}
               {alertpop?.label == "delete" && (
                 <>
-                  <h5>Do you want to Delete this Job ? </h5>
+                  <h5>Are you sure you want to Delete this Job ? </h5>
                 </>
               )}
               {alertpop?.label == "post-job" && (
                 <>
-                  <h5>Do you want to Post this Job ? </h5>
+                  <h5>Are you sure you want to Post this Job ? </h5>
                 </>
               )}
             </div>

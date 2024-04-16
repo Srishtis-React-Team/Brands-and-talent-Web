@@ -194,7 +194,10 @@ const BrandDashboard = () => {
               setMenu("view-dashboard");
             }}
           >
-            <i style={{ paddingLeft: "15px" }} class="bi bi-speedometer "></i>
+            <i
+              style={{ paddingLeft: "15px" }}
+              className="bi bi-speedometer "
+            ></i>
             <div className="brand-menu-text">Dashboard</div>
           </div>
 
@@ -220,7 +223,7 @@ const BrandDashboard = () => {
           >
             <i
               style={{ paddingLeft: "15px" }}
-              class="bi bi-person-workspace"
+              className="bi bi-person-workspace"
             ></i>
             <div className="brand-menu-text">My Gigs/Jobs</div>
           </div>
@@ -245,7 +248,10 @@ const BrandDashboard = () => {
               setMenu("view-talents");
             }}
           >
-            <i style={{ paddingLeft: "15px" }} class="bi bi-people-fill"></i>
+            <i
+              style={{ paddingLeft: "15px" }}
+              className="bi bi-people-fill"
+            ></i>
             <div className="brand-menu-text">Find Talents</div>
           </div>
 
@@ -269,7 +275,7 @@ const BrandDashboard = () => {
               setMenu("view-favorites");
             }}
           >
-            <i style={{ paddingLeft: "15px" }} class="bi bi-heart-fill"></i>
+            <i style={{ paddingLeft: "15px" }} className="bi bi-heart-fill"></i>
             <div className="brand-menu-text">Favorites</div>
           </div>
           <div className="brand-profile-not-sidemenu mt-5">
@@ -294,7 +300,7 @@ const BrandDashboard = () => {
           >
             <i
               style={{ paddingLeft: "15px" }}
-              class="bi bi-info-circle-fill"
+              className="bi bi-info-circle-fill"
             ></i>
             <div className="brand-menu-text">Help</div>
           </div>

@@ -3,17 +3,26 @@
 import Axios from "axios";
 export let ApiHelper = {
   // Api get function
-  get: async (url, data = {}, tokenNeed = true, config = {}) => {
+  get: async (url, tokenNeed = true) => {
     let headers = {
       "Content-Type": "application/json",
     };
-    // if (tokenNeed) {
-    //     headers['x-access-token'] = userData.token;
-    // }
+    let token;
+    let talentToken = localStorage.getItem("token");
+    let brandToken = localStorage.getItem("brandToken");
+    if (talentToken) {
+      token = talentToken;
+    }
+    if (brandToken) {
+      token = brandToken;
+    }
+    if (tokenNeed && token) {
+      console.log("true", "tokencalled");
+      headers["x-access-token"] = token;
+    }
+    console.log(headers, "headers");
     return await Axios.get(url, {
-      params: data,
       headers,
-      ...config,
     }).catch((error) => {
       handleError(error.response);
     });
@@ -35,7 +44,9 @@ export let ApiHelper = {
     }
     console.log(brandToken, "brandToken");
     console.log(token, "tokenAPiHelper");
-    if (tokenNeed) {
+    console.log(tokenNeed, "tokenNeed");
+    if (tokenNeed && token) {
+      console.log("true", "tokencalled");
       headers["x-access-token"] = token;
     }
     console.log(headers, "headers");

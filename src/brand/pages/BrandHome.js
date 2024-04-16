@@ -18,6 +18,8 @@ const BrandHome = () => {
   const [photosList, setPhotosList] = useState([]);
   const [talentList, setTalentList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
+  const [brandId, setBrandId] = useState(null);
+
   const headsetLogo = require("../../assets/icons/headset.png");
   const getTalentList = async () => {
     await ApiHelper.get(API.getTalentList)
@@ -38,6 +40,9 @@ const BrandHome = () => {
   const createJob = () => {
     navigate("/create-jobs");
   };
+  const listJob = () => {
+    navigate("/list-jobs");
+  };
 
   const planBenefits = [
     "Create a profile",
@@ -47,11 +52,19 @@ const BrandHome = () => {
     "6 video",
   ];
 
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+    if (brandId) {
+      getAllJobs();
+    }
+  }, [brandId]);
+
   const getAllJobs = async () => {
-    await ApiHelper.get(API.getAllJobs)
+    await ApiHelper.get(`${API.getAllJobs}${brandId}`)
       .then((resData) => {
         if (resData) {
-          console.log(resData.data, "resData.data");
+          console.log(resData.data, "resData.getAllJobs");
           setJobsList(resData.data.data[0]);
         }
       })
@@ -62,12 +75,22 @@ const BrandHome = () => {
 
   useEffect(() => {
     getTalentList();
-    getAllJobs();
   }, []);
 
   useEffect(() => {
     console.log(jobsList, "jobsList");
   }, [jobsList]);
+  useEffect(() => {
+    console.log(talentList, "jobsList");
+  }, [talentList]);
+
+  function PreviewJob(jobId) {
+    navigate("/preview-job", {
+      state: {
+        jobId: jobId,
+      },
+    });
+  }
 
   return (
     <>
@@ -78,7 +101,7 @@ const BrandHome = () => {
           showSidebar ? "show-sidebar" : "not-sidebar"
         }`}
       >
-        <BrandSideMenu />
+        <BrandSideMenu data={showSidebar} />
       </div>
       <main
         id="mainBrand"
@@ -109,107 +132,144 @@ const BrandHome = () => {
               </div>
 
               <div className="photos-slider">
-                {talentList && talentList?.length > 0 && (
-                  <Talentscarousel talentList={talentList} />
-                )}
+                <Talentscarousel />
               </div>
               <div className="brand-home-title-flex">
                 <div className="kids-title">Most Recent Campaigns</div>
-                <div className="view-all-text">View All</div>
-              </div>
-              <div className="recent-campaigns">
-                <div className="recent-campaigns-wrapper">
-                  <div className="campaigns-wrapper-one">
-                    <div className="campaigns-content-wrapper">
-                      <div className="campaign-paid-wrapper">
-                        <div className="campaign-name">
-                          {jobsList?.jobTitle}
-                        </div>
-                        <div className="campaign-status">
-                          <div className="campaign-features-count">Paid</div>
-                        </div>
-                      </div>
-                      {jobsList?.jobDescription?.map((htmlContent, index) => (
-                        <div
-                          className="campaign-description"
-                          key={index}
-                          dangerouslySetInnerHTML={{ __html: htmlContent }}
-                        />
-                      ))}
-                      <div className="campaign-features">
-                        <div className="campaign-features-wrapper">
-                          <div className="campaign-icons-wrapper">
-                            <i className="bi bi-person-check-fill"></i>
-                          </div>
-                          <div>
-                            <div className="campaign-features-title">
-                              Followers
-                            </div>
-                            <div className="campaign-features-count">2000</div>
-                          </div>
-                        </div>
-                        <div className="campaign-features-wrapper">
-                          <div className="campaign-icons-wrapper">
-                            <i className="bi bi-person-arms-up"></i>
-                          </div>
-                          <div>
-                            <div className="campaign-features-title">Age</div>
-                            <div className="campaign-features-count">
-                              {jobsList?.age}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="campaign-features-wrapper">
-                          <div className="campaign-icons-wrapper">
-                            <i className="bi bi-gender-ambiguous"></i>
-                          </div>
-                          <div>
-                            <div className="campaign-features-title">
-                              Gender
-                            </div>
-                            <div className="campaign-features-count">
-                              {jobsList?.gender}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="campaign-features-wrapper">
-                          <div className="campaign-icons-wrapper">
-                            <i className="bi bi-geo-alt-fill"></i>
-                          </div>
-                          <div>
-                            <div className="campaign-features-title">
-                              Location
-                            </div>
-                            <div className="campaign-features-count">
-                              Australia
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="campaigns-wrapper-two">
-                    <div className="campaign-company">
-                      <div className="campaign-company-wrapper">
-                        <div className="campaign-initial">
-                          {" "}
-                          {jobsList?.hiringCompany &&
-                            jobsList.hiringCompany.charAt(0)}
-                        </div>
-                        <div className="campaign-company-name">
-                          {jobsList?.hiringCompany}
-                        </div>
-                      </div>
-                      <div className="view-campaign">
-                        <div>
-                          <i class="bi bi-eye-fill"></i>
-                        </div>
-                        <div className="view-campaign-text">View Campaign</div>
-                      </div>
-                    </div>
-                  </div>
+                <div className="view-all-text" onClick={listJob}>
+                  View All
                 </div>
               </div>
+              {!jobsList && (
+                <>
+                  <div className="recent-campaigns">
+                    <div className="recent-campaigns-wrapper">
+                      <div className="campaigns-content-wrapper">
+                        <div className="campaign-paid-wrapper">
+                          <div className="campaign-name">
+                            No Campaigns Available
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+              {jobsList && (
+                <>
+                  <div className="recent-campaigns">
+                    <div className="recent-campaigns-wrapper">
+                      <div className="campaigns-wrapper-one">
+                        <div className="campaigns-content-wrapper">
+                          <div className="campaign-paid-wrapper">
+                            <div className="campaign-name">
+                              {jobsList?.jobTitle}
+                            </div>
+                            <div className="campaign-status">
+                              <div className="campaign-features-count">
+                                Paid
+                              </div>
+                            </div>
+                          </div>
+                          {jobsList?.jobDescription?.map(
+                            (htmlContent, index) => (
+                              <div
+                                className="campaign-description"
+                                key={index}
+                                dangerouslySetInnerHTML={{
+                                  __html: htmlContent,
+                                }}
+                              />
+                            )
+                          )}
+                          <div className="campaign-features">
+                            <div className="campaign-features-wrapper">
+                              <div className="campaign-icons-wrapper">
+                                <i className="bi bi-person-check-fill"></i>
+                              </div>
+                              <div>
+                                <div className="campaign-features-title">
+                                  Followers
+                                </div>
+                                <div className="campaign-features-count">
+                                  2000
+                                </div>
+                              </div>
+                            </div>
+                            <div className="campaign-features-wrapper">
+                              <div className="campaign-icons-wrapper">
+                                <i className="bi bi-person-arms-up"></i>
+                              </div>
+                              <div>
+                                <div className="campaign-features-title">
+                                  Age
+                                </div>
+                                <div className="campaign-features-count">
+                                  {jobsList?.age}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="campaign-features-wrapper">
+                              <div className="campaign-icons-wrapper">
+                                <i className="bi bi-gender-ambiguous"></i>
+                              </div>
+                              <div>
+                                <div className="campaign-features-title">
+                                  Gender
+                                </div>
+                                <div className="campaign-features-count">
+                                  {jobsList?.gender}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="campaign-features-wrapper">
+                              <div className="campaign-icons-wrapper">
+                                <i className="bi bi-geo-alt-fill"></i>
+                              </div>
+                              <div>
+                                <div className="campaign-features-title">
+                                  Location
+                                </div>
+                                <div className="campaign-features-count">
+                                  Australia
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="campaigns-wrapper-two">
+                        <div className="campaign-company">
+                          <div className="campaign-company-wrapper">
+                            <div className="campaign-initial">
+                              {" "}
+                              {jobsList?.hiringCompany &&
+                                jobsList.hiringCompany.charAt(0)}
+                            </div>
+                            <div className="campaign-company-name">
+                              {jobsList?.hiringCompany}
+                            </div>
+                          </div>
+                          <div
+                            className="view-campaign"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              PreviewJob(jobsList?._id);
+                            }}
+                          >
+                            <div>
+                              <i className="bi bi-eye-fill"></i>
+                            </div>
+                            <div className="view-campaign-text">
+                              View Campaign
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
             <div className="brand-home-right-container">
               <div className="contact-section-main">
@@ -239,7 +299,7 @@ const BrandHome = () => {
                             <div>
                               <i
                                 style={{ color: "#c2114b", fontSize: "18px" }}
-                                class="bi bi-check-square-fill"
+                                className="bi bi-check-square-fill"
                               ></i>
                             </div>
                             <div className="myplan-features-text">{item}</div>

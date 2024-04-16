@@ -999,9 +999,9 @@ const Dashboard = () => {
 
         <Footer />
       </div>
-      <div className="chat-section">
+      {/* <div className="chat-section">
         <ChatBot />
-      </div>
+      </div> */}
       {openPopUp && <PopUp message={message} />}
     </>
   );
