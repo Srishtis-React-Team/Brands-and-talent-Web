@@ -20,6 +20,7 @@
 .talents-profile-slider-image {
   max-width: 300px; /* Ensure the image does not exceed its container's width */
   max-height: 300px; /* Ensure the image does not exceed its container's height */
+  position: relative;
 }
 
 .carousel-talent-name {
@@ -33,4 +34,17 @@
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   padding: 16px;
+  cursor: pointer;
+}
+
+.heart-icon {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  .talents-profile-slider-image {
+    /* width: 140px !important;
+    margin-right: 20px !important; */
+  }
 }

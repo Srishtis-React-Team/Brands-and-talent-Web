@@ -893,9 +893,8 @@
     height: 160px;
     border-radius: 8px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin: 10px;
   }
   .model-name {
@@ -1050,17 +1049,16 @@
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   width: 20%;
-  padding: 15px;
+  padding: 10px;
   border-radius: 8px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin: 10px;
 }
 
 .view-cv {
-  width: 50%;
+  width: 25%;
   height: 30px;
   border-radius: 25px;
   border: 1px solid #fff;
@@ -1075,11 +1073,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
 }
 
 .fa-file {
-  font-size: 40px;
+  font-size: 20px;
   color: #c2114b;
   padding: 20px 0px;
 }
@@ -1174,4 +1171,54 @@
 
 .cvlist-wrapper {
   display: flex;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .individual-talent-tab-first-active-tab {
+    height: 35px;
+    border-top-right-radius: 140px;
+    border-bottom-right-radius: 140px;
+    background: #000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff !important;
+    max-width: 165px;
+    padding: 0px;
+    width: 100%;
+  }
+  .individual-talent-tabs {
+    display: flex;
+    flex-wrap: unset;
+    border-bottom: 1px solid rgb(189, 189, 189);
+    padding-bottom: 4px;
+  }
+  .individual-talent-tab {
+    margin-left: 16px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* max-width: 104px; */
+    padding: 15px;
+    width: 100%;
+  }
+  .individual-talent-tab-first {
+    margin-left: 0px !important;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* max-width: 165px; */
+    padding: 15px;
+    width: 100%;
+  }
+  .list-jobs-wrapper {
+    display: flex;
+    flex-wrap: unset;
+    flex-direction: column;
+  }
 }

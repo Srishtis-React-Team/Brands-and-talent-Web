@@ -12,6 +12,7 @@ import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
 import PopUp from "../components/PopUp.js";
 import Axios from "axios";
+import "../assets/css/talent-dashboard.scss";
 const TalentDashBoard = () => {
   const navigate = useNavigate();
 
@@ -125,18 +126,22 @@ const TalentDashBoard = () => {
   };
 
   const getRecentGigs = async () => {
-    await ApiHelper.get(API.getRecentGigs)
+    await ApiHelper.get(API.getPostedJobs)
       .then((resData) => {
         if (resData) {
           setGigsList(resData.data.data);
         }
         console.log("gigsList", resData.data.data);
-        console.log("gigsList", gigsList);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    console.log(gigsList, "gigsList");
+  }, [gigsList]);
+
   const getTopBrands = async () => {
     await ApiHelper.post(API.getTopBrands)
       .then((resData) => {
@@ -267,10 +272,7 @@ const TalentDashBoard = () => {
         </div>
       </div>
       <div className="container-fluid my-4">
-        <div
-          className="row justify-content-center"
-          style={{ marginTop: "120px" }}
-        >
+        <div className="row justify-content-center talent-dashboard-main">
           <div className="talent-column-one col-lg-8">
             <div className="recent-gigs-title">Most Recent Gigs</div>
             {gigsList.length && (
@@ -289,9 +291,11 @@ const TalentDashBoard = () => {
                           </div>
                           <div className="recent-gig-details">
                             <div className="recent-gig-company">
-                              {item.companyName}
+                              {item.hiringCompany}
                             </div>
-                            <div className="recent-gig-name">{item.title}</div>
+                            <div className="recent-gig-name">
+                              {item.jobTitle}
+                            </div>
                             <div className="recent-gig-description">
                               {item.description}
                             </div>
@@ -304,9 +308,7 @@ const TalentDashBoard = () => {
                             </div>
                             <div className="recent-gig-count-details">
                               <div className="recent-gig-name">Followers</div>
-                              <div className="recent-gigs-count">
-                                {item.followers}
-                              </div>
+                              <div className="recent-gigs-count">2500</div>
                             </div>
                           </div>
                           <div className="recent-gigs-count-wrapper">
@@ -338,7 +340,7 @@ const TalentDashBoard = () => {
                             <div className="recent-gig-count-details">
                               <div className="recent-gig-name">Location</div>
                               <div className="recent-gigs-count">
-                                {item.location}
+                                {item.jobLocation}
                               </div>
                             </div>
                           </div>

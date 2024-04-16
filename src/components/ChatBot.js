@@ -29,7 +29,7 @@ const ChatBot = () => {
     {
       role: "bot",
       content: {
-        botResponse: "Hi! welcome to brands and talent",
+        botResponse: `<div>Hi! welcome to brands and talent,</div> <div style="padding-top:'15px'">How Can I Help You today?</div>`,
       },
     },
   ]);

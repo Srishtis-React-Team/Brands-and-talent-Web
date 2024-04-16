@@ -433,3 +433,138 @@
   justify-content: space-between;
   padding: 0px 0px 25px 0px;
 }
+
+.owl-carousel .owl-item img {
+  display: block;
+  width: 100%;
+  height: 160px;
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1200px) {
+  .brand-sidebar {
+    width: 30% !important;
+  }
+  .brand-main-container {
+    padding-left: 31%;
+  }
+  .brand-home-main {
+    display: flex;
+    flex-direction: column;
+  }
+  .brand-home-left-container {
+    width: 100%;
+  }
+  .brand-home-right-container {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+  }
+  .brand-plan-section {
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 16px;
+    padding: 0px;
+    margin-left: 20px;
+    margin-top: 0px;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  .brand-menu-wrapper {
+    margin-top: 0px !important;
+    margin-bottom: 15px;
+  }
+  .talent-profile {
+    display: none;
+  }
+  .brand-sidebar-container {
+    padding: 10px 15px;
+  }
+  .brand-main-container {
+    padding: 90px 15px;
+    // transition: padding 0.4s;
+    background-color: #eeeeee;
+    padding-bottom: 30px;
+    // height: 100%;
+    margin-bottom: 40px;
+  }
+  .sidemenu-active {
+    margin-top: 0px !important;
+    margin-bottom: 15px;
+  }
+  .not-sidebar {
+    display: none;
+  }
+  .brand-home-main {
+    display: block;
+    justify-content: space-evenly;
+  }
+  .brand-home-left-container {
+    width: 100%;
+  }
+  .campaign-features {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .brand-content-main {
+    padding: 20px;
+    width: 100%;
+  }
+  .brand-home-one {
+    padding: 10px;
+  }
+  .home-job-add {
+    border-radius: 12px;
+    padding: 12px;
+  }
+  .home-add-title {
+    font-size: 14px;
+  }
+  .home-add-description {
+    font-size: 12px;
+  }
+  .home-job-start {
+    padding: 8px 16px;
+    border-radius: 10px;
+  }
+  .brand-home-right-container {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .campaign-company-name {
+    font-size: 13px;
+  }
+  .campaign-paid-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px 10px 0px;
+  }
+  .campaign-features-wrapper {
+    display: flex;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+  .campaign-icons-wrapper {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+  }
+  .recent-campaigns-wrapper {
+    padding: 30px;
+  }
+
+  .campaign-company {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0px 0px 0px;
+    flex-wrap: wrap;
+  }
+  .campaign-company-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+}

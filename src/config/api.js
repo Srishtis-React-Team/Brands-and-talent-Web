@@ -38,7 +38,7 @@ export const API = {
   otpVerificationBrands: BASEURL + "brands/otpVerificationBrands",
   editBrands: BASEURL + "brands/editBrands/",
   favouritesList: BASEURL + "brands/favouritesList",
-  favouritesList: BASEURL + "brands/favouritesList",
+  getBrandById: BASEURL + "brands/getBrandById/",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
@@ -50,7 +50,6 @@ export const API = {
 
   //common
   getFeatures: BASEURL + "features/getFeatures",
-  getRecentGigs: BASEURL + "gigs/getAllJobs",
   getTopBrands: BASEURL + "brands/topBrands",
   getTalentList: BASEURL + "users/talentList",
   getKidsData: BASEURL + "users/kidsFetch/",
@@ -71,7 +70,7 @@ export const API = {
   //jobs
   createJob: BASEURL + "gigs/createJob",
   draftJob: BASEURL + "gigs/draftJob",
-  getAllJobs: BASEURL + "gigs/getAllJobs",
+  getAllJobs: BASEURL + "gigs/getAllJobs/",
   getJobsByID: BASEURL + "gigs/getJobsByID/",
   getAnyJobById: BASEURL + "gigs/getAnyJobById/",
   getDraftJobsByID: BASEURL + "gigs/getDraftJobsByID/",
@@ -81,4 +80,6 @@ export const API = {
   deleteJob: BASEURL + "gigs/deleteJob",
   editDraft: BASEURL + "gigs/editDraft/",
   editJob: BASEURL + "gigs/editJob/",
+  jobCount: BASEURL + "gigs/jobCount/",
+  getPostedJobs: BASEURL + "gigs/getPostedJobs",
 };

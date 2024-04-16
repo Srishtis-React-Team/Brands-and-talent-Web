@@ -58,7 +58,7 @@
 }
 
 .brand-main-container {
-  padding-left: 365px;
+  padding-left: 20%;
   padding-top: 100px;
   transition: padding 0.4s;
   background-color: #eeeeee;
@@ -77,11 +77,11 @@
 }
 
 .show-sidebar .brand-main-container {
-  padding-left: 300px;
+  padding-left: 20%;
 }
 
 .main-pd {
-  padding-left: 175px;
+  padding-left: 9%;
 }
 
 .header__toggle {
@@ -106,6 +106,7 @@
   padding: 25px;
   .talent-data-wrapper {
     display: flex;
+    flex-wrap: wrap;
     align-items: start;
     .profile-img {
       width: 70px;
@@ -122,7 +123,6 @@
         font-style: normal;
         font-weight: 600;
         line-height: normal;
-        text-align: center;
       }
     }
   }
@@ -130,6 +130,7 @@
     display: flex;
     justify-content: space-between;
     padding: 15px 0px;
+    flex-wrap: wrap;
     .talent-plan-name {
       color: #000;
       font-family: "Open Sans", sans-serif;
@@ -298,4 +299,69 @@ input[type="radio"]:checked + .create-job-toggle-label {
 
 .active-sidemenu-icons {
   color: #c2114b;
+}
+
+.amount-wrapper-job {
+  width: 49%;
+}
+
+// 320px — 480px: Mobile devices
+// 481px — 768px: iPads, Tablets
+// 769px — 1024px: Small screens, laptops
+// 1025px — 1200px: Desktops, large screens
+// 1201px and more —  Extra large screens, TV
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .show-sidebar {
+    width: 25%;
+  }
+  .brand-main-container {
+    padding-left: 26%;
+  }
+  .brand-main-container {
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  .show-sidebar {
+    width: 50%;
+    box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.05), 0 3px 6px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #e3e6e8;
+  }
+  .create-job-toggle .radio-toggles {
+    align-items: center;
+    background: #eee;
+    border: 1px solid lightgrey;
+    border-radius: 9999px;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 20px 0px;
+    max-width: 390px;
+    overflow: hidden;
+    padding: 4px;
+    position: relative;
+  }
+  .create-job-toggle label {
+    cursor: pointer;
+    padding: 8px 10px;
+    text-align: center;
+    width: 50%;
+    z-index: 2;
+  }
+  .compensation-radios {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .compensation-labels {
+    display: flex;
+    align-items: center;
+    margin-right: 15px !important;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .amount-wrapper-job {
+    width: 100%;
+  }
+  .createjob-btn {
+    width: 40%;
+  }
 }

@@ -43,6 +43,7 @@ import CreateJobs from "../brand/pages/CreateJobs";
 import BrandTalents from "../brand/pages/BrandTalents";
 import BrandFavorites from "../brand/pages/BrandFavorites";
 import BrandHelp from "../brand/pages/BrandHelp";
+import JobSuccess from "../brand/pages/JobSuccess";
 function Routing() {
   return (
     <Routes>
@@ -92,6 +93,7 @@ function Routing() {
       <Route path="/favorite-talents" element={<BrandFavorites />} />
       <Route path="/brand-help" element={<BrandHelp />} />
       <Route path="/preview-job" element={<PreviewJob />} />
+      <Route path="/job-success" element={<JobSuccess />} />
     </Routes>
   );
 }

@@ -22,6 +22,7 @@ import BrandSideMenu from "./BrandSideMenu";
 const PreviewJob = ({ data, onButtonClick }) => {
   const location = useLocation();
   const { jobId } = location.state || {};
+  console.log(jobId, "jobId");
 
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
@@ -120,14 +121,14 @@ const PreviewJob = ({ data, onButtonClick }) => {
         >
           <div className="brand-content-main">
             <div className="back-create">
-              <i class="bi bi-arrow-left-circle-fill"></i>
+              <i className="bi bi-arrow-left-circle-fill"></i>
               <div onClick={createJob} className="back-to">
                 Back to Create job
               </div>
             </div>
             <div className="preview-section-one">
               <div className="job-main-details">
-                <div className="create-job-title">{jobData?.jobTitle}</div>
+                <div className="preview-job-name">{jobData?.jobTitle}</div>
                 <div className="job-price">
                   {jobData?.paymentType?.label === "range" && (
                     <>
@@ -264,7 +265,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   </ul>
                 </div>
               </div>
-              <div className="job-feature-title">Work Samples</div>
+              {/* <div className="job-feature-title">Work Samples</div>
 
               <div className="cvlist-wrapper">
                 {jobData?.workSamples?.length > 0 &&
@@ -286,7 +287,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       </>
                     );
                   })}
-              </div>
+              </div> */}
 
               {jobData?.type == "Draft" && (
                 <>

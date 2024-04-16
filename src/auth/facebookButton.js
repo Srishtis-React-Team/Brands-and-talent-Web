@@ -17,5 +17,5 @@ const MyFacebookLoginButton = createButton(config);
 
 export default MyFacebookLoginButton;
 {
-  /* <i class="fa-brands fa-facebook"></i> */
+  /* <i className="fa-brands fa-facebook"></i> */
 }

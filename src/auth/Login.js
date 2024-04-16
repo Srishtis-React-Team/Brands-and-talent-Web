@@ -111,7 +111,7 @@ const Login = () => {
             setTimeout(function() {
               setOpenPopUp(false);
               setBrandsLocalStorage(resData.data);
-              navigate(`/talent-dashboard`);
+              navigate(`/brand-dashboard`);
             }, 1000);
           } else if (resData.data.status === false) {
             console.log("false called");

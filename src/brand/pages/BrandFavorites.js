@@ -150,7 +150,10 @@ const BrandFavorites = () => {
               </div>
               <div className="models-images" style={{ width: "100%" }}>
                 <div className="gallery-section">
-                  <div className="gallery-main p-0 m-0">
+                  <div
+                    className="gallery-main p-0 m-0"
+                    style={{ justifyContent: "unset" }}
+                  >
                     {talentList?.length > 0 &&
                       talentList?.map((item) => {
                         return (

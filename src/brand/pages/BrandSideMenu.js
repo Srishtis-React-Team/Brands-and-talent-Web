@@ -3,22 +3,24 @@ import "../../assets/css/brand-dashboard.scss";
 import "../../assets/css/talentHeader.scss";
 import { NavLink } from "react-router-dom";
 import { Link, useLocation, useHistory } from "react-router-dom";
+import { API } from "../../config/api";
+import { ApiHelper } from "../../helpers/ApiHelper";
 
 const BrandSideMenu = () => {
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      const confirmationMessage =
-        "You have unsaved changes. Are you sure you want to leave?";
-      e.returnValue = confirmationMessage;
-      return confirmationMessage;
-    };
+  // useEffect(() => {
+  //   const handleBeforeUnload = (e) => {
+  //     const confirmationMessage =
+  //       "You have unsaved changes. Are you sure you want to leave?";
+  //     e.returnValue = confirmationMessage;
+  //     return confirmationMessage;
+  //   };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, []);
 
   const location = useLocation();
 
@@ -30,6 +32,35 @@ const BrandSideMenu = () => {
   const [viewTalents, setViewTalents] = useState(null);
   const [viewFavorites, setViewFavorites] = useState(null);
   const [viewHelp, setViewHelp] = useState(null);
+  const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
+  const [jobCountNumber, setJobCountNumber] = useState(null);
+
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+    if (brandId) {
+      getBrand();
+      jobCount();
+    }
+  }, [brandId]);
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const setMenu = (e) => {
     console.log(e, "setMenu setMenu");
@@ -65,6 +96,19 @@ const BrandSideMenu = () => {
     }
   };
 
+  const jobCount = async () => {
+    await ApiHelper.post(`${API.jobCount}${brandId}`)
+      .then((resData) => {
+        if (resData) {
+          console.log(resData.data.data[2].count, "countData");
+          setJobCountNumber(resData.data.data[2].count);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     console.log(createJob, "createJobStatus setMenu");
   }, [createJob]);
@@ -73,24 +117,33 @@ const BrandSideMenu = () => {
     <>
       <nav className="brand-sidebar-container">
         <div className="brand-profile-not-sidemenu">
-          <img className="profile-img" src={girl1} alt="" />
+          <img
+            className="profile-img"
+            src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
+            alt=""
+          />
         </div>
         <div className="talent-profile">
           <div className="talent-data-wrapper">
             <div>
-              <img className="profile-img" src={girl1} alt="" />
+              <img
+                className="profile-img"
+                src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
+                alt=""
+              />
             </div>
             <div className="talent-details">
-              <div className="talent-name">Elizabeth</div>
-              <div className="talent-category">Talent</div>
+              <div className="talent-name">{brandData?.brandName}</div>
+              <div className="talent-category">Brand</div>
             </div>
           </div>
           <div className="talents-plan-info">
             <div className="talent-plan-name">
               Plan : <span>Basic</span>
             </div>
+
             <div className="talent-plan-name">
-              campaigns : <span>0</span>
+              campaigns : <span>{jobCountNumber && <>{jobCountNumber}</>}</span>
             </div>
           </div>
           <div className="upgrade-btn">Upgrade Now</div>
@@ -155,7 +208,7 @@ const BrandSideMenu = () => {
           <div className="brand-menu-text">Dashboard</div>
         </Link>
 
-        <div className="brand-profile-not-sidemenu mt-5">
+        <Link to="/list-jobs" className="brand-profile-not-sidemenu mt-5">
           <i
             className={
               myJobs
@@ -166,7 +219,7 @@ const BrandSideMenu = () => {
               setMenu("my-jobs");
             }}
           ></i>
-        </div>
+        </Link>
 
         <Link
           to="/list-jobs"
@@ -183,7 +236,7 @@ const BrandSideMenu = () => {
           <div className="brand-menu-text">My Gigs/Jobs</div>
         </Link>
 
-        <div className="brand-profile-not-sidemenu mt-5">
+        <Link to="/find-talents" className="brand-profile-not-sidemenu mt-5">
           <i
             className={
               viewTalents
@@ -194,7 +247,7 @@ const BrandSideMenu = () => {
               setMenu("view-talents");
             }}
           ></i>
-        </div>
+        </Link>
 
         <Link
           to="/find-talents"
@@ -208,7 +261,10 @@ const BrandSideMenu = () => {
           <div className="brand-menu-text">Find Talents</div>
         </Link>
 
-        <div className="brand-profile-not-sidemenu mt-5">
+        <Link
+          to="/favorite-talents"
+          className="brand-profile-not-sidemenu mt-5"
+        >
           <i
             className={
               viewFavorites
@@ -219,7 +275,7 @@ const BrandSideMenu = () => {
               setMenu("view-favorites");
             }}
           ></i>
-        </div>
+        </Link>
 
         <Link
           to="/favorite-talents"
@@ -233,7 +289,7 @@ const BrandSideMenu = () => {
           <div className="brand-menu-text">Favorites</div>
         </Link>
 
-        <div className="brand-profile-not-sidemenu mt-5">
+        <Link to="/brand-help" className="brand-profile-not-sidemenu mt-5">
           <i
             className={
               viewHelp
@@ -244,7 +300,7 @@ const BrandSideMenu = () => {
               setMenu("view-help");
             }}
           ></i>
-        </div>
+        </Link>
 
         <Link
           to="/brand-help"
