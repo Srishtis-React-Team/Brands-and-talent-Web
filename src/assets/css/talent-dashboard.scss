@@ -6,7 +6,7 @@
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       margin-right: 20px;
       border-radius: 8px;
-      padding: 20px;
+      padding: 20px 30px;
       .recent-gigs-title {
         color: #000;
         font-family: "Open Sans", sans-serif;
@@ -629,13 +629,157 @@
   }
 }
 
+/* 481px — 768px: iPads, Tablets */
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .verification-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    .id-text {
+      padding: 26px 0px;
+    }
+    .select-cv-input {
+      display: none;
+    }
+  }
+}
+/* 769px — 1024px: Small screens, laptops */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .adult-main {
+    width: 100%;
+    .kids-form-row {
+      display: flex;
+      justify-content: unset;
+      flex-direction: column;
+      .kids-form-section {
+        width: 100%;
+      }
+    }
+  }
+}
+/* 1025px — 1200px: Desktops, large screens */
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .adult-main {
+    width: 100%;
+    .kids-form-row {
+      display: flex;
+      justify-content: unset;
+      flex-direction: column;
+      .kids-form-section {
+        width: 100%;
+      }
+    }
+  }
+
+  .kids-form {
+    padding-left: 0px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .kids-form {
+    padding-left: 0px !important;
+  }
+  .kidsform-one .kids-wrapper {
+    margin: 25px 30px;
+    display: flex;
+  }
+  .media-wrapper {
+    margin: 10px 0px !important;
+  }
+}
+
+.elipsis-icon {
+  padding: 10px;
+}
+
+// .modal-backdrop.show {
+//   opacity: 0.5 !important;
+// }
+
+.talent-dashboard-main {
+  padding: 80px 30px;
+  background-color: #eee;
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
+  .container-fluid .row .talent-column-one {
+    margin-right: 0px;
+    padding: 10px 20px;
+  }
+
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-settwo
+    .recent-gigs-count-wrapper {
+    padding-right: 0px;
+  }
+
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-settwo
+    .recent-gigs-count-wrapper
+    .recent-gigs-logo {
+    width: 30px;
+    height: 30px;
+  }
+
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-settwo
+    .recent-gigs-count-wrapper
+    .recent-gig-count-details
+    .recent-gigs-count {
+    color: #c2114b;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-settwo {
+    display: flex;
+    padding: 20px 0px;
+    justify-content: space-between;
+  }
+
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-settwo
+    .recent-gigs-count-wrapper {
+    display: flex;
+    align-items: center;
+    padding-right: 30px;
+    flex: 1;
+  }
+
   .add-more-services {
     padding: 20px 0px;
     margin-bottom: 100px;
   }
   .add-more-services .add-more-services-btn {
-    width: 60%;
+    width: 50%;
   }
 
   .cv-section {
@@ -651,20 +795,20 @@
   }
 
   .recent-setone {
-    flex-direction: column;
-    justify-content: center;
+    display: flex;
+    justify-content: space-evenly;
     align-items: center;
   }
   .recent-gig-company {
     padding-top: 10px;
   }
   .talent-column-one {
-    margin: 15px;
-    width: 90%;
+    // margin: 15px;
+    width: 100%;
   }
   .talent-column-two {
-    margin: 15px;
-    width: 90%;
+    // margin: 15px;
+    width: 100%;
   }
   .recent-settwo {
     display: flex;
@@ -757,81 +901,62 @@
       display: none;
     }
   }
-}
-/* 481px — 768px: iPads, Tablets */
 
-@media (min-width: 481px) and (max-width: 768px) {
-  .verification-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    .id-text {
-      padding: 26px 0px;
-    }
-    .select-cv-input {
-      display: none;
-    }
-  }
-}
-/* 769px — 1024px: Small screens, laptops */
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .adult-main {
-    width: 100%;
-    .kids-form-row {
-      display: flex;
-      justify-content: unset;
-      flex-direction: column;
-      .kids-form-section {
-        width: 100%;
-      }
-    }
-  }
-}
-/* 1025px — 1200px: Desktops, large screens */
-
-@media (min-width: 1025px) and (max-width: 1200px) {
-  .adult-main {
-    width: 100%;
-    .kids-form-row {
-      display: flex;
-      justify-content: unset;
-      flex-direction: column;
-      .kids-form-section {
-        width: 100%;
-      }
-    }
-  }
-
-  .kids-form {
-    padding-left: 0px !important;
+  .talent-dashboard-main {
+    padding: 80px 20px;
+    background-color: #eee;
   }
 }
 
-@media (max-width: 1200px) {
-  .kids-form {
-    padding-left: 0px !important;
-  }
-  .kidsform-one .kids-wrapper {
-    margin: 25px 30px;
-    display: flex;
-  }
-  .media-wrapper {
-    margin: 10px 0px !important;
+.apply-now-btn {
+  width: 120px;
+  height: 40px;
+  border-radius: 50px;
+  background-color: green;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  .bi-briefcase-fill,
+  .bi-eye-fill {
+    font-size: 14px;
+    padding-right: 10px;
   }
 }
 
-.elipsis-icon {
-  padding: 10px;
+.view-gig-btn {
+  width: 120px;
+  height: 40px;
+  border-radius: 50px;
+  background-color: #c2114b;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 20px;
+  .bi-eye-fill {
+    font-size: 14px;
+    padding-right: 10px;
+    width: unset;
+    height: unset;
+    cursor: pointer;
+  }
 }
 
-// .modal-backdrop.show {
-//   opacity: 0.5 !important;
-// }
-
-.talent-dashboard-main {
-  padding: 80px 30px;
-  background-color: #eee;
+.recent-set-three {
+  margin: 20px 0px;
+  display: flex;
+  justify-content: end;
 }

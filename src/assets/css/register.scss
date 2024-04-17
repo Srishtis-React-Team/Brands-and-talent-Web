@@ -401,11 +401,33 @@
 @media (min-width: 320px) and (max-width: 480px) {
   .adult-signup-main {
     // background-color: aqua;
-    width: 80%;
+    width: 95%;
     padding: 10px 20px;
   }
-
   .gmail-info {
     width: 80%;
+  }
+  .gmail-wrapper {
+    margin-top: 0px;
+  }
+  .trial-page {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px;
+    flex-direction: column;
+    flex-direction: column-reverse;
+  }
+  .trialing {
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+  }
+  .trialing > img {
+    width: 250px;
+    height: 250px;
+    flex-shrink: 0;
+  }
+  .trial-wrapper {
+    padding: 30px;
   }
 }

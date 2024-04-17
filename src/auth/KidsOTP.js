@@ -185,14 +185,14 @@ const KidsOTP = () => {
           <div className="otp-back" onClick={() => navigate(`/login`)}>
             Back
           </div>
-        </div>
-        <div
-          className="otp-logo"
-          style={{
-            top: "18%",
-          }}
-        >
-          <img src={btLogo} alt="" />
+          <div
+            className="otp-logo"
+            style={{
+              top: "-30",
+            }}
+          >
+            <img src={btLogo} alt="" />
+          </div>
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

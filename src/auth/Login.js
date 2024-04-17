@@ -5,6 +5,7 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
+import { generateToken } from "./firebase";
 const Login = () => {
   const btLogo = require("../assets/icons/Group 56.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
@@ -26,10 +27,15 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [fireBaseToken, setFireBaseToken] = useState(null);
   const [emailID, setEmailID] = useState(null);
 
   const [userType, setUserType] = useState("");
   const [currentUser_id, setCUrrentUserID] = useState("");
+
+  useEffect(() => {
+    generateToken();
+  }, []);
 
   useEffect(() => {
     const extractValuesFromURL = () => {
@@ -76,6 +82,9 @@ const Login = () => {
       setEmailID(storedEmailID);
     }
   }, [paramsValue]);
+  useEffect(() => {
+    console.log(isLoading, "isLoading");
+  }, [isLoading]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -97,6 +106,7 @@ const Login = () => {
       const formData = {
         brandEmail: talentEmail,
         brandPassword: talentPassword,
+        fcmToken: fireBaseToken,
       };
       console.log(formData, "formData talentLogin");
       setIsLoading(true);
@@ -110,10 +120,12 @@ const Login = () => {
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
+              setIsLoading(false);
               setBrandsLocalStorage(resData.data);
               navigate(`/brand-dashboard`);
             }, 1000);
           } else if (resData.data.status === false) {
+            setIsLoading(false);
             console.log("false called");
             setMessage(resData.data.message);
             setOpenPopUp(true);
@@ -129,6 +141,7 @@ const Login = () => {
       const formData = {
         email: talentEmail,
         password: talentPassword,
+        fcmToken: fireBaseToken,
       };
       console.log(formData, "formData talentLogin");
       setIsLoading(true);
@@ -142,6 +155,7 @@ const Login = () => {
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
+              setIsLoading(false);
               setTalentLocalStorage(resData.data.data);
             }, 1000);
             if (resData.data.type === "adult") {
@@ -152,16 +166,19 @@ const Login = () => {
               // navigate(`/otp?${resData?.data?.data?.email}`);
             }
           } else if (resData.data.status === false) {
+            setIsLoading(false);
             console.log("false called");
             setMessage(resData.data.message);
             setOpenPopUp(true);
             setTimeout(function() {
+              setIsLoading(false);
               setOpenPopUp(false);
             }, 1000);
           }
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
         });
     }
   };
@@ -182,6 +199,14 @@ const Login = () => {
     localStorage.setItem("brandToken", data?.token);
     setUserId(userId);
   };
+
+  useEffect(() => {
+    const fireBaseToken = localStorage.getItem("fcmToken");
+    if (fireBaseToken) {
+      setFireBaseToken(fireBaseToken);
+    }
+    console.log(fireBaseToken, "fireBaseToken");
+  }, [fireBaseToken]);
 
   return (
     <>
@@ -281,9 +306,9 @@ const Login = () => {
           <div className="login-btn" onClick={login}>
             {isLoading ? "Loading..." : "Login"}
           </div>
-        </div>
-        <div className="login-logo">
-          <img src={btLogo} alt="" />
+          <div className="login-logo">
+            <img src={btLogo} alt="" />
+          </div>
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

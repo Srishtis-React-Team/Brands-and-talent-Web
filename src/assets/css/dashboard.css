@@ -2429,9 +2429,10 @@ input[type="radio"] {
 
   .heart-icon {
     position: absolute;
-    top: 6px;
-    left: 185px;
+    top: 10px;
+    /* left: 0; */
     cursor: pointer;
+    right: 10px;
   }
 
   .gallery-content {
@@ -2776,8 +2777,8 @@ input[type="radio"] {
   }
 
   .choose-register {
-    width: 150px;
-    height: 50px;
+    width: 172px;
+    height: 62px;
     border-radius: 6px;
     border: 1px solid #000;
     background: #fff;
@@ -2787,17 +2788,19 @@ input[type="radio"] {
     color: #000;
     text-align: center;
     font-family: "Open Sans", sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     font-style: normal;
     font-weight: 300;
     cursor: pointer;
+    padding: 4px;
     margin-right: 25px;
   }
 
   .selected-register {
-    width: 150px;
-    height: 50px;
+    width: 172px;
+    height: 62px;
     border-radius: 6px;
+    border: 1px solid #c2114b;
     background: #c2114b;
     display: flex;
     justify-content: center;
@@ -2806,10 +2809,9 @@ input[type="radio"] {
     color: #fff;
     text-align: center;
     font-family: "Open Sans", sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     font-style: normal;
     font-weight: 300;
-    line-height: 37px;
     cursor: pointer;
   }
 

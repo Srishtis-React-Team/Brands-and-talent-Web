@@ -111,11 +111,10 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                 <img src={kidsImage} alt="" />
               </div>
               <div className="kids-form">
-                <div className="kids-main" style={{ width: "70%" }}>
+                <div className="kids-main">
                   <div className="kids-form-title">
                     Explore Your Social Media Presence
                   </div>
-
                   <div className="explore-info">
                     If you want to display your actual follower count, please
                     connect with your social media. Otherwise, manually enter

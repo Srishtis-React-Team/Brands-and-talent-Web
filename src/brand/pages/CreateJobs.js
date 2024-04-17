@@ -1325,6 +1325,11 @@ const CreateJobs = () => {
     console.log(showQuestions, "showQuestions");
   }, [showQuestions]);
 
+  const handleButtonClick = (data) => {
+    setShowSidebar(!showSidebar);
+    console.log(data, "handleButtonClickData");
+  };
+
   return (
     <>
       <>
@@ -1335,7 +1340,7 @@ const CreateJobs = () => {
             showSidebar ? "show-sidebar" : "not-sidebar"
           }`}
         >
-          <BrandSideMenu />
+          <BrandSideMenu onButtonClick={handleButtonClick} />
         </div>
         <main
           id="mainBrand"

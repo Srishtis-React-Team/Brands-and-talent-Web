@@ -27,7 +27,7 @@ h6 {
 }
 
 p,
-a:not([href]):not([tabindex]) {
+a:not([href]):not([tabIndex]) {
   color: $body-color;
   font-size: $default-font-size;
 }

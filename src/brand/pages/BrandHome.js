@@ -292,10 +292,10 @@ const BrandHome = () => {
                 <div className="my-plan-contents">
                   <p className="my-plan">My Plan</p>
                   <div className="my-plan-features">
-                    {planBenefits?.map((item) => {
+                    {planBenefits?.map((item, index) => {
                       return (
                         <>
-                          <div className="myplan-wrapper">
+                          <div className="myplan-wrapper" key={index}>
                             <div>
                               <i
                                 style={{ color: "#c2114b", fontSize: "18px" }}

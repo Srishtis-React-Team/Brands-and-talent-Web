@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../assets/css/findcreators.css";
 import "../assets/css/talent-profile.css";
+import "../assets/css/dashboard.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 import { useLocation } from "react-router-dom";

@@ -53,8 +53,8 @@
     }
   }
 
-  a:not([href]):not([tabindex]):hover,
-  a:not([href]):not([tabindex]):focus {
+  a:not([href]):not([tabIndex]):hover,
+  a:not([href]):not([tabIndex]):focus {
     &.dropdown-item {
       background: $dropdown-bg;
       color: $body-color;

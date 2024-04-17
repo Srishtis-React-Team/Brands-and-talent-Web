@@ -44,7 +44,7 @@
 .login-logo {
   position: absolute;
   background-color: #fff;
-  top: 18%;
+  top: -31px;
   padding: 0px 20px;
 }
 .forgot-logo {
@@ -195,6 +195,6 @@
 @media (min-width: 320px) and (max-width: 480px) {
   .login-container {
     // background-color: aqua;
-    width: 80%;
+    width: 90%;
   }
 }

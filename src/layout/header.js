@@ -19,6 +19,10 @@ const Header = ({ sendMessageToParent }) => {
     // Call the function passed from the parent with a message
   };
 
+  const logout = () => {
+    navigate("/");
+  };
+
   function userType(e) {
     if (e == "talent") {
       setTalent(true);
@@ -337,7 +341,7 @@ const Header = ({ sendMessageToParent }) => {
 
               <div
                 className="offcanvas offcanvas-top search-canvas-top"
-                tabindex="-1"
+                tabIndex="-1"
                 id="offcanvasTop"
                 aria-labelledby="offcanvasTopLabel"
               >
@@ -384,9 +388,29 @@ const Header = ({ sendMessageToParent }) => {
               >
                 Sign up for free
               </div>
-              <div className="gridLogo">
-                <img src={gridLogo}></img>
+              <div
+                className="gridLogo"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img src={gridLogo} alt="" />
               </div>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton1"
+              >
+                <li>
+                  <a
+                    className="dropdown-item"
+                    onClick={(e) => {
+                      logout();
+                    }}
+                  >
+                    Log Out
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -396,7 +420,7 @@ const Header = ({ sendMessageToParent }) => {
       <div
         className="modal fade"
         id="exampleModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
@@ -460,7 +484,7 @@ const Header = ({ sendMessageToParent }) => {
         ref={modalRef}
         className="modal fade"
         id="verify_age"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >

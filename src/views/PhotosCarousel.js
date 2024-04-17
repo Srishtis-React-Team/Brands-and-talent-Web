@@ -26,6 +26,16 @@ const PhotosCarousel = ({ photosList }) => {
         margin={10}
         nav
         items={photosList?.length === 1 ? 1 : 5}
+        responsive={{
+          // Breakpoint from 0 up
+          0: {
+            items: 2,
+          },
+          // Breakpoint from 768 up
+          768: {
+            items: 5,
+          },
+        }}
       >
         {photosList &&
           photosList.length > 0 &&
