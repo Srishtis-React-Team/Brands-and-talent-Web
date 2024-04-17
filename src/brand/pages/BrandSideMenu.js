@@ -6,7 +6,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
 
-const BrandSideMenu = () => {
+const BrandSideMenu = ({ onButtonClick }) => {
   // useEffect(() => {
   //   const handleBeforeUnload = (e) => {
   //     const confirmationMessage =
@@ -113,6 +113,13 @@ const BrandSideMenu = () => {
     console.log(createJob, "createJobStatus setMenu");
   }, [createJob]);
 
+  const handleClick = () => {
+    const data = "Data from child"; // Data to be passed to the parent
+    if (typeof onButtonClick === "function") {
+      onButtonClick(data);
+    }
+  };
+
   return (
     <>
       <nav className="brand-sidebar-container">
@@ -162,11 +169,7 @@ const BrandSideMenu = () => {
           ></i>
         </Link>
 
-        <div
-          onClick={(e) => {
-            setMenu("create-job");
-          }}
-        >
+        <div onClick={handleClick}>
           <Link
             to="/create-jobs"
             className={

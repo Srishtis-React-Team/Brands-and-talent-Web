@@ -27,6 +27,7 @@ const TalentDashBoard = () => {
 
   const girl1 = require("../assets/images/girl1.png");
   const btLogo = require("../assets/icons/Group 56.png");
+  const jobImage = require("../assets/icons/jobImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -138,6 +139,30 @@ const TalentDashBoard = () => {
       });
   };
 
+  const applyjobs = async (data) => {
+    console.log(data, "applyJobData");
+    const formData = {
+      talentId: talentId,
+      brandId: data?.brandId,
+      gigId: data?._id,
+    };
+    await ApiHelper.post(API.applyjobs, formData)
+      .then((resData) => {
+        if (resData) {
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const viewJob = async (jobId) => {
+    navigate("/preview-job", {
+      state: {
+        jobId: jobId,
+      },
+    });
+  };
+
   useEffect(() => {
     console.log(gigsList, "gigsList");
   }, [gigsList]);
@@ -164,6 +189,12 @@ const TalentDashBoard = () => {
       offcanvas.hide(); // Close offcanvas when menu is open
     }
   };
+  const [talentId, setTalentId] = useState(null);
+
+  useEffect(() => {
+    setTalentId(localStorage.getItem("userId"));
+    console.log(talentId, "brandId");
+  }, [talentId]);
 
   const closeMenu = () => {
     const offcanvas = offcanvasRef.current;
@@ -202,7 +233,7 @@ const TalentDashBoard = () => {
         ref={doItNowRef}
         className="modal fade"
         id="verify_age"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
@@ -283,11 +314,8 @@ const TalentDashBoard = () => {
                       <div className="recent-gigs-wrapper">
                         <div className="recent-setone">
                           <div className="recent-img-div">
-                            <img
-                              className="recent-img"
-                              src={API.userFilePath + item.image}
-                              alt=""
-                            />
+                            {/* <i class="bi bi-briefcase-fill "></i> */}
+                            <img className="recent-img" src={jobImage} alt="" />
                           </div>
                           <div className="recent-gig-details">
                             <div className="recent-gig-company">
@@ -304,7 +332,7 @@ const TalentDashBoard = () => {
                         <div className="recent-settwo">
                           <div className="recent-gigs-count-wrapper">
                             <div className="recent-gigs-logo">
-                              <img src={user} alt="" />
+                              <i className="bi bi-person-check-fill"></i>
                             </div>
                             <div className="recent-gig-count-details">
                               <div className="recent-gig-name">Followers</div>
@@ -313,7 +341,7 @@ const TalentDashBoard = () => {
                           </div>
                           <div className="recent-gigs-count-wrapper">
                             <div className="recent-gigs-logo">
-                              <img src={user} alt="" />
+                              <i className="bi bi-person-arms-up"></i>
                             </div>
                             <div className="recent-gig-count-details">
                               <div className="recent-gig-name">Age</div>
@@ -324,7 +352,7 @@ const TalentDashBoard = () => {
                           </div>
                           <div className="recent-gigs-count-wrapper">
                             <div className="recent-gigs-logo">
-                              <img src={genderIcon} alt="" />
+                              <i className="bi bi-gender-ambiguous"></i>
                             </div>
                             <div className="recent-gig-count-details">
                               <div className="recent-gig-name">Gender</div>
@@ -335,7 +363,7 @@ const TalentDashBoard = () => {
                           </div>
                           <div className="recent-gigs-count-wrapper">
                             <div className="recent-gigs-logo">
-                              <img src={map} alt="" />
+                              <i className="bi bi-geo-alt-fill"></i>
                             </div>
                             <div className="recent-gig-count-details">
                               <div className="recent-gig-name">Location</div>
@@ -343,6 +371,26 @@ const TalentDashBoard = () => {
                                 {item.jobLocation}
                               </div>
                             </div>
+                          </div>
+                        </div>
+                        <div className="recent-set-three">
+                          <div
+                            className="view-gig-btn"
+                            onClick={() => {
+                              viewJob(item?._id);
+                            }}
+                          >
+                            <i class="bi bi-eye-fill"></i>
+                            <div>View Job</div>
+                          </div>
+                          <div
+                            className="apply-now-btn"
+                            onClick={() => {
+                              applyjobs(item);
+                            }}
+                          >
+                            <i class="bi bi-briefcase-fill"></i>
+                            <div>Apply Now</div>
                           </div>
                         </div>
                       </div>

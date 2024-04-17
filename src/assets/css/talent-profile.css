@@ -1190,7 +1190,7 @@
   }
   .individual-talent-tabs {
     display: flex;
-    flex-wrap: unset;
+    flex-wrap: wrap;
     border-bottom: 1px solid rgb(189, 189, 189);
     padding-bottom: 4px;
   }
@@ -1220,5 +1220,9 @@
     display: flex;
     flex-wrap: unset;
     flex-direction: column;
+  }
+  .cv-card {
+    width: 75% !important;
+    height: 75px;
   }
 }
