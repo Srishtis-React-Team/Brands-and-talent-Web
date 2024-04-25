@@ -116,6 +116,18 @@ const KidsformOne = ({ sendDataToParent }) => {
     "Prefer not to say",
   ];
 
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "unset", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "200px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
+
   useEffect(() => {
     getCountries();
     if (userId) {
@@ -610,8 +622,9 @@ const KidsformOne = ({ sendDataToParent }) => {
                     step to making their dreams a reality. Register now and
                     unlock a world of possibilities for your kid!
                   </div>
+                  <div className="kids-notes">NOTE: </div>
                   <div className="kids-notes">
-                    NOTE:  1. Authorized Guardianship Required: This Kids & Teen
+                    1. Authorized Guardianship Required: This Kids & Teen
                     Registration form is for authorized guardians only,
                     registering on behalf of their child. Any unauthorized or
                     fraudulent registration constitutes a violation of our Terms
@@ -696,32 +709,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">
-                            Mobile No. <span className="mandatory">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            maxLength="15"
-                            pattern="[0-9]{15}"
-                            value={parentMobile}
-                            onChange={(e) => {
-                              setParentMobile(e.target.value);
-                              setParentMobileError(false);
-                            }}
-                            placeholder=" Mobile No."
-                          ></input>
-                          {parentMobileError && (
-                            <div className="invalid-fields">
-                              Please enter Mobile Number
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label className="form-label">
                             Country<span className="mandatory">*</span>
                           </label>
                           <Select
@@ -742,6 +729,8 @@ const KidsformOne = ({ sendDataToParent }) => {
                           )}
                         </div>
                       </div>
+                    </div>
+                    <div className="kids-form-row">
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">
@@ -764,8 +753,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                           )}
                         </div>
                       </div>
-                    </div>
-                    <div className="kids-form-row">
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">
@@ -784,31 +771,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                           {cityError && (
                             <div className="invalid-fields">
                               Please Select City
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label
-                            htmlFor="exampleFormControlTextarea1"
-                            className="form-label"
-                          >
-                            Address<span className="mandatory">*</span>
-                          </label>
-                          <textarea
-                            className="form-control address-textarea"
-                            id="exampleFormControlTextarea1"
-                            value={address}
-                            rows="3"
-                            onChange={(e) => {
-                              setAddress(e.target.value);
-                              setAddressError(false);
-                            }}
-                          ></textarea>
-                          {addressError && (
-                            <div className="invalid-fields">
-                              Please Enter Address
                             </div>
                           )}
                         </div>
@@ -896,99 +858,154 @@ const KidsformOne = ({ sendDataToParent }) => {
                         </div>
                       </div>
                     </div>
-
-                    <div className="kids-form-title">Your Child Details</div>
                     <div className="kids-form-row">
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label pay-info">
-                            Profession (choose any 4)
-                            <span className="mandatory">*</span>
+                          <label
+                            htmlFor="exampleFormControlTextarea1"
+                            className="form-label"
+                          >
+                            Address<span className="mandatory">*</span>
                           </label>
-                          <div>
-                            <Select
-                              defaultValue={[]}
-                              isMulti
-                              name="professions"
-                              options={professionList}
-                              className="basic-multi-select"
-                              classNamePrefix="select"
-                              onChange={handleProfessionChange}
-                            />
-                            {professionError && (
-                              <div className="invalid-fields">
-                                Please Choose Profession
-                              </div>
-                            )}
-                          </div>
+                          <textarea
+                            className="form-control address-textarea"
+                            id="exampleFormControlTextarea1"
+                            value={address}
+                            rows="3"
+                            onChange={(e) => {
+                              setAddress(e.target.value);
+                              setAddressError(false);
+                            }}
+                          ></textarea>
+                          {addressError && (
+                            <div className="invalid-fields">
+                              Please Enter Address
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="kids-form-section">
+                        <div className="mb-3">
+                          <label className="form-label">
+                            Mobile No. <span className="mandatory">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            maxLength="15"
+                            pattern="[0-9]{15}"
+                            value={parentMobile}
+                            onChange={(e) => {
+                              setParentMobile(e.target.value);
+                              setParentMobileError(false);
+                            }}
+                            placeholder=" Mobile No."
+                          ></input>
+                          {parentMobileError && (
+                            <div className="invalid-fields">
+                              Please enter Mobile Number
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
-                    <div className="profession-content-section">
-                      {selectedProfessions.map((profession, index) => (
-                        <div key={index} className="dynamic-profession">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              {profession.label} / day
-                            </label>
-                            <input
-                              type="number"
-                              className="form-control profession-input"
-                              value={profession.perDaySalary || ""}
-                              onChange={(e) =>
-                                handleDetailChange(
-                                  index,
-                                  "perDaySalary",
-                                  e.target.value
-                                )
-                              }
-                              placeholder="$/day"
-                            ></input>
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">
-                              {profession.label} / hour
-                            </label>
-                            <input
-                              type="number"
-                              className="form-control profession-input"
-                              value={profession.perHourSalary || ""}
-                              onChange={(e) =>
-                                handleDetailChange(
-                                  index,
-                                  "perHourSalary",
-                                  e.target.value
-                                )
-                              }
-                              placeholder="$/day"
-                            ></input>
-                          </div>
 
-                          <div className="offer-wrapper">
-                            <input
-                              className="profession-checkbox"
-                              id={profession.label}
-                              type="checkbox"
-                              checked={profession.openToOffers || false}
-                              onChange={(e) =>
-                                handleDetailChange(
-                                  index,
-                                  "openToOffers",
-                                  e.target.checked
-                                )
-                              }
-                            />
-                            <label
-                              className="form-label offer-label"
-                              htmlFor={profession.label}
-                            >
-                              Open to Offers / Happy to negotiate
+                    <div className="kids-form-title">Your Child Details</div>
+                    <div className="profession-section-cover">
+                      <div className="kids-form-row">
+                        <div className="kids-form-section">
+                          <div className="mb-3">
+                            <label className="form-label pay-info">
+                              Profession (choose any 4)
+                              <span className="mandatory">*</span>
                             </label>
+                            <div>
+                              <Select
+                                defaultValue={[]}
+                                isMulti
+                                name="professions"
+                                options={professionList}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                placeholder="Search for Category”"
+                                onChange={handleProfessionChange}
+                                styles={customStyles}
+                              />
+                              {professionError && (
+                                <div className="invalid-fields">
+                                  Please Choose Profession
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      ))}
+                      </div>
+                      <div className="profession-content-section">
+                        {selectedProfessions.map((profession, index) => (
+                          <div key={index} className="dynamic-profession">
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label} / day
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input"
+                                value={profession.perDaySalary || ""}
+                                onChange={(e) =>
+                                  handleDetailChange(
+                                    index,
+                                    "perDaySalary",
+                                    e.target.value
+                                  )
+                                }
+                                placeholder="$/day"
+                              ></input>
+                            </div>
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label} / hr
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input"
+                                value={profession.perHourSalary || ""}
+                                onChange={(e) =>
+                                  handleDetailChange(
+                                    index,
+                                    "perHourSalary",
+                                    e.target.value
+                                  )
+                                }
+                                placeholder="$/hr"
+                              ></input>
+                            </div>
+
+                            <div className="offer-wrapper">
+                              <input
+                                className="profession-checkbox"
+                                id={profession.label}
+                                type="checkbox"
+                                checked={profession.openToOffers || false}
+                                onChange={(e) =>
+                                  handleDetailChange(
+                                    index,
+                                    "openToOffers",
+                                    e.target.checked
+                                  )
+                                }
+                              />
+                              <label
+                                className="form-label offer-label"
+                                htmlFor={profession.label}
+                              >
+                                Open to Offers / Happy to negotiate
+                              </label>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <div className="kids-form-title">
+                    <div className="kids-form-title-sub">
                       Please select the top 4 categories relevant to your
                       profile.<span className="mandatory">*</span>
                     </div>
@@ -1090,7 +1107,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             onChange={(e) => {
                               setKidsPreferedLastName(e.target.value);
                             }}
-                            placeholder="Prefered Legal Last name"
+                            placeholder="Enter Prefered Last name"
                           ></input>
                         </div>
                       </div>

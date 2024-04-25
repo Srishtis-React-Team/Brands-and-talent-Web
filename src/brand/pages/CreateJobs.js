@@ -213,58 +213,81 @@ const CreateJobs = () => {
 
   const duplicateJob = () => {
     if (editJobData != null) {
-      const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
-      const jobDescriptionContentBlocks = convertFromHTML(
-        jobDescriptionhtmlContent
-      );
-      const jobDescriptionContentState = ContentState.createFromBlockArray(
-        jobDescriptionContentBlocks
-      );
-      const updateJobDescription = EditorState.createWithContent(
-        jobDescriptionContentState
-      );
-      setEditorStateJobDescription(updateJobDescription);
-      setJobDescription(editJobData?.jobDescription);
+      if (
+        editJobData?.jobDescription &&
+        editJobData?.jobDescription.length > 0
+      ) {
+        const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
+        const jobDescriptionContentBlocks = convertFromHTML(
+          jobDescriptionhtmlContent
+        );
+        const jobDescriptionContentState = ContentState.createFromBlockArray(
+          jobDescriptionContentBlocks
+        );
+        const updateJobDescription = EditorState.createWithContent(
+          jobDescriptionContentState
+        );
+        setEditorStateJobDescription(updateJobDescription);
+        setJobDescription(editJobData?.jobDescription);
+      }
+
       //////
-      const jobRequirementshtmlContent = editJobData?.additionalRequirements[0];
-      const jobRequirementsContentBlocks = convertFromHTML(
-        jobRequirementshtmlContent
-      );
-      const jobRequirementsContentState = ContentState.createFromBlockArray(
-        jobRequirementsContentBlocks
-      );
-      const updatejobRequirements = EditorState.createWithContent(
-        jobRequirementsContentState
-      );
-      setEditorStateJobRequirements(updatejobRequirements);
-      setJobRequirements(editJobData?.additionalRequirements);
+
+      if (
+        editJobData?.additionalRequirements &&
+        editJobData?.additionalRequirements.length > 0
+      ) {
+        const jobRequirementshtmlContent =
+          editJobData?.additionalRequirements[0];
+        const jobRequirementsContentBlocks = convertFromHTML(
+          jobRequirementshtmlContent
+        );
+        const jobRequirementsContentState = ContentState.createFromBlockArray(
+          jobRequirementsContentBlocks
+        );
+        const updatejobRequirements = EditorState.createWithContent(
+          jobRequirementsContentState
+        );
+        setEditorStateJobRequirements(updatejobRequirements);
+        setJobRequirements(editJobData?.additionalRequirements);
+      }
+
       ////////////
+      if (editJobData?.whyWorkWithUs && editJobData?.whyWorkWithUs.length > 0) {
+        const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
+        const whyWorkWithUsContentBlocks = convertFromHTML(
+          whyWorkWithUsContent
+        );
+        const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+          whyWorkWithUsContentBlocks
+        );
+        const updatewhyWorkWithUs = EditorState.createWithContent(
+          whyWorkWithUsContentState
+        );
+        setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+        setWhyWorkWithUs(editJobData?.whyWorkWithUs);
+      }
 
-      const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
-      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
-      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-        whyWorkWithUsContentBlocks
-      );
-      const updatewhyWorkWithUs = EditorState.createWithContent(
-        whyWorkWithUsContentState
-      );
-      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
-      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
       //////////
+      if (
+        editJobData?.hiringCompanyDescription &&
+        editJobData?.hiringCompanyDescription.length > 0
+      ) {
+        const hiringCompanyDescriptionContent =
+          editJobData?.hiringCompanyDescription[0];
+        const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+          hiringCompanyDescriptionContent
+        );
+        const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
+          hiringCompanyDescriptionContentBlocks
+        );
+        const hiringCompanyDescription = EditorState.createWithContent(
+          hiringCompanyDescriptionContentState
+        );
+        setEditorStateClientDescription(hiringCompanyDescription);
+        setClientDescription(editJobData?.hiringCompanyDescription);
+      }
 
-      const hiringCompanyDescriptionContent =
-        editJobData?.hiringCompanyDescription[0];
-      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
-        hiringCompanyDescriptionContent
-      );
-      const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
-        hiringCompanyDescriptionContentBlocks
-      );
-      const hiringCompanyDescription = EditorState.createWithContent(
-        hiringCompanyDescriptionContentState
-      );
-      setEditorStateClientDescription(hiringCompanyDescription);
-      setClientDescription(editJobData?.hiringCompanyDescription);
       //////////////////
       setSelectedTab("create-job");
       setjobTitle(editJobData?.jobTitle);
@@ -1300,6 +1323,9 @@ const CreateJobs = () => {
       addSkill();
     }
   };
+  const addSkillCall = () => {
+    addSkill();
+  };
 
   const addSkill = () => {
     if (inputValue.trim() !== "") {
@@ -1572,7 +1598,7 @@ const CreateJobs = () => {
                         </label>
 
                         <div className="mb-3">
-                          <div className="form-group ">
+                          <div className="form-group add-skill-wrapper">
                             {/* has-search <span className="fa fa-search form-control-feedback"></span> */}
                             <input
                               type="text"
@@ -1582,6 +1608,12 @@ const CreateJobs = () => {
                               onChange={handleInputChange}
                               onKeyDown={handleKeyDown}
                             />
+                            <div
+                              className="add-skill-btn"
+                              onClick={addSkillCall}
+                            >
+                              Add Skill
+                            </div>
                           </div>
                         </div>
 
@@ -2047,6 +2079,37 @@ const CreateJobs = () => {
                         </div>
                       </div>
 
+                      <div className="kids-form-section">
+                        <div className="mb-4">
+                          <label className="form-label">
+                            Currency <span className="mandatory">*</span>
+                          </label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={(e) => {
+                              setJobCurrency(e.target.value);
+                              setJobCurrencyError(false);
+                            }}
+                            value={jobCurrency}
+                          >
+                            <option value="" disabled selected>
+                              Select Your Currency
+                            </option>
+                            {currencyList.map((option, index) => (
+                              <option key={index} value={option?.value}>
+                                {option?.title}
+                              </option>
+                            ))}
+                          </select>
+                          {jobCurrencyError && (
+                            <div className="invalid-fields">
+                              Please Select Currency
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
                       <div className=" seperate-jobform-section">
                         <div className="kids-form-section">
                           <div className="mb-4">
@@ -2130,37 +2193,6 @@ const CreateJobs = () => {
                               )}
                             </div>
                           </div>
-                        </div>
-                      </div>
-
-                      <div className="kids-form-section">
-                        <div className="mb-4">
-                          <label className="form-label">
-                            Currency <span className="mandatory">*</span>
-                          </label>
-                          <select
-                            className="form-select"
-                            aria-label="Default select example"
-                            onChange={(e) => {
-                              setJobCurrency(e.target.value);
-                              setJobCurrencyError(false);
-                            }}
-                            value={jobCurrency}
-                          >
-                            <option value="" disabled selected>
-                              Select Your Currency
-                            </option>
-                            {currencyList.map((option, index) => (
-                              <option key={index} value={option?.value}>
-                                {option?.title}
-                              </option>
-                            ))}
-                          </select>
-                          {jobCurrencyError && (
-                            <div className="invalid-fields">
-                              Please Select Currency
-                            </div>
-                          )}
                         </div>
                       </div>
 

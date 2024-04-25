@@ -6,7 +6,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
 
-const BrandSideMenu = ({ onButtonClick }) => {
+const BrandSideMenu = ({ onChildClick }) => {
   // useEffect(() => {
   //   const handleBeforeUnload = (e) => {
   //     const confirmationMessage =
@@ -23,7 +23,6 @@ const BrandSideMenu = ({ onButtonClick }) => {
   // }, []);
 
   const location = useLocation();
-
   const [showSidebar, setShowSidebar] = useState(true);
   const girl1 = require("../../assets/images/girl1.png");
   const [createJob, setCreateJob] = useState(null);
@@ -113,10 +112,37 @@ const BrandSideMenu = ({ onButtonClick }) => {
     console.log(createJob, "createJobStatus setMenu");
   }, [createJob]);
 
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (
+        window.matchMedia("(min-width: 320px) and (max-width: 768px)").matches
+      ) {
+        setIsSmallScreen(true);
+      } else {
+        setIsSmallScreen(false);
+      }
+    };
+    // Call handleResize initially to check the screen size
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup function to remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log(isSmallScreen, "isSmallScreen");
+  }, [isSmallScreen]);
+
   const handleClick = () => {
-    const data = "Data from child"; // Data to be passed to the parent
-    if (typeof onButtonClick === "function") {
-      onButtonClick(data);
+    if (typeof onChildClick === "function" && isSmallScreen) {
+      onChildClick();
     }
   };
 
@@ -156,47 +182,20 @@ const BrandSideMenu = ({ onButtonClick }) => {
           <div className="upgrade-btn">Upgrade Now</div>
         </div>
 
-        <Link to="/create-jobs" className="brand-profile-not-sidemenu mt-5">
+        <Link
+          to="/create-jobs"
+          className={
+            location.pathname === "/create-jobs"
+              ? "sidemenu-active mt-4"
+              : "brand-menu-wrapper mt-4"
+          }
+          onClick={() => handleClick()}
+        >
           <i
-            className={
-              location.pathname === "/create-jobs"
-                ? "sidemenu-icons active-sidemenu-icons  bi bi-plus-square-fill mt-4"
-                : "sidemenu-icons bi bi-plus-square-fill  mt-4"
-            }
-            onClick={(e) => {
-              setMenu("create-job");
-            }}
+            style={{ paddingLeft: "15px" }}
+            className="bi bi-plus-square-fill "
           ></i>
-        </Link>
-
-        <div onClick={handleClick}>
-          <Link
-            to="/create-jobs"
-            className={
-              location.pathname === "/create-jobs"
-                ? "sidemenu-active mt-4"
-                : "brand-menu-wrapper mt-4"
-            }
-          >
-            <i
-              style={{ paddingLeft: "15px" }}
-              className="bi bi-plus-square-fill "
-            ></i>
-            <div className="brand-menu-text">Create Gig/Job</div>
-          </Link>
-        </div>
-
-        <Link to="/brand-dashboard" className="brand-profile-not-sidemenu mt-5">
-          <i
-            className={
-              location.pathname === "/brand-dashboard"
-                ? "sidemenu-icons active-sidemenu-icons bi bi-speedometer mt-4"
-                : "sidemenu-icons bi bi-speedometer mt-4"
-            }
-            onClick={(e) => {
-              setMenu("view-dashboard");
-            }}
-          ></i>
+          <div className="brand-menu-text">Create Gig/Job</div>
         </Link>
 
         <Link
@@ -209,19 +208,6 @@ const BrandSideMenu = ({ onButtonClick }) => {
         >
           <i style={{ paddingLeft: "15px" }} className="bi bi-speedometer "></i>
           <div className="brand-menu-text">Dashboard</div>
-        </Link>
-
-        <Link to="/list-jobs" className="brand-profile-not-sidemenu mt-5">
-          <i
-            className={
-              myJobs
-                ? "sidemenu-icons active-sidemenu-icons bi bi-person-workspace mt-4"
-                : "sidemenu-icons bi bi-person-workspace mt-4"
-            }
-            onClick={(e) => {
-              setMenu("my-jobs");
-            }}
-          ></i>
         </Link>
 
         <Link
@@ -239,19 +225,6 @@ const BrandSideMenu = ({ onButtonClick }) => {
           <div className="brand-menu-text">My Gigs/Jobs</div>
         </Link>
 
-        <Link to="/find-talents" className="brand-profile-not-sidemenu mt-5">
-          <i
-            className={
-              viewTalents
-                ? "sidemenu-icons active-sidemenu-icons bi bi-people-fill mt-4"
-                : "sidemenu-icons bi bi-people-fill mt-4"
-            }
-            onClick={(e) => {
-              setMenu("view-talents");
-            }}
-          ></i>
-        </Link>
-
         <Link
           to="/find-talents"
           className={
@@ -266,22 +239,6 @@ const BrandSideMenu = ({ onButtonClick }) => {
 
         <Link
           to="/favorite-talents"
-          className="brand-profile-not-sidemenu mt-5"
-        >
-          <i
-            className={
-              viewFavorites
-                ? "sidemenu-icons active-sidemenu-icons bi bi-heart-fill mt-4"
-                : "sidemenu-icons bi bi-heart-fill mt-4"
-            }
-            onClick={(e) => {
-              setMenu("view-favorites");
-            }}
-          ></i>
-        </Link>
-
-        <Link
-          to="/favorite-talents"
           className={
             location.pathname === "/favorite-talents"
               ? "sidemenu-active mt-4"
@@ -290,19 +247,6 @@ const BrandSideMenu = ({ onButtonClick }) => {
         >
           <i style={{ paddingLeft: "15px" }} className="bi bi-heart-fill"></i>
           <div className="brand-menu-text">Favorites</div>
-        </Link>
-
-        <Link to="/brand-help" className="brand-profile-not-sidemenu mt-5">
-          <i
-            className={
-              viewHelp
-                ? "sidemenu-icons active-sidemenu-icons bi  bi-info-circle-fill mt-4"
-                : "sidemenu-icons bi-info-circle-fill mt-4"
-            }
-            onClick={(e) => {
-              setMenu("view-help");
-            }}
-          ></i>
         </Link>
 
         <Link

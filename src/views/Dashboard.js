@@ -553,7 +553,7 @@ const Dashboard = () => {
                     alent
                   </p>
                   <p className="brand-description">
-                    No No Middlemen. No commissions. No Hidden Fees
+                    No Middlemen. No Commission. No Hidden Fees
                   </p>
                 </div>
               </div>
@@ -678,13 +678,13 @@ const Dashboard = () => {
                         className="gallery-img"
                         src={`${API.userFilePath}${item.image?.fileData}`}
                       ></img>
-                      {/* <div className="rating">
+                      <div className="rating">
                         <img src={brightStar}></img>
                         <img src={brightStar}></img>
                         <img src={brightStar}></img>
                         <img src={darkStar}></img>
                         <img src={darkStar}></img>
-                      </div> */}
+                      </div>
                       {!item.isFavorite && (
                         <img
                           className="heart-icon"

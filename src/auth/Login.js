@@ -74,7 +74,6 @@ const Login = () => {
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     const storedEmailID = localStorage.getItem("emailID");
-
     if (storedUserId) {
       setUserId(storedUserId);
     }
@@ -185,16 +184,19 @@ const Login = () => {
 
   // Function to set user ID
   const setTalentLocalStorage = (data) => {
-    console.log(data, "data otp");
+    console.log(data?.user, "data otp");
     localStorage.setItem("userId", data?.user?._id);
     localStorage.setItem("emailID", data?.email);
     localStorage.setItem("token", data?.token);
+    localStorage.setItem("currentUser", data?.user?._id);
     setUserId(userId);
   };
 
   const setBrandsLocalStorage = (data) => {
     console.log(data, "data otp");
     localStorage.setItem("brandId", data?.data?._id);
+    localStorage.setItem("currentUser", data?.data?._id);
+
     localStorage.setItem("brandEmail", data?.data?.brandEmail);
     localStorage.setItem("brandToken", data?.token);
     setUserId(userId);
@@ -286,26 +288,32 @@ const Login = () => {
               )}
             </div>
           </div>
-          <div className="stroke-wrapper login-input-containers">
-            <div className="stroke-div"></div>
-            <div className="or-signup">Or Login with</div>
-            <div className="stroke-div"></div>
-          </div>
-          <div className="signup-options login-input-containers">
-            <div className="google-media">
-              <img src={googleLogo} alt="" />
-              <div className="media-text">Google</div>
-            </div>
-          </div>
+
           <div
             className="login-forgot"
             onClick={() => handleForgotPassword(selectedItem)}
           >
             Forgot Password?
           </div>
+
           <div className="login-btn" onClick={login}>
-            {isLoading ? "Loading..." : "Login"}
+            {isLoading
+              ? "Loading..."
+              : `${selectedItem.charAt(0).toUpperCase() +
+                  selectedItem.slice(1)} Login`}
           </div>
+          {/* <div className="stroke-wrapper login-input-containers">
+            <div className="stroke-div"></div>
+            <div className="or-signup">Or Login with</div>
+            <div className="stroke-div"></div>
+          </div>
+          <div className="signup-options mt-3 login-input-containers">
+            <div className="google-media">
+              <img src={googleLogo} alt="" />
+              <div className="media-text">Google</div>
+            </div>
+          </div> */}
+
           <div className="login-logo">
             <img src={btLogo} alt="" />
           </div>

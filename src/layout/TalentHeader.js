@@ -1,11 +1,40 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/talentHeader.scss";
 import { useNavigate } from "react-router";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../config/api";
 const TalentHeader = ({ toggleMenu }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const model1 = require("../assets/images/girl1.png");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [talentId, setTalentId] = useState(null);
+  const [talentData, setTalentData] = useState();
+
+  useEffect(() => {
+    setTalentId(localStorage.getItem("userId"));
+    console.log(talentId, "talentId");
+    if (talentId) {
+      getTalentById();
+    }
+  }, [talentId]);
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${talentId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const logout = () => {
     navigate("/");
@@ -101,7 +130,10 @@ const TalentHeader = ({ toggleMenu }) => {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img src={model1} alt="" />
+            <img
+              src={`${API.userFilePath}${talentData?.image?.fileData}`}
+              alt=""
+            />
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li>
                 <a

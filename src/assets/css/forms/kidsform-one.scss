@@ -23,6 +23,16 @@
         padding: 20px 0px;
         width: 100%;
       }
+      .kids-form-title-sub {
+        color: #000;
+        font-family: "Open Sans", sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        padding: 20px 0px;
+        width: 100%;
+      }
       .kids-description {
         padding: 20px 0px;
       }
@@ -483,4 +493,16 @@
 
 .upload-info {
   text-align: center;
+}
+
+.address-textarea {
+  height: 100px !important;
+}
+
+.profession-section-cover {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #f8f8f8;
 }

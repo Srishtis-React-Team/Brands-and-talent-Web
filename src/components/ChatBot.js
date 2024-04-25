@@ -54,7 +54,6 @@ const ChatBot = () => {
     const message = chatInputRef.current.value.trim();
     if (!message) return;
     chatInputRef.current.value = "";
-
     if (newSectionID != null) {
       let formData = {
         message: message,
@@ -179,7 +178,6 @@ const ChatBot = () => {
                   </div>
                 </div>
               )}
-
               <div
                 className={`chat ${
                   message.role === "bot" ? "incoming" : "outgoing"
