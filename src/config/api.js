@@ -83,4 +83,17 @@ export const API = {
   jobCount: BASEURL + "gigs/jobCount/",
   getPostedJobs: BASEURL + "gigs/getPostedJobs",
   applyjobs: BASEURL + "gigs/applyjobs",
+
+  //notifications
+  getBrandNotification: BASEURL + "gigs/getBrandNotification/",
+  getCountNotification: BASEURL + "gigs/getCountNotification",
+
+  //chat section
+  listTalentsForChat: BASEURL + "message/listTalentsForChat",
+  listBrandsForChat: BASEURL + "message/listBrandsForChat",
+  addMessage: BASEURL + "message/addMessage",
+
+  //conversation
+  addConversation: BASEURL + "conversation/addConversation",
+  listByConversationId: BASEURL + "conversation/listByConversationId",
 };

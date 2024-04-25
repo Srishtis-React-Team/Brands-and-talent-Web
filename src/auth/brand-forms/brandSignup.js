@@ -35,6 +35,8 @@ const BrandSignup = () => {
   const [googleUser, setGoogleUser] = useState();
   const location = useLocation();
   const [receivedData, setReceivedData] = useState(null);
+  const [fireBaseToken, setFireBaseToken] = useState(null);
+
   useEffect(() => {
     //code for google auth
     console.log(openPopUp, "openPopUp");
@@ -62,6 +64,14 @@ const BrandSignup = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+  useEffect(() => {
+    const fireBaseToken = localStorage.getItem("fcmToken");
+    if (fireBaseToken) {
+      setFireBaseToken(fireBaseToken);
+    }
+    console.log(fireBaseToken, "fireBaseToken");
+  }, [fireBaseToken]);
+
   const socialSignup = async (response, mediaType) => {
     console.log(response, "socialSignupresponse");
     console.log(mediaType, "mediaType");
@@ -73,12 +83,14 @@ const BrandSignup = () => {
         brandEmail: response?.email,
         googleId: response?.sub,
         provider: "google",
+        fcmToken: fireBaseToken,
       };
     } else if (mediaType == "facebook") {
       formData = {
         brandEmail: response?.data?.email,
         facebookId: response?.data?.id,
         provider: "facebook",
+        fcmToken: fireBaseToken,
       };
     }
     setIsLoading(true);
@@ -142,6 +154,7 @@ const BrandSignup = () => {
         brandPassword: adultPassword,
         confirmPassword: adultConfirmPassword,
         position: receivedData,
+        fcmToken: fireBaseToken,
       };
       setIsLoading(true);
       await ApiHelper.post(API.brandsRegister, formData)

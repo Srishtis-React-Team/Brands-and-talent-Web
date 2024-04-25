@@ -140,7 +140,7 @@ const Talentscarousel = () => {
           },
           // Breakpoint from 768 up
           768: {
-            items: 5,
+            items: 4,
           },
         }}
       >

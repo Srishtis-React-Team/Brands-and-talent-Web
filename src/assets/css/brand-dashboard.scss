@@ -81,7 +81,7 @@
 }
 
 .main-pd {
-  padding-left: 9%;
+  padding-left: 1%;
 }
 
 .header__toggle {
@@ -195,6 +195,10 @@
 }
 .brand-menu-text:hover {
   color: #c2114b;
+}
+
+.not-sidebar {
+  display: none;
 }
 
 .not-sidebar .brand-profile-not-sidemenu {

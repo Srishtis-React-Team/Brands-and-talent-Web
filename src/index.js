@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import reportWebVitals from "./reportWebVitals";
 
 // basename="/project/brandsandtalent/"basename="/project/brandsandtalent/"
 // https://hybrid.sicsglobal.com/project/brandsandtalent/
@@ -18,3 +19,4 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById("root")
 );
+reportWebVitals();

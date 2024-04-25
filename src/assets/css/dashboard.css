@@ -730,7 +730,7 @@ a {
     line-height: normal;
     text-align: center;
     padding: 20px 0px;
-    margin-top: 50px;
+    /* margin-top: 50px; */
   }
   .ageverify-title {
     color: #c2114b;

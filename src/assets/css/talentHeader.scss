@@ -111,3 +111,133 @@
     padding-left: 20px;
   }
 }
+
+////////notification****************
+
+.notification-bell-wrapper {
+  padding: 0 15px;
+}
+
+.search-header-icon {
+  padding: 0 15px;
+}
+
+.chat-icon-header {
+  padding: 0 40px 0 15px;
+}
+
+.notification_wrap {
+  // width: 500px;
+  // margin: 430px auto 0;
+}
+
+.notification_wrap .notification_icon {
+  position: relative;
+  padding: 0px 20px;
+  width: 50px;
+  // height: 50px;
+  // font-size: 32px;
+  // margin: 0 auto;
+  // text-align: center;
+  // color: #605dff;
+}
+
+.notification_wrap .notification_icon .bi-bell {
+  cursor: pointer;
+}
+
+.notification_wrap .notification-dropdown {
+  width: 350px;
+  height: auto;
+  background: #fff;
+  border-radius: 0px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.125);
+  // margin: 600px 0px 0px 0px;
+  // padding: 15px;
+  position: absolute;
+  top: 75px;
+  right: 103px;
+  display: none;
+}
+
+.notification_wrap .notification-dropdown .notify_item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #dbdaff;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-bottom: 1px solid #dbdaff;
+  background-color: #c2114b;
+}
+
+.notification-message-text {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.notification-close {
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.notification_wrap .notification-dropdown .notify_item:last-child {
+  border-bottom: 0px;
+}
+
+.notification_wrap .notification-dropdown .notify_item .notify_img {
+  margin-right: 15px;
+}
+
+.notification-user-image {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.notification_wrap .notification-dropdown .notify_item .notify_info p {
+  margin-bottom: 5px;
+}
+
+.notification_wrap .notification-dropdown .notify_item .notify_info p span {
+  color: #605dff;
+  margin-left: 5px;
+}
+
+.notification_wrap
+  .notification-dropdown
+  .notify_item
+  .notify_info
+  .notify_time {
+  color: #c5c5e6;
+  font-size: 12px;
+}
+
+.notification_wrap .notification-dropdown:before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 76%;
+  transform: translateX(-50%);
+  border: 15px solid;
+  border-color: transparent transparent #c2114b transparent;
+  // border: 1px solid #c2114b;
+}
+
+.notification_wrap .notification-dropdown.active {
+  display: block;
+  border: 1px solid #d3d3d3;
+}
+
+p {
+  margin-bottom: 0px !important;
+}

@@ -23,7 +23,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
   const location = useLocation();
   const { jobId } = location.state || {};
   console.log(jobId, "jobId");
-
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);

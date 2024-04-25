@@ -15,6 +15,7 @@ const BrandHome = () => {
   const users = require("../../assets/icons/sidemenu/users.png");
   const girl1 = require("../../assets/images/girl1.png");
   const [showSidebar, setShowSidebar] = useState(true);
+  const [mobileSideBar, setMobileSidebar] = useState(true);
   const [photosList, setPhotosList] = useState([]);
   const [talentList, setTalentList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
@@ -92,16 +93,28 @@ const BrandHome = () => {
     });
   }
 
+  const handleChildClick = () => {
+    console.log("Child button clicked");
+    setMobileSidebar(false);
+  };
+
+  useEffect(() => {
+    console.log(mobileSideBar, "ChildmobileSideBar");
+  }, [mobileSideBar]);
+  useEffect(() => {
+    console.log(showSidebar, "ChildshowSidebar");
+  }, [showSidebar]);
+
   return (
     <>
       <BrandHeader toggleMenu={toggleMenu} />
       <div
         id="sidebarBrand"
         className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "not-sidebar"
+          showSidebar && mobileSideBar ? "show-sidebar" : "not-sidebar"
         }`}
       >
-        <BrandSideMenu data={showSidebar} />
+        <BrandSideMenu onChildClick={handleChildClick} />
       </div>
       <main
         id="mainBrand"

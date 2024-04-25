@@ -217,7 +217,7 @@ const KidsFormTwo = () => {
                         <button
                           className={
                             index === 0
-                              ? "choose-btn disabled-plan"
+                              ? "choose-btn disabled-plan first-plan-choose"
                               : "choose-btn"
                           }
                           onClick={(e) => {

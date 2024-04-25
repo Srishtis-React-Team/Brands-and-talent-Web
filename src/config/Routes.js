@@ -44,6 +44,12 @@ import BrandTalents from "../brand/pages/BrandTalents";
 import BrandFavorites from "../brand/pages/BrandFavorites";
 import BrandHelp from "../brand/pages/BrandHelp";
 import JobSuccess from "../brand/pages/JobSuccess";
+import MessageContainer from "../components/message/MessageContainer";
+import MessageTalents from "../components/message/MessageTalents";
+import SocketTest from "../components/message/SocketTest";
+import TalentPreviewJob from "../views/TalentPreviewJob";
+
+import SocketTalents from "../components/message/SocketTalents";
 function Routing() {
   return (
     <Routes>
@@ -94,6 +100,11 @@ function Routing() {
       <Route path="/brand-help" element={<BrandHelp />} />
       <Route path="/preview-job" element={<PreviewJob />} />
       <Route path="/job-success" element={<JobSuccess />} />
+      <Route path="/user-message" element={<MessageContainer />} />
+      <Route path="/talent-message" element={<MessageTalents />} />
+      <Route path="/preview-job-talent" element={<TalentPreviewJob />} />
+      <Route path="/socket-brands" element={<SocketTest />} />
+      <Route path="/socket-talents" element={<SocketTalents />} />
     </Routes>
   );
 }
