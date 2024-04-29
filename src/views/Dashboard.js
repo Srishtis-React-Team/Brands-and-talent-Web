@@ -582,8 +582,9 @@ const Dashboard = () => {
                     Skip the search, skip the stress. Hire dream talent in
                     minutes.
                   </div>
+
                   <div
-                    className="hire-wrapper center"
+                    className="Join-now-wrapper"
                     onClick={(e) => {
                       navigate("/signup", {
                         state: { signupCategory: "brand" },
@@ -606,7 +607,7 @@ const Dashboard = () => {
         <div className="container-fluid">
           <div className="tabs-section">
             <div className="title">Popular Talent</div>
-            <div className="tabs">
+            {/* <div className="tabs">
               <div
                 className={All ? "active-tab" : null}
                 onClick={(e) => {
@@ -663,7 +664,7 @@ const Dashboard = () => {
               >
                 More
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

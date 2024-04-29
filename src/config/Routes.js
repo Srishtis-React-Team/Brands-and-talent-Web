@@ -48,8 +48,9 @@ import MessageContainer from "../components/message/MessageContainer";
 import MessageTalents from "../components/message/MessageTalents";
 import SocketTest from "../components/message/SocketTest";
 import TalentPreviewJob from "../views/TalentPreviewJob";
-
 import SocketTalents from "../components/message/SocketTalents";
+import Chat from "../chat/Chat";
+import Blogs from "../pages/Blogs";
 function Routing() {
   return (
     <Routes>
@@ -62,6 +63,7 @@ function Routing() {
       <Route path="/otp" element={<OTPComponent />} />
       <Route path="/about-us" element={<About />} />
       <Route path="/community-guidelines" element={<Guidelines />} />
+      <Route path="/blogs" element={<Blogs />} />
       <Route path="/post-job" element={<PostJob />} />
       <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/login" element={<Login />}></Route>
@@ -100,11 +102,8 @@ function Routing() {
       <Route path="/brand-help" element={<BrandHelp />} />
       <Route path="/preview-job" element={<PreviewJob />} />
       <Route path="/job-success" element={<JobSuccess />} />
-      <Route path="/user-message" element={<MessageContainer />} />
-      <Route path="/talent-message" element={<MessageTalents />} />
+      <Route path="/message" element={<MessageTalents />} />
       <Route path="/preview-job-talent" element={<TalentPreviewJob />} />
-      <Route path="/socket-brands" element={<SocketTest />} />
-      <Route path="/socket-talents" element={<SocketTalents />} />
     </Routes>
   );
 }

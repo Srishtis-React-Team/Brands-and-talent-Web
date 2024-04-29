@@ -20,6 +20,9 @@ import compensationType from "../../components/compensationType";
 import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
 import { useLocation } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import Stack from "@mui/material/Stack";
 
 const CreateJobs = () => {
   const toggleMenu = () => {
@@ -1311,35 +1314,6 @@ const CreateJobs = () => {
     }
   };
 
-  const [inputValue, setInputValue] = useState("");
-  const [skills, setSkills] = useState([]);
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      addSkill();
-    }
-  };
-  const addSkillCall = () => {
-    addSkill();
-  };
-
-  const addSkill = () => {
-    if (inputValue.trim() !== "") {
-      setSkills([...skills, inputValue]);
-      setInputValue("");
-    }
-  };
-
-  const removeSkill = (index) => {
-    const newSkills = [...skills];
-    newSkills.splice(index, 1);
-    setSkills(newSkills);
-  };
-
   const [selectedTab, setSelectedTab] = useState("create-job");
 
   const handleJobTabs = (e) => {
@@ -1355,6 +1329,49 @@ const CreateJobs = () => {
     setShowSidebar(!showSidebar);
     console.log(data, "handleButtonClickData");
   };
+
+  const [skills, setSkills] = useState([]);
+  const [skillInputValue, setSkillInputValue] = useState("");
+
+  const handleKeyDown = (e) => {
+    // console.log(e.inputProps.value, "e");
+    setSkillInputValue(e.inputProps.value);
+    if (e.key === "Enter") {
+      addSkill();
+    }
+  };
+  const addSkillCall = () => {
+    addSkill();
+  };
+  const addSkill = () => {
+    if (skillInputValue.trim() !== "") {
+      setSkills([...skills, skillInputValue]);
+      setSkillInputValue("");
+    }
+  };
+  const removeSkill = (index) => {
+    const newSkills = [...skills];
+    newSkills.splice(index, 1);
+    setSkills(newSkills);
+  };
+
+  useEffect(() => {
+    console.log(skillInputValue, "skills");
+  }, [skills]);
+  useEffect(() => {
+    console.log(skills, "skills");
+  }, [skills]);
+
+  const top100Films = [
+    { title: "Html" },
+    { title: "Css" },
+    { title: "Accounting" },
+    { title: "Tally" },
+    { title: "Javascript" },
+    { title: "Premier Pro" },
+    { title: "Photo Shop" },
+  ];
+  console.log(skillInputValue, "skillInputValue");
 
   return (
     <>
@@ -1600,14 +1617,41 @@ const CreateJobs = () => {
                         <div className="mb-3">
                           <div className="form-group add-skill-wrapper">
                             {/* has-search <span className="fa fa-search form-control-feedback"></span> */}
-                            <input
+
+                            <Stack spacing={2} sx={{ width: 300 }}>
+                              <Autocomplete
+                                freeSolo
+                                id="free-solo-2-demo"
+                                disableClearable
+                                options={top100Films.map(
+                                  (option) => option.title
+                                )}
+                                value={skillInputValue}
+                                onChange={(event, newValue) => {
+                                  setSkillInputValue(newValue);
+                                }}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    label="Search input"
+                                    InputProps={{
+                                      ...params.InputProps,
+                                      type: "search",
+                                    }}
+                                    onKeyUp={() => handleKeyDown(params)}
+                                  />
+                                )}
+                              />
+                            </Stack>
+
+                            {/* <input
                               type="text"
                               className="form-control"
-                              placeholder="Add Your Skills"
+                              placeholder="Add New Skills"
                               value={inputValue}
                               onChange={handleInputChange}
                               onKeyDown={handleKeyDown}
-                            />
+                            /> */}
                             <div
                               className="add-skill-btn"
                               onClick={addSkillCall}

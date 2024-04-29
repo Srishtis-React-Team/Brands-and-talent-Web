@@ -57,6 +57,11 @@ const PreviewJob = ({ data, onButtonClick }) => {
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
+        navigate("/list-jobs", {
+          state: {
+            jobId: jobId,
+          },
+        });
       }, 2000);
     }
   };

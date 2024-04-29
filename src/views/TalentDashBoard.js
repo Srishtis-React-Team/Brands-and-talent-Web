@@ -355,7 +355,11 @@ const TalentDashBoard = () => {
                   })}
                 </div>
               )}
+              {gigsList.length == 0 && (
+                <div className="recent-gigs-main">No Jobs Available</div>
+              )}
             </div>
+
             <div className="talent-column-two col-lg-4">
               <div className="contact-section-main">
                 <div className="contact-wrapper">
@@ -380,11 +384,18 @@ const TalentDashBoard = () => {
                         <>
                           <div className="top-brands-wrapper">
                             <div className="top-brand-img-wrapper">
-                              <img
-                                className="top-brand-img"
-                                src={API.userFilePath + item.brandImage}
-                                alt=""
-                              />
+                              {item.brandImage.length > 0 ? (
+                                <img
+                                  className="top-brand-img"
+                                  src={
+                                    API.userFilePath +
+                                    item.brandImage[0].fileData
+                                  }
+                                  alt=""
+                                />
+                              ) : (
+                                <div>No Image Available</div>
+                              )}
                             </div>
                             <div className="top-brands-name">
                               {item.brandName}

@@ -69,6 +69,11 @@ const BrandHeader = ({ toggleMenu }) => {
     console.log(brandData, "brandData");
   }, [brandData]);
 
+  const gotomessage = (item) => {
+    console.log(item, "gotomessage");
+    navigate(`/message?${item?.talentId}`);
+  };
+
   const getBrandNotification = async () => {
     await ApiHelper.get(`${API.getBrandNotification}${brandId}`)
       .then((resData) => {
@@ -183,7 +188,13 @@ const BrandHeader = ({ toggleMenu }) => {
                 {notificationList &&
                   notificationList.length > 0 &&
                   notificationList.map((item, index) => (
-                    <div className="notify_item" key={index}>
+                    <div
+                      className="notify_item"
+                      key={index}
+                      onClick={(e) => {
+                        gotomessage(item);
+                      }}
+                    >
                       <div className="notify_img">
                         {item?.talentDetails?.image &&
                           item.talentDetails.image[0]?.fileData && (
@@ -203,6 +214,14 @@ const BrandHeader = ({ toggleMenu }) => {
                       </div>
                     </div>
                   ))}
+
+                {notificationList.length === 0 && (
+                  <>
+                    <div className="notify_item">
+                      No Notifications Available
+                    </div>
+                  </>
+                )}
 
                 {/* <div className="notify_item">
                   <div className="notify_img">
