@@ -189,6 +189,8 @@ const Login = () => {
     localStorage.setItem("emailID", data?.email);
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
+    localStorage.setItem("currentUserType", data?.user?.userType);
+
     setUserId(userId);
   };
 
@@ -196,9 +198,9 @@ const Login = () => {
     console.log(data, "data otp");
     localStorage.setItem("brandId", data?.data?._id);
     localStorage.setItem("currentUser", data?.data?._id);
-
     localStorage.setItem("brandEmail", data?.data?.brandEmail);
     localStorage.setItem("brandToken", data?.token);
+    localStorage.setItem("currentUserType", data?.data?.userType);
     setUserId(userId);
   };
 

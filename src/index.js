@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import reportWebVitals from "./reportWebVitals";
+import { StyledEngineProvider } from "@mui/material";
 
 // basename="/project/brandsandtalent/"basename="/project/brandsandtalent/"
 // https://hybrid.sicsglobal.com/project/brandsandtalent/
@@ -13,7 +14,9 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <BrowserRouter>
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
-      <App />
+      <StyledEngineProvider injectFirst>
+        <App />
+      </StyledEngineProvider>
     </GoogleOAuthProvider>
     ;
   </BrowserRouter>,

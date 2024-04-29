@@ -32,7 +32,6 @@ const AdultSignup = () => {
   const [googleUser, setGoogleUser] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
-
   const [openPopUp, setOpenPopUp] = useState(false);
 
   useEffect(() => {
@@ -121,7 +120,8 @@ const AdultSignup = () => {
         .then((resData) => {
           setIsLoading(false);
           if (resData.data.status === true) {
-            console.log(resData.data);
+            console.log(resData.data, "adultSignUp");
+
             setMessage("Registered SuccessFully!");
             setOpenPopUp(true);
             setTimeout(function() {

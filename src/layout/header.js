@@ -57,8 +57,11 @@ const Header = ({ sendMessageToParent }) => {
     modal.show();
   };
 
-  const handleClick = () => {
+  const handleClick = (data) => {
     window.scrollTo(0, 0); // Scroll to top on link click
+    if (data == "post-job") {
+      alert("Youneed to login first");
+    }
   };
 
   return (
@@ -75,7 +78,11 @@ const Header = ({ sendMessageToParent }) => {
 
         <div className="mobile-nav-functions">
           <div className="">
-            <NavLink to="/login" className="login-text " onClick={handleClick}>
+            <NavLink
+              to="/login"
+              className="login-text "
+              onClick={() => handleClick("")}
+            >
               Login
             </NavLink>
           </div>
@@ -100,27 +107,27 @@ const Header = ({ sendMessageToParent }) => {
       <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
         <div className="mobile-menu-items">
           <div>
-            <NavLink to="/" onClick={handleClick}>
+            <NavLink to="/" onClick={() => handleClick("")}>
               Home
             </NavLink>
           </div>
           <div>
-            <NavLink to="/" onClick={handleClick}>
+            <NavLink to="/login" onClick={() => handleClick("post-job")}>
               Post a Job
             </NavLink>
           </div>
           <div>
-            <NavLink to="/find-creators" onClick={handleClick}>
+            <NavLink to="/find-creators" onClick={() => handleClick("")}>
               Find Talent
             </NavLink>
           </div>
           <div>
-            <NavLink to="/how-it-works" onClick={handleClick}>
+            <NavLink to="/how-it-works" onClick={() => handleClick("")}>
               How It Works
             </NavLink>
           </div>
           <div>
-            <NavLink to="/pricing" onClick={handleClick}>
+            <NavLink to="/pricing" onClick={() => handleClick("")}>
               Pricing
             </NavLink>
           </div>
@@ -138,7 +145,7 @@ const Header = ({ sendMessageToParent }) => {
             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
                 <a className="dropdown-item">
-                  <NavLink to="/resources" onClick={handleClick}>
+                  <NavLink to="/resources" onClick={() => handleClick("")}>
                     About
                   </NavLink>
                 </a>
@@ -149,12 +156,16 @@ const Header = ({ sendMessageToParent }) => {
                   dropdown-toggle
                   data-bs-toggle="dropdown"
                 >
-                  Blogs
+                  <NavLink to="/blogs" onClick={() => handleClick("")}>
+                    Blogs
+                  </NavLink>
                 </a>
                 <ul className="dropdown-menu mobile-blogs-menu">
                   <li>
                     <a href="" className="dropdown-item">
-                      Industry News & Insights
+                      <NavLink to="/blogs" onClick={() => handleClick("")}>
+                        Industry News & Insights
+                      </NavLink>
                     </a>
                   </li>
                   <li>
@@ -182,8 +193,16 @@ const Header = ({ sendMessageToParent }) => {
               <li>
                 <hr className="dropdown-divider"></hr>
               </li>
+
               <li>
-                <a className="dropdown-item">Community guidelines</a>
+                <a className="dropdown-item">
+                  <NavLink
+                    to="/community-guidelines"
+                    onClick={() => handleClick("")}
+                  >
+                    About
+                  </NavLink>
+                </a>
               </li>
             </ul>
           </div>
@@ -226,40 +245,119 @@ const Header = ({ sendMessageToParent }) => {
           <div className="header-items">
             <div className=" menu-items">
               <div>
-                <NavLink to="/" onClick={handleClick}>
+                <NavLink to="/" onClick={() => handleClick("")}>
                   Home
                 </NavLink>
               </div>
               <div>
-                <NavLink to="/post-job" onClick={handleClick}>
+                <NavLink to="/login" onClick={() => handleClick("post-job")}>
                   Post a Job
                 </NavLink>
               </div>
               <div>
-                <NavLink to="/find-creators" onClick={handleClick}>
+                <NavLink to="/find-creators" onClick={() => handleClick("")}>
                   Find Talent
                 </NavLink>
               </div>
               {/* <div>
-            <NavLink to="/get-booked" onClick={handleClick}>
+            <NavLink to="/get-booked" onClick={() => handleClick("")}>
               Get Booked
             </NavLink>
           </div> */}
               <div>
-                <NavLink to="/how-it-works" onClick={handleClick}>
+                <NavLink to="/how-it-works" onClick={() => handleClick("")}>
                   How It Works
                 </NavLink>
               </div>
               <div>
-                <NavLink to="/pricing" onClick={handleClick}>
+                <NavLink to="/pricing" onClick={() => handleClick("")}>
                   Pricing
                 </NavLink>
               </div>
               <div>
-                {/* <NavLink to="/resources" onClick={handleClick}>
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Dropdown
+                  </a>
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <li>
+                      <NavLink to="/resources" onClick={() => handleClick("")}>
+                        <a className="dropdown-item">About</a>
+                      </NavLink>
+                    </li>
+                    <li className="dropend">
+                      <a
+                        className="dropdown-item dropdown-toggle"
+                        dropdown-toggle
+                        data-bs-toggle="dropdown"
+                      >
+                        <NavLink to="/blogs" onClick={() => handleClick("")}>
+                          Blogs
+                        </NavLink>
+                      </a>
+                      <ul className="dropdown-menu blogs-menu">
+                        <li>
+                          <a href="" className="dropdown-item">
+                            <NavLink
+                              to="/blogs"
+                              onClick={() => handleClick("")}
+                            >
+                              Industry News & Insights
+                            </NavLink>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="" className="dropdown-item">
+                             Case Studies
+                          </a>
+                        </li>
+                        <li>
+                          <a href="" className="dropdown-item">
+                            Talent Diaries
+                          </a>
+                        </li>
+                        <li>
+                          <a href="" className="dropdown-item">
+                             Talent Tips & Tricks
+                          </a>
+                        </li>
+                        <li>
+                          <a href="" className="dropdown-item">
+                             Brand Tips & Tricks
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider"></hr>
+                    </li>
+                    <li>
+                      <a className="dropdown-item">
+                        <NavLink
+                          to="/community-guidelines"
+                          onClick={() => handleClick("")}
+                        >
+                          Community Guidelines
+                        </NavLink>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                {/* <NavLink to="/resources" onClick={() => handleClick("")}>
               Resources
             </NavLink> */}
-                <a
+                {/* <a
                   className="dropdown-toggle"
                   id="navbarDropdown"
                   role="button"
@@ -271,7 +369,7 @@ const Header = ({ sendMessageToParent }) => {
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>
-                    <NavLink to="/resources" onClick={handleClick}>
+                    <NavLink to="/resources" onClick={() => handleClick("")}>
                       <a className="dropdown-item">About</a>
                     </NavLink>
                   </li>
@@ -281,12 +379,16 @@ const Header = ({ sendMessageToParent }) => {
                       dropdown-toggle
                       data-bs-toggle="dropdown"
                     >
-                      Blogs
+                      <NavLink to="/blogs" onClick={() => handleClick("")}>
+                        Blogs
+                      </NavLink>
                     </a>
                     <ul className="dropdown-menu">
                       <li>
                         <a href="" className="dropdown-item">
-                          Industry News & Insights
+                          <NavLink to="/blogs" onClick={() => handleClick("")}>
+                            Industry News & Insights
+                          </NavLink>
                         </a>
                       </li>
                       <li>
@@ -315,9 +417,16 @@ const Header = ({ sendMessageToParent }) => {
                     <hr className="dropdown-divider"></hr>
                   </li>
                   <li>
-                    <a className="dropdown-item">Community guidelines</a>
+                    <a className="dropdown-item">
+                      <NavLink
+                        to="/community-guidelines"
+                        onClick={() => handleClick("")}
+                      >
+                        Community Guidelines
+                      </NavLink>
+                    </a>
                   </li>
-                </ul>
+                </ul> */}
               </div>
             </div>
             <div className="header-functions">
@@ -376,7 +485,7 @@ const Header = ({ sendMessageToParent }) => {
                 <NavLink
                   to="/login"
                   className="login-text"
-                  onClick={handleClick}
+                  onClick={() => handleClick("")}
                 >
                   Login
                 </NavLink>
@@ -415,7 +524,7 @@ const Header = ({ sendMessageToParent }) => {
           </div>
         </div>
       </div>
-      {/* <NavLink to="/signup"  onClick={handleClick}></NavLink>            </NavLink> */}
+      {/* <NavLink to="/signup"  onClick={() => handleClick("")}></NavLink>            </NavLink> */}
 
       <div
         className="modal fade"

@@ -288,6 +288,7 @@ const ListJobs = () => {
                                     </div>
                                   </div>
                                 </div>
+
                                 {job?.jobDescription?.map(
                                   (htmlContent, index) => (
                                     <div

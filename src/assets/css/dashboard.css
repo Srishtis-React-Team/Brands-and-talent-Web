@@ -419,6 +419,29 @@ a {
 }
 
 @media (min-width: 480px) {
+  .nav-item.dropdown {
+    list-style-type: none; /* Removes bullets */
+  }
+
+  .nav-link {
+    color: #000;
+    font-size: 12px;
+    padding: 0;
+  }
+  .nav-link:hover {
+    color: #c2114b;
+    font-size: 12px;
+  }
+
+  .dropdown:hover > .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+  .dropend:hover > .blogs-menu {
+    display: block;
+    margin-top: 0;
+  }
+
   .step2-selection {
     display: flex;
     justify-content: center;

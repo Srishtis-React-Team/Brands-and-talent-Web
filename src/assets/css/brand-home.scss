@@ -17,7 +17,7 @@
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-radius: 10px;
-  padding: 30px;
+  padding: 15px;
 }
 
 .home-add-title-wrapper {
@@ -98,7 +98,6 @@
 
 .campaign-features {
   display: flex;
-  justify-content: space-between;
 }
 
 .campaigns-wrapper-one {
@@ -110,6 +109,11 @@
 
 .campaign-features-wrapper {
   display: flex;
+  border: 0.5px solid silver;
+  border-style: dashed;
+  border-radius: 8px;
+  padding: 10px;
+  margin-right: 15px;
 }
 
 .campaign-icons-wrapper {
@@ -119,9 +123,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
-  margin-right: 15px;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }
 
 .campaign-features-title {
@@ -160,7 +164,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  padding: 10px 0px;
+  padding: 10px 0px 20px 0px;
   line-height: normal;
 }
 
@@ -374,7 +378,7 @@
   .top-brands-main {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
     .top-brands-wrapper {
       width: 30%;
       padding: 10px;

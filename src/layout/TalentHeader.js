@@ -10,17 +10,64 @@ const TalentHeader = ({ toggleMenu }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
+  const [notificationList, setNotifications] = useState([]);
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // Toggle dropdown when clicking the bell icon
+    document.addEventListener("click", function(event) {
+      if (event?.target?.closest(".notification_icon")) {
+        var dropdown = document?.querySelector(".notification-dropdown");
+        dropdown?.classList?.toggle("active");
+      }
+    });
+
+    // Close dropdown when clicking the close icon
+    document.addEventListener("click", function(event) {
+      if (event?.target?.closest(".notification-close")) {
+        var dropdown = document?.querySelector(".notification-dropdown");
+        dropdown?.classList?.remove("active");
+      }
+    });
+
+    // Close dropdown when clicking outside of it
+    document.addEventListener("click", function(event) {
+      var dropdown = document.querySelector(".notification-dropdown");
+      if (
+        !event?.target?.closest(".notification-bell-wrapper") &&
+        dropdown?.classList?.contains("active")
+      ) {
+        dropdown?.classList?.remove("active");
+      }
+    });
+  });
+
+  const closeNotification = () => {
+    // var dropdown = document.querySelector(".notification-dropdown");
+    // dropdown.classList.toggle("active");
+  };
 
   useEffect(() => {
     setTalentId(localStorage.getItem("userId"));
     console.log(talentId, "talentId");
     if (talentId) {
       getTalentById();
+      getTalentNotification();
     }
   }, [talentId]);
+
+  const getTalentNotification = async () => {
+    await ApiHelper.get(`${API.getTalentNotification}${talentId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setNotifications(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
   useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+    console.log(notificationList, "notificationList");
+  }, [notificationList]);
 
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
@@ -36,8 +83,17 @@ const TalentHeader = ({ toggleMenu }) => {
       });
   };
 
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+
   const logout = () => {
     navigate("/");
+  };
+
+  const gotomessage = (item) => {
+    console.log(item, "gotomessage");
+    navigate(`/message?${item?.brandId}`);
   };
 
   return (
@@ -100,17 +156,94 @@ const TalentHeader = ({ toggleMenu }) => {
               </form>
             </div>
           </div>
-          <div className="talent-notification">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-bell"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
-            </svg>
+          <div className="notification-bell-wrapper">
+            <div className="notification_wrap">
+              <div className="notification_icon ">
+                <i className="bi bi-bell"></i>
+              </div>
+              <div className="notification-dropdown">
+                <div className=" notification-header">
+                  <div className="notification-message-text">Notifications</div>
+                  <div>
+                    <i className="fas fa-close notification-close"></i>
+                  </div>
+                </div>
+                {notificationList &&
+                  notificationList.length > 0 &&
+                  notificationList.map((item, index) => (
+                    <div
+                      className="notify_item"
+                      key={index}
+                      onClick={(e) => {
+                        gotomessage(item);
+                      }}
+                    >
+                      <div className="notify_img">
+                        {item?.talentDetails?.image &&
+                          item.talentDetails.image[0]?.fileData && (
+                            <img
+                              className="notification-user-image"
+                              src={`${API.userFilePath}${item.talentDetails?.image[0]?.fileData}`}
+                              alt="profile_pic"
+                            />
+                          )}
+                      </div>
+                      <div className="notify_info">
+                        <p>You Applied for {item?.gigDetails?.jobTitle}</p>
+                        <span className="notify_time">Just now</span>
+                      </div>
+                    </div>
+                  ))}
+
+                {notificationList.length === 0 && (
+                  <>
+                    <div className="notify_item">
+                      No Notifications Available
+                    </div>
+                  </>
+                )}
+
+                {/* <div className="notify_item">
+                  <div className="notify_img">
+                    <img
+                      className="notification-user-image"
+                      src={model1}
+                      alt="profile_pic"
+                    ></img>
+                  </div>
+                  <div className="notify_info">
+                    <p>Alex Send a message</p>
+                    <span className="notify_time">55 minutes ago</span>
+                  </div>
+                </div>
+                <div className="notify_item">
+                  <div className="notify_img">
+                    <img
+                      className="notification-user-image"
+                      src={model1}
+                      alt="profile_pic"
+                    ></img>
+                  </div>
+                  <div className="notify_info">
+                    <p>Alex Send a message</p>
+                    <span className="notify_time">2 hours ago</span>
+                  </div>
+                </div>
+                <div className="notify_item">
+                  <div className="notify_img">
+                    <img
+                      className="notification-user-image"
+                      src={model1}
+                      alt="profile_pic"
+                    ></img>
+                  </div>
+                  <div className="notify_info">
+                    <p>Alex Send a message</p>
+                    <span className="notify_time">6 hours ago</span>
+                  </div>
+                </div> */}
+              </div>
+            </div>
           </div>
           <div className="talent-chat-icon">
             <svg
