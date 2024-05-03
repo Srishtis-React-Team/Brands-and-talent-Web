@@ -57,6 +57,7 @@ const CreateJobs = () => {
   const [selectedJobID, setSelectedJobID] = useState(null);
   const [editJobData, setEditJobData] = useState(null);
   const [brandId, setBrandId] = useState(null);
+  const [brandImage, setBrandImage] = useState(null);
 
   useEffect(() => {
     console.log(editData, "editData");
@@ -365,11 +366,13 @@ const CreateJobs = () => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
+    setBrandImage(localStorage.getItem("currentUserImage"));
     console.log(brandId, "brandId");
+    console.log(brandImage, "brandImage");
     if (brandId && brandId != null) {
       getAllJobs(brandId);
     }
-  }, [brandId]);
+  }, [brandId, brandImage]);
 
   const [showSidebar, setShowSidebar] = useState(true);
 
@@ -977,6 +980,7 @@ const CreateJobs = () => {
         hiringCompanyDescription: clientDescription,
         howLikeToApply: selectedApplyOption,
         workSamples: portofolioFile,
+        brandImage: brandImage,
       };
       if (editData?.type == "Draft") {
         await ApiHelper.post(`${API.editDraft}${editData?.value}`, formData)
@@ -1098,6 +1102,7 @@ const CreateJobs = () => {
         howLikeToApply: selectedApplyOption,
         workSamples: portofolioFile,
         brandId: brandId,
+        brandImage: brandImage,
       };
       console.log(formData, "CREATEJOB_PAYLOAD");
       await ApiHelper.post(API.draftJob, formData)

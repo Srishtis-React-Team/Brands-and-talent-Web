@@ -4,6 +4,8 @@ import "../assets/css/dashboard.css";
 import { useNavigate } from "react-router";
 import { Route } from "react-router";
 import Register from "../auth/Register";
+import { Dropdown } from "react-bootstrap";
+import PopUp from "../components/PopUp";
 const Header = ({ sendMessageToParent }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
@@ -14,13 +16,26 @@ const Header = ({ sendMessageToParent }) => {
   const [below_18, setBelow_18] = useState(false);
   const [talent, setTalent] = useState(true);
   const [brand, setBrand] = useState(false);
+  const [currentUserId, setcurrentUserId] = useState(null);
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
+  useEffect(() => {
+    setcurrentUserId(localStorage.getItem("currentUser"));
+    console.log(currentUserId, "currentUserId header");
+  }, [currentUserId]);
 
-  const messageToSignup = () => {
-    // Call the function passed from the parent with a message
+  const login = () => {
+    navigate("/login");
   };
 
   const logout = () => {
-    navigate("/");
+    localStorage.clear();
+    setcurrentUserId(null);
+    setMessage("Logged Out SuccessFully");
+    setOpenPopUp(true);
+    setTimeout(function() {
+      setOpenPopUp(false);
+    }, 1000);
   };
 
   function userType(e) {
@@ -77,7 +92,7 @@ const Header = ({ sendMessageToParent }) => {
         </div>
 
         <div className="mobile-nav-functions">
-          <div className="">
+          {/* <div className="">
             <NavLink
               to="/login"
               className="login-text "
@@ -85,7 +100,7 @@ const Header = ({ sendMessageToParent }) => {
             >
               Login
             </NavLink>
-          </div>
+          </div> */}
           <div
             className="signup mobile-signup"
             data-bs-toggle="modal"
@@ -126,11 +141,13 @@ const Header = ({ sendMessageToParent }) => {
               How It Works
             </NavLink>
           </div>
-          <div>
-            <NavLink to="/pricing" onClick={() => handleClick("")}>
-              Pricing
-            </NavLink>
-          </div>
+          {currentUserId != null && (
+            <div>
+              <NavLink to="/pricing" onClick={() => handleClick("")}>
+                Pricing
+              </NavLink>
+            </div>
+          )}
           <div>
             <a
               className="dropdown-toggle"
@@ -269,11 +286,15 @@ const Header = ({ sendMessageToParent }) => {
                   How It Works
                 </NavLink>
               </div>
-              <div>
-                <NavLink to="/pricing" onClick={() => handleClick("")}>
-                  Pricing
-                </NavLink>
-              </div>
+
+              {currentUserId != null && (
+                <div>
+                  <NavLink to="/pricing" onClick={() => handleClick("")}>
+                    Pricing
+                  </NavLink>
+                </div>
+              )}
+
               <div>
                 <li class="nav-item dropdown">
                   <a
@@ -284,7 +305,7 @@ const Header = ({ sendMessageToParent }) => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    Dropdown
+                    Resources
                   </a>
                   <ul
                     className="dropdown-menu"
@@ -481,7 +502,7 @@ const Header = ({ sendMessageToParent }) => {
                 </div>
               </div>
 
-              <div className="">
+              {/* <div className="">
                 <NavLink
                   to="/login"
                   className="login-text"
@@ -489,7 +510,7 @@ const Header = ({ sendMessageToParent }) => {
                 >
                   Login
                 </NavLink>
-              </div>
+              </div> */}
               <div
                 className="signup"
                 data-bs-toggle="modal"
@@ -497,29 +518,29 @@ const Header = ({ sendMessageToParent }) => {
               >
                 Sign up for free
               </div>
-              <div
-                className="gridLogo"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <img src={gridLogo} alt="" />
+
+              <div class="dropdown">
+                <div
+                  className="gridLogo"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img src={gridLogo} alt="" />
+                </div>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  {currentUserId != null && (
+                    <li onClick={() => logout()}>
+                      <a class="dropdown-item">Logout</a>
+                    </li>
+                  )}
+                  {currentUserId === null && (
+                    <li onClick={() => login()}>
+                      <a class="dropdown-item">Login</a>
+                    </li>
+                  )}
+                </ul>
               </div>
-              <ul
-                className="dropdown-menu"
-                aria-labelledby="dropdownMenuButton1"
-              >
-                <li>
-                  <a
-                    className="dropdown-item"
-                    onClick={(e) => {
-                      logout();
-                    }}
-                  >
-                    Log Out
-                  </a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -639,6 +660,7 @@ const Header = ({ sendMessageToParent }) => {
           </div>
         </div>
       </div>
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };

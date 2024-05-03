@@ -88,6 +88,7 @@ export const API = {
   getBrandNotification: BASEURL + "gigs/getBrandNotification/",
   getTalentNotification: BASEURL + "gigs/getTalentNotification/",
   getCountNotification: BASEURL + "gigs/getCountNotification",
+  getAppliedjobs: BASEURL + "gigs/getAppliedjobs",
 
   //chat section
   listTalentsForChat: BASEURL + "message/listTalentsForChat",
@@ -103,6 +104,9 @@ export const API = {
   findPreviousChatUsers: BASEURL + "chat/findPreviousChatUsers/",
   findUserChats: BASEURL + "chat/findUserChats/",
   findChat: BASEURL + "chat/findChat/",
+  filterNames: BASEURL + "chat/filterNames/",
   createMessage: BASEURL + "message/createMessage",
   getMessages: BASEURL + "message/getMessages/",
+  getMessageByUser: BASEURL + "message/getMessageByUser",
+  deleteMessage: BASEURL + "message/deleteMessage",
 };

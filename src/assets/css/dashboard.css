@@ -3048,3 +3048,11 @@ input[type="radio"] {
 .rdw-text-align-dropdown {
   z-index: 0 !important;
 }
+
+.header-dropdown {
+  background-color: #c2114b !important;
+  border: unset !important;
+  line-height: 0.5 !important;
+  cursor: pointer;
+  color: #ffffff !important;
+}

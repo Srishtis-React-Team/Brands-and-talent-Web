@@ -68,25 +68,17 @@ const TalentDashBoard = () => {
       });
   };
 
+  const [modalData, setModalData] = useState(null);
+
   const applyjobs = async (data) => {
     console.log(data, "applyJobData");
-    const formData = {
-      talentId: talentId,
-      brandId: data?.brandId,
-      gigId: data?._id,
-    };
-    await ApiHelper.post(API.applyjobs, formData)
-      .then((resData) => {
-        setMessage("Job Applied SuccessFully!");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-          getRecentGigs();
-        }, 1000);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setModalData(data); // Set data to be displayed in the modal
+    // Open the modal programmatically
+    if (data?.isApplied != "Applied") {
+      const modalElement = document.getElementById("exampleModal");
+      const bootstrapModal = new window.bootstrap.Modal(modalElement);
+      bootstrapModal.show();
+    }
   };
   const viewJob = async (jobId) => {
     navigate("/preview-job-talent", {
@@ -144,6 +136,30 @@ const TalentDashBoard = () => {
     modal.hide();
   };
 
+  const handleCloseModal = async () => {
+    const formData = {
+      talentId: talentId,
+      brandId: modalData?.brandId,
+      gigId: modalData?._id,
+    };
+    await ApiHelper.post(API.applyjobs, formData)
+      .then((resData) => {
+        setMessage("Job Applied SuccessFully!");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          getRecentGigs();
+          // Close the modal programmatically
+          const modalElement = document.getElementById("exampleModal");
+          const bootstrapModal = new window.bootstrap.Modal(modalElement);
+          bootstrapModal.hide();
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -153,7 +169,7 @@ const TalentDashBoard = () => {
           showSidebar ? "show-sidebar" : "not-sidebar"
         }`}
       >
-        <TalentSideMenu />
+        <TalentSideMenu myState={queryString} />
       </div>
 
       <main
@@ -249,7 +265,7 @@ const TalentDashBoard = () => {
                               {/* <i className="bi bi-briefcase-fill "></i> */}
                               <img
                                 className="recent-img"
-                                src={jobImage}
+                                src={`${API.userFilePath}${item?.brandImage}`}
                                 alt=""
                               />
                             </div>
@@ -320,7 +336,11 @@ const TalentDashBoard = () => {
                               <div>View Job</div>
                             </div>
                             <div
-                              className="apply-now-btn"
+                              className={
+                                item?.isApplied
+                                  ? " apply-now-btn"
+                                  : "apply-now-btn applied-btn"
+                              }
                               style={{
                                 backgroundColor:
                                   item?.isApplied == "Apply Now"
@@ -411,6 +431,90 @@ const TalentDashBoard = () => {
           </div>
         </div>
       </main>
+
+      {/* Bootstrap Modal */}
+      {/* Bootstrap Modal */}
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <p id="exampleModalLabel" className="modal-job-title">
+                {modalData?.jobTitle}
+              </p>
+
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="modal-job-flex">
+                <i class="bi bi-building model-job-icons"></i>
+                <div className="model-job-name">{modalData?.hiringCompany}</div>
+              </div>
+
+              <div className="modal-job-flex">
+                <i class="bi bi-briefcase-fill model-job-icons"></i>
+                <div className="model-job-name">
+                  <span className="modal-job-workplace">
+                    {modalData?.workplaceType}{" "}
+                  </span>{" "}
+                  {modalData?.jobType}
+                </div>
+              </div>
+              <div className="modal-job-flex">
+                <i class="bi bi-list-check model-job-icons"></i>
+                <div className="model-job-name">
+                  {modalData?.skills.map((skill, index) => (
+                    <span key={index}>
+                      {skill}
+                      {index !== modalData?.skills.length - 1 && ", "}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="modal-job-flex">
+                <i class="bi bi-gender-ambiguous model-job-icons"></i>
+                <div className="model-job-name">{modalData?.gender}</div>
+              </div>
+              <div className="modal-job-flex">
+                <i class="bi  bi-cash-coin model-job-icons"></i>
+                <div className="model-job-name">
+                  {modalData?.paymentType?.amount} {modalData?.jobCurrency}
+                </div>
+              </div>
+              <div className="model-about-title">About the job</div>
+              <div className="model-job-about-values">
+                {modalData?.jobDescription &&
+                  modalData?.jobDescription?.map((htmlContent, index) => (
+                    <div
+                      key={index}
+                      dangerouslySetInnerHTML={{ __html: htmlContent }}
+                    />
+                  ))}
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                onClick={handleCloseModal}
+                type="button"
+                className="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {openPopUp && <PopUp message={message} />}
     </>
