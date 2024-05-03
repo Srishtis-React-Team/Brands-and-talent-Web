@@ -190,7 +190,7 @@ const Login = () => {
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
     localStorage.setItem("currentUserType", data?.user?.userType);
-
+    localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
     setUserId(userId);
   };
 
@@ -201,6 +201,10 @@ const Login = () => {
     localStorage.setItem("brandEmail", data?.data?.brandEmail);
     localStorage.setItem("brandToken", data?.token);
     localStorage.setItem("currentUserType", data?.data?.userType);
+    localStorage.setItem(
+      "currentUserImage",
+      data?.data?.brandImage[0]?.fileData
+    );
     setUserId(userId);
   };
 

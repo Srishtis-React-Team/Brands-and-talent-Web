@@ -51,6 +51,7 @@ import TalentPreviewJob from "../views/TalentPreviewJob";
 import SocketTalents from "../components/message/SocketTalents";
 import Chat from "../chat/Chat";
 import Blogs from "../pages/Blogs";
+import AppliedJobs from "../views/AppliedJobs";
 function Routing() {
   return (
     <Routes>
@@ -96,6 +97,7 @@ function Routing() {
       <Route path="/brand-activated" element={<BrandActivation />} />
       <Route path="/brand-dashboard" element={<BrandHome />} />
       <Route path="/list-jobs" element={<ListJobs />} />
+      <Route path="/applied-jobs" element={<AppliedJobs />} />
       <Route path="/create-jobs" element={<CreateJobs />} />
       <Route path="/find-talents" element={<BrandTalents />} />
       <Route path="/favorite-talents" element={<BrandFavorites />} />

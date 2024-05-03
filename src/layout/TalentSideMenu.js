@@ -6,15 +6,18 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 
-const TalentSideMenu = ({ onChildClick }) => {
+const TalentSideMenu = ({ myState }) => {
   const location = useLocation();
   const [createJob, setCreateJob] = useState(null);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
   const [jobCountNumber, setJobCountNumber] = useState(null);
+  console.log(myState, "myState");
 
   useEffect(() => {
-    setTalentId(localStorage.getItem("userId"));
+    setTimeout(function() {
+      setTalentId(localStorage.getItem("userId"));
+    }, 1000);
     console.log(talentId, "talentId");
     if (talentId) {
       getTalentById();
@@ -84,12 +87,6 @@ const TalentSideMenu = ({ onChildClick }) => {
     console.log(isSmallScreen, "isSmallScreen");
   }, [isSmallScreen]);
 
-  const handleClick = () => {
-    if (typeof onChildClick === "function" && isSmallScreen) {
-      onChildClick();
-    }
-  };
-
   return (
     <>
       <nav className="brand-sidebar-container">
@@ -139,6 +136,18 @@ const TalentSideMenu = ({ onChildClick }) => {
         >
           <i style={{ paddingLeft: "15px" }} className="bi bi-speedometer "></i>
           <div className="brand-menu-text">Dashboard</div>
+        </Link>
+
+        <Link
+          to="/applied-jobs"
+          className={
+            location.pathname === "/applied-jobs"
+              ? "sidemenu-active mt-4"
+              : "brand-menu-wrapper mt-4"
+          }
+        >
+          <i style={{ paddingLeft: "15px" }} className="bi bi-speedometer "></i>
+          <div className="brand-menu-text">Applied Jobs</div>
         </Link>
       </nav>
     </>

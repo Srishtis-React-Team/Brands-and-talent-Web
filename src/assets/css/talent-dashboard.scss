@@ -24,7 +24,9 @@
             display: flex;
             .recent-img-div {
               .recent-img {
-                border-radius: 16px;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
               }
             }
             .recent-gig-details {
@@ -931,6 +933,10 @@
   }
 }
 
+.applied-btn {
+  cursor: unset;
+}
+
 .view-gig-btn {
   width: 120px;
   height: 40px;
@@ -960,4 +966,60 @@
   margin: 20px 0px;
   display: flex;
   justify-content: end;
+}
+
+.modal-job-title {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  color: #000;
+}
+
+.model-about-title {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  color: #000;
+  padding: 10px 0px;
+}
+
+.model-job-about-values {
+  max-height: 350px;
+  overflow: scroll;
+  overflow-x: hidden;
+  /* overflow-y: hidden; */
+}
+
+.modal-job-flex {
+  display: flex;
+  align-items: center;
+  padding-bottom: 8px;
+}
+
+.model-job-name {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: #000;
+  padding-left: 15px;
+}
+
+.model-job-icons {
+  font-size: 18px;
+  color: #c2114b;
+}
+
+.modal-job-workplace {
+  padding: 2px 6px;
+  border-radius: 8px;
+  background-color: rgb(138, 255, 138);
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: #000;
+  margin-right: 6px;
 }

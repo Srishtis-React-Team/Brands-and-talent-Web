@@ -12,42 +12,60 @@ const TalentHeader = ({ toggleMenu }) => {
   const [talentData, setTalentData] = useState();
   const [notificationList, setNotifications] = useState([]);
 
-  document.addEventListener("DOMContentLoaded", function() {
-    // Toggle dropdown when clicking the bell icon
-    document.addEventListener("click", function(event) {
-      if (event?.target?.closest(".notification_icon")) {
-        var dropdown = document?.querySelector(".notification-dropdown");
-        dropdown?.classList?.toggle("active");
+  useEffect(() => {
+    // Function to toggle dropdown when clicking the bell icon
+    const handleBellIconClick = (event) => {
+      if (event.target.closest(".notification_icon")) {
+        const dropdown = document.querySelector(".notification-dropdown");
+        dropdown.classList.toggle("active");
       }
-    });
+    };
 
-    // Close dropdown when clicking the close icon
-    document.addEventListener("click", function(event) {
-      if (event?.target?.closest(".notification-close")) {
-        var dropdown = document?.querySelector(".notification-dropdown");
-        dropdown?.classList?.remove("active");
+    // Function to close dropdown when clicking the close icon
+    const handleCloseIconClick = (event) => {
+      if (event.target.closest(".notification-close")) {
+        const dropdown = document.querySelector(".notification-dropdown");
+        dropdown.classList.remove("active");
       }
-    });
+    };
 
-    // Close dropdown when clicking outside of it
-    document.addEventListener("click", function(event) {
-      var dropdown = document.querySelector(".notification-dropdown");
+    // Function to close dropdown when clicking outside of it
+    const handleCloseDropdownOutsideClick = (event) => {
+      const dropdown = document.querySelector(".notification-dropdown");
       if (
-        !event?.target?.closest(".notification-bell-wrapper") &&
+        !event.target.closest(".notification-bell-wrapper") &&
         dropdown?.classList?.contains("active")
       ) {
         dropdown?.classList?.remove("active");
       }
-    });
-  });
+    };
+
+    // Attach event listeners when the component mounts
+    document.addEventListener("click", handleBellIconClick);
+    document.addEventListener("click", handleCloseIconClick);
+    document.addEventListener("click", handleCloseDropdownOutsideClick);
+
+    // Clean up event listeners when the component unmounts
+    return () => {
+      document.removeEventListener("click", handleBellIconClick);
+      document.removeEventListener("click", handleCloseIconClick);
+      document.removeEventListener("click", handleCloseDropdownOutsideClick);
+    };
+  }, []);
 
   const closeNotification = () => {
     // var dropdown = document.querySelector(".notification-dropdown");
     // dropdown.classList.toggle("active");
   };
 
+  // useEffect(() => {
+  //   getTalentById();
+  // }, []);
   useEffect(() => {
-    setTalentId(localStorage.getItem("userId"));
+    setTimeout(function() {
+      setTalentId(localStorage.getItem("userId"));
+    }, 1000);
+
     console.log(talentId, "talentId");
     if (talentId) {
       getTalentById();
@@ -70,7 +88,9 @@ const TalentHeader = ({ toggleMenu }) => {
   }, [notificationList]);
 
   const getTalentById = async () => {
-    await ApiHelper.post(`${API.getTalentById}${talentId}`)
+    await ApiHelper.post(
+      `${API.getTalentById}${localStorage.getItem("userId")}`
+    )
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {

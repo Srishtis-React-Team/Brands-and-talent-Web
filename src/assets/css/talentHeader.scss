@@ -148,16 +148,16 @@
 
 .notification_wrap .notification-dropdown {
   width: 350px;
-  height: auto;
+  overflow: scroll;
+  max-height: 400px;
   background: #fff;
   border-radius: 0px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.125);
-  // margin: 600px 0px 0px 0px;
-  // padding: 15px;
   position: absolute;
   top: 75px;
   right: 103px;
   display: none;
+  overflow-x: hidden;
 }
 
 .notification_wrap .notification-dropdown .notify_item {
