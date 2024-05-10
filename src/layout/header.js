@@ -132,6 +132,11 @@ const Header = ({ sendMessageToParent }) => {
             </NavLink>
           </div>
           <div>
+            <NavLink to="/listJob" onClick={() => handleClick("list-job")}>
+              List Job
+            </NavLink>
+          </div>
+          <div>
             <NavLink to="/find-creators" onClick={() => handleClick("")}>
               Find Talent
             </NavLink>
@@ -268,7 +273,12 @@ const Header = ({ sendMessageToParent }) => {
               </div>
               <div>
                 <NavLink to="/login" onClick={() => handleClick("post-job")}>
-                  Post a Job
+                  Post a Campaign
+                </NavLink>
+              </div>
+              <div>
+                <NavLink to="/listJob" onClick={() => handleClick("list-job")}>
+                  Campaigns
                 </NavLink>
               </div>
               <div>

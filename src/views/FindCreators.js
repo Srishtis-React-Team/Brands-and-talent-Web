@@ -878,8 +878,8 @@ const FindCreators = () => {
                     Select Language
                   </option>
                   {languageOptions.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
+                    <option key={index} value={option.value}>
+                      {option.value}
                     </option>
                   ))}
                 </select>

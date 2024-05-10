@@ -46,6 +46,7 @@ export const API = {
 
   //pricing
   getPricingList: BASEURL + "pricing/pricingList",
+  brandsPricingList: BASEURL + "pricing/brandsPricingList",
   subscriptionPlan: BASEURL + "users/subscriptionPlan/",
 
   //common
@@ -109,4 +110,10 @@ export const API = {
   getMessages: BASEURL + "message/getMessages/",
   getMessageByUser: BASEURL + "message/getMessageByUser",
   deleteMessage: BASEURL + "message/deleteMessage",
+
+  //candidates
+  newCandidates: BASEURL + "gigs/newCandidates",
+  selectedLevelRange: BASEURL + "gigs/selectedLevelRange",
+  informSelectedLevel: BASEURL + "gigs/informSelectedLevel",
+  getSelectionList: BASEURL + "gigs/getSelectionList",
 };

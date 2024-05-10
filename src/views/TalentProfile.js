@@ -316,12 +316,12 @@ const TalentProfile = () => {
               className="talent-img"
               src={`${API.userFilePath}${talentData?.image?.fileData}`}
             ></img>
-            <div className="talent-status">
+            {/* <div className="talent-status">
               <span>
                 <img src={blackstar}></img>
               </span>
               <span>Pro</span>
-            </div>
+            </div> */}
           </div>
           <div className="individual-talents-details">
             <div className="individual-talent-name">
@@ -502,7 +502,7 @@ const TalentProfile = () => {
                   handleForms("portofolio");
                 }}
               >
-                Profile Overview
+                Home
               </div>
               <div
                 className={

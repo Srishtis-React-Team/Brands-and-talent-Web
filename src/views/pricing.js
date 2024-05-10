@@ -29,6 +29,20 @@ const Pricing = () => {
       });
   };
 
+  const getBrandsPricingList = async () => {
+    await ApiHelper.get(API.brandsPricingList)
+      .then((resData) => {
+        if (resData) {
+          setPricingList(resData.data.data);
+        }
+        console.log("getPricingList", resData.data.data);
+        console.log("pricingList", pricingList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const selectPricing = (event) => {
     setPricing(event.target.value);
   };
@@ -51,6 +65,16 @@ const Pricing = () => {
       selectPlan3(false);
     }
   }
+
+  const handleToggle = (event) => {
+    const { checked } = event.target;
+    if (checked) {
+      getBrandsPricingList();
+    } else {
+      getPricingList();
+    }
+  };
+
   return (
     <>
       <Header />
@@ -59,28 +83,22 @@ const Pricing = () => {
           <div className="header-title">Popular Talents</div>
           <div className="header-menu">
             <div>Home</div>
-            <div>Talents</div>
+            <div>Talent</div>
           </div>
         </div>
       </section>
       {/* className={artists ? "active-tab" : null} */}
 
       <div className="select-plan-main">
-        <div className="select-pricing-title">Filter</div>
         <div className="select-pricing">
-          <select
-            className="form-select select-pricing-select"
-            aria-label="Default select example"
-            onChange={selectPricing}
-            value={pricing}
-          >
-            <option value="" disabled selected>
-              For Talents
-            </option>
-            <option defaultValue value="forward">
-              For Brands
-            </option>
-          </select>
+          <label className="toggleSwitch nolabel">
+            <input type="checkbox" onChange={handleToggle} />
+            <a></a>
+            <span>
+              <span className="left-span">Talent</span>
+              <span className="right-span">Brand</span>
+            </span>
+          </label>
         </div>
       </div>
 

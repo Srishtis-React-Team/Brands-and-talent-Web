@@ -447,7 +447,7 @@ const Register = () => {
                   />
                 </div>
                 <div className="email-info">
-                  Talents that apply to your job will be send to this email
+                  Talent that apply to your job will be send to this email
                 </div>
                 <div className="select-wrapper password-wrapper">
                   <div>
