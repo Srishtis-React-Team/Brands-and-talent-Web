@@ -226,6 +226,21 @@ const BrandSideMenu = ({ onChildClick }) => {
         </Link>
 
         <Link
+          to="/applicants"
+          className={
+            location.pathname === "/applicants"
+              ? "sidemenu-active mt-4"
+              : "brand-menu-wrapper mt-4"
+          }
+        >
+          <i
+            style={{ paddingLeft: "15px" }}
+            className="bi bi-person-workspace "
+          ></i>
+          <div className="brand-menu-text">Applicants</div>
+        </Link>
+
+        <Link
           to="/find-talents"
           className={
             location.pathname === "/find-talents"
@@ -234,7 +249,7 @@ const BrandSideMenu = ({ onChildClick }) => {
           }
         >
           <i style={{ paddingLeft: "15px" }} className="bi bi-people-fill"></i>
-          <div className="brand-menu-text">Find Talents</div>
+          <div className="brand-menu-text">Invite To Apply</div>
         </Link>
 
         <Link

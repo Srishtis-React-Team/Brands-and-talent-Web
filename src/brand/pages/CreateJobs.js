@@ -28,6 +28,17 @@ const CreateJobs = () => {
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "50px", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
 
   const location = useLocation();
   let { editData } = location.state || {};
@@ -129,7 +140,7 @@ const CreateJobs = () => {
       setjobType(editData?.jobType);
       setGender(editData?.gender);
       setNationality(editData?.nationality);
-      setLanguages(editData?.languages);
+      // editData?.languages;
       setWhyWorkWithUs(editData?.whyWorkWithUs);
       setSelectedApplyOption(editData?.selectedApplyOption);
       setHiringCompany(editData?.hiringCompany);
@@ -302,7 +313,8 @@ const CreateJobs = () => {
       setjobType(editJobData?.jobType);
       setGender(editJobData?.gender);
       setNationality(editJobData?.nationality);
-      setLanguages(editJobData?.languages);
+
+      // editJobData?.languages;
       setWhyWorkWithUs(editJobData?.whyWorkWithUs);
       setSelectedApplyOption(editJobData?.selectedApplyOption);
       setHiringCompany(editJobData?.hiringCompany);
@@ -391,7 +403,6 @@ const CreateJobs = () => {
   ] = useState(EditorState.createEmpty());
   const [showError, setShowError] = useState(false);
   const [kidsFillData, setKidsFillData] = useState(null);
-  const [streetAddressError, setstreetAddressError] = useState(false);
   const [parentCountryError, setParentCountryError] = useState(false);
   const [stateError, setStateError] = useState(false);
   const [cityError, setCityError] = useState(false);
@@ -400,7 +411,6 @@ const CreateJobs = () => {
   const [preferedNameError, setPreferedNameError] = useState(false);
   const [jobTypeError, setjobTypeError] = useState(false);
   const [jobCurrencyError, setJobCurrencyError] = useState(false);
-  const [nationalityError, setNationalityError] = useState(false);
   const [ethnicityError, setEthnicityError] = useState(false);
   const [ageRangeError, setAgeRangeError] = useState(false);
   const [languageError, setLanguageError] = useState(false);
@@ -608,7 +618,7 @@ const CreateJobs = () => {
     "Prefer not to say",
   ];
 
-  const ageList = ["18-21", "22-26", "26-35", "36-45", "46-51"];
+  const ageList = ["13-17", "18+"];
 
   const payTypeList = ["Pay Range ", "Exact Pay Amount"];
 
@@ -669,12 +679,14 @@ const CreateJobs = () => {
     setworkPlaceTypeError(false);
   };
   const selectLanguage = (event) => {
-    setLanguages(event.target.value);
-    setLanguageError(false);
+    console.log(event, "selectLanguage");
+    if (event[0].value) {
+      setLanguages(event[0].value);
+      setLanguageError(false);
+    }
   };
   const selectNationality = (event) => {
     setNationality(event.target.value);
-    setNationalityError(false);
   };
   const selectGender = (event) => {
     setGender(event.target.value);
@@ -846,7 +858,8 @@ const CreateJobs = () => {
           );
           setKidsPreferedLastName(resData?.data?.data?.preferredChildLastName);
           setworkPlaceType(resData?.data?.data?.childworkPlaceType);
-          setLanguages(resData?.data?.data?.languages);
+
+          // resData?.data?.data?.languages;
           setNationality(resData?.data?.data?.childNationality);
           setjobType(resData?.data?.data?.jobType);
           setEthnicity(resData?.data?.data?.childEthnicity);
@@ -919,15 +932,10 @@ const CreateJobs = () => {
     if (workPlaceType === "") {
       setworkPlaceTypeError(true);
     }
-    if (streetAddress === "") {
-      setstreetAddressError(true);
-    }
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
     }
-    if (nationality === "") {
-      setNationalityError(true);
-    }
+
     if (languages === "") {
       setLanguageError(true);
     }
@@ -943,18 +951,28 @@ const CreateJobs = () => {
     if (jobCurrency === "") {
       setJobCurrencyError(true);
     }
+    if (country === "") {
+      setParentCountryError(true);
+    }
+    if (state === "") {
+      setStateError(true);
+    }
+    if (kidsCity === "") {
+      setCityError(true);
+    }
     if (
       jobTitle !== "" &&
       zipCode !== "" &&
       workPlaceType !== "" &&
-      streetAddress !== "" &&
       jobType !== "" &&
       skills !== "" &&
       ageRange !== "" &&
       gender !== "" &&
-      nationality !== "" &&
       languages !== "" &&
-      jobCurrency !== ""
+      jobCurrency !== "" &&
+      country !== "" &&
+      state !== "" &&
+      kidsCity !== ""
     ) {
       const formData = {
         _id: editData?.value,
@@ -1041,15 +1059,10 @@ const CreateJobs = () => {
     if (workPlaceType === "") {
       setworkPlaceTypeError(true);
     }
-    if (streetAddress === "") {
-      setstreetAddressError(true);
-    }
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
     }
-    if (nationality === "") {
-      setNationalityError(true);
-    }
+
     if (languages === "") {
       setLanguageError(true);
     }
@@ -1065,18 +1078,55 @@ const CreateJobs = () => {
     if (jobCurrency === "") {
       setJobCurrencyError(true);
     }
+    if (country === "") {
+      setParentCountryError(true);
+    }
+    if (state === "") {
+      setStateError(true);
+    }
+    if (kidsCity === "") {
+      setCityError(true);
+    }
+    console.log(
+      jobTitle,
+      "jobTitle",
+      zipCode,
+      "zipCode",
+      workPlaceType,
+      "workPlaceType",
+      jobType,
+      "jobType",
+      skills,
+      "skills",
+      ageRange,
+      "ageRange",
+      gender,
+      "gender",
+      languages,
+      "languages",
+      jobCurrency,
+      "jobCurrency",
+      country,
+      "country",
+      state,
+      "state",
+      kidsCity,
+      "kidsCity",
+      "sdsd"
+    );
     if (
       jobTitle !== "" &&
       zipCode !== "" &&
       workPlaceType !== "" &&
-      streetAddress !== "" &&
       jobType !== "" &&
       skills !== "" &&
       ageRange !== "" &&
       gender !== "" &&
-      nationality !== "" &&
       languages !== "" &&
-      jobCurrency !== ""
+      jobCurrency !== "" &&
+      country !== "" &&
+      state !== "" &&
+      kidsCity !== ""
     ) {
       const formData = {
         jobTitle: jobTitle,
@@ -1480,7 +1530,7 @@ const CreateJobs = () => {
                       </div>
                       <div className="kids-form-row">
                         <div className="kids-form-section">
-                          <div className="mb-4">
+                          {/* <div className="mb-4">
                             <label className="form-label">
                               Job Location
                               <span className="mandatory">*</span>
@@ -1500,29 +1550,87 @@ const CreateJobs = () => {
                                 Please enter Zip Code.
                               </div>
                             )}
+                          </div> */}
+                          <div className="mb-3">
+                            <label className="form-label">
+                              Country<span className="mandatory">*</span>
+                            </label>
+                            <Select
+                              placeholder="Search country..."
+                              options={countryList.map((country, index) => ({
+                                value: country,
+                                label: country,
+                                key: index,
+                              }))}
+                              value={country?.value}
+                              onChange={handleSelectedCountry}
+                              isSearchable={true}
+                            />
+                            {parentCountryError && (
+                              <div className="invalid-fields">
+                                Please Select Country
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="kids-form-section">
+                          <div className="mb-3">
+                            <label className="form-label">
+                              State<span className="mandatory">*</span>
+                            </label>
+                            <Select
+                              placeholder="Select state..."
+                              options={stateList.map((state) => ({
+                                value: state.stateId, // or whatever unique identifier you want to use
+                                label: state.name,
+                              }))}
+                              value={state?.label}
+                              onChange={handleSelectedState}
+                              isSearchable={true}
+                            />
+                            {stateError && (
+                              <div className="invalid-fields">
+                                Please Select State
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="kids-form-row">
+                        <div className="kids-form-section">
+                          <div className="mb-3">
+                            <label className="form-label">
+                              City<span className="mandatory">*</span>
+                            </label>
+                            <Select
+                              placeholder="Select City..."
+                              options={cityList.map((city) => ({
+                                value: city.cityId, // or whatever unique identifier you want to use
+                                label: city.name,
+                              }))}
+                              value={kidsCity?.label}
+                              onChange={handleSelectedCity}
+                              isSearchable={true}
+                            />
+                            {cityError && (
+                              <div className="invalid-fields">
+                                Please Select City
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="kids-form-section">
                           <div className="mb-4">
-                            <label className="form-label">
-                              Street Address{" "}
-                              <span className="mandatory">*</span>
-                            </label>
+                            <label className="form-label">Street Address</label>
                             <input
                               type="text"
                               className="form-control"
-                              value={streetAddress}
+                              value={zipCode}
                               onChange={(e) => {
-                                setstreetAddress(e.target.value);
-                                setstreetAddressError(false);
+                                setzipCode(e.target.value);
                               }}
                               placeholder="Street Address"
                             ></input>
-                            {streetAddressError && (
-                              <div className="invalid-fields">
-                                Please enter Street Address
-                              </div>
-                            )}
                           </div>
                         </div>
                       </div>
@@ -1539,6 +1647,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectworkPlaceType}
                               value={workPlaceType}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Work Place Type
@@ -1565,6 +1674,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectjobType}
                               value={jobType}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Job Type
@@ -1719,6 +1829,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectAge}
                               value={ageRange}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Age
@@ -1746,6 +1857,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectGender}
                               value={gender}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Gender
@@ -1767,14 +1879,13 @@ const CreateJobs = () => {
                       <div className="kids-form-row mb-2">
                         <div className="kids-form-section">
                           <div className="mb-4">
-                            <label className="form-label">
-                              Nationality <span className="mandatory">*</span>
-                            </label>
+                            <label className="form-label">Nationality</label>
                             <select
                               className="form-select"
                               aria-label="Default select example"
                               onChange={selectNationality}
                               value={nationality}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Nationality
@@ -1785,19 +1896,26 @@ const CreateJobs = () => {
                                 </option>
                               ))}
                             </select>
-                            {nationalityError && (
-                              <div className="invalid-fields">
-                                Please Select Nationality
-                              </div>
-                            )}
                           </div>
                         </div>
                         <div className="kids-form-section">
                           <div className="mb-4">
                             <label className="form-label">
-                              Language <span className="mandatory">*</span>
+                              Languages <span className="mandatory">*</span>
                             </label>
-                            <select
+
+                            <Select
+                              isMulti
+                              name="colors"
+                              options={languageOptions}
+                              valueField="value"
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={(value) => selectLanguage(value)}
+                              styles={customStyles}
+                            />
+
+                            {/* <select
                               className="form-select"
                               aria-label="Default select example"
                               onChange={selectLanguage}
@@ -1811,7 +1929,7 @@ const CreateJobs = () => {
                                   {option}
                                 </option>
                               ))}
-                            </select>
+                            </select> */}
                             {languageError && (
                               <div className="invalid-fields">
                                 Please Select Language
@@ -1961,6 +2079,7 @@ const CreateJobs = () => {
                                         aria-label="Default select example"
                                         onChange={handleTypeChange}
                                         value={type}
+                                        style={{ fontSize: "14px" }}
                                       >
                                         <option value="" disabled selected>
                                           Select Type
@@ -1985,6 +2104,7 @@ const CreateJobs = () => {
                                         aria-label="Default select example"
                                         value={currency}
                                         onChange={handleCurrencyChange}
+                                        style={{ fontSize: "14px" }}
                                       >
                                         <option value="" disabled selected>
                                           Select Currency
@@ -2047,6 +2167,7 @@ const CreateJobs = () => {
                                           aria-label="Default select example"
                                           onChange={handleTypeChange}
                                           value={type}
+                                          style={{ fontSize: "14px" }}
                                         >
                                           <option value="" disabled selected>
                                             Select Type
@@ -2074,6 +2195,7 @@ const CreateJobs = () => {
                                           aria-label="Default select example"
                                           value={currency}
                                           onChange={handleCurrencyChange}
+                                          style={{ fontSize: "14px" }}
                                         >
                                           <option value="" disabled selected>
                                             Select Currency
@@ -2141,6 +2263,7 @@ const CreateJobs = () => {
                               setJobCurrencyError(false);
                             }}
                             value={jobCurrency}
+                            style={{ fontSize: "14px" }}
                           >
                             <option value="" disabled selected>
                               Select Your Currency
@@ -2255,6 +2378,7 @@ const CreateJobs = () => {
                             aria-label="Default select example"
                             onChange={selectHiringCompany}
                             value={hiringCompany}
+                            style={{ fontSize: "14px" }}
                           >
                             <option value="" disabled selected>
                               Select

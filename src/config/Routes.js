@@ -52,6 +52,8 @@ import SocketTalents from "../components/message/SocketTalents";
 import Chat from "../chat/Chat";
 import Blogs from "../pages/Blogs";
 import AppliedJobs from "../views/AppliedJobs";
+import Applicants from "../brand/pages/Applicants";
+import OverallJobs from "../brand/pages/OverallJobs";
 function Routing() {
   return (
     <Routes>
@@ -68,6 +70,7 @@ function Routing() {
       <Route path="/post-job" element={<PostJob />} />
       <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/login" element={<Login />}></Route>
+      <Route path="/listJob" element={<OverallJobs />}></Route>
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/success-password" element={<PasswordSuccess />} />
@@ -106,6 +109,7 @@ function Routing() {
       <Route path="/job-success" element={<JobSuccess />} />
       <Route path="/message" element={<MessageTalents />} />
       <Route path="/preview-job-talent" element={<TalentPreviewJob />} />
+      <Route path="/applicants" element={<Applicants />} />
     </Routes>
   );
 }

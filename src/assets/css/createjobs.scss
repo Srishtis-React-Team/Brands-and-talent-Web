@@ -36,6 +36,8 @@
   align-items: center;
   margin-right: 30px !important;
   cursor: pointer;
+  font-size: 15px;
+  color: #000;
 }
 
 .application-condition-wrapper {
@@ -207,7 +209,7 @@
 }
 
 .alert-button-section {
-  margin: 15px 0px 0px 0px;
+  margin: 30px 0px 0px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,6 +219,19 @@
   margin-left: 20px;
 }
 
+.model-btn-candidate {
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.invite-box {
+  margin: 15px 0px;
+}
+.form-control::placeholder {
+  font-size: smaller;
+}
 .seperate-jobform-section {
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
@@ -228,6 +243,12 @@
 
 .add-skill-wrapper {
   display: flex;
+}
+
+.bi-telephone-fill {
+  color: #c2114b;
+  font-size: 18px;
+  padding-right: 4px;
 }
 
 .add-skill-btn {
@@ -244,6 +265,65 @@
   align-items: center;
   cursor: pointer;
   margin-left: 20px;
+}
+
+.candidates-tabs {
+  max-width: 200px;
+}
+
+.overalljobs-container {
+  padding-left: 2% !important;
+  padding-top: 100px;
+  transition: padding 0.4s;
+  background-color: #eeeeee;
+  padding-bottom: 30px;
+  height: 100vh;
+}
+
+.candidate-job-title {
+  color: blue;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  // cursor: pointer;
+}
+.phone-number {
+  color: green;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+// .candidate-job-title:hover {
+//   text-decoration: underline;
+// }
+
+.candidate-job {
+  padding: 6px 0px;
+}
+
+.candidate-image-styling {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.interview-model-title {
+  color: #c2114b;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 10px 0px 20px 0px;
+}
+
+.interview-headset {
+  color: green;
+  font-size: 40px;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 768px) {

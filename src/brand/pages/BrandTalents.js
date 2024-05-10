@@ -69,7 +69,7 @@ const BrandTalents = () => {
   const [message, setMessage] = useState("");
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
-  const [languages, setLanguages] = useState("");
+  const [languages, setLanguages] = useState([]);
   const [maritalStatus, setMaritalStatus] = useState("");
   const [industry, setIndustry] = useState("");
   const [nationality, setNationality] = useState("");
@@ -472,9 +472,19 @@ const BrandTalents = () => {
   const selectEthnicity = (event) => {
     setEthnicity(event.target.value);
   };
-  const selectLanguage = (event) => {
-    setLanguages(event.target.value);
+
+  const selectLanguage = (selectedOptions) => {
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setLanguages([]); // Clear the languages state
+      return;
+    }
+
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    setLanguages(selectedLanguages); // Update languages state with all selected languages
   };
+
   const selectNationality = (event) => {
     setNationality(event.target.value);
   };
@@ -568,7 +578,7 @@ const BrandTalents = () => {
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "200px", // Adjust the maxHeight as per your requirement
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
       zIndex: 9999, // Ensure menu appears above other elements
     }),
   };
@@ -881,21 +891,16 @@ const BrandTalents = () => {
                   <div className="keyword-wrapper">
                     <div className="filter-items">Language</div>
                     <div className="creators-filter-select">
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={selectLanguage}
-                        value={languages}
-                      >
-                        <option value="" disabled selected>
-                          Select Language
-                        </option>
-                        {languageOptions.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
+                      <Select
+                        isMulti
+                        name="colors"
+                        options={languageOptions}
+                        valueField="value"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(value) => selectLanguage(value)}
+                        styles={customStyles}
+                      />
                     </div>
                   </div>
 
