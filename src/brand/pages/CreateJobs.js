@@ -1647,7 +1647,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectworkPlaceType}
                               value={workPlaceType}
-                              style={{ fontSize: "14px" }}
+                              style={{ fontSize: "14px", color: "#afafaf" }}
                             >
                               <option value="" disabled selected>
                                 Select Work Place Type
@@ -1674,7 +1674,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectjobType}
                               value={jobType}
-                              style={{ fontSize: "14px" }}
+                              style={{ fontSize: "14px", color: "#afafaf" }}
                             >
                               <option value="" disabled selected>
                                 Select Job Type
@@ -1829,7 +1829,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectAge}
                               value={ageRange}
-                              style={{ fontSize: "14px" }}
+                              style={{ fontSize: "14px", color: "#afafaf" }}
                             >
                               <option value="" disabled selected>
                                 Select Age
@@ -1857,7 +1857,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectGender}
                               value={gender}
-                              style={{ fontSize: "14px" }}
+                              style={{ fontSize: "14px", color: "#afafaf" }}
                             >
                               <option value="" disabled selected>
                                 Select Gender
@@ -1885,7 +1885,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectNationality}
                               value={nationality}
-                              style={{ fontSize: "14px" }}
+                              style={{ fontSize: "14px", color: "#afafaf" }}
                             >
                               <option value="" disabled selected>
                                 Select Nationality
@@ -2079,7 +2079,10 @@ const CreateJobs = () => {
                                         aria-label="Default select example"
                                         onChange={handleTypeChange}
                                         value={type}
-                                        style={{ fontSize: "14px" }}
+                                        style={{
+                                          fontSize: "14px",
+                                          color: "#afafaf",
+                                        }}
                                       >
                                         <option value="" disabled selected>
                                           Select Type
@@ -2104,7 +2107,10 @@ const CreateJobs = () => {
                                         aria-label="Default select example"
                                         value={currency}
                                         onChange={handleCurrencyChange}
-                                        style={{ fontSize: "14px" }}
+                                        style={{
+                                          fontSize: "14px",
+                                          color: "#afafaf",
+                                        }}
                                       >
                                         <option value="" disabled selected>
                                           Select Currency
@@ -2167,7 +2173,10 @@ const CreateJobs = () => {
                                           aria-label="Default select example"
                                           onChange={handleTypeChange}
                                           value={type}
-                                          style={{ fontSize: "14px" }}
+                                          style={{
+                                            fontSize: "14px",
+                                            color: "#afafaf",
+                                          }}
                                         >
                                           <option value="" disabled selected>
                                             Select Type
@@ -2195,7 +2204,10 @@ const CreateJobs = () => {
                                           aria-label="Default select example"
                                           value={currency}
                                           onChange={handleCurrencyChange}
-                                          style={{ fontSize: "14px" }}
+                                          style={{
+                                            fontSize: "14px",
+                                            color: "#afafaf",
+                                          }}
                                         >
                                           <option value="" disabled selected>
                                             Select Currency
@@ -2263,7 +2275,7 @@ const CreateJobs = () => {
                               setJobCurrencyError(false);
                             }}
                             value={jobCurrency}
-                            style={{ fontSize: "14px" }}
+                            style={{ fontSize: "14px", color: "#afafaf" }}
                           >
                             <option value="" disabled selected>
                               Select Your Currency
@@ -2378,7 +2390,7 @@ const CreateJobs = () => {
                             aria-label="Default select example"
                             onChange={selectHiringCompany}
                             value={hiringCompany}
-                            style={{ fontSize: "14px" }}
+                            style={{ fontSize: "14px", color: "#afafaf" }}
                           >
                             <option value="" disabled selected>
                               Select

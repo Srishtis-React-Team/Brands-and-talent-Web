@@ -63,7 +63,7 @@ const KidsOTP = () => {
       .then((resData) => {
         console.log("otpVerification response", resData.data);
         if (resData.data.status === true) {
-          setMessage("Verification SuccessFull");
+          setMessage("Verification Successful");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -182,7 +182,10 @@ const KidsOTP = () => {
             If you didn’t receive a code?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
           </div>
-          <div className="otp-back" onClick={() => navigate(`/login`)}>
+          <div
+            className="otp-back"
+            onClick={() => navigate(`/talent-signup-basic-details`)}
+          >
             Back
           </div>
           <div

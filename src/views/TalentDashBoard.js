@@ -404,12 +404,12 @@ const TalentDashBoard = () => {
                         <>
                           <div className="top-brands-wrapper">
                             <div className="top-brand-img-wrapper">
-                              {item.brandImage.length > 0 ? (
+                              {item?.brandImage?.length > 0 ? (
                                 <img
                                   className="top-brand-img"
                                   src={
                                     API.userFilePath +
-                                    item.brandImage[0].fileData
+                                    item?.brandImage[0].fileData
                                   }
                                   alt=""
                                 />

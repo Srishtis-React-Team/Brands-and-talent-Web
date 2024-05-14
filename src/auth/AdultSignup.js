@@ -33,6 +33,24 @@ const AdultSignup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [openPopUp, setOpenPopUp] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [talentPasswordError, settalentPasswordError] = useState(false);
+  const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
+    false
+  );
+  const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
+
+  const handlePasswordChange = (e) => {
+    setAdultPassword(e.target.value);
+    setPasswordMatch(e.target.value === adultConfirmPassword);
+    setPasswordError(false);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setAdultConfirmPassword(e.target.value);
+    setPasswordMatch(e.target.value === adultPassword);
+    setConfirmPasswordError(false);
+  };
 
   useEffect(() => {
     //code for google auth
@@ -71,7 +89,7 @@ const AdultSignup = () => {
           // alert("dfd");
           console.log(resData.data, "resdata.data socialSignup");
           setGoogleUser(resData?.data);
-          setMessage("Registered SuccessFully! Please Update Your Password");
+          setMessage("Registered Successfully Please Update Your Password");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -107,7 +125,8 @@ const AdultSignup = () => {
     if (
       adultEmail !== "" &&
       adultPassword !== "" &&
-      adultConfirmPassword !== ""
+      adultConfirmPassword !== "" &&
+      passwordMatch === true
     ) {
       const formData = {
         adultEmail: adultEmail,
@@ -122,7 +141,7 @@ const AdultSignup = () => {
           if (resData.data.status === true) {
             console.log(resData.data, "adultSignUp");
 
-            setMessage("Registered SuccessFully!");
+            setMessage("Registered Successfully");
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
@@ -139,6 +158,19 @@ const AdultSignup = () => {
             setOpenPopUp(false);
           }, 1000);
         });
+    } else {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 1000);
+    }
+    if (!passwordMatch) {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 1000);
     }
   };
 
@@ -187,6 +219,7 @@ const AdultSignup = () => {
                   placeholder="Email "
                   onChange={(e) => {
                     setAdultEmail(e.target.value);
+                    setEmailError(false);
                   }}
                   value={googleUser?.email}
                 ></input>
@@ -208,6 +241,7 @@ const AdultSignup = () => {
                   placeholder="Your Name "
                   onChange={(e) => {
                     setAdultName(e.target.value);
+                    setNameError(false);
                   }}
                 ></input>
                 {nameError && (
@@ -227,6 +261,7 @@ const AdultSignup = () => {
                   className="form-control adult-signup-inputs"
                   placeholder="Password"
                   onChange={(e) => {
+                    handlePasswordChange(e);
                     setAdultPassword(e.target.value);
                   }}
                 ></input>
@@ -257,7 +292,9 @@ const AdultSignup = () => {
                   className="form-control adult-signup-inputs"
                   placeholder="Confirm Password"
                   onChange={(e) => {
+                    handleConfirmPasswordChange(e);
                     setAdultConfirmPassword(e.target.value);
+                    setConfirmPasswordError(false);
                   }}
                 ></input>
                 {confirmPasswordError && (
@@ -276,6 +313,11 @@ const AdultSignup = () => {
                     onClick={toggleConfirmPasswordVisibility}
                   ></span>
                 )}
+                {!passwordMatch &&
+                  adultConfirmPassword &&
+                  adultConfirmPassword.length && (
+                    <p className="password-wrong">Passwords does not match.</p>
+                  )}
               </div>
             </div>
 

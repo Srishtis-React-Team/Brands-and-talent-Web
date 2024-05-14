@@ -135,6 +135,71 @@ const BrandDetails = () => {
     setHearAboutUs(event.target.value);
   };
 
+  const [brandNameLetterError, setBrandNameLetterError] = useState(false);
+
+  const handleBrandName = (e) => {
+    const value = e.target.value;
+    // Regular expression to allow only letters
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (value.trim() === "") {
+      setBrandNameLetterError(false);
+      setBrandName("");
+    } else if (!onlyLettersRegex.test(value)) {
+      setBrandNameLetterError(true);
+    } else {
+      setBrandName(value);
+      setBrandNameLetterError(false);
+    }
+  };
+
+  const handleBrandNameKeyPress = (e) => {
+    // If the Backspace key is pressed and the input value is empty, clear the error
+    if (e.key === "Backspace") {
+      setBrandNameLetterError(false);
+    }
+  };
+
+  const [zipCodeValidation, setZipCodeValidation] = useState(false);
+
+  const handleZipCodeChange = (e) => {
+    const value = e.target.value;
+    // Regular expression to allow only numbers and the "+" symbol
+    const onlyNumbersRegex = /^[0-9+]*$/;
+    if (!onlyNumbersRegex.test(value)) {
+      setZipCodeValidation(true);
+    } else {
+      setZipCode(value);
+      setZipCodeValidation(false);
+    }
+  };
+
+  const handleZipCodeKeyPress = (e) => {
+    // If the Backspace key is pressed and the input value is empty, clear the error
+    if (e.key === "Backspace") {
+      setBrandNameLetterError(false);
+    }
+  };
+  const [mobileValidation, setMobileValidation] = useState(false);
+
+  const handleMobbileChange = (e) => {
+    const value = e.target.value;
+    // Regular expression to allow only numbers and the "+" symbol
+    const onlyNumbersRegex = /^[0-9+]*$/;
+    if (!onlyNumbersRegex.test(value)) {
+      setMobileValidation(true);
+    } else {
+      setPhoneNumber(value);
+      setMobileValidation(false);
+    }
+  };
+
+  const handleMobileKeyPress = (e) => {
+    // If the Backspace key is pressed and the input value is empty, clear the error
+    if (e.key === "Backspace") {
+      setBrandNameLetterError(false);
+    }
+  };
+
   return (
     <>
       <div className="form-dialog">
@@ -157,7 +222,10 @@ const BrandDetails = () => {
             }}
           ></button>
         </div>
-        <div className="dialog-body" style={{ height: "75vh" }}>
+        <div
+          className="dialog-body"
+          style={{ height: "75vh", marginTop: "50px" }}
+        >
           <div className="adult-signup-main">
             <div className="step-title mb-3">Brand Details</div>
 
@@ -171,11 +239,15 @@ const BrandDetails = () => {
                   className="form-control adult-signup-inputs"
                   placeholder="Brand Name"
                   onChange={(e) => {
-                    setBrandName(e.target.value);
+                    handleBrandName(e);
                   }}
+                  onKeyDown={handleBrandNameKeyPress}
                 ></input>
                 {brandNameError && (
                   <div className="invalid-fields">Please enter Brand Name</div>
+                )}
+                {brandNameLetterError && (
+                  <div className="invalid-fields">Only Letters are allowed</div>
                 )}
               </div>
             </div>
@@ -190,13 +262,18 @@ const BrandDetails = () => {
                   className="form-control adult-signup-inputs"
                   placeholder="Phone Number "
                   onChange={(e) => {
-                    setPhoneNumber(e.target.value);
+                    handleMobbileChange(e);
+                    setPhoneNumber(false);
                   }}
+                  onKeyDown={handleMobileKeyPress}
                 ></input>
                 {phoneNumberError && (
                   <div className="invalid-fields">
                     Please enter Phone Number
                   </div>
+                )}
+                {mobileValidation && (
+                  <div className="invalid-fields">Only Numbers Allowed</div>
                 )}
               </div>
             </div>
@@ -210,13 +287,18 @@ const BrandDetails = () => {
                   className="form-control adult-signup-inputs"
                   placeholder="Zip Code "
                   onChange={(e) => {
-                    setZipCode(e.target.value);
+                    handleZipCodeChange(e);
+                    setZipCodeError(false);
                   }}
+                  onKeyDown={handleZipCodeKeyPress}
                 ></input>
                 {zipCodeError && (
                   <div className="invalid-fields">
                     Please enter Phone Number
                   </div>
+                )}
+                {zipCodeValidation && (
+                  <div className="invalid-fields">Only Numbers Allowed</div>
                 )}
               </div>
             </div>
@@ -227,6 +309,7 @@ const BrandDetails = () => {
                 className="form-select"
                 aria-label="Default select example"
                 onChange={selectHearAbout}
+                style={{ fontSize: "14px" }}
               >
                 <option value="" disabled selected>
                   How Did You Hear About Us?
@@ -240,24 +323,28 @@ const BrandDetails = () => {
             </div>
 
             <div className="mb-3">
-              <label className="form-label">
+              <label
+                htmlFor="exampleFormControlTextarea1"
+                className="form-label"
+              >
                 Company Address<span className="mandatory">*</span>
               </label>
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control adult-signup-inputs"
-                  placeholder="Company Address "
-                  onChange={(e) => {
-                    setAddress(e.target.value);
-                  }}
-                ></input>
-                {addressError && (
-                  <div className="invalid-fields">
-                    Please enter Company Address
-                  </div>
-                )}
-              </div>
+              <textarea
+                style={{ width: "100%" }}
+                className="form-control address-textarea"
+                id="exampleFormControlTextarea1"
+                value={address}
+                rows="3"
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                  setAddressError(false);
+                }}
+              ></textarea>
+              {addressError && (
+                <div className="invalid-fields">
+                  Please enter Company Address
+                </div>
+              )}
             </div>
           </div>
         </div>

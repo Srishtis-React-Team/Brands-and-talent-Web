@@ -6,7 +6,7 @@ import { Route } from "react-router";
 import Register from "../auth/Register";
 import { Dropdown } from "react-bootstrap";
 import PopUp from "../components/PopUp";
-const Header = ({ sendMessageToParent }) => {
+const Header = ({ onData }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
@@ -75,9 +75,22 @@ const Header = ({ sendMessageToParent }) => {
   const handleClick = (data) => {
     window.scrollTo(0, 0); // Scroll to top on link click
     if (data == "post-job") {
-      alert("Youneed to login first");
+      setMessage("You Need To Login First");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 1000);
     }
   };
+
+  useEffect(() => {
+    console.log(onData, "onData");
+    if (onData === "talent-signup") {
+      setTalent(true);
+      openModal();
+    }
+  }, [onData]);
 
   return (
     <>
@@ -92,7 +105,7 @@ const Header = ({ sendMessageToParent }) => {
         </div>
 
         <div className="mobile-nav-functions">
-          {/* <div className="">
+          <div className="">
             <NavLink
               to="/login"
               className="login-text "
@@ -100,7 +113,7 @@ const Header = ({ sendMessageToParent }) => {
             >
               Login
             </NavLink>
-          </div> */}
+          </div>
           <div
             className="signup mobile-signup"
             data-bs-toggle="modal"
@@ -126,11 +139,7 @@ const Header = ({ sendMessageToParent }) => {
               Home
             </NavLink>
           </div>
-          <div>
-            <NavLink to="/login" onClick={() => handleClick("post-job")}>
-              Post a Job
-            </NavLink>
-          </div>
+          <div onClick={() => handleClick("post-job")}>Post a Job</div>
           <div>
             <NavLink to="/listJob" onClick={() => handleClick("list-job")}>
               List Job
@@ -167,7 +176,7 @@ const Header = ({ sendMessageToParent }) => {
             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
                 <a className="dropdown-item">
-                  <NavLink to="/resources" onClick={() => handleClick("")}>
+                  <NavLink to="/about-us" onClick={() => handleClick("")}>
                     About
                   </NavLink>
                 </a>
@@ -218,10 +227,7 @@ const Header = ({ sendMessageToParent }) => {
 
               <li>
                 <a className="dropdown-item">
-                  <NavLink
-                    to="/community-guidelines"
-                    onClick={() => handleClick("")}
-                  >
+                  <NavLink to="/about-us" onClick={() => handleClick("")}>
                     About
                   </NavLink>
                 </a>
@@ -271,14 +277,10 @@ const Header = ({ sendMessageToParent }) => {
                   Home
                 </NavLink>
               </div>
-              <div>
-                <NavLink to="/login" onClick={() => handleClick("post-job")}>
-                  Post a Campaign
-                </NavLink>
-              </div>
+              <div onClick={() => handleClick("post-job")}>Post a job</div>
               <div>
                 <NavLink to="/listJob" onClick={() => handleClick("list-job")}>
-                  Campaigns
+                  Jobs List
                 </NavLink>
               </div>
               <div>
@@ -322,7 +324,7 @@ const Header = ({ sendMessageToParent }) => {
                     aria-labelledby="navbarDropdown"
                   >
                     <li>
-                      <NavLink to="/resources" onClick={() => handleClick("")}>
+                      <NavLink to="/about-us" onClick={() => handleClick("")}>
                         <a className="dropdown-item">About</a>
                       </NavLink>
                     </li>
@@ -512,7 +514,7 @@ const Header = ({ sendMessageToParent }) => {
                 </div>
               </div>
 
-              {/* <div className="">
+              <div className="">
                 <NavLink
                   to="/login"
                   className="login-text"
@@ -520,7 +522,7 @@ const Header = ({ sendMessageToParent }) => {
                 >
                   Login
                 </NavLink>
-              </div> */}
+              </div>
               <div
                 className="signup"
                 data-bs-toggle="modal"
@@ -529,16 +531,16 @@ const Header = ({ sendMessageToParent }) => {
                 Sign up for free
               </div>
 
-              <div class="dropdown">
-                <div
-                  className="gridLogo"
-                  id="dropdownMenuButton1"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <img src={gridLogo} alt="" />
-                </div>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <div className="gridLogo">
+                <img src={gridLogo} alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <NavLink to="/signup"  onClick={() => handleClick("")}></NavLink>            </NavLink> */}
+
+      {/* <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   {currentUserId != null && (
                     <li onClick={() => logout()}>
                       <a class="dropdown-item">Logout</a>
@@ -549,13 +551,7 @@ const Header = ({ sendMessageToParent }) => {
                       <a class="dropdown-item">Login</a>
                     </li>
                   )}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* <NavLink to="/signup"  onClick={() => handleClick("")}></NavLink>            </NavLink> */}
+                </ul> */}
 
       <div
         className="modal fade"

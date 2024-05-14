@@ -13,10 +13,6 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import Axios from "axios";
 import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
-import OTPComponent from "./OTPComponent";
-import KidsFormTwo from "./KidsFormTwo";
-
-import AdultsOTP from "./AdultsOTP";
 const Register = () => {
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
@@ -1549,10 +1545,10 @@ const Register = () => {
             ></button>
           </div>
           <div className="dialog-body">
-            <AdultsOTP
+            {/* <AdultsOTP
               adultParentData={adultParentData}
               sendDataToParent={handleAdultOtp}
-            />
+            /> */}
           </div>
         </div>
       )}

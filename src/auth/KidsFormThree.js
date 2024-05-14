@@ -605,7 +605,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
 
                   <div className="kids-form-title">
-                    Portofolio <span className="astrix">*</span>
+                    Portfolio <span className="astrix">*</span>
                   </div>
                   <div
                     className="cv-section"

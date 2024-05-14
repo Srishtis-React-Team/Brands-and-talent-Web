@@ -5,8 +5,27 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
+import { useParams } from "react-router-dom";
 
 const ResetPassword = () => {
+  const urlX =
+    "https://hybrid.sicsglobal.com/project/brandsandtalent/reset-password/brand/7afd61b4c2a13679efb0b87b0ed701da7cd4a091";
+
+  // Split the URL by '/'
+  const parts = urlX.split("/");
+
+  // Find the index of "reset-password"
+  const resetPasswordIndex = parts.indexOf("reset-password");
+
+  // The type is the part after "reset-password" (index + 1)
+  const type = parts[resetPasswordIndex + 1]; // 'brand'
+
+  // The token is the part after the type (index + 1)
+  const token = parts[resetPasswordIndex + 2]; // 'dfs5345ertger56trte4'
+
+  console.log("Type:", type);
+  console.log("Token:", token);
+
   const btLogo = require("../assets/icons/Group 56.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -22,7 +41,9 @@ const ResetPassword = () => {
 
   // Get the current URL
   const url = window.location.href;
+  console.log(url, "url");
   const queryString = url.split("?")[1];
+  console.log("Search queryString:", queryString);
   console.log("Search queryString:", typeof queryString);
   const navigate = useNavigate();
   useEffect(() => {

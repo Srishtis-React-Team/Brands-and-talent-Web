@@ -1,5 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
+html {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::after *::before {
+  box-sizing: inherit;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+}
+
 .dashboard-main {
   /* scroll-behavior: none !important; */
 }
@@ -70,8 +92,12 @@
   height: 175px;
 }
 .case-img {
-  width: 100%;
+  width: 80%;
   border-radius: 18px;
+}
+
+.case-gallery-content {
+  width: 80%;
 }
 
 .case-warpper {
@@ -149,7 +175,7 @@ label {
 .dialog-footer {
   border-top: 1px solid rgb(173, 173, 173);
   display: flex;
-  justify-content: end;
+  justify-content: center;
   padding: 10px 40px 10px 0;
   position: fixed;
   bottom: 0;
@@ -172,6 +198,7 @@ label {
 
 .step-wrapper {
   display: flex;
+  align-items: center;
 }
 
 .user-details {
@@ -644,7 +671,7 @@ a {
     font-weight: 600;
     line-height: normal;
     text-align: center;
-    padding: 15px 0px;
+    padding: 2px 0px;
   }
   .step-text {
     padding-left: 20px;
@@ -694,7 +721,7 @@ a {
     cursor: pointer;
   }
   .selected-register {
-    width: 221px;
+    width: 245px;
     height: 52px;
     border-radius: 6px;
     background: #c2114b;
@@ -712,7 +739,7 @@ a {
     cursor: pointer;
   }
   .choose-register {
-    width: 221px;
+    width: 245px;
     height: 52px;
     border-radius: 6px;
     border: 1px solid #000;
@@ -741,19 +768,19 @@ a {
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 600;
     line-height: 37px;
-    padding: 20px 60px;
+    padding: 10px 60px 40px 0px;
   }
   .modal-title {
     color: #c2114b;
     font-family: "Open Sans", sans-serif;
-    font-size: 33px;
+    font-size: 35px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     text-align: center;
-    padding: 20px 0px;
+    padding: 20px 0px 10px 0px;
     /* margin-top: 50px; */
   }
   .ageverify-title {
@@ -764,15 +791,15 @@ a {
     font-weight: 500;
     line-height: normal;
     text-align: center;
-    padding: 30px 0px 50px 0px;
+    padding: 10px 0px 50px 0px;
   }
   .modal-wrapper {
     width: 100% !important;
     height: 100% !important;
   }
   .copyright-section {
-    margin: 30px 0px;
-    padding: 30px 0px;
+    margin: 10px 0px 4px 0px;
+    padding: 10px 0px 4px 0px;
     display: flex;
     justify-content: center;
     border-top: 1px solid #e2e8f0;
@@ -1272,6 +1299,7 @@ a {
     align-items: center;
     height: 40px;
     padding: 15px;
+    cursor: pointer;
   }
 }
 
@@ -1468,13 +1496,19 @@ input[type="radio"] {
 .header-wrapper {
   display: flex;
   justify-content: space-between;
-  padding: 15px 30px;
+  padding: 4px 30px;
   border-bottom: 1px solid rgb(173, 173, 173);
   align-items: center;
   /* position: fixed;
   top: 0;
   width: 100%; */
+  position: fixed;
+  top: 0;
+  z-index: 65;
+  width: 100%;
+  background-color: #ffffff;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -1497,7 +1531,6 @@ input[type="radio"] {
 
 .header-functions > div {
   margin-right: 40px;
-  cursor: pointer;
 }
 
 .hide-nav {
@@ -2039,6 +2072,7 @@ input[type="radio"] {
     border-radius: 100px;
     cursor: pointer;
   }
+
   .input-style {
     height: 50px;
     border-radius: 100px !important;
@@ -2050,8 +2084,8 @@ input[type="radio"] {
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
-    margin: 0px 20px;
-    width: 33%;
+    margin: 0px 20px 0px 0px;
+    width: 90%;
   }
   .input-style::placeholder {
     color: #fff !important;
@@ -3056,4 +3090,8 @@ input[type="radio"] {
   line-height: 0.5 !important;
   cursor: pointer;
   color: #ffffff !important;
+}
+
+.modal-header {
+  border-bottom: unset !important;
 }

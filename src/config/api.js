@@ -33,6 +33,11 @@ export const API = {
   updateAdultPassword: BASEURL + "users/updateAdultPassword",
   socialSignup: BASEURL + "users/socialSignup",
 
+  //passwords
+  brandsForgotPassword: BASEURL + "brands/brandsForgotPassword",
+  forgotPassword: BASEURL + "users/forgotPassword",
+  resetPassword: BASEURL + "users/resetPassword",
+
   //brands
   socailSignUpBrands: BASEURL + "brands/socailSignUpBrands",
   otpVerificationBrands: BASEURL + "brands/otpVerificationBrands",

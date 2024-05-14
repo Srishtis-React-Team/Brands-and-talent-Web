@@ -209,7 +209,7 @@ const AdultFormTwo = () => {
                 <div className="adult-img-img">
                   <img src={adultsBanner} alt="" />
                 </div>
-                <div className="adult-main">
+                <div className="adult-main" style={{ paddingLeft: "400px" }}>
                   <div className="adults-form-title">Complete your Profile</div>
                   <div>
                     {inputs.map((input, serviceIndex) => (

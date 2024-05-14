@@ -18,6 +18,8 @@ const Footer = () => {
 
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -27,29 +29,37 @@ const Footer = () => {
   };
 
   const subscribe = async () => {
-    const formData = {
-      email: email,
-    };
-    clear();
-    await ApiHelper.post(API.subscriptionStatus, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          setMessage("Subscribed SuccessFully! Check Your Email Inbox");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        } else if (resData.data.status === false) {
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (firstName === "") {
+      setFirstNameError(true);
+    }
+    if (email === "") {
+      setEmailError(true);
+    }
+    if (firstName !== "" && email !== "") {
+      const formData = {
+        email: email,
+      };
+      clear();
+      await ApiHelper.post(API.subscriptionStatus, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setMessage("Subscribed SuccessFully! Check Your Email Inbox");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const handleClick = () => {
@@ -67,22 +77,39 @@ const Footer = () => {
           <section className="main-footer-form">
             <div className="get-discover">Get Discovered</div>
             <div className="form-fields">
-              <input
-                className="input-style form-control"
-                placeholder="Full name"
-                value={firstName}
-                onChange={(e) => {
-                  setFirstName(e.target.value);
-                }}
-              ></input>
-              <input
-                className="input-style form-control"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              ></input>
+              <div>
+                <input
+                  className="input-style form-control"
+                  placeholder="Full name"
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                    setFirstNameError(false);
+                  }}
+                ></input>
+                {firstNameError && (
+                  <div className="invalid-fields" style={{ color: "#ffffff" }}>
+                    * Please enter First Name
+                  </div>
+                )}
+              </div>
+              <div>
+                <input
+                  className="input-style form-control"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setEmailError(false);
+                  }}
+                ></input>
+                {emailError && (
+                  <div className="invalid-fields" style={{ color: "#ffffff" }}>
+                    * Please enter Email Address
+                  </div>
+                )}
+              </div>
+
               <div
                 className="subscribe-btn"
                 onClick={(e) => {
