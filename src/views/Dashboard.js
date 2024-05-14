@@ -584,7 +584,7 @@ const Dashboard = () => {
                   </div>
 
                   <div
-                    className="Join-now-wrapper"
+                    className="Join-now-wrapper hireBtn"
                     onClick={(e) => {
                       navigate("/signup", {
                         state: { signupCategory: "brand" },
@@ -668,7 +668,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="container-fluid">
+        <div className="container">
           <div className="gallery-section">
             <div className="gallery-main">
               {talentsList?.map((item) => {
@@ -740,92 +740,118 @@ const Dashboard = () => {
         </div>
 
         <div className="find-more">
-          <div>Find More</div>
+          <div className="moreBtn">Find More</div>
         </div>
 
-        <div className="title">Our Community</div>
+        <div className="communityWraper secSpac">
+          <div className="container">
+              <div className="title">Our Community</div>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="community-card-wrapper card-background">
+                    <div className="count">5,258,451</div>
+                    <div className="cards-text">Talents in community</div>
+                  </div>
+                </div>
 
-        <div className="-fluid">
-          <div className="cards">
-            <div className="community-card-wrapper card-background">
-              <div className="count">5,258,451</div>
-              <div className="cards-text">Talents in community</div>
-            </div>
-            <div className="community-card-wrapper  card-background">
-              <div className="count">5,258,451</div>
-              <div className="cards-text">Brands Professionals</div>
-            </div>
-            <div className="community-card-wrapper  card-background">
-              <div className="count">5,258,451</div>
-              <div className="cards-text">Brands</div>
-            </div>
+                <div className="col-md-4">
+                  <div className="community-card-wrapper  card-background">
+                    <div className="count">5,258,451</div>
+                    <div className="cards-text">Brands Professionals</div>
+                  </div>
+                </div>
+
+                <div className="col-md-4">
+                  <div className="community-card-wrapper  card-background">
+                    <div className="count">5,258,451</div>
+                    <div className="cards-text">Brands</div>
+                  </div>
+                </div>
+              </div>
+            
           </div>
         </div>
 
-        <div className="title">Products and Services</div>
-
-        <div className="container-fluid">
-          <div className="cards">
-            <div className="card-wrapper ">
-              <div className="card-picture">
-                <img src={checkMark}></img>
-              </div>
-              <div className="card-title">Talent Marketplace</div>
-              <div className="cards-description">
-                A platform where talents can create a profile, showcase their
-                work, and connect with...
-              </div>
-            </div>
-            <div className="card-wrapper">
-              <div className="card-picture">
-                <img src={lockIcon}></img>
-              </div>
-              <div className="card-title">Hire Talent</div>
-              <div className="cards-description">
-                The platform will help brands find, attract, and hire the best
-                talent as per their ...
-              </div>
-            </div>
-            <div className="card-wrapper">
-              <div className="card-picture">
-                <img src={whiteStar}></img>
-              </div>
-              <div className="card-title">Find Jobs</div>
-              <div className="cards-description">
-                Talent can  build and manage their personal brands and will have
-                a unique url ...
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="title">Case studies</div>
-
-        <div className="container-fluid">
-          <div className="gallery-section">
-            <div className="case-study-main">
-              {caseList?.map((item) => {
-                return (
-                  <div className="case-wrapper">
-                    <div className="">
-                      <img className="case-img" src={item.photo}></img>
+        <div className="productsWraper secSpac">
+          <div className="container">
+              <div className="title">Products and Services</div>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="card-wrapper">
+                    <div className="card-picture">
+                      <img src={checkMark}></img>
                     </div>
-                    <div className="case-gallery-content">
-                      <div className="">
-                        <div className="case-study-name">{item.name}</div>
-                        <div className="case-study-address">{item.address}</div>
-                      </div>
+                    <div className="card-title">Talent Marketplace</div>
+                    <div className="cards-description">
+                      A platform where talents can create a profile, showcase their
+                      work, and connect with...
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+
+                <div className="col-md-4">
+                  <div className="card-wrapper">
+                    <div className="card-picture">
+                      <img src={lockIcon}></img>
+                    </div>
+                    <div className="card-title">Hire Talent</div>
+                    <div className="cards-description">
+                      The platform will help brands find, attract, and hire the best
+                      talent as per their ...
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-4">
+                  <div className="card-wrapper">
+                    <div className="card-picture">
+                      <img src={whiteStar}></img>
+                    </div>
+                    <div className="card-title">Find Jobs</div>
+                    <div className="cards-description">
+                      Talent can  build and manage their personal brands and will have
+                      a unique url ...
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
 
-        <div className="find-more">
-          <div>Find More</div>
+        <div className="caseWraper secSpac">
+          <div className="title">Case studies</div>
+          <div className="container">
+            <div className="gallery-section">
+              <div className="case-study-main row">
+                {caseList?.map((item) => {
+                  return (
+                   
+                    <div className="col-sm-6 col-md-4 col-lg-3">
+                      <div className="case-wrapper">
+                        <div className="caseBox">
+                          <img className="case-img" src={item.photo}></img>
+                        </div>
+                        <div className="case-gallery-content">
+                          <div className="caseCont">
+                            <div className="case-study-name">{item.name}</div>
+                            <div className="case-study-address">{item.address}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="find-more">
+            <div className="moreBtn">Find More</div>
+          </div>
         </div>
+
+       
 
         {/* data-bs-ride="carousel" <= under id="carouselExampleControls"
             className="carousel slide" */}
@@ -834,15 +860,15 @@ const Dashboard = () => {
           style={{
             backgroundImage: `url(${sliderBackground})`,
           }}
-          className="carousel-section"
+          className="carousel-section secSpac"
         >
-          <div className="carousel-title center">Success Stories</div>
+          <div className="carousel-title title center">Success Stories</div>
           <div id="carouselExampleControls" className="carousel slide">
             <div className="carousel-inner">
               <div className="carousel-item active">
                 <div className="carousel-wrapper">
                   <div className="box-one">
-                    <div>
+                    <div className="carimg_Box">
                       <img className="carousel-img" src={gents}></img>
                     </div>
                     <div className="box-content">
@@ -854,7 +880,7 @@ const Dashboard = () => {
                         really works!
                       </div>
                       <div className="profile-section">
-                        <div>
+                        <div className="profImg">
                           <img src={roundProfile}></img>
                         </div>
                         <div className="profile-content">
@@ -967,33 +993,35 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="title brands-row-title">Trusted by renowned brands</div>
 
-        <div className="container-fluid">
-          <div className="brands-section">
-            <div>
-              <img src={adidasIcon}></img>
-            </div>
-            <div>
-              <img src={ubisoftIcon}></img>
-            </div>
-            <div>
-              <img src={americanExpress}></img>
-            </div>
-            <div>
-              <img src={wppIcon}></img>
-            </div>
-            <div>
-              <img src={lorealIcon}></img>
-            </div>
-            <div>
-              <img src={joseIcon}></img>
-            </div>
-            <div>
-              <img src={calvinIcon}></img>
-            </div>
-            <div>
-              <img src={havasIcon}></img>
+        <div className="secSpac logoWraper my-4">
+          <div className="container">
+            <div className="title brands-row-title">Trusted by renowned brands</div>
+            <div className="brands-section">
+              <div className="logospc">
+                <img src={adidasIcon}></img>
+              </div>
+              <div className="logospc">
+                <img src={ubisoftIcon}></img>
+              </div>
+              <div className="logospc">
+                <img src={americanExpress}></img>
+              </div>
+              <div className="logospc">
+                <img src={wppIcon}></img>
+              </div>
+              <div className="logospc">
+                <img src={lorealIcon}></img>
+              </div>
+              <div className="logospc">
+                <img src={joseIcon}></img>
+              </div>
+              <div className="logospc">
+                <img src={calvinIcon}></img>
+              </div>
+              <div className="logospc">
+                <img src={havasIcon}></img>
+              </div>
             </div>
           </div>
         </div>

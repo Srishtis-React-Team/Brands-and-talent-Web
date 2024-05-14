@@ -134,29 +134,29 @@ const Header = ({ onData }) => {
       </div>
       <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
         <div className="mobile-menu-items">
-          <div>
+          <div className="navTxt">
             <NavLink to="/" onClick={() => handleClick("")}>
               Home
             </NavLink>
           </div>
           <div onClick={() => handleClick("post-job")}>Post a Job</div>
-          <div>
+          <div className="navTxt">
             <NavLink to="/listJob" onClick={() => handleClick("list-job")}>
               List Job
             </NavLink>
           </div>
-          <div>
+          <div className="navTxt">
             <NavLink to="/find-creators" onClick={() => handleClick("")}>
               Find Talent
             </NavLink>
           </div>
-          <div>
+          <div className="navTxt">
             <NavLink to="/how-it-works" onClick={() => handleClick("")}>
               How It Works
             </NavLink>
           </div>
           {currentUserId != null && (
-            <div>
+            <div className="navTxt padRmv">
               <NavLink to="/pricing" onClick={() => handleClick("")}>
                 Pricing
               </NavLink>
@@ -261,7 +261,7 @@ const Header = ({ onData }) => {
       </div>
 
       <div className="header">
-        <div className="container-fluid header-container d-flex align-items-center justify-content-between">
+        <div className="container header-container d-flex align-items-center justify-content-between">
           <div
             className="icon btn-logo"
             onClick={() => {
@@ -272,18 +272,18 @@ const Header = ({ onData }) => {
           </div>
           <div className="header-items">
             <div className=" menu-items">
-              <div>
+              <div className="navTxt">
                 <NavLink to="/" onClick={() => handleClick("")}>
                   Home
                 </NavLink>
               </div>
               <div onClick={() => handleClick("post-job")}>Post a job</div>
-              <div>
+              <div className="navTxt">
                 <NavLink to="/listJob" onClick={() => handleClick("list-job")}>
                   Jobs List
                 </NavLink>
               </div>
-              <div>
+              <div className="navTxt">
                 <NavLink to="/find-creators" onClick={() => handleClick("")}>
                   Find Talent
                 </NavLink>
@@ -293,21 +293,21 @@ const Header = ({ onData }) => {
               Get Booked
             </NavLink>
           </div> */}
-              <div>
+              <div className="navTxt">
                 <NavLink to="/how-it-works" onClick={() => handleClick("")}>
                   How It Works
                 </NavLink>
               </div>
 
               {currentUserId != null && (
-                <div>
+                <div className="navTxt">
                   <NavLink to="/pricing" onClick={() => handleClick("")}>
                     Pricing
                   </NavLink>
                 </div>
               )}
 
-              <div>
+              <div className="navTxt padRmv">
                 <li class="nav-item dropdown">
                   <a
                     class="nav-link dropdown-toggle"
@@ -473,7 +473,7 @@ const Header = ({ onData }) => {
             </div>
           </div> */}
               <div
-                className=""
+                className="searchBtn"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasTop"
                 aria-controls="offcanvasTop"
@@ -514,7 +514,7 @@ const Header = ({ onData }) => {
                 </div>
               </div>
 
-              <div className="">
+              <div className="loginTxt">
                 <NavLink
                   to="/login"
                   className="login-text"
