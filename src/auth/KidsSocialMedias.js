@@ -108,9 +108,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
           <div className="kidsform-one" style={{ width: "100%" }}>
             <div className="kids-wrapper">
               <div className="kids-img">
-                <img src={kidsImage} alt="" />
+                <img src={kidsImage} alt="" className="kids-image-sticky" />
               </div>
-              <div className="kids-form">
+              <div className="kids-form" style={{ paddingLeft: "400px" }}>
                 <div className="kids-main">
                   <div className="kids-form-title">
                     Explore Your Social Media Presence
@@ -185,8 +185,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
-                          <div className="media-text">Threads</div>
+                          <img className="" src={youTube} alt="" />
+                          <div className="media-text">You Yube</div>
                         </div>
                         <div className="connect-btn">connect</div>
                       </div>

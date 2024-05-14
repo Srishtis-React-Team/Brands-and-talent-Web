@@ -6,6 +6,9 @@ import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
 import { generateToken } from "./firebase";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+
 const Login = () => {
   const btLogo = require("../assets/icons/Group 56.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
@@ -98,6 +101,9 @@ const Login = () => {
 
   const handleForgotPassword = (userType) => {
     navigate(`/forgot-password?${userType}`);
+  };
+  const brandSignup = () => {
+    navigate(`/brand-firstGig`);
   };
 
   const login = async (enteredOTP) => {
@@ -216,9 +222,20 @@ const Login = () => {
     console.log(fireBaseToken, "fireBaseToken");
   }, [fireBaseToken]);
 
+  const [data, setData] = useState("");
+
+  const talentSignup = () => {
+    setData("talent-signup");
+  };
+
+  const socialSignup = async (response, mediaType) => {
+    console.log(response, "socialSignupresponse");
+    console.log(mediaType, "mediaType");
+  };
+
   return (
     <>
-      <Header />
+      <Header onData={data} />
       <div className="login-main">
         <div className="login-container">
           <div className="choose-who">
@@ -228,7 +245,7 @@ const Login = () => {
               }`}
               onClick={() => handleClick("brand")}
             >
-              I" am a Brand
+              I am a Brand/Client
             </div>
             <div
               className={`iam-talent ${
@@ -236,7 +253,7 @@ const Login = () => {
               }`}
               onClick={() => handleClick("talent")}
             >
-              I" am a Talent
+              I am a Talent
             </div>
           </div>
           {/* <div className="mb-3 login-input-containers">
@@ -294,20 +311,67 @@ const Login = () => {
               )}
             </div>
           </div>
+          {selectedItem === "brand" && (
+            <div
+              className="login-forgot"
+              onClick={() => handleForgotPassword(selectedItem)}
+            >
+              Forgot Password Brand/Client?
+            </div>
+          )}
+          {selectedItem === "talent" && (
+            <div
+              className="login-forgot"
+              onClick={() => handleForgotPassword(selectedItem)}
+            >
+              Forgot Password Talent?
+            </div>
+          )}
 
-          <div
-            className="login-forgot"
-            onClick={() => handleForgotPassword(selectedItem)}
-          >
-            Forgot Password?
-          </div>
-
-          <div className="login-btn" onClick={login}>
+          {/* <div className="login-btn" onClick={login}>
             {isLoading
               ? "Loading..."
               : `${selectedItem.charAt(0).toUpperCase() +
                   selectedItem.slice(1)} Login`}
+          </div> */}
+
+          {selectedItem === "brand" && (
+            <div onClick={() => login()} className="login-btn">
+              Login as Brand/Client
+            </div>
+          )}
+          {selectedItem === "talent" && (
+            <div onClick={() => login()} className="login-btn">
+              Login as Talent
+            </div>
+          )}
+
+          <div className="login-or">OR</div>
+
+          <div className="google-login">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                socialSignup(
+                  jwtDecode(credentialResponse?.credential),
+                  "google"
+                );
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
           </div>
+
+          {selectedItem === "brand" && (
+            <div onClick={() => brandSignup()} className="signup-login">
+              SignUp as Brand/Client
+            </div>
+          )}
+          {selectedItem === "talent" && (
+            <div onClick={() => talentSignup()} className="signup-login">
+              SignUp as Talent
+            </div>
+          )}
           {/* <div className="stroke-wrapper login-input-containers">
             <div className="stroke-div"></div>
             <div className="or-signup">Or Login with</div>

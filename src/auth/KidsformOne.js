@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsform-one.scss";
-
 import Select from "react-select";
 import Axios from "axios";
 import { API } from "../config/api";
@@ -10,6 +9,11 @@ import ReactFlagsSelect from "react-flags-select";
 import { useNavigate } from "react-router";
 import nationalityOptions from "../components/nationalities";
 import languageOptions from "../components/languages";
+import MuiPhoneNumber from "material-ui-phone-number";
+import TextField from "@mui/material/TextField";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const KidsformOne = ({ sendDataToParent }) => {
   const paramsValues = window.location.search;
@@ -22,7 +26,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [updateDisabled, setUpdateDisabled] = useState(false);
-
+  const [value, setValue] = useState(null);
   const [showError, setShowError] = useState(false);
   const [kidsFillData, setKidsFillData] = useState(null);
   const [parentFirstNameError, setparentFirstNameError] = useState(false);
@@ -67,7 +71,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [maritalStatus, setMaritalStatus] = useState("");
   const [nationality, setNationality] = useState("");
   const [ethnicity, setEthnicity] = useState("");
-  const [languages, setLanguages] = useState("");
+  const [languages, setLanguages] = useState([]);
   const [dateOfBirth, setDob] = useState("");
   const [profession, setProfession] = useState([]);
   const [aboutYou, setAboutYou] = useState([]);
@@ -119,11 +123,23 @@ const KidsformOne = ({ sendDataToParent }) => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "unset", // Reset the minHeight to avoid clipping
+      minHeight: "55px", // Reset the minHeight to avoid clipping
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "200px", // Adjust the maxHeight as per your requirement
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
+
+  const customStylesProfession = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "55px", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
       zIndex: 9999, // Ensure menu appears above other elements
     }),
   };
@@ -139,14 +155,31 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   // Function to handle date picker change
   const handleDateChange = (e) => {
-    const selectedDate = e.target.value; // Assuming your date picker provides the selected date
-    setDob(selectedDate); // Set the DOB in state
-    // Calculate age
-    const dobDate = new Date(selectedDate);
-    const today = new Date();
-    const diff = today - dobDate;
-    const ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)); // Calculating age in years
-    setAge(String(ageInYears)); // Set the age in state
+    // const selectedDate = e.target.value; // Assuming your date picker provides the selected date
+    // setDob(selectedDate); // Set the DOB in state
+    // // Calculate age
+    // const dobDate = new Date(selectedDate);
+    // const today = new Date();
+    // const diff = today - dobDate;
+    // const ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)); // Calculating age in years
+    // setAge(String(ageInYears)); // Set the age in state
+    setValue(e);
+    setDob(e);
+    // let dateString = e;
+    // if (dateString) {
+    //   let dateObject = new Date(dateString);
+    //   console.log(dateObject, "dateObject");
+    //   console.log(typeof dateObject, "dateObject");
+    //   if (dateObject) {
+    //     let formattedDate = dateObject?.toISOString()?.split("T")[0];
+    //     console.log(formattedDate, "formattedDate");
+    //   }
+    // }
+    let dobDate = new Date(e);
+    let today = new Date();
+    let diff = today - dobDate;
+    let ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+    setAge(String(ageInYears));
   };
 
   const togglePasswordVisibility = () => {
@@ -182,10 +215,20 @@ const KidsformOne = ({ sendDataToParent }) => {
     setGender(event.target.value);
     setgenderError(false);
   };
-  const selectLanguage = (event) => {
-    setLanguages(event.target.value);
+
+  const selectLanguage = (selectedOptions) => {
     setLanguageError(false);
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setLanguages([]); // Clear the languages state
+      return;
+    }
+
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    setLanguages(selectedLanguages); // Update languages state with all selected languages
   };
+
   const selectNationality = (event) => {
     setNationality(event.target.value);
     setNationalityError(false);
@@ -422,9 +465,6 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (state === "") {
       setStateError(true);
     }
-    if (kidsCity === "") {
-      setCityError(true);
-    }
     if (address === "") {
       setAddressError(true);
     }
@@ -446,9 +486,10 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (ethnicity === "") {
       setEthnicityError(true);
     }
-    if (languages === "") {
+    if (languages.length === 0) {
       setLanguageError(true);
     }
+
     if (maritalStatus === "") {
       setMaritalError(true);
     }
@@ -486,7 +527,6 @@ const KidsformOne = ({ sendDataToParent }) => {
       parentMobile !== "" &&
       country !== "" &&
       state !== "" &&
-      kidsCity !== "" &&
       address !== "" &&
       selectedProfessions.length !== 0 &&
       selectedCategories.length !== 0 &&
@@ -495,7 +535,8 @@ const KidsformOne = ({ sendDataToParent }) => {
       ethnicity !== "" &&
       languages !== "" &&
       maritalStatus !== "" &&
-      dateOfBirth !== ""
+      dateOfBirth !== "" &&
+      passwordMatch === true
     ) {
       const formData = {
         parentFirstName: parentFirstName,
@@ -531,7 +572,7 @@ const KidsformOne = ({ sendDataToParent }) => {
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              setMessage("Registered SuccessFully!");
+              setMessage("Registered Successfully");
               setOpenPopUp(true);
               setTimeout(function() {
                 setOpenPopUp(false);
@@ -576,8 +617,189 @@ const KidsformOne = ({ sendDataToParent }) => {
             setIsLoading(false);
           });
       }
+    } else {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 1000);
+    }
+    console.log(passwordMatch, "passwordMatch");
+    if (!passwordMatch) {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 1000);
     }
   };
+
+  const [firstNameLetterError, setFirstNameLetterError] = useState(false);
+  const [lastNameLetterError, setLastNameLetterError] = useState(false);
+  const [kidsLegalFirstLetterError, setKidsLegalFirstError] = useState(false);
+  const [
+    kidsLegalLastNameLetterError,
+    setKidsLegalLastNameLetterError,
+  ] = useState(false);
+  const [
+    kidsPrefferedFirstNameLetterError,
+    setKidsPrefferedFirstNameLetterError,
+  ] = useState(false);
+  const [
+    kidsPrefferedLastNameLetterError,
+    setKidsPrefferedLastNameLetterError,
+  ] = useState(false);
+
+  const handleFirstNameChange = (e) => {
+    const value = e.target.value;
+    // Regular expression to allow only letters
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (value.trim() === "") {
+      setFirstNameLetterError(false);
+      setParentFirstName("");
+    } else if (!onlyLettersRegex.test(value)) {
+      setFirstNameLetterError(true);
+    } else {
+      setParentFirstName(value);
+      setFirstNameLetterError(false);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    // If the Backspace key is pressed and the input value is empty, clear the error
+    if (e.key === "Backspace") {
+      setFirstNameLetterError(false);
+    }
+  };
+  const handleLastNameChange = (e) => {
+    const value = e.target.value;
+    // Regular expression to allow only letters
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (value.trim() === "") {
+      setLastNameLetterError(false);
+      setParentLastName("");
+    } else if (!onlyLettersRegex.test(value)) {
+      setLastNameLetterError(true);
+    } else {
+      setParentLastName(value);
+      setLastNameLetterError(false);
+    }
+  };
+
+  const handleLastNameKeyPress = (e) => {
+    // If the Backspace key is pressed and the input value is empty, clear the error
+    if (e.key === "Backspace") {
+      setLastNameLetterError(false);
+    }
+  };
+
+  const KidsLegalFirstNameChange = (e) => {
+    const value = e.target.value;
+    // Regular expression to allow only letters
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (value.trim() === "") {
+      setKidsLegalFirstError(false);
+      setKidsLegalFirstName("");
+    } else if (!onlyLettersRegex.test(value)) {
+      setKidsLegalFirstError(true);
+    } else {
+      setKidsLegalFirstName(value);
+      setKidsLegalFirstError(false);
+    }
+  };
+
+  const handleKidsLegalKeyPress = (e) => {
+    // If the Backspace key is pressed and the input value is empty, clear the error
+    if (e.key === "Backspace") {
+      setKidsLegalFirstError(false);
+    }
+  };
+
+  const KidsLegalLastNameChange = (e) => {
+    const value = e.target.value;
+    // Regular expression to allow only letters
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (value.trim() === "") {
+      setKidsLegalLastNameLetterError(false);
+      setKidsLegalLastName("");
+    } else if (!onlyLettersRegex.test(value)) {
+      setKidsLegalLastNameLetterError(true);
+    } else {
+      setKidsLegalLastName(value);
+      setKidsLegalLastNameLetterError(false);
+    }
+  };
+
+  const handleKidsLegalLastNameKeyPress = (e) => {
+    // If the Backspace key is pressed and the input value is empty, clear the error
+    if (e.key === "Backspace") {
+      setKidsLegalLastNameLetterError(false);
+    }
+  };
+
+  const kidsPreferedFirstNameChange = (e) => {
+    const value = e.target.value;
+    // Regular expression to allow only letters
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (value.trim() === "") {
+      setKidsPrefferedFirstNameLetterError(false);
+      setKidsPreferedFirstName("");
+    } else if (!onlyLettersRegex.test(value)) {
+      setKidsPrefferedFirstNameLetterError(true);
+    } else {
+      setKidsPreferedFirstName(value);
+      setKidsPrefferedFirstNameLetterError(false);
+    }
+  };
+
+  const handleKidsPrefferedFirstNameKeyPress = (e) => {
+    // If the Backspace key is pressed and the input value is empty, clear the error
+    if (e.key === "Backspace") {
+      setKidsPrefferedFirstNameLetterError(false);
+    }
+  };
+  const kidsPreferedLastNameChange = (e) => {
+    const value = e.target.value;
+    // Regular expression to allow only letters
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (value.trim() === "") {
+      setKidsPrefferedLastNameLetterError(false);
+      setKidsPreferedLastName("");
+    } else if (!onlyLettersRegex.test(value)) {
+      setKidsPrefferedLastNameLetterError(true);
+    } else {
+      setKidsPreferedLastName(value);
+      setKidsPrefferedLastNameLetterError(false);
+    }
+  };
+
+  const handleKidsPrefferedLasttNameKeyPress = (e) => {
+    // If the Backspace key is pressed and the input value is empty, clear the error
+    if (e.key === "Backspace") {
+      setKidsPrefferedLastNameLetterError(false);
+    }
+  };
+
+  const [mobileNumError, setMobileNumError] = useState();
+
+  const handleMobileChange = (value, countryData) => {
+    // Update the parentMobile state with the new phone number
+    console.log(value, "handleMobileChange");
+    setParentMobile(value);
+    setParentMobileError(false);
+  };
+
+  // const handleMobileChange = (e) => {
+  //   const value = e.target.value;
+  //   // Regular expression to allow only numbers and the "+" symbol
+  //   const onlyNumbersRegex = /^[0-9+]*$/;
+  //   if (!onlyNumbersRegex.test(value)) {
+  //     setMobileNumError(true);
+  //   } else {
+  //     setParentMobile(value);
+  //     setMobileNumError(false);
+  //   }
+  // };
 
   return (
     <>
@@ -606,9 +828,9 @@ const KidsformOne = ({ sendDataToParent }) => {
             <div className="kidsform-one">
               <div className="kids-wrapper">
                 <div className="kids-img">
-                  <img src={kidsImage} alt="" />
+                  <img src={kidsImage} alt="" className="kids-image-sticky" />
                 </div>
-                <div className="kids-form">
+                <div className="kids-form" style={{ paddingLeft: "400px" }}>
                   <div className="kids-title">
                     Welcome to Kids & Teen Talent ( 13-17 years ) Registration
                     Form
@@ -652,14 +874,20 @@ const KidsformOne = ({ sendDataToParent }) => {
                             className="form-control"
                             value={parentFirstName}
                             onChange={(e) => {
-                              setParentFirstName(e.target.value);
+                              handleFirstNameChange(e);
                               setparentFirstNameError(false);
                             }}
+                            onKeyDown={handleKeyPress}
                             placeholder="Enter Legal First Name"
                           ></input>
                           {parentFirstNameError && (
                             <div className="invalid-fields">
                               Please enter First Name
+                            </div>
+                          )}
+                          {firstNameLetterError && (
+                            <div className="invalid-fields">
+                              Only Letters are allowed
                             </div>
                           )}
                         </div>
@@ -672,10 +900,16 @@ const KidsformOne = ({ sendDataToParent }) => {
                             className="form-control"
                             value={parentLastName}
                             onChange={(e) => {
-                              setParentLastName(e.target.value);
+                              handleLastNameChange(e);
                             }}
+                            onKeyDown={handleLastNameKeyPress}
                             placeholder="Enter Legal Last name"
                           ></input>
+                          {lastNameLetterError && (
+                            <div className="invalid-fields">
+                              Only Letters are allowed
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -755,9 +989,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                       </div>
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">
-                            City<span className="mandatory">*</span>
-                          </label>
+                          <label className="form-label">City</label>
                           <Select
                             placeholder="Select City..."
                             options={cityList.map((city) => ({
@@ -768,11 +1000,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                             onChange={handleSelectedCity}
                             isSearchable={true}
                           />
-                          {cityError && (
-                            <div className="invalid-fields">
-                              Please Select City
-                            </div>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -860,6 +1087,44 @@ const KidsformOne = ({ sendDataToParent }) => {
                     </div>
                     <div className="kids-form-row">
                       <div className="kids-form-section">
+                        <label className="form-label">
+                          Mobile No <span className="mandatory">*</span>
+                        </label>
+                        <div className="mb-3">
+                          {/* <input
+                            type="text"
+                            className="form-control"
+                            maxLength="15"
+                            pattern="[0-9]{10}"
+                            value={parentMobile}
+                            onChange={(e) => {
+                              handleMobileChange(e);
+                              setParentMobileError(false);
+                            }}
+                            placeholder=" Mobile No"
+                          ></input> */}
+
+                          <MuiPhoneNumber
+                            defaultCountry={"kh"}
+                            className="form-control"
+                            onChange={handleMobileChange}
+                          />
+
+                          {parentMobileError && (
+                            <div className="invalid-fields">
+                              Please enter Mobile Number
+                            </div>
+                          )}
+                          {mobileNumError && (
+                            <div className="invalid-fields">
+                              Only Numbers Allowed
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="kids-form-row">
+                      <div className="kids-form-section">
                         <div className="mb-3">
                           <label
                             htmlFor="exampleFormControlTextarea1"
@@ -868,6 +1133,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             Address<span className="mandatory">*</span>
                           </label>
                           <textarea
+                            style={{ width: "820px" }}
                             className="form-control address-textarea"
                             id="exampleFormControlTextarea1"
                             value={address}
@@ -880,30 +1146,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                           {addressError && (
                             <div className="invalid-fields">
                               Please Enter Address
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            Mobile No. <span className="mandatory">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            maxLength="15"
-                            pattern="[0-9]{15}"
-                            value={parentMobile}
-                            onChange={(e) => {
-                              setParentMobile(e.target.value);
-                              setParentMobileError(false);
-                            }}
-                            placeholder=" Mobile No."
-                          ></input>
-                          {parentMobileError && (
-                            <div className="invalid-fields">
-                              Please enter Mobile Number
                             </div>
                           )}
                         </div>
@@ -1043,15 +1285,21 @@ const KidsformOne = ({ sendDataToParent }) => {
                             type="text"
                             className="form-control"
                             onChange={(e) => {
-                              setKidsLegalFirstName(e.target.value);
+                              KidsLegalFirstNameChange(e);
                               setkidsLegalFirstNameError(false);
                             }}
+                            onKeyDown={handleKidsLegalKeyPress}
                             value={kidsLegalFirstName}
                             placeholder="Enter Legal First Name"
                           ></input>
                           {kidsLegalFirstNameError && (
                             <div className="invalid-fields">
                               Please enter First Name
+                            </div>
+                          )}
+                          {kidsLegalFirstLetterError && (
+                            <div className="invalid-fields">
+                              Only Letters Allowed
                             </div>
                           )}
                         </div>
@@ -1064,10 +1312,16 @@ const KidsformOne = ({ sendDataToParent }) => {
                             className="form-control"
                             value={kidsLegalLastName}
                             onChange={(e) => {
-                              setKidsLegalLastName(e.target.value);
+                              KidsLegalLastNameChange(e);
                             }}
+                            onKeyDown={handleKidsLegalLastNameKeyPress}
                             placeholder="Enter Legal Last name"
                           ></input>
+                          {kidsLegalLastNameLetterError && (
+                            <div className="invalid-fields">
+                              Only Letters Allowed
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1075,7 +1329,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">
-                            Prefered First Name
+                            Preferred First Name
                             <span className="mandatory">*</span>
                           </label>
                           <input
@@ -1083,14 +1337,20 @@ const KidsformOne = ({ sendDataToParent }) => {
                             className="form-control"
                             value={kidsPreferedFirstName}
                             onChange={(e) => {
-                              setKidsPreferedFirstName(e.target.value);
+                              kidsPreferedFirstNameChange(e);
                               setPreferedNameError(false);
                             }}
-                            placeholder="Enter Prefered First Name"
+                            onKeyDown={handleKidsPrefferedFirstNameKeyPress}
+                            placeholder="Enter Preferred  First Name"
                           ></input>
                           {preferedNameError && (
                             <div className="invalid-fields">
-                              Please Enter Prefered First Name
+                              Please Enter Preferred First Name
+                            </div>
+                          )}
+                          {kidsPrefferedFirstNameLetterError && (
+                            <div className="invalid-fields">
+                              Only Letters Allowed
                             </div>
                           )}
                         </div>
@@ -1098,17 +1358,23 @@ const KidsformOne = ({ sendDataToParent }) => {
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">
-                            Prefered Last name
+                            Preferred Last name
                           </label>
                           <input
                             type="text"
                             className="form-control"
                             value={kidsPreferedLastName}
                             onChange={(e) => {
-                              setKidsPreferedLastName(e.target.value);
+                              kidsPreferedLastNameChange(e);
                             }}
-                            placeholder="Enter Prefered Last name"
+                            onKeyDown={handleKidsPrefferedLasttNameKeyPress}
+                            placeholder="Enter Preferred  Last name"
                           ></input>
+                          {kidsPrefferedLastNameLetterError && (
+                            <div className="invalid-fields">
+                              Only Letters Allowed
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1122,6 +1388,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             className="form-select"
                             aria-label="Default select example"
                             onChange={selectGender}
+                            style={{ fontSize: "14px" }}
                             value={gender}
                           >
                             <option value="" disabled selected>
@@ -1150,6 +1417,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             aria-label="Default select example"
                             onChange={selectMaritalStatus}
                             value={maritalStatus}
+                            style={{ fontSize: "14px" }}
                           >
                             <option value="" disabled selected>
                               Select Marital Status
@@ -1178,6 +1446,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             aria-label="Default select example"
                             onChange={selectEthnicity}
                             value={ethnicity}
+                            style={{ fontSize: "14px" }}
                           >
                             <option value="" disabled>
                               Select Ethnicity
@@ -1205,6 +1474,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             aria-label="Default select example"
                             onChange={selectNationality}
                             value={nationality}
+                            style={{ fontSize: "14px" }}
                           >
                             <option value="" disabled selected>
                               Select Nationality
@@ -1225,11 +1495,11 @@ const KidsformOne = ({ sendDataToParent }) => {
                     </div>
                     <div className="kids-form-row mb-5">
                       <div className="kids-form-section">
+                        <label className="form-label">
+                          Date Of Birth <span className="mandatory">*</span>
+                        </label>
                         <div className="mb-3">
-                          <label className="form-label">
-                            Date Of Birth <span className="mandatory">*</span>
-                          </label>
-                          <input
+                          {/* <input
                             type="date"
                             className="form-control"
                             value={dateOfBirth}
@@ -1238,7 +1508,22 @@ const KidsformOne = ({ sendDataToParent }) => {
                               setDobError(false);
                             }}
                             placeholder=""
-                          ></input>
+                          ></input> */}
+
+                          <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                              value={value}
+                              onChange={(newValue) => {
+                                console.log(newValue, "newValue");
+                                handleDateChange(newValue);
+                              }}
+                              renderInput={(params) => (
+                                <TextField {...params} />
+                              )}
+                              disableFuture
+                            />
+                          </LocalizationProvider>
+
                           {dobError && (
                             <div className="invalid-fields">
                               Please Select Date Of Birth
@@ -1251,21 +1536,16 @@ const KidsformOne = ({ sendDataToParent }) => {
                           <label className="form-label">
                             Language <span className="mandatory">*</span>
                           </label>
-                          <select
-                            className="form-select"
-                            aria-label="Default select example"
-                            onChange={selectLanguage}
-                            value={languages}
-                          >
-                            <option value="" disabled selected>
-                              Select Language
-                            </option>
-                            {languageOptions.map((option, index) => (
-                              <option key={index} value={option.value}>
-                                {option.value}
-                              </option>
-                            ))}
-                          </select>
+                          <Select
+                            isMulti
+                            name="colors"
+                            options={languageOptions}
+                            valueField="value"
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            onChange={(value) => selectLanguage(value)}
+                            styles={customStylesProfession}
+                          />
                           {languageError && (
                             <div className="invalid-fields">
                               Please Select Language

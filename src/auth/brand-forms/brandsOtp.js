@@ -61,20 +61,16 @@ const BrandsOtp = () => {
       brandEmail: queryString,
     };
     setIsLoading(true);
-    navigate(`/brand-details`);
     console.log(formData, "formData otpVerification");
     await ApiHelper.post(API.otpVerificationBrands, formData)
       .then((resData) => {
-        console.log("otpVerification response", resData.data);
+        console.log("otpVerification response", resData);
         if (resData.data.status === true) {
-          setMessage("Verification SuccessFull");
+          setMessage("Verification Successful");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-          }, 1000);
-          setIsLoading(false);
-          setTimeout(function() {
-            let successData = "verified";
+            setIsLoading(false);
             navigate("/brand-details", {
               state: { data: resData?.data?.data },
             });
@@ -184,7 +180,7 @@ const BrandsOtp = () => {
             If you didn’t receive a code?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
           </div>
-          <div className="otp-back" onClick={() => navigate(`/login`)}>
+          <div className="otp-back" onClick={() => navigate(`/brand-signup`)}>
             Back
           </div>
         </div>

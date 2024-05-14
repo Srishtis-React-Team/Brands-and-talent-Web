@@ -10,6 +10,7 @@ import { API } from "../config/api.js";
 import PhotosCarousel from "./PhotosCarousel.js";
 import CardCarousel from "./CardCarousel.js";
 import ServicesCarousel from "./ServicesCarousel.js";
+import TalentHeader from "../layout/TalentHeader.js";
 import PdfModal from "../components/PdfModal.js";
 
 const TalentProfile = () => {
@@ -293,10 +294,16 @@ const TalentProfile = () => {
     modal.style.display = "none";
     document.body.classList.remove("modal-open");
   };
+  const [showSidebar, setShowSidebar] = useState(true);
+
+  const toggleMenu = () => {
+    setShowSidebar(!showSidebar);
+  };
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
+      <TalentHeader toggleMenu={toggleMenu} />
       <section>
         <div className="popular-header">
           <div className="header-title">Profile</div>

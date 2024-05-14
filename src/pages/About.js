@@ -7,8 +7,16 @@ const About = () => {
 
   return (
     <>
-      <Header />
-      About Us Page under Development
+      <Header />{" "}
+      <section style={{ marginTop: "64px" }}>
+        <div className="popular-header">
+          <div className="header-title">About Us</div>
+          <div className="header-menu">
+            <div>Home</div>
+            <div>Learn</div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );
