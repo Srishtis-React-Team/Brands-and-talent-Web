@@ -25,7 +25,6 @@
 
 .gig-name {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   line-height: normal;
@@ -34,7 +33,6 @@
 
 .gig-description {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 300;
@@ -69,7 +67,6 @@
 
 .followers-text {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -82,7 +79,6 @@
 
 .followers-count {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -124,7 +120,6 @@
 
 .name-wrapper {
   color: #fff;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
@@ -133,7 +128,6 @@
 
 .company-text {
   color: #181818;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
@@ -143,7 +137,6 @@
 
 .company-plan {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -158,7 +151,6 @@
 
 .trial-title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 30px;
   font-style: normal;
   font-weight: 600;
@@ -167,7 +159,6 @@
 
 .inlcluded {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
@@ -189,7 +180,6 @@
 .include-text {
   padding-left: 8px;
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -235,7 +225,6 @@
 .done {
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -246,7 +235,6 @@
 .gmail-info {
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
@@ -269,7 +257,6 @@
 .gmail-btn-text {
   color: #fff;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -326,11 +313,12 @@
 }
 
 .adult-signup-main {
-  // background-color: aqua;
-  width: 30%;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 35px;
-  border-radius: 16px;
+  width: 400px;
+  max-width: 100%;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  padding: 15px 35px;
+  border-radius: 20px;
 }
 
 .adult-password-wrapper,
@@ -353,9 +341,16 @@
   color: #aaa;
   cursor: pointer;
 }
+.form-control, .form-select{
+  outline: 0 !important;
+  box-shadow: inherit !important;
+}
+.login-main .form-label{ margin: 0; }
 
 .adult-signup-inputs {
   height: 50px;
+  border: 1px solid #B1A8A8;
+  
 }
 .signup-btn-section {
   padding: 20px 0px;
