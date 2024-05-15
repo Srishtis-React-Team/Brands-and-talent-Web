@@ -89,6 +89,7 @@ export const API = {
   jobCount: BASEURL + "gigs/jobCount/",
   getPostedJobs: BASEURL + "gigs/getPostedJobs",
   applyjobs: BASEURL + "gigs/applyjobs",
+  searchJobs: BASEURL + "gigs/searchJobs",
 
   //notifications
   getBrandNotification: BASEURL + "gigs/getBrandNotification/",

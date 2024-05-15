@@ -49,6 +49,7 @@ import Blogs from "../pages/Blogs";
 import AppliedJobs from "../views/AppliedJobs";
 import Applicants from "../brand/pages/Applicants";
 import OverallJobs from "../brand/pages/OverallJobs";
+import EditTalent from "../auth/EditTalent";
 function Routing() {
   return (
     <Routes>
@@ -105,6 +106,7 @@ function Routing() {
       <Route path="/message" element={<MessageTalents />} />
       <Route path="/preview-job-talent" element={<TalentPreviewJob />} />
       <Route path="/applicants" element={<Applicants />} />
+      <Route path="/edit-talent-profile" element={<EditTalent />} />
     </Routes>
   );
 }

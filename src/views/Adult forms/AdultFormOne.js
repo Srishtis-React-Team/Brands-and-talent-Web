@@ -1048,6 +1048,7 @@ const AdultFormOne = () => {
                               handleDateChange(newValue);
                             }}
                             renderInput={(params) => <TextField {...params} />}
+                            disableFuture
                           />
                         </LocalizationProvider>
 

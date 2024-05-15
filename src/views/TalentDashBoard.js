@@ -249,27 +249,64 @@ const TalentDashBoard = () => {
             </div>
           </div>
         </div>
-
-        <div className="container-fluid my-2">
-          <div className="row talent-dashboard-main">
-
-            <div className="col-lg-8">
-              <div className="talent-column-one">
-                  <div className="recent-gigs-title">Most Recent Gigs</div>
-                  {gigsList.length && (
-                    <div className="recent-gigs-main">
-                      {gigsList.map((item, index) => {
-                        return (
-                          <>
-                            <div className="recent-gigs-wrapper">
-                              <div className="recent-setone">
-                                <div className="recent-img-div">
-                                  {/* <i className="bi bi-briefcase-fill "></i> */}
-                                  <img
-                                    className="recent-img"
-                                    src={`${API.userFilePath}${item?.brandImage}`}
-                                    alt=""
-                                  />
+        <div className="container-fluid my-4">
+          <div className="row  talent-dashboard-main">
+            <div className="talent-column-one col-lg-7">
+              <div className="recent-gigs-title">Most Recent Gigs</div>
+              {gigsList.length && (
+                <div className="recent-gigs-main">
+                  {gigsList.map((item, index) => {
+                    return (
+                      <>
+                        <div className="recent-gigs-wrapper">
+                          <div className="recent-setone">
+                            <div className="recent-img-div">
+                              {/* <i className="bi bi-briefcase-fill "></i> */}
+                              {item?.brandImage && (
+                                <img
+                                  className="recent-img"
+                                  src={`${API.userFilePath}${item?.brandImage}`}
+                                  alt=""
+                                />
+                              )}
+                              {!item?.brandImage && (
+                                <img
+                                  className="recent-img"
+                                  src={jobImage}
+                                  alt=""
+                                />
+                              )}
+                            </div>
+                            <div className="recent-gig-details">
+                              <div className="recent-gig-company">
+                                {item.hiringCompany}
+                              </div>
+                              <div className="recent-gig-name">
+                                {item.jobTitle}
+                              </div>
+                              <div className="recent-gig-description">
+                                {item.description}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="recent-settwo">
+                            <div className="recent-gigs-count-wrapper">
+                              <div className="recent-gigs-logo">
+                                <i className="bi bi-person-check-fill"></i>
+                              </div>
+                              <div className="recent-gig-count-details">
+                                <div className="recent-gig-name">Followers</div>
+                                <div className="recent-gigs-count">2500</div>
+                              </div>
+                            </div>
+                            <div className="recent-gigs-count-wrapper">
+                              <div className="recent-gigs-logo">
+                                <i className="bi bi-person-arms-up"></i>
+                              </div>
+                              <div className="recent-gig-count-details">
+                                <div className="recent-gig-name">Age</div>
+                                <div className="recent-gigs-count">
+                                  {item.age}
                                 </div>
                                 <div className="recent-gig-details">
                                   <div className="recent-gig-company">
@@ -372,15 +409,16 @@ const TalentDashBoard = () => {
                                 </div>
                               </div>
                             </div>
-                          </>
-                        );
-                      })}
-                    </div>
-                  )}
-                  {gigsList.length == 0 && (
-                    <div className="recent-gigs-main">No Jobs Available</div>
-                  )}
-              </div>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })}
+                </div>
+              )}
+              {gigsList && gigsList.length == 0 && (
+                <div className="recent-gigs-main">No Jobs Available</div>
+              )}
             </div>
             <div className="col-lg-4">
               <div className="rightBx">
