@@ -217,6 +217,103 @@ const BrandSignup = () => {
     settalentConfirmPasswordError(false);
   };
 
+  let line = document.querySelector(".line");
+  let text = document.querySelector(".text");
+  let password_strength_box = document.querySelector(".password_strength_box");
+  let password = document.querySelector(".password");
+
+  if (password && password_strength_box && line && text) {
+    if (password.value.length == 0) {
+      password_strength_box.style.display = "none";
+    }
+
+    password.oninput = function() {
+      if (password.value.length == 0) {
+        password_strength_box.style.display = "none";
+      }
+
+      if (password.value.length >= 1) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "5%";
+        line.style.backgroundColor = "red";
+        text.style.color = "red";
+        text.innerHTML = "Weak";
+      }
+      if (password.value.length >= 2) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "10%";
+        line.style.backgroundColor = "red";
+        text.style.color = "red";
+        text.innerHTML = "Weak";
+      }
+      if (password.value.length >= 3) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "20%";
+        line.style.backgroundColor = "red";
+        text.style.color = "red";
+        text.innerHTML = "Weak";
+      }
+      if (password.value.length >= 4) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "35%";
+        line.style.backgroundColor = "red";
+        text.style.color = "red";
+        text.innerHTML = "Weak";
+        if (password.value.match(/[!@#$%^&*]/)) {
+          password_strength_box.style.display = "flex";
+          line.style.width = "45%";
+          line.style.backgroundColor = "#e9ee30";
+          text.style.color = "#e9ee30";
+          text.innerHTML = "Medium";
+        }
+      }
+      if (
+        password.value.length >= 5 &&
+        password.value.match(/[A-Z]/) &&
+        password.value.match(/[a-z]/)
+      ) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "50%";
+        line.style.backgroundColor = "#e9ee30";
+        text.style.color = "#e9ee30";
+        text.innerHTML = "Medium";
+      }
+      if (password.value.length >= 6 && password.value.match(/[0-9]/)) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "70%";
+        line.style.backgroundColor = "#e9ee30";
+        text.style.color = "#e9ee30";
+        text.innerHTML = "Medium";
+      }
+      if (
+        password.value.length >= 7 &&
+        password.value.match(/[A-Z]/) &&
+        password.value.match(/[a-z]/) &&
+        password.value.match(/[0-9]/)
+      ) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "80%";
+        line.style.backgroundColor = "#e9ee30";
+        text.style.color = "#e9ee30";
+        text.innerHTML = "Medium";
+      }
+
+      if (
+        password.value.length >= 8 &&
+        password.value.match(/[A-Z]/) &&
+        password.value.match(/[a-z]/) &&
+        password.value.match(/[0-9]/) &&
+        password.value.match(/[!@#$%^&*]/)
+      ) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "100%";
+        line.style.backgroundColor = "#2ccc2c";
+        text.style.color = "#2ccc2c";
+        text.innerHTML = "Strong";
+      }
+    };
+  }
+
   return (
     <>
       <div className="form-dialog">
@@ -300,13 +397,38 @@ const BrandSignup = () => {
                 <span className="fa fa-lock form-control-feedback"></span>
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="form-control adult-signup-inputs"
+                  className="form-control password adult-signup-inputs"
                   placeholder="Password"
                   onChange={(e) => {
                     handlePasswordChange(e);
                     setAdultPassword(e.target.value);
                   }}
                 ></input>
+                {adultPassword && (
+                  <div className="password_strength_box">
+                    <div className="password_strength">
+                      <p className="text">Weak</p>
+                      <div className="line_box">
+                        <div className="line"></div>
+                      </div>
+                    </div>
+                    <div className="tool_tip_box">
+                      <span>
+                        <i className="bi bi-question-circle"></i>
+                      </span>
+                      <div className="tool_tip">
+                        <p style={{ listStyleType: "none" }}>
+                          <b>Password must be:</b>
+                        </p>
+                        <p>At least 8 character long</p>
+                        <p>At least 1 uppercase letter</p>
+                        <p>At least 1 lowercase letter</p>
+                        <p>At least 1 number</p>
+                        <p>At least 1 special character from !@#$%^&*</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 {passwordError && (
                   <div className="invalid-fields">Please enter Password</div>
                 )}

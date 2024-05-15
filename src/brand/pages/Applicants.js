@@ -431,7 +431,7 @@ const Applicants = () => {
                                 </div>
                                 <div className="candidate-job">
                                   <span>
-                                    <i class="bi bi-telephone-fill"></i>
+                                    <i className="bi bi-telephone-fill"></i>
                                   </span>
                                   <span className="phone-number">
                                     {candidate?.talents[0]?.talentDetails

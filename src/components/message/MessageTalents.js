@@ -622,7 +622,7 @@ const MessageTalents = () => {
                                   </div>
                                   <div className="message-file-options">
                                     <i
-                                      class="bi bi-eye-fill view-file-icon"
+                                      className="bi bi-eye-fill view-file-icon"
                                       onClick={() => handleView(item?.chatFile)}
                                     ></i>
                                   </div>

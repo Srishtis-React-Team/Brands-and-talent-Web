@@ -164,7 +164,7 @@ const TalentHeader = ({ toggleMenu }) => {
           <div className="telent-menubar">
             <i className="fa-solid fa-bars"></i>
           </div>
-          <div className="mydashboard font-styles">My Dashboard</div>
+          {/* <div className="mydashboard font-styles">My Dashboard</div> */}
         </div>
         <div className="talent-navbar-functions">
           <div
