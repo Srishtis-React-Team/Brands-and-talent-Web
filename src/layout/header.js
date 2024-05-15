@@ -307,10 +307,15 @@ const Header = ({ onData }) => {
                 </div>
               )}
 
+<<<<<<< HEAD
+              <div>
+                <li className="nav-item dropdown">
+=======
               <div className="navTxt padRmv">
                 <li class="nav-item dropdown">
+>>>>>>> 8ecf9c2e293e81677808b0a78a2aef4791686b5f
                   <a
-                    class="nav-link dropdown-toggle"
+                    className="nav-link dropdown-toggle"
                     href="#"
                     id="navbarDropdown"
                     role="button"
@@ -540,15 +545,15 @@ const Header = ({ onData }) => {
       </div>
       {/* <NavLink to="/signup"  onClick={() => handleClick("")}></NavLink>            </NavLink> */}
 
-      {/* <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      {/* <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   {currentUserId != null && (
                     <li onClick={() => logout()}>
-                      <a class="dropdown-item">Logout</a>
+                      <a className="dropdown-item">Logout</a>
                     </li>
                   )}
                   {currentUserId === null && (
                     <li onClick={() => login()}>
-                      <a class="dropdown-item">Login</a>
+                      <a className="dropdown-item">Login</a>
                     </li>
                   )}
                 </ul> */}

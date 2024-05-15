@@ -337,12 +337,12 @@ const Login = () => {
 
           {selectedItem === "brand" && (
             <div onClick={() => login()} className="login-btn">
-              Login as Brand/Client
+              Log In as Brand/Client
             </div>
           )}
           {selectedItem === "talent" && (
             <div onClick={() => login()} className="login-btn">
-              Login as Talent
+              Log In as Talent
             </div>
           )}
 
@@ -364,12 +364,12 @@ const Login = () => {
 
           {selectedItem === "brand" && (
             <div onClick={() => brandSignup()} className="signup-login">
-              SignUp as Brand/Client
+              Sign Up as Brand/Client
             </div>
           )}
           {selectedItem === "talent" && (
             <div onClick={() => talentSignup()} className="signup-login">
-              SignUp as Talent
+              Sign Up as Talent
             </div>
           )}
           {/* <div className="stroke-wrapper login-input-containers">

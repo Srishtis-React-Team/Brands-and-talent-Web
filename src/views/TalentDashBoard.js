@@ -457,12 +457,12 @@ const TalentDashBoard = () => {
             </div>
             <div className="modal-body">
               <div className="modal-job-flex">
-                <i class="bi bi-building model-job-icons"></i>
+                <i className="bi bi-building model-job-icons"></i>
                 <div className="model-job-name">{modalData?.hiringCompany}</div>
               </div>
 
               <div className="modal-job-flex">
-                <i class="bi bi-briefcase-fill model-job-icons"></i>
+                <i className="bi bi-briefcase-fill model-job-icons"></i>
                 <div className="model-job-name">
                   <span className="modal-job-workplace">
                     {modalData?.workplaceType}{" "}
@@ -471,7 +471,7 @@ const TalentDashBoard = () => {
                 </div>
               </div>
               <div className="modal-job-flex">
-                <i class="bi bi-list-check model-job-icons"></i>
+                <i className="bi bi-list-check model-job-icons"></i>
                 <div className="model-job-name">
                   {modalData?.skills.map((skill, index) => (
                     <span key={index}>
@@ -482,11 +482,11 @@ const TalentDashBoard = () => {
                 </div>
               </div>
               <div className="modal-job-flex">
-                <i class="bi bi-gender-ambiguous model-job-icons"></i>
+                <i className="bi bi-gender-ambiguous model-job-icons"></i>
                 <div className="model-job-name">{modalData?.gender}</div>
               </div>
               <div className="modal-job-flex">
-                <i class="bi  bi-cash-coin model-job-icons"></i>
+                <i className="bi  bi-cash-coin model-job-icons"></i>
                 <div className="model-job-name">
                   {modalData?.paymentType?.amount} {modalData?.jobCurrency}
                 </div>
