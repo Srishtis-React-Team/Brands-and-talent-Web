@@ -127,6 +127,18 @@ const TalentSideMenu = ({ myState }) => {
         </div>
 
         <Link
+          to="/edit-talent-profile"
+          className={
+            location.pathname === "/edit-talent-profile"
+              ? "sidemenu-active mt-4"
+              : "brand-menu-wrapper mt-4"
+          }
+        >
+          <i style={{ paddingLeft: "15px" }} className="bi bi-speedometer "></i>
+          <div className="brand-menu-text">Edit Profile</div>
+        </Link>
+
+        <Link
           to="/talent-dashboard"
           className={
             location.pathname === "/talent-dashboard"

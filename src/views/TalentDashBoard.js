@@ -263,11 +263,20 @@ const TalentDashBoard = () => {
                           <div className="recent-setone">
                             <div className="recent-img-div">
                               {/* <i className="bi bi-briefcase-fill "></i> */}
-                              <img
-                                className="recent-img"
-                                src={`${API.userFilePath}${item?.brandImage}`}
-                                alt=""
-                              />
+                              {item?.brandImage && (
+                                <img
+                                  className="recent-img"
+                                  src={`${API.userFilePath}${item?.brandImage}`}
+                                  alt=""
+                                />
+                              )}
+                              {!item?.brandImage && (
+                                <img
+                                  className="recent-img"
+                                  src={jobImage}
+                                  alt=""
+                                />
+                              )}
                             </div>
                             <div className="recent-gig-details">
                               <div className="recent-gig-company">
@@ -375,7 +384,7 @@ const TalentDashBoard = () => {
                   })}
                 </div>
               )}
-              {gigsList.length == 0 && (
+              {gigsList && gigsList.length == 0 && (
                 <div className="recent-gigs-main">No Jobs Available</div>
               )}
             </div>
