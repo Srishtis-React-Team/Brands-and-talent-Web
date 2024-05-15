@@ -935,9 +935,16 @@ input[type="radio"] {
   align-items: center;
 }
 
+.talent-header-main button.base-MenuButton-root {
+  background: transparent;
+  border: 0;
+}
 
-
-
+.boxsWhite{
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+}
 
 
 

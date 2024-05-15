@@ -58,12 +58,12 @@
 }
 
 .brand-main-container {
-  padding-left: 20%;
-  padding-top: 100px;
+  padding: 10px;
+  margin-top: 75px;
   transition: padding 0.4s;
   background-color: #eeeeee;
-  padding-bottom: 30px;
-  // height: 100vh;
+  width: calc(100% - 305px);
+  float: right;
 }
 
 /* Show sidebar */
@@ -73,7 +73,7 @@
 
 /* Reduce sidebar */
 .show-sidebar {
-  width: 18%;
+  width: 305px;
 }
 
 .show-sidebar .brand-main-container {
@@ -102,8 +102,8 @@
 .talent-profile {
   width: 100%;
   background-color: rgb(228, 228, 228);
-  border-radius: 16px;
-  padding: 25px;
+  border-radius: 15px;
+  padding: 15px;
   .talent-data-wrapper {
     display: flex;
     flex-wrap: wrap;
