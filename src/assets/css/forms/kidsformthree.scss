@@ -1,31 +1,30 @@
 .plan-main {
-  // background-color: aqua;
-  margin: 0 auto;
-  width: 60%;
+  margin: 0 0 35px 0;
+  width: 100%;
 }
 
 .kids-pan-section {
   margin-top: 30px;
 }
 
-.plans-section {
-  padding: 60px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
 .plans-wrapper {
-  width: 350px;
-  // height: 100%;
-  /* height: 840px; */
+  width: 100%;
   border-radius: 20px;
+  padding: 20px 40px 30px;
   background: #fff;
   box-shadow: 2px 4px 24px 0px rgba(0, 0, 0, 0.25);
-  padding-bottom: 30px;
-  margin-right: 25px !important;
   cursor: pointer;
-}
 
+  height: auto;
+  min-height: 97%;
+
+}
+.plans-section .col-md-4:first-child{
+  width: 29%;
+}
+.plans-section .col-md-4:nth-child(2), .plans-section .col-md-4:nth-child(3) {
+  width: 35.5%;
+}
 .bordered {
   border: 3px solid #c2114b !important;
 }
@@ -35,29 +34,38 @@
 }
 
 .choose-btn {
-  width: 140px;
-  height: 40px;
+  width: 100%;
+  height: 48px;
   flex-shrink: 0;
-  border-radius: 245px;
+  border-radius: 60px;
   border: 1px solid #fff;
   background: #000;
   color: #fff;
-  font-family: "Open Sans", sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   line-height: normal;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 30px;
+  margin: 25px 0;
 }
-
+.free-plans .choose-btn{
+  background-color: #AB7E13;
+  color: #fff;
+}
+.pro-plans .choose-btn{
+  background-color: #5F2895;
+  color: #fff;
+}
+.premium-plans .choose-btn{
+  background-color: #106D3E;
+  color: #fff;
+}
 .subcribe-gift {
   color: #c2114b !important;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;

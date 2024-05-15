@@ -1,30 +1,24 @@
 .plan-main {
-  /* background-color: aqua; */
   margin: 0 auto;
-  width: 95%;
+  width: 10%;
 }
 
 .select-plan-main {
-  margin: 60px 235px 10px;
+  margin: 40px 0px 10px;
   display: flex;
   align-items: center;
 }
-.select-pricing {
-  width: 20%;
-}
+
 
 .select-pricing-title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
   padding-right: 25px;
 }
 .plans-section {
-  padding: 10px 0px;
-  display: flex;
-  justify-content: center;
+  padding: 0;
 }
 
 .pro-checkbox[type="radio"] {
@@ -45,129 +39,103 @@
   align-items: start;
   padding: 5px 0px;
 }
+.plan-content .listIc {
+  max-height: 17px;
+}
 
 .plan-content-text {
   color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-style: normal;
-  font-weight: 300;
-  line-height: 28px;
+  font-weight: 400;
+  line-height: 22px;
   padding-left: 10px;
 }
 
 .plans-wrapper {
-  width: 25%;
-  /* height: 100%; */
-  margin-right: 30px;
-  /* height: 840px; */
-  border-radius: 20px;
-  background: #fff;
-  box-shadow: 2px 4px 24px 0px rgba(0, 0, 0, 0.25);
-  padding-bottom: 30px;
+  margin: 15px 0 25px;
 }
 
 .free-plans {
-  border-top: 11px solid #ab7e13;
+  border-top: 11px solid #AB7E13;
 }
 
 .pro-plans {
-  border-top: 11px solid #5f2895;
+  border-top: 11px solid #5F2895;
 }
 
 .premium-plans {
-  border-top: 11px solid #106d3e;
+  border-top: 11px solid #106D3E;
 }
 
 .plan-name {
   color: #000;
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 18px;
+  justify-content: center;
+  font-size: 20px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  letter-spacing: -0.333px;
-  padding: 50px 0px 25px 0px;
+  padding:  0px;
+  margin: 0 0 20px;
+  display: flex;
+  min-height: 85px;
+  align-items: center;
+  flex-direction: column;
 }
 
 .plan-value {
-  padding: 10px 0px 20px 0px;
+  padding: 0;
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 22px;
+  font-size: 55px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  letter-spacing: -0.25px;
+  letter-spacing: 0px;
+  margin: 0 0 15px;
 }
 
 .plan-validity {
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 300;
-  line-height: 28px; /* 175% */
-  letter-spacing: -0.25px;
-  padding-bottom: 20px;
-}
-
-.choose-btn {
-  cursor: pointer;
-  width: 90%;
-  height: 45px;
-  flex-shrink: 0;
-  border-radius: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-family: "Open Sans", sans-serif;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
-  letter-spacing: -0.25px;
-  margin: 25px auto;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0;
+  padding: 0;
+  margin: 0 0 15px;
 }
 
 .include {
   cursor: pointer;
   color: #000;
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  letter-spacing: -0.333px;
   text-decoration-line: underline;
-  padding: 10px 0px 0px 50px;
+  padding: 0px;
   text-align: left;
 }
 
 .included-things {
-  padding: 20px;
+  padding: 20px 0;
 }
 
 .learn-btn {
   cursor: pointer;
   border-radius: 60px;
   background: #dddddd;
-  width: 90%;
+  width: 100%;
   height: 45px;
   flex-shrink: 0;
   color: #c2114b;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px; /* 175% */
-  letter-spacing: -0.25px;
+  line-height: 28px; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -185,36 +153,28 @@
 .premium-btn {
   background: #106d3e;
 }
-
+.giftSize{
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  padding: 0;
+  margin: 7px 0 10px;
+}
 .pro-gift {
   color: #106d3e;
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 300;
-  letter-spacing: -0.25px;
-  padding-top: 12px;
 }
 .premium-gift {
   color: #5f2895;
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 300;
-  letter-spacing: -0.25px;
-  padding-top: 12px;
 }
 
 .save-plan {
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
-  line-height: 28px; /* 175% */
+  line-height: 28px; 
   letter-spacing: -0.25px;
 }
 
@@ -225,7 +185,6 @@
 .premium-text {
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 300;
@@ -237,26 +196,23 @@
 .annual-wrapper {
   display: flex;
   align-items: center;
-  padding-left: 40px;
 }
 
 .monthly-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 30px 12px 40px;
+  padding: 12px 0px 12px;
 }
-
-.monthly {
-  padding-left: 10px;
+.annual, .monthly {
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   line-height: normal;
   cursor: pointer;
+  padding-left: 10px;
 }
 
 .chexkbox {
@@ -264,29 +220,18 @@
   width: 30%;
 }
 
-.annual {
-  padding-left: 10px;
-  color: #000;
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  cursor: pointer;
-}
 
 .plan-amounts {
   display: flex;
   justify-content: space-between;
-  padding: 12px 30px 12px 40px;
+  padding: 10px 0px 10px 32px;
   align-items: center;
 }
 
 .border-bottom {
-  width: 90%;
+  width: 100%;
   height: 2px;
-  background-color: #dddddd;
+  background-color: #332A2A;
   text-align: center;
   margin: 0 auto;
 }
@@ -299,10 +244,9 @@
   text-decoration: line-through;
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -310,14 +254,16 @@
 .monthly-amount {
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   cursor: pointer;
   padding-left: 8px;
 }
-
+.per-value, .monthly-amount {
+  font-size: 16px;
+  font-weight: 600;
+}
 .toggleSwitch span span {
   display: none;
 }
@@ -387,6 +333,7 @@
   width: 40%;
   text-align: center;
   line-height: 34px;
+  font-weight: 600;
 }
 .toggleSwitch a {
   position: absolute;
@@ -398,6 +345,7 @@
   padding: 0;
   left: 3px;
   width: 50%;
+  font-weight: 600;
   background-color: #c2114b;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-out;
@@ -498,7 +446,7 @@
 
 @media (min-width: 320px) and (max-width: 480px) {
   .plans-section {
-    padding: 10px 0px;
+    
     display: flex;
     flex-wrap: wrap;
   }
@@ -510,14 +458,7 @@
 /* 481px — 768px: iPads, Tablets */
 
 @media (min-width: 481px) and (max-width: 768px) {
-  .plans-section {
-    padding: 30px 0px;
-    display: flex;
-    /* justify-content: flex-start; */
-    /* align-items: center; */
-    flex-wrap: wrap;
-    /* flex-direction: column; */
-  }
+
   .plans-wrapper {
     width: 100%;
     margin-top: 20px;
@@ -526,14 +467,7 @@
 /* 769px — 1024px: Small screens, laptops */
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .plans-section {
-    padding: 40px 0px;
-    display: flex;
-    /* justify-content: flex-start; */
-    /* align-items: center; */
-    flex-wrap: wrap;
-    /* flex-direction: column; */
-  }
+
   .plans-wrapper {
     width: 40%;
     margin-top: 20px;
@@ -542,14 +476,7 @@
 /* 1025px — 1200px: Desktops, large screens */
 
 @media (min-width: 1025px) and (max-width: 1200px) {
-  .plans-section {
-    padding: 60px 0px;
-    display: flex;
-    /* justify-content: flex-start; */
-    /* align-items: center; */
-    flex-wrap: wrap;
-    /* flex-direction: column; */
-  }
+
   .plans-wrapper {
     width: 40%;
     margin-top: 20px;
@@ -563,15 +490,9 @@
   .select-pricing-title {
     padding-bottom: 15px;
   }
-  .select-plan-main {
-    margin: 60px 20px 10px;
-    display: flex;
-    align-items: start;
-    flex-direction: column;
-  }
+
 
   .plans-section {
-    margin: 20px;
     padding: 0px;
     display: flex;
     flex-direction: column;

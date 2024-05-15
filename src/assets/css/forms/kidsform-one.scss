@@ -9,7 +9,6 @@
       .kids-title,
       .kids-form-title {
         color: #000;
-        font-family: "Open Sans", sans-serif;
         font-size: 26px;
         font-style: normal;
         font-weight: 600;
@@ -30,7 +29,6 @@
       }
       .kids-form-title-sub {
         color: #000;
-        font-family: "Open Sans", sans-serif;
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
@@ -97,7 +95,6 @@
       .submit-profession {
         background-color: #c2114b;
         color: #fff;
-        font-family: "Open Sans", sans-serif;
         font-size: 12px;
         font-style: normal;
         font-weight: 700;
@@ -110,7 +107,9 @@
     }
   }
 }
-
+.form-label {
+  margin-bottom: .2rem;
+}
 .password-wrong {
   color: red;
   padding: 4px 0px;
@@ -175,7 +174,7 @@
 // }
 
 .kids-main {
-  width: 60%;
+  width: 100%;
   .kids-form-row {
     display: flex;
     justify-content: space-between;
@@ -223,7 +222,6 @@
     padding: 16px 0px;
     text-align: center;
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
@@ -312,7 +310,6 @@
     width: 100%;
     .id-text {
       color: #000;
-      font-family: "Open Sans", sans-serif;
       font-size: 18px;
       font-style: normal;
       font-weight: 600;

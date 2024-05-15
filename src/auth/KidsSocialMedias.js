@@ -105,7 +105,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
           ></button>
         </div>
         <div className="dialog-body">
-          <div className="kidsform-one" style={{ width: "100%" }}>
+          <div className="kidsform-one container">
             <div className="kids-wrapper">
               <div className="kids-img">
                 <img src={kidsImage} alt="" className="kids-image-sticky" />

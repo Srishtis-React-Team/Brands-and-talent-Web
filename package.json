@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "date-fns": "^2.30.0",
+    "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "firebase": "^10.11.0",
     "jquery": "^3.7.1",
@@ -48,6 +49,7 @@
     "reactjs-social-login": "^2.6.3",
     "sass": "^1.70.0",
     "socket.io-client": "^4.7.5",
+    "styled-components": "^6.1.11",
     "swiper": "^11.0.5",
     "web-vitals": "^2.1.4"
   },
