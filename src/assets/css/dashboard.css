@@ -177,7 +177,7 @@ label {
   border-top: 1px solid rgb(173, 173, 173);
   display: flex;
   justify-content: center;
-  padding: 10px 40px 10px 0;
+  padding: 10px 0px 10px;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -428,13 +428,19 @@ a {
   height: 22px;
 }
 
+.signup-options div button {
+    border-radius: 60px !important;
+    overflow: hidden;
+    height: 40px !important;
+    font-size: 13px !important;
+}
 .or-signup {
   color: #858597;
   font-size: 12px;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
-  padding: 15px 0px;
+  padding: 15px 0px 10px;
 }
 
 .stroke-div {
@@ -470,7 +476,9 @@ a:hover {
 .signup-options {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  width: calc(100% + 30px);
+  margin: 0 -15px;
 }
 
 .signup-options > .google-media {
@@ -521,15 +529,13 @@ a:hover {
 
 .signup-terms {
   color: #000;
-  text-align: center;
-  font-size: 15px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 500;
-  text-align: center;
-  padding: 20px 0px 0px 8px;
+  padding: 15px 0px 0px 8px;
   width: 100%;
   margin: 0 auto;
-  line-height: 25px;
+  line-height: 23px;
   text-align: center;
 }
 
@@ -550,7 +556,7 @@ a:hover {
 .signup-terms-linetwo > span {
   color: #c2114b;
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   cursor: pointer;
@@ -670,7 +676,6 @@ input[type="radio"] {
   display: flex;
   align-items: center;
   justify-content: end;
-  padding-right: 10px;
 }
 
 .hide-nav {
@@ -858,6 +863,78 @@ input[type="radio"] {
   justify-content: center;
   border-top: 1px solid #e2e8f0;
 }
+
+.modal-dialog.signupModal {
+  max-width: 700px;
+}
+.modal-backdrop.show {
+  opacity: .4;
+}
+.modal-title {
+  color: #c2114b;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+}
+.signupModal .modal-title {
+  padding: 0;
+  margin: 0px 0px 10px 0px;
+  font-weight: 700;
+}
+.signupModal .modal-header {
+  padding-bottom: 0;
+}
+.signupModal .modal-body{ padding: 10px 14%; }
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-description {
+  color: #000;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 36px;
+  padding: 10px 0px 40px;
+}
+.question-model {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 37px;
+  padding: 30px 0 40px;
+  text-align: center;
+}
+
+.step-title {
+  color: #000;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+  padding: 2px 0px;
+}
+.step-text {
+  padding-left: 20px;
+  height: 47px;
+  color: #060606;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34px;
+  text-transform: capitalize;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 
 
 
@@ -1271,23 +1348,6 @@ input[type="radio"] {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .rdw-list-dropdown,
 .rdw-text-align-dropdown {
   z-index: 0 !important;
@@ -1305,11 +1365,101 @@ input[type="radio"] {
   border-bottom: unset !important;
 }
 
+.register-modal {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.register-btn {
+  min-width: 200px;
+  height: 55px;
+  border-radius: 60px;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 37px;
+  cursor: pointer;
+  width: auto;
+}
+.choose-register, .selected-register{
+  width: 245px;
+  height: 52px;
+  border-radius: 6px;
+  border: 1px solid #000;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 37px;
+  cursor: pointer;
+  margin: 0 8px;
+}
+.selected-register {
+  background: #c2114b;
+  color: #fff;
+  border: 1px solid #c2114b;
+}
 
 
+.adults-select-btn {
+  width: 25%;
+  height: 50px;
+  border-radius: 25px;
+  border: 1px solid #fff;
+  background: #c2114b;
+  color: #fff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.ageverify-buttons {
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: space-evenly !important;
+}
 
+.step-continue {
+  width: 140px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 245px;
+  border: 1px solid #fff;
+  background: #c2114b;
+  color: #fff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.step-back, .step-continue{
+  margin: 0 10px;
+}
 
+.disabled-continue {
+  background: #ccc; /* Change the background color for disabled state */
+  cursor: unset !important; /* Change cursor for disabled state */
+}
 
 
 
@@ -1424,52 +1574,7 @@ input[type="radio"] {
     align-items: center;
   }
 
-  .adults-select-btn {
-    width: 25%;
-    height: 50px;
-    border-radius: 25px;
-    border: 1px solid #fff;
-    background: #c2114b;
-    color: #fff;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
-  .ageverify-buttons {
-    padding-bottom: 40px;
-    display: flex;
-    justify-content: space-evenly !important;
-  }
-
-  .step-continue {
-    width: 140px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 245px;
-    border: 1px solid #fff;
-    background: #c2114b;
-    color: #fff;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 30px;
-  }
-
-  .disabled-continue {
-    background: #ccc; /* Change the background color for disabled state */
-    cursor: unset !important; /* Change cursor for disabled state */
-  }
 
   .upload-step {
     display: flex;
@@ -1527,118 +1632,12 @@ input[type="radio"] {
     padding: 10px 0px 30px 0px;
     text-align: center;
   }
-  .step-title {
-    color: #000;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    text-align: center;
-    padding: 2px 0px;
-  }
-  .step-text {
-    padding-left: 20px;
-    height: 47px;
-    color: #060606;
-    font-size: 17px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 34px;
-    text-transform: capitalize;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
 
-  .question-model {
-    color: #000;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 37px;
-    padding: 40px;
-    text-align: center;
-  }
-  .register-modal {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-  }
-  .register-btn {
-    width: 170px;
-    height: 45px;
-    border-radius: 161px;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    text-align: center;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 37px;
-    cursor: pointer;
-  }
-  .selected-register {
-    width: 245px;
-    height: 52px;
-    border-radius: 6px;
-    background: #c2114b;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 25px;
-    color: #fff;
-    text-align: center;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 37px;
-    cursor: pointer;
-  }
-  .choose-register {
-    width: 245px;
-    height: 52px;
-    border-radius: 6px;
-    border: 1px solid #000;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #000;
-    text-align: center;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 37px;
-    cursor: pointer;
-    margin-right: 25px;
-  }
-  .modal-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .modal-description {
-    color: #000;
-    text-align: center;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 37px;
-    padding: 10px 60px 40px 0px;
-  }
-  .modal-title {
-    color: #c2114b;
-    font-size: 35px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    text-align: center;
-    padding: 20px 0px 10px 0px;
-    /* margin-top: 50px; */
-  }
+
+
+
+
+
   .ageverify-title {
     color: #c2114b;
     font-size: 30px;

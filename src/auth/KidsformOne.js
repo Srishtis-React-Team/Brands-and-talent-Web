@@ -922,7 +922,7 @@ const KidsformOne = ({ sendDataToParent }) => {
             ></button>
           </div>
           <div className="dialog-body">
-            <div className="kidsform-one">
+            <div className="kidsform-one container">
               <div className="kids-wrapper">
                 <div className="kids-img">
                   <img src={kidsImage} alt="" className="kids-image-sticky" />

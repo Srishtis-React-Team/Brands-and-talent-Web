@@ -1,7 +1,8 @@
 .login-container {
-  width: 25%;
+  width: 400px;
+  max-width: 100%;
   border: 1px solid #aaa;
-  border-radius: 26px;
+  border-radius: 20px;
   padding: 30px;
   position: relative;
   display: flex;
@@ -15,15 +16,12 @@
   margin: 15px 0px;
 }
 
-.login-inputs > input {
-}
 
 .forgot-info,
 .resend-forgot {
   text-align: center;
   padding-bottom: 10px;
   color: #000;
-  font-family: "Open Sans";
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -64,26 +62,27 @@
   background-color: #fff;
   top: 30%;
   padding: 0px 20px;
+  font-size: 13px !important;
 }
-
+.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId{ font-weight: 500; }
 .login-main {
   display: flex;
   justify-content: center;
-  /* margin-top: 70px; */
   align-items: center;
-  height: 100vh;
+  height: auto;
+  min-height: 96vh;
+  padding-top: 35px;
 }
 
 .choose-who {
   display: flex;
-  padding: 25px 0px;
+  padding: 25px 0px 15px;
 }
 
 .iam-brand,
 .iam-talent {
   cursor: pointer;
   color: #000;
-  font-family: "Open Sans";
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -92,14 +91,13 @@
 }
 
 .login-forgot {
-  color: red;
-  font-family: "Open Sans";
+  color: #C2114B;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   cursor: pointer;
-  padding: 10px 0px;
+  padding: 0px 0px 10px;
   text-align: left;
   width: 100%;
 }
@@ -129,10 +127,9 @@
   border: 1px solid #fff;
   background: #c2114b;
   color: #fff;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 600;
   line-height: normal;
   cursor: pointer;
   display: flex;
@@ -141,6 +138,11 @@
   padding: 10px 20px;
   margin: 10px 0px;
   height: 50px;
+}
+.nsm7Bb-HzV7m-LgbsSe {
+  border-radius: 60px !important;
+  border: 1px solid #4141415c;
+  min-height: 45px;
 }
 
 .gmail-options {
@@ -170,22 +172,20 @@
 }
 
 .success-info {
-  font-family: 18px;
   padding: 30px 0px;
   font-weight: 400;
 }
 
 .signup-login {
   cursor: pointer;
-  text-align: right;
-  color: blue;
-  font-family: "Open Sans", sans-serif;
+  text-align: center;
+  color: #c2114b;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   width: 100%;
-  padding: 20px 5px 0px 0px;
+  padding: 10px 0px 0;
   text-decoration: underline;
 }
 
@@ -220,9 +220,8 @@
 
 .login-or {
   text-align: center;
-  padding: 15px 0px;
+  padding: 5px 0px 10px;
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 600;

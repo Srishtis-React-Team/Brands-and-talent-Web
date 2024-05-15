@@ -162,7 +162,7 @@ const Header = ({ onData }) => {
               </NavLink>
             </div>
           )}
-          <div>
+          <div className="navTxt">
             <a
               className="dropdown-toggle"
               id="navbarDropdown"
@@ -307,8 +307,8 @@ const Header = ({ onData }) => {
                 </div>
               )}
 
-              <div className="navTxt padRmv">
-                <li class="nav-item dropdown">
+              <div className="navTxt">
+                <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -560,7 +560,7 @@ const Header = ({ onData }) => {
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered  modal-lg">
+        <div className="modal-dialog modal-dialog-centered modal-lg signupModal">
           <div className="modal-content ">
             <div className="modal-header">
               <button

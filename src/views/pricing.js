@@ -78,19 +78,21 @@ const Pricing = () => {
   return (
     <>
       <Header />
-      <section>
+      <section className="topSpace">
         <div className="popular-header">
-          <div className="header-title">Popular Talents</div>
-          <div className="header-menu">
-            <div>Home</div>
-            <div>Talent</div>
+          <div className="container">
+            <div className="header-title">Popular Talents</div>
+            <div className="header-menu">
+              <div>Home</div>
+              <div>Talent</div>
+            </div>
           </div>
         </div>
       </section>
       {/* className={artists ? "active-tab" : null} */}
 
       <div className="select-plan-main">
-        <div className="select-pricing">
+        <div className="select-pricing container">
           <label className="toggleSwitch nolabel">
             <input type="checkbox" onChange={handleToggle} />
             <a></a>
@@ -103,142 +105,150 @@ const Pricing = () => {
       </div>
 
       <div className="plan-main">
-        {pricingList.length && (
-          <div className="plans-section">
-            {pricingList.map((item, index) => {
-              return (
-                <div
-                  className={
-                    index == 0
-                      ? "plans-wrapper free-plans"
-                      : "" || index == 1
-                      ? "plans-wrapper pro-plans"
-                      : "" || index == 2
-                      ? "plans-wrapper premium-plans"
-                      : ""
-                  }
-                >
-                  <div className="plan-name">
-                    {item.planname}
+        <div className="container">
+          {pricingList.length && (
+            <div className="plans-section">
+               <div className="row">
+              {pricingList.map((item, index) => {
+                return (
+                 
+                    <div className="col-md-4">
                     <div
                       className={
-                        index == 1
-                          ? "pro-gift"
+                        index == 0
+                          ? "plans-wrapper free-plans"
+                          : "" || index == 1
+                          ? "plans-wrapper pro-plans"
                           : "" || index == 2
-                          ? "premium-gift"
+                          ? "plans-wrapper premium-plans"
                           : ""
                       }
                     >
-                      {item.gift}
-                    </div>
-                  </div>
-                  {item.planname == "Basic" && (
-                    <>
-                      <div className="plan-value">Free</div>
-                      <div className="plan-validity">Forever</div>
-                    </>
-                  )}
-                  {item.plan_type_annual.length >= 1 && (
-                    <>
-                      <div className="annual-wrapper">
-                        <input
-                          type="radio"
-                          name="click"
-                          value="save"
-                          CHECKED
-                          id={item.planname}
+                      <div className="plan-name">
+                        {item.planname}
+                        <div
                           className={
-                            item.planname == "Pro (Popular)"
-                              ? "pro-checkbox"
-                              : "premium-checkbox"
+                            index == 1
+                              ? "pro-gift giftSize"
+                              : "" || index == 2
+                              ? "premium-gift giftSize"
+                              : ""
                           }
-                        ></input>
-                        <label for={item.planname} className="annual">
-                          {item.period}
-                        </label>
-                      </div>
-                      {item.plan_type_annual.map((item) => {
-                        return (
-                          <>
-                            <div className="plan-amounts">
-                              <div className="value-wrapper">
-                                <div className="previous-value">
-                                  {item.beforeValue}
-                                </div>
-                                <div className="after-value">
-                                  {item.afterDiscount}
-                                </div>
-                              </div>
-                              <div className="per-value">{item.amount}</div>
-                            </div>
-                            <div className="border-bottom"></div>
-                          </>
-                        );
-                      })}
-                      <div className="monthly-wrapper pt-3">
-                        <div>
-                          <input
-                            type="radio"
-                            name="click"
-                            value="save"
-                            CHECKED
-                            id={item._id}
-                            className={
-                              item.planname == "Pro (Popular)"
-                                ? "pro-checkbox"
-                                : "premium-checkbox"
-                            }
-                          ></input>
-                          <label for={item._id} className="monthly">
-                            Monthly
-                          </label>
+                        >
+                          {item.gift}
                         </div>
-                        {item.plan_type_monthly.map((item) => {
+                      </div>
+                      {item.planname == "Basic" && (
+                        <>
+                          <div className="plan-value">Free</div>
+                          <div className="plan-validity">Forever</div>
+                        </>
+                      )}
+                      {item.plan_type_annual.length >= 1 && (
+                        <>
+                          <div className="annual-wrapper">
+                            <input
+                              type="radio"
+                              name="click"
+                              value="save"
+                              CHECKED
+                              id={item.planname}
+                              className={
+                                item.planname == "Pro (Popular)"
+                                  ? "pro-checkbox"
+                                  : "premium-checkbox"
+                              }
+                            ></input>
+                            <label for={item.planname} className="annual">
+                              {item.period}
+                            </label>
+                          </div>
+                          {item.plan_type_annual.map((item) => {
+                            return (
+                              <>
+                                <div className="plan-amounts">
+                                  <div className="value-wrapper">
+                                    <div className="previous-value">
+                                      {item.beforeValue}
+                                    </div>
+                                    <div className="after-value">
+                                      {item.afterDiscount}
+                                    </div>
+                                  </div>
+                                  <div className="per-value">{item.amount}</div>
+                                </div>
+                                <div className="border-bottom"></div>
+                              </>
+                            );
+                          })}
+                          <div className="monthly-wrapper pt-3">
+                            <div>
+                              <input
+                                type="radio"
+                                name="click"
+                                value="save"
+                                CHECKED
+                                id={item._id}
+                                className={
+                                  item.planname == "Pro (Popular)"
+                                    ? "pro-checkbox"
+                                    : "premium-checkbox"
+                                }
+                              ></input>
+                              <label for={item._id} className="monthly">
+                                Monthly
+                              </label>
+                            </div>
+                            {item.plan_type_monthly.map((item) => {
+                              return (
+                                <>
+                                  <div className="monthly-amount">
+                                    {item.amount}
+                                  </div>
+                                </>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
+                      <div
+                        className={
+                          index == 0
+                            ? "choose-btn free-btn"
+                            : "" || index == 1
+                            ? "choose-btn pro-btn"
+                            : "" || index == 2
+                            ? "choose-btn premium-btn"
+                            : ""
+                        }
+                      >
+                        Choose plan
+                      </div>
+                      <div className="include">WHAT'S INCLUDED</div>
+                      <div className="included-things">
+                        {item.data.map((item) => {
                           return (
                             <>
-                              <div className="monthly-amount">
-                                {item.amount}
+                              <div className="plan-content">
+                                <div>
+                                  <img className="listIc" src={greenTick} alt="" />
+                                </div>
+                                <div className="plan-content-text">{item}</div>
                               </div>
                             </>
                           );
                         })}
                       </div>
-                    </>
-                  )}
-                  <div
-                    className={
-                      index == 0
-                        ? "choose-btn free-btn"
-                        : "" || index == 1
-                        ? "choose-btn pro-btn"
-                        : "" || index == 2
-                        ? "choose-btn premium-btn"
-                        : ""
-                    }
-                  >
-                    Choose plan
-                  </div>
-                  <div className="include">WHAT'S INCLUDED</div>
-                  <div className="included-things">
-                    {item.data.map((item) => {
-                      return (
-                        <>
-                          <div className="plan-content">
-                            <div>
-                              <img src={greenTick} alt="" />
-                            </div>
-                            <div className="plan-content-text">{item}</div>
-                          </div>
-                        </>
-                      );
-                    })}
-                  </div>
-                  <div className="learn-btn">Learn More</div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                      <div className="learn-btn">Learn More</div>
+                    </div>
+                    </div>
+                 
+                );
+              })}
+               </div>
+            </div>
+          )}
+        </div>
       </div>
       <Footer />
     </>
