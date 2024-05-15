@@ -21,6 +21,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import Select from "react-select";
 
 const TalentHeader = ({ toggleMenu }) => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const TalentHeader = ({ toggleMenu }) => {
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
   const [notificationList, setNotifications] = useState([]);
+  const [skillsList, setSkillsList] = useState([]);
   const [currentUserId, setcurrentUserId] = useState(null);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -42,6 +44,18 @@ const TalentHeader = ({ toggleMenu }) => {
   const currentPathname = window.location.pathname;
   const isTalentProfilePage = currentPathname.includes("/talent-profile");
   console.log(isTalentProfilePage, "isTalentProfilePage");
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "50px", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
 
   useEffect(() => {
     // Function to toggle dropdown when clicking the bell icon
@@ -231,6 +245,8 @@ const TalentHeader = ({ toggleMenu }) => {
   const jobAgeRef = useRef(null);
   const jobFullNameRef = useRef(null);
 
+  const selectSkills = (event) => {};
+
   // Function to handle getting the input value
 
   return (
@@ -359,17 +375,16 @@ const TalentHeader = ({ toggleMenu }) => {
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="form-label">Skills</label>
-                        {/* <Select
-                          defaultValue={[professionList[2], professionList[3]]}
+                        <Select
                           isMulti
                           name="colors"
-                          options={professionList}
+                          options={skillsList}
                           valueField="value"
                           className="basic-multi-select"
                           classNamePrefix="select"
-                          onChange={(value) => setProfession(value)}
+                          onChange={(value) => selectSkills(value)}
                           styles={customStyles}
-                        /> */}
+                        />
                       </div>
                     </div>
                   </div>
