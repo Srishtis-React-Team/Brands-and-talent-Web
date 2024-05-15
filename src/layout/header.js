@@ -307,13 +307,8 @@ const Header = ({ onData }) => {
                 </div>
               )}
 
-<<<<<<< HEAD
-              <div>
-                <li className="nav-item dropdown">
-=======
               <div className="navTxt padRmv">
                 <li class="nav-item dropdown">
->>>>>>> 8ecf9c2e293e81677808b0a78a2aef4791686b5f
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"

@@ -8,6 +8,8 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import Axios from "axios";
 import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
+import MuiPhoneNumber from "material-ui-phone-number";
+
 const BrandDetails = () => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/icons/Group 56.png");
@@ -21,7 +23,7 @@ const BrandDetails = () => {
   const [zipCode, setZipCode] = useState("");
   const [address, setAddress] = useState("");
   const [brandNameError, setbrandNameError] = useState(false);
-  const [phoneNumberError, sePhoneNumberError] = useState(false);
+  const [phoneNumberError, setPhoneNumberError] = useState(false);
   const [hearAboutUs, setHearAboutUs] = useState(false);
   const [zipCodeError, setZipCodeError] = useState(false);
   const [addressError, setAddressError] = useState(false);
@@ -61,7 +63,7 @@ const BrandDetails = () => {
       setbrandNameError(true);
     }
     if (phoneNumber === "") {
-      sePhoneNumberError(true);
+      setPhoneNumberError(true);
     }
     if (zipCode === "") {
       setZipCodeError(true);
@@ -181,23 +183,30 @@ const BrandDetails = () => {
   };
   const [mobileValidation, setMobileValidation] = useState(false);
 
-  const handleMobbileChange = (e) => {
-    const value = e.target.value;
-    // Regular expression to allow only numbers and the "+" symbol
-    const onlyNumbersRegex = /^[0-9+]*$/;
-    if (!onlyNumbersRegex.test(value)) {
-      setMobileValidation(true);
-    } else {
-      setPhoneNumber(value);
-      setMobileValidation(false);
-    }
-  };
+  // const handleMobbileChange = (e) => {
+  //   const value = e.target.value;
+  //   // Regular expression to allow only numbers and the "+" symbol
+  //   const onlyNumbersRegex = /^[0-9+]*$/;
+  //   if (!onlyNumbersRegex.test(value)) {
+  //     setMobileValidation(true);
+  //   } else {
+  //     setPhoneNumber(value);
+  //     setMobileValidation(false);
+  //   }
+  // };
 
-  const handleMobileKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
-    if (e.key === "Backspace") {
-      setBrandNameLetterError(false);
-    }
+  // const handleMobileKeyPress = (e) => {
+  //   // If the Backspace key is pressed and the input value is empty, clear the error
+  //   if (e.key === "Backspace") {
+  //     setBrandNameLetterError(false);
+  //   }
+  // };
+
+  const handleMobileChange = (value, countryData) => {
+    // Update the parentMobile state with the new phone number
+    console.log(value, "handleMobileChange");
+    setPhoneNumber(value);
+    setPhoneNumberError(false);
   };
 
   return (
@@ -240,6 +249,7 @@ const BrandDetails = () => {
                   placeholder="Brand Name"
                   onChange={(e) => {
                     handleBrandName(e);
+                    setbrandNameError(false);
                   }}
                   onKeyDown={handleBrandNameKeyPress}
                 ></input>
@@ -257,7 +267,7 @@ const BrandDetails = () => {
                 Phone Number<span className="mandatory">*</span>
               </label>
               <div className="form-group">
-                <input
+                {/* <input
                   type="text"
                   className="form-control adult-signup-inputs"
                   placeholder="Phone Number "
@@ -266,7 +276,14 @@ const BrandDetails = () => {
                     setPhoneNumber(false);
                   }}
                   onKeyDown={handleMobileKeyPress}
-                ></input>
+                ></input> */}
+
+                <MuiPhoneNumber
+                  defaultCountry={"kh"}
+                  className="form-control"
+                  onChange={handleMobileChange}
+                />
+
                 {phoneNumberError && (
                   <div className="invalid-fields">
                     Please enter Phone Number

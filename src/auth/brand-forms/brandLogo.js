@@ -15,30 +15,17 @@ const BrandLogo = () => {
   const imageType = require("../../assets/icons/imageType.png");
   const videoType = require("../../assets/icons/videoType.png");
   const audiotype = require("../../assets/icons/audiotype.png");
-  const idCard = require("../../assets/icons/id-card.png");
   const elipsis = require("../../assets/icons/elipsis.png");
   const greenTickCircle = require("../../assets/icons/small-green-tick.png");
   const docsIcon = require("../../assets/icons/docsIcon.png");
   const [showOptions, setShowOptions] = useState(false);
-
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [position, setPosition] = useState("");
-  const [brandName, setBrandName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [address, setAddress] = useState("");
-  const [brandNameError, setbrandNameError] = useState(false);
-  const [phoneNumberError, sePhoneNumberError] = useState(false);
-  const [hearAboutUs, setHearAboutUs] = useState(false);
-  const [zipCodeError, setZipCodeError] = useState(false);
-  const [addressError, setAddressError] = useState(false);
   const location = useLocation();
   const [receivedData, setReceivedData] = useState(null);
   const [portofolioFile, setPortofolioFile] = useState([]);
-  const [loader, setLoader] = useState(false);
+  const [portofolioFileError, setPortofolioFileError] = useState(false);
 
   useEffect(() => {
     console.log(portofolioFile, "portofolioFile");
@@ -70,50 +57,6 @@ const BrandLogo = () => {
     //code for google auth
     console.log(openPopUp, "openPopUp");
   }, [openPopUp]);
-
-  const brandsSignup = async () => {
-    const formData = {
-      logo: portofolioFile,
-    };
-    // setIsLoading(true);
-    await ApiHelper.post(
-      `${API.editBrands}${receivedData?.brandUserId}`,
-      formData
-    )
-      .then((resData) => {
-        if (resData.data.status === true) {
-          console.log(resData.data);
-          // setIsLoading(false);
-          setMessage("Registered SuccessFully!");
-          navigate("/brand-activated", {
-            state: { data: receivedData },
-          });
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        } else if (resData.data.status === false) {
-          // setIsLoading(false);
-          setMessage("Error Occured Try Again!");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        setMessage("Error Occured Try Again!");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-        }, 1000);
-      });
-  };
-
-  const selectHearAbout = (event) => {
-    setHearAboutUs(event.target.value);
-  };
 
   const handlePortofolioDrop = (e) => {
     e.preventDefault();
@@ -151,7 +94,6 @@ const BrandLogo = () => {
   };
 
   const uploadFile = async (fileData) => {
-    setLoader(true);
     const params = new FormData();
     params.append("file", fileData);
     params.append("fileName", fileData.name);
@@ -172,14 +114,13 @@ const BrandLogo = () => {
         };
         setPortofolioFile([fileObj]);
         console.log(portofolioFile, "portofolioFile");
+        setPortofolioFileError(false);
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
         }, 1000);
       })
-      .catch((err) => {
-        setLoader(false);
-      });
+      .catch((err) => {});
   };
 
   const handleView = (imageUrl) => {
@@ -190,6 +131,57 @@ const BrandLogo = () => {
   const handlePortofolioDelete = (index) => {
     setPortofolioFile(null);
   };
+
+  const brandsSignup = async () => {
+    if (portofolioFile.length === 0) {
+      setPortofolioFileError(true);
+    }
+    if (portofolioFile && portofolioFile.length !== 0) {
+      const formData = {
+        logo: portofolioFile,
+      };
+      // setIsLoading(true);
+      await ApiHelper.post(
+        `${API.editBrands}${receivedData?.brandUserId}`,
+        formData
+      )
+        .then((resData) => {
+          if (resData.data.status === true) {
+            console.log(resData.data);
+            // setIsLoading(false);
+            setMessage("Registered SuccessFully!");
+            navigate("/brand-activated", {
+              state: { data: receivedData },
+            });
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            // setIsLoading(false);
+            setMessage("Error Occured Try Again!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          setMessage("Error Occured Try Again!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        });
+    }
+  };
+
+  useEffect(() => {
+    //code for google auth
+    console.log(portofolioFile, "portofolioFile");
+    console.log(portofolioFile.length, "portofolioFile length");
+  }, [portofolioFile]);
 
   return (
     <>
@@ -235,6 +227,9 @@ const BrandLogo = () => {
               <div className="upload-text">Upload Your Brand Logo</div>
               <div className="upload-info">Drag and drop your Logo here.</div>
             </div>
+            {portofolioFileError && (
+              <div className="invalid-fields">Please Upload Logo</div>
+            )}
 
             {portofolioFile && portofolioFile.length > 0 && (
               <>
