@@ -325,11 +325,16 @@
   border-top-left-radius: 16px;
   height: 200px;
 }
+.remvSpace{
+  padding: 0 !important;
+  background-color: transparent !important;
+  box-shadow: inherit !important;
+}
 
 .contact-section-main {
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 16px;
+  border-radius: 10px;
   padding: 30px;
   .contact-wrapper {
     display: flex;
