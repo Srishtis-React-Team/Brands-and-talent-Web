@@ -249,64 +249,34 @@ const TalentDashBoard = () => {
             </div>
           </div>
         </div>
-        <div className="container-fluid my-4">
-          <div className="row  talent-dashboard-main">
-            <div className="talent-column-one col-lg-7">
-              <div className="recent-gigs-title">Most Recent Gigs</div>
-              {gigsList.length && (
-                <div className="recent-gigs-main">
-                  {gigsList.map((item, index) => {
-                    return (
-                      <>
-                        <div className="recent-gigs-wrapper">
-                          <div className="recent-setone">
-                            <div className="recent-img-div">
-                              {/* <i className="bi bi-briefcase-fill "></i> */}
-                              {item?.brandImage && (
-                                <img
-                                  className="recent-img"
-                                  src={`${API.userFilePath}${item?.brandImage}`}
-                                  alt=""
-                                />
-                              )}
-                              {!item?.brandImage && (
-                                <img
-                                  className="recent-img"
-                                  src={jobImage}
-                                  alt=""
-                                />
-                              )}
-                            </div>
-                            <div className="recent-gig-details">
-                              <div className="recent-gig-company">
-                                {item.hiringCompany}
-                              </div>
-                              <div className="recent-gig-name">
-                                {item.jobTitle}
-                              </div>
-                              <div className="recent-gig-description">
-                                {item.description}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="recent-settwo">
-                            <div className="recent-gigs-count-wrapper">
-                              <div className="recent-gigs-logo">
-                                <i className="bi bi-person-check-fill"></i>
-                              </div>
-                              <div className="recent-gig-count-details">
-                                <div className="recent-gig-name">Followers</div>
-                                <div className="recent-gigs-count">2500</div>
-                              </div>
-                            </div>
-                            <div className="recent-gigs-count-wrapper">
-                              <div className="recent-gigs-logo">
-                                <i className="bi bi-person-arms-up"></i>
-                              </div>
-                              <div className="recent-gig-count-details">
-                                <div className="recent-gig-name">Age</div>
-                                <div className="recent-gigs-count">
-                                  {item.age}
+        <div className="container-fluid my-2 p-0">
+          <div className="row talent-dashboard-main">
+            <div className="col-md-8 col-lg-9">
+              <div className="talent-column-one">
+                <div className="recent-gigs-title">Most Recent Gigs</div>
+                  {gigsList.length && (
+                    <div className="recent-gigs-main">
+                      {gigsList.map((item, index) => {
+                        return (
+                          <>
+                            <div className="recent-gigs-wrapper">
+                              <div className="recent-setone">
+                                <div className="recent-img-div">
+                                  {/* <i className="bi bi-briefcase-fill "></i> */}
+                                  {item?.brandImage && (
+                                    <img
+                                      className="recent-img"
+                                      src={`${API.userFilePath}${item?.brandImage}`}
+                                      alt=""
+                                    />
+                                  )}
+                                  {!item?.brandImage && (
+                                    <img
+                                      className="recent-img"
+                                      src={jobImage}
+                                      alt=""
+                                    />
+                                  )}
                                 </div>
                                 <div className="recent-gig-details">
                                   <div className="recent-gig-company">
@@ -339,88 +309,120 @@ const TalentDashBoard = () => {
                                     <div className="recent-gigs-count">
                                       {item.age}
                                     </div>
-                                  </div>
-                                </div>
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-gender-ambiguous"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Gender</div>
-                                    <div className="recent-gigs-count">
-                                      {item.gender}
+                                    <div className="recent-gig-details">
+                                      <div className="recent-gig-company">
+                                        {item.hiringCompany}
+                                      </div>
+                                      <div className="recent-gig-name">
+                                        {item.jobTitle}
+                                      </div>
+                                      <div className="recent-gig-description">
+                                        {item.description}
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-geo-alt-fill"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Location</div>
-                                    <div className="recent-gigs-count">
-                                      {item.jobLocation}
+                                  <div className="recent-settwo">
+                                    <div className="recent-gigs-count-wrapper">
+                                      <div className="recent-gigs-logo">
+                                        <i className="bi bi-person-check-fill"></i>
+                                      </div>
+                                      <div className="recent-gig-count-details">
+                                        <div className="recent-gig-name">Followers</div>
+                                        <div className="recent-gigs-count">2500</div>
+                                      </div>
+                                    </div>
+                                    <div className="recent-gigs-count-wrapper">
+                                      <div className="recent-gigs-logo">
+                                        <i className="bi bi-person-arms-up"></i>
+                                      </div>
+                                      <div className="recent-gig-count-details">
+                                        <div className="recent-gig-name">Age</div>
+                                        <div className="recent-gigs-count">
+                                          {item.age}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="recent-gigs-count-wrapper">
+                                      <div className="recent-gigs-logo">
+                                        <i className="bi bi-gender-ambiguous"></i>
+                                      </div>
+                                      <div className="recent-gig-count-details">
+                                        <div className="recent-gig-name">Gender</div>
+                                        <div className="recent-gigs-count">
+                                          {item.gender}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="recent-gigs-count-wrapper">
+                                      <div className="recent-gigs-logo">
+                                        <i className="bi bi-geo-alt-fill"></i>
+                                      </div>
+                                      <div className="recent-gig-count-details">
+                                        <div className="recent-gig-name">Location</div>
+                                        <div className="recent-gigs-count">
+                                          {item.jobLocation}
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              </div>
-                              <div className="recent-set-three">
-                                <div
-                                  className="view-gig-btn"
-                                  onClick={() => {
-                                    viewJob(item?._id);
-                                  }}
-                                >
-                                  <i className="bi bi-eye-fill"></i>
-                                  <div>View Job</div>
-                                </div>
-                                <div
-                                  className={
-                                    item?.isApplied
-                                      ? " apply-now-btn"
-                                      : "apply-now-btn applied-btn"
-                                  }
-                                  style={{
-                                    backgroundColor:
-                                      item?.isApplied == "Apply Now"
-                                        ? "yellow"
-                                        : "green",
-                                    color:
-                                      item?.isApplied == "Apply Now"
-                                        ? "black"
-                                        : "#FFFFFF",
-                                  }}
-                                  onClick={() => {
-                                    applyjobs(item);
-                                  }}
-                                >
-                                  {item?.isApplied == "Applied" && (
-                                    <>
-                                      <i className="bi bi-check-circle-fill"></i>
-                                    </>
-                                  )}
-                                  {item?.isApplied == "Apply Now" && (
-                                    <>
-                                      <i className="bi bi-briefcase-fill"></i>
-                                    </>
-                                  )}
+                                  <div className="recent-set-three">
+                                    <div
+                                      className="view-gig-btn"
+                                      onClick={() => {
+                                        viewJob(item?._id);
+                                      }}
+                                    >
+                                      <i className="bi bi-eye-fill"></i>
+                                      <div>View Job</div>
+                                    </div>
+                                    <div
+                                      className={
+                                        item?.isApplied
+                                          ? " apply-now-btn"
+                                          : "apply-now-btn applied-btn"
+                                      }
+                                      style={{
+                                        backgroundColor:
+                                          item?.isApplied == "Apply Now"
+                                            ? "yellow"
+                                            : "green",
+                                        color:
+                                          item?.isApplied == "Apply Now"
+                                            ? "black"
+                                            : "#FFFFFF",
+                                      }}
+                                      onClick={() => {
+                                        applyjobs(item);
+                                      }}
+                                    >
+                                      {item?.isApplied == "Applied" && (
+                                        <>
+                                          <i className="bi bi-check-circle-fill"></i>
+                                        </>
+                                      )}
+                                      {item?.isApplied == "Apply Now" && (
+                                        <>
+                                          <i className="bi bi-briefcase-fill"></i>
+                                        </>
+                                      )}
 
-                                  <div>{item?.isApplied}</div>
+                                      <div>{item?.isApplied}</div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </>
-                    );
-                  })}
+                          </>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {gigsList && gigsList.length == 0 && (
+                    <div className="recent-gigs-main">No Jobs Available</div>
+                  )}
                 </div>
-              )}
-              {gigsList && gigsList.length == 0 && (
-                <div className="recent-gigs-main">No Jobs Available</div>
-              )}
             </div>
-            <div className="col-lg-4">
+            <div className="col-md-4 col-lg-3">
               <div className="rightBx">
                 <div className="contact-section-main remvSpace">
                   <div className="contact-wrapper boxsWhite mb-4">
