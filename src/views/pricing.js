@@ -92,7 +92,7 @@ const Pricing = () => {
       {/* className={artists ? "active-tab" : null} */}
 
       <div className="select-plan-main">
-        <div className="select-pricing container">
+        <div className="select-pricing container text-center">
           <label className="toggleSwitch nolabel">
             <input type="checkbox" onChange={handleToggle} />
             <a></a>

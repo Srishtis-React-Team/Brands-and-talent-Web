@@ -108,12 +108,14 @@
     display: flex;
     flex-wrap: wrap;
     align-items: start;
+    align-items: center;
     .profile-img {
-      width: 70px;
-      height: 70px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      border: 1px solid #c2114b;
+      border: 2px solid #c2114b;
       margin-right: 15px;
+      object-fit: cover;
     }
     .talent-details {
       .talent-name {
