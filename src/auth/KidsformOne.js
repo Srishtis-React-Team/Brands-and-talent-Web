@@ -180,6 +180,7 @@ const KidsformOne = ({ sendDataToParent }) => {
     let diff = today - dobDate;
     let ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
     setAge(String(ageInYears));
+    setDobError(false);
   };
 
   const togglePasswordVisibility = () => {
@@ -489,34 +490,30 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (languages.length === 0) {
       setLanguageError(true);
     }
-
-    if (maritalStatus === "") {
-      setMaritalError(true);
-    }
     if (dateOfBirth === "") {
       setDobError(true);
     }
-    console.log(parentFirstName !== "", "parentFirstName");
-    console.log(parentEmail !== "", "parentEmail");
-    console.log(talentPassword !== "", "talentPassword");
-    console.log(talentConfirmPassword !== "", "talentConfirmPassword");
-    console.log(kidsLegalFirstName !== "", "kidsLegalFirstName");
-    console.log(gender !== "", "gender");
-    console.log(parentMobile !== "", "parentMobile");
-    console.log(country !== "", "country");
-    console.log(state !== "", "state");
-    console.log(kidsCity !== "", "kidsCity");
-    console.log(address !== "", "address");
-    console.log(selectedProfessions.length === 0, "selectedProfessions");
+    console.log(parentFirstName, "parentFirstName");
+    console.log(parentEmail, "parentEmail");
+    console.log(talentPassword, "talentPassword");
+    console.log(talentConfirmPassword, "talentConfirmPassword");
+    console.log(kidsLegalFirstName, "kidsLegalFirstName");
+    console.log(gender, "gender");
+    console.log(parentMobile, "parentMobile");
+    console.log(country, "country");
+    console.log(state, "state");
+    console.log(kidsCity, "kidsCity");
+    console.log(address, "address");
     console.log(selectedProfessions, "selectedProfessions");
-    console.log(selectedCategories.length === 0, "selectedCategories");
+    console.log(selectedProfessions, "selectedProfessions");
     console.log(selectedCategories, "selectedCategories");
-    console.log(kidsPreferedFirstName !== "", "kidsPreferedFirstName");
-    console.log(nationality !== "", "nationality");
-    console.log(ethnicity !== "", "ethnicity");
-    console.log(languages !== "", "languages");
-    console.log(maritalStatus !== "", "maritalStatus");
-    console.log(dateOfBirth !== "", "dateOfBirth");
+    console.log(selectedCategories, "selectedCategories");
+    console.log(kidsPreferedFirstName, "kidsPreferedFirstName");
+    console.log(nationality, "nationality");
+    console.log(ethnicity, "ethnicity");
+    console.log(languages, "languages");
+    console.log(maritalStatus, "maritalStatus");
+    console.log(dateOfBirth, "dateOfBirth");
     if (
       parentFirstName !== "" &&
       parentEmail !== "" &&
@@ -534,7 +531,6 @@ const KidsformOne = ({ sendDataToParent }) => {
       nationality !== "" &&
       ethnicity !== "" &&
       languages !== "" &&
-      maritalStatus !== "" &&
       dateOfBirth !== "" &&
       passwordMatch === true
     ) {
@@ -1532,35 +1528,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">
-                            Marital Status <span className="mandatory">*</span>
-                          </label>
-                          <select
-                            className="form-select"
-                            aria-label="Default select example"
-                            onChange={selectMaritalStatus}
-                            value={maritalStatus}
-                            style={{ fontSize: "14px" }}
-                          >
-                            <option value="" disabled selected>
-                              Select Marital Status
-                            </option>
-                            <option defaultValue value="married">
-                              Married
-                            </option>
-                            <option value="unmarried">UnMarried</option>
-                          </select>
-                          {maritalError && (
-                            <div className="invalid-fields">
-                              Please Select Marital Status
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label className="form-label">
                             Ethnicity <span className="mandatory">*</span>
                           </label>
                           <select
@@ -1586,6 +1553,8 @@ const KidsformOne = ({ sendDataToParent }) => {
                           )}
                         </div>
                       </div>
+                    </div>
+                    <div className="kids-form-row ">
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">
@@ -1614,8 +1583,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                           )}
                         </div>
                       </div>
-                    </div>
-                    <div className="kids-form-row mb-5">
                       <div className="kids-form-section">
                         <label className="form-label">
                           Date Of Birth <span className="mandatory">*</span>
@@ -1653,6 +1620,8 @@ const KidsformOne = ({ sendDataToParent }) => {
                           )}
                         </div>
                       </div>
+                    </div>
+                    <div className="kids-form-row mb-5">
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">

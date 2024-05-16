@@ -7,15 +7,58 @@ import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
+import { Dropdown } from "@mui/base/Dropdown";
+import { Menu, MenuListboxSlotProps } from "@mui/base/Menu";
+import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
+import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
+import { styled } from "@mui/system";
+import { CssTransition } from "@mui/base/Transitions";
+import { PopupContext } from "@mui/base/Unstable_Popup";
+import Button from "@mui/material/Button";
+// import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Select from "react-select";
+
 const TalentDashBoard = () => {
+  const workPlaceTypesOptions = [
+    "Man",
+    "Woman",
+    "Non binary",
+    "TransworkPlaceType Woman",
+    "TransworkPlaceType Man",
+    "AworkPlaceType",
+    "Other",
+    "Prefer not to say",
+  ];
+
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const offcanvasRef = useRef(null); // Reference to the offcanvas element
   const [gigsList, setGigsList] = useState([]);
   const [topBrandsList, setTopBrandsList] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
   const [isFilled, setIsFilled] = useState(true);
   const girl1 = require("../assets/images/girl1.png");
   const btLogo = require("../assets/icons/Group 56.png");
+  const sliderIcon = require("../assets/icons/sliders.png");
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "50px", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
   const jobImage = require("../assets/icons/jobImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -24,6 +67,9 @@ const TalentDashBoard = () => {
   const headsetLogo = require("../assets/icons/headset.png");
   const [showSidebar, setShowSidebar] = useState(true);
   const [userId, setUserId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [skillsList, setSkillsList] = useState([]);
+
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
@@ -160,6 +206,158 @@ const TalentDashBoard = () => {
       });
   };
 
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    "& .MuiDialogContent-root": {
+      padding: theme.spacing(2),
+    },
+    "& .MuiDialogActions-root": {
+      padding: theme.spacing(1),
+    },
+  }));
+
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [keywordError, setKeywordError] = useState(false);
+  const [jobNameError, setJobNameError] = useState(false);
+  const [locationError, setLocationError] = useState(false);
+  const [ageError, setAgeError] = useState(false);
+  const [skillsError, setSkillsError] = useState(false);
+  const [jobTypeError, setJobTypeError] = useState(false);
+  const [workPlaceType, setWorkPlaceType] = useState("");
+  const ageList = ["13-17", "18+"];
+
+  const applyFiltrer = async () => {
+    let key_word;
+    let job_location;
+    let job_age;
+    let job_full_name;
+    let job_type;
+    let work_place_type;
+
+    // Get the select element
+    var selectElement = document.getElementById("workPlaceSelect");
+    // Get the selected value
+    work_place_type = selectElement.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(work_place_type, "workPlaceSelect");
+
+    // Get the select element
+    var selectJobElement = document.getElementById("jobtypeID");
+    // Get the selected value
+    job_type = selectJobElement.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(job_type, "job_type");
+
+    // Get the select element
+    var selectAgeElement = document.getElementById("ageSelectID");
+    // Get the selected value
+    job_age = selectAgeElement.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(job_age, "job_age");
+
+    if (keyWordRef.current) {
+      key_word = keyWordRef?.current?.value;
+    }
+    if (jobLocationRef?.current) {
+      job_location = jobLocationRef?.current?.value;
+    }
+    if (jobFullNameRef?.current) {
+      job_full_name = jobFullNameRef?.current?.value;
+    }
+    const formData = {
+      keyword: key_word,
+      jobTitle: key_word,
+      jobLocation: job_location,
+      age: job_age,
+      jobType: job_type,
+      workPlaceType: work_place_type,
+      skills: selectedSkills,
+    };
+    console.log(formData, "formData talentFilterData");
+    setIsLoading(true);
+    await ApiHelper.post(API.searchJobs, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("Filtered SuccessFully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setMessage("No Matching Users Found");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setOpen(false);
+  };
+
+  // Ref to store the input element
+  const keyWordRef = useRef(null);
+  const jobLocationRef = useRef(null);
+  const jobFullNameRef = useRef(null);
+
+  const jobTypeOptions = [
+    "Full-Time",
+    "Part-Time",
+    "Per Diem",
+    "Contractor",
+    "Temporary",
+    "Other",
+  ];
+
+  useEffect(() => {
+    getSkills();
+  }, []);
+
+  const [jobType, setjobType] = useState("");
+
+  // Function to handle getting the input value
+  const selectjobType = (event) => {
+    setjobType(event.target.value);
+  };
+
+  const getSkills = async () => {
+    await ApiHelper.get(API.getSkills)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setSkillsList(resData.data.data);
+          console.log(resData.data.data, "getSkills");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setOpen(false);
+  };
+
+  const selectSkills = (selectedOptions) => {
+    setSkillsError(false);
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setSelectedSkills([]); // Clear the languages state
+      return;
+    }
+
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    setSelectedSkills(selectedLanguages); // Update languages state with all selected languages
+  };
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -252,7 +450,170 @@ const TalentDashBoard = () => {
         <div className="container-fluid my-4">
           <div className="row  talent-dashboard-main">
             <div className="talent-column-one col-lg-7">
-              <div className="recent-gigs-title">Most Recent Gigs</div>
+              <div className="filter-section-jobs">
+                <div className="recent-gigs-title">Most Recent Gigs </div>
+                <React.Fragment>
+                  <div className="header-filter-icon" onClick={handleClickOpen}>
+                    FIlter Jobs
+                    <img className="filter-icon" src={sliderIcon} alt="" />
+                  </div>
+                  <BootstrapDialog
+                    onClose={handleClose}
+                    aria-labelledby="customized-dialog-title"
+                    open={open}
+                    PaperProps={{
+                      sx: {
+                        marginTop: "10vh", // Adjust this value to suit your needs
+                        position: "absolute",
+                        top: 0,
+                        maxHeight: "90vh", // Optional: Limit the height of the dialog
+                      },
+                    }}
+                  >
+                    <DialogTitle
+                      sx={{ m: 0, p: 2 }}
+                      id="customized-dialog-title"
+                    >
+                      Filter Jobs
+                    </DialogTitle>
+                    <IconButton
+                      aria-label="close"
+                      onClick={handleClose}
+                      sx={{
+                        position: "absolute",
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                      }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                    <DialogContent dividers>
+                      <div className="search-filter-section">
+                        <div className="kids-form-section">
+                          {/* <div className="mb-3">
+                            <label className="form-label">Skills</label>
+                            <Select
+                              isMulti
+                              name="colors"
+                              options={skillsList}
+                              valueField="value"
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={(value) => selectSkills(value)}
+                              styles={customStyles}
+                            />
+                          </div> */}
+                        </div>
+
+                        <div className="search-labels">Job Name</div>
+                        <div>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter Job Name"
+                            ref={keyWordRef}
+                          ></input>
+                          {keywordError && (
+                            <div className="invalid-fields">
+                              Please Enter Preferred First Name
+                            </div>
+                          )}
+                        </div>
+                        <div className="kids-form-row mt-3">
+                          <div className="kids-form-section">
+                            <div className="mb-3 ">
+                              <label className="form-label">Location</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Location"
+                                ref={jobLocationRef}
+                              ></input>
+                            </div>
+                          </div>
+                          <div className="kids-form-section">
+                            <div className="mb-3">
+                              <label className="form-label">Age</label>
+                              <select
+                                id="ageSelectID"
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                              >
+                                <option value="" disabled selected>
+                                  Select Age
+                                </option>
+                                {ageList.map((option, index) => (
+                                  <option key={index} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="kids-form-row mt-3">
+                          <div className="kids-form-section">
+                            <div className="mb-3 ">
+                              <label className="form-label">Job Type</label>
+                              <select
+                                id="jobtypeID"
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                              >
+                                <option value="" disabled selected>
+                                  Select Job Type
+                                </option>
+                                {jobTypeOptions.map((option, index) => (
+                                  <option key={index} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="kids-form-section">
+                            <div className="mb-3 ">
+                              <label className="form-label">
+                                WorkPlace Type
+                              </label>
+
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                id="workPlaceSelect"
+                                style={{ fontSize: "14px" }}
+                              >
+                                <option value="" disabled selected>
+                                  Select Work Place Type
+                                </option>
+                                <option value="onsite" defaultValue>
+                                  On Site
+                                </option>
+                                <option value="remote">Remote</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        className="search-popup-btn"
+                        onClick={() => {
+                          applyFiltrer();
+                        }}
+                      >
+                        Filter
+                      </Button>
+                    </DialogActions>
+                  </BootstrapDialog>
+                </React.Fragment>
+              </div>
+
               {gigsList.length && (
                 <div className="recent-gigs-main">
                   {gigsList.map((item, index) => {
@@ -326,8 +687,12 @@ const TalentDashBoard = () => {
                                     <i className="bi bi-person-check-fill"></i>
                                   </div>
                                   <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Followers</div>
-                                    <div className="recent-gigs-count">2500</div>
+                                    <div className="recent-gig-name">
+                                      Followers
+                                    </div>
+                                    <div className="recent-gigs-count">
+                                      2500
+                                    </div>
                                   </div>
                                 </div>
                                 <div className="recent-gigs-count-wrapper">
@@ -346,7 +711,9 @@ const TalentDashBoard = () => {
                                     <i className="bi bi-gender-ambiguous"></i>
                                   </div>
                                   <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Gender</div>
+                                    <div className="recent-gig-name">
+                                      Gender
+                                    </div>
                                     <div className="recent-gigs-count">
                                       {item.gender}
                                     </div>
@@ -357,7 +724,9 @@ const TalentDashBoard = () => {
                                     <i className="bi bi-geo-alt-fill"></i>
                                   </div>
                                   <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Location</div>
+                                    <div className="recent-gig-name">
+                                      Location
+                                    </div>
                                     <div className="recent-gigs-count">
                                       {item.jobLocation}
                                     </div>
@@ -470,11 +839,9 @@ const TalentDashBoard = () => {
                       </div>
                     )}
                   </div>
-
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </main>

@@ -5,7 +5,6 @@ import Axios from "axios";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
-import ReactFlagsSelect from "react-flags-select";
 import { useNavigate } from "react-router";
 import nationalityOptions from "../components/nationalities";
 import languageOptions from "../components/languages";
@@ -16,7 +15,59 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TalentHeader from "../layout/TalentHeader";
 import TalentSideMenu from "../layout/TalentSideMenu";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
 const EditTalent = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const open = Boolean(anchorEl);
+  const handleFileClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const imageType = require("../assets/icons/imageType.png");
+  const videoType = require("../assets/icons/videoType.png");
+  const audiotype = require("../assets/icons/audiotype.png");
+  const idCard = require("../assets/icons/id-card.png");
+  const elipsis = require("../assets/icons/elipsis.png");
+  const greenTickCircle = require("../assets/icons/small-green-tick.png");
+  const docsIcon = require("../assets/icons/docsIcon.png");
+
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
   const userId = urlParams.get("userId");
@@ -91,9 +142,110 @@ const EditTalent = () => {
   const [age, setAge] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
   const [allJobsList, setAllJobsList] = useState([]);
+  const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
+  const [selectedProfessionsEdit, setSelectedProfessionsEdit] = useState([]);
 
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
+  };
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "55px", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
+
+  const professionList = [
+    { value: "Model", label: "Model" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Creator", label: "Creator" },
+    { value: "Stylist", label: "Stylist" },
+    { value: "Photographer", label: "Photographer" },
+    { value: "Videographer", label: "Videographer" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Actor", label: "Actor" },
+    { value: "Singer", label: "Singer" },
+    { value: "Writer", label: "Writer" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "RJ", label: "RJ" },
+    { value: "DJ", label: "DJ" },
+    { value: "VJ", label: "VJ" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Yoga Teacher", label: "Yoga Teacher" },
+    { value: "Webapp Developer", label: "Webapp Developer" },
+    { value: "Virtual Assistant", label: "Virtual Assistant" },
+    { value: "AI Influencer", label: "AI Influencer" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Other", label: "Other" },
+  ];
+
+  const categoryList = [
+    "Fashion",
+    "Parenting and family",
+    "Sports/Martial Arts/Dance",
+    "Arts and photography",
+    "Videography",
+    "Music",
+    "Comedy/Entertainment",
+    "Education",
+    "Transportation",
+    "Food and beverage",
+    "Finance",
+    "Beauty/Cosmetics",
+    "Luxury",
+    "Business and Technology",
+    "Travel/Tourism",
+    "Health/Wellness/Fitness",
+    "Home and Gardening",
+    "Eco-friendly/Nature/Sustainability",
+    "Diversity and inclusion",
+    "Outdoor and nature",
+    "Content Creation",
+    "Lifestyle",
+    "Celebrity",
+    "Animals/Pets",
+    "Web3",
+    "Home and DIY",
+    "Anime/Memes",
+    "Website/Mobile Applications",
+    "Gaming",
+    "Lifecoach/Relationships",
+    "Cosplay/Memes",
+    "Other",
+  ];
+
+  function chooseCategory(category) {
+    setCategoryError(false);
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(
+        selectedCategories.filter((item) => item !== category)
+      );
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  }
+
+  const handleProfessionChange = (selectedOptions) => {
+    setSelectedProfessions(selectedOptions);
+    setProfessionError(false);
+  };
+
+  const handleDetailChange = (index, field, value) => {
+    const updatedSelectedProfessions = [...selectedProfessions];
+    updatedSelectedProfessions[index][field] = value;
+    setSelectedProfessions(updatedSelectedProfessions);
+    setProfessionError(false);
   };
 
   const ethnicityOptions = [
@@ -126,18 +278,6 @@ const EditTalent = () => {
     "Other",
     "Prefer not to say",
   ];
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      minHeight: "55px", // Reset the minHeight to avoid clipping
-    }),
-    menu: (provided, state) => ({
-      ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
-    }),
-  };
 
   const customStylesProfession = {
     control: (provided, state) => ({
@@ -245,109 +385,6 @@ const EditTalent = () => {
     setMaritalError(false);
   };
 
-  const handlePasswordChange = (e) => {
-    setTalentPassword(e.target.value);
-    setPasswordMatch(e.target.value === talentConfirmPassword);
-    settalentPasswordError(false);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setTalentConfirmPassword(e.target.value);
-    setPasswordMatch(e.target.value === talentPassword);
-    settalentConfirmPasswordError(false);
-  };
-
-  const handleProfessionChange = (selectedOptions) => {
-    setSelectedProfessions(selectedOptions);
-    setProfessionError(false);
-  };
-
-  const handleDetailChange = (index, field, value) => {
-    const updatedSelectedProfessions = [...selectedProfessions];
-    updatedSelectedProfessions[index][field] = value;
-    setSelectedProfessions(updatedSelectedProfessions);
-    setProfessionError(false);
-  };
-
-  const handleSubmit = () => {
-    // Construct the final object containing selected professions and their details
-  };
-
-  const professionList = [
-    { value: "Model", label: "Model" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Creator", label: "Creator" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Actor", label: "Actor" },
-    { value: "Singer", label: "Singer" },
-    { value: "Writer", label: "Writer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "RJ", label: "RJ" },
-    { value: "DJ", label: "DJ" },
-    { value: "VJ", label: "VJ" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Yoga Teacher", label: "Yoga Teacher" },
-    { value: "Webapp Developer", label: "Webapp Developer" },
-    { value: "Virtual Assistant", label: "Virtual Assistant" },
-    { value: "AI Influencer", label: "AI Influencer" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Other", label: "Other" },
-  ];
-
-  const categoryList = [
-    "Fashion",
-    "Parenting and family",
-    "Sports/Martial Arts/Dance",
-    "Arts and photography",
-    "Videography",
-    "Music",
-    "Comedy/Entertainment",
-    "Education",
-    "Transportation",
-    "Food and beverage",
-    "Finance",
-    "Beauty/Cosmetics",
-    "Luxury",
-    "Business and Technology",
-    "Travel/Tourism",
-    "Health/Wellness/Fitness",
-    "Home and Gardening",
-    "Eco-friendly/Nature/Sustainability",
-    "Diversity and inclusion",
-    "Outdoor and nature",
-    "Content Creation",
-    "Lifestyle",
-    "Celebrity",
-    "Animals/Pets",
-    "Web3",
-    "Home and DIY",
-    "Anime/Memes",
-    "Website/Mobile Applications",
-    "Gaming",
-    "Lifecoach/Relationships",
-    "Cosplay/Memes",
-    "Other",
-  ];
-
-  function chooseCategory(category) {
-    setCategoryError(false);
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(
-        selectedCategories.filter((item) => item !== category)
-      );
-    } else {
-      setSelectedCategories([...selectedCategories, category]);
-    }
-  }
-
   const getCountries = async () => {
     await ApiHelper.get(API.listCountries)
       .then((resData) => {
@@ -359,52 +396,91 @@ const EditTalent = () => {
   };
 
   const getKidsData = async () => {
-    await ApiHelper.post(`${API.getKidsData}${userId}`)
+    await ApiHelper.post(`${API.getTalentById}${talentData?._id}`)
       .then((resData) => {
         if (resData.data.status === true) {
-          setKidsFillData(resData.data.data);
-          setParentFirstName(resData?.data?.data?.parentFirstName);
-          setParentLastName(resData?.data?.data?.parentLastName);
-          setParentEmail(resData?.data?.data?.parentEmail);
-          setParentMobile(resData?.data?.data?.parentMobileNo);
-          setAddress(resData?.data?.data?.parentAddress);
-          setKidsLegalFirstName(resData?.data?.data?.childFirstName);
-          setKidsLegalLastName(resData?.data?.data?.childLastName);
-          setDob(resData?.data?.data?.childDob);
-          handleSelectedCountry({
-            value: resData?.data?.data?.parentCountry,
-            label: resData?.data?.data?.parentCountry,
-            key: 0,
-          });
-          setKidsPreferedFirstName(
-            resData?.data?.data?.preferredChildFirstname
-          );
-          setKidsPreferedLastName(resData?.data?.data?.preferredChildLastName);
-          setGender(resData?.data?.data?.childGender);
-          setLanguages(resData?.data?.data?.languages);
-          setNationality(resData?.data?.data?.childNationality);
-          setMaritalStatus(resData?.data?.data?.maritalStatus);
-          setEthnicity(resData?.data?.data?.childEthnicity);
-          // setKidsEmail(resData?.data?.data?.childEmail);
-          // setKidsPhone(resData?.data?.data?.childPhone);
-          // setKidsLocation(resData?.data?.data?.childLocation);
-          setKidsCity(resData?.data?.data?.childCity);
-          setSelectedCategories([
-            ...selectedCategories,
-            ...resData.data.data?.relevantCategories,
-          ]);
-          setAboutYou(resData.data.data?.childAboutYou);
-          setAge(resData.data.data?.age);
+          console.log(resData?.data?.data, "KIDSFETCH");
+          if (resData?.data?.data?.type === "kids") {
+            setKidsFillData(resData.data.data);
+            setParentFirstName(resData?.data?.data?.parentFirstName);
+            setParentLastName(resData?.data?.data?.parentLastName);
+            setParentEmail(resData?.data?.data?.parentEmail);
+            setParentMobile(resData?.data?.data?.parentMobileNo);
+            setAddress(resData?.data?.data?.parentAddress);
+            setKidsLegalFirstName(resData?.data?.data?.childFirstName);
+            setKidsLegalLastName(resData?.data?.data?.childLastName);
+            setDob(resData?.data?.data?.childDob);
+            // handleSelectedCountry({
+            //   value: resData?.data?.data?.parentCountry,
+            //   label: resData?.data?.data?.parentCountry,
+            //   key: 0,
+            // });
+            setCountry(resData?.data?.data?.parentCountry);
+            setState(resData?.data?.data?.parentState);
+            setKidsCity(resData?.data?.data?.childCity);
+            setKidsPreferedFirstName(
+              resData?.data?.data?.preferredChildFirstname
+            );
+            setKidsPreferedLastName(
+              resData?.data?.data?.preferredChildLastName
+            );
+            setGender(resData?.data?.data?.childGender);
+            setLanguages(resData?.data?.data?.languages);
+            setNationality(resData?.data?.data?.childNationality);
+            setMaritalStatus(resData?.data?.data?.maritalStatus);
+            setEthnicity(resData?.data?.data?.childEthnicity);
+            // setKidsEmail(resData?.data?.data?.childEmail);
+            // setKidsPhone(resData?.data?.data?.childPhone);
+            // setKidsLocation(resData?.data?.data?.childLocation);
+            setKidsCity(resData?.data?.data?.childCity);
+            setSelectedCategories([
+              ...selectedCategories,
+              ...resData.data.data?.relevantCategories,
+            ]);
+            setAboutYou(resData.data.data?.childAboutYou);
+            setAge(resData.data.data?.age);
+            const selectedOptions = resData.data.data?.languages.map(
+              (language) => {
+                return languageOptions.find(
+                  (option) => option.label === language
+                );
+              }
+            );
+            setSelectedLanguageOptions(selectedOptions);
+            console.log(selectedOptions, "selectedOptions");
+
+            const selectedProfessionOptions = resData.data.data?.profession.map(
+              (profession) => {
+                console.log(profession, "professionmap");
+                console.log(professionList, "professionList");
+                return professionList.find(
+                  (option) => option.label === profession
+                );
+              }
+            );
+            console.log(selectedProfessionOptions, "selectedProfessionOptions");
+            setSelectedProfessionsEdit(selectedProfessionOptions);
+          }
         }
       })
       .catch((err) => {});
   };
 
+  useEffect(() => {
+    console.log(parentEmail, "parentEmail");
+  }, [parentEmail]);
+  useEffect(() => {
+    console.log(country, "country");
+  }, [country]);
+  useEffect(() => {
+    console.log(dateOfBirth, "dateOfBirth");
+  }, [dateOfBirth]);
+
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
     console.log(event, "event");
     console.log(event?.value, "event?.value");
-    setCountry(event?.value);
+
     getStates(event?.value);
     console.log(country, "country");
   };
@@ -444,201 +520,50 @@ const EditTalent = () => {
       .catch((err) => {});
   };
 
-  const kidsSignUp = async () => {
-    if (parentFirstName === "") {
-      setparentFirstNameError(true);
-    }
-    if (parentEmail === "") {
-      setparentEmailError(true);
-    }
-    if (talentPassword === "") {
-      settalentPasswordError(true);
-    }
-    if (talentConfirmPassword === "") {
-      settalentConfirmPasswordError(true);
-    }
-    if (kidsLegalFirstName === "") {
-      setkidsLegalFirstNameError(true);
-    }
-    if (gender === "") {
-      setgenderError(true);
-    }
-    if (parentMobile === "") {
-      setParentMobileError(true);
-    }
-    if (country === "") {
-      setParentCountryError(true);
-    }
-    if (state === "") {
-      setStateError(true);
-    }
-    if (address === "") {
-      setAddressError(true);
-    }
-    if (selectedProfessions.length === 0) {
-      setProfessionError(true);
-    }
-    if (selectedCategories.length === 0) {
-      setCategoryError(true);
-    }
-    if (kidsPreferedFirstName === "") {
-      setPreferedNameError(true);
-    }
-    if (kidsPreferedFirstName === "") {
-      setPreferedNameError(true);
-    }
-    if (nationality === "") {
-      setNationalityError(true);
-    }
-    if (ethnicity === "") {
-      setEthnicityError(true);
-    }
-    if (languages.length === 0) {
-      setLanguageError(true);
-    }
-
-    if (maritalStatus === "") {
-      setMaritalError(true);
-    }
-    if (dateOfBirth === "") {
-      setDobError(true);
-    }
-    console.log(parentFirstName !== "", "parentFirstName");
-    console.log(parentEmail !== "", "parentEmail");
-    console.log(talentPassword !== "", "talentPassword");
-    console.log(talentConfirmPassword !== "", "talentConfirmPassword");
-    console.log(kidsLegalFirstName !== "", "kidsLegalFirstName");
-    console.log(gender !== "", "gender");
-    console.log(parentMobile !== "", "parentMobile");
-    console.log(country !== "", "country");
-    console.log(state !== "", "state");
-    console.log(kidsCity !== "", "kidsCity");
-    console.log(address !== "", "address");
-    console.log(selectedProfessions.length === 0, "selectedProfessions");
-    console.log(selectedProfessions, "selectedProfessions");
-    console.log(selectedCategories.length === 0, "selectedCategories");
-    console.log(selectedCategories, "selectedCategories");
-    console.log(kidsPreferedFirstName !== "", "kidsPreferedFirstName");
-    console.log(nationality !== "", "nationality");
-    console.log(ethnicity !== "", "ethnicity");
-    console.log(languages !== "", "languages");
-    console.log(maritalStatus !== "", "maritalStatus");
-    console.log(dateOfBirth !== "", "dateOfBirth");
-    if (
-      parentFirstName !== "" &&
-      parentEmail !== "" &&
-      talentPassword !== "" &&
-      talentConfirmPassword !== "" &&
-      kidsLegalFirstName !== "" &&
-      gender !== "" &&
-      parentMobile !== "" &&
-      country !== "" &&
-      state !== "" &&
-      address !== "" &&
-      selectedProfessions.length !== 0 &&
-      selectedCategories.length !== 0 &&
-      kidsPreferedFirstName !== "" &&
-      nationality !== "" &&
-      ethnicity !== "" &&
-      languages !== "" &&
-      maritalStatus !== "" &&
-      dateOfBirth !== "" &&
-      passwordMatch === true
-    ) {
-      const formData = {
-        parentFirstName: parentFirstName,
-        parentLastName: parentLastName,
-        parentEmail: parentEmail,
-        parentMobileNo: parentMobile,
-        parentCountry: country,
-        parentState: state,
-        parentAddress: address,
-        talentPassword: talentPassword,
-        confirmPassword: talentConfirmPassword,
-        profession: selectedProfessions,
-        relevantCategories: selectedCategories,
-        maritalStatus: maritalStatus,
-        childFirstName: kidsLegalFirstName,
-        childLastName: kidsLegalLastName,
-        preferredChildFirstname: kidsPreferedFirstName,
-        preferredChildLastName: kidsPreferedLastName,
-        childGender: gender,
-        childNationality: nationality,
-        childEthnicity: ethnicity,
-        languages: languages,
-        childDob: dateOfBirth,
-        childCity: kidsCity,
-        childAboutYou: aboutYou,
-        age: age,
-      };
-      setIsLoading(true);
-      console.log(userId, "userId");
-      if (!userId) {
-        console.log("signup block");
-        await ApiHelper.post(API.kidsSignUp, formData)
-          .then((resData) => {
-            if (resData.data.status === true) {
-              setIsLoading(false);
-              setMessage("Registered Successfully");
-              setOpenPopUp(true);
-              setTimeout(function() {
-                setOpenPopUp(false);
-                navigate(`/talent-otp?${resData.data.data}`);
-              }, 1000);
-            } else if (resData.data.status === false) {
-              setIsLoading(false);
-              setMessage(resData.data.message);
-              setOpenPopUp(true);
-              setTimeout(function() {
-                setOpenPopUp(false);
-              }, 1000);
-            }
-          })
-          .catch((err) => {
-            setIsLoading(false);
-          });
-      } else if (userId) {
-        console.log("edit block");
-        await ApiHelper.post(`${API.editKids}${userId}`, formData)
-          .then((resData) => {
-            if (resData.data.status === true) {
-              setIsLoading(false);
-              setMessage("Updated SuccessFully!");
-              setOpenPopUp(true);
-              setTimeout(function() {
-                setOpenPopUp(false);
-                navigate(
-                  `/talent-signup-plan-details?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
-                );
-              }, 1000);
-            } else if (resData.data.status === false) {
-              setIsLoading(false);
-              setMessage(resData.data.message);
-              setOpenPopUp(true);
-              setTimeout(function() {
-                setOpenPopUp(false);
-              }, 1000);
-            }
-          })
-          .catch((err) => {
-            setIsLoading(false);
-          });
-      }
-    } else {
-      setMessage("Please Update All Required Fields");
-      setOpenPopUp(true);
-      setTimeout(function() {
-        setOpenPopUp(false);
-      }, 1000);
-    }
-    console.log(passwordMatch, "passwordMatch");
-    if (!passwordMatch) {
-      setMessage("Please Update All Required Fields");
-      setOpenPopUp(true);
-      setTimeout(function() {
-        setOpenPopUp(false);
-      }, 1000);
-    }
+  const basicDetailsUpdate = async () => {
+    const formData = {
+      parentFirstName: parentFirstName,
+      parentLastName: parentLastName,
+      parentEmail: parentEmail,
+      parentMobileNo: parentMobile,
+      parentCountry: country,
+      parentState: state,
+      parentAddress: address,
+      relevantCategories: selectedCategories,
+      childFirstName: kidsLegalFirstName,
+      childLastName: kidsLegalLastName,
+      preferredChildFirstname: kidsPreferedFirstName,
+      preferredChildLastName: kidsPreferedLastName,
+      childGender: gender,
+      childNationality: nationality,
+      childEthnicity: ethnicity,
+      languages: languages,
+      childDob: dateOfBirth,
+      childCity: kidsCity,
+      childAboutYou: aboutYou,
+      age: age,
+    };
+    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Updated SuccessFully!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
 
   const [firstNameLetterError, setFirstNameLetterError] = useState(false);
@@ -796,114 +721,142 @@ const EditTalent = () => {
     setParentMobileError(false);
   };
 
-  // const handleMobileChange = (e) => {
-  //   const value = e.target.value;
-  //   // Regular expression to allow only numbers and the "+" symbol
-  //   const onlyNumbersRegex = /^[0-9+]*$/;
-  //   if (!onlyNumbersRegex.test(value)) {
-  //     setMobileNumError(true);
-  //   } else {
-  //     setParentMobile(value);
-  //     setMobileNumError(false);
-  //   }
-  // };
+  const [valueTabs, setValueTabs] = React.useState(0);
 
-  let line = document.querySelector(".line");
-  let text = document.querySelector(".text");
-  let password_strength_box = document.querySelector(".password_strength_box");
-  let password = document.querySelector(".password");
+  const handleChange = (event, newValue) => {
+    setValueTabs(newValue);
+  };
 
-  if (password && password_strength_box && line && text) {
-    if (password.value.length == 0) {
-      password_strength_box.style.display = "none";
+  const [talentId, setTalentId] = useState(null);
+  const [talentData, setTalentData] = useState();
+
+  useEffect(() => {
+    setTalentId(localStorage.getItem("userId"));
+    console.log(talentId, "talentId");
+    if (talentId) {
+      getTalentById();
     }
+  }, [talentId]);
 
-    password.oninput = function() {
-      if (password.value.length == 0) {
-        password_strength_box.style.display = "none";
-      }
-
-      if (password.value.length >= 1) {
-        password_strength_box.style.display = "flex";
-        line.style.width = "5%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (password.value.length >= 2) {
-        password_strength_box.style.display = "flex";
-        line.style.width = "10%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (password.value.length >= 3) {
-        password_strength_box.style.display = "flex";
-        line.style.width = "20%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (password.value.length >= 4) {
-        password_strength_box.style.display = "flex";
-        line.style.width = "35%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-        if (password.value.match(/[!@#$%^&*]/)) {
-          password_strength_box.style.display = "flex";
-          line.style.width = "45%";
-          line.style.backgroundColor = "#e9ee30";
-          text.style.color = "#e9ee30";
-          text.innerHTML = "Medium";
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${talentId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setTalentData(resData.data.data, "resData.data.data");
+            setEditProfileImage(resData.data.data?.image?.fileData);
+          }
         }
-      }
-      if (
-        password.value.length >= 5 &&
-        password.value.match(/[A-Z]/) &&
-        password.value.match(/[a-z]/)
-      ) {
-        password_strength_box.style.display = "flex";
-        line.style.width = "50%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (password.value.length >= 6 && password.value.match(/[0-9]/)) {
-        password_strength_box.style.display = "flex";
-        line.style.width = "70%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (
-        password.value.length >= 7 &&
-        password.value.match(/[A-Z]/) &&
-        password.value.match(/[a-z]/) &&
-        password.value.match(/[0-9]/)
-      ) {
-        password_strength_box.style.display = "flex";
-        line.style.width = "80%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-      if (
-        password.value.length >= 8 &&
-        password.value.match(/[A-Z]/) &&
-        password.value.match(/[a-z]/) &&
-        password.value.match(/[0-9]/) &&
-        password.value.match(/[!@#$%^&*]/)
-      ) {
-        password_strength_box.style.display = "flex";
-        line.style.width = "100%";
-        line.style.backgroundColor = "#2ccc2c";
-        text.style.color = "#2ccc2c";
-        text.innerHTML = "Strong";
-      }
+  useEffect(() => {
+    console.log(talentData, "talentDataEdit");
+    if (talentData?._id) {
+      getKidsData();
+    }
+  }, [talentData]);
+
+  const [editProfileImage, setEditProfileImage] = useState("");
+
+  useEffect(() => {
+    console.log(editProfileImage, "editProfileImage");
+  }, [editProfileImage]);
+
+  const profileUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
+      uploadProfile(fileData);
+    }
+  };
+
+  const getFileType = (fileType) => {
+    // Extract main category from MIME type
+    if (fileType.startsWith("image/")) {
+      return "image";
+    } else if (fileType.startsWith("video/")) {
+      return "video";
+    } else if (fileType.startsWith("audio/")) {
+      return "audio";
+    } else if (fileType === "application/pdf") {
+      return "pdf";
+    } else {
+      return "other";
+    }
+  };
+
+  const uploadProfile = async (fileData) => {
+    setLoader(true);
+    const params = new FormData();
+    params.append("file", fileData);
+    params.append("fileName", fileData.name);
+    params.append("fileType", getFileType(fileData.type));
+    /* await ApiHelper.post(API.uploadFile, params) */
+    await Axios.post(API.uploadFile, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((resData) => {
+        console.log(resData, "uploadProfileDATA");
+        if (resData?.data?.status === true) {
+          let fileObj = {
+            id: resData.data.data.fileId,
+            title: fileData.name,
+            fileData: resData.data.data.filename,
+            type: resData?.data?.data?.filetype,
+          };
+          console.log(fileObj, "fileObj");
+          setEditProfileImage(fileObj?.fileData);
+          updateProfile(fileObj);
+        }
+      })
+      .catch((err) => {
+        setLoader(false);
+      });
+  };
+
+  const [myState, setMyState] = useState(false);
+
+  const updateProfile = async (data) => {
+    const formData = {
+      image: data,
     };
-  }
+    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Profile Image Update Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setMyState(true);
+            setOpenPopUp(false);
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const fileInputRef = useRef(null);
+
+  const File = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Trigger the click event on the file input
+    }
+  };
 
   return (
     <>
@@ -914,326 +867,248 @@ const EditTalent = () => {
           showSidebar ? "show-sidebar" : "not-sidebar"
         }`}
       >
-        <TalentSideMenu />
+        <TalentSideMenu myState={myState} />
       </div>
 
       <main
-        style={allJobsList?.length === 0 ? { height: "100vh" } : {}}
+        style={allJobsList?.length === 0 ? {} : {}}
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main">
           <div className="create-job-title">Edit Profile</div>
-          <div className="kids-main mt-4">
-            <div className="kids-form-row">
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">
-                    Preferred First Name
-                    <span className="mandatory">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={kidsPreferedFirstName}
-                    onChange={(e) => {
-                      kidsPreferedFirstNameChange(e);
-                      setPreferedNameError(false);
-                    }}
-                    onKeyDown={handleKidsPrefferedFirstNameKeyPress}
-                    placeholder="Enter Preferred  First Name"
-                  ></input>
-                  {preferedNameError && (
-                    <div className="invalid-fields">
-                      Please Enter Preferred First Name
-                    </div>
-                  )}
-                  {kidsPrefferedFirstNameLetterError && (
-                    <div className="invalid-fields">Only Letters Allowed</div>
-                  )}
-                </div>
-              </div>
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">Preferred Last name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={kidsPreferedLastName}
-                    onChange={(e) => {
-                      kidsPreferedLastNameChange(e);
-                    }}
-                    onKeyDown={handleKidsPrefferedLasttNameKeyPress}
-                    placeholder="Enter Preferred  Last name"
-                  ></input>
-                  {kidsPrefferedLastNameLetterError && (
-                    <div className="invalid-fields">Only Letters Allowed</div>
-                  )}
-                </div>
-              </div>
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">
-                    E-mail <span className="mandatory">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    className={`form-control ${
-                      !isValidEmail ? "is-invalid" : "form-control"
-                    }`}
-                    onChange={handleEmailChange}
-                    placeholder="Enter E-mail"
-                    value={parentEmail}
-                  />
-                  {!isValidEmail && (
-                    <div className="invalid-feedback">
-                      Please enter a valid email address.
-                    </div>
-                  )}
-                  {parentEmailError && (
-                    <div className="invalid-fields">Please enter Email</div>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="kids-form-row">
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">
-                    Country<span className="mandatory">*</span>
-                  </label>
-                  <Select
-                    placeholder="Search country..."
-                    options={countryList.map((country, index) => ({
-                      value: country,
-                      label: country,
-                      key: index,
-                    }))}
-                    value={country?.value}
-                    onChange={handleSelectedCountry}
-                    isSearchable={true}
-                  />
-                  {parentCountryError && (
-                    <div className="invalid-fields">Please Select Country</div>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="kids-form-row">
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">
-                    State<span className="mandatory">*</span>
-                  </label>
-                  <Select
-                    placeholder="Select state..."
-                    options={stateList.map((state) => ({
-                      value: state.stateId, // or whatever unique identifier you want to use
-                      label: state.name,
-                    }))}
-                    value={state?.label}
-                    onChange={handleSelectedState}
-                    isSearchable={true}
-                  />
-                  {stateError && (
-                    <div className="invalid-fields">Please Select State</div>
-                  )}
-                </div>
-              </div>
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">City</label>
-                  <Select
-                    placeholder="Select City..."
-                    options={cityList.map((city) => ({
-                      value: city.cityId, // or whatever unique identifier you want to use
-                      label: city.name,
-                    }))}
-                    value={kidsCity?.label}
-                    onChange={handleSelectedCity}
-                    isSearchable={true}
-                  />
-                </div>
-              </div>
-            </div>
 
-            <div className="kids-form-row">
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">
-                    Gender <span className="mandatory">*</span>
-                  </label>
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    onChange={selectGender}
-                    style={{ fontSize: "14px" }}
-                    value={gender}
-                  >
-                    <option value="" disabled selected>
-                      Select Gender
-                    </option>
-                    {gendersOptions.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                  {genderError && (
-                    <div className="invalid-fields">Please Select Gender</div>
-                  )}
-                </div>
-              </div>
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">
-                    Marital Status <span className="mandatory">*</span>
-                  </label>
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    onChange={selectMaritalStatus}
-                    value={maritalStatus}
-                    style={{ fontSize: "14px" }}
-                  >
-                    <option value="" disabled selected>
-                      Select Marital Status
-                    </option>
-                    <option defaultValue value="married">
-                      Married
-                    </option>
-                    <option value="unmarried">UnMarried</option>
-                  </select>
-                  {maritalError && (
-                    <div className="invalid-fields">
-                      Please Select Marital Status
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="kids-form-row">
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">
-                    Ethnicity <span className="mandatory">*</span>
-                  </label>
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    onChange={selectEthnicity}
-                    value={ethnicity}
-                    style={{ fontSize: "14px" }}
-                  >
-                    <option value="" disabled>
-                      Select Ethnicity
-                    </option>
-                    {ethnicityOptions.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                  {ethnicityError && (
-                    <div className="invalid-fields">
-                      Please Select Ethnicity
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">
-                    Nationality <span className="mandatory">*</span>
-                  </label>
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    onChange={selectNationality}
-                    value={nationality}
-                    style={{ fontSize: "14px" }}
-                  >
-                    <option value="" disabled selected>
-                      Select Nationality
-                    </option>
-                    {nationalityOptions.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                  {nationalityError && (
-                    <div className="invalid-fields">
-                      Please Select Nationality
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="kids-form-row">
-              <div className="kids-form-section">
-                <label className="form-label">
-                  Date Of Birth <span className="mandatory">*</span>
-                </label>
-                <div className="mb-3">
-                  {/* <input
-                            type="date"
-                            className="form-control"
-                            value={dateOfBirth}
-                            onChange={(e) => {
-                              handleDateChange(e);
-                              setDobError(false);
-                            }}
-                            placeholder=""
-                          ></input> */}
-
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                      value={value}
-                      onChange={(newValue) => {
-                        console.log(newValue, "newValue");
-                        handleDateChange(newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
-                      disableFuture
-                    />
-                  </LocalizationProvider>
-
-                  {dobError && (
-                    <div className="invalid-fields">
-                      Please Select Date Of Birth
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label className="form-label">
-                    Language <span className="mandatory">*</span>
-                  </label>
-                  <Select
-                    isMulti
-                    name="colors"
-                    options={languageOptions}
-                    valueField="value"
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                    onChange={(value) => selectLanguage(value)}
-                    styles={customStylesProfession}
+          <Box sx={{ width: "100%" }}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                value={valueTabs}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab
+                  label="Update Profile Image"
+                  {...a11yProps(0)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Update Basic Details"
+                  {...a11yProps(1)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Update Portfolio"
+                  {...a11yProps(2)}
+                  style={{ textTransform: "capitalize" }}
+                />
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={valueTabs} index={0}>
+              <div className="profile-image-edit-section">
+                <div>
+                  <img
+                    className="profile-image-edit"
+                    src={`${API.userFilePath}${editProfileImage}`}
+                    alt=""
                   />
-                  {languageError && (
-                    <div className="invalid-fields">Please Select Language</div>
-                  )}
+                </div>
+
+                <div className="btn-img-edit-wrapper">
+                  <input
+                    type="file"
+                    className="select-cv-input"
+                    id="profile-image"
+                    accept="image/*"
+                    onChange={profileUpload}
+                    ref={fileInputRef}
+                  />
+                  <Button
+                    onClick={File}
+                    className="edit-profileimg-btn"
+                    variant="text"
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    Update Image
+                  </Button>
                 </div>
               </div>
-            </div>
-            <div className="kids-form-row">
-              <div className="kids-form-section">
-                <label className="form-label">
-                  Mobile No <span className="mandatory">*</span>
-                </label>
-                <div className="mb-3">
-                  {/* <input
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={1}>
+              <div className="kids-main">
+                <div className="kids-form-title">Parent/Guardian Details</div>
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Legal First Name
+                        <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={parentFirstName}
+                        onChange={(e) => {
+                          handleFirstNameChange(e);
+                          setparentFirstNameError(false);
+                        }}
+                        onKeyDown={handleKeyPress}
+                        placeholder="Enter Legal First Name"
+                      ></input>
+                      {parentFirstNameError && (
+                        <div className="invalid-fields">
+                          Please enter First Name
+                        </div>
+                      )}
+                      {firstNameLetterError && (
+                        <div className="invalid-fields">
+                          Only Letters are allowed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">Legal Last name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={parentLastName}
+                        onChange={(e) => {
+                          handleLastNameChange(e);
+                        }}
+                        onKeyDown={handleLastNameKeyPress}
+                        placeholder="Enter Legal Last name"
+                      ></input>
+                      {lastNameLetterError && (
+                        <div className="invalid-fields">
+                          Only Letters are allowed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        E-mail <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        className={`form-control ${
+                          !isValidEmail ? "is-invalid" : "form-control"
+                        }`}
+                        onChange={handleEmailChange}
+                        placeholder="Enter E-mail"
+                        value={parentEmail}
+                        disabled={true}
+                      />
+                      {!isValidEmail && (
+                        <div className="invalid-feedback">
+                          Please enter a valid email address.
+                        </div>
+                      )}
+                      {parentEmailError && (
+                        <div className="invalid-fields">Please enter Email</div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Country<span className="mandatory">*</span>
+                      </label>
+                      <Select
+                        placeholder="Search country..."
+                        options={countryList.map((country, index) => ({
+                          value: country,
+                          label: country,
+                          key: index,
+                        }))}
+                        value={{ value: country, label: country }}
+                        onChange={handleSelectedCountry}
+                        isSearchable={true}
+                      />
+                      {parentCountryError && (
+                        <div className="invalid-fields">
+                          Please Select Country
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        State<span className="mandatory">*</span>
+                      </label>
+                      <Select
+                        placeholder="Select state..."
+                        options={stateList.map((state) => ({
+                          value: state.stateId, // or whatever unique identifier you want to use
+                          label: state.name,
+                        }))}
+                        value={{ value: state, label: state }}
+                        onChange={handleSelectedState}
+                        isSearchable={true}
+                      />
+                      {stateError && (
+                        <div className="invalid-fields">
+                          Please Select State
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">City</label>
+                      <Select
+                        placeholder="Select City..."
+                        options={cityList.map((city) => ({
+                          value: city.cityId, // or whatever unique identifier you want to use
+                          label: city.name,
+                        }))}
+                        value={{ value: kidsCity, label: kidsCity }}
+                        onChange={handleSelectedCity}
+                        isSearchable={true}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="exampleFormControlTextarea1"
+                        className="form-label"
+                      >
+                        Address<span className="mandatory">*</span>
+                      </label>
+                      <textarea
+                        style={{ width: "714px" }}
+                        className="form-control address-textarea"
+                        id="exampleFormControlTextarea1"
+                        value={address}
+                        rows="3"
+                        onChange={(e) => {
+                          setAddress(e.target.value);
+                          setAddressError(false);
+                        }}
+                      ></textarea>
+                      {addressError && (
+                        <div className="invalid-fields">
+                          Please Enter Address
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <label className="form-label">
+                      Mobile No <span className="mandatory">*</span>
+                    </label>
+                    <div className="mb-3">
+                      {/* <input
                             type="text"
                             className="form-control"
                             maxLength="15"
@@ -1246,50 +1121,634 @@ const EditTalent = () => {
                             placeholder=" Mobile No"
                           ></input> */}
 
-                  <MuiPhoneNumber
-                    defaultCountry={"kh"}
-                    className="form-control"
-                    onChange={handleMobileChange}
-                  />
+                      <MuiPhoneNumber
+                        value={parentMobile}
+                        defaultCountry={"kh"}
+                        className="form-control"
+                        onChange={handleMobileChange}
+                      />
 
-                  {parentMobileError && (
-                    <div className="invalid-fields">
-                      Please enter Mobile Number
+                      {parentMobileError && (
+                        <div className="invalid-fields">
+                          Please enter Mobile Number
+                        </div>
+                      )}
+                      {mobileNumError && (
+                        <div className="invalid-fields">
+                          Only Numbers Allowed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="kids-form-title">Your Child Details</div>
+                {/* <div className="profession-section-cover">
+                  <div className="kids-form-row">
+                    <div className="kids-form-section">
+                      <div className="mb-3">
+                        <label className="form-label pay-info">
+                          Profession (choose any 4)
+                          <span className="mandatory">*</span>
+                        </label>
+                        <div>
+                          <Select
+                            defaultValue={[]}
+                            isMulti
+                            name="professions"
+                            options={professionList}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            placeholder="Search for Category”"
+                            onChange={handleProfessionChange}
+                            styles={customStyles}
+                            value={selectedProfessionsEdit}
+                          />
+                          {professionError && (
+                            <div className="invalid-fields">
+                              Please Choose Profession
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="profession-content-section">
+                    {selectedProfessions.map((profession, index) => (
+                      <div key={index} className="dynamic-profession">
+                        <div className="mb-3">
+                          <label className="form-label">
+                            {profession.label} / day
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control profession-input"
+                            value={profession.perDaySalary || ""}
+                            onChange={(e) =>
+                              handleDetailChange(
+                                index,
+                                "perDaySalary",
+                                e.target.value
+                              )
+                            }
+                            placeholder="$/day"
+                          ></input>
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label">
+                            {profession.label} / hr
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control profession-input"
+                            value={profession.perHourSalary || ""}
+                            onChange={(e) =>
+                              handleDetailChange(
+                                index,
+                                "perHourSalary",
+                                e.target.value
+                              )
+                            }
+                            placeholder="$/hr"
+                          ></input>
+                        </div>
+
+                        <div className="offer-wrapper">
+                          <input
+                            className="profession-checkbox"
+                            id={profession.label}
+                            type="checkbox"
+                            checked={profession.openToOffers || false}
+                            onChange={(e) =>
+                              handleDetailChange(
+                                index,
+                                "openToOffers",
+                                e.target.checked
+                              )
+                            }
+                          />
+                          <label
+                            className="form-label offer-label"
+                            htmlFor={profession.label}
+                          >
+                            Open to Offers / Happy to negotiate
+                          </label>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div> */}
+                <div className="kids-form-title-sub">
+                  Please select the top 4 categories relevant to your profile.
+                  <span className="mandatory">*</span>
+                </div>
+                <div className="category-list">
+                  {categoryList.map((category, index) => (
+                    <div
+                      className={
+                        selectedCategories.includes(category)
+                          ? "selected-category"
+                          : "category-name"
+                      }
+                      onClick={(e) => {
+                        chooseCategory(category);
+                      }}
+                      key={index}
+                    >
+                      {category}
+                    </div>
+                  ))}
+                </div>
+                {categoryError && (
+                  <div className="invalid-fields">Please Choose Categories</div>
+                )}
+                <div className="kids-form-title">Personal Details</div>
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Legal First Name
+                        <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        onChange={(e) => {
+                          KidsLegalFirstNameChange(e);
+                          setkidsLegalFirstNameError(false);
+                        }}
+                        onKeyDown={handleKidsLegalKeyPress}
+                        value={kidsLegalFirstName}
+                        placeholder="Enter Legal First Name"
+                      ></input>
+                      {kidsLegalFirstNameError && (
+                        <div className="invalid-fields">
+                          Please enter First Name
+                        </div>
+                      )}
+                      {kidsLegalFirstLetterError && (
+                        <div className="invalid-fields">
+                          Only Letters Allowed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">Legal Last name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={kidsLegalLastName}
+                        onChange={(e) => {
+                          KidsLegalLastNameChange(e);
+                        }}
+                        onKeyDown={handleKidsLegalLastNameKeyPress}
+                        placeholder="Enter Legal Last name"
+                      ></input>
+                      {kidsLegalLastNameLetterError && (
+                        <div className="invalid-fields">
+                          Only Letters Allowed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Preferred First Name
+                        <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={kidsPreferedFirstName}
+                        onChange={(e) => {
+                          kidsPreferedFirstNameChange(e);
+                          setPreferedNameError(false);
+                        }}
+                        onKeyDown={handleKidsPrefferedFirstNameKeyPress}
+                        placeholder="Enter Preferred  First Name"
+                      ></input>
+                      {preferedNameError && (
+                        <div className="invalid-fields">
+                          Please Enter Preferred First Name
+                        </div>
+                      )}
+                      {kidsPrefferedFirstNameLetterError && (
+                        <div className="invalid-fields">
+                          Only Letters Allowed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">Preferred Last name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={kidsPreferedLastName}
+                        onChange={(e) => {
+                          kidsPreferedLastNameChange(e);
+                        }}
+                        onKeyDown={handleKidsPrefferedLasttNameKeyPress}
+                        placeholder="Enter Preferred  Last name"
+                      ></input>
+                      {kidsPrefferedLastNameLetterError && (
+                        <div className="invalid-fields">
+                          Only Letters Allowed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Ethnicity <span className="mandatory">*</span>
+                      </label>
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={selectEthnicity}
+                        value={ethnicity}
+                        style={{ fontSize: "14px" }}
+                      >
+                        <option value="" disabled>
+                          Select Ethnicity
+                        </option>
+                        {ethnicityOptions.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      {ethnicityError && (
+                        <div className="invalid-fields">
+                          Please Select Ethnicity
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Nationality <span className="mandatory">*</span>
+                      </label>
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={selectNationality}
+                        value={nationality}
+                        style={{ fontSize: "14px" }}
+                      >
+                        <option value="" disabled selected>
+                          Select Nationality
+                        </option>
+                        {nationalityOptions.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      {nationalityError && (
+                        <div className="invalid-fields">
+                          Please Select Nationality
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="kids-form-row ">
+                  <div className="kids-form-section">
+                    <label className="form-label">
+                      Date Of Birth <span className="mandatory">*</span>
+                    </label>
+                    <div className="mb-3">
+                      {/* <input
+                            type="date"
+                            className="form-control"
+                            value={dateOfBirth}
+                            onChange={(e) => {
+                              handleDateChange(e);
+                              setDobError(false);
+                            }}
+                            placeholder=""
+                          ></input> */}
+
+                      <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                          value={dateOfBirth}
+                          onChange={(newValue) => {
+                            console.log(newValue, "newValue");
+                            handleDateChange(newValue);
+                          }}
+                          renderInput={(params) => <TextField {...params} />}
+                          disableFuture
+                        />
+                      </LocalizationProvider>
+
+                      {dobError && (
+                        <div className="invalid-fields">
+                          Please Select Date Of Birth
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Language <span className="mandatory">*</span>
+                      </label>
+                      <Select
+                        isMulti
+                        name="colors"
+                        options={languageOptions}
+                        valueField="value"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(value) => selectLanguage(value)}
+                        styles={customStylesProfession}
+                        value={selectedLanguageOptions}
+                      />
+                      {languageError && (
+                        <div className="invalid-fields">
+                          Please Select Language
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="kids-form-row mb-5">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Gender <span className="mandatory">*</span>
+                      </label>
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={selectGender}
+                        style={{ fontSize: "14px" }}
+                        value={gender}
+                      >
+                        <option value="" disabled selected>
+                          Select Gender
+                        </option>
+                        {gendersOptions.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      {genderError && (
+                        <div className="invalid-fields">
+                          Please Select Gender
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  {talentData?.type != "kids" && (
+                    <div className="kids-form-section">
+                      <div className="mb-3">
+                        <label className="form-label">Marital Status</label>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          onChange={selectMaritalStatus}
+                        >
+                          <option value="" disabled selected>
+                            Select Marital Status
+                          </option>
+                          <option defaultValue value="married">
+                            Married
+                          </option>
+                          <option value="unmarried">UnMarried</option>
+                        </select>
+                      </div>
                     </div>
                   )}
-                  {mobileNumError && (
-                    <div className="invalid-fields">Only Numbers Allowed</div>
-                  )}
                 </div>
-              </div>
-            </div>
-            <div className="kids-form-row mb-5">
-              <div className="kids-form-section">
-                <div className="mb-3">
-                  <label
-                    htmlFor="exampleFormControlTextarea1"
-                    className="form-label"
+                <div className="update-profile-flex">
+                  <Button
+                    onClick={() => basicDetailsUpdate()}
+                    className="edit-profileimg-btn"
+                    variant="text"
+                    style={{ textTransform: "capitalize" }}
                   >
-                    Address<span className="mandatory">*</span>
-                  </label>
-                  <textarea
-                    style={{ width: "820px" }}
-                    className="form-control address-textarea"
-                    id="exampleFormControlTextarea1"
-                    value={address}
-                    rows="3"
-                    onChange={(e) => {
-                      setAddress(e.target.value);
-                      setAddressError(false);
-                    }}
-                  ></textarea>
-                  {addressError && (
-                    <div className="invalid-fields">Please Enter Address</div>
-                  )}
+                    Update
+                  </Button>
                 </div>
               </div>
-            </div>
-          </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={2}>
+              <div className="update-portfolio-section">
+                <div className="update-portfolio-cards-wrapper">
+                  <div className="update-portfolio-title">Portfolio</div>
+
+                  {talentData &&
+                    talentData?.portfolio?.length > 0 &&
+                    talentData?.portfolio?.map((item) => {
+                      return (
+                        <>
+                          <div className="update-portfolio-cards">
+                            <div className="update-portfolio-icon">
+                              <div className="file-section">
+                                {item.type === "image" && (
+                                  <div className="fileType">
+                                    <i class="bi bi-card-image"></i>
+                                  </div>
+                                )}
+                                <div className="update-portfolio-fileName">
+                                  {item.title}
+                                </div>
+                                <div className="update-portfolio-action">
+                                  <Button
+                                    id="basic-button"
+                                    aria-controls={
+                                      open ? "basic-menu" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? "true" : undefined}
+                                    onClick={handleFileClick}
+                                  >
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                  </Button>
+                                  <Menu
+                                    id="basic-menu"
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    MenuListProps={{
+                                      "aria-labelledby": "basic-button",
+                                    }}
+                                  >
+                                    <MenuItem onClick={handleClose}>
+                                      View
+                                    </MenuItem>
+                                    <MenuItem onClick={handleClose}>
+                                      Edit
+                                    </MenuItem>
+                                    <MenuItem onClick={handleClose}>
+                                      Delete
+                                    </MenuItem>
+                                  </Menu>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })}
+                </div>
+                <div className="update-portfolio-cards-wrapper">
+                  <div className="update-portfolio-title">Videos & Audios</div>
+
+                  {talentData &&
+                    talentData?.videosAndAudios?.length > 0 &&
+                    talentData?.videosAndAudios?.map((item) => {
+                      return (
+                        <>
+                          <div className="update-portfolio-cards">
+                            <div className="update-portfolio-icon">
+                              <div className="file-section">
+                                {item.type === "audio" && (
+                                  <div className="fileType">
+                                    <i class="bi bi-mic-fill"></i>
+                                  </div>
+                                )}
+                                {item.type === "video" && (
+                                  <div className="fileType">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                  </div>
+                                )}
+                                {item.type === "document" && (
+                                  <div className="fileType">
+                                    <i class="bi bi-file-earmark-richtext"></i>
+                                  </div>
+                                )}
+                                <div className="update-portfolio-fileName">
+                                  {item.title}
+                                </div>
+                                <div className="update-portfolio-action">
+                                  <Button
+                                    id="basic-button"
+                                    aria-controls={
+                                      open ? "basic-menu" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? "true" : undefined}
+                                    onClick={handleFileClick}
+                                  >
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                  </Button>
+                                  <Menu
+                                    id="basic-menu"
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    MenuListProps={{
+                                      "aria-labelledby": "basic-button",
+                                    }}
+                                  >
+                                    <MenuItem onClick={handleClose}>
+                                      View
+                                    </MenuItem>
+                                    <MenuItem onClick={handleClose}>
+                                      Edit
+                                    </MenuItem>
+                                    <MenuItem onClick={handleClose}>
+                                      Delete
+                                    </MenuItem>
+                                  </Menu>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="update-portfolio-action"></div>
+                          </div>
+                        </>
+                      );
+                    })}
+                </div>
+
+                <div className="update-portfolio-cards-wrapper">
+                  <div className="update-portfolio-title">Resumes</div>
+
+                  {talentData &&
+                    talentData?.cv?.length > 0 &&
+                    talentData?.cv?.map((item) => {
+                      return (
+                        <>
+                          <div className="update-portfolio-cards">
+                            <div className="update-portfolio-icon">
+                              <div className="file-section">
+                                {item.type === "audio" && (
+                                  <div className="fileType">
+                                    <i class="bi bi-mic-fill"></i>
+                                  </div>
+                                )}
+                                {item.type === "video" && (
+                                  <div className="fileType">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                  </div>
+                                )}
+                                {item.type === "document" && (
+                                  <div className="fileType">
+                                    <i class="bi bi-file-earmark-richtext"></i>
+                                  </div>
+                                )}
+                                <div className="update-portfolio-fileName">
+                                  {item.title}
+                                </div>
+                                <div className="update-portfolio-action">
+                                  <Button
+                                    id="basic-button"
+                                    aria-controls={
+                                      open ? "basic-menu" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? "true" : undefined}
+                                    onClick={handleFileClick}
+                                  >
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                  </Button>
+                                  <Menu
+                                    id="basic-menu"
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    MenuListProps={{
+                                      "aria-labelledby": "basic-button",
+                                    }}
+                                    className="update-portfolio-menu"
+                                  >
+                                    <MenuItem onClick={handleClose}>
+                                      View
+                                    </MenuItem>
+                                    <MenuItem onClick={handleClose}>
+                                      Edit
+                                    </MenuItem>
+                                    <MenuItem onClick={handleClose}>
+                                      Delete
+                                    </MenuItem>
+                                  </Menu>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="update-portfolio-action"></div>
+                          </div>
+                        </>
+                      );
+                    })}
+                </div>
+              </div>
+            </CustomTabPanel>
+          </Box>
         </div>
       </main>
 

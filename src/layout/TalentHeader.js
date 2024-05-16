@@ -149,6 +149,9 @@ const TalentHeader = ({ toggleMenu }) => {
   };
 
   useEffect(() => {
+    getSkills();
+  }, []);
+  useEffect(() => {
     console.log(talentData, "talentData");
   }, [talentData]);
 
@@ -190,6 +193,7 @@ const TalentHeader = ({ toggleMenu }) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = async () => {
     let job_name;
     let job_location;
@@ -245,10 +249,38 @@ const TalentHeader = ({ toggleMenu }) => {
   const jobAgeRef = useRef(null);
   const jobFullNameRef = useRef(null);
 
+  const jobTypeOptions = [
+    "Full-Time",
+    "Part-Time",
+    "Per Diem",
+    "Contractor",
+    "Temporary",
+    "Other",
+  ];
+
+  const [jobType, setjobType] = useState("");
+
   const selectSkills = (event) => {};
 
   // Function to handle getting the input value
+  const selectjobType = (event) => {
+    setjobType(event.target.value);
+  };
 
+  const getSkills = async () => {
+    await ApiHelper.get(API.getSkills)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setSkillsList(resData.data.data);
+          console.log(resData.data.data, "getSkills");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setOpen(false);
+  };
   return (
     <>
       <div className="talent-header-main">
@@ -280,7 +312,7 @@ const TalentHeader = ({ toggleMenu }) => {
                 <img className="filter-icon" src={sliderIcon} alt="" />
               </div>
             </div>
-            <BootstrapDialog
+            {/* <BootstrapDialog
               onClose={handleClose}
               aria-labelledby="customized-dialog-title"
               open={open}
@@ -312,27 +344,11 @@ const TalentHeader = ({ toggleMenu }) => {
                 <div className="search-filter-section">
                   <div className="search-labels">Keywords</div>
                   <div>
-                    {/* <TextField
-                      autoFocus
-                      required
-                      margin="dense"
-                      id="name"
-                      name="email"
-                      label="Email Address"
-                      type="email"
-                      fullWidth
-                      variant="standard"
-                    /> */}
-
                     <input
                       type="text"
                       className="form-control"
                       placeholder="Enter Keyword"
                       ref={jobNameRef}
-                      // onChange={(e) => {
-                      //   e.preventDefault();
-                      //   setJobName(e.target.value);
-                      // }}
                     ></input>
                   </div>
 
@@ -360,6 +376,21 @@ const TalentHeader = ({ toggleMenu }) => {
                       </div>
                     </div>
                   </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">Skills</label>
+                      <Select
+                        isMulti
+                        name="colors"
+                        options={skillsList}
+                        valueField="value"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(value) => selectSkills(value)}
+                        styles={customStyles}
+                      />
+                    </div>
+                  </div>
                   <div className="kids-form-row mt-3">
                     <div className="kids-form-section">
                       <div className="mb-3 ">
@@ -373,18 +404,24 @@ const TalentHeader = ({ toggleMenu }) => {
                       </div>
                     </div>
                     <div className="kids-form-section">
-                      <div className="mb-3">
-                        <label className="form-label">Skills</label>
-                        <Select
-                          isMulti
-                          name="colors"
-                          options={skillsList}
-                          valueField="value"
-                          className="basic-multi-select"
-                          classNamePrefix="select"
-                          onChange={(value) => selectSkills(value)}
-                          styles={customStyles}
-                        />
+                      <div className="mb-3 ">
+                        <label className="form-label">Job Type</label>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          onChange={selectjobType}
+                          value={jobType}
+                          style={{ fontSize: "14px" }}
+                        >
+                          <option value="" disabled selected>
+                            Select Job Type
+                          </option>
+                          {jobTypeOptions.map((option, index) => (
+                            <option key={index} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -392,10 +429,10 @@ const TalentHeader = ({ toggleMenu }) => {
               </DialogContent>
               <DialogActions>
                 <Button className="search-popup-btn" onClick={handleClose}>
-                  Save changes
+                  Filter
                 </Button>
               </DialogActions>
-            </BootstrapDialog>
+            </BootstrapDialog> */}
           </React.Fragment>
 
           {/* <div
