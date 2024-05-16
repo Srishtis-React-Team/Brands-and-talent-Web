@@ -90,6 +90,7 @@ export const API = {
   getPostedJobs: BASEURL + "gigs/getPostedJobs",
   applyjobs: BASEURL + "gigs/applyjobs",
   searchJobs: BASEURL + "gigs/searchJobs",
+  getSkills: BASEURL + "gigs/getSkills",
 
   //notifications
   getBrandNotification: BASEURL + "gigs/getBrandNotification/",

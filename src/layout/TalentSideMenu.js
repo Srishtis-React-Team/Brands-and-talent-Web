@@ -15,6 +15,16 @@ const TalentSideMenu = ({ myState }) => {
   console.log(myState, "myState");
 
   useEffect(() => {
+    if (myState === true) {
+      getTalentById();
+    }
+  }, [myState]);
+
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+
+  useEffect(() => {
     setTimeout(function() {
       setTalentId(localStorage.getItem("userId"));
     }, 1000);

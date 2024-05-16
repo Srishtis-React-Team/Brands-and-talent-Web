@@ -1084,9 +1084,6 @@ const CreateJobs = () => {
     if (state === "") {
       setStateError(true);
     }
-    if (kidsCity === "") {
-      setCityError(true);
-    }
     console.log(
       jobTitle,
       "jobTitle",
@@ -1125,8 +1122,7 @@ const CreateJobs = () => {
       languages !== "" &&
       jobCurrency !== "" &&
       country !== "" &&
-      state !== "" &&
-      kidsCity !== ""
+      state !== ""
     ) {
       const formData = {
         jobTitle: jobTitle,
@@ -1599,9 +1595,7 @@ const CreateJobs = () => {
                       <div className="kids-form-row">
                         <div className="kids-form-section">
                           <div className="mb-3">
-                            <label className="form-label">
-                              City<span className="mandatory">*</span>
-                            </label>
+                            <label className="form-label">City</label>
                             <Select
                               placeholder="Select City..."
                               options={cityList.map((city) => ({
@@ -1612,11 +1606,6 @@ const CreateJobs = () => {
                               onChange={handleSelectedCity}
                               isSearchable={true}
                             />
-                            {cityError && (
-                              <div className="invalid-fields">
-                                Please Select City
-                              </div>
-                            )}
                           </div>
                         </div>
                         <div className="kids-form-section">
@@ -1647,7 +1636,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectworkPlaceType}
                               value={workPlaceType}
-                              style={{ fontSize: "14px", color: "#afafaf" }}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Work Place Type
@@ -1674,7 +1663,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectjobType}
                               value={jobType}
-                              style={{ fontSize: "14px", color: "#afafaf" }}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Job Type
@@ -1829,7 +1818,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectAge}
                               value={ageRange}
-                              style={{ fontSize: "14px", color: "#afafaf" }}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Age
@@ -1857,7 +1846,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectGender}
                               value={gender}
-                              style={{ fontSize: "14px", color: "#afafaf" }}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Gender
@@ -1885,7 +1874,7 @@ const CreateJobs = () => {
                               aria-label="Default select example"
                               onChange={selectNationality}
                               value={nationality}
-                              style={{ fontSize: "14px", color: "#afafaf" }}
+                              style={{ fontSize: "14px" }}
                             >
                               <option value="" disabled selected>
                                 Select Nationality
@@ -2081,7 +2070,6 @@ const CreateJobs = () => {
                                         value={type}
                                         style={{
                                           fontSize: "14px",
-                                          color: "#afafaf",
                                         }}
                                       >
                                         <option value="" disabled selected>
@@ -2109,7 +2097,6 @@ const CreateJobs = () => {
                                         onChange={handleCurrencyChange}
                                         style={{
                                           fontSize: "14px",
-                                          color: "#afafaf",
                                         }}
                                       >
                                         <option value="" disabled selected>
@@ -2175,7 +2162,6 @@ const CreateJobs = () => {
                                           value={type}
                                           style={{
                                             fontSize: "14px",
-                                            color: "#afafaf",
                                           }}
                                         >
                                           <option value="" disabled selected>
@@ -2206,7 +2192,6 @@ const CreateJobs = () => {
                                           onChange={handleCurrencyChange}
                                           style={{
                                             fontSize: "14px",
-                                            color: "#afafaf",
                                           }}
                                         >
                                           <option value="" disabled selected>
@@ -2275,7 +2260,7 @@ const CreateJobs = () => {
                               setJobCurrencyError(false);
                             }}
                             value={jobCurrency}
-                            style={{ fontSize: "14px", color: "#afafaf" }}
+                            style={{ fontSize: "14px" }}
                           >
                             <option value="" disabled selected>
                               Select Your Currency
@@ -2390,7 +2375,7 @@ const CreateJobs = () => {
                             aria-label="Default select example"
                             onChange={selectHiringCompany}
                             value={hiringCompany}
-                            style={{ fontSize: "14px", color: "#afafaf" }}
+                            style={{ fontSize: "14px" }}
                           >
                             <option value="" disabled selected>
                               Select

@@ -13,7 +13,7 @@ const Pricing = () => {
   const [pricing, setPricing] = useState("");
 
   useEffect(() => {
-    getPricingList();
+    getBrandsPricingList();
   }, []);
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
@@ -68,10 +68,11 @@ const Pricing = () => {
 
   const handleToggle = (event) => {
     const { checked } = event.target;
+    console.log(checked, "checked");
     if (checked) {
-      getBrandsPricingList();
-    } else {
       getPricingList();
+    } else {
+      getBrandsPricingList();
     }
   };
 
@@ -97,8 +98,8 @@ const Pricing = () => {
             <input type="checkbox" onChange={handleToggle} />
             <a></a>
             <span>
-              <span className="left-span">Talent</span>
               <span className="right-span">Brand</span>
+              <span className="left-span">Talent</span>
             </span>
           </label>
         </div>
@@ -108,144 +109,150 @@ const Pricing = () => {
         <div className="container">
           {pricingList.length && (
             <div className="plans-section">
-               <div className="row">
-              {pricingList.map((item, index) => {
-                return (
-                 
+              <div className="row">
+                {pricingList.map((item, index) => {
+                  return (
                     <div className="col-md-4">
-                    <div
-                      className={
-                        index == 0
-                          ? "plans-wrapper free-plans"
-                          : "" || index == 1
-                          ? "plans-wrapper pro-plans"
-                          : "" || index == 2
-                          ? "plans-wrapper premium-plans"
-                          : ""
-                      }
-                    >
-                      <div className="plan-name">
-                        {item.planname}
-                        <div
-                          className={
-                            index == 1
-                              ? "pro-gift giftSize"
-                              : "" || index == 2
-                              ? "premium-gift giftSize"
-                              : ""
-                          }
-                        >
-                          {item.gift}
-                        </div>
-                      </div>
-                      {item.planname == "Basic" && (
-                        <>
-                          <div className="plan-value">Free</div>
-                          <div className="plan-validity">Forever</div>
-                        </>
-                      )}
-                      {item.plan_type_annual.length >= 1 && (
-                        <>
-                          <div className="annual-wrapper">
-                            <input
-                              type="radio"
-                              name="click"
-                              value="save"
-                              CHECKED
-                              id={item.planname}
-                              className={
-                                item.planname == "Pro (Popular)"
-                                  ? "pro-checkbox"
-                                  : "premium-checkbox"
-                              }
-                            ></input>
-                            <label for={item.planname} className="annual">
-                              {item.period}
-                            </label>
+                      <div
+                        className={
+                          index == 0
+                            ? "plans-wrapper free-plans"
+                            : "" || index == 1
+                            ? "plans-wrapper pro-plans"
+                            : "" || index == 2
+                            ? "plans-wrapper premium-plans"
+                            : ""
+                        }
+                      >
+                        <div className="plan-name">
+                          {item.planname}
+                          <div
+                            className={
+                              index == 1
+                                ? "pro-gift giftSize"
+                                : "" || index == 2
+                                ? "premium-gift giftSize"
+                                : ""
+                            }
+                          >
+                            {item.gift}
                           </div>
-                          {item.plan_type_annual.map((item) => {
-                            return (
-                              <>
-                                <div className="plan-amounts">
-                                  <div className="value-wrapper">
-                                    <div className="previous-value">
-                                      {item.beforeValue}
-                                    </div>
-                                    <div className="after-value">
-                                      {item.afterDiscount}
-                                    </div>
-                                  </div>
-                                  <div className="per-value">{item.amount}</div>
-                                </div>
-                                <div className="border-bottom"></div>
-                              </>
-                            );
-                          })}
-                          <div className="monthly-wrapper pt-3">
-                            <div>
+                        </div>
+                        {item.planname == "Basic" && (
+                          <>
+                            <div className="plan-value">Free</div>
+                            <div className="plan-validity">Forever</div>
+                          </>
+                        )}
+                        {item.plan_type_annual.length >= 1 && (
+                          <>
+                            <div className="annual-wrapper">
                               <input
                                 type="radio"
                                 name="click"
                                 value="save"
                                 CHECKED
-                                id={item._id}
+                                id={item.planname}
                                 className={
                                   item.planname == "Pro (Popular)"
                                     ? "pro-checkbox"
                                     : "premium-checkbox"
                                 }
                               ></input>
-                              <label for={item._id} className="monthly">
-                                Monthly
+                              <label for={item.planname} className="annual">
+                                {item.period}
                               </label>
                             </div>
-                            {item.plan_type_monthly.map((item) => {
+                            {item.plan_type_annual.map((item) => {
                               return (
                                 <>
-                                  <div className="monthly-amount">
-                                    {item.amount}
+                                  <div className="plan-amounts">
+                                    <div className="value-wrapper">
+                                      <div className="previous-value">
+                                        {item.beforeValue}
+                                      </div>
+                                      <div className="after-value">
+                                        {item.afterDiscount}
+                                      </div>
+                                    </div>
+                                    <div className="per-value">
+                                      {item.amount}
+                                    </div>
                                   </div>
+                                  <div className="border-bottom"></div>
                                 </>
                               );
                             })}
-                          </div>
-                        </>
-                      )}
-                      <div
-                        className={
-                          index == 0
-                            ? "choose-btn free-btn"
-                            : "" || index == 1
-                            ? "choose-btn pro-btn"
-                            : "" || index == 2
-                            ? "choose-btn premium-btn"
-                            : ""
-                        }
-                      >
-                        Choose plan
-                      </div>
-                      <div className="include">WHAT'S INCLUDED</div>
-                      <div className="included-things">
-                        {item.data.map((item) => {
-                          return (
-                            <>
-                              <div className="plan-content">
-                                <div>
-                                  <img className="listIc" src={greenTick} alt="" />
-                                </div>
-                                <div className="plan-content-text">{item}</div>
+                            <div className="monthly-wrapper pt-3">
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="click"
+                                  value="save"
+                                  CHECKED
+                                  id={item._id}
+                                  className={
+                                    item.planname == "Pro (Popular)"
+                                      ? "pro-checkbox"
+                                      : "premium-checkbox"
+                                  }
+                                ></input>
+                                <label for={item._id} className="monthly">
+                                  Monthly
+                                </label>
                               </div>
-                            </>
-                          );
-                        })}
+                              {item.plan_type_monthly.map((item) => {
+                                return (
+                                  <>
+                                    <div className="monthly-amount">
+                                      {item.amount}
+                                    </div>
+                                  </>
+                                );
+                              })}
+                            </div>
+                          </>
+                        )}
+                        <div
+                          className={
+                            index == 0
+                              ? "choose-btn free-btn"
+                              : "" || index == 1
+                              ? "choose-btn pro-btn"
+                              : "" || index == 2
+                              ? "choose-btn premium-btn"
+                              : ""
+                          }
+                        >
+                          Choose plan
+                        </div>
+                        <div className="include">WHAT'S INCLUDED</div>
+                        <div className="included-things">
+                          {item.data.map((item) => {
+                            return (
+                              <>
+                                <div className="plan-content">
+                                  <div>
+                                    <img
+                                      className="listIc"
+                                      src={greenTick}
+                                      alt=""
+                                    />
+                                  </div>
+                                  <div className="plan-content-text">
+                                    {item}
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })}
+                        </div>
+                        <div className="learn-btn">Learn More</div>
                       </div>
-                      <div className="learn-btn">Learn More</div>
                     </div>
-                    </div>
-                 
-                );
-              })}
-               </div>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>

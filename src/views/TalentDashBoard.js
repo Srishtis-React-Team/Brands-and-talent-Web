@@ -7,15 +7,58 @@ import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
+import { Dropdown } from "@mui/base/Dropdown";
+import { Menu, MenuListboxSlotProps } from "@mui/base/Menu";
+import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
+import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
+import { styled } from "@mui/system";
+import { CssTransition } from "@mui/base/Transitions";
+import { PopupContext } from "@mui/base/Unstable_Popup";
+import Button from "@mui/material/Button";
+// import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Select from "react-select";
+
 const TalentDashBoard = () => {
+  const workPlaceTypesOptions = [
+    "Man",
+    "Woman",
+    "Non binary",
+    "TransworkPlaceType Woman",
+    "TransworkPlaceType Man",
+    "AworkPlaceType",
+    "Other",
+    "Prefer not to say",
+  ];
+
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const offcanvasRef = useRef(null); // Reference to the offcanvas element
   const [gigsList, setGigsList] = useState([]);
   const [topBrandsList, setTopBrandsList] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
   const [isFilled, setIsFilled] = useState(true);
   const girl1 = require("../assets/images/girl1.png");
   const btLogo = require("../assets/icons/Group 56.png");
+  const sliderIcon = require("../assets/icons/sliders.png");
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "50px", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
   const jobImage = require("../assets/icons/jobImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -24,6 +67,9 @@ const TalentDashBoard = () => {
   const headsetLogo = require("../assets/icons/headset.png");
   const [showSidebar, setShowSidebar] = useState(true);
   const [userId, setUserId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [skillsList, setSkillsList] = useState([]);
+
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
@@ -160,6 +206,158 @@ const TalentDashBoard = () => {
       });
   };
 
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    "& .MuiDialogContent-root": {
+      padding: theme.spacing(2),
+    },
+    "& .MuiDialogActions-root": {
+      padding: theme.spacing(1),
+    },
+  }));
+
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [keywordError, setKeywordError] = useState(false);
+  const [jobNameError, setJobNameError] = useState(false);
+  const [locationError, setLocationError] = useState(false);
+  const [ageError, setAgeError] = useState(false);
+  const [skillsError, setSkillsError] = useState(false);
+  const [jobTypeError, setJobTypeError] = useState(false);
+  const [workPlaceType, setWorkPlaceType] = useState("");
+  const ageList = ["13-17", "18+"];
+
+  const applyFiltrer = async () => {
+    let key_word;
+    let job_location;
+    let job_age;
+    let job_full_name;
+    let job_type;
+    let work_place_type;
+
+    // Get the select element
+    var selectElement = document.getElementById("workPlaceSelect");
+    // Get the selected value
+    work_place_type = selectElement.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(work_place_type, "workPlaceSelect");
+
+    // Get the select element
+    var selectJobElement = document.getElementById("jobtypeID");
+    // Get the selected value
+    job_type = selectJobElement.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(job_type, "job_type");
+
+    // Get the select element
+    var selectAgeElement = document.getElementById("ageSelectID");
+    // Get the selected value
+    job_age = selectAgeElement.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(job_age, "job_age");
+
+    if (keyWordRef.current) {
+      key_word = keyWordRef?.current?.value;
+    }
+    if (jobLocationRef?.current) {
+      job_location = jobLocationRef?.current?.value;
+    }
+    if (jobFullNameRef?.current) {
+      job_full_name = jobFullNameRef?.current?.value;
+    }
+    const formData = {
+      keyword: key_word,
+      jobTitle: key_word,
+      jobLocation: job_location,
+      age: job_age,
+      jobType: job_type,
+      workPlaceType: work_place_type,
+      skills: selectedSkills,
+    };
+    console.log(formData, "formData talentFilterData");
+    setIsLoading(true);
+    await ApiHelper.post(API.searchJobs, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("Filtered SuccessFully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setMessage("No Matching Users Found");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setOpen(false);
+  };
+
+  // Ref to store the input element
+  const keyWordRef = useRef(null);
+  const jobLocationRef = useRef(null);
+  const jobFullNameRef = useRef(null);
+
+  const jobTypeOptions = [
+    "Full-Time",
+    "Part-Time",
+    "Per Diem",
+    "Contractor",
+    "Temporary",
+    "Other",
+  ];
+
+  useEffect(() => {
+    getSkills();
+  }, []);
+
+  const [jobType, setjobType] = useState("");
+
+  // Function to handle getting the input value
+  const selectjobType = (event) => {
+    setjobType(event.target.value);
+  };
+
+  const getSkills = async () => {
+    await ApiHelper.get(API.getSkills)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setSkillsList(resData.data.data);
+          console.log(resData.data.data, "getSkills");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setOpen(false);
+  };
+
+  const selectSkills = (selectedOptions) => {
+    setSkillsError(false);
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setSelectedSkills([]); // Clear the languages state
+      return;
+    }
+
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    setSelectedSkills(selectedLanguages); // Update languages state with all selected languages
+  };
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -254,110 +452,108 @@ const TalentDashBoard = () => {
             <div className="col-md-8 col-lg-9">
               <div className="talent-column-one">
                 <div className="recent-gigs-title">Most Recent Gigs</div>
-                  {gigsList.length && (
-                    <div className="recent-gigs-main">
-                      {gigsList.map((item, index) => {
-                        return (
-                          <>
-                            <div className="recent-gigs-wrapper">
-                              <div className="recent-setone alignDivs mb-2">
-
-                                <div className="userBox">
-                                  <div className="recent-img-div">
-                                    {/* <i className="bi bi-briefcase-fill "></i> */}
-                                    {item?.brandImage && (
-                                      <img
-                                        className="recent-img"
-                                        src={`${API.userFilePath}${item?.brandImage}`}
-                                        alt=""
-                                      />
-                                    )}
-                                    {!item?.brandImage && (
-                                      <img
-                                        className="recent-img"
-                                        src={jobImage}
-                                        alt=""
-                                      />
-                                    )}
-                                  </div>
-
-                                  <div className="recent-gig-details">
-                                    <div className="recent-gig-company">
-                                      {item.hiringCompany}
-                                    </div>
-                                    <div className="recent-gig-name">
-                                      {item.jobTitle}
-                                    </div>
-                                    <div className="recent-gig-description">
-                                      {item.description}
-                                    </div>
-                                  </div>
+                {gigsList.length && (
+                  <div className="recent-gigs-main">
+                    {gigsList.map((item, index) => {
+                      return (
+                        <>
+                          <div className="recent-gigs-wrapper">
+                            <div className="recent-setone alignDivs mb-2">
+                              <div className="userBox">
+                                <div className="recent-img-div">
+                                  {/* <i className="bi bi-briefcase-fill "></i> */}
+                                  {item?.brandImage && (
+                                    <img
+                                      className="recent-img"
+                                      src={`${API.userFilePath}${item?.brandImage}`}
+                                      alt=""
+                                    />
+                                  )}
+                                  {!item?.brandImage && (
+                                    <img
+                                      className="recent-img"
+                                      src={jobImage}
+                                      alt=""
+                                    />
+                                  )}
                                 </div>
 
-                                <div className="recent-set-three">
-                                    <div
-                                      className="view-gig-btn"
-                                      onClick={() => {
-                                        viewJob(item?._id);
-                                      }}
-                                    >
-                                      <i className="bi bi-eye-fill"></i>
-                                      <div>View Job</div>
-                                    </div>
-                                    <div
-                                      className={
-                                        item?.isApplied
-                                          ? " apply-now-btn"
-                                          : "apply-now-btn applied-btn"
-                                      }
-                                      style={{
-                                        backgroundColor:
-                                          item?.isApplied == "Apply Now"
-                                            ? "yellow"
-                                            : "green",
-                                        color:
-                                          item?.isApplied == "Apply Now"
-                                            ? "black"
-                                            : "#FFFFFF",
-                                      }}
-                                      onClick={() => {
-                                        applyjobs(item);
-                                      }}
-                                    >
-                                      {item?.isApplied == "Applied" && (
-                                        <>
-                                          <i className="bi bi-check-circle-fill"></i>
-                                        </>
-                                      )}
-                                      {item?.isApplied == "Apply Now" && (
-                                        <>
-                                          <i className="bi bi-briefcase-fill"></i>
-                                        </>
-                                      )}
-
-                                      <div>{item?.isApplied}</div>
-                                    </div>
+                                <div className="recent-gig-details">
+                                  <div className="recent-gig-company">
+                                    {item.hiringCompany}
+                                  </div>
+                                  <div className="recent-gig-name">
+                                    {item.jobTitle}
+                                  </div>
+                                  <div className="recent-gig-description">
+                                    {item.description}
+                                  </div>
                                 </div>
-
-
                               </div>
-                              <div className="recent-settwo pt-0">
 
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-person-check-fill"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Followers</div>
-                                    <div className="recent-gigs-count">2500</div>
-                                  </div>
+                              <div className="recent-set-three">
+                                <div
+                                  className="view-gig-btn"
+                                  onClick={() => {
+                                    viewJob(item?._id);
+                                  }}
+                                >
+                                  <i className="bi bi-eye-fill"></i>
+                                  <div>View Job</div>
                                 </div>
+                                <div
+                                  className={
+                                    item?.isApplied
+                                      ? " apply-now-btn"
+                                      : "apply-now-btn applied-btn"
+                                  }
+                                  style={{
+                                    backgroundColor:
+                                      item?.isApplied == "Apply Now"
+                                        ? "yellow"
+                                        : "green",
+                                    color:
+                                      item?.isApplied == "Apply Now"
+                                        ? "black"
+                                        : "#FFFFFF",
+                                  }}
+                                  onClick={() => {
+                                    applyjobs(item);
+                                  }}
+                                >
+                                  {item?.isApplied == "Applied" && (
+                                    <>
+                                      <i className="bi bi-check-circle-fill"></i>
+                                    </>
+                                  )}
+                                  {item?.isApplied == "Apply Now" && (
+                                    <>
+                                      <i className="bi bi-briefcase-fill"></i>
+                                    </>
+                                  )}
 
-                                <div className="recent-gigs-count-wrapper">
-                                  {/* <div className="recent-gigs-logo">
+                                  <div>{item?.isApplied}</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="recent-settwo pt-0">
+                              <div className="recent-gigs-count-wrapper">
+                                <div className="recent-gigs-logo">
+                                  <i className="bi bi-person-check-fill"></i>
+                                </div>
+                                <div className="recent-gig-count-details">
+                                  <div className="recent-gig-name">
+                                    Followers
+                                  </div>
+                                  <div className="recent-gigs-count">2500</div>
+                                </div>
+                              </div>
+
+                              <div className="recent-gigs-count-wrapper">
+                                {/* <div className="recent-gigs-logo">
                                     <i className="bi bi-person-arms-up"></i>
                                   </div> */}
-                                  {/* <div className="recent-gig-count-details">
+                                {/* <div className="recent-gig-count-details">
                                     <div className="recent-gig-name">Age</div>
                                     <div className="recent-gigs-count">
                                       {item.age}
@@ -375,65 +571,70 @@ const TalentDashBoard = () => {
                                     </div>
                                   </div> */}
 
-                                  <div className="recent-settwo">
-                                    <div className="recent-gigs-count-wrapper">
-                                      <div className="recent-gigs-logo">
-                                        <i className="bi bi-person-check-fill"></i>
-                                      </div>
-                                      <div className="recent-gig-count-details">
-                                        <div className="recent-gig-name">Followers</div>
-                                        <div className="recent-gigs-count">2500</div>
-                                      </div>
+                                <div className="recent-settwo">
+                                  <div className="recent-gigs-count-wrapper">
+                                    <div className="recent-gigs-logo">
+                                      <i className="bi bi-person-check-fill"></i>
                                     </div>
-                                    <div className="recent-gigs-count-wrapper">
-                                      <div className="recent-gigs-logo">
-                                        <i className="bi bi-person-arms-up"></i>
+                                    <div className="recent-gig-count-details">
+                                      <div className="recent-gig-name">
+                                        Followers
                                       </div>
-                                      <div className="recent-gig-count-details">
-                                        <div className="recent-gig-name">Age</div>
-                                        <div className="recent-gigs-count">
-                                          {item.age}
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="recent-gigs-count-wrapper">
-                                      <div className="recent-gigs-logo">
-                                        <i className="bi bi-gender-ambiguous"></i>
-                                      </div>
-                                      <div className="recent-gig-count-details">
-                                        <div className="recent-gig-name">Gender</div>
-                                        <div className="recent-gigs-count">
-                                          {item.gender}
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="recent-gigs-count-wrapper">
-                                      <div className="recent-gigs-logo">
-                                        <i className="bi bi-geo-alt-fill"></i>
-                                      </div>
-                                      <div className="recent-gig-count-details">
-                                        <div className="recent-gig-name">Location</div>
-                                        <div className="recent-gigs-count">
-                                          {item.jobLocation}
-                                        </div>
+                                      <div className="recent-gigs-count">
+                                        2500
                                       </div>
                                     </div>
                                   </div>
-
-                                 
-
+                                  <div className="recent-gigs-count-wrapper">
+                                    <div className="recent-gigs-logo">
+                                      <i className="bi bi-person-arms-up"></i>
+                                    </div>
+                                    <div className="recent-gig-count-details">
+                                      <div className="recent-gig-name">Age</div>
+                                      <div className="recent-gigs-count">
+                                        {item.age}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="recent-gigs-count-wrapper">
+                                    <div className="recent-gigs-logo">
+                                      <i className="bi bi-gender-ambiguous"></i>
+                                    </div>
+                                    <div className="recent-gig-count-details">
+                                      <div className="recent-gig-name">
+                                        Gender
+                                      </div>
+                                      <div className="recent-gigs-count">
+                                        {item.gender}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="recent-gigs-count-wrapper">
+                                    <div className="recent-gigs-logo">
+                                      <i className="bi bi-geo-alt-fill"></i>
+                                    </div>
+                                    <div className="recent-gig-count-details">
+                                      <div className="recent-gig-name">
+                                        Location
+                                      </div>
+                                      <div className="recent-gigs-count">
+                                        {item.jobLocation}
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </>
-                        );
-                      })}
-                    </div>
-                  )}
-                  {gigsList && gigsList.length == 0 && (
-                    <div className="recent-gigs-main">No Jobs Available</div>
-                  )}
-                </div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </div>
+                )}
+                {gigsList && gigsList.length == 0 && (
+                  <div className="recent-gigs-main">No Jobs Available</div>
+                )}
+              </div>
             </div>
             <div className="col-md-4 col-lg-3">
               <div className="rightBx">
@@ -483,15 +684,13 @@ const TalentDashBoard = () => {
                               </>
                             );
                           })}
-                         </div>
+                        </div>
                       </div>
                     )}
                   </div>
-
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </main>

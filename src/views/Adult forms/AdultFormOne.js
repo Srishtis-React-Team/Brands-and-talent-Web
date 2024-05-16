@@ -1038,7 +1038,6 @@ const AdultFormOne = () => {
                     <div className="kids-form-section">
                       <label className="form-label">Date Of Birth</label>
                       <span className="mandatory">*</span>
-
                       <div className="mb-3">
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                           <DatePicker
@@ -1051,7 +1050,6 @@ const AdultFormOne = () => {
                             disableFuture
                           />
                         </LocalizationProvider>
-
                         {dateOfBirthError && (
                           <div className="invalid-fields">
                             Please Select Date Of Birth

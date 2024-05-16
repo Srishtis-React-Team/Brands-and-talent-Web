@@ -217,9 +217,13 @@ const KidsServices = () => {
             <div className="kidsform-one" style={{ width: "100%" }}>
               <div className="adult-form-wrapper">
                 <div className="adult-img-img">
-                  <img src={adultsBanner} alt="" />
+                  <img
+                    src={adultsBanner}
+                    alt=""
+                    className="kids-image-sticky"
+                  />
                 </div>
-                <div className="adult-main">
+                <div className="adult-main" style={{ paddingLeft: "400px" }}>
                   <div className="adults-form-title">Complete your Profile</div>
                   <div>
                     {inputs.map((input, serviceIndex) => (

@@ -482,6 +482,7 @@
 .file-section,
 .file-options {
   display: flex;
+  align-items: center;
 }
 .fileName {
   padding: 0px 15px;
@@ -1032,4 +1033,23 @@
 
 .adult-img-img {
   position: fixed;
+}
+
+.filter-section-jobs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-filter-icon {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  color: #000;
+  padding-right: 8px;
+  cursor: pointer;
+}
+
+.filter-icon {
+  padding-left: 10px;
 }
