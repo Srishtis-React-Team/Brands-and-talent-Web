@@ -8,7 +8,6 @@
       padding: 20px 30px;
       .recent-gigs-title {
         color: #000;
-        font-family: "Open Sans", sans-serif;
         font-size: 20px;
         font-style: normal;
         font-weight: 600;
@@ -17,8 +16,8 @@
       .recent-gigs-main {
         // background-color: aqua;
         .recent-gigs-wrapper {
-          padding: 30px 0px;
-          border-bottom: 1px solid gray;
+          padding: 15px 0px 30px;
+          border-bottom: 1px solid #80808066;
           .recent-setone {
             display: flex;
             .recent-img-div {
@@ -36,7 +35,6 @@
               .recent-gig-company,
               .recent-gig-description {
                 color: #000;
-                font-family: "Open Sans", sans-serif;
                 font-size: 16px;
                 font-style: normal;
                 font-weight: 500;
@@ -44,7 +42,6 @@
               }
               .recent-gig-name {
                 color: #000;
-                font-family: "Open Sans", sans-serif;
                 font-size: 18px;
                 font-style: normal;
                 font-weight: 600;
@@ -59,7 +56,7 @@
           }
           .recent-settwo {
             display: flex;
-            padding: 20px 0px;
+            padding:  0;
             .recent-gigs-count-wrapper {
               display: flex;
               align-items: center;
@@ -75,14 +72,16 @@
                 height: 35px;
               }
               .recent-gig-count-details {
-                padding-left: 15px;
+                padding-left: 10px;
                 .recent-gigs-count {
                   color: #c2114b;
-                  font-family: "Open Sans", sans-serif;
-                  font-size: 16px;
+                  font-size: 14px;
                   font-style: normal;
-                  font-weight: 700;
+                  font-weight: 600;
                   line-height: normal;
+                }
+                .recent-gig-name {
+                  font-size: 13px;
                 }
               }
             }
@@ -113,7 +112,6 @@
           .contact-q,
           .contact-description {
             color: #000;
-            font-family: "Open Sans", sans-serif;
             font-size: 20px;
             font-style: normal;
             font-weight: 600;
@@ -131,7 +129,6 @@
             background-color: #000;
             color: #ffffff;
             cursor: pointer;
-            font-family: "Open Sans", sans-serif;
             font-size: 17px;
             font-style: normal;
             font-weight: 600;
@@ -150,7 +147,6 @@
           .top-brands-title,
           .view-all-brands {
             color: #000;
-            font-family: "Open Sans", sans-serif;
             font-size: 20px;
             font-style: normal;
             font-weight: 600;
@@ -178,7 +174,7 @@
             }
             .top-brands-name {
               color: #000;
-              font-family: "Open Sans", sans-serif;
+
               font-size: 15px;
               font-style: normal;
               font-weight: 600;
@@ -225,7 +221,6 @@
         .talent-details {
           .talent-name {
             color: #000;
-            font-family: "Open Sans", sans-serif;
             font-size: 18px;
             font-style: normal;
             font-weight: 600;
@@ -240,7 +235,6 @@
         padding: 10px 0px;
         .talent-plan-name {
           color: #000;
-          font-family: "Open Sans", sans-serif;
           font-size: 16px;
           font-style: normal;
           font-weight: 600;
@@ -295,7 +289,6 @@
 
 .talent-popup-title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 22px;
   font-style: normal;
   font-weight: 600;
@@ -304,7 +297,6 @@
 
 .talent-popup-enter {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 26px;
   font-style: normal;
   font-weight: 600;
@@ -313,7 +305,6 @@
 }
 .talent-popup-span {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 26px;
   font-style: normal;
   font-weight: 800;
@@ -323,7 +314,6 @@
 
 .talent-popup-description {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -375,7 +365,6 @@
 
 .adults-form-title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 26px;
   font-style: normal;
   font-weight: 600;
@@ -386,7 +375,6 @@
 
 .adults-titles {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -479,7 +467,6 @@
   padding: 16px 0px;
   text-align: center;
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -510,7 +497,6 @@
     padding: 10px 15px;
     text-align: center;
     color: #ffffff;
-    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -577,7 +563,6 @@
   width: 100%;
   .id-text {
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
@@ -629,6 +614,35 @@
     border: none;
   }
 }
+.recent-gigs-count-wrapper:last-child{ padding-right: 0 !important; }
+
+.recent-setone.alignDivs{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} 
+.recent-setone.alignDivs .recent-img-div {
+  width: 55px;
+  height: 55px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.recent-setone.alignDivs .recent-img-div img.recent-img { object-fit: cover; min-height: 55px; min-width: 55px; max-width: 100%; width: auto !important; height: auto !important; }
+
+.recent-setone.alignDivs .userBox {
+  display: flex;
+  align-items: center;
+}
+.recent-setone.alignDivs .userBox .recent-gig-name {
+  padding: 0 !important;
+  margin: 0px 0 5px;
+}
+
+.recent-setone.alignDivs .userBox .recent-gig-company{ font-size: 14px !important; }
+
+
+
+
 
 /* 481px — 768px: iPads, Tablets */
 
@@ -746,7 +760,6 @@
     .recent-gig-count-details
     .recent-gigs-count {
     color: #c2114b;
-    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-weight: 600;
   }
@@ -915,7 +928,6 @@
   border-radius: 50px;
   background-color: green;
   color: #ffffff;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -942,7 +954,6 @@
   border-radius: 50px;
   background-color: #c2114b;
   color: #ffffff;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -968,7 +979,6 @@
 }
 
 .modal-job-title {
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -976,7 +986,6 @@
 }
 
 .model-about-title {
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -998,7 +1007,6 @@
 }
 
 .model-job-name {
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -1015,7 +1023,6 @@
   padding: 2px 6px;
   border-radius: 8px;
   background-color: rgb(138, 255, 138);
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
