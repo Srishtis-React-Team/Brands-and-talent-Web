@@ -58,7 +58,7 @@
 }
 
 .brand-main-container {
-  padding: 10px;
+  padding: 10px 15px;
   margin-top: 75px;
   transition: padding 0.4s;
   background-color: #eeeeee;
@@ -81,7 +81,7 @@
 }
 
 .main-pd {
-  padding-left: 1%;
+  width: 100%;
 }
 
 .header__toggle {
@@ -108,17 +108,18 @@
     display: flex;
     flex-wrap: wrap;
     align-items: start;
+    align-items: center;
     .profile-img {
-      width: 70px;
-      height: 70px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      border: 1px solid #c2114b;
+      border: 2px solid #c2114b;
       margin-right: 15px;
+      object-fit: cover;
     }
     .talent-details {
       .talent-name {
         color: #000;
-        font-family: "Open Sans", sans-serif;
         font-size: 18px;
         font-style: normal;
         font-weight: 600;
@@ -133,7 +134,6 @@
     flex-wrap: wrap;
     .talent-plan-name {
       color: #000;
-      font-family: "Open Sans", sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 600;
@@ -158,11 +158,10 @@
 .brand-menu-wrapper {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 8px 12px;
   cursor: pointer;
   .brand-menu-text {
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
@@ -176,7 +175,7 @@
 .sidemenu-active {
   display: flex;
   align-items: center;
-  padding: 4px 12px;
+  padding: 8px 12px;
   cursor: pointer;
   border: 1px solid #000;
   justify-content: start !important;
@@ -184,7 +183,6 @@
   color: #c2114b;
   .brand-menu-text {
     color: #c2114b;
-    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
@@ -223,7 +221,6 @@
   width: 99%;
   .create-job-title {
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 19px;
     font-style: normal;
     font-weight: 700;
