@@ -1,11 +1,11 @@
 .kidsform-one {
   .kids-wrapper {
-    margin: 30px 60px;
+    margin: 30px 0px;
     display: flex;
     .kids-img {
     }
     .kids-form {
-      padding-left: 50px;
+      
       .kids-title,
       .kids-form-title {
         color: #000;
@@ -25,7 +25,7 @@
         background-color: black; /* Adjust the color as needed */
         margin-top: 10px; /* Adjust the margin as needed */
         width: 70%;
-        margin-left: 4px;
+        margin-left: 10px;
       }
       .kids-form-title-sub {
         color: #000;
@@ -36,9 +36,9 @@
         padding: 20px 0px;
         width: 100%;
       }
-      .kids-description {
-        padding: 20px 0px;
-      }
+      // .kids-description {
+      //   padding: 20px 0px;
+      // }
       .kids-notes-two {
         padding: 20px 0px;
       }
@@ -55,6 +55,7 @@
         margin: 8px 8px 8px 0px;
         cursor: pointer;
         border-radius: 4px;
+        font-size: 14px;
       }
       .selected-category {
         padding: 8px 16px;
@@ -456,17 +457,13 @@
     }
   }
 
-  .kids-form {
-    padding-left: 0px !important;
-  }
+
 }
 
 @media (max-width: 1200px) {
-  .kids-form {
-    padding-left: 0px !important;
-  }
+
   .kidsform-one .kids-wrapper {
-    margin: 25px 30px;
+    margin: 25px 0px;
     display: flex;
   }
   .media-wrapper {
@@ -509,21 +506,18 @@
   border-radius: 6px;
   background-color: #f8f8f8;
 }
+.fixImgs{
+  position: relative;
+}
 
-// .kids-wrapper {
-//   position: relative;
-// }
-
-.kids-image-sticky {
+.fixImgs .kids-image-sticky {
   position: fixed;
+  max-width: 100%;
+  object-fit: cover;
+  width: 20%;
 }
 
-.kidsform-one .kids-wrapper .kids-form {
-  // padding-left: 400px;
-}
 
-.basic-multi-select {
-}
 
 .css-1eed5fa-MuiInputBase-root-MuiInput-root::before {
   border-bottom: unset !important;
@@ -693,15 +687,20 @@
   padding: 20px 0px;
   width: 100%;
 }
-.kids-description {
-  padding: 20px 0px;
-}
+// .kids-description {
+//   padding: 20px 0px;
+// }
 .kids-notes-two {
   padding: 20px 0px;
 }
 .kids-form-title {
   font-size: 22px;
   padding-top: 15px 0px 0px 0px;
+ 
+}
+.kids-title{
+  margin: 0 !important;
+  padding-top: 0 !important;
 }
 .splitter {
   padding: 20px 0px;
@@ -822,3 +821,31 @@
 // .update-portfolio-menu{
 // box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 // }
+
+
+@media only screen and (max-width: 1399px) {
+  .fixImgs .kids-image-sticky {
+    width: 19%;
+  }
+}
+@media only screen and (max-width: 1199px) {
+  .kids-form.col-md-8 {
+    padding-left: 3%;
+  }
+}
+@media only screen and (max-width: 1149px) {
+  .kids-form.col-md-8 {
+    padding-left: 10px;
+    width: 100%;
+  }
+
+
+
+}
+
+@media only screen and (max-width: 767px) {
+  .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
+    width: 37%;
+    margin-left: 15px;
+  }
+}

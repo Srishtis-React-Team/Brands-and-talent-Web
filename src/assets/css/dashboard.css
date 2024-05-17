@@ -1005,7 +1005,10 @@ input[type="radio"] {
   margin-bottom: 60px;
 }
 
-
+.adult-form-wrapper.ml-0.mr-0 {
+  margin-left: 0;
+  margin-right: 0;
+}
 
 
 

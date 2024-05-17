@@ -919,11 +919,13 @@ const KidsformOne = ({ sendDataToParent }) => {
           </div>
           <div className="dialog-body">
             <div className="kidsform-one container">
-              <div className="kids-wrapper">
-                <div className="kids-img">
-                  <img src={kidsImage} alt="" className="kids-image-sticky" />
+              <div className="kids-wrapper row">
+                <div className="kids-img col-md-4 col-lg-3">
+                  <div className="fixImgs">
+                    <img src={kidsImage} alt="" className="kids-image-sticky" />
+                  </div>
                 </div>
-                <div className="kids-form" style={{ paddingLeft: "400px" }}>
+                <div className="kids-form col-md-8 col-lg-9">
                   <div className="kids-title">
                     Welcome to Kids & Teen Talent ( 13-17 years ) Registration
                     Form
