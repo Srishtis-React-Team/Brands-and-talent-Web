@@ -16,7 +16,6 @@
   margin: 15px 0px;
 }
 
-
 .forgot-info,
 .resend-forgot {
   text-align: center;
@@ -64,7 +63,9 @@
   padding: 0px 20px;
   font-size: 13px !important;
 }
-.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId{ font-weight: 500; }
+.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId {
+  font-weight: 500;
+}
 .login-main {
   align-items: center;
   display: flex;
@@ -91,7 +92,7 @@
 }
 
 .login-forgot {
-  color: #C2114B;
+  color: #c2114b;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -208,21 +209,16 @@
   height: 50px;
   border-radius: 60px;
 }
-.google-login iframe{
+.google-login iframe {
   width: 100% !important;
   margin: 0 !important;
 }
 
 .google-login .haAclf {
-  padding: 0  !important;
-  width: 100%  !important;
-  border-radius: 60px  !important;
+  padding: 0 !important;
+  width: 100% !important;
+  border-radius: 60px !important;
 }
-
-
-
-
-
 
 // 320px — 480px: Mobile devices
 // 481px — 768px: iPads, Tablets
@@ -249,3 +245,7 @@
   }
 }
 
+.haAclf {
+  display: inline-block;
+  width: 94% !important;
+}

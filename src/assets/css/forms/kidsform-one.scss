@@ -628,7 +628,6 @@
   }
   .btn-img-edit-wrapper {
     display: flex;
-    justify-content: start;
     .edit-profileimg-btn {
       background-color: #c2114b;
       color: #fff;
@@ -636,6 +635,15 @@
       font-weight: 500;
       margin-top: 20px;
       text-align: right;
+    }
+    .update-profileimg-btn {
+      background-color: #c2114b;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 20px;
+      text-align: right;
+      margin-left: 30px;
     }
   }
 }
@@ -774,10 +782,19 @@
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   border-radius: 6px;
   padding: 15px;
-  width: 46%;
+  width: 30%;
   margin: 15px;
   // display: flex;
   // justify-content: space-between;
+}
+
+.update-service-cards-wrapper {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 6px;
+  padding: 15px;
+  width: 100%;
+  margin: 15px;
 }
 
 .update-portfolio-fileName {
@@ -849,3 +866,11 @@
     margin-left: 15px;
   }
 }
+=======
+.add-portfoli-section {
+  display: flex;
+  justify-content: end;
+  .add-portfolia-btn {
+  }
+}
+

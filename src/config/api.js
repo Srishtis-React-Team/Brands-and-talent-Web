@@ -67,6 +67,7 @@ export const API = {
   removeFavorite: BASEURL + "users/removeFavorite/",
   subscriptionStatus: BASEURL + "users/subscriptionStatus/",
   setUserFavorite: BASEURL + "users/setUserFavorite/",
+  deleteFile: BASEURL + "users/deleteFile/",
 
   //keyword
   postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",

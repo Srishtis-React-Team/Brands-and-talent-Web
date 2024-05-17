@@ -56,7 +56,7 @@
           }
           .recent-settwo {
             display: flex;
-            padding:  0;
+            padding: 0;
             .recent-gigs-count-wrapper {
               display: flex;
               align-items: center;
@@ -493,18 +493,18 @@
 }
 
 .add-more-services {
-  padding: 20px 0px;
+  padding: 10px 0px;
   .add-more-services-btn {
     padding: 10px 15px;
     text-align: center;
     color: #ffffff;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 400;
     line-height: normal;
     background-color: #000;
     border-radius: 6px;
-    width: 40%;
+    width: 200px;
     cursor: pointer;
   }
 }
@@ -615,20 +615,29 @@
     border: none;
   }
 }
-.recent-gigs-count-wrapper:last-child{ padding-right: 0 !important; }
+.recent-gigs-count-wrapper:last-child {
+  padding-right: 0 !important;
+}
 
-.recent-setone.alignDivs{
+.recent-setone.alignDivs {
   display: flex;
   justify-content: space-between;
   align-items: center;
-} 
+}
 .recent-setone.alignDivs .recent-img-div {
   width: 55px;
   height: 55px;
   border-radius: 100%;
   overflow: hidden;
 }
-.recent-setone.alignDivs .recent-img-div img.recent-img { object-fit: cover; min-height: 55px; min-width: 55px; max-width: 100%; width: auto !important; height: auto !important; }
+.recent-setone.alignDivs .recent-img-div img.recent-img {
+  object-fit: cover;
+  min-height: 55px;
+  min-width: 55px;
+  max-width: 100%;
+  width: auto !important;
+  height: auto !important;
+}
 
 .recent-setone.alignDivs .userBox {
   display: flex;
@@ -638,6 +647,7 @@
   padding: 0 !important;
   margin: 0px 0 5px;
 }
+
 
 .recent-setone.alignDivs .userBox .recent-gig-company{ font-size: 14px !important; }
 
@@ -653,6 +663,18 @@
   height: auto;
   max-width: 1000px;
 }
+.recent-setone.alignDivs .userBox .recent-gig-company {
+  font-size: 14px !important;
+
+}
+
+
+
+
+
+
+
+
 
 /* 481px — 768px: iPads, Tablets */
 
@@ -1061,3 +1083,13 @@
 // .filter-icon {
 //   padding-left: 10px;
 // }
+
+.filter-icon {
+  padding-left: 10px;
+}
+
+.filter-text-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
