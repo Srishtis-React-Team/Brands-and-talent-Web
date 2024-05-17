@@ -1,16 +1,16 @@
-.brand-home-main {
-  display: flex;
-  justify-content: space-evenly;
-}
+// .brand-home-main {
+//   display: flex;
+//   justify-content: space-evenly;
+// }
 
 .brand-home-one {
   background-color: #ffffff;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 16px;
+  box-shadow: rgb(0 0 0 / 11%) 0px 3px 3px;
+  border-radius: 10px;
   padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-evenly;
 }
 
 .recent-campaigns-wrapper {
@@ -30,11 +30,13 @@
   border-radius: 16px;
   padding: 20px;
   cursor: pointer;
+  float: left;
+  margin-right: 20px;
 }
 
-.brand-home-left-container {
-  width: 70%;
-}
+// .brand-home-left-container {
+//   width: 70%;
+// }
 
 .home-add-title {
   color: #685f62;
@@ -48,46 +50,62 @@
   color: #000000;
   font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: normal;
-  padding-top: 10px;
+  padding-top: 5px;
 }
-
+.my-plan-features.scroll {
+  max-height: 145px;
+  overflow-y: auto;
+}
 .myplan-features-text {
   color: #000000;
   font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
   padding-left: 10px;
 }
-
+.btnSpace{
+  justify-content: end;
+  display: inline-grid;
+  align-items: center;
+}
+.kids-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 10px 0;
+}
 .home-job-start {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   background-color: #000000;
+  min-height: 40px;
   color: #ffffff;
   font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
   padding: 8px 16px;
   border-radius: 25px;
+  width: auto;
+  min-width: 130px;
 }
 
 .brand-home-title-flex {
   display: flex;
   justify-content: space-between;
-  padding: 40px 0px;
+  margin:20px 0px 0;
+  align-items: center;
 }
 
 .view-all-text {
   color: #685f62;
-  font-size: 15px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
   cursor: pointer;
 }
@@ -198,8 +216,8 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  padding-left: 8px;
   line-height: normal;
+  margin: 0 0 10px !important;
 }
 
 .campaign-company-wrapper {
@@ -296,16 +314,22 @@
 .brand-plan-section {
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 16px;
+  border-radius: 10px;
   padding: 0px;
   margin-top: 30px;
 }
-
-.plan-backdrop-image {
+.brand-plan-section .planImg {
   width: 100%;
-  border-top-right-radius: 16px;
-  border-top-left-radius: 16px;
-  height: 200px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  height: 130px;
+  overflow: hidden;
+}
+
+.brand-plan-section .planImg .plan-backdrop-image {
+  min-height: 130px;
+  width: 100%;
+  object-fit: cover;
 }
 .remvSpace{
   padding: 0 !important;
@@ -428,14 +452,14 @@
   margin: 5px 0;
 }
 
-.brand-home-right-container {
-  width: 25%;
-}
+// .brand-home-right-container {
+//   width: 25%;
+// }
 
 .myplan-wrapper {
   display: flex;
   align-items: center;
-  padding: 5px 10px;
+  padding: 5px 0px;
 }
 
 .contact-btn {
@@ -444,9 +468,9 @@
   background-color: #ffffff;
   color: #000;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
   border-radius: 25px;
   display: flex;
@@ -461,11 +485,21 @@
   justify-content: space-between;
   padding: 0px 0px 10px 0px;
 }
-
+.photos-slider .sliderImg{
+  height: 200px;
+  width: 100%;
+  background-color: #FFF;
+  overflow: hidden;
+}
+.photos-slider .sliderImg .talents-profile-slider-image{
+  min-height: 200px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 0;
+}
 .owl-carousel .owl-item img {
   display: block;
   width: 100%;
-  height: 225px;
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1200px) {

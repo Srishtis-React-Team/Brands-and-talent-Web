@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import "../../assets/css/talentHeader.scss";
 import { useNavigate } from "react-router";
 import { API } from "../../config/api";
@@ -154,186 +155,250 @@ const BrandHeader = ({ toggleMenu }) => {
 
   return (
     <>
-      <div className="talent-header-main">
-        <div className="talent-nav-logo">
-          <img
-            src={btLogo}
-            alt=""
-            onClick={() => {
-              navigate("/");
-            }}
-          />
-        </div>
-        <div className="talent-menu" onClick={toggleMenu}>
-          <div className="telent-menubar">
-            <i className="fa-solid fa-bars"></i>
-          </div>
-          {/* <div className="mydashboard font-styles">My Dashboard</div> */}
-        </div>
-        <div className="talent-navbar-functions">
-          <div
-            className="search-header-icon"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasTop"
-            aria-controls="offcanvasTop"
-          >
-            <i className="fas fa-search"></i>
-          </div>
-
-          <div
-            className="offcanvas offcanvas-top search-canvas-top"
-            tabIndex="-1"
-            id="offcanvasTop"
-            aria-labelledby="offcanvasTopLabel"
-          >
-            <div className="offcanvas-header">
-              <h5 id="offcanvasTopLabel">Search Anything</h5>
-              <button
-                type="button"
-                className="btn-close text-reset"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="offcanvas-body">
-              <form className="d-flex search-bootstrap">
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                ></input>
-                <button
-                  className="btn btn-outline-success search-bootstrap-btn"
-                  type="submit"
-                >
-                  Search
-                </button>
-              </form>
-            </div>
-          </div>
-
-          <div className="notification-bell-wrapper">
-            <div className="notification_wrap">
-              <div className="notification_icon ">
-                <i className="bi bi-bell"></i>
-              </div>
-              <div className="notification-dropdown">
-                <div className=" notification-header">
-                  <div className="notification-message-text">Notifications</div>
-                  <div>
-                    <i className="fas fa-close notification-close"></i>
-                  </div>
-                </div>
-                {notificationList &&
-                  notificationList.length > 0 &&
-                  notificationList.map((item, index) => (
-                    <div
-                      className="notify_item"
-                      key={index}
-                      onClick={(e) => {
-                        gotomessage(item);
-                      }}
-                    >
-                      <div className="notify_img">
-                        {item?.talentDetails?.image &&
-                          item.talentDetails.image[0]?.fileData && (
-                            <img
-                              className="notification-user-image"
-                              src={`${API.userFilePath}${item.talentDetails.image[0].fileData}`}
-                              alt="profile_pic"
-                            />
-                          )}
-                      </div>
-                      <div className="notify_info">
-                        <p>
-                          {item?.talentDetails?.preferredChildFirstname} Applied
-                          for {item?.gigDetails?.jobTitle}
-                        </p>
-                        <span className="notify_time">Just now</span>
-                      </div>
-                    </div>
-                  ))}
-
-                {notificationList.length === 0 && (
-                  <>
-                    <div className="notify_item">
-                      No Notifications Available
-                    </div>
-                  </>
-                )}
-
-                {/* <div className="notify_item">
-                  <div className="notify_img">
-                    <img
-                      className="notification-user-image"
-                      src={model1}
-                      alt="profile_pic"
-                    ></img>
-                  </div>
-                  <div className="notify_info">
-                    <p>Alex Send a message</p>
-                    <span className="notify_time">55 minutes ago</span>
-                  </div>
-                </div>
-                <div className="notify_item">
-                  <div className="notify_img">
-                    <img
-                      className="notification-user-image"
-                      src={model1}
-                      alt="profile_pic"
-                    ></img>
-                  </div>
-                  <div className="notify_info">
-                    <p>Alex Send a message</p>
-                    <span className="notify_time">2 hours ago</span>
-                  </div>
-                </div>
-                <div className="notify_item">
-                  <div className="notify_img">
-                    <img
-                      className="notification-user-image"
-                      src={model1}
-                      alt="profile_pic"
-                    ></img>
-                  </div>
-                  <div className="notify_info">
-                    <p>Alex Send a message</p>
-                    <span className="notify_time">6 hours ago</span>
-                  </div>
-                </div> */}
-              </div>
-            </div>
-          </div>
-
-          <div className="chat-icon-header">
-            <i className="bi bi-chat-dots"></i>
-          </div>
-
-          <Dropdown>
-            <MenuButton>
-              <div className="talent-profile-icon">
+      <div className="headerDashboard">
+        <div className="container-fluid">
+          <div className="talent-header-main">
+            <div className="leftPart">
+              <div className="talent-nav-logo">
                 <img
-                  src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
+                  src={btLogo}
                   alt=""
+                  onClick={() => {
+                    navigate("/");
+                  }}
                 />
               </div>
-            </MenuButton>
-            <Menu slots={{ listbox: AnimatedListbox }}>
-              {/* <MenuItem
-                style={{ cursor: "pointer" }}
-                onClick={createHandleMenuClick("profile")}
-              >
-                Profile
-              </MenuItem> */}
-              <MenuItem
-                style={{ cursor: "pointer" }}
-                onClick={createHandleMenuClick("logout")}
-              >
-                Log out
-              </MenuItem>
-            </Menu>
-          </Dropdown>
+              <div className="talent-menu" onClick={toggleMenu}>
+                <div className="telent-menubar">
+                  <i className="fa-solid fa-bars"></i>
+                </div>
+                {/* <div className="mydashboard font-styles">My Dashboard</div> */}
+              </div>
+            </div>
+
+            <div className="rightPart">  
+              
+
+              <div className="talent-navbar-functions">
+              <nav className="menu-items">
+                  <div className="navTxt">
+                    <NavLink to="/">
+                      Home
+                    </NavLink>
+                  </div>
+                  <div className="navTxt">
+                    <NavLink to="/listJob">
+                      Post a Job
+                    </NavLink>
+                  </div>
+                  <div className="navTxt">
+                    <NavLink to="/listJob">
+                      Get Hired
+                    </NavLink>
+                  </div>
+                  <div className="navTxt">
+                    <NavLink to="/listJob">
+                      Find Talent
+                    </NavLink>
+                  </div>
+                  <div className="navTxt">
+                    <NavLink to="/listJob">
+                      How it works
+                    </NavLink>
+                  </div>
+                  <div className="navTxt">
+                    <NavLink to="/listJob">
+                      Pricing
+                    </NavLink>
+                  </div>
+                  <div className="navTxt">
+                    <NavLink to="/listJob">
+                      Resources
+                    </NavLink>
+                  </div>
+               </nav> 
+
+
+                <div
+                  className="search-header-icon"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasTop"
+                  aria-controls="offcanvasTop"
+                >
+                  <i className="fas fa-search"></i>
+                </div>
+
+                <div
+                  className="offcanvas offcanvas-top search-canvas-top"
+                  tabIndex="-1"
+                  id="offcanvasTop"
+                  aria-labelledby="offcanvasTopLabel"
+                >
+                  <div className="offcanvas-header">
+                    <h5 id="offcanvasTopLabel">Search Anything</h5>
+                    <button
+                      type="button"
+                      className="btn-close text-reset"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="offcanvas-body">
+                    <form className="d-flex search-bootstrap">
+                      <input
+                        className="form-control me-2"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                      ></input>
+                      <button
+                        className="btn btn-outline-success search-bootstrap-btn"
+                        type="submit"
+                      >
+                        Search
+                      </button>
+                    </form>
+                  </div>
+                </div>
+
+                {/* <div className="notification-bell-wrapper">
+                  <div className="notification_wrap">
+                    <div className="notification_icon ">
+                      <i className="bi bi-bell"></i>
+                    </div>
+                    <div className="notification-dropdown">
+                      <div className=" notification-header">
+                        <div className="notification-message-text">Notifications</div>
+                        <div>
+                          <i className="fas fa-close notification-close"></i>
+                        </div>
+                      </div>
+                      {notificationList &&
+                        notificationList.length > 0 &&
+                        notificationList.map((item, index) => (
+                          <div
+                            className="notify_item"
+                            key={index}
+                            onClick={(e) => {
+                              gotomessage(item);
+                            }}
+                          >
+                            <div className="notify_img">
+                              {item?.talentDetails?.image &&
+                                item.talentDetails.image[0]?.fileData && (
+                                  <img
+                                    className="notification-user-image"
+                                    src={`${API.userFilePath}${item.talentDetails.image[0].fileData}`}
+                                    alt="profile_pic"
+                                  />
+                                )}
+                            </div>
+                            <div className="notify_info">
+                              <p>
+                                {item?.talentDetails?.preferredChildFirstname} Applied
+                                for {item?.gigDetails?.jobTitle}
+                              </p>
+                              <span className="notify_time">Just now</span>
+                            </div>
+                          </div>
+                        ))}
+
+                      {notificationList.length === 0 && (
+                        <>
+                          <div className="notify_item">
+                            No Notifications Available
+                          </div>
+                        </>
+                      )} */}
+
+                      {/* <div className="notify_item">
+                        <div className="notify_img">
+                          <img
+                            className="notification-user-image"
+                            src={model1}
+                            alt="profile_pic"
+                          ></img>
+                        </div>
+                        <div className="notify_info">
+                          <p>Alex Send a message</p>
+                          <span className="notify_time">55 minutes ago</span>
+                        </div>
+                      </div>
+                      <div className="notify_item">
+                        <div className="notify_img">
+                          <img
+                            className="notification-user-image"
+                            src={model1}
+                            alt="profile_pic"
+                          ></img>
+                        </div>
+                        <div className="notify_info">
+                          <p>Alex Send a message</p>
+                          <span className="notify_time">2 hours ago</span>
+                        </div>
+                      </div>
+                      <div className="notify_item">
+                        <div className="notify_img">
+                          <img
+                            className="notification-user-image"
+                            src={model1}
+                            alt="profile_pic"
+                          ></img>
+                        </div>
+                        <div className="notify_info">
+                          <p>Alex Send a message</p>
+                          <span className="notify_time">6 hours ago</span>
+                        </div>
+                      </div> */}
+                    {/* </div>
+                  </div>
+                </div>
+
+                <div className="chat-icon-header">
+                  <i className="bi bi-chat-dots"></i>
+                </div> */}
+
+                <Dropdown>
+                  <MenuButton>
+                    <div className="talent-profile-icon">
+                      <img
+                        src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
+                        alt=""
+                      />
+                    </div>
+                  </MenuButton>
+                  <Menu slots={{ listbox: AnimatedListbox }}>
+                    {/* <MenuItem
+                      style={{ cursor: "pointer" }}
+                      onClick={createHandleMenuClick("profile")}
+                    >
+                      Profile
+                    </MenuItem> */}
+
+                    <MenuItem
+                      style={{ cursor: "pointer" }}
+                      onClick={createHandleMenuClick("logout")}
+                    >
+                      View profile
+                    </MenuItem>
+                    <MenuItem
+                      style={{ cursor: "pointer" }}
+                      onClick={createHandleMenuClick("logout")}
+                    >
+                      Edit profile
+                    </MenuItem>
+                    <MenuItem
+                      style={{ cursor: "pointer" }}
+                      onClick={createHandleMenuClick("logout")}
+                    >
+                      Log out
+                    </MenuItem>
+                  </Menu>
+                </Dropdown>
+              </div>
+            </div>  
+
+          </div>
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

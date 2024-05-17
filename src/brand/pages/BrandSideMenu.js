@@ -150,15 +150,17 @@ const BrandSideMenu = ({ onChildClick }) => {
     <>
       <nav className="brand-sidebar-container">
         <div className="brand-profile-not-sidemenu">
-          <img
-            className="profile-img"
-            src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
-            alt=""
-          />
+          <div className="profImg">
+            <img
+              className="profile-img"
+              src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
+              alt=""
+            />
+          </div>
         </div>
         <div className="talent-profile">
           <div className="talent-data-wrapper">
-            <div>
+            <div className="profImg">
               <img
                 className="profile-img"
                 src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
@@ -182,102 +184,173 @@ const BrandSideMenu = ({ onChildClick }) => {
           <div className="upgrade-btn">Upgrade Now</div>
         </div>
 
-        <Link
-          to="/create-jobs"
-          className={
-            location.pathname === "/create-jobs"
-              ? "sidemenu-active mt-4"
-              : "brand-menu-wrapper mt-4"
-          }
-          onClick={() => handleClick()}
-        >
-          <i
-            style={{ paddingLeft: "15px" }}
-            className="bi bi-plus-square-fill "
-          ></i>
-          <div className="brand-menu-text">Create Gig/Job</div>
-        </Link>
+        <div className="sidenavWraper scroll">
+            {/* <Link
+              to="/create-jobs"
+              className={
+                location.pathname === "/create-jobs"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+              onClick={() => handleClick()}
+            >
+              <i className="bi bi-plus-square-fill "
+              ></i>
+              <div className="brand-menu-text">Create Gig/Job</div>
+            </Link> */}
 
-        <Link
-          to="/brand-dashboard"
-          className={
-            location.pathname === "/brand-dashboard"
-              ? "sidemenu-active mt-4"
-              : "brand-menu-wrapper mt-4"
-          }
-        >
-          <i style={{ paddingLeft: "15px" }} className="bi bi-speedometer "></i>
-          <div className="brand-menu-text">Dashboard</div>
-        </Link>
+            <Link
+              to="/brand-dashboard"
+              className={
+                location.pathname === "/brand-dashboard"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+            >
+              <i className="bi bi-house-door icons"></i>
+              <div className="brand-menu-text">Home</div>
+            </Link>
 
-        <Link
-          to="/list-jobs"
-          className={
-            location.pathname === "/list-jobs"
-              ? "sidemenu-active mt-4"
-              : "brand-menu-wrapper mt-4"
-          }
-        >
-          <i
-            style={{ paddingLeft: "15px" }}
-            className="bi bi-person-workspace "
-          ></i>
-          <div className="brand-menu-text">My Gigs/Jobs</div>
-        </Link>
+            <Link
+            to="/talent"
+            className={
+              location.pathname === "/talent"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-bell icons"></i>
+            <div className="brand-menu-text">Notification</div>
+          </Link>
 
-        <Link
-          to="/applicants"
-          className={
-            location.pathname === "/applicants"
-              ? "sidemenu-active mt-4"
-              : "brand-menu-wrapper mt-4"
-          }
-        >
-          <i
-            style={{ paddingLeft: "15px" }}
-            className="bi bi-person-workspace "
-          ></i>
-          <div className="brand-menu-text">Applicants</div>
-        </Link>
+          <Link
+            to="/talent"
+            className={
+              location.pathname === "/talent"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-chat icons"></i>
+            <div className="brand-menu-text">Messages</div>
+          </Link>
 
-        <Link
-          to="/find-talents"
-          className={
-            location.pathname === "/find-talents"
-              ? "sidemenu-active mt-4"
-              : "brand-menu-wrapper mt-4"
-          }
-        >
-          <i style={{ paddingLeft: "15px" }} className="bi bi-people-fill"></i>
-          <div className="brand-menu-text">Invite To Apply</div>
-        </Link>
+          <Link
+            to="/talent"
+            className={
+              location.pathname === "/talent"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-person-plus icons"></i>
+            <div className="brand-menu-text">Create Jobs</div>
+          </Link>
 
-        <Link
-          to="/favorite-talents"
-          className={
-            location.pathname === "/favorite-talents"
-              ? "sidemenu-active mt-4"
-              : "brand-menu-wrapper mt-4"
-          }
-        >
-          <i style={{ paddingLeft: "15px" }} className="bi bi-heart-fill"></i>
-          <div className="brand-menu-text">Favorites</div>
-        </Link>
+          <Link
+            to="/talent"
+            className={
+              location.pathname === "/talent"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-person icons"></i>
+            <div className="brand-menu-text">Edit Profile</div>
+          </Link>
 
-        <Link
-          to="/brand-help"
-          className={
-            location.pathname === "/brand-help"
-              ? "sidemenu-active mt-4"
-              : "brand-menu-wrapper mt-4"
-          }
-        >
-          <i
-            style={{ paddingLeft: "15px" }}
-            className="bi bi-info-circle-fill"
-          ></i>
-          <div className="brand-menu-text">Help</div>
-        </Link>
+            <Link
+              to="/list-jobs"
+              className={
+                location.pathname === "/list-jobs"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+            >
+              <i
+                className="bi bi-suitcase-lg icons"
+              ></i>
+              <div className="brand-menu-text">My Jobs</div>
+            </Link>
+
+            <Link
+              to="/applicants"
+              className={
+                location.pathname === "/applicants"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+            >
+              <i
+                className="bi bi-person-workspace icons"
+              ></i>
+              <div className="brand-menu-text">Applicants</div>
+            </Link>
+
+            <Link
+              to="/talent"
+              className={
+                location.pathname === "/talent"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+            >
+              <i className="bi bi-person-check icons"></i>
+              <div className="brand-menu-text">Find Talent</div>
+            </Link>
+
+            <Link
+              to="/favorite-talents"
+              className={
+                location.pathname === "/favorite-talents"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+            >
+              <i className="bi bi-heart icons"></i>
+              <div className="brand-menu-text">Favourite Talent</div>
+            </Link> 
+
+            <Link
+            to="/talent"
+            className={
+              location.pathname === "/talent"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-gear icons"></i>
+            <div className="brand-menu-text">Settings</div>
+          </Link>
+
+            
+
+            {/* <Link
+              to="/find-talents"
+              className={
+                location.pathname === "/find-talents"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+            >
+              <i className="bi bi-people-fill"></i>
+              <div className="brand-menu-text">Invite To Apply</div>
+            </Link> */}
+          
+            {/* <Link
+              to="/brand-help"
+              className={
+                location.pathname === "/brand-help"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+            >
+              <i
+               className="bi bi-info-circle-fill"
+              ></i>
+              <div className="brand-menu-text">Help</div>
+            </Link> */}
+        </div>
       </nav>
     </>
   );

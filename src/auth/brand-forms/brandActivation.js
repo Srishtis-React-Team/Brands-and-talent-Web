@@ -63,7 +63,7 @@ const BrandActivation = () => {
             }}
           ></button>
         </div>
-        <div className="dialog-body" style={{ height: "85vh" }}>
+        <div className="dialog-body spaceTops" style={{ minHeight: "85vh" }}>
           <div className="trial-page">
             <div className="trial-wrapper">
               <div className="trial-title">Trial Version Activated</div>

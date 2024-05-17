@@ -152,6 +152,7 @@ const Talentscarousel = () => {
             return (
               <>
                 <div className="item" key={index}>
+                  <div className="sliderImg">
                   <img
                     className="talents-profile-slider-image"
                     src={`${API.userFilePath}${item?.image?.fileData}`}
@@ -173,6 +174,7 @@ const Talentscarousel = () => {
                       onClick={() => removeFavorite(item)}
                     ></img>
                   )}
+                  </div>
                   <div
                     className="carousel-talent-name"
                     onClick={() => openTalent(item)}
