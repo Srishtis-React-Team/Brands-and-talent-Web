@@ -91,12 +91,24 @@
 .brand-profile-not-sidemenu {
   display: none;
 }
-
-.profile-img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 1px solid #c2114b;
+.profImg{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #c2114b;
+    margin-right: 10px;
+    overflow: hidden;
+}
+.profImg .profile-img {
+    min-width: 45px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    min-height: 45px;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+    border: 0;
 }
 
 .talent-profile {
@@ -115,6 +127,7 @@
       border-radius: 50%;
       border: 2px solid #c2114b;
       margin-right: 10px;
+      overflow: hidden;
       .profile-img {
         min-width: 45px;
         max-width: 100%;
@@ -138,7 +151,7 @@
       .talent-category {
         font-size: 13px;
         font-weight: 500;
-        margin: 2px 0 0;
+        margin: 0;
       }
     }
   }
@@ -186,9 +199,14 @@
   }
   // justify-content: space-evenly;
 }
-.sidenavWraper  i.bi.bi-person.icons {
+.sidenavWraper i.bi-person, .sidenavWraper i.bi-person-plus, .sidenavWraper i.bi-person-check  {
   font-size: 22px;
 }
+.sidenavWraper .bi-person::before, .sidenavWraper .bi-person-check::before {
+  content: "\f4e1";
+  margin: 0 0 0 -2px;
+}
+
 .sidemenu-active {
   display: flex;
   align-items: center;
@@ -231,10 +249,7 @@
 }
 
 .brand-content-main {
-  padding: 30px;
-  border-radius: 16px;
-  background-color: #ffffff;
-  width: 99%;
+
   .create-job-title {
     color: #000;
     font-size: 19px;

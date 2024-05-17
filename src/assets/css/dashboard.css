@@ -1000,7 +1000,10 @@ input[type="radio"] {
   text-decoration: none;
 }
 
-
+.dialog-body.spaceTops {
+  padding: 25px 0;
+  margin-bottom: 60px;
+}
 
 
 

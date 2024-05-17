@@ -120,23 +120,28 @@ const BrandHome = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        <div className="brand-content-main">
-          <div className="brand-home-main">
-            <div className="brand-home-left-container">
+        <div className="brand-content-main my-2">
+          <div className="brand-home-main row">
+
+            <div className="brand-home-left-container col-md-8 col-lg-9">
               <div className="brand-home-one">
-                <div className="home-job-add" onClick={createJob}>
-                  <img src={bigAdd} alt="" />
-                </div>
-                <div className="home-add-title-wrapper">
-                  <div className="home-add-title">Create a Gig/Job</div>
-                  <div className="home-add-description">
-                    Provide a clear and concise title for the job position. The
-                    title should accurately reflect the role and
-                    responsibilities of the job.
+                <div className="row">
+                  <div className="col-md-8 col-lg-9">
+                    <div className="home-job-add" onClick={createJob}>
+                      <img src={bigAdd} alt="" />
+                    </div>
+                    <div className="home-add-title-wrapper">
+                      <div className="home-add-title">Create a Gig/Job</div>
+                      <div className="home-add-description">
+                        Provide a clear and concise title for the job position. The
+                        title should accurately reflect the role and
+                        responsibilities of the job.
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div style={{ width: "20%" }} onClick={createJob}>
-                  <div className="home-job-start">Start Now</div>
+                  <div className="col-md-4 col-lg-3 btnSpace">
+                    <div className="home-job-start" onClick={createJob}>Start Now</div>
+                  </div>
                 </div>
               </div>
               <div className="brand-home-title-flex">
@@ -284,7 +289,8 @@ const BrandHome = () => {
                 </>
               )}
             </div>
-            <div className="brand-home-right-container">
+
+            <div className="brand-home-right-container col-md-4 col-lg-3">
               <div className="contact-section-main">
                 <div className="contact-wrapper">
                   <div className="contact-logo">
@@ -299,12 +305,12 @@ const BrandHome = () => {
                 </div>
               </div>
               <div className="brand-plan-section">
-                <div>
+                <div className="planImg">
                   <img className="plan-backdrop-image" src={girl1} alt="" />
                 </div>
                 <div className="my-plan-contents">
                   <p className="my-plan">My Plan</p>
-                  <div className="my-plan-features">
+                  <div className="my-plan-features scroll">
                     {planBenefits?.map((item, index) => {
                       return (
                         <>
