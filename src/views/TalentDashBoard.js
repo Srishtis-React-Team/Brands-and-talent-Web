@@ -233,7 +233,7 @@ const TalentDashBoard = () => {
   const [workPlaceType, setWorkPlaceType] = useState("");
   const ageList = ["13-17", "18+"];
 
-  const applyFiltrer = async () => {
+  const applyFilter = async () => {
     let key_word;
     let job_location;
     let job_age;
@@ -308,6 +308,8 @@ const TalentDashBoard = () => {
   // Ref to store the input element
   const keyWordRef = useRef(null);
   const jobLocationRef = useRef(null);
+  const jobNameRef = useRef(null);
+  const jobAgeRef = useRef(null);
   const jobFullNameRef = useRef(null);
 
   const jobTypeOptions = [
@@ -369,7 +371,6 @@ const TalentDashBoard = () => {
       >
         <TalentSideMenu myState={queryString} />
       </div>
-
       <main
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
@@ -451,7 +452,168 @@ const TalentDashBoard = () => {
           <div className="row talent-dashboard-main">
             <div className="col-md-8 col-lg-9">
               <div className="talent-column-one">
-                <div className="recent-gigs-title">Most Recent Gigs</div>
+                <div className="filter-text-wrapper">
+                  <div className="recent-gigs-title">Most Recent Gigs</div>
+                  <React.Fragment>
+                    <div
+                      className="header-filter-icon"
+                      onClick={handleClickOpen}
+                    >
+                      Filter Jobs
+                      <img className="filter-icon" src={sliderIcon} alt="" />
+                    </div>
+                    <BootstrapDialog
+                      onClose={handleClose}
+                      aria-labelledby="customized-dialog-title"
+                      open={open}
+                      PaperProps={{
+                        sx: {
+                          marginTop: "10vh", // Adjust this value to suit your needs
+                          position: "absolute",
+                          top: 0,
+                          maxHeight: "90vh", // Optional: Limit the height of the dialog
+                        },
+                      }}
+                    >
+                      <DialogTitle
+                        sx={{ m: 0, p: 2 }}
+                        id="customized-dialog-title"
+                      >
+                        Filter Jobs
+                      </DialogTitle>
+                      <IconButton
+                        aria-label="close"
+                        onClick={handleClose}
+                        sx={{
+                          position: "absolute",
+                          right: 8,
+                          top: 8,
+                          color: (theme) => theme.palette.grey[500],
+                        }}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                      <DialogContent dividers>
+                        <div className="search-filter-section">
+                          <div className="search-labels">Keywords</div>
+                          <div>
+                            {/* <TextField
+                      autoFocus
+                      required
+                      margin="dense"
+                      id="name"
+                      name="email"
+                      label="Email Address"
+                      type="email"
+                      fullWidth
+                      variant="standard"
+                    /> */}
+
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Keyword"
+                              ref={jobNameRef}
+                              // onChange={(e) => {
+                              //   e.preventDefault();
+                              //   setJobName(e.target.value);
+                              // }}
+                            ></input>
+                          </div>
+
+                          <div className="kids-form-row mt-3">
+                            <div className="kids-form-section">
+                              <div className="mb-3 ">
+                                <label className="form-label">Location</label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Location"
+                                  ref={jobLocationRef}
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="kids-form-section">
+                              <div className="mb-3">
+                                <label className="form-label">Age</label>
+                                <select
+                                  className="form-select"
+                                  aria-label="Default select example"
+                                  style={{ fontSize: "14px" }}
+                                >
+                                  <option value="" disabled selected>
+                                    Select Age
+                                  </option>
+                                  {ageList.map((option, index) => (
+                                    <option key={index} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          {/* <div className="kids-form-section">
+                            <div className="mb-3">
+                              <label className="form-label">Skills</label>
+                              <Select
+                                isMulti
+                                name="colors"
+                                options={skillsList}
+                                valueField="value"
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                onChange={(value) => selectSkills(value)}
+                                styles={customStyles}
+                              />
+                            </div>
+                          </div> */}
+                          <div className="kids-form-row mt-3">
+                            <div className="kids-form-section">
+                              <div className="mb-3 ">
+                                <label className="form-label">Job Name</label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter Name"
+                                  ref={jobFullNameRef}
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="kids-form-section">
+                              <div className="mb-3 ">
+                                <label className="form-label">Job Type</label>
+                                <select
+                                  className="form-select"
+                                  aria-label="Default select example"
+                                  style={{ fontSize: "14px" }}
+                                >
+                                  <option value="" disabled selected>
+                                    Select Job Type
+                                  </option>
+                                  {jobTypeOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          className="search-popup-btn"
+                          onClick={applyFilter}
+                        >
+                          Filter
+                        </Button>
+                      </DialogActions>
+                    </BootstrapDialog>
+                  </React.Fragment>
+                </div>
+
                 {gigsList.length && (
                   <div className="recent-gigs-main">
                     {gigsList.map((item, index) => {

@@ -24,7 +24,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Select from "react-select";
 
-const TalentHeader = ({ toggleMenu }) => {
+const TalentHeader = ({ toggleMenu, myState }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const model1 = require("../assets/images/girl1.png");
@@ -120,6 +120,14 @@ const TalentHeader = ({ toggleMenu }) => {
       getTalentNotification();
     }
   }, [talentId]);
+
+  console.log(myState, "myState");
+
+  useEffect(() => {
+    if (myState === true) {
+      getTalentById();
+    }
+  }, [myState]);
 
   const getTalentNotification = async () => {
     await ApiHelper.get(`${API.getTalentNotification}${talentId}`)
