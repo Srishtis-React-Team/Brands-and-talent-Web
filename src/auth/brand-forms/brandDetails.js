@@ -232,8 +232,8 @@ const BrandDetails = () => {
           ></button>
         </div>
         <div
-          className="dialog-body"
-          style={{ height: "75vh", marginTop: "50px" }}
+          className="dialog-body spaceTops"
+          
         >
           <div className="adult-signup-main">
             <div className="step-title mb-3">Brand Details</div>

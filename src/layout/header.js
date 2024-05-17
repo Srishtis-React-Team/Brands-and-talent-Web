@@ -139,7 +139,7 @@ const Header = ({ onData }) => {
               Home
             </NavLink>
           </div>
-          <div onClick={() => handleClick("post-job")}>Post a Job</div>
+          <div className="navTxt" onClick={() => handleClick("post-job")}>Post a Job</div>
           <div className="navTxt">
             <NavLink to="/listJob" onClick={() => handleClick("list-job")}>
               List Job
@@ -277,7 +277,7 @@ const Header = ({ onData }) => {
                   Home
                 </NavLink>
               </div>
-              <div onClick={() => handleClick("post-job")}>Post a job</div>
+              <div className="navTxt" onClick={() => handleClick("post-job")}>Post a job</div>
               <div className="navTxt">
                 <NavLink to="/listJob" onClick={() => handleClick("list-job")}>
                   Jobs List

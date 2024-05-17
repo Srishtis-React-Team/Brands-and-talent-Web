@@ -950,12 +950,72 @@ input[type="radio"] {
 .talent-header-main button.base-MenuButton-root {
   background: transparent;
   border: 0;
+  margin: 0 0 0 10px;
+  padding: 0;
+}
+
+.headerDashboard {
+  position: relative;
 }
 
 .boxsWhite {
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
+}
+.sidenavWraper {
+  margin: 15px 0 0;
+}
+
+.sidenavWraper .icons {
+  font-size: 18px;
+  font-weight: 700;
+  width: 33px;
+}
+
+.sidenavWraper.scroll {
+  overflow-y: auto;
+}
+
+/* .scroll::-webkit-scrollbar {
+} */
+.scroll::-webkit-scrollbar {
+  width: 0.2em;
+  background-color: transparent;
+}
+.scroll::-webkit-scrollbar-track {
+  box-shadow: inherit;
+  background-color: transparent;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 60px;
+}
+.menu-items {
+  display: flex;
+  justify-content: space-between;
+  justify-content: end;
+  align-items: center;
+}
+
+.menu-items > div.navTxt {
+  padding-right: 35px;
+  font-optical-sizing: auto;
+}
+.menu-items a.nav-link,
+.menu-items .navTxt a {
+  font-size: 14px;
+  color: #000;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.dialog-body.spaceTops {
+  padding: 25px 0;
+  margin-bottom: 60px;
 }
 
 /* 320px — 480px: Mobile devices */
@@ -1959,28 +2019,6 @@ input[type="radio"] {
 
   .mobile-section {
     display: none;
-  }
-
-  .menu-items {
-    display: flex;
-    justify-content: space-between;
-    justify-content: end;
-    align-items: center;
-  }
-
-  .menu-items > div.navTxt {
-    padding-right: 35px;
-    font-optical-sizing: auto;
-  }
-  .menu-items a.nav-link,
-  .menu-items .navTxt a {
-    font-size: 14px;
-    color: #000;
-    font-weight: 400;
-    font-style: normal;
-    line-height: normal;
-    cursor: pointer;
-    text-decoration: none;
   }
 
   .dropdown-item {
