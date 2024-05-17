@@ -1017,6 +1017,10 @@ input[type="radio"] {
   padding: 25px 0;
   margin-bottom: 60px;
 }
+.adult-form-wrapper.ml-0.mr-0 {
+  margin-left: 0;
+  margin-right: 0;
+}
 
 /* 320px — 480px: Mobile devices */
 

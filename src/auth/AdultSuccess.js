@@ -52,22 +52,24 @@ const AdultSuccess = () => {
           ></button>
         </div>
         <div
-          className="dialog-body gmail-page-body"
-          style={{ height: "850px" }}
+          className="dialog-body gmail-page-body successWrap"
+          style={{ minHeight: "90vh" }}
         >
-          <div className="gmail-wrapper">
-            <div className="gmail-tick">
-              <img src={bigTick} alt="" />
-            </div>
-            <div className="done">Done!</div>
-            <div className="gmail-info">
-              Get ready to embark on your journey! Your account will be
-              activated within the next 48 hours, unlocking a world of
-              possibilities.
-            </div>
-            <div className="open-gmail" onClick={openGmail}>
-              <img src={gmailGrey} alt="" />
-              <div className="gmail-btn-text">Open Gmail</div>
+          <div className="container">
+            <div className="gmail-wrapper">
+              <div className="gmail-tick">
+                <img src={bigTick} className="kids-image-sticky" alt="" />
+              </div>
+              <div className="done">Done!</div>
+              <div className="gmail-info">
+                Get ready to embark on your journey! Your account will be
+                activated within the next 48 hours, unlocking a world of
+                possibilities.
+              </div>
+              <div className="open-gmail" onClick={openGmail}>
+                <img src={gmailGrey} alt="" />
+                <div className="gmail-btn-text">Open Gmail</div>
+              </div>
             </div>
           </div>
         </div>

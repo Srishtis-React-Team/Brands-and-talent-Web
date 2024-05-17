@@ -484,16 +484,20 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         </div>
         <div className="dialog-body">
           <div className="kidsform-one container">
-            <div className="kids-wrapper">
-              <div className="kids-img">
-                <img src={kidsImage} alt="" />
+            <div className="kids-wrapper row">
+
+              <div className="kids-img col-md-4 col-lg-3">
+                <div className="fixImgs">
+                  <img src={kidsImage} className="kids-image-sticky" alt="" />
+                </div>
               </div>
-              <div className="kids-form">
+
+              <div className="kids-form col-md-8 col-lg-9">
                 <div className="kids-description">
                   Upload Your Files & Connect With your social media accounts
                 </div>
                 <div className="kids-main">
-                  <div className="kids-form-title">
+                  <div className="kids-form-title pb-0">
                     Profile Picture <span className="astrix">*</span>
                   </div>
                   <div
@@ -575,7 +579,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div className="kids-form-title">Bio</div>
+                  <div className="kids-form-title pb-1">Bio</div>
 
                   <div className="rich-editor">
                     <label className="form-label">About You</label>
@@ -604,7 +608,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     />
                   </div>
 
-                  <div className="kids-form-title">
+                  <div className="kids-form-title pb-0">
                     Portfolio <span className="astrix">*</span>
                   </div>
                   <div
@@ -806,7 +810,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       })}
                     </>
                   )}
-                  <div className="kids-form-title">CV</div>
+                  <div className="kids-form-title pb-0">CV</div>
                   <div
                     className="cv-section"
                     onDrop={handleResumeDrop}
