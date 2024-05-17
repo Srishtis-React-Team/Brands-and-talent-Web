@@ -22,6 +22,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import draftToHtml from "draftjs-to-html";
+import { convertToRaw } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import Modal from "react-modal";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -364,16 +370,21 @@ const EditTalent = () => {
   };
 
   const selectLanguage = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
       setLanguages([]); // Clear the languages state
+      setSelectedLanguageOptions([]);
+
       return;
     }
-
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
     setLanguages(selectedLanguages); // Update languages state with all selected languages
+
+    setSelectedLanguageOptions(selectedOptions);
   };
 
   const selectNationality = (event) => {
@@ -479,8 +490,8 @@ const EditTalent = () => {
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
     console.log(event, "event");
-    console.log(event?.value, "event?.value");
-
+    console.log(event, "event?.value");
+    setCountry(event?.value);
     getStates(event?.value);
     console.log(country, "country");
   };
@@ -761,6 +772,8 @@ const EditTalent = () => {
   }, [talentData]);
 
   const [editProfileImage, setEditProfileImage] = useState("");
+  const [editProfileImageObject, setEditProfileImageObject] = useState(null);
+  const [portofolioFile, setPortofolioFile] = useState([]);
 
   useEffect(() => {
     console.log(editProfileImage, "editProfileImage");
@@ -771,6 +784,14 @@ const EditTalent = () => {
       let fileData = event.target.files[0];
       console.log(fileData, "fileData");
       uploadProfile(fileData);
+    }
+  };
+
+  const newPortfolioUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
+      uploadNewPortfolio(fileData);
     }
   };
 
@@ -812,7 +833,8 @@ const EditTalent = () => {
           };
           console.log(fileObj, "fileObj");
           setEditProfileImage(fileObj?.fileData);
-          updateProfile(fileObj);
+          setEditProfileImageObject(fileObj);
+          // updateProfile(fileObj);
         }
       })
       .catch((err) => {
@@ -820,11 +842,70 @@ const EditTalent = () => {
       });
   };
 
+  const uploadNewPortfolio = async (fileData) => {
+    setLoader(true);
+    const params = new FormData();
+    params.append("file", fileData);
+    params.append("fileName", fileData.name);
+    params.append("fileType", getFileType(fileData.type));
+    /* await ApiHelper.post(API.uploadFile, params) */
+    await Axios.post(API.uploadFile, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((resData) => {
+        console.log(resData, "uploadProfileDATA");
+        if (resData?.data?.status === true) {
+          let fileObj = {
+            id: resData.data.data.fileId,
+            title: fileData.name,
+            fileData: resData.data.data.filename,
+            type: resData?.data?.data?.filetype,
+          };
+          console.log(fileObj, "fileObj");
+          setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
+          updatePortfolioAPI();
+        }
+      })
+      .catch((err) => {
+        setLoader(false);
+      });
+  };
+
+  const updatePortfolioAPI = async () => {
+    const formData = {
+      portfolio: portofolioFile,
+    };
+    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Portfolio Added Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setMyState(true);
+            setOpenPopUp(false);
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
   const [myState, setMyState] = useState(false);
 
-  const updateProfile = async (data) => {
+  const updateProfileImage = async () => {
     const formData = {
-      image: data,
+      image: editProfileImageObject,
     };
     await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
       .then((resData) => {
@@ -858,9 +939,129 @@ const EditTalent = () => {
     }
   };
 
+  const portfolioFileInputRef = useRef(null);
+
+  const portfolioFile = () => {
+    if (portfolioFileInputRef.current) {
+      portfolioFileInputRef.current.click(); // Trigger the click event on the file input
+    }
+  };
+
+  const viewUpdateFile = (item) => {
+    console.log(item, "viewFile");
+    window.open(`${API.userFilePath}${item.fileData}`, "_blank");
+  };
+
+  const customStylesAlert = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      /* margin: '0 auto', */
+      width: "450px",
+      height: "270px",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
+  const [alertpop, setAlertpop] = useState({
+    status: false,
+    item: "",
+    label: "",
+  });
+
+  const deleteUpdateFile = async () => {
+    const formData = {
+      element_id: alertpop?.item?.id,
+    };
+    await ApiHelper.post(`${API.deleteFile}${talentData?._id}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("File Deleted Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getTalentById();
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const [inputs, setInputs] = useState([
+    {
+      serviceName: "",
+      serviceAmount: "",
+      serviceDuration: "",
+      editorState: "",
+      files: [],
+    },
+  ]);
+
+  const handleFileChange = (index, event) => {
+    console.log("handleFileChange");
+    console.log(index, "index file");
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      uploadProfile(fileData, (fileObj) => {
+        setInputs((prevInputs) => {
+          const newInputs = [...prevInputs];
+          newInputs[index]["files"] = [
+            ...(newInputs[index]["files"] || []),
+            fileObj,
+          ];
+          console.log(newInputs, "newInputs");
+          return newInputs;
+        });
+      });
+    }
+  };
+
+  const handleInputChange = (index, key, value) => {
+    console.log(index, "index handleInputChange");
+    const newInputs = [...inputs];
+    newInputs[index][key] = value;
+    setInputs(newInputs);
+  };
+
+  const handleEditorStateChange = (index, editorState) => {
+    console.log(index, "index handleEditorStateChange");
+    const newInputs = [...inputs];
+    newInputs[index]["editorState"] = [
+      draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    ];
+    setInputs(newInputs);
+  };
+
+  const handleAddMore = () => {
+    setInputs([
+      ...inputs,
+      {
+        serviceName: "",
+        serviceAmount: "",
+        serviceDuration: "",
+        editorState: "",
+        files: [],
+      },
+    ]);
+
+    console.log(inputs, "inputs");
+  };
+
   return (
     <>
-      <TalentHeader toggleMenu={toggleMenu} />
+      <TalentHeader toggleMenu={toggleMenu} myState={myState} />
       <div
         id="sidebarBrand"
         className={`brand-sidebar ${
@@ -900,6 +1101,11 @@ const EditTalent = () => {
                   {...a11yProps(2)}
                   style={{ textTransform: "capitalize" }}
                 />
+                <Tab
+                  label="Update Services"
+                  {...a11yProps(3)}
+                  style={{ textTransform: "capitalize" }}
+                />
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
@@ -924,6 +1130,14 @@ const EditTalent = () => {
                   <Button
                     onClick={File}
                     className="edit-profileimg-btn"
+                    variant="text"
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    Change Image
+                  </Button>
+                  <Button
+                    onClick={() => updateProfileImage()}
+                    className="update-profileimg-btn"
                     variant="text"
                     style={{ textTransform: "capitalize" }}
                   >
@@ -1568,36 +1782,40 @@ const EditTalent = () => {
                                   {item.title}
                                 </div>
                                 <div className="update-portfolio-action">
-                                  <Button
-                                    id="basic-button"
-                                    aria-controls={
-                                      open ? "basic-menu" : undefined
-                                    }
-                                    aria-haspopup="true"
-                                    aria-expanded={open ? "true" : undefined}
-                                    onClick={handleFileClick}
+                                  <i
+                                    className="bi bi-three-dots-vertical"
+                                    type="button"
+                                    id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  ></i>
+                                  <ul
+                                    class="dropdown-menu"
+                                    aria-labelledby="dropdownMenuButton1"
                                   >
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                  </Button>
-                                  <Menu
-                                    id="basic-menu"
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={handleClose}
-                                    MenuListProps={{
-                                      "aria-labelledby": "basic-button",
-                                    }}
-                                  >
-                                    <MenuItem onClick={handleClose}>
-                                      View
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                      Edit
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                      Delete
-                                    </MenuItem>
-                                  </Menu>
+                                    <li>
+                                      <a
+                                        class="dropdown-item"
+                                        onClick={() => viewUpdateFile(item)}
+                                      >
+                                        View
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a
+                                        class="dropdown-item"
+                                        onClick={(e) => {
+                                          setAlertpop({
+                                            status: true,
+                                            item: item,
+                                            label: "delete",
+                                          });
+                                        }}
+                                      >
+                                        Delete
+                                      </a>
+                                    </li>
+                                  </ul>
                                 </div>
                               </div>
                             </div>
@@ -1605,6 +1823,26 @@ const EditTalent = () => {
                         </>
                       );
                     })}
+                  <div className="add-portfoli-section">
+                    <div className="add-portfolia-btn">
+                      <input
+                        type="file"
+                        className="select-cv-input"
+                        id="profile-image"
+                        accept="image/*"
+                        onChange={newPortfolioUpload}
+                        ref={portfolioFileInputRef}
+                      />
+                      <Button
+                        onClick={portfolioFile}
+                        className="edit-profileimg-btn"
+                        variant="text"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Add Portfolio
+                      </Button>
+                    </div>
+                  </div>
                 </div>
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Videos & Audios</div>
@@ -1636,36 +1874,40 @@ const EditTalent = () => {
                                   {item.title}
                                 </div>
                                 <div className="update-portfolio-action">
-                                  <Button
-                                    id="basic-button"
-                                    aria-controls={
-                                      open ? "basic-menu" : undefined
-                                    }
-                                    aria-haspopup="true"
-                                    aria-expanded={open ? "true" : undefined}
-                                    onClick={handleFileClick}
+                                  <i
+                                    className="bi bi-three-dots-vertical"
+                                    type="button"
+                                    id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  ></i>
+                                  <ul
+                                    class="dropdown-menu"
+                                    aria-labelledby="dropdownMenuButton1"
                                   >
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                  </Button>
-                                  <Menu
-                                    id="basic-menu"
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={handleClose}
-                                    MenuListProps={{
-                                      "aria-labelledby": "basic-button",
-                                    }}
-                                  >
-                                    <MenuItem onClick={handleClose}>
-                                      View
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                      Edit
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                      Delete
-                                    </MenuItem>
-                                  </Menu>
+                                    <li>
+                                      <a
+                                        class="dropdown-item"
+                                        onClick={() => viewUpdateFile(item)}
+                                      >
+                                        View
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a
+                                        class="dropdown-item"
+                                        onClick={(e) => {
+                                          setAlertpop({
+                                            status: true,
+                                            item: item,
+                                            label: "delete",
+                                          });
+                                        }}
+                                      >
+                                        Delete
+                                      </a>
+                                    </li>
+                                  </ul>
                                 </div>
                               </div>
                             </div>
@@ -1674,6 +1916,26 @@ const EditTalent = () => {
                         </>
                       );
                     })}
+                  <div className="add-portfoli-section">
+                    <div className="add-portfolia-btn">
+                      <input
+                        type="file"
+                        className="select-cv-input"
+                        id="profile-image"
+                        accept="image/*"
+                        onChange={newPortfolioUpload}
+                        ref={portfolioFileInputRef}
+                      />
+                      <Button
+                        onClick={portfolioFile}
+                        className="edit-profileimg-btn"
+                        variant="text"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Add Videos & Audios
+                      </Button>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="update-portfolio-cards-wrapper">
@@ -1706,41 +1968,252 @@ const EditTalent = () => {
                                   {item.title}
                                 </div>
                                 <div className="update-portfolio-action">
-                                  <Button
-                                    id="basic-button"
-                                    aria-controls={
-                                      open ? "basic-menu" : undefined
-                                    }
-                                    aria-haspopup="true"
-                                    aria-expanded={open ? "true" : undefined}
-                                    onClick={handleFileClick}
+                                  <i
+                                    className="bi bi-three-dots-vertical"
+                                    type="button"
+                                    id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  ></i>
+                                  <ul
+                                    class="dropdown-menu"
+                                    aria-labelledby="dropdownMenuButton1"
                                   >
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                  </Button>
-                                  <Menu
-                                    id="basic-menu"
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={handleClose}
-                                    MenuListProps={{
-                                      "aria-labelledby": "basic-button",
-                                    }}
-                                    className="update-portfolio-menu"
-                                  >
-                                    <MenuItem onClick={handleClose}>
-                                      View
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                      Edit
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                      Delete
-                                    </MenuItem>
-                                  </Menu>
+                                    <li>
+                                      <a
+                                        class="dropdown-item"
+                                        onClick={() => viewUpdateFile(item)}
+                                      >
+                                        View
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a
+                                        class="dropdown-item"
+                                        onClick={(e) => {
+                                          setAlertpop({
+                                            status: true,
+                                            item: item,
+                                            label: "delete",
+                                          });
+                                        }}
+                                      >
+                                        Delete
+                                      </a>
+                                    </li>
+                                  </ul>
                                 </div>
                               </div>
                             </div>
                             <div className="update-portfolio-action"></div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  <div className="add-portfoli-section">
+                    <div className="add-portfolia-btn">
+                      <input
+                        type="file"
+                        className="select-cv-input"
+                        id="profile-image"
+                        accept="image/*"
+                        onChange={newPortfolioUpload}
+                        ref={portfolioFileInputRef}
+                      />
+                      <Button
+                        onClick={portfolioFile}
+                        className="edit-profileimg-btn"
+                        variant="text"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Add Resumes
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={3}>
+              <div className="update-portfolio-section">
+                <div className="update-service-cards-wrapper">
+                  {talentData &&
+                    talentData?.services?.length > 0 &&
+                    talentData?.services?.map((item) => {
+                      return (
+                        <>
+                          <div className="update-portfolio-title">
+                            {item?.serviceName}
+                          </div>
+                          <div>
+                            {inputs.map((input, serviceIndex) => (
+                              <>
+                                <div key={serviceIndex}>
+                                  <div className="">
+                                    <div className="">
+                                      <div className="mb-3">
+                                        <label className="form-label">
+                                          Service name
+                                        </label>
+                                        <input
+                                          value={input.serviceName}
+                                          onChange={(e) =>
+                                            handleInputChange(
+                                              serviceIndex,
+                                              "serviceName",
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          name="serviceName"
+                                          className="form-control"
+                                          placeholder="Enter Service Heading"
+                                        ></input>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="kids-form-row">
+                                    <div className="kids-form-section">
+                                      <div className="mb-3">
+                                        <label className="form-label">
+                                          Amount
+                                        </label>
+                                        <input
+                                          type="number"
+                                          name="amount"
+                                          value={input.serviceAmount}
+                                          onChange={(e) =>
+                                            handleInputChange(
+                                              serviceIndex,
+                                              "serviceAmount",
+                                              e.target.value
+                                            )
+                                          }
+                                          className="form-control"
+                                          placeholder="Enter Amount In $"
+                                        ></input>
+                                      </div>
+                                    </div>
+                                    <div className="kids-form-section">
+                                      <div className="mb-3">
+                                        <label className="form-label">
+                                          Duration
+                                        </label>
+                                        <input
+                                          type="text"
+                                          name="duration"
+                                          value={input.serviceDuration}
+                                          onChange={(e) =>
+                                            handleInputChange(
+                                              serviceIndex,
+                                              "serviceDuration",
+                                              e.target.value
+                                            )
+                                          }
+                                          className="form-control"
+                                          placeholder="Duration In Months"
+                                        ></input>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="adults-titles">Features</div>
+                                  <div className="rich-editor">
+                                    <label className="form-label">
+                                      Features
+                                    </label>
+                                    <Editor
+                                      editorStyle={{
+                                        overflow: "hidden",
+                                      }}
+                                      value={input.editorState}
+                                      onEditorStateChange={(editorState) =>
+                                        handleEditorStateChange(
+                                          serviceIndex,
+                                          editorState
+                                        )
+                                      }
+                                      toolbar={{
+                                        options: [
+                                          "inline",
+                                          "blockType",
+                                          "fontSize",
+                                          "list",
+                                          "textAlign",
+                                          "history",
+                                        ],
+                                        inline: { inDropdown: true },
+                                        list: { inDropdown: true },
+                                        textAlign: { inDropdown: true },
+                                        link: { inDropdown: true },
+                                        history: { inDropdown: true },
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              </>
+                            ))}
+                          </div>
+                          {item?.files?.length > 0 &&
+                            item?.files?.map((item) => {
+                              return (
+                                <>
+                                  <div className="update-portfolio-cards">
+                                    <div className="update-portfolio-icon">
+                                      <div className="file-section">
+                                        {item.type === "image" && (
+                                          <div className="fileType">
+                                            <i class="bi bi-card-image"></i>
+                                          </div>
+                                        )}
+                                        <div className="update-portfolio-fileName">
+                                          {item.title}
+                                        </div>
+                                        <div className="update-portfolio-action">
+                                          <i
+                                            className="bi bi-three-dots-vertical"
+                                            type="button"
+                                            id="dropdownMenuButton1"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                          ></i>
+                                          <ul
+                                            class="dropdown-menu"
+                                            aria-labelledby="dropdownMenuButton1"
+                                          >
+                                            <li>
+                                              <a
+                                                class="dropdown-item"
+                                                onClick={() =>
+                                                  viewUpdateFile(item)
+                                                }
+                                              >
+                                                View
+                                              </a>
+                                            </li>
+                                            <li>
+                                              <a
+                                                class="dropdown-item"
+                                                onClick={() =>
+                                                  deleteUpdateFile(item)
+                                                }
+                                              >
+                                                Delete
+                                              </a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })}
+                          <div className="add-more-services">
+                            <div
+                              onClick={handleAddMore}
+                              className="add-more-services-btn"
+                            >
+                              Add More Services
+                            </div>
                           </div>
                         </>
                       );
@@ -1752,6 +2225,58 @@ const EditTalent = () => {
         </div>
       </main>
 
+      <Modal style={customStylesAlert} isOpen={alertpop?.status === true}>
+        <div>
+          {/* <div className='uploadHead'>
+                        <h4 className='mt-2'>Reason For stock Return</h4>
+                        <img src={CloseIcon} className='pop-close' onClick={() => { setIsModalOpen(false); }} />
+                    </div> */}
+          <div className="alertBox">
+            <div className="col-md-12  mx-5">
+              <div className="alert-icon-section">
+                <i className="alert-icon bi bi-exclamation-triangle-fill"></i>
+              </div>
+              {alertpop?.label == "delete" && (
+                <>
+                  <h5>Are you sure you want to Delete this File? </h5>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="alert-button-section">
+            <button
+              type="submit"
+              className=" btn btn-warning"
+              onClick={() => {
+                setAlertpop({
+                  status: false,
+                  item: null,
+                  label: null,
+                });
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className=" btn btn-danger alert-ok-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                setAlertpop({
+                  status: false,
+                  item: null,
+                  label: null,
+                });
+                if (alertpop?.label === "delete") {
+                  deleteUpdateFile();
+                }
+              }}
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </Modal>
       {openPopUp && <PopUp message={message} />}
     </>
   );

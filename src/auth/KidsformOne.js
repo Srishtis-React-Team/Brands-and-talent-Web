@@ -463,9 +463,7 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (country === "") {
       setParentCountryError(true);
     }
-    if (state === "") {
-      setStateError(true);
-    }
+
     if (address === "") {
       setAddressError(true);
     }
@@ -501,7 +499,6 @@ const KidsformOne = ({ sendDataToParent }) => {
     console.log(gender, "gender");
     console.log(parentMobile, "parentMobile");
     console.log(country, "country");
-    console.log(state, "state");
     console.log(kidsCity, "kidsCity");
     console.log(address, "address");
     console.log(selectedProfessions, "selectedProfessions");
@@ -523,7 +520,6 @@ const KidsformOne = ({ sendDataToParent }) => {
       gender !== "" &&
       parentMobile !== "" &&
       country !== "" &&
-      state !== "" &&
       address !== "" &&
       selectedProfessions.length !== 0 &&
       selectedCategories.length !== 0 &&
@@ -1060,9 +1056,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                     <div className="kids-form-row">
                       <div className="kids-form-section">
                         <div className="mb-3">
-                          <label className="form-label">
-                            State<span className="mandatory">*</span>
-                          </label>
+                          <label className="form-label">State</label>
                           <Select
                             placeholder="Select state..."
                             options={stateList.map((state) => ({
@@ -1528,27 +1522,21 @@ const KidsformOne = ({ sendDataToParent }) => {
                       <div className="kids-form-section">
                         <div className="mb-3">
                           <label className="form-label">
-                            Ethnicity <span className="mandatory">*</span>
+                            Languages <span className="mandatory">*</span>
                           </label>
-                          <select
-                            className="form-select"
-                            aria-label="Default select example"
-                            onChange={selectEthnicity}
-                            value={ethnicity}
-                            style={{ fontSize: "14px" }}
-                          >
-                            <option value="" disabled>
-                              Select Ethnicity
-                            </option>
-                            {ethnicityOptions.map((option, index) => (
-                              <option key={index} value={option}>
-                                {option}
-                              </option>
-                            ))}
-                          </select>
-                          {ethnicityError && (
+                          <Select
+                            isMulti
+                            name="colors"
+                            options={languageOptions}
+                            valueField="value"
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            onChange={(value) => selectLanguage(value)}
+                            styles={customStylesProfession}
+                          />
+                          {languageError && (
                             <div className="invalid-fields">
-                              Please Select Ethnicity
+                              Please Select Language
                             </div>
                           )}
                         </div>
@@ -1584,6 +1572,36 @@ const KidsformOne = ({ sendDataToParent }) => {
                         </div>
                       </div>
                       <div className="kids-form-section">
+                        <div className="mb-3">
+                          <label className="form-label">
+                            Ethnicity <span className="mandatory">*</span>
+                          </label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={selectEthnicity}
+                            value={ethnicity}
+                            style={{ fontSize: "14px" }}
+                          >
+                            <option value="" disabled>
+                              Select Ethnicity
+                            </option>
+                            {ethnicityOptions.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                          {ethnicityError && (
+                            <div className="invalid-fields">
+                              Please Select Ethnicity
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="kids-form-row mb-5">
+                      <div className="kids-form-section">
                         <label className="form-label">
                           Date Of Birth <span className="mandatory">*</span>
                         </label>
@@ -1616,30 +1634,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                           {dobError && (
                             <div className="invalid-fields">
                               Please Select Date Of Birth
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-row mb-5">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            Language <span className="mandatory">*</span>
-                          </label>
-                          <Select
-                            isMulti
-                            name="colors"
-                            options={languageOptions}
-                            valueField="value"
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            onChange={(value) => selectLanguage(value)}
-                            styles={customStylesProfession}
-                          />
-                          {languageError && (
-                            <div className="invalid-fields">
-                              Please Select Language
                             </div>
                           )}
                         </div>
