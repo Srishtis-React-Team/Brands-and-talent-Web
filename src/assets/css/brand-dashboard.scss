@@ -109,32 +109,47 @@
     flex-wrap: wrap;
     align-items: start;
     align-items: center;
-    .profile-img {
-      width: 60px;
-      height: 60px;
+    .profImg{
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       border: 2px solid #c2114b;
-      margin-right: 15px;
-      object-fit: cover;
+      margin-right: 10px;
+      .profile-img {
+        min-width: 45px;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        min-height: 45px;
+        margin: 0;
+        padding: 0;
+        object-fit: cover;
+        border: 0;
+      }
     }
     .talent-details {
       .talent-name {
         color: #000;
-        font-size: 18px;
+        font-size: 16px;
         font-style: normal;
         font-weight: 600;
         line-height: normal;
+      }
+      .talent-category {
+        font-size: 13px;
+        font-weight: 500;
+        margin: 2px 0 0;
       }
     }
   }
   .talents-plan-info {
     display: flex;
     justify-content: space-between;
-    padding: 15px 0px;
+    padding: 10px 0px;
     flex-wrap: wrap;
     .talent-plan-name {
       color: #000;
-      font-size: 14px;
+      font-size: 12px;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
@@ -153,12 +168,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 14px;
   }
 }
 .brand-menu-wrapper {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
+  padding: 8px 12px 8px 20px;
   cursor: pointer;
   .brand-menu-text {
     color: #000;
@@ -167,15 +183,16 @@
     font-weight: 600;
     line-height: normal;
     text-align: center;
-    padding-left: 10px;
   }
   // justify-content: space-evenly;
 }
-
+.sidenavWraper  i.bi.bi-person.icons {
+  font-size: 22px;
+}
 .sidemenu-active {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
+  padding: 8px 12px 8px 20px;
   cursor: pointer;
   border: 1px solid #000;
   justify-content: start !important;
@@ -188,7 +205,6 @@
     font-weight: 600;
     line-height: normal;
     text-align: center;
-    padding-left: 10px;
   }
 }
 .brand-menu-text:hover {

@@ -3,9 +3,11 @@
   text-align: center;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 160% */
+  line-height: 24px; 
 }
-
+.talent-navbar-functions .menu-items > div.navTxt {
+  padding-right: 30px;
+}
 .talent-header-main {
   // background-color: aqua;
   height: 75px;
@@ -17,18 +19,32 @@
   left: 0;
   width: 100%;
   background-color: #ffffff;
+  padding: 0 20px;
   z-index: 101;
   box-shadow: 0px 4px 4px rgba(201, 201, 201, 0.5);
-
+  .leftPart {
+    display: flex;
+    align-items: center;
+    .telent-menubar {
+      border: 1px solid #66666659;
+      padding: 5px;
+      min-width: 35px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+      min-height: 34px;
+      cursor: pointer;
+    }
+  }
   .talent-nav-logo {
-    padding: 0px 20px;
+    padding: 0;
     cursor: pointer;
-    width: 20%;
+    margin: 0 15px 0 0;
   }
   .talent-menu {
     display: flex;
     align-items: center;
-    width: 20%;
     .mydashboard {
       font-size: 16px;
       padding-left: 20px;
@@ -36,8 +52,8 @@
     }
     .telent-menubar {
       .fa-bars {
-        font-size: 18px;
-        cursor: pointer;
+        font-size: 14px;
+        color: #c2114b;
       }
     }
   }
@@ -45,23 +61,31 @@
     display: flex;
     align-items: center;
     justify-content: end;
-    width: 60%;
     .talent-seacrh-bar {
-      width: 40%;
+      width: auto;
     }
     .talent-notification,
     .talent-chat-icon {
-      padding: 0px 20px;
+      padding: 0px 8px;
       svg {
         cursor: pointer;
+        height: 20px;
+        width: auto;
       }
     }
     .talent-profile-icon {
+      border: 1px solid #ddd;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: #eee;
       img {
-        width: 50px;
-        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 100%;
+        object-fit: cover;
         cursor: pointer;
-        border-radius: 50%;
       }
     }
   }
@@ -113,7 +137,8 @@
 ////////notification****************
 
 .notification-bell-wrapper {
-  padding: 0 15px;
+  padding: 0;
+  margin-left: 10px;
 }
 
 .search-header-icon {
@@ -124,26 +149,21 @@
   padding: 0 40px 0 15px;
 }
 
-.notification_wrap {
-  // width: 500px;
-  // margin: 430px auto 0;
-}
 
 .notification_wrap .notification_icon {
   position: relative;
-  padding: 0px 20px;
-  width: 50px;
-  // height: 50px;
-  // font-size: 32px;
-  // margin: 0 auto;
-  // text-align: center;
-  // color: #605dff;
+  padding: 0px 8px;
+  width: auto;
+
 }
 
 .notification_wrap .notification_icon .bi-bell {
   cursor: pointer;
+  font-size: 20px;
 }
-
+.talent-navbar-functions .talent-chat-icon {
+  min-height: 27px;
+}
 .notification_wrap .notification-dropdown {
   width: 350px;
   overflow: scroll;
@@ -242,18 +262,20 @@ p {
 
 .header-search-wrapper {
   border: 1px solid #c9c9c9;
-  height: 47px;
+  height: 45px;
   border-radius: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 20px;
+  padding: 0px 17px;
+  margin: 0 0 0 10px;
   .header-search-input {
     .header-search-input-style {
       height: 40px;
       border-color: #ffffff;
       border: none;
       outline: none !important;
+      font-size: 14px;
     }
   }
   .header-search-icon {
@@ -267,10 +289,12 @@ p {
     }
   }
   .header-filter-icon {
-    padding-left: 15px;
+    padding: 0 0 0 5px;
     .filter-icon {
       color: #c9c9c9;
       cursor: pointer;
+      margin: 0;
+      padding: 0;
     }
     .filter-icon:hover {
       color: #c2114b;
