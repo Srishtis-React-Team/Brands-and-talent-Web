@@ -1485,9 +1485,19 @@ input[type="radio"] {
   display: flex;
 }
 
+.dashHeader .hide-nav{
+  display: block;
+}
 
-
-
+.dashHeader .menu-icon {
+  padding: 5px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 32px;
+  display: none;
+}
+.dashHeader .menu-icon .fa-bars { font-size: 22px; }
 
 
 
@@ -1538,10 +1548,20 @@ input[type="radio"] {
     width: 100%;
   }
 
-
-
-
-
+  .dashHeader .menu-icon { display: inline-block; }
+  .dashHeader .hide-nav{ display: none; }
+  .dashHeader .menu-items {
+    display: flex;
+    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: inherit;
+    flex-direction: column;
+  }
+  .dashHeader .mobile-nav-content {
+    padding: 20px;
+    left: 0;
+  } 
+  .dashHeader .mobile-nav-content .navTxt { margin: 10px 0; padding: 0 !important; }
 
 
 
@@ -2672,7 +2692,7 @@ input[type="radio"] {
     cursor: pointer;
     padding-right: 30px;
     text-decoration: none;
-    margin: 30px 0px;
+    margin: 25px 0px;
   }
 
   .signup,

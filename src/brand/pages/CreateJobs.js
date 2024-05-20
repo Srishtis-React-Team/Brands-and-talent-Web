@@ -2669,7 +2669,7 @@ const CreateJobs = () => {
                   <div className="kidsform-one w-100  p-2">
                     <div className="kids-main">
                       <div
-                        style={{ height: "500px" }}
+                        style={{ minHeight: "500px" }}
                         className="kids-form-row"
                       >
                         <div className="w-100">

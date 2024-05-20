@@ -294,7 +294,7 @@ const TalentHeader = ({ toggleMenu, myState }) => {
   };
   return (
     <>
-      <div className="headerDashboard">
+      <div className="headerDashboard dashHeader">
         <div className="container-fluid">
           <div className="talent-header-main">
             <div className="leftPart">
@@ -317,29 +317,40 @@ const TalentHeader = ({ toggleMenu, myState }) => {
 
             <div className="rightPart">
               <div className="talent-navbar-functions">
-                <nav className="menu-items">
-                  <div className="navTxt">
-                    <NavLink to="/">Home</NavLink>
+                <div
+                    onClick={() => {
+                        setMenuOpen(!menuOpen);
+                        // sendMessageToParent({ menuStatus: menuOpen });
+                      }}
+                      className="menu-icon"
+                    >
+                    <i className="fa-solid fa-bars"></i>
                   </div>
-                  <div className="navTxt">
-                    <NavLink to="/listJob">Jobs List</NavLink>
+                  <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
+                    <nav className="menu-items">
+                      <div className="navTxt">
+                        <NavLink to="/">Home</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/listJob">Jobs List</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/listJob">Get Hired</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/listJob">Find Talent</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/listJob">How it works</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/listJob">Pricing</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/listJob">Resources</NavLink>
+                      </div>
+                    </nav>
                   </div>
-                  <div className="navTxt">
-                    <NavLink to="/listJob">Get Hired</NavLink>
-                  </div>
-                  <div className="navTxt">
-                    <NavLink to="/listJob">Find Talent</NavLink>
-                  </div>
-                  <div className="navTxt">
-                    <NavLink to="/listJob">How it works</NavLink>
-                  </div>
-                  <div className="navTxt">
-                    <NavLink to="/listJob">Pricing</NavLink>
-                  </div>
-                  <div className="navTxt">
-                    <NavLink to="/listJob">Resources</NavLink>
-                  </div>
-                </nav>
 
                 <React.Fragment>
                   <div className="header-search-wrapper">
