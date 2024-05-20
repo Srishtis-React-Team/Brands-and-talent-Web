@@ -503,12 +503,12 @@
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1200px) {
-  .brand-sidebar {
-    width: 30% !important;
-  }
-  .brand-main-container {
-    padding-left: 31%;
-  }
+  // .brand-sidebar {
+  //   width: 30% !important;
+  // }
+  // .brand-main-container {
+  //   padding-left: 31%;
+  // }
   .brand-home-main {
     display: flex;
     flex-direction: column;
@@ -544,11 +544,8 @@
     padding: 10px 15px;
   }
   .brand-main-container {
-    padding: 90px 15px;
-    // transition: padding 0.4s;
+    padding: 20px 15px 15px;
     background-color: #eeeeee;
-    padding-bottom: 30px;
-    // height: 100%;
     margin-bottom: 40px;
   }
   .sidemenu-active {
