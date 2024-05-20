@@ -11,14 +11,13 @@
 }
 
 .bi-arrow-left-circle-fill {
-  color: blue;
+  color: #069EED;
   padding-right: 8px;
   font-size: 20px;
 }
 
 .back-to {
-  color: blue;
-  font-family: "Open Sans", sans-serif;
+  color: #069EED;
   font-size: 13px;
   font-style: normal;
   font-weight: 600;
@@ -26,7 +25,7 @@
   cursor: pointer;
 }
 .back-to:hover {
-  color: blue;
+  color: #069EED;
 }
 
 .job-main-details {
@@ -40,7 +39,6 @@
 
 .job-pay {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -49,7 +47,6 @@
 
 .company-name {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -59,7 +56,6 @@
 .job-to-pay {
   padding: 0px 6px 0px 6px;
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -77,7 +73,6 @@
   align-items: center;
   padding: 10px 0px;
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -90,62 +85,45 @@
 
 .job-features-benefits {
   padding: 20px 0px;
-  display: flex;
+  width: 100%;
 }
 
-.job-features {
+.job-features-benefits ol, .job-features-benefits ul {
+  padding: 0 0 0 20px;
+  margin: 0 0 15px;
+  color: #666;
+  font-size: 14px;
 }
 
 .job-feature-title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 15px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  padding-bottom: 10px;
+  padding: 0;
+  margin: 10px 0;
 }
 
-.job-feature-points {
-}
 
 .job-feature-heading {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
 
-.job-feature-values {
-  padding-left: 10px;
-  color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 13px;
+.job-feature-values, .job-benefits-values {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
-.job-benefits-values {
-  padding-left: 10px;
-  color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  padding: 6px 0px;
-}
 
-.job-benefits {
-  padding-left: 60px;
+.job-features-li, .job-benefits-points li {
+  padding: 0;
+  margin: 0 0 10px;
 }
-
-.job-features-li {
-  padding: 4px 0px;
-}
-
 .job-about-section {
   padding-bottom: 20px;
 }
@@ -158,20 +136,20 @@
   padding: 8px 16px;
   cursor: pointer;
   color: #ffffff;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
   border-radius: 25px;
+  min-width: 130px;
 }
 
 .post-job-btn {
-  width: 10%;
+  width: auto;
+  min-width: 150px;
   height: 40px;
-  border-radius: 140px;
+  border-radius: 60px;
   background: #c2114b;
   color: #ffffff;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-weight: 500;
   display: flex;
@@ -183,13 +161,13 @@
 
 .preview-job-name {
   color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   line-height: normal;
   padding: 10px 0px;
   width: 100%;
+  text-transform: capitalize;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 768px) {

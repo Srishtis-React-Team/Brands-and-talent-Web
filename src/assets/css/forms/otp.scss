@@ -4,6 +4,7 @@
   height: 50px;
   text-align: center;
   margin: 0px 10px;
+  border: 1px solid #B1A8A8;
 }
 
 .otp-main {
@@ -15,11 +16,11 @@
 .adult-otp-main {
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 115px;
 }
 
 .otp-container {
-  width: 25%;
+  width: 400px;
   height: 100%;
   border: 1px solid #aaa;
   border-radius: 26px;
@@ -28,6 +29,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 100%;
 }
 
 .adults-otp-container {
@@ -51,25 +53,23 @@
 .adult-otp-logo {
   position: absolute;
   background-color: #fff;
-  top: 165px;
-  padding: 0px 20px;
+  top: -32px;
+  padding: 0px 10px;
 }
 
 .otp-title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 26px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   text-align: center;
-  padding: 30px 0px 15px 0px;
-  margin: 20px 0px;
+  padding: 0;
+  margin: 40px 0px 25px;
 }
 
 .bold-otp {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 26px;
   font-style: normal;
   font-weight: 600;
@@ -82,25 +82,24 @@
 }
 
 .otp-mail {
-  color: red;
-  font-family: "Open Sans", sans-serif;
-  font-size: 18px;
+  color: #C2114B;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   line-height: normal;
   text-align: center;
   margin: 17px 0px;
 }
 
 .verify-otp {
-  border-radius: 245px;
+  min-height: 50px;
+  border-radius: 60px;
   border: 1px solid #fff;
   background: #c2114b;
   color: #fff;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   line-height: normal;
   cursor: pointer;
   display: flex;
@@ -108,19 +107,19 @@
   align-items: center;
   padding: 10px 20px;
   margin: 30px 0px;
+  width: 100%;
 }
 
 .otp-info {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 600;
   line-height: normal;
   text-align: center;
   margin: 10px 0px;
   span {
-    color: blue;
+    color: #069EED;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -128,17 +127,15 @@
 
 .otp-back {
   cursor: pointer;
-  text-align: end !important;
-  color: red;
+  color: #C2114B;
   text-decoration: underline;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: bold;
   line-height: normal;
   text-align: center;
-  margin: 10px 0px 30px 0px;
-  width: 290px;
+  margin: 15px 0px 0px 0px;
+  width: 100%;
 }
 
 .disabled-otp {
