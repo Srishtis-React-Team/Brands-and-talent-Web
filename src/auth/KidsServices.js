@@ -214,16 +214,20 @@ const KidsServices = () => {
             ></button>
           </div>
           <div className="dialog-body">
-            <div className="kidsform-one" style={{ width: "100%" }}>
-              <div className="adult-form-wrapper">
-                <div className="adult-img-img">
-                  <img
-                    src={adultsBanner}
-                    alt=""
-                    className="kids-image-sticky"
-                  />
+            <div className="kidsform-one container">
+              <div className="adult-form-wrapper row ml-0 mr-0">
+
+                <div className="col-md-4 col-lg-3">
+                  <div className="adult-img-img fixImgs">
+                    <img
+                      src={adultsBanner}
+                      alt=""
+                      className="kids-image-sticky"
+                    />
+                  </div>
                 </div>
-                <div className="adult-main" style={{ paddingLeft: "400px" }}>
+
+                <div className="adult-main remvSpc col-md-8 col-lg-9">
                   <div className="adults-form-title">Complete your Profile</div>
                   <div>
                     {inputs.map((input, serviceIndex) => (
@@ -439,6 +443,7 @@ const KidsServices = () => {
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>

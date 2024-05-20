@@ -354,14 +354,14 @@
 }
 
 .adult-form-wrapper {
-  margin: 30px 60px;
+  margin: 30px 0px;
   display: flex;
 }
 
-.adult-main {
-  width: 60%;
-  padding-left: 50px;
-}
+// .adult-main {
+//   width: 60%;
+//   padding-left: 50px;
+// }
 
 .adults-form-title {
   color: #000;
@@ -648,9 +648,33 @@
   margin: 0px 0 5px;
 }
 
+
+.recent-setone.alignDivs .userBox .recent-gig-company{ font-size: 14px !important; }
+
+.successWrap {
+  margin: 70px 0 0;
+  padding: 55px 0;
+  align-items: inherit;
+  flex-direction: inherit;
+}
+.successWrap .gmail-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  height: auto;
+  max-width: 1000px;
+}
 .recent-setone.alignDivs .userBox .recent-gig-company {
   font-size: 14px !important;
+
 }
+
+
+
+
+
+
+
+
 
 /* 481px — 768px: iPads, Tablets */
 
@@ -699,15 +723,11 @@
     }
   }
 
-  .kids-form {
-    padding-left: 0px !important;
-  }
+
 }
 
 @media (max-width: 1200px) {
-  .kids-form {
-    padding-left: 0px !important;
-  }
+
   .kidsform-one .kids-wrapper {
     margin: 25px 30px;
     display: flex;
@@ -715,6 +735,7 @@
   .media-wrapper {
     margin: 10px 0px !important;
   }
+  .adult-img-img.fixImgs{ display: none; }
 }
 
 .elipsis-icon {
@@ -1056,6 +1077,13 @@
   cursor: pointer;
 }
 
+
+
+
+// .filter-icon {
+//   padding-left: 10px;
+// }
+
 .filter-icon {
   padding-left: 10px;
 }
@@ -1064,3 +1092,4 @@
   display: flex;
   justify-content: space-between;
 }
+
