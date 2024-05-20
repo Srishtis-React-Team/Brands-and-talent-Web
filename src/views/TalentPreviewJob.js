@@ -108,7 +108,7 @@ const TalentPreviewJob = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        <div className="brand-content-main">
+        <div className="brand-content-main boxBg">
           <div className="back-create">
             <i className="bi bi-arrow-left-circle-fill"></i>
             <div onClick={createJob} className="back-to">

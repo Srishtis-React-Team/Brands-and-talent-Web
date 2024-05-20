@@ -1207,7 +1207,7 @@ const EditTalent = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        <div className="brand-content-main">
+        <div className="brand-content-main boxBg">
           <div className="create-job-title">Edit Profile</div>
 
           <Box sx={{ width: "100%" }}>
