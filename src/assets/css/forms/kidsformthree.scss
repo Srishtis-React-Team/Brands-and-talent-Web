@@ -51,18 +51,35 @@
   align-items: center;
   margin: 25px 0;
 }
-.free-plans .choose-btn{
+.free-plans .choose-btn, .plans-section .col-md-4:first-child .choose-btn{
   background-color: #AB7E13;
   color: #fff;
 }
-.pro-plans .choose-btn{
+.pro-plans .choose-btn, .plans-section .col-md-4:nth-child(2) .choose-btn{
   background-color: #5F2895;
   color: #fff;
 }
-.premium-plans .choose-btn{
+.premium-plans .choose-btn, .plans-section .col-md-4:nth-child(3) .choose-btn{
   background-color: #106D3E;
   color: #fff;
 }
+
+.subscriptions-wrapper .col-md-4:first-child .plans-wrapper {
+  border-top: 11px solid #AB7E13 !important;
+}
+.subscriptions-wrapper .col-md-4:nth-child(2) .plans-wrapper {
+  border-top: 11px solid #5F2895 !important;
+}
+.subscriptions-wrapper .col-md-4:nth-child(3) .plans-wrapper {
+  border-top: 11px solid #106D3E !important;
+}
+
+.subscriptions-wrapper  .plan-name {  min-height: 55px; }
+
+.subscribe-form{
+  margin-bottom: 50px;
+}
+
 .subcribe-gift {
   color: #c2114b !important;
   text-align: center;
@@ -82,4 +99,46 @@
 
 .explore-info {
   padding: 10px 0px;
+}
+
+.fixImgs{
+  position: relative;
+}
+
+.fixImgs .kids-image-sticky {
+  position: fixed;
+  max-width: 100%;
+  object-fit: cover;
+  width: 20%;
+}
+
+
+
+
+
+@media only screen and (max-width: 1399px) {
+  .fixImgs .kids-image-sticky {
+    width: 19%;
+  }
+}
+@media only screen and (max-width: 1199px) {
+  .kids-form.col-md-8 {
+    padding-left: 3%;
+  }
+}
+@media only screen and (max-width: 1149px) {
+  .kids-form.col-md-8 {
+    padding-left: 10px;
+    width: 100%;
+  }
+
+
+
+}
+
+@media only screen and (max-width: 767px) {
+  .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
+    width: 37%;
+    margin-left: 15px;
+  }
 }

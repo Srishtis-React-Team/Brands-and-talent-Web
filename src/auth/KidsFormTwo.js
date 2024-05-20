@@ -109,156 +109,167 @@ const KidsFormTwo = () => {
             }}
           ></button>
         </div>
-        <div className="dialog-body" style={{ marginBottom: "50px" }}>
-          <div className="subscribe-form">
-            <div className="subscriptions-wrapper">
-              {pricingList.length && (
-                <div className="plans-section kids-pan-section">
-                  {pricingList.map((item, index) => {
-                    return (
-                      <div
-                        className={
-                          index === 0
-                            ? "plans-wrapper disabled-plan"
-                            : "plans-wrapper"
-                        }
-                        style={{
-                          border:
-                            selectedPlan && selectedIndex === index
-                              ? "4px solid #c2114b"
-                              : "none",
-                        }}
-                      >
-                        <div className="plan-name">{item.planname}</div>
-                        <div className="subcribe-gift">{item.gift}</div>
 
-                        {item.planname == "Basic" && (
-                          <>
-                            <div className="plan-value">Free</div>
-                            <div className="plan-validity">Forever</div>
-                          </>
-                        )}
-                        {item.plan_type_annual.length >= 1 && (
-                          <>
-                            <div className="annual-wrapper">
-                              <input
-                                type="radio"
-                                name="click"
-                                value="save"
-                                CHECKED
-                                onChange={(event) =>
-                                  handleRadioChange(event, item, "anual")
-                                }
-                                id={item.planname}
-                                className={
-                                  item.planname == "Pro (Popular)"
-                                    ? "pro-checkbox"
-                                    : "premium-checkbox"
-                                }
-                              ></input>
-                              <label for={item.planname} className="annual">
-                                {item.period}
-                              </label>
-                            </div>
-                            {item.plan_type_annual.map((item) => {
-                              return (
-                                <>
-                                  <div className="plan-amounts">
-                                    <div className="value-wrapper">
-                                      <div className="previous-value">
-                                        {item.beforeValue}
+
+        <div className="dialog-body">
+          <div className="container">
+            <div className="subscribe-form">
+
+              <div className="subscriptions-wrapper">
+                {pricingList.length && (
+                  <div className="plans-section kids-pan-section">
+                    <div className="row">
+                    {pricingList.map((item, index) => {
+                      return (
+                        <div className="col-md-4">
+                          <div
+                            className={
+                              index === 0
+                                ? "plans-wrapper disabled-plan"
+                                : "plans-wrapper"
+                            }
+                            style={{
+                              border:
+                                selectedPlan && selectedIndex === index
+                                  ? "4px solid #c2114b"
+                                  : "none",
+                            }}
+                          >
+                            <div className="plan-name">{item.planname}</div>
+                            <div className="subcribe-gift">{item.gift}</div>
+
+                            {item.planname == "Basic" && (
+                              <>
+                                <div className="plan-value">Free</div>
+                                <div className="plan-validity">Forever</div>
+                              </>
+                            )}
+                            {item.plan_type_annual.length >= 1 && (
+                              <>
+                                <div className="annual-wrapper">
+                                  <input
+                                    type="radio"
+                                    name="click"
+                                    value="save"
+                                    CHECKED
+                                    onChange={(event) =>
+                                      handleRadioChange(event, item, "anual")
+                                    }
+                                    id={item.planname}
+                                    className={
+                                      item.planname == "Pro (Popular)"
+                                        ? "pro-checkbox"
+                                        : "premium-checkbox"
+                                    }
+                                  ></input>
+                                  <label for={item.planname} className="annual">
+                                    {item.period}
+                                  </label>
+                                </div>
+                                {item.plan_type_annual.map((item) => {
+                                  return (
+                                    <>
+                                      <div className="plan-amounts">
+                                        <div className="value-wrapper">
+                                          <div className="previous-value">
+                                            {item.beforeValue}
+                                          </div>
+                                          <div className="after-value">
+                                            {item.afterDiscount}
+                                          </div>
+                                        </div>
+                                        <div className="per-value">
+                                          {item.amount}
+                                        </div>
                                       </div>
-                                      <div className="after-value">
-                                        {item.afterDiscount}
-                                      </div>
-                                    </div>
-                                    <div className="per-value">
-                                      {item.amount}
-                                    </div>
+                                      <div className="border-bottom"></div>
+                                    </>
+                                  );
+                                })}
+                                <div className="monthly-wrapper pt-3">
+                                  <div>
+                                    <input
+                                      type="radio"
+                                      name="click"
+                                      value="save"
+                                      CHECKED
+                                      id={item._id}
+                                      onChange={(event) =>
+                                        handleRadioChange(event, item, "monthly")
+                                      }
+                                      className={
+                                        item.planname == "Pro (Popular)"
+                                          ? "pro-checkbox"
+                                          : "premium-checkbox"
+                                      }
+                                    ></input>
+                                    <label for={item._id} className="monthly">
+                                      Monthly
+                                    </label>
                                   </div>
-                                  <div className="border-bottom"></div>
-                                </>
-                              );
-                            })}
-                            <div className="monthly-wrapper pt-3">
-                              <div>
-                                <input
-                                  type="radio"
-                                  name="click"
-                                  value="save"
-                                  CHECKED
-                                  id={item._id}
-                                  onChange={(event) =>
-                                    handleRadioChange(event, item, "monthly")
-                                  }
-                                  className={
-                                    item.planname == "Pro (Popular)"
-                                      ? "pro-checkbox"
-                                      : "premium-checkbox"
-                                  }
-                                ></input>
-                                <label for={item._id} className="monthly">
-                                  Monthly
-                                </label>
-                              </div>
-                              {item.plan_type_monthly.map((item) => {
+                                  {item.plan_type_monthly.map((item) => {
+                                    return (
+                                      <>
+                                        <div className="monthly-amount">
+                                          {item.amount}
+                                        </div>
+                                      </>
+                                    );
+                                  })}
+                                </div>
+                              </>
+                            )}
+
+                            <button
+                              className={
+                                index === 0
+                                  ? "choose-btn disabled-plan first-plan-choose"
+                                  : "choose-btn"
+                              }
+                              onClick={(e) => {
+                                subscriptionPlan(index);
+                              }}
+                              disabled={index === 0}
+                            >
+                              Choose plan
+                            </button>
+                            <div
+                              className={
+                                index === 0 ? "include disabled-plan" : "include"
+                              }
+                            >
+                              WHAT'S INCLUDED
+                            </div>
+                            <div className="included-things">
+                              {item.data.map((item) => {
                                 return (
                                   <>
-                                    <div className="monthly-amount">
-                                      {item.amount}
+                                    <div className="plan-content">
+                                      <div>
+                                        <img src={greenTick} alt="" />
+                                      </div>
+                                      <div className="plan-content-text">
+                                        {item}
+                                      </div>
                                     </div>
                                   </>
                                 );
                               })}
                             </div>
-                          </>
-                        )}
+                            {/* <div className="learn-btn">Learn More</div> */}
+                          </div>
+                        </div>
+                      );
+                    })}
+                    </div>
+                  </div>
+                )}
+              </div>
 
-                        <button
-                          className={
-                            index === 0
-                              ? "choose-btn disabled-plan first-plan-choose"
-                              : "choose-btn"
-                          }
-                          onClick={(e) => {
-                            subscriptionPlan(index);
-                          }}
-                          disabled={index === 0}
-                        >
-                          Choose plan
-                        </button>
-                        <div
-                          className={
-                            index === 0 ? "include disabled-plan" : "include"
-                          }
-                        >
-                          WHAT'S INCLUDED
-                        </div>
-                        <div className="included-things">
-                          {item.data.map((item) => {
-                            return (
-                              <>
-                                <div className="plan-content">
-                                  <div>
-                                    <img src={greenTick} alt="" />
-                                  </div>
-                                  <div className="plan-content-text">
-                                    {item}
-                                  </div>
-                                </div>
-                              </>
-                            );
-                          })}
-                        </div>
-                        {/* <div className="learn-btn">Learn More</div> */}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
             </div>
           </div>
         </div>
+
         <div className="dialog-footer">
           <button
             type="button"
