@@ -127,6 +127,7 @@
       border-radius: 50%;
       border: 2px solid #c2114b;
       margin-right: 10px;
+      background-color: #FFF;
       overflow: hidden;
       .profile-img {
         min-width: 45px;
@@ -269,7 +270,7 @@
     border-radius: 9999px;
     display: flex;
     justify-content: center;
-    margin: 20px 0 40px 0px;
+    margin: 20px 0;
     max-width: 400px;
     overflow: hidden;
     padding: 4px;

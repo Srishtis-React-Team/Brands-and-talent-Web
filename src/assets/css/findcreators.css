@@ -246,7 +246,7 @@
   .models-images {
     width: 65%;
     background-color: #ffffff;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgb(0 0 0 / 11%) 0px 2px 8px;
     margin-right: 20px;
     border-radius: 8px;
     padding: 30px;

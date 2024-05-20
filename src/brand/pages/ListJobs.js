@@ -227,7 +227,7 @@ const ListJobs = () => {
           id="mainBrand"
           className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
         >
-          <div className="brand-content-main">
+          <div className="brand-content-main boxBg">
             <div className="create-job-title">My Jobs</div>
             <div className="individual-talent-tabs">
               <div

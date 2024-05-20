@@ -767,6 +767,14 @@ input[type="radio"] {
 .card-background {
   background: #f1f1f1;
 }
+
+.boxBg {
+  background: #FFF;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: rgb(0 0 0 / 11%) 0px 2px 8px;
+}
+
 .cards-text {
   color: #000;
   font-size: 20px;
@@ -1022,250 +1030,6 @@ input[type="radio"] {
   margin-right: 0;
 }
 
-/* 320px — 480px: Mobile devices */
-
-@media (min-width: 320px) and (max-width: 480px) {
-  .signup-terms {
-    font-size: 13px;
-  }
-
-  .signup-terms-linetwo {
-    font-size: 13px;
-  }
-
-  .signup-terms-linetwo > span {
-    font-size: 13px;
-  }
-
-  .case-warpper {
-    width: 80%;
-  }
-
-  .mobile-blogs-menu {
-    top: 56px;
-  }
-
-  .dialog-footer {
-    justify-content: center !important;
-    padding: 15px 0px !important;
-  }
-  .search-bootstrap {
-    width: 100% !important;
-    padding: 0px;
-  }
-  .form-title {
-    padding-top: 30px;
-  }
-
-  .form-fields {
-    display: flex;
-    padding: 25px;
-    width: 100%;
-    align-items: center;
-  }
-  .form-fields > input {
-    margin: 15px 15px;
-  }
-  .form-fields {
-    display: flex;
-    padding-top: 25px;
-    flex-direction: column;
-  }
-
-  .brand-section > .brand-title {
-    font-size: 35px !important;
-  }
-
-  .brand-section > .brand-description {
-    color: #fff;
-    font-size: 16px;
-    text-align: center;
-  }
-  .section-description {
-    padding-top: 15px;
-    width: 90%;
-    color: #fff;
-    text-align: center;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 24px;
-  }
-
-  .brand-options {
-    /* background-color: lightblue; */
-    width: 100%;
-    height: 240px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* padding: 10px 0px; */
-  }
-
-  .join-talent-section {
-    /* background-color: blue; */
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0px;
-  }
-
-  .hire-talent-section {
-    display: flex;
-    flex-direction: column;
-    padding: 20px 0px;
-  }
-
-  .section-title {
-    color: #fff;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    text-align: center;
-  }
-
-  .find-more {
-    color: #fff;
-    width: 30%;
-    height: 45px;
-    border-radius: 20px;
-    background: #c2124b;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-  }
-
-  .find-more > div {
-    height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .hire-wrapper {
-    width: 30%;
-    border-radius: 35px;
-    cursor: pointer;
-    text-align: center;
-    padding: 10px;
-    margin-top: 20px;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-    cursor: pointer;
-  }
-
-  .case-study-main {
-    width: 100%;
-    display: flex;
-    padding: 0px 40px;
-    flex-direction: column;
-  }
-
-  .location-name {
-    color: #000;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    padding: 0px 10px;
-  }
-  .rating {
-    position: absolute;
-    background-color: #fff;
-    border-radius: 30px;
-    padding: 4px;
-    top: 54%;
-    right: 5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .card-picture {
-    border-radius: 104px;
-    border: 1px solid #fff;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-  }
-  .brands-row-title {
-    margin: 15px 0px;
-  }
-}
-/* 481px — 768px: iPads, Tablets */
-@media (min-width: 481px) and (max-width: 768px) {
-  .case-warpper {
-    width: 40%;
-  }
-  .search-bootstrap {
-    width: 80% !important;
-  }
-  .form-fields > input {
-    margin: 15px 0px;
-  }
-  .form-fields {
-    display: flex;
-    padding: 25px;
-    width: 100%;
-    align-items: center;
-  }
-  .form-fields > input {
-    margin: 15px 15px;
-  }
-  .form-fields {
-    display: flex;
-    padding-top: 25px;
-  }
-
-  .brand-section > .brand-title {
-    font-size: 40px !important;
-  }
-}
-/* 769px — 1024px: Small screens, laptops */
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .case-warpper {
-    width: 30%;
-  }
-  .brand-section > .brand-title {
-    font-size: 40px !important;
-  }
-  .search-bootstrap {
-    width: 50% !important;
-  }
-  .form-fields {
-    display: flex;
-    padding: 25px;
-    width: 100%;
-    align-items: center;
-  }
-  .form-fields > input {
-    margin: 15px 15px;
-  }
-  .form-fields {
-    display: flex;
-    padding-top: 25px;
-  }
-}
-/* 1025px — 1200px: Desktops, large screens */
-
-@media (min-width: 1025px) and (max-width: 1200px) {
-  .form-fields {
-    display: flex;
-    padding: 25px;
-    width: 100%;
-  }
-
-  .search-bootstrap {
-    width: 50% !important;
-  }
-}
 
 /* .responsive-box {
   max-width: 305px;
@@ -1527,6 +1291,32 @@ input[type="radio"] {
   background: #ccc; /* Change the background color for disabled state */
   cursor: unset !important; /* Change cursor for disabled state */
 }
+
+
+
+.active-tab {
+  height: 40px;
+  border-radius: 60px;
+  background: #000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* MEDIA-QUERY START */
 
@@ -1927,18 +1717,6 @@ input[type="radio"] {
     margin: 10px;
   } */
 
-  .active-tab {
-    height: 40px;
-    border-radius: 140px;
-    background: #000;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff !important;
-    max-width: 170px;
-    padding: 15px;
-  }
 
   .tabs {
     display: flex;
@@ -2814,5 +2592,252 @@ input[type="radio"] {
     min-width: 140px;
     height: 35px;
     margin: 0px 15px;
+  }
+}
+
+
+
+/* 320px — 480px: Mobile devices */
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .signup-terms {
+    font-size: 13px;
+  }
+
+  .signup-terms-linetwo {
+    font-size: 13px;
+  }
+
+  .signup-terms-linetwo > span {
+    font-size: 13px;
+  }
+
+  .case-warpper {
+    width: 80%;
+  }
+
+  .mobile-blogs-menu {
+    top: 56px;
+  }
+
+  .dialog-footer {
+    justify-content: center !important;
+    padding: 15px 0px !important;
+  }
+  .search-bootstrap {
+    width: 100% !important;
+    padding: 0px;
+  }
+  .form-title {
+    padding-top: 30px;
+  }
+
+  .form-fields {
+    display: flex;
+    padding: 25px;
+    width: 100%;
+    align-items: center;
+  }
+  .form-fields > input {
+    margin: 15px 15px;
+  }
+  .form-fields {
+    display: flex;
+    padding-top: 25px;
+    flex-direction: column;
+  }
+
+  .brand-section > .brand-title {
+    font-size: 35px !important;
+  }
+
+  .brand-section > .brand-description {
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+  }
+  .section-description {
+    padding-top: 15px;
+    width: 90%;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px;
+  }
+
+  .brand-options {
+    /* background-color: lightblue; */
+    width: 100%;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* padding: 10px 0px; */
+  }
+
+  .join-talent-section {
+    /* background-color: blue; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0px;
+  }
+
+  .hire-talent-section {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0px;
+  }
+
+  .section-title {
+    color: #fff;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+  }
+
+  .find-more {
+    color: #fff;
+    width: 30%;
+    height: 45px;
+    border-radius: 20px;
+    background: #c2124b;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+  }
+
+  .find-more > div {
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hire-wrapper {
+    width: 30%;
+    border-radius: 35px;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .case-study-main {
+    width: 100%;
+    display: flex;
+    padding: 0px 40px;
+    flex-direction: column;
+  }
+
+  .location-name {
+    color: #000;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    padding: 0px 10px;
+  }
+  .rating {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 4px;
+    top: 54%;
+    right: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-picture {
+    border-radius: 104px;
+    border: 1px solid #fff;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+  }
+  .brands-row-title {
+    margin: 15px 0px;
+  }
+}
+/* 481px — 768px: iPads, Tablets */
+@media (min-width: 481px) and (max-width: 768px) {
+  .case-warpper {
+    width: 40%;
+  }
+  .search-bootstrap {
+    width: 80% !important;
+  }
+  .form-fields > input {
+    margin: 15px 0px;
+  }
+  .form-fields {
+    display: flex;
+    padding: 25px;
+    width: 100%;
+    align-items: center;
+  }
+  .form-fields > input {
+    margin: 15px 15px;
+  }
+  .form-fields {
+    display: flex;
+    padding-top: 25px;
+  }
+
+  .brand-section > .brand-title {
+    font-size: 40px !important;
+  }
+}
+/* 769px — 1024px: Small screens, laptops */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .case-warpper {
+    width: 30%;
+  }
+  .brand-section > .brand-title {
+    font-size: 40px !important;
+  }
+  .search-bootstrap {
+    width: 50% !important;
+  }
+  .form-fields {
+    display: flex;
+    padding: 25px;
+    width: 100%;
+    align-items: center;
+  }
+  .form-fields > input {
+    margin: 15px 15px;
+  }
+  .form-fields {
+    display: flex;
+    padding-top: 25px;
+  }
+}
+/* 1025px — 1200px: Desktops, large screens */
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .form-fields {
+    display: flex;
+    padding: 25px;
+    width: 100%;
+  }
+
+  .search-bootstrap {
+    width: 50% !important;
   }
 }
