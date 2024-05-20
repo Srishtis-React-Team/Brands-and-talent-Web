@@ -9,7 +9,7 @@ import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
 
-const AppliedJobs = () => {
+const SavedJobs = () => {
   const location = useLocation();
   const { jobId } = location.state || {};
   console.log(jobId, "jobId");
@@ -26,7 +26,6 @@ const AppliedJobs = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [userId, setUserId] = useState(null);
   const jobImage = require("../assets/icons/jobImage.png");
-
   const [allJobs, showAllJobs] = useState(true);
   const [draftJobs, showDraftJobs] = useState(false);
   const [postedJobs, showPostedJobs] = useState(false);
@@ -37,14 +36,20 @@ const AppliedJobs = () => {
     console.log(storedUserId, "storedUserId");
     setUserId(storedUserId);
     if (storedUserId) {
-      getAppliedjobs(storedUserId);
+      getSavedJobsByTalentId(storedUserId);
     }
   }, [userId]);
 
-  const getJobsByID = async () => {
-    await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+  const getSavedJobsByTalentId = async (id) => {
+    const formData = {
+      talentId: id,
+    };
+    await ApiHelper.post(`${API.getSavedJobsByTalentId}`, formData)
       .then((resData) => {
-        setJobData(resData.data.data);
+        if (resData?.data?.status === true) {
+          setAllJobsList(resData?.data?.data);
+          console.log(resData?.data?.data, "resDatagetSavedJobsByTalentId");
+        }
       })
       .catch((err) => {});
   };
@@ -61,76 +66,65 @@ const AppliedJobs = () => {
     setShowSidebar(!showSidebar);
   };
 
-  const viewFile = (file) => {
-    window.open(`${API.userFilePath}${file.fileData}`, "_blank");
-  };
-
-  const saveAsDraft = async () => {
-    if (jobId) {
-      setMessage("Job Saved To Draft");
-      setOpenPopUp(true);
-      setTimeout(function() {
-        setOpenPopUp(false);
-      }, 2000);
-    }
-  };
-
-  const getAppliedjobs = async (id) => {
-    const formData = {
-      userId: id,
-    };
-    await ApiHelper.post(API.getAppliedjobs, formData)
-      .then((resData) => {
-        console.log(resData, "getAppliedjobs");
-        setAllJobsList(resData?.data?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const postJob = async () => {
-    await ApiHelper.post(`${API.postJobByDraft}${jobId}`)
-      .then((resData) => {
-        console.log(resData, "draftedData");
-        console.log(resData.data.data._id, "draftedData");
-        if (resData.data.status === true) {
-          setMessage("Job Posted SuccessFully!");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            navigate("/list-jobs", {
-              state: {
-                jobId: resData?.data?.data?._id,
-              },
-            });
-          }, 2000);
-        } else if (resData.data.status === false) {
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {});
-  };
-
-  useEffect(() => {
-    getJobsByID();
-  }, []);
-  useEffect(() => {
-    console.log(jobData, "jobData");
-  }, [jobData]);
-  useEffect(() => {
-    console.log(jobId, "jobId");
-  }, [jobId]);
   useEffect(() => {
     console.log(allJobsList, "allJobsList");
   }, [allJobsList]);
 
-  const createJob = () => {
-    navigate("/talent-dashboard");
+  const addToSavedJobs = async (data) => {
+    console.log(data, "dataaddToSavedJobs");
+    const formData = {
+      gigId: data?._id,
+      brandId: data?.brandId,
+      talentId: userId,
+    };
+    await ApiHelper.post(API.updateFavouriteJobs, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("Job Saved SuccessFully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getSavedJobsByTalentId(userId);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessage("Error Occured Try Again");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          getSavedJobsByTalentId(userId);
+        }, 1000);
+      });
+  };
+  const removeFromSavedJobs = async (data) => {
+    console.log(data, "dataremoveFromSavedJobs");
+    const formData = {
+      gigId: data?.gigId,
+      talentId: userId,
+    };
+    await ApiHelper.post(API.removeFavouritesJob, formData)
+      .then((resData) => {
+        console.log(resData, "resDataremoveFromSavedJobs");
+        if (resData.data.status === true) {
+          setMessage("Removed From Saved Jobs");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getSavedJobsByTalentId(userId);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessage("Error Occured Try Again");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          getSavedJobsByTalentId(userId);
+        }, 1000);
+      });
   };
 
   return (
@@ -151,7 +145,7 @@ const AppliedJobs = () => {
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main">
-          <div className="create-job-title">Applied Jobs</div>
+          <div className="create-job-title">Saved Jobs</div>
           {allJobsList && allJobsList?.length > 0 && (
             <>
               <div className="list-jobs-wrapper">
@@ -162,26 +156,27 @@ const AppliedJobs = () => {
                         <div className="recent-campaigns-wrapper">
                           <div className="campaigns-wrapper-one">
                             <div className="campaigns-content-wrapper">
-                              <div className="applied-job-wrapper">
-                                <div className="recent-img-div">
-                                  {/* <i className="bi bi-briefcase-fill "></i> */}
-                                  {job?.brandImage && (
-                                    <img
-                                      className="recent-img"
-                                      src={`${API.userFilePath}${job?.brandImage}`}
-                                      alt=""
-                                    />
-                                  )}
-                                  {!job?.brandImage && (
-                                    <img
-                                      className="recent-img"
-                                      src={jobImage}
-                                      alt=""
-                                    />
-                                  )}
-                                </div>
+                              <div className="campaign-paid-wrapper">
                                 <div className="campaign-name">
-                                  {job?.jobTitle}
+                                  {job?.gigDetails?.jobTitle}
+                                </div>
+                                <div className="recent-gig-description">
+                                  {!job?.gigDetails?.matched && (
+                                    <i
+                                      className="bi bi-heart save-job-icon"
+                                      onClick={() => {
+                                        addToSavedJobs(job?.gigDetails);
+                                      }}
+                                    ></i>
+                                  )}
+                                  {job?.gigDetails?.matched && (
+                                    <i
+                                      className="bi bi-heart-fill remove-job-icon"
+                                      onClick={() => {
+                                        removeFromSavedJobs(job);
+                                      }}
+                                    ></i>
+                                  )}
                                 </div>
                                 {/* <div className="campaign-status">
                                   <div className="campaign-features-count">
@@ -189,7 +184,7 @@ const AppliedJobs = () => {
                                   </div>
                                 </div> */}
                               </div>
-                              {job?.jobDescription?.map(
+                              {job?.gigDetails?.jobDescription?.map(
                                 (htmlContent, index) => (
                                   <div
                                     className="campaign-description"
@@ -200,6 +195,7 @@ const AppliedJobs = () => {
                                   />
                                 )
                               )}
+
                               <div className="campaign-features">
                                 <div className="campaign-features-wrapper">
                                   <div className="campaign-icons-wrapper">
@@ -223,7 +219,7 @@ const AppliedJobs = () => {
                                       Age
                                     </div>
                                     <div className="campaign-features-count">
-                                      {job?.age}
+                                      {job?.gigDetails?.age}
                                     </div>
                                   </div>
                                 </div>
@@ -236,7 +232,7 @@ const AppliedJobs = () => {
                                       Gender
                                     </div>
                                     <div className="campaign-features-count">
-                                      {job?.gender}
+                                      {job?.gigDetails?.gender}
                                     </div>
                                   </div>
                                 </div>
@@ -261,21 +257,21 @@ const AppliedJobs = () => {
                               <div className="campaign-company-wrapper">
                                 <div className="campaign-initial">
                                   {" "}
-                                  {job?.hiringCompany &&
-                                    job.hiringCompany.charAt(0)}
+                                  {job?.gigDetails?.hiringCompany &&
+                                    job.gigDetails?.hiringCompany.charAt(0)}
                                 </div>
                                 <div className="campaign-company-name">
-                                  {job?.hiringCompany}
+                                  {job?.gigDetails?.hiringCompany}
                                 </div>
                               </div>
                               <div className="job-card-buttons">
-                                {job?.type == "Posted" && (
+                                {job?.gigDetails?.type == "Posted" && (
                                   <>
                                     <div
                                       className="preview-work-btn"
                                       onClick={(e) => {
                                         e.preventDefault();
-                                        PreviewJob(job?._id);
+                                        PreviewJob(job?.gigDetails?._id);
                                       }}
                                     >
                                       <i className="bi bi-eye-fill post-work-icon"></i>
@@ -297,13 +293,33 @@ const AppliedJobs = () => {
             </>
           )}
 
-          {allJobsList?.length == 0 && (
+          {allJobsList && allJobsList.length == 0 && allJobs && (
             <>
               <div
                 style={{ textAlign: "center", padding: "20px" }}
                 className="list-jobs-wrapper"
               >
                 No Jobs Available
+              </div>
+            </>
+          )}
+          {allJobsList && allJobsList.length == 0 && draftJobs && (
+            <>
+              <div
+                style={{ textAlign: "center", padding: "20px" }}
+                className="list-jobs-wrapper"
+              >
+                No Draft Jobs Available
+              </div>
+            </>
+          )}
+          {allJobsList && allJobsList.length == 0 && postedJobs && (
+            <>
+              <div
+                style={{ textAlign: "center", padding: "20px" }}
+                className="list-jobs-wrapper"
+              >
+                No Posted Jobs Available
               </div>
             </>
           )}
@@ -315,4 +331,4 @@ const AppliedJobs = () => {
   );
 };
 
-export default AppliedJobs;
+export default SavedJobs;

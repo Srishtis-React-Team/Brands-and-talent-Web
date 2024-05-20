@@ -58,7 +58,6 @@ const TalentHeader = ({ toggleMenu, myState }) => {
     }),
   };
 
-  
   useEffect(() => {
     // Function to toggle dropdown when clicking the bell icon
     const handleBellIconClick = (event) => {
@@ -86,7 +85,6 @@ const TalentHeader = ({ toggleMenu, myState }) => {
         dropdown?.classList?.remove("active");
       }
     };
-
 
     // Attach event listeners when the component mounts
     document.addEventListener("click", handleBellIconClick);
@@ -186,6 +184,8 @@ const TalentHeader = ({ toggleMenu, myState }) => {
         }, 1000);
       } else if (menuItem === "dashboard") {
         navigate(`${"/talent-dashboard"}?${talentData?._id}`);
+      } else if (menuItem === "edit") {
+        navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
       }
       console.log(`Clicked on ${menuItem}`);
     };
@@ -297,7 +297,6 @@ const TalentHeader = ({ toggleMenu, myState }) => {
       <div className="headerDashboard">
         <div className="container-fluid">
           <div className="talent-header-main">
-
             <div className="leftPart">
               <div className="talent-nav-logo">
                 <img
@@ -318,43 +317,29 @@ const TalentHeader = ({ toggleMenu, myState }) => {
 
             <div className="rightPart">
               <div className="talent-navbar-functions">
-              <nav className="menu-items">
+                <nav className="menu-items">
                   <div className="navTxt">
-                    <NavLink to="/">
-                      Home
-                    </NavLink>
+                    <NavLink to="/">Home</NavLink>
                   </div>
                   <div className="navTxt">
-                    <NavLink to="/listJob">
-                      Jobs List
-                    </NavLink>
+                    <NavLink to="/listJob">Jobs List</NavLink>
                   </div>
                   <div className="navTxt">
-                    <NavLink to="/listJob">
-                      Get Hired
-                    </NavLink>
+                    <NavLink to="/listJob">Get Hired</NavLink>
                   </div>
                   <div className="navTxt">
-                    <NavLink to="/listJob">
-                      Find Talent
-                    </NavLink>
+                    <NavLink to="/listJob">Find Talent</NavLink>
                   </div>
                   <div className="navTxt">
-                    <NavLink to="/listJob">
-                      How it works
-                    </NavLink>
+                    <NavLink to="/listJob">How it works</NavLink>
                   </div>
                   <div className="navTxt">
-                    <NavLink to="/listJob">
-                      Pricing
-                    </NavLink>
+                    <NavLink to="/listJob">Pricing</NavLink>
                   </div>
                   <div className="navTxt">
-                    <NavLink to="/listJob">
-                      Resources
-                    </NavLink>
+                    <NavLink to="/listJob">Resources</NavLink>
                   </div>
-               </nav>
+                </nav>
 
                 <React.Fragment>
                   <div className="header-search-wrapper">
@@ -362,9 +347,15 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                       <i className="fas fa-search"></i>
                     </div>
                     <div className="header-search-input">
-                      <input type="text" className="header-search-input-style" />
+                      <input
+                        type="text"
+                        className="header-search-input-style"
+                      />
                     </div>
-                    <div className="header-filter-icon" onClick={handleClickOpen}>
+                    <div
+                      className="header-filter-icon"
+                      onClick={handleClickOpen}
+                    >
                       <img className="filter-icon" src={sliderIcon} alt="" />
                     </div>
                   </div>
@@ -571,7 +562,7 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                         </>
                       )} */}
 
-                      {/* <div className="notify_item">
+                {/* <div className="notify_item">
                         <div className="notify_img">
                           <img
                             className="notification-user-image"
@@ -610,11 +601,11 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                           <span className="notify_time">6 hours ago</span>
                         </div>
                       </div> */}
-                    {/* </div>
+                {/* </div>
                   </div>
                 </div> */}
-                
-                  {/* <div className="talent-chat-icon">
+
+                {/* <div className="talent-chat-icon">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -655,7 +646,7 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                     )}
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("logout")}
+                      onClick={createHandleMenuClick("edit")}
                     >
                       Edit Profile
                     </MenuItem>
@@ -669,7 +660,6 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                 </Dropdown>
               </div>
             </div>
-
           </div>
         </div>
       </div>

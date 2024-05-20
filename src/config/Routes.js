@@ -50,6 +50,9 @@ import AppliedJobs from "../views/AppliedJobs";
 import Applicants from "../brand/pages/Applicants";
 import OverallJobs from "../brand/pages/OverallJobs";
 import EditTalent from "../auth/EditTalent";
+import SavedJobs from "../views/SavedJobs";
+import TalentSettings from "../auth/TalentSettings";
+import TalentNotification from "../views/TalentNotification";
 function Routing() {
   return (
     <Routes>
@@ -97,6 +100,7 @@ function Routing() {
       <Route path="/brand-dashboard" element={<BrandHome />} />
       <Route path="/list-jobs" element={<ListJobs />} />
       <Route path="/applied-jobs" element={<AppliedJobs />} />
+      <Route path="/saved-jobs" element={<SavedJobs />} />
       <Route path="/create-jobs" element={<CreateJobs />} />
       <Route path="/find-talents" element={<BrandTalents />} />
       <Route path="/favorite-talents" element={<BrandFavorites />} />
@@ -107,6 +111,8 @@ function Routing() {
       <Route path="/preview-job-talent" element={<TalentPreviewJob />} />
       <Route path="/applicants" element={<Applicants />} />
       <Route path="/edit-talent-profile" element={<EditTalent />} />
+      <Route path="/talent-notification" element={<TalentNotification />} />
+      <Route path="/talent-settings" element={<TalentSettings />} />
     </Routes>
   );
 }

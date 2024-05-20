@@ -73,6 +73,11 @@ const EditTalent = () => {
   const elipsis = require("../assets/icons/elipsis.png");
   const greenTickCircle = require("../assets/icons/small-green-tick.png");
   const docsIcon = require("../assets/icons/docsIcon.png");
+  const [editProfileImage, setEditProfileImage] = useState("");
+  const [editProfileImageObject, setEditProfileImageObject] = useState(null);
+  const [portofolioFile, setPortofolioFile] = useState([]);
+  const [videoAUdioFile, setVideoAudioFile] = useState([]);
+  const [resumeFile, setResumeFile] = useState([]);
 
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
@@ -151,6 +156,8 @@ const EditTalent = () => {
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [selectedProfessionsEdit, setSelectedProfessionsEdit] = useState([]);
 
+  const [talentId, setTalentId] = useState(null);
+  const [talentData, setTalentData] = useState();
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -299,9 +306,6 @@ const EditTalent = () => {
 
   useEffect(() => {
     getCountries();
-    if (userId) {
-      getKidsData();
-    }
   }, []);
 
   useEffect(() => {}, [updateDisabled]);
@@ -406,12 +410,21 @@ const EditTalent = () => {
       .catch((err) => {});
   };
 
+  useEffect(() => {
+    setTalentId(localStorage.getItem("userId"));
+    if (talentId) {
+      getKidsData();
+    }
+  }, [talentId]);
+
   const getKidsData = async () => {
-    await ApiHelper.post(`${API.getTalentById}${talentData?._id}`)
+    await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
         if (resData.data.status === true) {
           console.log(resData?.data?.data, "KIDSFETCH");
           if (resData?.data?.data?.type === "kids") {
+            setTalentData(resData.data.data, "resData.data.data");
+            setEditProfileImage(resData.data.data?.image?.fileData);
             setKidsFillData(resData.data.data);
             setParentFirstName(resData?.data?.data?.parentFirstName);
             setParentLastName(resData?.data?.data?.parentLastName);
@@ -449,6 +462,9 @@ const EditTalent = () => {
               ...resData.data.data?.relevantCategories,
             ]);
             setAboutYou(resData.data.data?.childAboutYou);
+            setPortofolioFile(resData.data.data?.portfolio);
+            setVideoAudioFile(resData.data.data?.videosAndAudios);
+            setResumeFile(resData.data.data?.cv);
             setAge(resData.data.data?.age);
             const selectedOptions = resData.data.data?.languages.map(
               (language) => {
@@ -476,17 +492,6 @@ const EditTalent = () => {
       })
       .catch((err) => {});
   };
-
-  useEffect(() => {
-    console.log(parentEmail, "parentEmail");
-  }, [parentEmail]);
-  useEffect(() => {
-    console.log(country, "country");
-  }, [country]);
-  useEffect(() => {
-    console.log(dateOfBirth, "dateOfBirth");
-  }, [dateOfBirth]);
-
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
     console.log(event, "event");
@@ -738,43 +743,6 @@ const EditTalent = () => {
     setValueTabs(newValue);
   };
 
-  const [talentId, setTalentId] = useState(null);
-  const [talentData, setTalentData] = useState();
-
-  useEffect(() => {
-    setTalentId(localStorage.getItem("userId"));
-    console.log(talentId, "talentId");
-    if (talentId) {
-      getTalentById();
-    }
-  }, [talentId]);
-
-  const getTalentById = async () => {
-    await ApiHelper.post(`${API.getTalentById}${talentId}`)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          if (resData.data.data) {
-            setTalentData(resData.data.data, "resData.data.data");
-            setEditProfileImage(resData.data.data?.image?.fileData);
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    console.log(talentData, "talentDataEdit");
-    if (talentData?._id) {
-      getKidsData();
-    }
-  }, [talentData]);
-
-  const [editProfileImage, setEditProfileImage] = useState("");
-  const [editProfileImageObject, setEditProfileImageObject] = useState(null);
-  const [portofolioFile, setPortofolioFile] = useState([]);
-
   useEffect(() => {
     console.log(editProfileImage, "editProfileImage");
   }, [editProfileImage]);
@@ -792,6 +760,22 @@ const EditTalent = () => {
       let fileData = event.target.files[0];
       console.log(fileData, "fileData");
       uploadNewPortfolio(fileData);
+    }
+  };
+
+  const newVideoUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
+      uploadNewVideo(fileData);
+    }
+  };
+
+  const newResumeUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
+      uploadNewResume(fileData);
     }
   };
 
@@ -863,9 +847,8 @@ const EditTalent = () => {
             fileData: resData.data.data.filename,
             type: resData?.data?.data?.filetype,
           };
-          console.log(fileObj, "fileObj");
-          setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
-          updatePortfolioAPI();
+
+          updatePortfolioAPI(fileObj);
         }
       })
       .catch((err) => {
@@ -873,10 +856,15 @@ const EditTalent = () => {
       });
   };
 
-  const updatePortfolioAPI = async () => {
-    const formData = {
-      portfolio: portofolioFile,
-    };
+  const updatePortfolioAPI = async (fileObj) => {
+    let portofolioArray = [...portofolioFile, fileObj];
+    console.log(portofolioArray, "portofolioArray");
+    let formData;
+    if (portofolioArray.length > 0) {
+      formData = {
+        portfolio: portofolioArray,
+      };
+    }
     await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -884,8 +872,131 @@ const EditTalent = () => {
           setMessage("Portfolio Added Successfully");
           setOpenPopUp(true);
           setTimeout(function() {
-            setMyState(true);
             setOpenPopUp(false);
+            getKidsData();
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const uploadNewVideo = async (fileData) => {
+    setLoader(true);
+    const params = new FormData();
+    params.append("file", fileData);
+    params.append("fileName", fileData.name);
+    params.append("fileType", getFileType(fileData.type));
+    /* await ApiHelper.post(API.uploadFile, params) */
+    await Axios.post(API.uploadFile, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((resData) => {
+        console.log(resData, "uploadProfileDATA");
+        if (resData?.data?.status === true) {
+          let fileObj = {
+            id: resData.data.data.fileId,
+            title: fileData.name,
+            fileData: resData.data.data.filename,
+            type: resData?.data?.data?.filetype,
+          };
+          updateVideoAPI(fileObj);
+        }
+      })
+      .catch((err) => {
+        setLoader(false);
+      });
+  };
+
+  const updateVideoAPI = async (fileObj) => {
+    let portofolioArray = [...videoAUdioFile, fileObj];
+    console.log(portofolioArray, "portofolioArray");
+    let formData;
+    if (portofolioArray.length > 0) {
+      formData = {
+        videosAndAudios: portofolioArray,
+      };
+    }
+    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("File Added Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getKidsData();
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+  const uploadNewResume = async (fileData) => {
+    setLoader(true);
+    const params = new FormData();
+    params.append("file", fileData);
+    params.append("fileName", fileData.name);
+    params.append("fileType", getFileType(fileData.type));
+    /* await ApiHelper.post(API.uploadFile, params) */
+    await Axios.post(API.uploadFile, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((resData) => {
+        console.log(resData, "uploadProfileDATA");
+        if (resData?.data?.status === true) {
+          let fileObj = {
+            id: resData.data.data.fileId,
+            title: fileData.name,
+            fileData: resData.data.data.filename,
+            type: resData?.data?.data?.filetype,
+          };
+          updateResumeAPI(fileObj);
+        }
+      })
+      .catch((err) => {
+        setLoader(false);
+      });
+  };
+
+  const updateResumeAPI = async (fileObj) => {
+    let portofolioArray = [...resumeFile, fileObj];
+    console.log(portofolioArray, "portofolioArray");
+    let formData;
+    if (portofolioArray.length > 0) {
+      formData = {
+        cv: portofolioArray,
+      };
+    }
+    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("File Added Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getKidsData();
           }, 2000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -947,6 +1058,22 @@ const EditTalent = () => {
     }
   };
 
+  const videoFileInputRef = useRef(null);
+
+  const videoFile = () => {
+    if (videoFileInputRef.current) {
+      videoFileInputRef.current.click(); // Trigger the click event on the file input
+    }
+  };
+
+  const resumeFileInputRef = useRef(null);
+
+  const resumeFileFunction = () => {
+    if (resumeFileInputRef.current) {
+      resumeFileInputRef.current.click(); // Trigger the click event on the file input
+    }
+  };
+
   const viewUpdateFile = (item) => {
     console.log(item, "viewFile");
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
@@ -983,7 +1110,7 @@ const EditTalent = () => {
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            getTalentById();
+            getKidsData();
           }, 2000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -1059,6 +1186,10 @@ const EditTalent = () => {
     console.log(inputs, "inputs");
   };
 
+  useEffect(() => {
+    console.log(portofolioFile, "portofolioFile");
+  }, [portofolioFile]);
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} myState={myState} />
@@ -1109,7 +1240,7 @@ const EditTalent = () => {
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
-              <div className="profile-image-edit-section">
+              <div className="profile-image-edit-section edit-basicdetails-section-main">
                 <div>
                   <img
                     className="profile-image-edit"
@@ -1147,7 +1278,7 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
-              <div className="kids-main">
+              <div className="kids-main edit-basicdetails-section-main">
                 <div className="kids-form-title">Parent/Guardian Details</div>
                 <div className="kids-form-row">
                   <div className="kids-form-section">
@@ -1761,7 +1892,7 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
-              <div className="update-portfolio-section">
+              <div className="update-portfolio-section edit-basicdetails-section-main">
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Portfolio</div>
 
@@ -1922,12 +2053,12 @@ const EditTalent = () => {
                         type="file"
                         className="select-cv-input"
                         id="profile-image"
-                        accept="image/*"
-                        onChange={newPortfolioUpload}
-                        ref={portfolioFileInputRef}
+                        accept="audio/*,video/*"
+                        onChange={newVideoUpload}
+                        ref={videoFileInputRef}
                       />
                       <Button
-                        onClick={portfolioFile}
+                        onClick={videoFile}
                         className="edit-profileimg-btn"
                         variant="text"
                         style={{ textTransform: "capitalize" }}
@@ -2016,12 +2147,12 @@ const EditTalent = () => {
                         type="file"
                         className="select-cv-input"
                         id="profile-image"
-                        accept="image/*"
-                        onChange={newPortfolioUpload}
-                        ref={portfolioFileInputRef}
+                        accept="*/*"
+                        onChange={newResumeUpload}
+                        ref={resumeFileInputRef}
                       />
                       <Button
-                        onClick={portfolioFile}
+                        onClick={resumeFileFunction}
                         className="edit-profileimg-btn"
                         variant="text"
                         style={{ textTransform: "capitalize" }}
@@ -2035,7 +2166,7 @@ const EditTalent = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={3}>
               <div className="update-portfolio-section">
-                <div className="update-service-cards-wrapper">
+                <div className="update-service-cards-wrapper edit-service-section-main">
                   {talentData &&
                     talentData?.services?.length > 0 &&
                     talentData?.services?.map((item) => {

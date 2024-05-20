@@ -347,6 +347,65 @@ const TalentDashBoard = () => {
     setOpen(false);
   };
 
+  const addToSavedJobs = async (data) => {
+    console.log(data, "dataaddToSavedJobs");
+    const formData = {
+      gigId: data?._id,
+      brandId: data?.brandId,
+      talentId: talentId,
+    };
+    await ApiHelper.post(API.updateFavouriteJobs, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("Job Saved SuccessFully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getRecentGigs();
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessage("Error Occured Try Again");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          getRecentGigs();
+        }, 1000);
+      });
+
+    setOpen(false);
+  };
+  const removeFromSavedJobs = async (data) => {
+    const formData = {
+      gigId: data?._id,
+      talentId: talentId,
+    };
+    await ApiHelper.post(API.removeFavouritesJob, formData)
+      .then((resData) => {
+        console.log(resData, "resDataremoveFromSavedJobs");
+        if (resData.data.status === true) {
+          setMessage("Removed From Saved Jobs");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getRecentGigs();
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessage("Error Occured Try Again");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 1000);
+      });
+
+    setOpen(false);
+  };
+
   const selectSkills = (selectedOptions) => {
     setSkillsError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
@@ -652,7 +711,24 @@ const TalentDashBoard = () => {
                                   </div>
                                 </div>
                               </div>
-
+                              <div className="recent-gig-description">
+                                {!item?.matched && (
+                                  <i
+                                    className="bi bi-heart save-job-icon"
+                                    onClick={() => {
+                                      addToSavedJobs(item);
+                                    }}
+                                  ></i>
+                                )}
+                                {item?.matched && (
+                                  <i
+                                    className="bi bi-heart-fill remove-job-icon"
+                                    onClick={() => {
+                                      removeFromSavedJobs(item);
+                                    }}
+                                  ></i>
+                                )}
+                              </div>
                               <div className="recent-set-three">
                                 <div
                                   className="view-gig-btn"
@@ -665,20 +741,10 @@ const TalentDashBoard = () => {
                                 </div>
                                 <div
                                   className={
-                                    item?.isApplied
-                                      ? " apply-now-btn"
+                                    item?.isApplied === "Apply Now"
+                                      ? "apply-now-btn"
                                       : "apply-now-btn applied-btn"
                                   }
-                                  style={{
-                                    backgroundColor:
-                                      item?.isApplied == "Apply Now"
-                                        ? "yellow"
-                                        : "green",
-                                    color:
-                                      item?.isApplied == "Apply Now"
-                                        ? "black"
-                                        : "#FFFFFF",
-                                  }}
                                   onClick={() => {
                                     applyjobs(item);
                                   }}
@@ -693,8 +759,12 @@ const TalentDashBoard = () => {
                                       <i className="bi bi-briefcase-fill"></i>
                                     </>
                                   )}
-
-                                  <div>{item?.isApplied}</div>
+                                  {item?.isApplied === "Apply Now" && (
+                                    <div>Apply Now</div>
+                                  )}
+                                  {item?.isApplied === "Applied" && (
+                                    <div>Applied</div>
+                                  )}
                                 </div>
                               </div>
                             </div>

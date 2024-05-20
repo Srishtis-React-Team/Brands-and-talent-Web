@@ -628,12 +628,13 @@
 
 .profile-image-edit-section {
   margin: 20px;
-  width: 300px;
+  width: 320px;
   .profile-image-edit {
     border-radius: 5%;
   }
   .btn-img-edit-wrapper {
     display: flex;
+    justify-content: end;
     .edit-profileimg-btn {
       background-color: #c2114b;
       color: #fff;
@@ -845,4 +846,69 @@
   justify-content: end;
   .add-portfolia-btn {
   }
+}
+
+.edit-basicdetails-section-main {
+  padding: 10px 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+.edit-service-section-main {
+  background-color: #ffffff;
+}
+
+.edit-profileimg-btn:hover {
+  background-color: #c2114b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+  text-align: right;
+}
+
+.update-password-main {
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  width: 50%;
+  margin: 0 auto;
+}
+.manage-account-main {
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.account-active-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.talent-name {
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 0px;
+}
+
+.talent-account-status-title {
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 0px;
+}
+.talent-account-status-active {
+  color: green;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 0px;
+}
+.talent-account-status-inactive {
+  color: red;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 0px;
 }

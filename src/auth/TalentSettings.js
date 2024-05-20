@@ -1,0 +1,527 @@
+import React, { useState, useEffect, useRef } from "react";
+import "../assets/css/forms/kidsform-one.scss";
+import Select from "react-select";
+import Axios from "axios";
+import { API } from "../config/api";
+import PopUp from "../components/PopUp";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { useNavigate } from "react-router";
+import nationalityOptions from "../components/nationalities";
+import languageOptions from "../components/languages";
+import MuiPhoneNumber from "material-ui-phone-number";
+import TextField from "@mui/material/TextField";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import TalentHeader from "../layout/TalentHeader";
+import TalentSideMenu from "../layout/TalentSideMenu";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import draftToHtml from "draftjs-to-html";
+import { convertToRaw } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import Modal from "react-modal";
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+const TalentSettings = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const open = Boolean(anchorEl);
+  const handleFileClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
+  const [editProfileImage, setEditProfileImage] = useState("");
+
+  const [oldPassword, setTalentOldPassword] = useState("");
+  const [talentPassword, setTalentPassword] = useState("");
+  const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [talentId, setTalentId] = useState(null);
+  const [talentData, setTalentData] = useState();
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [talentPasswordError, settalentPasswordError] = useState(false);
+  const [oldPasswordError, setOldPasswordError] = useState(false);
+  const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
+    false
+  );
+  const [valueTabs, setValueTabs] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValueTabs(newValue);
+  };
+
+  const toggleMenu = () => {
+    setShowSidebar(!showSidebar);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  useEffect(() => {
+    setTalentId(localStorage.getItem("userId"));
+    if (talentId) {
+      getKidsData();
+    }
+  }, [talentId]);
+
+  const getKidsData = async () => {
+    await ApiHelper.post(`${API.getTalentById}${talentId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          console.log(resData?.data?.data, "KIDSFETCH");
+          if (resData?.data?.data?.type === "kids") {
+            setTalentData(resData?.data?.data);
+            setEditProfileImage(resData.data.data?.image?.fileData);
+          }
+        }
+      })
+      .catch((err) => {});
+  };
+  const activateAccount = async () => {
+    const formData = {
+      inActive: false,
+    };
+    await ApiHelper.post(`${API.activateUser}${talentId}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("Status Changed Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getKidsData();
+          }, 2000);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const handleOldPasswordChange = (e) => {
+    setTalentOldPassword(e.target.value);
+    setOldPasswordError(false);
+  };
+  const handlePasswordChange = (e) => {
+    setTalentPassword(e.target.value);
+    setPasswordMatch(e.target.value === talentConfirmPassword);
+    settalentPasswordError(false);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setTalentConfirmPassword(e.target.value);
+    setPasswordMatch(e.target.value === talentPassword);
+    settalentConfirmPasswordError(false);
+  };
+
+  const updatePassword = async () => {
+    const formData = {
+      talentId: talentId,
+      password: oldPassword,
+      newPassword: talentPassword,
+    };
+    await ApiHelper.post(`${API.updatePassword}`, formData)
+      .then((resData) => {
+        console.log(resData, "resData");
+        if (resData.data.status === true) {
+          setMessage("Password Updated Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            setTalentOldPassword("");
+            setTalentPassword("");
+            setTalentConfirmPassword("");
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setMessage(resData?.data?.message);
+          setOpenPopUp(true);
+          setOldPasswordError(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getKidsData();
+          }, 2000);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  let line = document.querySelector(".line");
+  let text = document.querySelector(".text");
+  let password_strength_box = document.querySelector(".password_strength_box");
+  let password = document.querySelector(".password");
+
+  if (password && password_strength_box && line && text) {
+    if (password.value.length == 0) {
+      password_strength_box.style.display = "none";
+    }
+
+    password.oninput = function() {
+      if (password.value.length == 0) {
+        password_strength_box.style.display = "none";
+      }
+
+      if (password.value.length >= 1) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "5%";
+        line.style.backgroundColor = "red";
+        text.style.color = "red";
+        text.innerHTML = "Weak";
+      }
+      if (password.value.length >= 2) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "10%";
+        line.style.backgroundColor = "red";
+        text.style.color = "red";
+        text.innerHTML = "Weak";
+      }
+      if (password.value.length >= 3) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "20%";
+        line.style.backgroundColor = "red";
+        text.style.color = "red";
+        text.innerHTML = "Weak";
+      }
+      if (password.value.length >= 4) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "35%";
+        line.style.backgroundColor = "red";
+        text.style.color = "red";
+        text.innerHTML = "Weak";
+        if (password.value.match(/[!@#$%^&*]/)) {
+          password_strength_box.style.display = "flex";
+          line.style.width = "45%";
+          line.style.backgroundColor = "#e9ee30";
+          text.style.color = "#e9ee30";
+          text.innerHTML = "Medium";
+        }
+      }
+      if (
+        password.value.length >= 5 &&
+        password.value.match(/[A-Z]/) &&
+        password.value.match(/[a-z]/)
+      ) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "50%";
+        line.style.backgroundColor = "#e9ee30";
+        text.style.color = "#e9ee30";
+        text.innerHTML = "Medium";
+      }
+      if (password.value.length >= 6 && password.value.match(/[0-9]/)) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "70%";
+        line.style.backgroundColor = "#e9ee30";
+        text.style.color = "#e9ee30";
+        text.innerHTML = "Medium";
+      }
+      if (
+        password.value.length >= 7 &&
+        password.value.match(/[A-Z]/) &&
+        password.value.match(/[a-z]/) &&
+        password.value.match(/[0-9]/)
+      ) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "80%";
+        line.style.backgroundColor = "#e9ee30";
+        text.style.color = "#e9ee30";
+        text.innerHTML = "Medium";
+      }
+
+      if (
+        password.value.length >= 8 &&
+        password.value.match(/[A-Z]/) &&
+        password.value.match(/[a-z]/) &&
+        password.value.match(/[0-9]/) &&
+        password.value.match(/[!@#$%^&*]/)
+      ) {
+        password_strength_box.style.display = "flex";
+        line.style.width = "100%";
+        line.style.backgroundColor = "#2ccc2c";
+        text.style.color = "#2ccc2c";
+        text.innerHTML = "Strong";
+      }
+    };
+  }
+
+  return (
+    <>
+      <TalentHeader toggleMenu={toggleMenu} />
+      <div
+        id="sidebarBrand"
+        className={`brand-sidebar ${
+          showSidebar ? "show-sidebar" : "not-sidebar"
+        }`}
+      >
+        <TalentSideMenu />
+      </div>
+
+      <main
+        id="mainBrand"
+        className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
+      >
+        <div className="brand-content-main">
+          <div className="create-job-title">Settings</div>
+          <Box sx={{ width: "100%" }}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                value={valueTabs}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab
+                  label="Change Password"
+                  {...a11yProps(0)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Account Settings"
+                  {...a11yProps(1)}
+                  style={{ textTransform: "capitalize" }}
+                />
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={valueTabs} index={0}>
+              <div className="update-password-main">
+                <div className="kids-form-section">
+                  <div className="mb-3">
+                    <label className="form-label">
+                      Old Password <span className="mandatory">*</span>
+                    </label>
+                    <div className="form-group has-search adult-password-wrapper">
+                      <span className="fa fa-lock form-control-feedback"></span>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        className="form-control adult-signup-inputs"
+                        placeholder="Old Password"
+                        value={oldPassword}
+                        onChange={(e) => {
+                          handleOldPasswordChange(e);
+                          setTalentOldPassword(e.target.value);
+                          setOldPasswordError(false);
+                        }}
+                      ></input>
+                      {showPassword ? (
+                        <span
+                          className="fa fa-eye show-password-icon"
+                          onClick={togglePasswordVisibility}
+                        ></span>
+                      ) : (
+                        <span
+                          className="fa fa-eye-slash show-password-icon"
+                          onClick={togglePasswordVisibility}
+                        ></span>
+                      )}
+                      {oldPasswordError && (
+                        <div className="invalid-fields">
+                          Enter Correct Old Password
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="kids-form-section w-40">
+                  <div className="mb-3">
+                    <label className="form-label">
+                      New Password <span className="mandatory">*</span>
+                    </label>
+                    <div className="form-group has-search adult-password-wrapper">
+                      <span className="fa fa-lock form-control-feedback"></span>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        className="form-control password adult-signup-inputs"
+                        placeholder="New Password"
+                        value={talentPassword}
+                        onChange={(e) => {
+                          handlePasswordChange(e);
+                          setTalentPassword(e.target.value);
+                          settalentPasswordError(false);
+                        }}
+                      ></input>
+                      {talentPassword && (
+                        <div className="password_strength_box">
+                          <div className="password_strength">
+                            <p className="text">Weak</p>
+                            <div className="line_box">
+                              <div className="line"></div>
+                            </div>
+                          </div>
+                          <div className="tool_tip_box">
+                            <span>
+                              <i className="bi bi-question-circle"></i>
+                            </span>
+                            <div className="tool_tip">
+                              <p style={{ listStyleType: "none" }}>
+                                <b>Password must be:</b>
+                              </p>
+                              <p>At least 8 character long</p>
+                              <p>At least 1 uppercase letter</p>
+                              <p>At least 1 lowercase letter</p>
+                              <p>At least 1 number</p>
+                              <p>At least 1 special character from !@#$%^&*</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {showPassword ? (
+                        <span
+                          className="fa fa-eye show-password-icon"
+                          onClick={togglePasswordVisibility}
+                        ></span>
+                      ) : (
+                        <span
+                          className="fa fa-eye-slash show-password-icon"
+                          onClick={togglePasswordVisibility}
+                        ></span>
+                      )}
+                      {talentPasswordError && (
+                        <div className="invalid-fields">
+                          Please enter Password
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="kids-form-section w-40">
+                  <div className="mb-1">
+                    <label className="form-label">
+                      Confirm New Password <span className="mandatory">*</span>
+                    </label>
+                    <div className="form-group has-search adult-confirm-password-wrapper">
+                      <span className="fa fa-lock form-control-feedback"></span>
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        className="form-control adult-signup-inputs"
+                        placeholder="Confirm New Password"
+                        value={talentConfirmPassword}
+                        onChange={(e) => {
+                          handleConfirmPasswordChange(e);
+                          setTalentConfirmPassword(e.target.value);
+                          settalentConfirmPasswordError(false);
+                        }}
+                      ></input>
+                      {showConfirmPassword ? (
+                        <span
+                          className="fa fa-eye show-confirm-password-icon"
+                          onClick={toggleConfirmPasswordVisibility}
+                        ></span>
+                      ) : (
+                        <span
+                          className="fa fa-eye-slash show-confirm-password-icon"
+                          onClick={toggleConfirmPasswordVisibility}
+                        ></span>
+                      )}
+                      {talentConfirmPasswordError && (
+                        <div className="invalid-fields">
+                          Please enter Password
+                        </div>
+                      )}
+                    </div>
+                    {!passwordMatch &&
+                      talentConfirmPassword &&
+                      talentConfirmPassword.length && (
+                        <p className="password-wrong">
+                          Passwords does not match.
+                        </p>
+                      )}
+                  </div>
+                </div>
+                <div className="add-portfoli-section">
+                  <div className="add-portfolia-btn">
+                    <Button
+                      onClick={updatePassword}
+                      className="edit-profileimg-btn"
+                      variant="text"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      Update Password
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={1}>
+              Manage Account
+              <div className="profile-image-edit-section edit-basicdetails-section-main">
+                <div>
+                  <img
+                    className="account-active-image"
+                    src={`${API.userFilePath}${editProfileImage}`}
+                    alt=""
+                  />
+                  <div className="talent-name">
+                    {talentData?.preferredChildFirstname}&nbsp;
+                    {talentData?.preferredChildLastName}
+                  </div>
+                  <div className="talent-account-status">
+                    <span className="talent-account-status-title">
+                      Account Status
+                    </span>
+                    &nbsp;:&nbsp;
+                    <span className="talent-account-status-inactive">
+                      {talentData?.inActive === true && "Active"}
+                      {talentData?.inActive === false && "In Active"}
+                    </span>
+                  </div>
+                </div>
+                <div className="btn-img-edit-wrapper">
+                  <Button
+                    onClick={() => activateAccount()}
+                    className="edit-profileimg-btn"
+                    variant="text"
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    {talentData?.inActive === true && "DeActivate"}
+                    {talentData?.inActive === false && "Activate"}
+                  </Button>
+                </div>
+              </div>
+            </CustomTabPanel>
+          </Box>
+        </div>
+      </main>
+
+      {openPopUp && <PopUp message={message} />}
+    </>
+  );
+};
+
+export default TalentSettings;
