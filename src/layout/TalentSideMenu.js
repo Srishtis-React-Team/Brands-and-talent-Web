@@ -152,9 +152,9 @@ const TalentSideMenu = ({ myState }) => {
           </Link>
 
           <Link
-            to="/talent"
+            to="/talent-notification"
             className={
-              location.pathname === "/talent"
+              location.pathname === "/talent-notification"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -164,9 +164,9 @@ const TalentSideMenu = ({ myState }) => {
           </Link>
 
           <Link
-            to="/talent"
+            to="/message"
             className={
-              location.pathname === "/talent"
+              location.pathname === "/message"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -176,9 +176,9 @@ const TalentSideMenu = ({ myState }) => {
           </Link>
 
           <Link
-            to="/talent"
+            to="/edit-talent-profile"
             className={
-              location.pathname === "/talent"
+              location.pathname === "/edit-talent-profile"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -188,9 +188,9 @@ const TalentSideMenu = ({ myState }) => {
           </Link>
 
           <Link
-            to="/talent"
+            to="/saved-jobs"
             className={
-              location.pathname === "/talent"
+              location.pathname === "/saved-jobs"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -198,7 +198,6 @@ const TalentSideMenu = ({ myState }) => {
             <i className="bi bi-save icons"></i>
             <div className="brand-menu-text">Saved Jobs</div>
           </Link>
-          
 
           <Link
             to="/applied-jobs"
@@ -213,9 +212,9 @@ const TalentSideMenu = ({ myState }) => {
           </Link>
 
           <Link
-            to="/talent"
+            to="/talent-settings"
             className={
-              location.pathname === "/talent"
+              location.pathname === "/talent-settings"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }

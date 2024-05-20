@@ -68,6 +68,7 @@ export const API = {
   subscriptionStatus: BASEURL + "users/subscriptionStatus/",
   setUserFavorite: BASEURL + "users/setUserFavorite/",
   deleteFile: BASEURL + "users/deleteFile/",
+  activateUser: BASEURL + "users/activateUser/",
 
   //keyword
   postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",
@@ -92,12 +93,17 @@ export const API = {
   applyjobs: BASEURL + "gigs/applyjobs",
   searchJobs: BASEURL + "gigs/searchJobs",
   getSkills: BASEURL + "gigs/getSkills",
+  updateFavouriteJobs: BASEURL + "gigs/updateFavouriteJobs	",
+  removeFavouritesJob: BASEURL + "gigs/removeFavouritesJob	",
+  getSavedJobsByTalentId: BASEURL + "gigs/getSavedJobsByTalentId	",
+  readNotification: BASEURL + "gigs/readNotification	",
 
   //notifications
   getBrandNotification: BASEURL + "gigs/getBrandNotification/",
   getTalentNotification: BASEURL + "gigs/getTalentNotification/",
   getCountNotification: BASEURL + "gigs/getCountNotification",
   getAppliedjobs: BASEURL + "gigs/getAppliedjobs",
+  updatePassword: BASEURL + "gigs/updatePassword",
 
   //chat section
   listTalentsForChat: BASEURL + "message/listTalentsForChat",

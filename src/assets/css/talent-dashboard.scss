@@ -648,8 +648,9 @@
   margin: 0px 0 5px;
 }
 
-
-.recent-setone.alignDivs .userBox .recent-gig-company{ font-size: 14px !important; }
+.recent-setone.alignDivs .userBox .recent-gig-company {
+  font-size: 14px !important;
+}
 
 .successWrap {
   margin: 70px 0 0;
@@ -665,16 +666,7 @@
 }
 .recent-setone.alignDivs .userBox .recent-gig-company {
   font-size: 14px !important;
-
 }
-
-
-
-
-
-
-
-
 
 /* 481px — 768px: iPads, Tablets */
 
@@ -722,12 +714,9 @@
       }
     }
   }
-
-
 }
 
 @media (max-width: 1200px) {
-
   .kidsform-one .kids-wrapper {
     margin: 25px 30px;
     display: flex;
@@ -735,7 +724,9 @@
   .media-wrapper {
     margin: 10px 0px !important;
   }
-  .adult-img-img.fixImgs{ display: none; }
+  .adult-img-img.fixImgs {
+    display: none;
+  }
 }
 
 .elipsis-icon {
@@ -955,8 +946,8 @@
   width: 120px;
   height: 40px;
   border-radius: 50px;
-  background-color: green;
-  color: #ffffff;
+  background-color: yellow;
+  color: #000;
   font-size: 13px;
   font-style: normal;
   font-weight: 600;
@@ -975,6 +966,24 @@
 
 .applied-btn {
   cursor: unset;
+  width: 120px;
+  height: 40px;
+  border-radius: 50px;
+  background-color: green;
+  color: #ffffff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .bi-briefcase-fill,
+  .bi-eye-fill,
+  .bi-check-circle-fill {
+    font-size: 13px;
+    padding-right: 10px;
+  }
 }
 
 .view-gig-btn {
@@ -1077,9 +1086,6 @@
   cursor: pointer;
 }
 
-
-
-
 // .filter-icon {
 //   padding-left: 10px;
 // }
@@ -1093,3 +1099,92 @@
   justify-content: space-between;
 }
 
+.save-job-icon {
+  cursor: pointer;
+  color: #c2114b;
+}
+.remove-job-icon {
+  cursor: pointer;
+  color: #c2114b;
+}
+
+.talent-notification-main {
+  background-color: #ffffff;
+  width: 45%;
+  margin: 0 auto;
+}
+
+.talent-notification-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #b4b4b4;
+}
+
+.notification-card-flex {
+  display: flex;
+  align-items: center;
+}
+
+.notification-card-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.notification-card-content {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: #000;
+  padding-left: 15px;
+}
+
+.notification-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.notification-card-time {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  color: #2600ff;
+}
+
+.bi-three-dots {
+  cursor: pointer;
+}
+.bi-three-dots:hover {
+  color: #c2114b;
+}
+
+.notification-unread {
+  background-color: rgba(55, 143, 233, 0.2);
+  color: black; /* Ensure text is readable */
+}
+
+.notification-read {
+  background-color: white;
+  color: black;
+}
+
+.recent-img {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+.applied-job-wrapper {
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px;
+}
+
+.campaign-name {
+  padding-left: 15px;
+}

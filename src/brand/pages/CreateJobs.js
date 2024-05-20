@@ -1081,9 +1081,6 @@ const CreateJobs = () => {
     if (country === "") {
       setParentCountryError(true);
     }
-    if (state === "") {
-      setStateError(true);
-    }
     console.log(
       jobTitle,
       "jobTitle",
@@ -1121,8 +1118,7 @@ const CreateJobs = () => {
       gender !== "" &&
       languages !== "" &&
       jobCurrency !== "" &&
-      country !== "" &&
-      state !== ""
+      country !== ""
     ) {
       const formData = {
         jobTitle: jobTitle,
@@ -1571,9 +1567,7 @@ const CreateJobs = () => {
                         </div>
                         <div className="kids-form-section">
                           <div className="mb-3">
-                            <label className="form-label">
-                              State<span className="mandatory">*</span>
-                            </label>
+                            <label className="form-label">State</label>
                             <Select
                               placeholder="Select state..."
                               options={stateList.map((state) => ({
