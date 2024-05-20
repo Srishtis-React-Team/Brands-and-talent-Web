@@ -542,7 +542,7 @@ const Dashboard = () => {
       <div className="dashboard-main">
         <Header sendMessageToParent={handleMessageFromHeader} />
 
-        <section className="section-1">
+        <section className="section-1 wraper">
           <div className="container-fluid">
             <div className="row banner-content">
               <div className="col-lg-12">
@@ -604,146 +604,149 @@ const Dashboard = () => {
           <div className="brand-options"></div>
         </div> */}
 
-        <div className="container-fluid">
-          <div className="tabs-section">
-            <div className="title">Popular Talent</div>
-            {/* <div className="tabs">
-              <div
-                className={All ? "active-tab" : null}
-                onClick={(e) => {
-                  handleTabs("All");
-                }}
-              >
-                All Talents
-              </div>
-              <div
-                className={featuredMembers ? "active-tab" : null}
-                onClick={(e) => {
-                  handleTabs("featured-members");
-                }}
-              >
-                Featured Members
-              </div>
-              <div
-                className={Actor ? "active-tab" : null}
-                onClick={(e) => {
-                  handleTabs("Actor");
-                }}
-              >
-                Actor
-              </div>
-              <div
-                className={Director ? "active-tab" : null}
-                onClick={(e) => {
-                  handleTabs("Director");
-                }}
-              >
-                Director
-              </div>
-              <div
-                className={Singer ? "active-tab" : null}
-                onClick={(e) => {
-                  handleTabs("Singer");
-                }}
-              >
-                Singer
-              </div>
-              <div
-                className={Model ? "active-tab" : null}
-                onClick={(e) => {
-                  handleTabs("Model");
-                }}
-              >
-                Model
-              </div>
-              <div
-                className="more-text"
-                onClick={(e) => {
-                  handleTabs("more");
-                }}
-              >
-                More
-              </div>
-            </div> */}
+        <div className="wraper">
+          <div className="container-fluid">
+            <div className="tabs-section">
+              <div className="title">Popular Talent</div>
+              {/* <div className="tabs">
+                <div
+                  className={All ? "active-tab" : null}
+                  onClick={(e) => {
+                    handleTabs("All");
+                  }}
+                >
+                  All Talents
+                </div>
+                <div
+                  className={featuredMembers ? "active-tab" : null}
+                  onClick={(e) => {
+                    handleTabs("featured-members");
+                  }}
+                >
+                  Featured Members
+                </div>
+                <div
+                  className={Actor ? "active-tab" : null}
+                  onClick={(e) => {
+                    handleTabs("Actor");
+                  }}
+                >
+                  Actor
+                </div>
+                <div
+                  className={Director ? "active-tab" : null}
+                  onClick={(e) => {
+                    handleTabs("Director");
+                  }}
+                >
+                  Director
+                </div>
+                <div
+                  className={Singer ? "active-tab" : null}
+                  onClick={(e) => {
+                    handleTabs("Singer");
+                  }}
+                >
+                  Singer
+                </div>
+                <div
+                  className={Model ? "active-tab" : null}
+                  onClick={(e) => {
+                    handleTabs("Model");
+                  }}
+                >
+                  Model
+                </div>
+                <div
+                  className="more-text"
+                  onClick={(e) => {
+                    handleTabs("more");
+                  }}
+                >
+                  More
+                </div>
+              </div> */}
+            </div>
           </div>
-        </div>
-
-        <div className="container">
-          <div className="gallery-section">
-            <div className="gallery-main">
-              {talentsList?.map((item) => {
-                return (
-                  <div className="gallery-wrapper">
-                    <div className="gallery-top">
-                      <img
-                        className="gallery-img"
-                        src={`${API.userFilePath}${item.image?.fileData}`}
-                      ></img>
-                      <div className="rating">
-                        <img src={brightStar}></img>
-                        <img src={brightStar}></img>
-                        <img src={brightStar}></img>
-                        <img src={darkStar}></img>
-                        <img src={darkStar}></img>
+        
+        
+          <div className="container">
+            <div className="gallery-section wraper">
+              <div className="gallery-main">
+                {talentsList?.map((item) => {
+                  return (
+                    <div className="gallery-wrapper">
+                      <div className="gallery-top">
+                        <img
+                          className="gallery-img"
+                          src={`${API.userFilePath}${item.image?.fileData}`}
+                        ></img>
+                        <div className="rating">
+                          <img src={brightStar}></img>
+                          <img src={brightStar}></img>
+                          <img src={brightStar}></img>
+                          <img src={darkStar}></img>
+                          <img src={darkStar}></img>
+                        </div>
+                        {!item.isFavorite && (
+                          <img
+                            className="heart-icon"
+                            src={heartIcon}
+                            onClick={() => addFavorite(item)}
+                          ></img>
+                        )}
+                        {item.isFavorite === true && (
+                          <img
+                            className="heart-icon"
+                            src={favoruiteIcon}
+                            onClick={() => removeFavorite(item)}
+                          ></img>
+                        )}
                       </div>
-                      {!item.isFavorite && (
-                        <img
-                          className="heart-icon"
-                          src={heartIcon}
-                          onClick={() => addFavorite(item)}
-                        ></img>
-                      )}
-                      {item.isFavorite === true && (
-                        <img
-                          className="heart-icon"
-                          src={favoruiteIcon}
-                          onClick={() => removeFavorite(item)}
-                        ></img>
-                      )}
-                    </div>
-                    <div className="gallery-content">
-                      <div className="content">
-                        <div className="name">
-                          {item?.preferredChildFirstname
-                            ? `${item?.preferredChildFirstname}`
-                            : "Elizabeth"}
-                        </div>
-                        <div className="address">
-                          {item.profession?.map((profession, index) => (
-                            <React.Fragment key={index}>
-                              {profession.value}
-                              {index !== item.profession.length - 1 && ","}
-                            </React.Fragment>
-                          ))}
-                        </div>
-                        <div className="user-details">
-                          <div className="location-wrapper">
-                            <img src={locationIcon} alt="" />
-                            <div className="location-name">
-                              {item?.parentCountry
-                                ? item?.parentCountry
-                                : "cambodia"}
+                      <div className="gallery-content">
+                        <div className="content">
+                          <div className="name">
+                            {item?.preferredChildFirstname
+                              ? `${item?.preferredChildFirstname}`
+                              : "Elizabeth"}
+                          </div>
+                          <div className="address">
+                            {item.profession?.map((profession, index) => (
+                              <React.Fragment key={index}>
+                                {profession.value}
+                                {index !== item.profession.length - 1 && ","}
+                              </React.Fragment>
+                            ))}
+                          </div>
+                          <div className="user-details">
+                            <div className="location-wrapper">
+                              <img src={locationIcon} alt="" />
+                              <div className="location-name">
+                                {item?.parentCountry
+                                  ? item?.parentCountry
+                                  : "cambodia"}
+                              </div>
+                            </div>
+                            <div className="location-wrapper">
+                              <img src={jobIcon} alt="" />
+                              <div className="location-name">25 Jobs Booked</div>
                             </div>
                           </div>
-                          <div className="location-wrapper">
-                            <img src={jobIcon} alt="" />
-                            <div className="location-name">25 Jobs Booked</div>
-                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="find-more wraper">
+              <div className="moreBtn">Find More</div>
             </div>
           </div>
         </div>
 
-        <div className="find-more">
-          <div className="moreBtn">Find More</div>
-        </div>
-
-        <div className="communityWraper secSpac">
+        <div className="communityWraper wraper secSpac">
           <div className="container">
               <div className="title">Our Community</div>
               <div className="row">
@@ -772,7 +775,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="productsWraper secSpac">
+        <div className="productsWraper wraper secSpac">
           <div className="container">
               <div className="title">Products and Services</div>
               <div className="row">
@@ -818,7 +821,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="caseWraper secSpac">
+        <div className="caseWraper wraper secSpac">
           <div className="title">Case studies</div>
           <div className="container">
             <div className="gallery-section">
@@ -845,9 +848,10 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
-          <div className="find-more">
-            <div className="moreBtn">Find More</div>
+          <div className="container">
+            <div className="find-more">
+              <div className="moreBtn">Find More</div>
+            </div>
           </div>
         </div>
 
@@ -860,141 +864,143 @@ const Dashboard = () => {
           style={{
             backgroundImage: `url(${sliderBackground})`,
           }}
-          className="carousel-section secSpac"
+          className="carousel-section storyCar secSpac wraper"
         >
           <div className="carousel-title title center">Success Stories</div>
-          <div id="carouselExampleControls" className="carousel slide">
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <div className="carousel-wrapper">
-                  <div className="box-one">
-                    <div className="carimg_Box">
-                      <img className="carousel-img" src={gents}></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
+          <div className="container">
+            <div id="carouselExampleControls" className="carousel slide">
+              <div className="carousel-inner">
+                <div className="carousel-item active">
+                  <div className="carousel-wrapper">
+                    <div className="box-one">
+                      <div className="carimg_Box">
+                        <img className="carousel-img" src={gents}></img>
                       </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div className="profImg">
-                          <img src={roundProfile}></img>
+                      <div className="box-content">
+                        <div className="quote">
+                          <img src={quoteIcon}></img>
                         </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
+                        <div className="carousel-description">
+                          A great photographer's tool for online castings that
+                          really works!
+                        </div>
+                        <div className="profile-section">
+                          <div className="profImg">
+                            <img src={roundProfile}></img>
+                          </div>
+                          <div className="profile-content">
+                            <div className="profile-name">Dorothy</div>
+                            <div className="profile-info">Lorem ipsum dolor</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="box-one box-two">
+                      <div className="carimg_Box">
+                        <img className="carousel-img" src={female}></img>
+                      </div>
+                      <div className="box-content">
+                        <div className="quote">
+                          <img src={quoteIcon}></img>
+                        </div>
+                        <div className="carousel-description">
+                          A great photographer's tool for online castings that
+                          really works!
+                        </div>
+                        <div className="profile-section">
+                          <div className="profImg">
+                            <img src={roundProfile}></img>
+                          </div>
+                          <div className="profile-content">
+                            <div className="profile-name">Dorothy</div>
+                            <div className="profile-info">Lorem ipsum dolor</div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="box-one box-two">
-                    <div>
-                      <img className="carousel-img" src={female}></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
+                </div>
+                <div className="carousel-item">
+                  <div className="carousel-wrapper">
+                    <div className="box-one">
+                      <div className="carimg_Box">
+                        <img className="carousel-img" src={girl}></img>
                       </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div>
-                          <img src={roundProfile}></img>
+                      <div className="box-content">
+                        <div className="quote">
+                          <img src={quoteIcon}></img>
                         </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
+                        <div className="carousel-description">
+                          A great photographer's tool for online castings that
+                          really works!
+                        </div>
+                        <div className="profile-section">
+                          <div className="profImg">
+                            <img src={roundProfile}></img>
+                          </div>
+                          <div className="profile-content">
+                            <div className="profile-name">Dorothy</div>
+                            <div className="profile-info">Lorem ipsum dolor</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="box-one box-two">
+                      <div className="carimg_Box">
+                        <img className="carousel-img" src={fashion}></img>
+                      </div>
+                      <div className="box-content">
+                        <div className="quote">
+                          <img src={quoteIcon}></img>
+                        </div>
+                        <div className="carousel-description">
+                          A great photographer's tool for online castings that
+                          really works!
+                        </div>
+                        <div className="profile-section">
+                          <div className="profImg">
+                            <img src={roundProfile}></img>
+                          </div>
+                          <div className="profile-content">
+                            <div className="profile-name">Dorothy</div>
+                            <div className="profile-info">Lorem ipsum dolor</div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="carousel-item">
-                <div className="carousel-wrapper">
-                  <div className="box-one">
-                    <div>
-                      <img className="carousel-img" src={girl}></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
-                      </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div>
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="box-one box-two">
-                    <div>
-                      <img className="carousel-img" src={fashion}></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
-                      </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div>
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <button
+                className="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev"
+              >
+                <span
+                  className="carousel-control-prev-icon carousel-icons"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button
+                className="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleControls"
+                data-bs-slide="next"
+              >
+                <span
+                  className="carousel-control-next-icon carousel-icons"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Next</span>
+              </button>
             </div>
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExampleControls"
-              data-bs-slide="prev"
-            >
-              <span
-                className="carousel-control-prev-icon carousel-icons"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExampleControls"
-              data-bs-slide="next"
-            >
-              <span
-                className="carousel-control-next-icon carousel-icons"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Next</span>
-            </button>
           </div>
         </div>
 
 
-        <div className="secSpac logoWraper my-4">
+        <div className="secSpac logoWraper wraper my-4">
           <div className="container">
             <div className="title brands-row-title">Trusted by renowned brands</div>
             <div className="brands-section">

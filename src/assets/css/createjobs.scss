@@ -131,15 +131,18 @@
   // background-color: rgb(25, 0, 255);
   // height: 30%;
 }
+.campaign-paid-wrapper, .campaigns-content-wrapper, .campaign-name { padding-left: 0 !important; }
+
+.campaign-features-wrapper{ margin-right: 10px; }
+
+.campaign-features .campaign-features-wrapper:last-child{ margin-right: 0px; }
 
 .list-jobs-wrapper {
-  display: flex;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .list-jobs-card {
-  width: 45%;
-  margin: 20px 20px 20px 0px;
+  margin:5px 0px 20px;
 }
 
 .job-card-buttons {
