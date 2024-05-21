@@ -124,26 +124,29 @@ const Pricing = () => {
                             : ""
                         }
                       >
-                        <div className="plan-name">
-                          {item.planname}
-                          <div
-                            className={
-                              index == 1
-                                ? "pro-gift giftSize"
-                                : "" || index == 2
-                                ? "premium-gift giftSize"
-                                : ""
-                            }
-                          >
-                            {item.gift}
+                        <div className="priceHeight">
+                          <div className="plan-name">
+                            {item.planname}
+                            <div
+                              className={
+                                index == 1
+                                  ? "pro-gift giftSize"
+                                  : "" || index == 2
+                                  ? "premium-gift giftSize"
+                                  : ""
+                              }
+                            >
+                              {item.gift}
+                            </div>
                           </div>
-                        </div>
-                        {item.planname == "Basic" && (
-                          <>
-                            <div className="plan-value">Free</div>
-                            <div className="plan-validity">Forever</div>
-                          </>
-                        )}
+
+                          {item.planname == "Basic" && (
+                            <>
+                              <div className="plan-value">Free</div>
+                              <div className="plan-validity">Forever</div>
+                            </>
+                          )}
+                       
                         {item.plan_type_annual.length >= 1 && (
                           <>
                             <div className="annual-wrapper">
@@ -213,6 +216,7 @@ const Pricing = () => {
                             </div>
                           </>
                         )}
+                         </div>
                         <div
                           className={
                             index == 0
