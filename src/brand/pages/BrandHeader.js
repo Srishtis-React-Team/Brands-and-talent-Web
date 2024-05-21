@@ -156,7 +156,7 @@ const BrandHeader = ({ toggleMenu }) => {
 
   return (
     <>
-      <div className="headerDashboard">
+      <div className="headerDashboard dashHeader">
         <div className="container-fluid">
           <div className="talent-header-main">
             <div className="leftPart">

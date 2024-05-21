@@ -144,7 +144,7 @@ const SavedJobs = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        <div className="brand-content-main">
+        <div className="brand-content-main boxBg">
           <div className="create-job-title">Saved Jobs</div>
           {allJobsList && allJobsList?.length > 0 && (
             <>
