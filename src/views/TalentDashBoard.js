@@ -712,7 +712,7 @@ const TalentDashBoard = () => {
                                 </div>
                               </div>
                               <div className="recent-gig-description">
-                                {!item?.matched && (
+                                {!item?.isFavorite && (
                                   <i
                                     className="bi bi-heart save-job-icon"
                                     onClick={() => {
@@ -720,7 +720,7 @@ const TalentDashBoard = () => {
                                     }}
                                   ></i>
                                 )}
-                                {item?.matched && (
+                                {item?.isFavorite && (
                                   <i
                                     className="bi bi-heart-fill remove-job-icon"
                                     onClick={() => {

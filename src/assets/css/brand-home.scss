@@ -66,7 +66,7 @@
   line-height: normal;
   padding-left: 10px;
 }
-.btnSpace{
+.btnSpace {
   justify-content: end;
   display: inline-grid;
   align-items: center;
@@ -97,7 +97,7 @@
 .brand-home-title-flex {
   display: flex;
   justify-content: space-between;
-  margin:20px 0px 0;
+  margin: 20px 0px 0;
   align-items: center;
 }
 
@@ -173,6 +173,7 @@
 .campaign-name:hover {
   text-decoration: underline;
 }
+
 .campaign-description {
   color: #000;
   font-size: 14px;
@@ -180,6 +181,11 @@
   font-weight: 400;
   padding: 10px 0px 20px 0px;
   line-height: normal;
+  max-height: 150px;
+  padding-bottom: 10px;
+  overflow: scroll;
+  margin-bottom: 20px;
+  margin-top: 5px;
 }
 
 .campaign-initial {
@@ -331,15 +337,19 @@
   width: 100%;
   object-fit: cover;
 }
-.remvSpace{
+.remvSpace {
   padding: 0 !important;
   background-color: transparent !important;
   box-shadow: inherit !important;
 }
 
-.rowSpc{ padding: 0 10px; }
+.rowSpc {
+  padding: 0 10px;
+}
 
-.top-brands-wrapper.col-md-4{  padding: 0 3px; }
+.top-brands-wrapper.col-md-4 {
+  padding: 0 3px;
+}
 
 .contact-section-main {
   background-color: #ffffff;
@@ -376,9 +386,9 @@
     }
   }
 
-  .top-brands-section .top-brands-title.py-1{     
+  .top-brands-section .top-brands-title.py-1 {
     font-size: 16px;
-    font-weight: 700; 
+    font-weight: 700;
   }
 
   .top-brands-section {
@@ -404,7 +414,7 @@
     flex-wrap: wrap;
     // justify-content: space-evenly;
     .top-brands-wrapper {
-       cursor: pointer;
+      cursor: pointer;
       .top-brand-img-wrapper {
         .top-brand-img {
           width: 100%;
@@ -434,14 +444,14 @@
   display: flex;
   align-items: center;
 }
-.top-brand-img-wrapper div{
-    font-size: 10px;
-    line-height: 13px;
-    text-align: center;
-    margin: 5px 0;
-    color: #66666675;
+.top-brand-img-wrapper div {
+  font-size: 10px;
+  line-height: 13px;
+  text-align: center;
+  margin: 5px 0;
+  color: #66666675;
 }
-.top-brands-section{ 
+.top-brands-section {
   font-size: 16px;
   font-weight: 700;
 }
@@ -485,13 +495,13 @@
   justify-content: space-between;
   padding: 0px 0px 10px 0px;
 }
-.photos-slider .sliderImg{
+.photos-slider .sliderImg {
   height: 200px;
   width: 100%;
-  background-color: #FFF;
+  background-color: #fff;
   overflow: hidden;
 }
-.photos-slider .sliderImg .talents-profile-slider-image{
+.photos-slider .sliderImg .talents-profile-slider-image {
   min-height: 200px;
   object-fit: cover;
   width: 100%;

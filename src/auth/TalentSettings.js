@@ -68,7 +68,6 @@ const TalentSettings = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [editProfileImage, setEditProfileImage] = useState("");
-
   const [oldPassword, setTalentOldPassword] = useState("");
   const [talentPassword, setTalentPassword] = useState("");
   const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
@@ -89,6 +88,19 @@ const TalentSettings = () => {
     setValueTabs(newValue);
   };
 
+  const customStylesAlert = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      /* margin: '0 auto', */
+      width: "450px",
+      height: "270px",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -107,6 +119,12 @@ const TalentSettings = () => {
     }
   }, [talentId]);
 
+  const [alertpop, setAlertpop] = useState({
+    status: false,
+    item: "",
+    label: "",
+  });
+
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
@@ -121,6 +139,23 @@ const TalentSettings = () => {
       .catch((err) => {});
   };
   const activateAccount = async () => {
+    const formData = {
+      inActive: false,
+    };
+    await ApiHelper.post(`${API.activateUser}${talentId}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("Status Changed Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getKidsData();
+          }, 2000);
+        }
+      })
+      .catch((err) => {});
+  };
+  const deActivateAccount = async () => {
     const formData = {
       inActive: false,
     };
@@ -504,7 +539,15 @@ const TalentSettings = () => {
                 </div>
                 <div className="btn-img-edit-wrapper">
                   <Button
-                    onClick={() => activateAccount()}
+                    onClick={(e) => {
+                      setAlertpop({
+                        status: true,
+                        label:
+                          talentData?.inActive === true
+                            ? "deActivate"
+                            : "Activate",
+                      });
+                    }}
                     className="edit-profileimg-btn"
                     variant="text"
                     style={{ textTransform: "capitalize" }}
@@ -518,6 +561,66 @@ const TalentSettings = () => {
           </Box>
         </div>
       </main>
+
+      <Modal style={customStylesAlert} isOpen={alertpop?.status === true}>
+        <div>
+          {/* <div className='uploadHead'>
+                        <h4 className='mt-2'>Reason For stock Return</h4>
+                        <img src={CloseIcon} className='pop-close' onClick={() => { setIsModalOpen(false); }} />
+                    </div> */}
+          <div className="alertBox">
+            <div className="col-md-12  mx-5">
+              <div className="alert-icon-section">
+                <i className="alert-icon bi bi-exclamation-triangle-fill"></i>
+              </div>
+              {alertpop?.label == "Activate" && (
+                <>
+                  <h5>Are you sure you want to Activate this Account? </h5>
+                </>
+              )}
+              {alertpop?.label == "deActivate" && (
+                <>
+                  <h5>Are you sure you want to DeActivate this Account? </h5>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="alert-button-section">
+            <button
+              type="submit"
+              className=" btn btn-warning"
+              onClick={() => {
+                setAlertpop({
+                  status: false,
+                  item: null,
+                  label: null,
+                });
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className=" btn btn-danger alert-ok-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                setAlertpop({
+                  status: false,
+                  item: null,
+                  label: null,
+                });
+                if (alertpop?.label === "Activate") {
+                  activateAccount();
+                } else if (alertpop?.label === "deActivate") {
+                  deActivateAccount();
+                }
+              }}
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </Modal>
 
       {openPopUp && <PopUp message={message} />}
     </>

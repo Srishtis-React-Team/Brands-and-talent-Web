@@ -60,6 +60,19 @@ const TalentNotification = () => {
     });
   };
 
+  const deleteNotification = async (item) => {
+    const formData = {
+      notificationId: item?._id,
+    };
+    await ApiHelper.post(`${API.deleteNotification}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          getTalentNotification();
+        }
+      })
+      .catch((err) => {});
+  };
+
   useEffect(() => {
     console.log(notificationList, "notificationListMain");
   }, [notificationList]);
@@ -96,9 +109,6 @@ const TalentNotification = () => {
                             ? "notification-read"
                             : "notification-unread"
                         }`}
-                        onClick={() => {
-                          viewNotification(item);
-                        }}
                       >
                         <div className="notification-card-flex">
                           <img
@@ -106,7 +116,12 @@ const TalentNotification = () => {
                             src={`${API.userFilePath}${item?.brandDetails?.brandImage[0]?.fileData}`}
                             alt=""
                           />
-                          <div className="notification-card-content">
+                          <div
+                            className="notification-card-content "
+                            onClick={() => {
+                              viewNotification(item);
+                            }}
+                          >
                             {item?.brandNotificationMessage}&nbsp;
                             {item?.gigDetails?.jobTitle}
                           </div>
@@ -118,7 +133,27 @@ const TalentNotification = () => {
                               addSuffix: true,
                             })}
                           </div>
-                          <i class="bi bi-three-dots"></i>
+                          <i
+                            className="bi bi-three-dots "
+                            id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          ></i>
+                          <ul
+                            class="dropdown-menu"
+                            aria-labelledby="dropdownMenuButton1"
+                          >
+                            <li>
+                              <a
+                                class="dropdown-item"
+                                onClick={() => {
+                                  deleteNotification(item);
+                                }}
+                              >
+                                Remove Notification
+                              </a>
+                            </li>
+                          </ul>
                         </div>
                       </div>
                     </>

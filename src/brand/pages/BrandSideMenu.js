@@ -212,30 +212,6 @@ const BrandSideMenu = ({ onChildClick }) => {
           </Link>
 
           <Link
-            to="/talent"
-            className={
-              location.pathname === "/talent"
-                ? "sidemenu-active mt-2"
-                : "brand-menu-wrapper mt-2"
-            }
-          >
-            <i className="bi bi-bell icons"></i>
-            <div className="brand-menu-text">Notification</div>
-          </Link>
-
-          <Link
-            to="/talent"
-            className={
-              location.pathname === "/talent"
-                ? "sidemenu-active mt-2"
-                : "brand-menu-wrapper mt-2"
-            }
-          >
-            <i className="bi bi-chat icons"></i>
-            <div className="brand-menu-text">Messages</div>
-          </Link>
-
-          <Link
             to="/create-jobs"
             className={
               location.pathname === "/create-jobs"
@@ -248,7 +224,6 @@ const BrandSideMenu = ({ onChildClick }) => {
           </Link>
 
           <Link
-            to="/talent"
             className={
               location.pathname === "/talent"
                 ? "sidemenu-active mt-2"
@@ -284,9 +259,9 @@ const BrandSideMenu = ({ onChildClick }) => {
           </Link>
 
           <Link
-            to="/talent"
+            to="/find-talents"
             className={
-              location.pathname === "/talent"
+              location.pathname === "/find-talents"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -305,6 +280,30 @@ const BrandSideMenu = ({ onChildClick }) => {
           >
             <i className="bi bi-heart icons"></i>
             <div className="brand-menu-text">Favourite Talent</div>
+          </Link>
+
+          <Link
+            to="/brand-notification"
+            className={
+              location.pathname === "/brand-notification"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-bell icons"></i>
+            <div className="brand-menu-text">Notification</div>
+          </Link>
+
+          <Link
+            to="/talent"
+            className={
+              location.pathname === "/talent"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-chat icons"></i>
+            <div className="brand-menu-text">Messages</div>
           </Link>
 
           <Link

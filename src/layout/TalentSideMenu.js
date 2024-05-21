@@ -140,6 +140,18 @@ const TalentSideMenu = ({ myState }) => {
 
         <div className="sidenavWraper scroll">
           <Link
+            to="/talent-home"
+            className={
+              location.pathname === "/talent-home"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-house-door icons"></i>
+            <div className="brand-menu-text">Home</div>
+          </Link>
+
+          <Link
             to="/talent-dashboard"
             className={
               location.pathname === "/talent-dashboard"

@@ -31,14 +31,18 @@ const BrandDetails = () => {
   const [receivedData, setReceivedData] = useState(null);
 
   useEffect(() => {
-    console.log(receivedData, "receivedData");
-  }, [receivedData]);
-  useEffect(() => {
     // Check if data is passed through state
     if (location.state && location.state.data) {
       setReceivedData(location.state.data);
     }
   }, [location.state]);
+
+  useEffect(() => {
+    console.log(receivedData, "receivedData");
+    if (receivedData?.brandName) {
+      setBrandName(receivedData?.brandName);
+    }
+  }, [receivedData]);
 
   const aboutUsOptions = [
     "Streaming Audio (Pandora, Spotify, etc.)",
@@ -231,10 +235,7 @@ const BrandDetails = () => {
             }}
           ></button>
         </div>
-        <div
-          className="dialog-body spaceTops"
-          
-        >
+        <div className="dialog-body spaceTops">
           <div className="adult-signup-main">
             <div className="step-title mb-3">Brand Details</div>
 
@@ -252,6 +253,7 @@ const BrandDetails = () => {
                     setbrandNameError(false);
                   }}
                   onKeyDown={handleBrandNameKeyPress}
+                  value={brandName}
                 ></input>
                 {brandNameError && (
                   <div className="invalid-fields">Please enter Brand Name</div>
