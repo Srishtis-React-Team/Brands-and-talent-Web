@@ -77,7 +77,7 @@ const Footer = () => {
           <section className="main-footer-form">
             <div className="get-discover title mt-0">Get Discovered</div>
             <div className="form-fields row">
-              <div className="col-md-4">
+              <div className="col-md-4 form-group">
                 <input
                   className="input-style form-control"
                   placeholder="Full name"
@@ -93,7 +93,7 @@ const Footer = () => {
                   </div>
                 )}
               </div>
-              <div className="col-md-4">
+              <div className="col-md-4 form-group">
                 <input
                   className="input-style form-control"
                   placeholder="Email Address"
@@ -109,7 +109,7 @@ const Footer = () => {
                   </div>
                 )}
               </div>
-              <div className="col-md-4">
+              <div className="col-md-4 form-group">
                 <div
                   className="subscribe-btn"
                   onClick={(e) => {

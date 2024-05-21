@@ -316,14 +316,17 @@
 }
 
 .adult-signup-main {
-  width: 400px;
+  width: 450px;
   max-width: 100%;
   border: 1px solid #aaa;
   border-radius: 20px;
-  padding: 15px 35px;
+  padding: 15px 25px;
   border-radius: 20px;
 }
-
+.adult-signup-main .step-title{
+  padding: 0;
+  margin: 10px 0;
+}
 .adult-password-wrapper,
 .adult-confirm-password-wrapper {
   position: relative;

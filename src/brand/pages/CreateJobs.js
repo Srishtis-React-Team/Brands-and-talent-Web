@@ -1436,7 +1436,7 @@ const CreateJobs = () => {
           id="mainBrand"
           className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
         >
-          <div className="brand-content-main">
+          <div className="brand-content-main boxBg">
             <div className="create-job-title">
               {editData?.value && "Edit Gig/Job"}
               {!editData?.value && editJobData == null && "Create Gig/Job"}
@@ -1492,7 +1492,7 @@ const CreateJobs = () => {
             </div>
             {selectedTab === "create-job" && (
               <>
-                <div className="dialog-body ">
+                <div className="dialog-body mt-0">
                   <div className="kidsform-one w-100 p-2">
                     <div className="kids-main">
                       <div className="kids-form-row">
@@ -2621,7 +2621,7 @@ const CreateJobs = () => {
                         its site and through its distribution partners.
                       </div>
 
-                      <div className="create-job-buttons my-4">
+                      <div className="create-job-buttons mt-4 mb-2">
                         <div
                           onClick={(e) => {
                             e.preventDefault();
@@ -2665,11 +2665,11 @@ const CreateJobs = () => {
             )}
             {selectedTab === "duplicate-job" && (
               <>
-                <div className="dialog-body ">
+                <div className="dialog-body mt-0">
                   <div className="kidsform-one w-100  p-2">
                     <div className="kids-main">
                       <div
-                        style={{ height: "500px" }}
+                        style={{ minHeight: "500px" }}
                         className="kids-form-row"
                       >
                         <div className="w-100">
@@ -2702,7 +2702,7 @@ const CreateJobs = () => {
                         </div>
                       </div>
 
-                      <div className="create-job-buttons my-4">
+                      <div className="create-job-buttons mt-4 mb-2">
                         <div
                           className="createjob-btn"
                           onClick={(e) => {
