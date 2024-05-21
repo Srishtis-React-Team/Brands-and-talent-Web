@@ -872,6 +872,17 @@
   background-color: #ffffff;
 }
 
+.edit-service-section-wrapper {
+  border-bottom: 1px solid #c2114b;
+  margin-bottom: 20px;
+}
+
+.no-data {
+  font-size: 12px;
+  color: red;
+  font-family: sans-serif;
+}
+
 .edit-profileimg-btn:hover {
   background-color: #c2114b;
   color: #fff;
@@ -926,4 +937,42 @@
   font-size: 13px;
   font-weight: 500;
   padding: 10px 0px;
+}
+
+.add-service-section {
+  display: flex;
+  justify-content: end;
+  margin: 0px 15px 15px 0px;
+}
+
+.add-more-services-btn {
+  color: blue;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  .bi-plus-circle-fill {
+    padding-right: 8px;
+  }
+}
+
+.add-more-files-btn {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: green;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  .bi-plus-circle-fill {
+    padding-right: 8px;
+    color: #ffffff;
+  }
+}
+
+.add-service-btn-flex {
+  display: flex;
+  justify-content: end;
 }

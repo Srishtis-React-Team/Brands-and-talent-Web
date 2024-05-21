@@ -117,8 +117,8 @@ const Login = () => {
       setIsLoading(true);
       await ApiHelper.post(API.brandsLogin, formData)
         .then((resData) => {
-          console.log("talentLogin response", resData);
-          if (resData.data.status === true) {
+          console.log("brandLogin response", resData.status);
+          if (resData.status === 200) {
             console.log("called");
             setIsLoading(false);
             setMessage("Logged In SuccessFully!");
@@ -152,7 +152,7 @@ const Login = () => {
       setIsLoading(true);
       await ApiHelper.post(API.talentLogin, formData)
         .then((resData) => {
-          console.log("talentLogin response", resData);
+          console.log("TalentLoginRESPONSE", resData.data);
           if (resData.data.status === true) {
             console.log("called");
             setIsLoading(false);
@@ -162,14 +162,14 @@ const Login = () => {
               setOpenPopUp(false);
               setIsLoading(false);
               setTalentLocalStorage(resData.data.data);
+              if (resData.data.type === "adult") {
+                console.log("adult block");
+                navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+              } else if (resData.data.type === "kids") {
+                navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+                // navigate(`/otp?${resData?.data?.data?.email}`);
+              }
             }, 1000);
-            if (resData.data.type === "adult") {
-              console.log("adult block");
-              navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-            } else if (resData.data.type === "kids") {
-              navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-              // navigate(`/otp?${resData?.data?.data?.email}`);
-            }
           } else if (resData.data.status === false) {
             setIsLoading(false);
             console.log("false called");

@@ -318,39 +318,95 @@ const TalentHeader = ({ toggleMenu, myState }) => {
             <div className="rightPart">
               <div className="talent-navbar-functions">
                 <div
-                    onClick={() => {
-                        setMenuOpen(!menuOpen);
-                        // sendMessageToParent({ menuStatus: menuOpen });
-                      }}
-                      className="menu-icon"
+                  onClick={() => {
+                    setMenuOpen(!menuOpen);
+                    // sendMessageToParent({ menuStatus: menuOpen });
+                  }}
+                  className="menu-icon"
+                >
+                  <i className="fa-solid fa-bars"></i>
+                </div>
+                <div className="navTxt">
+                  <NavLink to="/job-list">Jobs List</NavLink>
+                </div>
+                <div className="navTxt">
+                  <NavLink to="/how-it-works">How it works</NavLink>
+                </div>
+                <div className="navTxt">
+                  <NavLink to="/pricing">Pricing</NavLink>
+                </div>
+                <div className="navTxt">
+                  <li className="nav-item dropdown">
+                    <a
+                      className="nav-link dropdown-toggle"
+                      href="#"
+                      id="navbarDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
                     >
-                    <i className="fa-solid fa-bars"></i>
-                  </div>
-                  <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
-                    <nav className="menu-items">
-                      <div className="navTxt">
-                        <NavLink to="/">Home</NavLink>
-                      </div>
-                      <div className="navTxt">
-                        <NavLink to="/listJob">Jobs List</NavLink>
-                      </div>
-                      <div className="navTxt">
-                        <NavLink to="/listJob">Get Hired</NavLink>
-                      </div>
-                      <div className="navTxt">
-                        <NavLink to="/listJob">Find Talent</NavLink>
-                      </div>
-                      <div className="navTxt">
-                        <NavLink to="/listJob">How it works</NavLink>
-                      </div>
-                      <div className="navTxt">
-                        <NavLink to="/listJob">Pricing</NavLink>
-                      </div>
-                      <div className="navTxt">
-                        <NavLink to="/listJob">Resources</NavLink>
-                      </div>
-                    </nav>
-                  </div>
+                      Resources
+                    </a>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="navbarDropdown"
+                    >
+                      <li>
+                        <NavLink to="/about-us">
+                          <a className="dropdown-item">About</a>
+                        </NavLink>
+                      </li>
+                      <li className="dropend">
+                        <a
+                          className="dropdown-item dropdown-toggle"
+                          dropdown-toggle
+                          data-bs-toggle="dropdown"
+                        >
+                          <NavLink to="/blogs">Blogs</NavLink>
+                        </a>
+                        <ul className="dropdown-menu blogs-menu">
+                          <li>
+                            <a href="" className="dropdown-item">
+                              <NavLink to="/blogs">
+                                Industry News & Insights
+                              </NavLink>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="" className="dropdown-item">
+                               Case Studies
+                            </a>
+                          </li>
+                          <li>
+                            <a href="" className="dropdown-item">
+                              Talent Diaries
+                            </a>
+                          </li>
+                          <li>
+                            <a href="" className="dropdown-item">
+                               Talent Tips & Tricks
+                            </a>
+                          </li>
+                          <li>
+                            <a href="" className="dropdown-item">
+                               Brand Tips & Tricks
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <hr className="dropdown-divider"></hr>
+                      </li>
+                      <li>
+                        <a className="dropdown-item">
+                          <NavLink to="/community-guidelines">
+                            Community Guidelines
+                          </NavLink>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </div>
 
                 <React.Fragment>
                   <div className="header-search-wrapper">

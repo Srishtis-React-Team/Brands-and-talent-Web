@@ -16,6 +16,7 @@ const MessageTalents = () => {
   const audiotype = require("../../assets/icons/audiotype.png");
   const docsIcon = require("../../assets/icons/docsIcon.png");
   const elipsis = require("../../assets/icons/elipsis.png");
+  const avatar = require("../../assets/images/avatar.webp");
   const navigate = useNavigate();
 
   const [userList, setUsersList] = useState([]);
@@ -465,6 +466,9 @@ const MessageTalents = () => {
                         alt=""
                       />
                     )}
+                    {!selectedUSerImage && (
+                      <img className="message-user-image" src={avatar} alt="" />
+                    )}
                     {selectedUser?.isOnline === true && (
                       <div className="online-dot"></div>
                     )}
@@ -495,6 +499,12 @@ const MessageTalents = () => {
             <div className="message-sidebar">
               <div className="message-leftmenu-main">
                 <div className="message-list-wrapper">
+                  {userList.length === 0 && (
+                    <div className="no-data">
+                      Connect With a Brand (Your Brands Profile will appear
+                      here)
+                    </div>
+                  )}
                   {userList &&
                     userList?.map((item, index) => (
                       <>

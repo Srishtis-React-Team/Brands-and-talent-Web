@@ -157,6 +157,16 @@ const SavedJobs = () => {
                           <div className="campaigns-wrapper-one">
                             <div className="campaigns-content-wrapper">
                               <div className="campaign-paid-wrapper">
+                                <div className="recent-img-div">
+                                  {/* <i className="bi bi-briefcase-fill "></i> */}
+                                  {job?.brandDetails?.brandImage && (
+                                    <img
+                                      className="recent-img"
+                                      src={`${API.userFilePath}${job?.brandDetails?.brandImage[0]?.fileData}`}
+                                      alt=""
+                                    />
+                                  )}
+                                </div>
                                 <div className="campaign-name">
                                   {job?.gigDetails?.jobTitle}
                                 </div>

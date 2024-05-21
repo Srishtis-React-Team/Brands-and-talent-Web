@@ -53,6 +53,9 @@ import EditTalent from "../auth/EditTalent";
 import SavedJobs from "../views/SavedJobs";
 import TalentSettings from "../auth/TalentSettings";
 import TalentNotification from "../views/TalentNotification";
+import TalentHome from "../views/TalentHome";
+import TalentHelp from "../views/TalentHelp";
+import BrandNotification from "../brand/pages/BrandNotification";
 function Routing() {
   return (
     <Routes>
@@ -69,7 +72,7 @@ function Routing() {
       <Route path="/post-job" element={<PostJob />} />
       <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/login" element={<Login />}></Route>
-      <Route path="/listJob" element={<OverallJobs />}></Route>
+      <Route path="/job-list" element={<OverallJobs />}></Route>
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/success-password" element={<PasswordSuccess />} />
@@ -113,6 +116,9 @@ function Routing() {
       <Route path="/edit-talent-profile" element={<EditTalent />} />
       <Route path="/talent-notification" element={<TalentNotification />} />
       <Route path="/talent-settings" element={<TalentSettings />} />
+      <Route path="/talent-home" element={<TalentHome />} />
+      <Route path="/talent-help" element={<TalentHelp />} />
+      <Route path="/brand-notification" element={<BrandNotification />} />
     </Routes>
   );
 }

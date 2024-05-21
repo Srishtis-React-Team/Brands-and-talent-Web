@@ -48,6 +48,7 @@ export const API = {
   //login
   talentLogin: BASEURL + "users/talentLogin",
   brandsLogin: BASEURL + "brands/brandsLogin",
+  deleteNotification: BASEURL + "brands/deleteNotification",
 
   //pricing
   getPricingList: BASEURL + "pricing/pricingList",

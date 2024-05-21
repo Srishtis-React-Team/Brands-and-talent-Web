@@ -24,9 +24,9 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
+import { EditorState, convertFromHTML, ContentState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
 import Modal from "react-modal";
 
 function CustomTabPanel(props) {
@@ -417,6 +417,18 @@ const EditTalent = () => {
     }
   }, [talentId]);
 
+  const initializeEditorState = (htmlContent) => {
+    console.log(htmlContent, "htmlContent");
+    const blocksFromHTML = convertFromHTML(...htmlContent);
+    const contentState = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+    return EditorState.createWithContent(contentState);
+  };
+
+  const [services, setServices] = useState();
+
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
@@ -475,6 +487,14 @@ const EditTalent = () => {
             );
             setSelectedLanguageOptions(selectedOptions);
             console.log(selectedOptions, "selectedOptions");
+            setServices(
+              resData.data.data?.services.map((service) => ({
+                ...service,
+                editorState: initializeEditorState(
+                  service.editorState || "<p></p>"
+                ), // Initialize editor state
+              }))
+            );
 
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
@@ -771,6 +791,14 @@ const EditTalent = () => {
     }
   };
 
+  const newServiceFileUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
+      uploadNewServiceFile(fileData);
+    }
+  };
+
   const newResumeUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
@@ -1012,6 +1040,68 @@ const EditTalent = () => {
       });
   };
 
+  const uploadNewServiceFile = async (fileData) => {
+    setLoader(true);
+    const params = new FormData();
+    params.append("file", fileData);
+    params.append("fileName", fileData.name);
+    params.append("fileType", getFileType(fileData.type));
+    /* await ApiHelper.post(API.uploadFile, params) */
+    await Axios.post(API.uploadFile, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((resData) => {
+        console.log(resData, "uploadProfileDATA");
+        if (resData?.data?.status === true) {
+          let fileObj = {
+            id: resData.data.data.fileId,
+            title: fileData.name,
+            fileData: resData.data.data.filename,
+            type: resData?.data?.data?.filetype,
+          };
+          updateServiceFileAPI(fileObj);
+        }
+      })
+      .catch((err) => {
+        setLoader(false);
+      });
+  };
+
+  const updateServiceFileAPI = async (fileObj) => {
+    let portofolioArray = [...resumeFile, fileObj];
+    console.log(portofolioArray, "portofolioArray");
+    let formData;
+    if (portofolioArray.length > 0) {
+      formData = {
+        cv: portofolioArray,
+      };
+    }
+    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("File Added Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getKidsData();
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
   const [myState, setMyState] = useState(false);
 
   const updateProfileImage = async () => {
@@ -1063,6 +1153,14 @@ const EditTalent = () => {
   const videoFile = () => {
     if (videoFileInputRef.current) {
       videoFileInputRef.current.click(); // Trigger the click event on the file input
+    }
+  };
+
+  const serviceFileInputRef = useRef(null);
+
+  const serviceFile = () => {
+    if (serviceFileInputRef.current) {
+      serviceFileInputRef.current.click(); // Trigger the click event on the file input
     }
   };
 
@@ -1126,69 +1224,53 @@ const EditTalent = () => {
       });
   };
 
-  const [inputs, setInputs] = useState([
-    {
-      serviceName: "",
-      serviceAmount: "",
-      serviceDuration: "",
-      editorState: "",
-      files: [],
-    },
-  ]);
-
-  const handleFileChange = (index, event) => {
-    console.log("handleFileChange");
-    console.log(index, "index file");
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      uploadProfile(fileData, (fileObj) => {
-        setInputs((prevInputs) => {
-          const newInputs = [...prevInputs];
-          newInputs[index]["files"] = [
-            ...(newInputs[index]["files"] || []),
-            fileObj,
-          ];
-          console.log(newInputs, "newInputs");
-          return newInputs;
-        });
-      });
-    }
-  };
-
-  const handleInputChange = (index, key, value) => {
-    console.log(index, "index handleInputChange");
-    const newInputs = [...inputs];
-    newInputs[index][key] = value;
-    setInputs(newInputs);
-  };
-
-  const handleEditorStateChange = (index, editorState) => {
-    console.log(index, "index handleEditorStateChange");
-    const newInputs = [...inputs];
-    newInputs[index]["editorState"] = [
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ];
-    setInputs(newInputs);
-  };
-
-  const handleAddMore = () => {
-    setInputs([
-      ...inputs,
-      {
-        serviceName: "",
-        serviceAmount: "",
-        serviceDuration: "",
-        editorState: "",
-        files: [],
-      },
-    ]);
-
-    console.log(inputs, "inputs");
-  };
-
   useEffect(() => {
     console.log(portofolioFile, "portofolioFile");
   }, [portofolioFile]);
+
+  const handleEditorStateChange = (index, editorState) => {
+    // console.log(index, "index handleEditorStateChange");
+    // const newInputs = [...inputs];
+    // newInputs[index]["editorState"] = [
+    //   draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    // ];
+    // setInputs(newInputs);
+  };
+
+  const handleInputChange = (index, event) => {
+    const { name, value } = event.target;
+    const newServices = [...services];
+    newServices[index][name] = value;
+    setServices(newServices);
+  };
+
+  const addService = () => {
+    setServices([
+      ...services,
+      { serviceName: "", serviceAmount: "", serviceDuration: "" },
+    ]);
+  };
+
+  useEffect(() => {
+    console.log(services, "services");
+  }, [services]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Prepare data for submission, converting EditorState to HTML
+    const submittedServices = services.map((service) => ({
+      ...service,
+      editorState: service.editorState.getCurrentContent().getPlainText(), // Convert editor content to HTML
+    }));
+    // Replace the following line with your actual submit logic, e.g., API call.
+    console.log("Submitted services:", submittedServices);
+  };
+
+  const handleEditorChange = (index, editorState) => {
+    const newServices = [...services];
+    newServices[index].editorState = editorState;
+    setServices(newServices);
+  };
 
   return (
     <>
@@ -1895,7 +1977,9 @@ const EditTalent = () => {
               <div className="update-portfolio-section edit-basicdetails-section-main">
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Portfolio</div>
-
+                  {talentData?.portfolio?.length === 0 && (
+                    <div className="no-data">Please Add Files</div>
+                  )}
                   {talentData &&
                     talentData?.portfolio?.length > 0 &&
                     talentData?.portfolio?.map((item) => {
@@ -1977,7 +2061,9 @@ const EditTalent = () => {
                 </div>
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Videos & Audios</div>
-
+                  {talentData?.videosAndAudios?.length === 0 && (
+                    <div className="no-data">Please Add Files</div>
+                  )}
                   {talentData &&
                     talentData?.videosAndAudios?.length > 0 &&
                     talentData?.videosAndAudios?.map((item) => {
@@ -2071,7 +2157,9 @@ const EditTalent = () => {
 
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Resumes</div>
-
+                  {talentData?.cv?.length === 0 && (
+                    <div className="no-data">Please Add Files</div>
+                  )}
                   {talentData &&
                     talentData?.cv?.length > 0 &&
                     talentData?.cv?.map((item) => {
@@ -2167,188 +2255,202 @@ const EditTalent = () => {
             <CustomTabPanel value={valueTabs} index={3}>
               <div className="update-portfolio-section">
                 <div className="update-service-cards-wrapper edit-service-section-main">
-                  {talentData &&
-                    talentData?.services?.length > 0 &&
-                    talentData?.services?.map((item) => {
+                  {services &&
+                    services?.length > 0 &&
+                    services?.map((item, index) => {
                       return (
                         <>
-                          <div className="update-portfolio-title">
-                            {item?.serviceName}
-                          </div>
-                          <div>
-                            {inputs.map((input, serviceIndex) => (
-                              <>
-                                <div key={serviceIndex}>
-                                  <div className="">
-                                    <div className="">
-                                      <div className="mb-3">
-                                        <label className="form-label">
-                                          Service name
-                                        </label>
-                                        <input
-                                          value={input.serviceName}
-                                          onChange={(e) =>
-                                            handleInputChange(
-                                              serviceIndex,
-                                              "serviceName",
-                                              e.target.value
-                                            )
-                                          }
-                                          type="text"
-                                          name="serviceName"
-                                          className="form-control"
-                                          placeholder="Enter Service Heading"
-                                        ></input>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="kids-form-row">
-                                    <div className="kids-form-section">
-                                      <div className="mb-3">
-                                        <label className="form-label">
-                                          Amount
-                                        </label>
-                                        <input
-                                          type="number"
-                                          name="amount"
-                                          value={input.serviceAmount}
-                                          onChange={(e) =>
-                                            handleInputChange(
-                                              serviceIndex,
-                                              "serviceAmount",
-                                              e.target.value
-                                            )
-                                          }
-                                          className="form-control"
-                                          placeholder="Enter Amount In $"
-                                        ></input>
-                                      </div>
-                                    </div>
-                                    <div className="kids-form-section">
-                                      <div className="mb-3">
-                                        <label className="form-label">
-                                          Duration
-                                        </label>
-                                        <input
-                                          type="text"
-                                          name="duration"
-                                          value={input.serviceDuration}
-                                          onChange={(e) =>
-                                            handleInputChange(
-                                              serviceIndex,
-                                              "serviceDuration",
-                                              e.target.value
-                                            )
-                                          }
-                                          className="form-control"
-                                          placeholder="Duration In Months"
-                                        ></input>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="adults-titles">Features</div>
-                                  <div className="rich-editor">
-                                    <label className="form-label">
-                                      Features
-                                    </label>
-                                    <Editor
-                                      editorStyle={{
-                                        overflow: "hidden",
-                                      }}
-                                      value={input.editorState}
-                                      onEditorStateChange={(editorState) =>
-                                        handleEditorStateChange(
-                                          serviceIndex,
-                                          editorState
-                                        )
-                                      }
-                                      toolbar={{
-                                        options: [
-                                          "inline",
-                                          "blockType",
-                                          "fontSize",
-                                          "list",
-                                          "textAlign",
-                                          "history",
-                                        ],
-                                        inline: { inDropdown: true },
-                                        list: { inDropdown: true },
-                                        textAlign: { inDropdown: true },
-                                        link: { inDropdown: true },
-                                        history: { inDropdown: true },
-                                      }}
-                                    />
-                                  </div>
+                          <div className="edit-service-section-wrapper">
+                            <h5>{item.serviceName}</h5>
+                            <div className="kids-form-row" key={index}>
+                              <div className="kids-form-section">
+                                <div className="mb-3">
+                                  <label className="form-label">
+                                    Service Name
+                                    <span className="mandatory">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="service name"
+                                    value={item.serviceName}
+                                  ></input>
                                 </div>
-                              </>
-                            ))}
-                          </div>
-                          {item?.files?.length > 0 &&
-                            item?.files?.map((item) => {
-                              return (
-                                <>
-                                  <div className="update-portfolio-cards">
-                                    <div className="update-portfolio-icon">
-                                      <div className="file-section">
-                                        {item.type === "image" && (
-                                          <div className="fileType">
-                                            <i class="bi bi-card-image"></i>
+                              </div>
+                            </div>
+                            <div className="kids-form-row">
+                              <div className="kids-form-section">
+                                <div className="mb-3">
+                                  <label className="form-label">
+                                    Service Amount
+                                    <span className="mandatory">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="service amount"
+                                    value={item.serviceAmount}
+                                  ></input>
+                                </div>
+                              </div>
+                              <div className="kids-form-section">
+                                <div className="mb-3">
+                                  <label className="form-label">
+                                    Service Duration
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Service Duration"
+                                    value={item.serviceDuration}
+                                  ></input>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="kids-form-row">
+                              <div className="kids-form-section">
+                                <div className="mb-3">
+                                  <label className="form-label">
+                                    Features
+                                    <span className="mandatory">*</span>
+                                  </label>
+                                  <Editor
+                                    editorState={item.editorState}
+                                    onEditorStateChange={(editorState) =>
+                                      handleEditorChange(index, editorState)
+                                    }
+                                    toolbar={{
+                                      options: [
+                                        "inline",
+                                        "blockType",
+                                        "fontSize",
+                                        "list",
+                                        "textAlign",
+                                        "history",
+                                      ],
+                                      inline: { inDropdown: true },
+                                      list: { inDropdown: true },
+                                      textAlign: { inDropdown: true },
+                                      link: { inDropdown: true },
+                                      history: { inDropdown: true },
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            {item?.files?.length > 0 &&
+                              item?.files?.map((item) => {
+                                return (
+                                  <>
+                                    <div className="update-portfolio-cards">
+                                      <div className="update-portfolio-icon">
+                                        <div className="file-section">
+                                          {item.type === "audio" && (
+                                            <div className="fileType">
+                                              <i class="bi bi-mic-fill"></i>
+                                            </div>
+                                          )}
+                                          {item.type === "video" && (
+                                            <div className="fileType">
+                                              <i class="bi bi-play-circle-fill"></i>
+                                            </div>
+                                          )}
+                                          {item.type === "document" && (
+                                            <div className="fileType">
+                                              <i class="bi bi-file-earmark-richtext"></i>
+                                            </div>
+                                          )}
+                                          <div className="update-portfolio-fileName">
+                                            {item.title}
                                           </div>
-                                        )}
-                                        <div className="update-portfolio-fileName">
-                                          {item.title}
-                                        </div>
-                                        <div className="update-portfolio-action">
-                                          <i
-                                            className="bi bi-three-dots-vertical"
-                                            type="button"
-                                            id="dropdownMenuButton1"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                          ></i>
-                                          <ul
-                                            class="dropdown-menu"
-                                            aria-labelledby="dropdownMenuButton1"
-                                          >
-                                            <li>
-                                              <a
-                                                class="dropdown-item"
-                                                onClick={() =>
-                                                  viewUpdateFile(item)
-                                                }
-                                              >
-                                                View
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <a
-                                                class="dropdown-item"
-                                                onClick={() =>
-                                                  deleteUpdateFile(item)
-                                                }
-                                              >
-                                                Delete
-                                              </a>
-                                            </li>
-                                          </ul>
+                                          <div className="update-portfolio-action">
+                                            <i
+                                              className="bi bi-three-dots-vertical"
+                                              type="button"
+                                              id="dropdownMenuButton1"
+                                              data-bs-toggle="dropdown"
+                                              aria-expanded="false"
+                                            ></i>
+                                            <ul
+                                              class="dropdown-menu"
+                                              aria-labelledby="dropdownMenuButton1"
+                                            >
+                                              <li>
+                                                <a
+                                                  class="dropdown-item"
+                                                  onClick={() =>
+                                                    viewUpdateFile(item)
+                                                  }
+                                                >
+                                                  View
+                                                </a>
+                                              </li>
+                                              <li>
+                                                <a
+                                                  class="dropdown-item"
+                                                  onClick={(e) => {
+                                                    setAlertpop({
+                                                      status: true,
+                                                      item: item,
+                                                      label: "delete",
+                                                    });
+                                                  }}
+                                                >
+                                                  Delete
+                                                </a>
+                                              </li>
+                                            </ul>
+                                          </div>
                                         </div>
                                       </div>
+                                      <div className="update-portfolio-action"></div>
                                     </div>
-                                  </div>
-                                </>
-                              );
-                            })}
-                          <div className="add-more-services">
-                            <div
-                              onClick={handleAddMore}
-                              className="add-more-services-btn"
-                            >
-                              Add More Services
+                                  </>
+                                );
+                              })}
+                            <div className="add-service-section">
+                              <div className="add-portfolia-btn">
+                                <input
+                                  type="file"
+                                  className="select-cv-input"
+                                  id="profile-image"
+                                  accept="audio/*,video/*"
+                                  onChange={newServiceFileUpload}
+                                  ref={serviceFileInputRef}
+                                />
+
+                                <div
+                                  className="add-more-files-btn"
+                                  onClick={() => serviceFile()}
+                                  variant="text"
+                                >
+                                  <i class="bi bi-plus-circle-fill"></i> Add
+                                  Files
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </>
                       );
                     })}
+                  <div
+                    className="add-more-services-btn"
+                    onClick={() => addService()}
+                    variant="text"
+                  >
+                    <i class="bi bi-plus-circle-fill"></i>Add More Service
+                  </div>
+                  <div className="add-service-btn-flex">
+                    <Button
+                      onClick={() => addService()}
+                      className="edit-profileimg-btn"
+                      variant="text"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      Add Services
+                    </Button>
+                  </div>
                 </div>
               </div>
             </CustomTabPanel>
