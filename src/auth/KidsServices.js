@@ -13,6 +13,8 @@ import "../assets/css/talent-dashboard.scss";
 import "../assets/css/forms/kidsform-one.scss";
 import PopUp from "../components/PopUp";
 import { event } from "jquery";
+import { v4 as uuidv4 } from "uuid";
+
 const KidsServices = () => {
   const btLogo = require("../assets/icons/Group 56.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -58,7 +60,6 @@ const KidsServices = () => {
           setMessage("Updated SuccessFully Check Your Email");
           setOpenPopUp(true);
           loginTemplate(resData?.data?.data?.email);
-
           setTimeout(function() {
             setOpenPopUp(false);
             navigate(`/talent-signup-files-success`);
@@ -102,6 +103,7 @@ const KidsServices = () => {
       serviceDuration: "",
       editorState: "",
       files: [],
+      uniqueId: uuidv4(),
     },
   ]);
 
@@ -149,6 +151,7 @@ const KidsServices = () => {
         serviceDuration: "",
         editorState: "",
         files: [],
+        uniqueId: uuidv4(),
       },
     ]);
 
@@ -216,7 +219,6 @@ const KidsServices = () => {
           <div className="dialog-body">
             <div className="kidsform-one container">
               <div className="adult-form-wrapper row ml-0 mr-0">
-
                 <div className="col-md-4 col-lg-3">
                   <div className="adult-img-img fixImgs">
                     <img
@@ -443,7 +445,6 @@ const KidsServices = () => {
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>

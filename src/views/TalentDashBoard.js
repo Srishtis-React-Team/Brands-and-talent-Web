@@ -512,7 +512,7 @@ const TalentDashBoard = () => {
             <div className="col-md-8 col-lg-9">
               <div className="talent-column-one">
                 <div className="filter-text-wrapper">
-                  <div className="recent-gigs-title">Most Recent Gigs</div>
+                  <div className="recent-gigs-title">Most Recent Jobs</div>
                   <React.Fragment>
                     <div
                       className="header-filter-icon"

@@ -805,6 +805,12 @@
   padding: 10px;
   margin: 10px;
   border-radius: 2px;
+  display: inline-block;
+}
+
+.service-files-main {
+  display: flex;
+  align-items: center;
 }
 
 .update-portfolio-section {
@@ -874,7 +880,8 @@
 
 .edit-service-section-wrapper {
   border-bottom: 1px solid #c2114b;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
 }
 
 .no-data {
@@ -940,9 +947,6 @@
 }
 
 .add-service-section {
-  display: flex;
-  justify-content: end;
-  margin: 0px 15px 15px 0px;
 }
 
 .add-more-services-btn {
@@ -975,4 +979,59 @@
 .add-service-btn-flex {
   display: flex;
   justify-content: end;
+}
+
+.edit-profile-navigations {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+}
+
+.bi-arrow-left-circle-fill,
+.bi-arrow-right-circle-fill {
+  font-size: 25px;
+  cursor: pointer;
+  color: #000;
+}
+
+.bi-arrow-right-circle-fill:hover {
+  color: #c2114b;
+}
+.bi-arrow-left-circle-fill:hover {
+  color: #c2114b;
+}
+
+.edit-profile-navigation-text {
+  font-size: 12px;
+  font-family: sans-serif;
+  font-weight: 400;
+  color: #000;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+}
+
+.edit-profile-navigation-text:hover {
+  font-size: 12px;
+  font-family: sans-serif;
+  font-weight: 500;
+  color: #c2114b;
+  cursor: pointer;
+}
+
+.edit-profile-navigation-btn {
+  display: flex;
+  align-items: center;
+}
+.edit-profile-navigation-btn:hover {
+  .bi-arrow-right-circle-fill {
+    color: #c2114b;
+  }
+  .bi-arrow-left-circle-fill {
+    color: #c2114b;
+  }
+  .edit-profile-navigation-text {
+    color: #c2114b;
+  }
 }

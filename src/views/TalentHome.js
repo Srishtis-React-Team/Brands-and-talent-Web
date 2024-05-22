@@ -111,7 +111,7 @@ const TalentHome = () => {
                 <div className="home-cards-wrapper">
                   <div className="home-card-content">
                     <i class="bi bi-search icons home-card-icons"></i>
-                    <div className="home-cards-names">Search Jobs</div>
+                    <div className="home-cards-names">Browse Jobs</div>
                   </div>
                 </div>
               </Link>

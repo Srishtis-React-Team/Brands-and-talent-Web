@@ -90,7 +90,29 @@ const Header = ({ onData }) => {
   const handleClick = (data) => {
     window.scrollTo(0, 0); // Scroll to top on link click
     if (data == "post-job") {
-      navigate("/create-jobs");
+      if (!currentUserId) {
+        setMessage("You Must Be Logged In");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
+      } else if (currentUser_type === "brand" && currentUserId) {
+        navigate("/create-jobs");
+      }
+    }
+
+    if (data == "find-talent") {
+      if (!currentUserId) {
+        setMessage("You Must Be Logged In");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
+      } else if (currentUser_type === "brand" && currentUserId) {
+        navigate("/find-creators");
+      }
     }
   };
 
@@ -106,9 +128,16 @@ const Header = ({ onData }) => {
     return () => {
       if (menuItem === "dashboard") {
         if (currentUser_type === "talent") {
-          navigate(`${"/talent-dashboard"}?${currentUserId}`);
+          navigate(`${"/talent-profile"}?${currentUserId}`);
         } else if (currentUser_type === "brand") {
           navigate(`brand-dashboard`);
+        }
+      }
+      if (menuItem === "edit") {
+        if (currentUser_type === "talent") {
+          navigate(`${"/edit-talent-profile"}?${currentUserId}`);
+        } else if (currentUser_type === "brand") {
+          navigate(`/`);
         }
       }
     };
@@ -316,13 +345,21 @@ const Header = ({ onData }) => {
                   Home
                 </NavLink>
               </div>
-              {currentUser_type === "brand" && (
-                <div
-                  className="navTxt"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleClick("post-job")}
-                >
-                  Post a Job
+
+              {currentUser_type === "brand" ||
+                (!currentUserId && (
+                  <div className="navTxt" style={{ cursor: "pointer" }}>
+                    <NavLink onClick={() => handleClick("post-job")}>
+                      Post a Job
+                    </NavLink>
+                  </div>
+                ))}
+
+              {!currentUserId && (
+                <div className="navTxt" style={{ cursor: "pointer" }}>
+                  <NavLink to="/get-booked" onClick={() => handleClick("")}>
+                    Get Booked
+                  </NavLink>
                 </div>
               )}
 
@@ -337,13 +374,14 @@ const Header = ({ onData }) => {
                 </div>
               )}
 
-              {currentUser_type === "brand" && (
-                <div className="navTxt">
-                  <NavLink to="/find-creators" onClick={() => handleClick("")}>
-                    Find Talent
-                  </NavLink>
-                </div>
-              )}
+              {currentUser_type === "brand" ||
+                (!currentUserId && (
+                  <div className="navTxt">
+                    <NavLink onClick={() => handleClick("find-talent")}>
+                      Find Talent
+                    </NavLink>
+                  </div>
+                ))}
 
               {/* <div>
             <NavLink to="/get-booked" onClick={() => handleClick("")}>
@@ -578,15 +616,21 @@ const Header = ({ onData }) => {
                   <Menu slots={{ listbox: AnimatedListbox }}>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={() => logout()}
+                      onClick={createHandleMenuClick("dashboard")}
                     >
-                      Log out
+                      View Profile
                     </MenuItem>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("dashboard")}
+                      onClick={createHandleMenuClick("edit")}
                     >
-                      DashBoard
+                      Edit Profile
+                    </MenuItem>
+                    <MenuItem
+                      style={{ cursor: "pointer" }}
+                      onClick={() => logout()}
+                    >
+                      Log out
                     </MenuItem>
                   </Menu>
                 </Dropdown>

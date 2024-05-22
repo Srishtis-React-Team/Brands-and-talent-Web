@@ -28,6 +28,7 @@ import { EditorState, convertFromHTML, ContentState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import Modal from "react-modal";
+import { ta } from "date-fns/locale";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -155,7 +156,8 @@ const EditTalent = () => {
   const [allJobsList, setAllJobsList] = useState([]);
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [selectedProfessionsEdit, setSelectedProfessionsEdit] = useState([]);
-
+  const [featuresList, setFeaturesList] = useState([]);
+  const [features, setFeature] = useState([]);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
   const toggleMenu = () => {
@@ -173,6 +175,10 @@ const EditTalent = () => {
       zIndex: 9999, // Ensure menu appears above other elements
     }),
   };
+
+  useEffect(() => {
+    getFeatures();
+  }, []);
 
   const professionList = [
     { value: "Model", label: "Model" },
@@ -446,6 +452,7 @@ const EditTalent = () => {
             setKidsLegalFirstName(resData?.data?.data?.childFirstName);
             setKidsLegalLastName(resData?.data?.data?.childLastName);
             setDob(resData?.data?.data?.childDob);
+            setFeature(resData?.data?.data?.features);
             // handleSelectedCountry({
             //   value: resData?.data?.data?.parentCountry,
             //   label: resData?.data?.data?.parentCountry,
@@ -760,9 +767,25 @@ const EditTalent = () => {
   const [valueTabs, setValueTabs] = React.useState(0);
 
   const handleChange = (event, newValue) => {
+    console.log(newValue, "newValue");
     setValueTabs(newValue);
   };
 
+  const handleNavigation = (event) => {
+    console.log(valueTabs, "valueTabs");
+    console.log(event, "event");
+    if (valueTabs === 0 && event === "back") {
+      setValueTabs(0);
+    } else if (event === "next") {
+      setValueTabs(valueTabs + 1);
+    } else if (event === "back") {
+      setValueTabs(valueTabs - 1);
+    }
+  };
+
+  useEffect(() => {
+    console.log(valueTabs, "valueTabs");
+  }, [valueTabs]);
   useEffect(() => {
     console.log(editProfileImage, "editProfileImage");
   }, [editProfileImage]);
@@ -791,7 +814,8 @@ const EditTalent = () => {
     }
   };
 
-  const newServiceFileUpload = (event) => {
+  const newServiceFileUpload = (event, servicesIndex) => {
+    console.log(servicesIndex, "newServiceFileUploadINDEX");
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
       console.log(fileData, "fileData");
@@ -1251,6 +1275,10 @@ const EditTalent = () => {
     ]);
   };
 
+  const submitServices = () => {
+    console.log(services, "servicessubmitServices");
+  };
+
   useEffect(() => {
     console.log(services, "services");
   }, [services]);
@@ -1271,6 +1299,37 @@ const EditTalent = () => {
     newServices[index].editorState = editorState;
     setServices(newServices);
   };
+
+  const handleFeaturesChange = (label, value) => {
+    const updatedValues = [...features];
+    const index = updatedValues.findIndex((item) => item.label === label);
+    if (index !== -1) {
+      updatedValues[index] = { label, value };
+    } else {
+      updatedValues.push({ label, value });
+    }
+    setFeature(updatedValues);
+    // Call your API here with the updated selectedValues array
+    // Example:
+    // callYourApi(selectedValues);
+  };
+
+  const getFeatures = async () => {
+    await ApiHelper.get(API.getFeatures)
+      .then((resData) => {
+        if (resData) {
+          setFeaturesList(resData.data.data[0].features);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(featuresList, "featuresList");
+  }, [featuresList]);
+  useEffect(() => {
+    console.log(features, "features");
+  }, [features]);
 
   return (
     <>
@@ -1300,23 +1359,43 @@ const EditTalent = () => {
                 aria-label="basic tabs example"
               >
                 <Tab
-                  label="Update Profile Image"
+                  label="Profile Image"
                   {...a11yProps(0)}
                   style={{ textTransform: "capitalize" }}
                 />
                 <Tab
-                  label="Update Basic Details"
+                  label="Personal Info"
                   {...a11yProps(1)}
                   style={{ textTransform: "capitalize" }}
                 />
                 <Tab
-                  label="Update Portfolio"
+                  label="Portfolio"
                   {...a11yProps(2)}
                   style={{ textTransform: "capitalize" }}
                 />
                 <Tab
-                  label="Update Services"
+                  label="Videos & Audios"
                   {...a11yProps(3)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="CV"
+                  {...a11yProps(4)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Services"
+                  {...a11yProps(5)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Features"
+                  {...a11yProps(6)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Reviews"
+                  {...a11yProps(7)}
                   style={{ textTransform: "capitalize" }}
                 />
               </Tabs>
@@ -1330,7 +1409,6 @@ const EditTalent = () => {
                     alt=""
                   />
                 </div>
-
                 <div className="btn-img-edit-wrapper">
                   <input
                     type="file"
@@ -2059,8 +2137,12 @@ const EditTalent = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={3}>
+              <div className="update-portfolio-section edit-basicdetails-section-main">
                 <div className="update-portfolio-cards-wrapper">
-                  <div className="update-portfolio-title">Videos & Audios</div>
+                  <div className="update-portfolio-title">Video & Audios</div>
                   {talentData?.videosAndAudios?.length === 0 && (
                     <div className="no-data">Please Add Files</div>
                   )}
@@ -2154,115 +2236,117 @@ const EditTalent = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="update-portfolio-cards-wrapper">
-                  <div className="update-portfolio-title">Resumes</div>
-                  {talentData?.cv?.length === 0 && (
-                    <div className="no-data">Please Add Files</div>
-                  )}
-                  {talentData &&
-                    talentData?.cv?.length > 0 &&
-                    talentData?.cv?.map((item) => {
-                      return (
-                        <>
-                          <div className="update-portfolio-cards">
-                            <div className="update-portfolio-icon">
-                              <div className="file-section">
-                                {item.type === "audio" && (
-                                  <div className="fileType">
-                                    <i class="bi bi-mic-fill"></i>
-                                  </div>
-                                )}
-                                {item.type === "video" && (
-                                  <div className="fileType">
-                                    <i class="bi bi-play-circle-fill"></i>
-                                  </div>
-                                )}
-                                {item.type === "document" && (
-                                  <div className="fileType">
-                                    <i class="bi bi-file-earmark-richtext"></i>
-                                  </div>
-                                )}
-                                <div className="update-portfolio-fileName">
-                                  {item.title}
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={4}>
+              <div className="update-portfolio-cards-wrapper">
+                <div className="update-portfolio-title">Resumes</div>
+                {talentData?.cv?.length === 0 && (
+                  <div className="no-data">Please Add Files</div>
+                )}
+                {talentData &&
+                  talentData?.cv?.length > 0 &&
+                  talentData?.cv?.map((item) => {
+                    return (
+                      <>
+                        <div className="update-portfolio-cards">
+                          <div className="update-portfolio-icon">
+                            <div className="file-section">
+                              {item.type === "audio" && (
+                                <div className="fileType">
+                                  <i class="bi bi-mic-fill"></i>
                                 </div>
-                                <div className="update-portfolio-action">
-                                  <i
-                                    className="bi bi-three-dots-vertical"
-                                    type="button"
-                                    id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                  ></i>
-                                  <ul
-                                    class="dropdown-menu"
-                                    aria-labelledby="dropdownMenuButton1"
-                                  >
-                                    <li>
-                                      <a
-                                        class="dropdown-item"
-                                        onClick={() => viewUpdateFile(item)}
-                                      >
-                                        View
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        class="dropdown-item"
-                                        onClick={(e) => {
-                                          setAlertpop({
-                                            status: true,
-                                            item: item,
-                                            label: "delete",
-                                          });
-                                        }}
-                                      >
-                                        Delete
-                                      </a>
-                                    </li>
-                                  </ul>
+                              )}
+                              {item.type === "video" && (
+                                <div className="fileType">
+                                  <i class="bi bi-play-circle-fill"></i>
                                 </div>
+                              )}
+                              {item.type === "document" && (
+                                <div className="fileType">
+                                  <i class="bi bi-file-earmark-richtext"></i>
+                                </div>
+                              )}
+                              <div className="update-portfolio-fileName">
+                                {item.title}
+                              </div>
+                              <div className="update-portfolio-action">
+                                <i
+                                  className="bi bi-three-dots-vertical"
+                                  type="button"
+                                  id="dropdownMenuButton1"
+                                  data-bs-toggle="dropdown"
+                                  aria-expanded="false"
+                                ></i>
+                                <ul
+                                  class="dropdown-menu"
+                                  aria-labelledby="dropdownMenuButton1"
+                                >
+                                  <li>
+                                    <a
+                                      class="dropdown-item"
+                                      onClick={() => viewUpdateFile(item)}
+                                    >
+                                      View
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a
+                                      class="dropdown-item"
+                                      onClick={(e) => {
+                                        setAlertpop({
+                                          status: true,
+                                          item: item,
+                                          label: "delete",
+                                        });
+                                      }}
+                                    >
+                                      Delete
+                                    </a>
+                                  </li>
+                                </ul>
                               </div>
                             </div>
-                            <div className="update-portfolio-action"></div>
                           </div>
-                        </>
-                      );
-                    })}
-                  <div className="add-portfoli-section">
-                    <div className="add-portfolia-btn">
-                      <input
-                        type="file"
-                        className="select-cv-input"
-                        id="profile-image"
-                        accept="*/*"
-                        onChange={newResumeUpload}
-                        ref={resumeFileInputRef}
-                      />
-                      <Button
-                        onClick={resumeFileFunction}
-                        className="edit-profileimg-btn"
-                        variant="text"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        Add Resumes
-                      </Button>
-                    </div>
+                          <div className="update-portfolio-action"></div>
+                        </div>
+                      </>
+                    );
+                  })}
+                <div className="add-portfoli-section">
+                  <div className="add-portfolia-btn">
+                    <input
+                      type="file"
+                      className="select-cv-input"
+                      id="profile-image"
+                      accept="*/*"
+                      onChange={newResumeUpload}
+                      ref={resumeFileInputRef}
+                    />
+                    <Button
+                      onClick={resumeFileFunction}
+                      className="edit-profileimg-btn"
+                      variant="text"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      Add Resumes
+                    </Button>
                   </div>
                 </div>
               </div>
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={3}>
+            <CustomTabPanel value={valueTabs} index={5}>
               <div className="update-portfolio-section">
                 <div className="update-service-cards-wrapper edit-service-section-main">
                   {services &&
                     services?.length > 0 &&
-                    services?.map((item, index) => {
+                    services?.map((item, servicesIndex) => {
+                      // console.log(servicesIndex, "servicesIndex");
                       return (
                         <>
                           <div className="edit-service-section-wrapper">
                             <h5>{item.serviceName}</h5>
-                            <div className="kids-form-row" key={index}>
+                            <div className="kids-form-row">
                               <div className="kids-form-section">
                                 <div className="mb-3">
                                   <label className="form-label">
@@ -2277,8 +2361,6 @@ const EditTalent = () => {
                                   ></input>
                                 </div>
                               </div>
-                            </div>
-                            <div className="kids-form-row">
                               <div className="kids-form-section">
                                 <div className="mb-3">
                                   <label className="form-label">
@@ -2293,19 +2375,6 @@ const EditTalent = () => {
                                   ></input>
                                 </div>
                               </div>
-                              <div className="kids-form-section">
-                                <div className="mb-3">
-                                  <label className="form-label">
-                                    Service Duration
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Service Duration"
-                                    value={item.serviceDuration}
-                                  ></input>
-                                </div>
-                              </div>
                             </div>
                             <div className="kids-form-row">
                               <div className="kids-form-section">
@@ -2317,7 +2386,10 @@ const EditTalent = () => {
                                   <Editor
                                     editorState={item.editorState}
                                     onEditorStateChange={(editorState) =>
-                                      handleEditorChange(index, editorState)
+                                      handleEditorChange(
+                                        servicesIndex,
+                                        editorState
+                                      )
                                     }
                                     toolbar={{
                                       options: [
@@ -2337,96 +2409,116 @@ const EditTalent = () => {
                                   />
                                 </div>
                               </div>
+                              <div className="kids-form-section">
+                                <div className="mb-3">
+                                  <label className="form-label">
+                                    Service Duration
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Service Duration"
+                                    value={item.serviceDuration}
+                                  ></input>
+                                </div>
+                              </div>
                             </div>
-
-                            {item?.files?.length > 0 &&
-                              item?.files?.map((item) => {
-                                return (
-                                  <>
-                                    <div className="update-portfolio-cards">
-                                      <div className="update-portfolio-icon">
-                                        <div className="file-section">
-                                          {item.type === "audio" && (
-                                            <div className="fileType">
-                                              <i class="bi bi-mic-fill"></i>
-                                            </div>
-                                          )}
-                                          {item.type === "video" && (
-                                            <div className="fileType">
-                                              <i class="bi bi-play-circle-fill"></i>
-                                            </div>
-                                          )}
-                                          {item.type === "document" && (
-                                            <div className="fileType">
-                                              <i class="bi bi-file-earmark-richtext"></i>
-                                            </div>
-                                          )}
-                                          <div className="update-portfolio-fileName">
-                                            {item.title}
-                                          </div>
-                                          <div className="update-portfolio-action">
-                                            <i
-                                              className="bi bi-three-dots-vertical"
-                                              type="button"
-                                              id="dropdownMenuButton1"
-                                              data-bs-toggle="dropdown"
-                                              aria-expanded="false"
-                                            ></i>
-                                            <ul
-                                              class="dropdown-menu"
-                                              aria-labelledby="dropdownMenuButton1"
-                                            >
-                                              <li>
-                                                <a
-                                                  class="dropdown-item"
-                                                  onClick={() =>
-                                                    viewUpdateFile(item)
-                                                  }
+                            <div className="service-files-main">
+                              <div>
+                                {item?.files?.length > 0 &&
+                                  item?.files?.map((item) => {
+                                    return (
+                                      <>
+                                        <div className="update-portfolio-cards">
+                                          <div className="update-portfolio-icon">
+                                            <div className="file-section">
+                                              {item.type === "audio" && (
+                                                <div className="fileType">
+                                                  <i class="bi bi-mic-fill"></i>
+                                                </div>
+                                              )}
+                                              {item.type === "video" && (
+                                                <div className="fileType">
+                                                  <i class="bi bi-play-circle-fill"></i>
+                                                </div>
+                                              )}
+                                              {item.type === "document" && (
+                                                <div className="fileType">
+                                                  <i class="bi bi-file-earmark-richtext"></i>
+                                                </div>
+                                              )}
+                                              <div className="update-portfolio-fileName">
+                                                {item.title}
+                                              </div>
+                                              <div className="update-portfolio-action">
+                                                <i
+                                                  className="bi bi-three-dots-vertical"
+                                                  type="button"
+                                                  id="dropdownMenuButton1"
+                                                  data-bs-toggle="dropdown"
+                                                  aria-expanded="false"
+                                                ></i>
+                                                <ul
+                                                  class="dropdown-menu"
+                                                  aria-labelledby="dropdownMenuButton1"
                                                 >
-                                                  View
-                                                </a>
-                                              </li>
-                                              <li>
-                                                <a
-                                                  class="dropdown-item"
-                                                  onClick={(e) => {
-                                                    setAlertpop({
-                                                      status: true,
-                                                      item: item,
-                                                      label: "delete",
-                                                    });
-                                                  }}
-                                                >
-                                                  Delete
-                                                </a>
-                                              </li>
-                                            </ul>
+                                                  <li>
+                                                    <a
+                                                      class="dropdown-item"
+                                                      onClick={() =>
+                                                        viewUpdateFile(item)
+                                                      }
+                                                    >
+                                                      View
+                                                    </a>
+                                                  </li>
+                                                  <li>
+                                                    <a
+                                                      class="dropdown-item"
+                                                      onClick={(e) => {
+                                                        setAlertpop({
+                                                          status: true,
+                                                          item: item,
+                                                          label: "delete",
+                                                        });
+                                                      }}
+                                                    >
+                                                      Delete
+                                                    </a>
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                            </div>
                                           </div>
+                                          <div className="update-portfolio-action"></div>
                                         </div>
-                                      </div>
-                                      <div className="update-portfolio-action"></div>
-                                    </div>
-                                  </>
-                                );
-                              })}
-                            <div className="add-service-section">
-                              <div className="add-portfolia-btn">
-                                <input
-                                  type="file"
-                                  className="select-cv-input"
-                                  id="profile-image"
-                                  accept="audio/*,video/*"
-                                  onChange={newServiceFileUpload}
-                                  ref={serviceFileInputRef}
-                                />
-
-                                <div
-                                  className="add-more-files-btn"
-                                  onClick={() => serviceFile()}
-                                  variant="text"
-                                >
-                                  <i class="bi bi-plus-circle-fill"></i> Add
-                                  Files
+                                      </>
+                                    );
+                                  })}
+                              </div>
+                              <div
+                                className="add-service-section"
+                                key={servicesIndex}
+                              >
+                                <div className="add-portfolia-btn">
+                                  <input
+                                    type="file"
+                                    className="select-cv-input"
+                                    id="profile-image"
+                                    accept="audio/*,video/*"
+                                    onChange={(e) =>
+                                      newServiceFileUpload(e, servicesIndex)
+                                    }
+                                    ref={serviceFileInputRef}
+                                  />
+                                  <div
+                                    className="add-more-files-btn"
+                                    onClick={() => serviceFile()}
+                                    variant="text"
+                                  >
+                                    <i class="bi bi-plus-circle-fill"></i> Add
+                                    Files
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -2443,7 +2535,7 @@ const EditTalent = () => {
                   </div>
                   <div className="add-service-btn-flex">
                     <Button
-                      onClick={() => addService()}
+                      onClick={() => submitServices()}
                       className="edit-profileimg-btn"
                       variant="text"
                       style={{ textTransform: "capitalize" }}
@@ -2454,6 +2546,78 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={6}>
+              <div className="kids-form-title">Features</div>
+              {talentData && talentData?.features?.length > 0 && (
+                <div className="features-section">
+                  {featuresList && (
+                    <>
+                      {featuresList?.map((item, index) => {
+                        return (
+                          <>
+                            <div className="mb-3 features-input-wrapper">
+                              <label className="form-label">{item.label}</label>
+                              <select
+                                className="form-select features-select"
+                                aria-label="Default select example"
+                                value={features}
+                                onChange={(e) =>
+                                  handleFeaturesChange(
+                                    item.label,
+                                    e.target.value
+                                  )
+                                }
+                              >
+                                <option value="" disabled selected>
+                                  {item.label}
+                                </option>
+                                {item?.options?.map((item, index) => {
+                                  return (
+                                    <>
+                                      <option defaultValue value="1">
+                                        {item}
+                                      </option>
+                                    </>
+                                  );
+                                })}
+                              </select>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </>
+                  )}
+                </div>
+              )}
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={7}>
+              Reviews
+            </CustomTabPanel>
+
+            <div className="edit-profile-navigations">
+              {valueTabs >= 1 && (
+                <div
+                  className="edit-profile-navigation-btn"
+                  onClick={() => {
+                    handleNavigation("back");
+                  }}
+                >
+                  <i class="bi bi-arrow-left-circle-fill arrow-left-circle"></i>
+                  <span className="edit-profile-navigation-text">Back</span>
+                </div>
+              )}
+              {valueTabs != 7 && (
+                <div
+                  className="edit-profile-navigation-btn"
+                  onClick={() => {
+                    handleNavigation("next");
+                  }}
+                >
+                  <span className="edit-profile-navigation-text">Next</span>
+                  <i class="bi bi-arrow-right-circle-fill"></i>
+                </div>
+              )}
+            </div>
           </Box>
         </div>
       </main>
