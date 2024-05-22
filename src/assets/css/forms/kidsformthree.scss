@@ -141,4 +141,11 @@
     width: 37%;
     margin-left: 15px;
   }
+
+  .plans-section .col-md-4:first-child, .plans-section .col-md-4:nth-child(2), .plans-section .col-md-4:nth-child(3) {
+    width: 100%;
+  }
+  .priceHeight { min-height: 80px; }
+
+  
 }
