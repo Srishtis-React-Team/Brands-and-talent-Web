@@ -26,7 +26,6 @@
  
   .header-title {
     color: #fff;
-    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -40,7 +39,6 @@
   .header-menu > div {
     padding-right: 15px;
     color: #fff;
-    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 300;
@@ -68,7 +66,6 @@
     background: #000;
     cursor: pointer;
     color: #fff;
-    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -105,7 +102,6 @@
     display: flex;
     align-items: center;
     background-color: #c2114b;
-    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     cursor: pointer;
     padding: 0px 6px;
@@ -113,12 +109,10 @@
   }
 
   .filter-wrapper {
-    width: 25%;
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin-right: 20px;
     border-radius: 8px;
     padding: 30px;
   }
@@ -129,10 +123,8 @@
   .filter-items {
     padding: 8px 0px;
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-weight: 400;
-    width: 30%;
   }
   .keyword-wrapper {
     justify-content: space-between;
@@ -179,7 +171,6 @@
   }
   .label-style {
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 15px;
     font-weight: 300;
     padding-left: 10px;
@@ -200,7 +191,6 @@
   }
   .input-items-style::placeholder {
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 300;
@@ -231,7 +221,6 @@
     border-radius: 140px;
     background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
     color: #fff;
-    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-weight: 300;
     display: flex;
@@ -244,10 +233,8 @@
     margin-left: 15px;
   }
   .models-images {
-    width: 65%;
     background-color: #ffffff;
     box-shadow: rgb(0 0 0 / 11%) 0px 2px 8px;
-    margin-right: 20px;
     border-radius: 8px;
     padding: 30px;
   }
@@ -263,7 +250,9 @@
   outline: 0;
   box-shadow: 0 0 0 0.25rem #e9ecef;
 }
-
+.models-images .gallery-wrapper {
+  width: 23%;
+}
 .find-talent-image {
   width: 100%;
   height: 250px;
@@ -325,36 +314,11 @@ select {
   justify-content: end;
 }
 
-/* // 320px — 480px: Mobile devices
-// 481px — 768px: iPads, Tablets
-// 769px — 1024px: Small screens, laptops
-// 1025px — 1200px: Desktops, large screens
-// 1201px and more —  Extra large screens, TV */
-@media (min-width: 1201px) and (max-width: 1400px) {
-  .filter-wrapper {
-    width: 35%;
-  }
-  .models-images {
-    width: 65%;
-  }
-}
 
-@media (min-width: 1025px) and (max-width: 1200px) {
-  .filter-wrapper {
-    width: 35%;
-  }
-  .models-images {
-    width: 65%;
-  }
-}
+
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .filter-wrapper {
-    width: 35%;
-  }
-  .models-images {
-    width: 65%;
-  }
+
   .filter-wrapper {
     display: flex;
     flex-direction: column;
@@ -367,12 +331,7 @@ select {
     display: flex;
     flex-direction: column;
   }
-  .filter-wrapper {
-    width: 100%;
-  }
-  .models-images {
-    width: 100%;
-  }
+
 }
 @media (min-width: 320px) and (max-width: 768px) {
   .filtered-gallery {
@@ -388,9 +347,7 @@ select {
     width: 100%;
     padding: 10px 20px;
   }
-  .filter-wrapper {
-    width: 100%;
-  }
+
   .models-images {
     width: 100%;
   }
@@ -411,7 +368,6 @@ select {
   }
   .header-title {
     color: #fff;
-    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -425,7 +381,6 @@ select {
   .header-menu > div {
     padding-right: 15px;
     color: #fff;
-    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 300;
@@ -442,9 +397,7 @@ select {
   .filter-section {
     margin-top: 20px;
   }
-  .filter-wrapper {
-    width: 100%;
-  }
+ 
   .filter-btn {
     width: 296px;
     height: 49px;
@@ -452,7 +405,6 @@ select {
     background: #000;
     cursor: pointer;
     color: #fff;
-    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -468,18 +420,13 @@ select {
     justify-content: center;
     margin-top: 20px;
   }
-  .filter-wrapper {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center; */
-  }
+
   .filter-content {
     display: block;
   }
   .filter-items {
     padding: 8px 0px;
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-weight: 600;
   }
@@ -517,7 +464,6 @@ select {
   .search-history > div {
     padding: 8px 8px;
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 300;
@@ -539,7 +485,6 @@ select {
   }
   .input-items-style::placeholder {
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 300;
@@ -563,7 +508,6 @@ select {
     border-radius: 140px;
     background: linear-gradient(90deg, #030303 6.98%, #000 65.92%);
     color: #fff;
-    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-weight: 300;
     display: flex;
@@ -582,7 +526,6 @@ select {
 
 .find-creator-name {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
@@ -592,7 +535,6 @@ select {
 
 .find-creator-address {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 500;
@@ -602,12 +544,11 @@ select {
 
 .find-creator-location-name {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  padding: 6px 6px;
+  padding: 6px 0 6px 6px;
 }
 
 .keyword-input::placeholder {
