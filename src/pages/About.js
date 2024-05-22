@@ -10,10 +10,12 @@ const About = () => {
       <Header />{" "}
       <section style={{ marginTop: "64px" }}>
         <div className="popular-header">
-          <div className="header-title">About Us</div>
-          <div className="header-menu">
-            <div>Home</div>
-            <div>Learn</div>
+          <div className="container">
+            <div className="header-title">About Us</div>
+            <div className="header-menu">
+              <div>Home</div>
+              <div>Learn</div>
+            </div>
           </div>
         </div>
       </section>

@@ -62,48 +62,56 @@ const Blogs = () => {
       <Header />{" "}
       <section style={{ marginTop: "64px" }}>
         <div className="popular-header">
-          <div className="header-title">Blog</div>
-          <div className="header-menu">
-            <div>Home</div>
-            <div>Learn</div>
+          <div className="container">
+            <div className="header-title">Blog</div>
+            <div className="header-menu">
+              <div>Home</div>
+              <div>Learn</div>
+            </div>
           </div>
         </div>
       </section>
-      <div className="blogs-main">
-        <div className="blog-contents">
-          {blogsList && blogsList.length > 0 && (
-            <div className="blog-card">
-              {blogsList?.map((item, index) => {
-                return (
-                  <>
-                    <div className="blogs-wrapper">
-                      <div>
-                        <img className="blogs-image" src={item?.image} alt="" />
-                      </div>
-                      <div className="blogs-content-wrapper">
-                        <div className="blogs-subhead">{item?.subheading}</div>
-                        <div className="blogs-heading">{item?.heading}</div>
-                        <div className="blogs-description">
-                          {item?.description}
+
+      <section>
+        <div className="container">
+          <div className="blogs-main row">
+            <div className="blog-contents col-sm-9 col-md-9">
+              {blogsList && blogsList.length > 0 && (
+                <div className="blog-card">
+                  {blogsList?.map((item, index) => {
+                    return (
+                      <>
+                        <div className="blogs-wrapper">
+                          <div className="blogimg-bx">
+                            <img className="blogs-image" src={item?.image} alt="" />
+                          </div>
+                          <div className="blogs-content-wrapper">
+                            <div className="blogs-subhead">{item?.subheading}</div>
+                            <div className="blogs-heading">{item?.heading}</div>
+                            <div className="blogs-description">
+                              {item?.description}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </>
-                );
-              })}
+                      </>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <div className="blogs-tabs">
-          <div className="blogs-tabs-wrapper">
-            <div className="blogs-tab-text">Industry News & Insights</div>
-            <div className="blogs-tab-text">Case Studies</div>
-            <div className="blogs-tab-text">Talent Diaries</div>
-            <div className="blogs-tab-text"> Talent Tips & Tricks</div>
-            <div className="blogs-tab-text"> Brand Tips & Tricks</div>
+            <div className="blogs-tabs col-sm-4 col-md-3">
+              <div className="blogs-tabs-wrapper">
+                <div className="blogs-tab-text">Industry News & Insights</div>
+                <div className="blogs-tab-text">Case Studies</div>
+                <div className="blogs-tab-text">Talent Diaries</div>
+                <div className="blogs-tab-text"> Talent Tips & Tricks</div>
+                <div className="blogs-tab-text"> Brand Tips & Tricks</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
       <Footer />
     </>
   );
