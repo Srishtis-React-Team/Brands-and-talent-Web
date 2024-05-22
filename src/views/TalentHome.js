@@ -95,40 +95,37 @@ const TalentHome = () => {
       >
         <div className="brand-content-main">
           <div className="create-job-title">Welcome To Brands And Talent</div>
-          <div className="home-cards">
-            <Link to="/edit-talent-profile">
-              <div className="home-cards-wrapper">
-                <div className="home-card-content">
-                  <i className="bi bi-person icons home-card-icons"></i>
-                  <div className="home-cards-names">Update Profile</div>
+          <div className="home-cards row">
+            <div className="col-md-4">
+              <Link to="/edit-talent-profile">
+                <div className="home-cards-wrapper">
+                  <div className="home-card-content">
+                    <i className="bi bi-person icons home-card-icons"></i>
+                    <div className="home-cards-names">Update Profile</div>
+                  </div>
                 </div>
-              </div>
-            </Link>
-            <Link to="/talent-dashboard">
-              <div className="home-cards-wrapper">
-                <div className="home-card-content">
-                  <i class="bi bi-search icons home-card-icons"></i>
-                  <div className="home-cards-names">Browse Jobs</div>
+              </Link>
+            </div>
+            <div className="col-md-4">
+              <Link to="/talent-dashboard">
+                <div className="home-cards-wrapper">
+                  <div className="home-card-content">
+                    <i class="bi bi-search icons home-card-icons"></i>
+                    <div className="home-cards-names">Browse Jobs</div>
+                  </div>
                 </div>
-              </div>
-            </Link>
-
-            <Link to="/talent-help">
-              <div className="home-cards-wrapper">
-                <div className="home-card-content">
-                  <i class="bi bi-info-circle-fill  home-card-icons"></i>
-                  <div className="home-cards-names">Help And Support</div>
+              </Link>
+            </div>
+            <div className="col-md-4">
+              <Link to="/talent-help">
+                <div className="home-cards-wrapper">
+                  <div className="home-card-content">
+                    <i class="bi bi-info-circle-fill  home-card-icons"></i>
+                    <div className="home-cards-names">Help And Support</div>
+                  </div>
                 </div>
-              </div>
-            </Link>
-            <Link to="/talent-help">
-              <div className="home-cards-wrapper">
-                <div className="home-card-content">
-                  <i class="bi bi-briefcase home-card-icons"></i>
-                  <div className="home-cards-names">Create Job Alert</div>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
       </main>
