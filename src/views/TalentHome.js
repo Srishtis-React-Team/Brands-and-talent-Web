@@ -108,7 +108,7 @@ const TalentHome = () => {
               <div className="home-cards-wrapper">
                 <div className="home-card-content">
                   <i class="bi bi-search icons home-card-icons"></i>
-                  <div className="home-cards-names">Search Jobs</div>
+                  <div className="home-cards-names">Browse Jobs</div>
                 </div>
               </div>
             </Link>
@@ -118,6 +118,14 @@ const TalentHome = () => {
                 <div className="home-card-content">
                   <i class="bi bi-info-circle-fill  home-card-icons"></i>
                   <div className="home-cards-names">Help And Support</div>
+                </div>
+              </div>
+            </Link>
+            <Link to="/talent-help">
+              <div className="home-cards-wrapper">
+                <div className="home-card-content">
+                  <i class="bi bi-briefcase home-card-icons"></i>
+                  <div className="home-cards-names">Create Job Alert</div>
                 </div>
               </div>
             </Link>

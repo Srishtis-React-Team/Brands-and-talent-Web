@@ -169,6 +169,7 @@
   font-weight: 600;
   line-height: normal;
   cursor: pointer;
+  padding-left: 10px;
 }
 .campaign-name:hover {
   text-decoration: underline;
@@ -184,6 +185,7 @@
   max-height: 150px;
   padding-bottom: 10px;
   overflow: scroll;
+  overflow-x: hidden;
   margin-bottom: 20px;
   margin-top: 5px;
 }

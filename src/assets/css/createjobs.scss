@@ -89,12 +89,14 @@
   margin: 10px 0px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   .skills-wrapper {
     display: flex;
     align-items: center;
     background-color: #c2114b;
     padding: 10px;
     border-radius: 3px;
+    margin-bottom: 10px;
     .skill-text {
       color: #ffffff;
       font-size: 14px;
@@ -131,18 +133,26 @@
   // background-color: rgb(25, 0, 255);
   // height: 30%;
 }
-.campaign-paid-wrapper, .campaigns-content-wrapper, .campaign-name { padding-left: 0 !important; }
+.campaign-paid-wrapper,
+.campaigns-content-wrapper,
+.campaign-name {
+  padding-left: 0 !important;
+}
 
-.campaign-features-wrapper{ margin-right: 10px; }
+.campaign-features-wrapper {
+  margin-right: 10px;
+}
 
-.campaign-features .campaign-features-wrapper:last-child{ margin-right: 0px; }
+.campaign-features .campaign-features-wrapper:last-child {
+  margin-right: 0px;
+}
 
 .list-jobs-wrapper {
   width: 100%;
 }
 
 .list-jobs-card {
-  margin:5px 0px 20px;
+  margin: 5px 0px 20px;
 }
 
 .job-card-buttons {

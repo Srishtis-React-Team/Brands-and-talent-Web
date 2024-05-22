@@ -160,7 +160,7 @@ const TalentSideMenu = ({ myState }) => {
             }
           >
             <i className="bi bi-house-door icons"></i>
-            <div className="brand-menu-text">Dashboard</div>
+            <div className="brand-menu-text">Browse Jobs</div>
           </Link>
 
           <Link
@@ -207,7 +207,7 @@ const TalentSideMenu = ({ myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i className="bi bi-save icons"></i>
+            <i class="bi bi-heart icons"></i>
             <div className="brand-menu-text">Saved Jobs</div>
           </Link>
 

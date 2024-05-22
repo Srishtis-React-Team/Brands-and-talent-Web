@@ -11,13 +11,10 @@
 }
 
 .bi-arrow-left-circle-fill {
-  color: #069EED;
-  padding-right: 8px;
-  font-size: 20px;
 }
 
 .back-to {
-  color: #069EED;
+  color: #069eed;
   font-size: 13px;
   font-style: normal;
   font-weight: 600;
@@ -25,7 +22,7 @@
   cursor: pointer;
 }
 .back-to:hover {
-  color: #069EED;
+  color: #069eed;
 }
 
 .job-main-details {
@@ -88,7 +85,8 @@
   width: 100%;
 }
 
-.job-features-benefits ol, .job-features-benefits ul {
+.job-features-benefits ol,
+.job-features-benefits ul {
   padding: 0 0 0 20px;
   margin: 0 0 15px;
   color: #666;
@@ -105,7 +103,6 @@
   margin: 10px 0;
 }
 
-
 .job-feature-heading {
   color: #000;
   font-size: 14px;
@@ -114,13 +111,15 @@
   line-height: normal;
 }
 
-.job-feature-values, .job-benefits-values {
+.job-feature-values,
+.job-benefits-values {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 
-.job-features-li, .job-benefits-points li {
+.job-features-li,
+.job-benefits-points li {
   padding: 0;
   margin: 0 0 10px;
 }

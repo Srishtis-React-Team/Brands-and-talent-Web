@@ -23,7 +23,9 @@ import { useLocation } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
-
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 const CreateJobs = () => {
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -149,6 +151,7 @@ const CreateJobs = () => {
       setSelectedApplyOption(editData?.howLikeToApply);
       setPortofolioFile(editData?.workSamples);
       setJobCurrency(editData?.jobCurrency);
+      setLastdateApply(editData?.lastDateForApply);
       if (editData?.questions && editData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editData?.questions);
@@ -313,6 +316,7 @@ const CreateJobs = () => {
       setjobType(editJobData?.jobType);
       setGender(editJobData?.gender);
       setNationality(editJobData?.nationality);
+      setLastdateApply(editData?.lastDateForApply);
 
       // editJobData?.languages;
       setWhyWorkWithUs(editJobData?.whyWorkWithUs);
@@ -465,9 +469,9 @@ const CreateJobs = () => {
   const [age, setAge] = useState("");
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [jobCurrency, setJobCurrency] = useState("");
-
   const [selectedApplyOption, setSelectedApplyOption] = useState("easy-apply");
   const [hiringCompany, setHiringCompany] = useState("");
+  const [dobError, setDobError] = useState(false);
 
   const handleApplyOption = (e) => {
     console.log(e.target.value, "e.target.value");
@@ -632,18 +636,6 @@ const CreateJobs = () => {
   }, []);
 
   useEffect(() => {}, [updateDisabled]);
-
-  // Function to handle date picker change
-  const handleDateChange = (e) => {
-    const selectedDate = e.target.value; // Assuming your date picker provides the selected date
-    setDob(selectedDate); // Set the DOB in state
-    // Calculate age
-    const dobDate = new Date(selectedDate);
-    const today = new Date();
-    const diff = today - dobDate;
-    const ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)); // Calculating age in years
-    setAge(String(ageInYears)); // Set the age in state
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -999,6 +991,7 @@ const CreateJobs = () => {
         howLikeToApply: selectedApplyOption,
         workSamples: portofolioFile,
         brandImage: brandImage,
+        lastDateForApply: lastdateApply,
       };
       if (editData?.type == "Draft") {
         await ApiHelper.post(`${API.editDraft}${editData?.value}`, formData)
@@ -1145,6 +1138,7 @@ const CreateJobs = () => {
         workSamples: portofolioFile,
         brandId: brandId,
         brandImage: brandImage,
+        lastDateForApply: lastdateApply,
       };
       console.log(formData, "CREATEJOB_PAYLOAD");
       await ApiHelper.post(API.draftJob, formData)
@@ -1419,6 +1413,18 @@ const CreateJobs = () => {
     { title: "Photo Shop" },
   ];
   console.log(skillInputValue, "skillInputValue");
+
+  const [lastdateApply, setLastdateApply] = useState(null);
+  const handleDateChange = (e) => {
+    setLastdateApply(e);
+    setDob(e);
+    let dobDate = new Date(e);
+    let today = new Date();
+    let diff = today - dobDate;
+    let ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+    setAge(String(ageInYears));
+    setDobError(false);
+  };
 
   return (
     <>
@@ -1706,43 +1712,66 @@ const CreateJobs = () => {
                         />
                       </div>
 
-                      <div className="mb-4">
-                        <label className="form-label pay-info">
-                          Profession/Skills (optional)
-                          <span className="mandatory">*</span>
-                        </label>
-
-                        <div className="mb-3">
-                          <div className="form-group add-skill-wrapper">
-                            {/* has-search <span className="fa fa-search form-control-feedback"></span> */}
-
-                            <Stack spacing={2} sx={{ width: 300 }}>
-                              <Autocomplete
-                                freeSolo
-                                id="free-solo-2-demo"
-                                disableClearable
-                                options={top100Films.map(
-                                  (option) => option.title
-                                )}
-                                value={skillInputValue}
-                                onChange={(event, newValue) => {
-                                  setSkillInputValue(newValue);
+                      <div className="kids-form-row">
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Last date to apply{" "}
+                              <span className="mandatory">*</span>
+                            </label>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                              <DatePicker
+                                value={lastdateApply}
+                                onChange={(newValue) => {
+                                  console.log(newValue, "newValue");
+                                  handleDateChange(newValue);
                                 }}
                                 renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    label="Search input"
-                                    InputProps={{
-                                      ...params.InputProps,
-                                      type: "search",
-                                    }}
-                                    onKeyUp={() => handleKeyDown(params)}
-                                  />
+                                  <TextField {...params} />
                                 )}
+                                disablePast
                               />
-                            </Stack>
+                            </LocalizationProvider>
+                          </div>
+                        </div>
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Profession/Skills (optional)
+                              <span className="mandatory">*</span>
+                            </label>
 
-                            {/* <input
+                            <div className="mb-3">
+                              <div className="form-group add-skill-wrapper">
+                                {/* has-search <span className="fa fa-search form-control-feedback"></span> */}
+
+                                <Stack spacing={2} sx={{ width: 300 }}>
+                                  <Autocomplete
+                                    freeSolo
+                                    id="free-solo-2-demo"
+                                    disableClearable
+                                    options={top100Films.map(
+                                      (option) => option.title
+                                    )}
+                                    value={skillInputValue}
+                                    onChange={(event, newValue) => {
+                                      setSkillInputValue(newValue);
+                                    }}
+                                    renderInput={(params) => (
+                                      <TextField
+                                        {...params}
+                                        label="Search input"
+                                        InputProps={{
+                                          ...params.InputProps,
+                                          type: "search",
+                                        }}
+                                        onKeyUp={() => handleKeyDown(params)}
+                                      />
+                                    )}
+                                  />
+                                </Stack>
+
+                                {/* <input
                               type="text"
                               className="form-control"
                               placeholder="Add New Skills"
@@ -1750,25 +1779,27 @@ const CreateJobs = () => {
                               onChange={handleInputChange}
                               onKeyDown={handleKeyDown}
                             /> */}
-                            <div
-                              className="add-skill-btn"
-                              onClick={addSkillCall}
-                            >
-                              Add Skill
+                                <div
+                                  className="add-skill-btn"
+                                  onClick={addSkillCall}
+                                >
+                                  Add Skill
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="skills-section">
+                              {skills.map((skill, index) => (
+                                <div className="skills-wrapper" key={index}>
+                                  <div className="skill-text"> {skill}</div>
+                                  <i
+                                    className="bi bi-x"
+                                    onClick={() => removeSkill(index)}
+                                  ></i>
+                                </div>
+                              ))}
                             </div>
                           </div>
-                        </div>
-
-                        <div className="skills-section">
-                          {skills.map((skill, index) => (
-                            <div className="skills-wrapper" key={index}>
-                              <div className="skill-text"> {skill}</div>
-                              <i
-                                className="bi bi-x"
-                                onClick={() => removeSkill(index)}
-                              ></i>
-                            </div>
-                          ))}
                         </div>
                       </div>
 
