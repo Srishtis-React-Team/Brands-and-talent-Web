@@ -26,6 +26,8 @@ import Stack from "@mui/material/Stack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { format, parseISO } from "date-fns";
+
 const CreateJobs = () => {
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -1415,16 +1417,25 @@ const CreateJobs = () => {
   console.log(skillInputValue, "skillInputValue");
 
   const [lastdateApply, setLastdateApply] = useState(null);
-  const handleDateChange = (e) => {
-    setLastdateApply(e);
-    setDob(e);
-    let dobDate = new Date(e);
+
+  const handleDateChange = (date) => {
+    console.log(date, "ehandleDateChange");
+    // Format the date to ensure it's correctly parsed and displayed
+    const formattedDate = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+    setLastdateApply(formattedDate);
+    // Set the DOB state and calculate the age
+    setDob(formattedDate);
+    let dobDate = new Date(formattedDate);
     let today = new Date();
     let diff = today - dobDate;
     let ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
     setAge(String(ageInYears));
     setDobError(false);
   };
+
+  useEffect(() => {
+    console.log(lastdateApply, "lastdateApply");
+  }, [lastdateApply]);
 
   return (
     <>
@@ -1719,9 +1730,12 @@ const CreateJobs = () => {
                               Last date to apply{" "}
                               <span className="mandatory">*</span>
                             </label>
+
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                               <DatePicker
-                                value={lastdateApply}
+                                value={
+                                  lastdateApply ? parseISO(lastdateApply) : null
+                                }
                                 onChange={(newValue) => {
                                   console.log(newValue, "newValue");
                                   handleDateChange(newValue);

@@ -110,7 +110,7 @@ const TalentHome = () => {
               <Link to="/talent-dashboard ">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
-                    <i class="bi bi-search icons home-card-icons"></i>
+                    <i className="bi bi-search icons home-card-icons"></i>
                     <div className="home-cards-names">Browse Jobs</div>
                   </div>
                 </div>
@@ -120,8 +120,18 @@ const TalentHome = () => {
               <Link to="/talent-help">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
-                    <i class="bi bi-info-circle-fill  home-card-icons"></i>
+                    <i className="bi bi-info-circle-fill  home-card-icons"></i>
                     <div className="home-cards-names">Help And Support</div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+            <div className="col-md-4">
+              <Link>
+                <div className="home-cards-wrapper hovBx">
+                  <div className="home-card-content">
+                    <i className="bi bi-briefcase-fill home-card-icons"></i>
+                    <div className="home-cards-names">Create Job Alert</div>
                   </div>
                 </div>
               </Link>

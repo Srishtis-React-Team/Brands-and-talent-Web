@@ -69,21 +69,22 @@ const Applicants = () => {
 
   function inviteToInterview(candidate) {
     const formData = {
-      talentId: candidate?.talents[0]?.talentDetails?._id,
+      talentId: candidate?.talentId,
       selectedLevel: "interviewInvitations",
       interviewType: "online",
     };
   }
   const sortListCandidate = async (candidate) => {
+    console.log(candidate, "candidate");
     const formData = {
-      talentId: candidate?.talents[0]?.talentDetails?._id,
+      talentId: candidate?.talentId,
       selectedLevel: "shortlistedCandidates",
     };
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           // getNewCandidates(brandId, "new");
-          setMessage("Candidate Sortlisted SuccessFully!");
+          setMessage("Candidate Shortlisted SuccessFully!");
           setOpenPopUp(true);
           setTimeout(function() {
             handleForms("sortlisted-candidates");
@@ -175,15 +176,12 @@ const Applicants = () => {
     console.log(formData, "formDatagetNewCandidates");
     await ApiHelper.post(apiUrl, formData)
       .then((resData) => {
-        console.log(resData, "newCandidatesresData");
-        if (resData.data.status === true && resData != undefined) {
-          if (resData.data.gigs) {
-            setCandidatesList(resData.data.gigs, "resData.data.data");
-          }
+        if (resData.data.status === true) {
+          console.log(resData.data.data, "newCandidatesresData");
+          setCandidatesList(resData.data.data, "resData.data.data");
         }
       })
       .catch((err) => {
-        setCandidatesList([]);
         console.log(err);
       });
   };
@@ -233,7 +231,6 @@ const Applicants = () => {
         }
       })
       .catch((err) => {
-        setCandidatesList([]);
         console.log(err);
       });
   };
@@ -272,7 +269,6 @@ const Applicants = () => {
         }
       })
       .catch((err) => {
-        setCandidatesList([]);
         console.log(err);
       });
   };
@@ -356,7 +352,7 @@ const Applicants = () => {
                   handleForms("sortlisted-candidates");
                 }}
               >
-                SortListed Candidates
+                ShortListed Candidates
               </div>
               <div
                 className={
@@ -387,7 +383,7 @@ const Applicants = () => {
             {candidatesList && candidatesList.length > 0 && (
               <>
                 <div className="list-jobs-wrapper">
-                  {candidatesList.map((candidate, index) => {
+                  {candidatesList?.map((candidate, index) => {
                     return (
                       <>
                         <div key={index} className="list-jobs-card">
@@ -396,7 +392,7 @@ const Applicants = () => {
                               <div className="candidate-image-wrapper">
                                 <img
                                   className="candidate-image-styling"
-                                  src={`${API.userFilePath}${candidate?.talents[0]?.talentDetails?.image?.fileData}`}
+                                  src={`${API.userFilePath}${candidate?.talentDetails?.image[0]?.fileData}`}
                                   alt=""
                                 />
                               </div>
@@ -404,25 +400,16 @@ const Applicants = () => {
                                 <div className="campaign-paid-wrapper">
                                   <div className="campaign-name ">
                                     {
-                                      candidate?.talents[0]?.talentDetails
+                                      candidate?.talentDetails
                                         ?.preferredChildFirstname
                                     }
                                     &nbsp;
                                     {
-                                      candidate?.talents[0]?.talentDetails
+                                      candidate?.talentDetails
                                         ?.preferredChildLastName
                                     }
                                   </div>
                                 </div>
-                                {/* <div className="campaign-status">
-                                  <div className="campaign-features-count">
-                                    View &nbsp;
-                                    {
-                                      candidate?.talents[0]?.talentDetails
-                                        ?.preferredChildLastName
-                                    }
-                                  </div>
-                                </div> */}
                                 <div className="candidate-job">
                                   <span>Applied For</span> &nbsp;
                                   <span className="candidate-job-title">
@@ -434,14 +421,10 @@ const Applicants = () => {
                                     <i className="bi bi-telephone-fill"></i>
                                   </span>
                                   <span className="phone-number">
-                                    {candidate?.talents[0]?.talentDetails
-                                      ?.childPhone &&
-                                      candidate?.talents[0]?.talentDetails
-                                        ?.childPhone}
-                                    {candidate?.talents[0]?.talentDetails
-                                      ?.parentMobileNo &&
-                                      candidate?.talents[0]?.talentDetails
-                                        ?.parentMobileNo}
+                                    {candidate?.talentDetails?.childPhone &&
+                                      candidate?.talentDetails?.childPhone}
+                                    {candidate?.talentDetails?.parentMobileNo &&
+                                      candidate?.talentDetails?.parentMobileNo}
                                   </span>
                                 </div>
                               </div>
@@ -451,17 +434,13 @@ const Applicants = () => {
                                 <div className="campaign-company-wrapper">
                                   <div className="campaign-initial">
                                     {" "}
-                                    {candidate?.talents[0]?.talentDetails
-                                      ?.parentEmail &&
-                                      candidate?.talents[0]?.talentDetails?.parentEmail.charAt(
+                                    {candidate?.talentDetails?.parentEmail &&
+                                      candidate?.talentDetails?.parentEmail.charAt(
                                         0
                                       )}
                                   </div>
                                   <div className="campaign-company-name">
-                                    {
-                                      candidate?.talents[0]?.talentDetails
-                                        ?.parentEmail
-                                    }
+                                    {candidate?.talentDetails?.parentEmail}
                                   </div>
                                 </div>
                                 <div className="job-card-buttons">
@@ -488,7 +467,7 @@ const Applicants = () => {
                                                 sortListCandidate(candidate);
                                               }}
                                             >
-                                              Sortlist Candidate
+                                              Shortlist Candidate
                                             </a>
                                           </li>
                                         )}
@@ -499,9 +478,7 @@ const Applicants = () => {
                                               onClick={(e) => {
                                                 setAlertpop({
                                                   status: true,
-                                                  talentId:
-                                                    candidate?.talents[0]
-                                                      ?.talentDetails?._id,
+                                                  talentId: candidate?.talentId,
                                                   label: "invite",
                                                 });
                                               }}
@@ -517,9 +494,7 @@ const Applicants = () => {
                                               onClick={(e) => {
                                                 setAlertpop({
                                                   status: true,
-                                                  talentId:
-                                                    candidate?.talents[0]
-                                                      ?.talentDetails?._id,
+                                                  talentId: candidate?.talentId,
                                                   label: "reject",
                                                 });
                                               }}

@@ -44,11 +44,13 @@ export const API = {
   editBrands: BASEURL + "brands/editBrands/",
   favouritesList: BASEURL + "brands/favouritesList",
   getBrandById: BASEURL + "brands/getBrandById/",
+  updateBrandPassword: BASEURL + "brands/updateBrandPassword/",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
   brandsLogin: BASEURL + "brands/brandsLogin",
   deleteNotification: BASEURL + "brands/deleteNotification",
+  updatePasswordInSettings: BASEURL + "brands/updatePasswordInSettings",
 
   //pricing
   getPricingList: BASEURL + "pricing/pricingList",
@@ -70,6 +72,7 @@ export const API = {
   setUserFavorite: BASEURL + "users/setUserFavorite/",
   deleteFile: BASEURL + "users/deleteFile/",
   activateUser: BASEURL + "users/activateUser/",
+  deleteService: BASEURL + "users/deleteService",
 
   //keyword
   postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",

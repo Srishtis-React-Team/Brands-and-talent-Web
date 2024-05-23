@@ -29,6 +29,20 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import Modal from "react-modal";
 import { ta } from "date-fns/locale";
+import { v4 as uuidv4 } from "uuid";
+
+const convertHtmlToEditorState = (html) => {
+  if (!html || typeof html !== "string" || !html.trim()) {
+    // Return an empty editor state if the HTML string is invalid
+    return EditorState.createEmpty();
+  }
+  const blocksFromHTML = convertFromHTML(html);
+  const contentState = ContentState.createFromBlockArray(
+    blocksFromHTML.contentBlocks,
+    blocksFromHTML.entityMap
+  );
+  return EditorState.createWithContent(contentState);
+};
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,7 +93,6 @@ const EditTalent = () => {
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
   const [resumeFile, setResumeFile] = useState([]);
-
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
   const userId = urlParams.get("userId");
@@ -494,14 +507,8 @@ const EditTalent = () => {
             );
             setSelectedLanguageOptions(selectedOptions);
             console.log(selectedOptions, "selectedOptions");
-            setServices(
-              resData.data.data?.services.map((service) => ({
-                ...service,
-                editorState: initializeEditorState(
-                  service.editorState || "<p></p>"
-                ), // Initialize editor state
-              }))
-            );
+
+            setServices(resData.data.data?.services);
 
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
@@ -629,7 +636,7 @@ const EditTalent = () => {
     const value = e.target.value;
     // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
+    if (value?.trim() === "") {
       setFirstNameLetterError(false);
       setParentFirstName("");
     } else if (!onlyLettersRegex.test(value)) {
@@ -650,7 +657,7 @@ const EditTalent = () => {
     const value = e.target.value;
     // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
+    if (value?.trim() === "") {
       setLastNameLetterError(false);
       setParentLastName("");
     } else if (!onlyLettersRegex.test(value)) {
@@ -694,7 +701,7 @@ const EditTalent = () => {
     const value = e.target.value;
     // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
+    if (value?.trim() === "") {
       setKidsLegalLastNameLetterError(false);
       setKidsLegalLastName("");
     } else if (!onlyLettersRegex.test(value)) {
@@ -716,7 +723,7 @@ const EditTalent = () => {
     const value = e.target.value;
     // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
+    if (value?.trim() === "") {
       setKidsPrefferedFirstNameLetterError(false);
       setKidsPreferedFirstName("");
     } else if (!onlyLettersRegex.test(value)) {
@@ -737,7 +744,7 @@ const EditTalent = () => {
     const value = e.target.value;
     // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
+    if (value?.trim() === "") {
       setKidsPrefferedLastNameLetterError(false);
       setKidsPreferedLastName("");
     } else if (!onlyLettersRegex.test(value)) {
@@ -814,12 +821,21 @@ const EditTalent = () => {
     }
   };
 
-  const newServiceFileUpload = (event, servicesIndex) => {
-    console.log(servicesIndex, "newServiceFileUploadINDEX");
+  const serviceFileInputRefs = useRef([]);
+
+  const serviceFile = (index) => {
+    // console.log(eachService, "serviceFileUpload"); // should correctly log each service
+    if (serviceFileInputRefs.current[index]) {
+      serviceFileInputRefs.current[index].click();
+    }
+  };
+
+  const newServiceFileUpload = (event, serviceData) => {
+    console.log(serviceData, "serviceData newServiceFileUploadINDEX");
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
       console.log(fileData, "fileData");
-      uploadNewServiceFile(fileData);
+      uploadNewServiceFile(fileData, serviceData);
     }
   };
 
@@ -1064,7 +1080,7 @@ const EditTalent = () => {
       });
   };
 
-  const uploadNewServiceFile = async (fileData) => {
+  const uploadNewServiceFile = async (fileData, serviceData) => {
     setLoader(true);
     const params = new FormData();
     params.append("file", fileData);
@@ -1085,7 +1101,7 @@ const EditTalent = () => {
             fileData: resData.data.data.filename,
             type: resData?.data?.data?.filetype,
           };
-          updateServiceFileAPI(fileObj);
+          updateServiceFileAPI(fileObj, serviceData);
         }
       })
       .catch((err) => {
@@ -1093,15 +1109,30 @@ const EditTalent = () => {
       });
   };
 
-  const updateServiceFileAPI = async (fileObj) => {
-    let portofolioArray = [...resumeFile, fileObj];
-    console.log(portofolioArray, "portofolioArray");
-    let formData;
-    if (portofolioArray.length > 0) {
-      formData = {
-        cv: portofolioArray,
-      };
-    }
+  const updateServiceFileAPI = async (fileObj, serviceData) => {
+    console.log(serviceData, "serviceData  updateServiceFileAPI");
+    let serviceFilesArray = [...resumeFile, fileObj];
+    let myValue = services.map((item) => {
+      if (item?.uniqueId === serviceData?.uniqueId) {
+        console.log(item, "item updateServiceFileAPI");
+        if (item?.files?.length > 0) {
+          return {
+            ...item,
+            files: [...item?.files, fileObj],
+          };
+        } else {
+          return {
+            ...item,
+            files: [fileObj],
+          };
+        }
+      }
+      return item;
+    });
+    console.log(myValue, "myValue");
+    let formData = {
+      services: myValue,
+    };
     await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -1180,14 +1211,6 @@ const EditTalent = () => {
     }
   };
 
-  const serviceFileInputRef = useRef(null);
-
-  const serviceFile = () => {
-    if (serviceFileInputRef.current) {
-      serviceFileInputRef.current.click(); // Trigger the click event on the file input
-    }
-  };
-
   const resumeFileInputRef = useRef(null);
 
   const resumeFileFunction = () => {
@@ -1218,6 +1241,7 @@ const EditTalent = () => {
     status: false,
     item: "",
     label: "",
+    eachService: null,
   });
 
   const deleteUpdateFile = async () => {
@@ -1225,6 +1249,37 @@ const EditTalent = () => {
       element_id: alertpop?.item?.id,
     };
     await ApiHelper.post(`${API.deleteFile}${talentData?._id}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("File Deleted Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getKidsData();
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const deleteServiceFile = async () => {
+    console.log(alertpop, "alertpop");
+    const formData = {
+      talentId: talentData?._id,
+      serviceUniqueId: alertpop?.eachService?.uniqueId,
+      element_id: alertpop?.item?.id,
+    };
+    await ApiHelper.post(`${API.deleteService}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
@@ -1261,22 +1316,44 @@ const EditTalent = () => {
     // setInputs(newInputs);
   };
 
-  const handleInputChange = (index, event) => {
-    const { name, value } = event.target;
-    const newServices = [...services];
-    newServices[index][name] = value;
-    setServices(newServices);
-  };
-
   const addService = () => {
     setServices([
       ...services,
-      { serviceName: "", serviceAmount: "", serviceDuration: "" },
+      {
+        serviceName: "",
+        serviceAmount: "",
+        serviceDuration: "",
+        uniqueId: uuidv4(),
+      },
     ]);
   };
 
-  const submitServices = () => {
+  const submitServices = async () => {
     console.log(services, "servicessubmitServices");
+    let formData = {
+      services: services,
+    };
+    await ApiHelper.post(`${API.editKids}${talentId}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Services Updated Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -1295,9 +1372,12 @@ const EditTalent = () => {
   };
 
   const handleEditorChange = (index, editorState) => {
-    const newServices = [...services];
-    newServices[index].editorState = editorState;
-    setServices(newServices);
+    console.log(index, "index handleEditorStateChange");
+    const newInputs = [...services];
+    newInputs[index]["editorState"] = [
+      draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    ];
+    setServices(newInputs);
   };
 
   const handleFeaturesChange = (label, value) => {
@@ -1330,6 +1410,14 @@ const EditTalent = () => {
   useEffect(() => {
     console.log(features, "features");
   }, [features]);
+
+  const handleInputChange = (index, key, value) => {
+    console.log(index, "index handleInputChange");
+    const newInputs = [...services];
+    newInputs[index][key] = value;
+    console.log(newInputs, "newInputs");
+    setServices(newInputs);
+  };
 
   return (
     <>
@@ -1402,14 +1490,12 @@ const EditTalent = () => {
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
               <div className="profile-image-edit-section edit-basicdetails-section-main">
-                <div>
-                  <img
-                    className="profile-image-edit"
-                    src={`${API.userFilePath}${editProfileImage}`}
-                    alt=""
-                  />
-                </div>
-                <div className="btn-img-edit-wrapper">
+                <img
+                  className="profile-image-edit"
+                  src={`${API.userFilePath}${editProfileImage}`}
+                  alt=""
+                />
+                <div className="image-edit-icon" onClick={File}>
                   <input
                     type="file"
                     className="select-cv-input"
@@ -1418,14 +1504,9 @@ const EditTalent = () => {
                     onChange={profileUpload}
                     ref={fileInputRef}
                   />
-                  <Button
-                    onClick={File}
-                    className="edit-profileimg-btn"
-                    variant="text"
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    Change Image
-                  </Button>
+                  <i className="bi bi-pencil-fill profile-edit-icon"></i>
+                </div>
+                <div className="btn-img-edit-wrapper">
                   <Button
                     onClick={() => updateProfileImage()}
                     className="update-profileimg-btn"
@@ -2068,7 +2149,7 @@ const EditTalent = () => {
                               <div className="file-section">
                                 {item.type === "image" && (
                                   <div className="fileType">
-                                    <i class="bi bi-card-image"></i>
+                                    <i className="bi bi-card-image"></i>
                                   </div>
                                 )}
                                 <div className="update-portfolio-fileName">
@@ -2083,12 +2164,12 @@ const EditTalent = () => {
                                     aria-expanded="false"
                                   ></i>
                                   <ul
-                                    class="dropdown-menu"
+                                    className="dropdown-menu"
                                     aria-labelledby="dropdownMenuButton1"
                                   >
                                     <li>
                                       <a
-                                        class="dropdown-item"
+                                        className="dropdown-item"
                                         onClick={() => viewUpdateFile(item)}
                                       >
                                         View
@@ -2096,12 +2177,13 @@ const EditTalent = () => {
                                     </li>
                                     <li>
                                       <a
-                                        class="dropdown-item"
+                                        className="dropdown-item"
                                         onClick={(e) => {
                                           setAlertpop({
                                             status: true,
                                             item: item,
                                             label: "delete",
+                                            eachService: null,
                                           });
                                         }}
                                       >
@@ -2156,17 +2238,17 @@ const EditTalent = () => {
                               <div className="file-section">
                                 {item.type === "audio" && (
                                   <div className="fileType">
-                                    <i class="bi bi-mic-fill"></i>
+                                    <i className="bi bi-mic-fill"></i>
                                   </div>
                                 )}
                                 {item.type === "video" && (
                                   <div className="fileType">
-                                    <i class="bi bi-play-circle-fill"></i>
+                                    <i className="bi bi-play-circle-fill"></i>
                                   </div>
                                 )}
                                 {item.type === "document" && (
                                   <div className="fileType">
-                                    <i class="bi bi-file-earmark-richtext"></i>
+                                    <i className="bi bi-file-earmark-richtext"></i>
                                   </div>
                                 )}
                                 <div className="update-portfolio-fileName">
@@ -2181,12 +2263,12 @@ const EditTalent = () => {
                                     aria-expanded="false"
                                   ></i>
                                   <ul
-                                    class="dropdown-menu"
+                                    className="dropdown-menu"
                                     aria-labelledby="dropdownMenuButton1"
                                   >
                                     <li>
                                       <a
-                                        class="dropdown-item"
+                                        className="dropdown-item"
                                         onClick={() => viewUpdateFile(item)}
                                       >
                                         View
@@ -2194,12 +2276,13 @@ const EditTalent = () => {
                                     </li>
                                     <li>
                                       <a
-                                        class="dropdown-item"
+                                        className="dropdown-item"
                                         onClick={(e) => {
                                           setAlertpop({
                                             status: true,
                                             item: item,
                                             label: "delete",
+                                            eachService: null,
                                           });
                                         }}
                                       >
@@ -2254,17 +2337,17 @@ const EditTalent = () => {
                             <div className="file-section">
                               {item.type === "audio" && (
                                 <div className="fileType">
-                                  <i class="bi bi-mic-fill"></i>
+                                  <i className="bi bi-mic-fill"></i>
                                 </div>
                               )}
                               {item.type === "video" && (
                                 <div className="fileType">
-                                  <i class="bi bi-play-circle-fill"></i>
+                                  <i className="bi bi-play-circle-fill"></i>
                                 </div>
                               )}
                               {item.type === "document" && (
                                 <div className="fileType">
-                                  <i class="bi bi-file-earmark-richtext"></i>
+                                  <i className="bi bi-file-earmark-richtext"></i>
                                 </div>
                               )}
                               <div className="update-portfolio-fileName">
@@ -2279,12 +2362,12 @@ const EditTalent = () => {
                                   aria-expanded="false"
                                 ></i>
                                 <ul
-                                  class="dropdown-menu"
+                                  className="dropdown-menu"
                                   aria-labelledby="dropdownMenuButton1"
                                 >
                                   <li>
                                     <a
-                                      class="dropdown-item"
+                                      className="dropdown-item"
                                       onClick={() => viewUpdateFile(item)}
                                     >
                                       View
@@ -2292,12 +2375,13 @@ const EditTalent = () => {
                                   </li>
                                   <li>
                                     <a
-                                      class="dropdown-item"
+                                      className="dropdown-item"
                                       onClick={(e) => {
                                         setAlertpop({
                                           status: true,
                                           item: item,
                                           label: "delete",
+                                          eachService: null,
                                         });
                                       }}
                                     >
@@ -2340,12 +2424,14 @@ const EditTalent = () => {
                 <div className="update-service-cards-wrapper edit-service-section-main">
                   {services &&
                     services?.length > 0 &&
-                    services?.map((item, servicesIndex) => {
-                      // console.log(servicesIndex, "servicesIndex");
+                    services?.map((eachService, servicesIndex) => {
+                      const updateEditorState = convertHtmlToEditorState(
+                        eachService?.editorState?.join("")
+                      );
                       return (
                         <>
                           <div className="edit-service-section-wrapper">
-                            <h5>{item.serviceName}</h5>
+                            <h5>{eachService.serviceName}</h5>
                             <div className="kids-form-row">
                               <div className="kids-form-section">
                                 <div className="mb-3">
@@ -2357,7 +2443,14 @@ const EditTalent = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="service name"
-                                    value={item.serviceName}
+                                    value={eachService.serviceName}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        servicesIndex,
+                                        "serviceName",
+                                        e.target.value
+                                      )
+                                    }
                                   ></input>
                                 </div>
                               </div>
@@ -2371,7 +2464,14 @@ const EditTalent = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="service amount"
-                                    value={item.serviceAmount}
+                                    value={eachService.serviceAmount}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        servicesIndex,
+                                        "serviceAmount",
+                                        e.target.value
+                                      )
+                                    }
                                   ></input>
                                 </div>
                               </div>
@@ -2383,8 +2483,12 @@ const EditTalent = () => {
                                     Features
                                     <span className="mandatory">*</span>
                                   </label>
+
                                   <Editor
-                                    editorState={item.editorState}
+                                    editorStyle={{
+                                      overflow: "hidden",
+                                    }}
+                                    value={updateEditorState}
                                     onEditorStateChange={(editorState) =>
                                       handleEditorChange(
                                         servicesIndex,
@@ -2418,15 +2522,22 @@ const EditTalent = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Service Duration"
-                                    value={item.serviceDuration}
+                                    value={eachService.serviceDuration}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        servicesIndex,
+                                        "serviceDuration",
+                                        e.target.value
+                                      )
+                                    }
                                   ></input>
                                 </div>
                               </div>
                             </div>
                             <div className="service-files-main">
                               <div>
-                                {item?.files?.length > 0 &&
-                                  item?.files?.map((item) => {
+                                {eachService?.files?.length > 0 &&
+                                  eachService?.files?.map((item) => {
                                     return (
                                       <>
                                         <div className="update-portfolio-cards">
@@ -2434,17 +2545,17 @@ const EditTalent = () => {
                                             <div className="file-section">
                                               {item.type === "audio" && (
                                                 <div className="fileType">
-                                                  <i class="bi bi-mic-fill"></i>
+                                                  <i className="bi bi-mic-fill"></i>
                                                 </div>
                                               )}
                                               {item.type === "video" && (
                                                 <div className="fileType">
-                                                  <i class="bi bi-play-circle-fill"></i>
+                                                  <i className="bi bi-play-circle-fill"></i>
                                                 </div>
                                               )}
                                               {item.type === "document" && (
                                                 <div className="fileType">
-                                                  <i class="bi bi-file-earmark-richtext"></i>
+                                                  <i className="bi bi-file-earmark-richtext"></i>
                                                 </div>
                                               )}
                                               <div className="update-portfolio-fileName">
@@ -2459,12 +2570,12 @@ const EditTalent = () => {
                                                   aria-expanded="false"
                                                 ></i>
                                                 <ul
-                                                  class="dropdown-menu"
+                                                  className="dropdown-menu"
                                                   aria-labelledby="dropdownMenuButton1"
                                                 >
                                                   <li>
                                                     <a
-                                                      class="dropdown-item"
+                                                      className="dropdown-item"
                                                       onClick={() =>
                                                         viewUpdateFile(item)
                                                       }
@@ -2474,12 +2585,14 @@ const EditTalent = () => {
                                                   </li>
                                                   <li>
                                                     <a
-                                                      class="dropdown-item"
+                                                      className="dropdown-item"
                                                       onClick={(e) => {
                                                         setAlertpop({
                                                           status: true,
                                                           item: item,
-                                                          label: "delete",
+                                                          label:
+                                                            "delete-service",
+                                                          eachService: eachService,
                                                         });
                                                       }}
                                                     >
@@ -2496,28 +2609,29 @@ const EditTalent = () => {
                                     );
                                   })}
                               </div>
-                              <div
-                                className="add-service-section"
-                                key={servicesIndex}
-                              >
+                              <div className="add-service-section">
                                 <div className="add-portfolia-btn">
                                   <input
                                     type="file"
                                     className="select-cv-input"
-                                    id="profile-image"
-                                    accept="audio/*,video/*"
+                                    id={servicesIndex}
+                                    accept="image/*"
                                     onChange={(e) =>
-                                      newServiceFileUpload(e, servicesIndex)
+                                      newServiceFileUpload(e, eachService)
                                     }
-                                    ref={serviceFileInputRef}
+                                    ref={(el) =>
+                                      (serviceFileInputRefs.current[
+                                        servicesIndex
+                                      ] = el)
+                                    }
                                   />
                                   <div
                                     className="add-more-files-btn"
-                                    onClick={() => serviceFile()}
+                                    onClick={() => serviceFile(servicesIndex)}
                                     variant="text"
                                   >
-                                    <i class="bi bi-plus-circle-fill"></i> Add
-                                    Files
+                                    <i className="bi bi-plus-circle-fill"></i>{" "}
+                                    Add Files
                                   </div>
                                 </div>
                               </div>
@@ -2531,7 +2645,7 @@ const EditTalent = () => {
                     onClick={() => addService()}
                     variant="text"
                   >
-                    <i class="bi bi-plus-circle-fill"></i>Add More Service
+                    <i className="bi bi-plus-circle-fill"></i>Add More Service
                   </div>
                   <div className="add-service-btn-flex">
                     <Button
@@ -2540,7 +2654,7 @@ const EditTalent = () => {
                       variant="text"
                       style={{ textTransform: "capitalize" }}
                     >
-                      Add Services
+                      Submit
                     </Button>
                   </div>
                 </div>
@@ -2602,7 +2716,7 @@ const EditTalent = () => {
                     handleNavigation("back");
                   }}
                 >
-                  <i class="bi bi-arrow-left-circle-fill arrow-left-circle"></i>
+                  <i className="bi bi-arrow-left-circle-fill arrow-left-circle"></i>
                   <span className="edit-profile-navigation-text">Back</span>
                 </div>
               )}
@@ -2614,7 +2728,7 @@ const EditTalent = () => {
                   }}
                 >
                   <span className="edit-profile-navigation-text">Next</span>
-                  <i class="bi bi-arrow-right-circle-fill"></i>
+                  <i className="bi bi-arrow-right-circle-fill"></i>
                 </div>
               )}
             </div>
@@ -2649,6 +2763,7 @@ const EditTalent = () => {
                   status: false,
                   item: null,
                   label: null,
+                  eachService: null,
                 });
               }}
             >
@@ -2663,9 +2778,12 @@ const EditTalent = () => {
                   status: false,
                   item: null,
                   label: null,
+                  eachService: null,
                 });
                 if (alertpop?.label === "delete") {
                   deleteUpdateFile();
+                } else if (alertpop?.label === "delete-service") {
+                  deleteServiceFile();
                 }
               }}
             >

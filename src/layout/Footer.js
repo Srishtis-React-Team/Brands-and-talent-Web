@@ -75,7 +75,9 @@ const Footer = () => {
       <div className="container">
         <div className="main-footer-wrapper mb-4">
           <section className="main-footer-form">
-            <div className="get-discover title mt-0">Get Discovered</div>
+            <div className="get-discover title mt-0">
+              Subscribe to Newsletter
+            </div>
             <div className="form-fields row">
               <div className="col-md-4 form-group">
                 <input
@@ -126,7 +128,6 @@ const Footer = () => {
 
         <section className="footerCommon pt-5">
           <div className="footer-section row">
-
             <div className="footer-wrapper col-md-6 col-lg-3">
               <div className="footer-icon">
                 <img src={btLogo}></img>
@@ -180,67 +181,65 @@ const Footer = () => {
             </div>
 
             <div className="footer-wrapper col-md-6 col-lg-3">
-                  <h6>
-                    <Link className="footer-title" onClick={handleClick} to="/">
-                      Products & Services
-                    </Link>
-                  </h6>
+              <h6>
+                <Link className="footer-title" onClick={handleClick} to="/">
+                  Products & Services
+                </Link>
+              </h6>
 
-                  <ul className="footerLinks">
-                    <li>
-                      <Link onClick={handleClick} to="/">
-                        Verified Talent Marketplace
-                      </Link>
-                    </li>
-                    <li>
-                      <Link onClick={handleClick} to="/find-creators">
-                        Hire Talent
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" onClick={handleClick}>
-                        Register as Talent
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" onClick={handleClick}>
-                        Get Hired
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/resources" onClick={handleClick}>
-                        Brands & Talent Store
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-
-            <div className="footer-wrapper col-md-6 col-lg-3">
-            
-                  <h6>
-                    <Link className="footer-title" onClick={handleClick} to="/">
-                      Resources
-                    </Link>
-                  </h6>
-                  <ul className="footerLinks">
-                    <li>
-                      <Link onClick={handleClick} to="/">
-                        Industry news and insights
-                      </Link>
-                    </li>
-                    <li>
-                      <Link onClick={handleClick} to="/">
-                        Case studies
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" onClick={handleClick}>
-                        Talent stories
-                      </Link>
-                    </li>
-                  </ul>
+              <ul className="footerLinks">
+                <li>
+                  <Link onClick={handleClick} to="/">
+                    Verified Talent Marketplace
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={handleClick} to="/find-creators">
+                    Hire Talent
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={handleClick}>
+                    Register as Talent
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={handleClick}>
+                    Get Hired
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/resources" onClick={handleClick}>
+                    Brands & Talent Store
+                  </Link>
+                </li>
+              </ul>
             </div>
 
+            <div className="footer-wrapper col-md-6 col-lg-3">
+              <h6>
+                <Link className="footer-title" onClick={handleClick} to="/">
+                  Resources
+                </Link>
+              </h6>
+              <ul className="footerLinks">
+                <li>
+                  <Link onClick={handleClick} to="/">
+                    Industry news and insights
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={handleClick} to="/">
+                    Case studies
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={handleClick}>
+                    Talent stories
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </section>
         <section>

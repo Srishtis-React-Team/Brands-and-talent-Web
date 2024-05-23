@@ -6,7 +6,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
 
-const BrandSideMenu = ({ onChildClick }) => {
+const BrandSideMenu = ({ onChildClick, myState }) => {
   // useEffect(() => {
   //   const handleBeforeUnload = (e) => {
   //     const confirmationMessage =
@@ -146,6 +146,13 @@ const BrandSideMenu = ({ onChildClick }) => {
     }
   };
 
+  useEffect(() => {
+    if (myState === true) {
+      getBrand();
+      // alert("getBrand sidemenu");
+    }
+  }, [myState]);
+
   return (
     <>
       <nav className="brand-sidebar-container">
@@ -153,7 +160,7 @@ const BrandSideMenu = ({ onChildClick }) => {
           <div className="profImg">
             <img
               className="profile-img"
-              src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
+              src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
               alt=""
             />
           </div>
@@ -163,7 +170,7 @@ const BrandSideMenu = ({ onChildClick }) => {
             <div className="profImg">
               <img
                 className="profile-img"
-                src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
+                src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
                 alt=""
               />
             </div>
@@ -224,8 +231,9 @@ const BrandSideMenu = ({ onChildClick }) => {
           </Link>
 
           <Link
+            to="/edit-brand-profile"
             className={
-              location.pathname === "/talent"
+              location.pathname === "/edit-brand-profile"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -307,9 +315,9 @@ const BrandSideMenu = ({ onChildClick }) => {
           </Link>
 
           <Link
-            to="/talent"
+            to="/brand-settings"
             className={
-              location.pathname === "/talent"
+              location.pathname === "/brand-settings"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }

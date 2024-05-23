@@ -207,7 +207,7 @@ const TalentSideMenu = ({ myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i class="bi bi-heart icons"></i>
+            <i className="bi bi-heart icons"></i>
             <div className="brand-menu-text">Saved Jobs</div>
           </Link>
 

@@ -139,6 +139,7 @@ const BrandLogo = () => {
     if (portofolioFile && portofolioFile.length !== 0) {
       const formData = {
         logo: portofolioFile,
+        brandImage: portofolioFile,
       };
       // setIsLoading(true);
       await ApiHelper.post(
