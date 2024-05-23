@@ -17,7 +17,6 @@
 
 .blogs-subhead {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 23px;
   font-style: italic;
   font-weight: 500;
@@ -25,7 +24,6 @@
 
 .blogs-heading {
   color: #000000;
-  font-family: "Open Sans", sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: bold;
@@ -34,15 +32,12 @@
 
 .blogs-description {
   color: #817979;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
 }
 
-.blogs-tabs {
-  padding-left: 60px;
-}
+
 
 .blogs-tabs-wrapper {
   padding: 25px;
@@ -51,7 +46,6 @@
 
 .blogs-tab-text {
   color: #000000;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

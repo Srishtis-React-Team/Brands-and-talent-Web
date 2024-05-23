@@ -4,8 +4,8 @@
 }
 
 .resources {
-  width: 85%;
-  padding-top: 120px;
+  width: 100%;
+  padding-top: 100px;
 }
 
 .team-members-section {
@@ -17,11 +17,8 @@
 }
 
 .resource-content-wrapper {
-  width: 50%;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  padding: 0px 20px 0px 40px;
 }
 .resource-image-wrapper {
   width: 40%;
@@ -35,7 +32,6 @@
 
 .resource-name {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 26px;
   font-style: normal;
   font-weight: 700;
@@ -44,7 +40,6 @@
 
 .resource-description {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -53,7 +48,6 @@
 
 .team-description {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -78,7 +72,7 @@
 
 .faq-section {
   margin: 20px auto;
-  width: 60%;
+  width:100%;
 }
 
 .faq-question-wrapper {
@@ -90,7 +84,6 @@
 
 .faq-question {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -100,7 +93,6 @@
 .faq-answer {
   color: #000;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;

@@ -2432,7 +2432,6 @@ input[type="radio"] {
   }
   .nav-link:hover {
     color: #c2114b;
-    font-size: 12px;
   }
 
   .dropdown:hover > .dropdown-menu {
