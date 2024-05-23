@@ -122,7 +122,7 @@ const TalentNotification = () => {
                               viewNotification(item);
                             }}
                           >
-                            {item?.brandNotificationMessage}&nbsp;
+                            {item?.talentNotificationMessage}&nbsp;
                             {item?.gigDetails?.jobTitle}
                           </div>
                         </div>
@@ -140,12 +140,12 @@ const TalentNotification = () => {
                             aria-expanded="false"
                           ></i>
                           <ul
-                            class="dropdown-menu"
+                            className="dropdown-menu"
                             aria-labelledby="dropdownMenuButton1"
                           >
                             <li>
                               <a
-                                class="dropdown-item"
+                                className="dropdown-item"
                                 onClick={() => {
                                   deleteNotification(item);
                                 }}

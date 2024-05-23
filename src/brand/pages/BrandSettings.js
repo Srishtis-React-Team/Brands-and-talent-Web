@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../assets/css/forms/kidsform-one.scss";
+import "../../assets/css/forms/kidsform-one.scss";
 import Select from "react-select";
 import Axios from "axios";
-import { API } from "../config/api";
-import PopUp from "../components/PopUp";
-import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../../config/api";
+import PopUp from "../../components/PopUp";
+import { ApiHelper } from "../../helpers/ApiHelper";
 import { useNavigate } from "react-router";
-import nationalityOptions from "../components/nationalities";
-import languageOptions from "../components/languages";
+import nationalityOptions from "../../components/nationalities";
+import languageOptions from "../../components/languages";
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import TalentHeader from "../layout/TalentHeader";
-import TalentSideMenu from "../layout/TalentSideMenu";
+import TalentHeader from "../../layout/TalentHeader";
+import TalentSideMenu from "../../layout/TalentSideMenu";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -28,6 +28,8 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import Modal from "react-modal";
+import BrandHeader from "./BrandHeader";
+import BrandSideMenu from "./BrandSideMenu";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,7 +57,7 @@ function a11yProps(index) {
   };
 }
 
-const TalentSettings = () => {
+const BrandSettings = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -83,9 +85,33 @@ const TalentSettings = () => {
     false
   );
   const [valueTabs, setValueTabs] = React.useState(0);
+  const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
 
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
+  };
+
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+    if (brandId) {
+      getBrand();
+    }
+  }, [brandId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const customStylesAlert = {
@@ -140,7 +166,7 @@ const TalentSettings = () => {
   };
   const activateAccount = async () => {
     const formData = {
-      inActive: true,
+      inActive: false,
     };
     await ApiHelper.post(`${API.activateUser}${talentId}`, formData)
       .then((resData) => {
@@ -191,11 +217,12 @@ const TalentSettings = () => {
 
   const updatePassword = async () => {
     const formData = {
-      talentId: talentId,
+      brandId: brandId,
       password: oldPassword,
       newPassword: talentPassword,
     };
-    await ApiHelper.post(`${API.updatePassword}`, formData)
+
+    await ApiHelper.post(`${API.updatePasswordInSettings}`, formData)
       .then((resData) => {
         console.log(resData, "resData");
         if (resData.data.status === true) {
@@ -319,14 +346,14 @@ const TalentSettings = () => {
 
   return (
     <>
-      <TalentHeader toggleMenu={toggleMenu} />
+      <BrandHeader toggleMenu={toggleMenu} />
       <div
         id="sidebarBrand"
         className={`brand-sidebar ${
           showSidebar ? "show-sidebar" : "not-sidebar"
         }`}
       >
-        <TalentSideMenu />
+        <BrandSideMenu />
       </div>
 
       <main
@@ -627,4 +654,4 @@ const TalentSettings = () => {
   );
 };
 
-export default TalentSettings;
+export default BrandSettings;

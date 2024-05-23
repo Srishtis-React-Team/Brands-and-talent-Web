@@ -12,7 +12,7 @@ import { styled } from "@mui/system";
 import { CssTransition } from "@mui/base/Transitions";
 import { PopupContext } from "@mui/base/Unstable_Popup";
 import PopUp from "../../components/PopUp";
-const BrandHeader = ({ toggleMenu }) => {
+const BrandHeader = ({ toggleMenu, myState }) => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/icons/Group 56.png");
   const model1 = require("../../assets/images/girl1.png");
@@ -75,6 +75,8 @@ const BrandHeader = ({ toggleMenu }) => {
   const logout = () => {
     navigate("/");
   };
+
+  console.log(myState, "myState");
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
@@ -153,6 +155,13 @@ const BrandHeader = ({ toggleMenu }) => {
       console.log(`Clicked on ${menuItem}`);
     };
   };
+
+  useEffect(() => {
+    if (myState === true) {
+      getBrand();
+      // alert("getBrandHeader");
+    }
+  }, [myState]);
 
   return (
     <>
@@ -507,7 +516,7 @@ const BrandHeader = ({ toggleMenu }) => {
                   <MenuButton>
                     <div className="talent-profile-icon">
                       <img
-                        src={`${API.userFilePath}${brandData?.logo[0]?.fileData}`}
+                        src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
                         alt=""
                       />
                     </div>

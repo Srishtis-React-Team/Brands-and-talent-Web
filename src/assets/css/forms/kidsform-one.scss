@@ -616,13 +616,15 @@
 
 .profile-image-edit-section {
   margin: 20px;
-  width: 320px;
+  width: 250px;
+  position: relative;
   .profile-image-edit {
     border-radius: 5%;
+    width: 250px;
   }
   .btn-img-edit-wrapper {
     display: flex;
-    justify-content: end;
+    justify-content: start;
     .edit-profileimg-btn {
       background-color: #c2114b;
       color: #fff;
@@ -638,7 +640,7 @@
       font-weight: 500;
       margin-top: 20px;
       text-align: right;
-      margin-left: 30px;
+      margin-left: 0px;
     }
   }
 }
@@ -1034,4 +1036,26 @@
   .edit-profile-navigation-text {
     color: #c2114b;
   }
+}
+
+.image-edit-icon {
+  background-color: #ffffff;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 0;
+  right: -40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 18px;
+  border: 1px solid #c2114b;
+}
+
+.profile-edit-icon {
+  font-size: 20px;
+  color: #c2114b;
+  cursor: pointer;
 }

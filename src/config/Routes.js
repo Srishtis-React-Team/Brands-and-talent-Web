@@ -56,6 +56,8 @@ import TalentNotification from "../views/TalentNotification";
 import TalentHome from "../views/TalentHome";
 import TalentHelp from "../views/TalentHelp";
 import BrandNotification from "../brand/pages/BrandNotification";
+import BrandSettings from "../brand/pages/BrandSettings";
+import EditBrands from "../brand/pages/EditBrands";
 function Routing() {
   return (
     <Routes>
@@ -114,8 +116,10 @@ function Routing() {
       <Route path="/preview-job-talent" element={<TalentPreviewJob />} />
       <Route path="/applicants" element={<Applicants />} />
       <Route path="/edit-talent-profile" element={<EditTalent />} />
+      <Route path="/edit-brand-profile" element={<EditBrands />} />
       <Route path="/talent-notification" element={<TalentNotification />} />
       <Route path="/talent-settings" element={<TalentSettings />} />
+      <Route path="/brand-settings" element={<BrandSettings />} />
       <Route path="/talent-home" element={<TalentHome />} />
       <Route path="/talent-help" element={<TalentHelp />} />
       <Route path="/brand-notification" element={<BrandNotification />} />

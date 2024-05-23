@@ -583,7 +583,7 @@ const Header = ({ onData }) => {
                     className="login-text"
                     onClick={() => handleClick("")}
                   >
-                    Login
+                    Log In
                   </NavLink>
                 </div>
               )}

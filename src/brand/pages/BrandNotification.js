@@ -13,34 +13,48 @@ import BrandHeader from "./BrandHeader.js";
 import BrandSideMenu from "./BrandSideMenu.js";
 
 const BrandNotification = () => {
-  const [talentId, setTalentId] = useState(null);
   const [notificationList, setNotifications] = useState([]);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
   const navigate = useNavigate();
   const [mobileSideBar, setMobileSidebar] = useState(true);
+  const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
 
   useEffect(() => {
-    setTimeout(function() {
-      setTalentId(localStorage.getItem("userId"));
-    }, 1000);
-
-    console.log(talentId, "talentId");
-    if (talentId) {
-      getTalentNotification();
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+    if (brandId) {
+      getBrand();
     }
-  }, [talentId]);
+  }, [brandId]);
 
-  const getTalentNotification = async () => {
-    await ApiHelper.get(`${API.getTalentNotification}${talentId}`)
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
       .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getBrandNotification = async () => {
+    await ApiHelper.get(`${API.getBrandNotification}${brandId}`)
+      .then((resData) => {
+        console.log(resData, "resDatagetBrandNotification");
         if (resData.data.status === true) {
           setNotifications(resData.data.data);
         }
       })
       .catch((err) => {});
   };
+
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -52,7 +66,7 @@ const BrandNotification = () => {
     await ApiHelper.post(`${API.readNotification}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          getTalentNotification();
+          getBrandNotification();
         }
       })
       .catch((err) => {});
@@ -70,7 +84,7 @@ const BrandNotification = () => {
     await ApiHelper.post(`${API.deleteNotification}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          getTalentNotification();
+          getBrandNotification();
         }
       })
       .catch((err) => {});
@@ -147,12 +161,12 @@ const BrandNotification = () => {
                               aria-expanded="false"
                             ></i>
                             <ul
-                              class="dropdown-menu"
+                              className="dropdown-menu"
                               aria-labelledby="dropdownMenuButton1"
                             >
                               <li>
                                 <a
-                                  class="dropdown-item"
+                                  className="dropdown-item"
                                   onClick={() => {
                                     deleteNotification(item);
                                   }}
