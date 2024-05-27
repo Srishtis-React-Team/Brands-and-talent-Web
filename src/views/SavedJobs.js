@@ -133,7 +133,7 @@ const SavedJobs = () => {
       <div
         id="sidebarBrand"
         className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "not-sidebar"
+          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
         }`}
       >
         <TalentSideMenu />

@@ -313,6 +313,7 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                 </div>
                 {/* <div className="mydashboard font-styles">My Dashboard</div> */}
               </div>
+              
             </div>
 
             <div className="rightPart">
@@ -326,405 +327,408 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                 >
                   <i className="fa-solid fa-bars"></i>
                 </div>
-                <div className="navTxt">
-                  <NavLink to="/job-list">Jobs List</NavLink>
-                </div>
-                <div className="navTxt">
-                  <NavLink to="/how-it-works">How it works</NavLink>
-                </div>
-                <div className="navTxt">
-                  <NavLink to="/pricing">Pricing</NavLink>
-                </div>
-                <div className="navTxt">
-                  <li className="nav-item dropdown">
-                    <a
-                      className="nav-link dropdown-toggle"
-                      href="#"
-                      id="navbarDropdown"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Resources
-                    </a>
-                    <ul
-                      className="dropdown-menu"
-                      aria-labelledby="navbarDropdown"
-                    >
-                      <li>
-                        <NavLink to="/about-us">
-                          <a className="dropdown-item">About</a>
-                        </NavLink>
-                      </li>
-                      <li className="dropend">
-                        <a
-                          className="dropdown-item dropdown-toggle"
-                          dropdown-toggle
-                          data-bs-toggle="dropdown"
-                        >
-                          <NavLink to="/blogs">Blogs</NavLink>
-                        </a>
-                        <ul className="dropdown-menu blogs-menu">
-                          <li>
-                            <a href="" className="dropdown-item">
-                              <NavLink to="/blogs">
-                                Industry News & Insights
-                              </NavLink>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="" className="dropdown-item">
-                               Case Studies
-                            </a>
-                          </li>
-                          <li>
-                            <a href="" className="dropdown-item">
-                              Talent Diaries
-                            </a>
-                          </li>
-                          <li>
-                            <a href="" className="dropdown-item">
-                               Talent Tips & Tricks
-                            </a>
-                          </li>
-                          <li>
-                            <a href="" className="dropdown-item">
-                               Brand Tips & Tricks
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <hr className="dropdown-divider"></hr>
-                      </li>
-                      <li>
-                        <a className="dropdown-item">
-                          <NavLink to="/community-guidelines">
-                            Community Guidelines
-                          </NavLink>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </div>
 
-                <React.Fragment>
-                  <div className="header-search-wrapper">
-                    <div className="header-search-icon">
-                      <i className="fas fa-search"></i>
-                    </div>
-                    <div className="header-search-input">
-                      <input
-                        type="text"
-                        className="header-search-input-style"
-                      />
-                    </div>
-                    <div
-                      className="header-filter-icon"
-                      onClick={handleClickOpen}
-                    >
-                      <img className="filter-icon" src={sliderIcon} alt="" />
-                    </div>
+                <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
+                  <div className="navTxt">
+                    <NavLink to="/job-list">Jobs List</NavLink>
                   </div>
-                  {/* <BootstrapDialog
-                    onClose={handleClose}
-                    aria-labelledby="customized-dialog-title"
-                    open={open}
-                    PaperProps={{
-                      sx: {
-                        marginTop: "10vh", // Adjust this value to suit your needs
-                        position: "absolute",
-                        top: 0,
-                        maxHeight: "90vh", // Optional: Limit the height of the dialog
-                      },
-                    }}
-                  >
-                    <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                      Filter Jobs
-                    </DialogTitle>
-                    <IconButton
-                      aria-label="close"
-                      onClick={handleClose}
-                      sx={{
-                        position: "absolute",
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
+                  <div className="navTxt">
+                    <NavLink to="/how-it-works">How it works</NavLink>
+                  </div>
+                  <div className="navTxt">
+                    <NavLink to="/pricing">Pricing</NavLink>
+                  </div>
+                  <div className="navTxt">
+                    <li className="nav-item dropdown">
+                      <a
+                        className="nav-link dropdown-toggle"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Resources
+                      </a>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="navbarDropdown"
+                      >
+                        <li>
+                          <NavLink to="/about-us">
+                            <a className="dropdown-item">About</a>
+                          </NavLink>
+                        </li>
+                        <li className="dropend">
+                          <a
+                            className="dropdown-item dropdown-toggle"
+                            dropdown-toggle
+                            data-bs-toggle="dropdown"
+                          >
+                            <NavLink to="/blogs">Blogs</NavLink>
+                          </a>
+                          <ul className="dropdown-menu blogs-menu">
+                            <li>
+                              <a href="" className="dropdown-item">
+                                <NavLink to="/blogs">
+                                  Industry News & Insights
+                                </NavLink>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="" className="dropdown-item">
+                                 Case Studies
+                              </a>
+                            </li>
+                            <li>
+                              <a href="" className="dropdown-item">
+                                Talent Diaries
+                              </a>
+                            </li>
+                            <li>
+                              <a href="" className="dropdown-item">
+                                 Talent Tips & Tricks
+                              </a>
+                            </li>
+                            <li>
+                              <a href="" className="dropdown-item">
+                                 Brand Tips & Tricks
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <hr className="dropdown-divider"></hr>
+                        </li>
+                        <li>
+                          <a className="dropdown-item">
+                            <NavLink to="/community-guidelines">
+                              Community Guidelines
+                            </NavLink>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </div>
+
+                  <React.Fragment>
+                    <div className="header-search-wrapper">
+                      <div className="header-search-icon">
+                        <i className="fas fa-search"></i>
+                      </div>
+                      <div className="header-search-input">
+                        <input
+                          type="text"
+                          className="header-search-input-style"
+                        />
+                      </div>
+                      <div
+                        className="header-filter-icon"
+                        onClick={handleClickOpen}
+                      >
+                        <img className="filter-icon" src={sliderIcon} alt="" />
+                      </div>
+                    </div>
+                    {/* <BootstrapDialog
+                      onClose={handleClose}
+                      aria-labelledby="customized-dialog-title"
+                      open={open}
+                      PaperProps={{
+                        sx: {
+                          marginTop: "10vh", // Adjust this value to suit your needs
+                          position: "absolute",
+                          top: 0,
+                          maxHeight: "90vh", // Optional: Limit the height of the dialog
+                        },
                       }}
                     >
-                      <CloseIcon />
-                    </IconButton>
-                    <DialogContent dividers>
-                      <div className="search-filter-section">
-                        <div className="search-labels">Keywords</div>
-                        <div>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Enter Keyword"
-                            ref={jobNameRef}
-                          ></input>
-                        </div>
+                      <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                        Filter Jobs
+                      </DialogTitle>
+                      <IconButton
+                        aria-label="close"
+                        onClick={handleClose}
+                        sx={{
+                          position: "absolute",
+                          right: 8,
+                          top: 8,
+                          color: (theme) => theme.palette.grey[500],
+                        }}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                      <DialogContent dividers>
+                        <div className="search-filter-section">
+                          <div className="search-labels">Keywords</div>
+                          <div>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Keyword"
+                              ref={jobNameRef}
+                            ></input>
+                          </div>
 
-                        <div className="kids-form-row mt-3">
-                          <div className="kids-form-section">
-                            <div className="mb-3 ">
-                              <label className="form-label">Location</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Location"
-                                ref={jobLocationRef}
-                              ></input>
+                          <div className="kids-form-row mt-3">
+                            <div className="kids-form-section">
+                              <div className="mb-3 ">
+                                <label className="form-label">Location</label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Location"
+                                  ref={jobLocationRef}
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="kids-form-section">
+                              <div className="mb-3">
+                                <label className="form-label">Age</label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Age"
+                                  ref={jobAgeRef}
+                                ></input>
+                              </div>
                             </div>
                           </div>
                           <div className="kids-form-section">
                             <div className="mb-3">
-                              <label className="form-label">Age</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Age"
-                                ref={jobAgeRef}
-                              ></input>
+                              <label className="form-label">Skills</label>
+                              <Select
+                                isMulti
+                                name="colors"
+                                options={skillsList}
+                                valueField="value"
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                onChange={(value) => selectSkills(value)}
+                                styles={customStyles}
+                              />
                             </div>
                           </div>
-                        </div>
-                        <div className="kids-form-section">
-                          <div className="mb-3">
-                            <label className="form-label">Skills</label>
-                            <Select
-                              isMulti
-                              name="colors"
-                              options={skillsList}
-                              valueField="value"
-                              className="basic-multi-select"
-                              classNamePrefix="select"
-                              onChange={(value) => selectSkills(value)}
-                              styles={customStyles}
-                            />
-                          </div>
-                        </div>
-                        <div className="kids-form-row mt-3">
-                          <div className="kids-form-section">
-                            <div className="mb-3 ">
-                              <label className="form-label">Job Name</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Location"
-                                ref={jobFullNameRef}
-                              ></input>
+                          <div className="kids-form-row mt-3">
+                            <div className="kids-form-section">
+                              <div className="mb-3 ">
+                                <label className="form-label">Job Name</label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Location"
+                                  ref={jobFullNameRef}
+                                ></input>
+                              </div>
                             </div>
-                          </div>
-                          <div className="kids-form-section">
-                            <div className="mb-3 ">
-                              <label className="form-label">Job Type</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                onChange={selectjobType}
-                                value={jobType}
-                                style={{ fontSize: "14px" }}
-                              >
-                                <option value="" disabled selected>
-                                  Select Job Type
-                                </option>
-                                {jobTypeOptions.map((option, index) => (
-                                  <option key={index} value={option}>
-                                    {option}
+                            <div className="kids-form-section">
+                              <div className="mb-3 ">
+                                <label className="form-label">Job Type</label>
+                                <select
+                                  className="form-select"
+                                  aria-label="Default select example"
+                                  onChange={selectjobType}
+                                  value={jobType}
+                                  style={{ fontSize: "14px" }}
+                                >
+                                  <option value="" disabled selected>
+                                    Select Job Type
                                   </option>
-                                ))}
-                              </select>
+                                  {jobTypeOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button className="search-popup-btn" onClick={handleClose}>
-                        Filter
-                      </Button>
-                    </DialogActions>
-                  </BootstrapDialog> */}
-                </React.Fragment>
-
-                {/* <div
-                  className="offcanvas offcanvas-top search-canvas-top"
-                  tabIndex="-1"
-                  id="offcanvasTop"
-                  aria-labelledby="offcanvasTopLabel"
-                >
-                  <div className="offcanvas-header">
-                    <h5 id="offcanvasTopLabel">Search Anything</h5>
-                    <button
-                      type="button"
-                      className="btn-close text-reset"
-                      data-bs-dismiss="offcanvas"
-                      aria-label="Close"
-                    ></button>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button className="search-popup-btn" onClick={handleClose}>
+                          Filter
+                        </Button>
+                      </DialogActions>
+                    </BootstrapDialog> */}
+                  </React.Fragment>
                   </div>
-                  <div className="offcanvas-body">
-                    <form className="d-flex search-bootstrap">
-                      <input
-                        className="form-control me-2"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                      ></input>
-                      <button
-                        className="btn btn-outline-success search-bootstrap-btn"
-                        type="submit"
+                      {/* <div
+                        className="offcanvas offcanvas-top search-canvas-top"
+                        tabIndex="-1"
+                        id="offcanvasTop"
+                        aria-labelledby="offcanvasTopLabel"
                       >
-                        Search
-                      </button>
-                    </form>
-                  </div>
-                </div> */}
-
-                {/* <div className="notification-bell-wrapper">
-                  <div className="notification_wrap">
-                    <div className="notification_icon ">
-                      <i className="bi bi-bell"></i>
-                    </div>
-                    <div className="notification-dropdown">
-                      <div className=" notification-header">
-                        <div className="notification-message-text">Notifications</div>
-                        <div>
-                          <i className="fas fa-close notification-close"></i>
+                        <div className="offcanvas-header">
+                          <h5 id="offcanvasTopLabel">Search Anything</h5>
+                          <button
+                            type="button"
+                            className="btn-close text-reset"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                          ></button>
                         </div>
-                      </div>
-                      {notificationList &&
-                        notificationList.length > 0 &&
-                        notificationList.map((item, index) => (
-                          <div
-                            className="notify_item"
-                            key={index}
-                            onClick={(e) => {
-                              gotomessage(item);
-                            }}
-                          >
-                            <div className="notify_img">
-                              {item?.talentDetails?.image &&
-                                item.talentDetails.image[0]?.fileData && (
-                                  <img
-                                    className="notification-user-image"
-                                    src={`${API.userFilePath}${item.talentDetails?.image[0]?.fileData}`}
-                                    alt="profile_pic"
-                                  />
-                                )}
-                            </div>
-                            <div className="notify_info">
-                              <p>You Applied for {item?.gigDetails?.jobTitle}</p>
-                              <span className="notify_time">Just now</span>
-                            </div>
-                          </div>
-                        ))}
-
-                      {notificationList.length === 0 && (
-                        <>
-                          <div className="notify_item">
-                            No Notifications Available
-                          </div>
-                        </>
-                      )} */}
-
-                {/* <div className="notify_item">
-                        <div className="notify_img">
-                          <img
-                            className="notification-user-image"
-                            src={model1}
-                            alt="profile_pic"
-                          ></img>
-                        </div>
-                        <div className="notify_info">
-                          <p>Alex Send a message</p>
-                          <span className="notify_time">55 minutes ago</span>
-                        </div>
-                      </div>
-                      <div className="notify_item">
-                        <div className="notify_img">
-                          <img
-                            className="notification-user-image"
-                            src={model1}
-                            alt="profile_pic"
-                          ></img>
-                        </div>
-                        <div className="notify_info">
-                          <p>Alex Send a message</p>
-                          <span className="notify_time">2 hours ago</span>
-                        </div>
-                      </div>
-                      <div className="notify_item">
-                        <div className="notify_img">
-                          <img
-                            className="notification-user-image"
-                            src={model1}
-                            alt="profile_pic"
-                          ></img>
-                        </div>
-                        <div className="notify_info">
-                          <p>Alex Send a message</p>
-                          <span className="notify_time">6 hours ago</span>
+                        <div className="offcanvas-body">
+                          <form className="d-flex search-bootstrap">
+                            <input
+                              className="form-control me-2"
+                              type="search"
+                              placeholder="Search"
+                              aria-label="Search"
+                            ></input>
+                            <button
+                              className="btn btn-outline-success search-bootstrap-btn"
+                              type="submit"
+                            >
+                              Search
+                            </button>
+                          </form>
                         </div>
                       </div> */}
-                {/* </div>
-                  </div>
-                </div> */}
 
-                {/* <div className="talent-chat-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-chat"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105" />
-                    </svg>
-                  </div> */}
+                      {/* <div className="notification-bell-wrapper">
+                        <div className="notification_wrap">
+                          <div className="notification_icon ">
+                            <i className="bi bi-bell"></i>
+                          </div>
+                          <div className="notification-dropdown">
+                            <div className=" notification-header">
+                              <div className="notification-message-text">Notifications</div>
+                              <div>
+                                <i className="fas fa-close notification-close"></i>
+                              </div>
+                            </div>
+                            {notificationList &&
+                              notificationList.length > 0 &&
+                              notificationList.map((item, index) => (
+                                <div
+                                  className="notify_item"
+                                  key={index}
+                                  onClick={(e) => {
+                                    gotomessage(item);
+                                  }}
+                                >
+                                  <div className="notify_img">
+                                    {item?.talentDetails?.image &&
+                                      item.talentDetails.image[0]?.fileData && (
+                                        <img
+                                          className="notification-user-image"
+                                          src={`${API.userFilePath}${item.talentDetails?.image[0]?.fileData}`}
+                                          alt="profile_pic"
+                                        />
+                                      )}
+                                  </div>
+                                  <div className="notify_info">
+                                    <p>You Applied for {item?.gigDetails?.jobTitle}</p>
+                                    <span className="notify_time">Just now</span>
+                                  </div>
+                                </div>
+                              ))}
 
-                <Dropdown>
-                  <MenuButton>
-                    <div className="talent-profile-icon">
-                      <img
-                        src={`${API.userFilePath}${talentData?.image?.fileData}`}
-                        alt=""
-                      />
-                    </div>
-                  </MenuButton>
-                  <Menu slots={{ listbox: AnimatedListbox }}>
-                    {isTalentProfilePage === false && (
-                      <MenuItem
-                        style={{ cursor: "pointer" }}
-                        onClick={createHandleMenuClick("profile")}
-                      >
-                        View Profile
-                      </MenuItem>
-                    )}
-                    {isTalentProfilePage === true && (
-                      <MenuItem
-                        style={{ cursor: "pointer" }}
-                        onClick={createHandleMenuClick("dashboard")}
-                      >
-                        DashBoard
-                      </MenuItem>
-                    )}
-                    <MenuItem
-                      style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("edit")}
-                    >
-                      Edit Profile
-                    </MenuItem>
-                    <MenuItem
-                      style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("logout")}
-                    >
-                      Log out
-                    </MenuItem>
-                  </Menu>
-                </Dropdown>
+                            {notificationList.length === 0 && (
+                              <>
+                                <div className="notify_item">
+                                  No Notifications Available
+                                </div>
+                              </>
+                            )} */}
+
+                      {/* <div className="notify_item">
+                              <div className="notify_img">
+                                <img
+                                  className="notification-user-image"
+                                  src={model1}
+                                  alt="profile_pic"
+                                ></img>
+                              </div>
+                              <div className="notify_info">
+                                <p>Alex Send a message</p>
+                                <span className="notify_time">55 minutes ago</span>
+                              </div>
+                            </div>
+                            <div className="notify_item">
+                              <div className="notify_img">
+                                <img
+                                  className="notification-user-image"
+                                  src={model1}
+                                  alt="profile_pic"
+                                ></img>
+                              </div>
+                              <div className="notify_info">
+                                <p>Alex Send a message</p>
+                                <span className="notify_time">2 hours ago</span>
+                              </div>
+                            </div>
+                            <div className="notify_item">
+                              <div className="notify_img">
+                                <img
+                                  className="notification-user-image"
+                                  src={model1}
+                                  alt="profile_pic"
+                                ></img>
+                              </div>
+                              <div className="notify_info">
+                                <p>Alex Send a message</p>
+                                <span className="notify_time">6 hours ago</span>
+                              </div>
+                            </div> */}
+                      {/* </div>
+                        </div>
+                      </div> */}
+
+                      {/* <div className="talent-chat-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className="bi bi-chat"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105" />
+                          </svg>
+                        </div> */}
+
+                        <Dropdown>
+                          <MenuButton>
+                            <div className="talent-profile-icon">
+                              <img
+                                src={`${API.userFilePath}${talentData?.image?.fileData}`}
+                                alt=""
+                              />
+                            </div>
+                          </MenuButton>
+                          <Menu slots={{ listbox: AnimatedListbox }}>
+                            {isTalentProfilePage === false && (
+                              <MenuItem
+                                style={{ cursor: "pointer" }}
+                                onClick={createHandleMenuClick("profile")}
+                              >
+                                View Profile
+                              </MenuItem>
+                            )}
+                            {isTalentProfilePage === true && (
+                              <MenuItem
+                                style={{ cursor: "pointer" }}
+                                onClick={createHandleMenuClick("dashboard")}
+                              >
+                                DashBoard
+                              </MenuItem>
+                            )}
+                            <MenuItem
+                              style={{ cursor: "pointer" }}
+                              onClick={createHandleMenuClick("edit")}
+                            >
+                              Edit Profile
+                            </MenuItem>
+                            <MenuItem
+                              style={{ cursor: "pointer" }}
+                              onClick={createHandleMenuClick("logout")}
+                            >
+                              Log out
+                            </MenuItem>
+                          </Menu>
+                        </Dropdown>
+                      
               </div>
             </div>
           </div>

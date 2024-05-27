@@ -425,7 +425,7 @@ const TalentDashBoard = () => {
       <div
         id="sidebarBrand"
         className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "not-sidebar"
+          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
         }`}
       >
         <TalentSideMenu myState={queryString} />
@@ -452,9 +452,9 @@ const TalentDashBoard = () => {
                   aria-label="Close"
                 ></button>
               </div>
-              <div className="modal-body talent-popup-body">
-                <div className="doitnow-main">
-                  <div className="doit-one">
+              <div className="modal-body talent-popup-body pt-1">
+                <div className="doitnow-main row">
+                  <div className="doit-one col-md-8">
                     <div className="talent-popup-title">
                       Welcome To Brands And Talent
                     </div>
@@ -487,8 +487,8 @@ const TalentDashBoard = () => {
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     </div>
                   </div>
-                  <div className="doit-two">
-                    <img src={doitnow} alt="" />
+                  <div className="doit-two col-md-4 text-center">
+                    <img className="img-fluid" src={doitnow} alt="" />
                   </div>
                 </div>
               </div>
