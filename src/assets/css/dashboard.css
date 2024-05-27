@@ -1532,7 +1532,7 @@ input[type="radio"] {
   display: none;
 }
 .dashHeader .menu-icon .fa-bars {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .dashHeader .hide-nav {
@@ -1625,6 +1625,16 @@ input[type="radio"] {
     margin: 10px 0;
     padding: 0 !important;
   }
+  .show-sidebar.hide-sidebar {
+    display: block !important;
+  }
+  .show-sidebar {
+    display: none;
+  }
+
+  .brand-main-container {
+    width: 100% !important;
+  }
 }
 @media (max-width: 767px) {
   .gallery-wrapper {
@@ -1670,14 +1680,29 @@ input[type="radio"] {
   .footer-wrapper {
     margin: 20px 0px 10px;
   }
-  .show-sidebar.hide-sidebar {
-    display: block !important;
+  .sidenavWraper.scroll {
+    padding-right: 15px;
   }
-  .show-sidebar {
-    display: none;
+  .talent-profile {
+    margin-right: 15px !important;
   }
-  .brand-main-container {
-    width: 100% !important;
+
+  .headerDashboard .nav-item {
+    font-size: 14px;
+    font-weight: 400;
+    list-style: none !important;
+  }
+
+  .headerDashboard .nav-item a {
+    color: #000;
+    padding: 0;
+  }
+
+  .mobile-nav-content .header-search-wrapper {
+    margin: 10px 0 !important;
+  }
+  .header-search-wrapper .header-search-icon {
+    padding: 0 !important;
   }
 }
 
@@ -2356,6 +2381,9 @@ input[type="radio"] {
   .brand-section > p > span {
     color: #c2114b;
   }
+  .brand-sidebar-container {
+    padding: 0px 0px 15px 15px !important;
+  }
 
   .mobile-nav-functions {
     width: 100%;
@@ -2444,7 +2472,6 @@ input[type="radio"] {
     line-height: 42px;
   }
 }
-
 @media (min-width: 480px) {
   .nav-item.dropdown {
     list-style-type: none; /* Removes bullets */
@@ -2871,6 +2898,9 @@ input[type="radio"] {
   .login-text {
     font-size: 14px;
     font-weight: 500;
+  }
+  .mobile-nav-functions .login-text {
+    margin-right: 15px;
   }
 
   a.active {

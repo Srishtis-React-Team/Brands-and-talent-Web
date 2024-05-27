@@ -26,75 +26,93 @@ const CardCarousel = () => {
       <div className="App">
         <Carousel breakPoints={breakPoints}>
           <div className="talents-carousel-post-wrapper">
-            <img className="talents-carousel-img" src={model2}></img>
+            <div className="talentImg">
+              <img className="talents-carousel-img" src={model2}></img>
+            </div>
             <div className="talents-post-details">
-              <img src={instaLogo}></img>
-              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="leftCont">
+                <img className="insta" src={instaLogo}></img>
+                <div className="talents-likes">234 Likes 340 comments</div>
+              </div>
               <div className="talents-date">23 Nov 2023</div>
             </div>
             <div className="talents-post-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-              elit...
+              Lorem ipsum dolor sit amet, consectetur adipiscing consectet elit
             </div>
           </div>
           <div className="talents-carousel-post-wrapper">
-            <img className="talents-carousel-img" src={model3}></img>
+            <div className="talentImg">
+              <img className="talents-carousel-img" src={model3}></img>
+            </div>
             <div className="talents-post-details">
-              <img src={instaLogo}></img>
-              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="leftCont">
+                <img className="insta" src={instaLogo}></img>
+                <div className="talents-likes">234 Likes 340 comments</div>
+              </div>
               <div className="talents-date">23 Nov 2023</div>
             </div>
             <div className="talents-post-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-              elit...
+              Lorem ipsum dolor sit amet, consectetur adipiscing consectet elit
             </div>
           </div>
           <div className="talents-carousel-post-wrapper">
-            <img className="talents-carousel-img" src={model4}></img>
+            <div className="talentImg">
+              <img className="talents-carousel-img" src={model4}></img>
+            </div>
             <div className="talents-post-details">
-              <img src={instaLogo}></img>
-              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="leftCont">
+                <img className="insta" src={instaLogo}></img>
+                <div className="talents-likes">234 Likes 340 comments</div>
+              </div>
               <div className="talents-date">23 Nov 2023</div>
             </div>
             <div className="talents-post-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-              elit...
+              Lorem ipsum dolor sit amet, consectetur adipiscing consectet elit
             </div>
           </div>
           <div className="talents-carousel-post-wrapper">
-            <img className="talents-carousel-img" src={model5}></img>
+            <div className="talentImg">
+              <img className="talents-carousel-img" src={model5}></img>
+            </div>
             <div className="talents-post-details">
-              <img src={instaLogo}></img>
-              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="leftCont">
+                <img className="insta" src={instaLogo}></img>
+                <div className="talents-likes">234 Likes 340 comments</div>
+              </div>
               <div className="talents-date">23 Nov 2023</div>
             </div>
             <div className="talents-post-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-              elit...
+              Lorem ipsum dolor sit amet, consectetur adipiscing consectet elit
             </div>
           </div>
           <div className="talents-carousel-post-wrapper">
-            <img className="talents-carousel-img" src={model6}></img>
+            <div className="talentImg">
+              <img className="talents-carousel-img" src={model6}></img>
+            </div>
             <div className="talents-post-details">
-              <img src={instaLogo}></img>
-              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="leftCont">
+                <img className="insta" src={instaLogo}></img>
+                <div className="talents-likes">234 Likes 340 comments</div>
+              </div>
               <div className="talents-date">23 Nov 2023</div>
             </div>
             <div className="talents-post-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-              elit...
+              Lorem ipsum dolor sit amet, consectetur adipiscing consectet elit
             </div>
           </div>
           <div className="talents-carousel-post-wrapper">
-            <img className="talents-carousel-img" src={model7}></img>
+            <div className="talentImg">
+              <img className="talents-carousel-img" src={model7}></img>
+            </div>
             <div className="talents-post-details">
-              <img src={instaLogo}></img>
-              <div className="talents-likes">234 Likes 340 comments</div>
+              <div className="leftCont">
+                <img className="insta" src={instaLogo}></img>
+                <div className="talents-likes">234 Likes 340 comments</div>
+              </div>
               <div className="talents-date">23 Nov 2023</div>
             </div>
             <div className="talents-post-content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-              elit...
+              Lorem ipsum dolor sit amet, consectetur adipiscing consectet elit
             </div>
           </div>
         </Carousel>
