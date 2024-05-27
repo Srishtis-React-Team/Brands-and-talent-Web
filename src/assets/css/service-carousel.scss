@@ -1,30 +1,32 @@
 .service-list-main {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 20px;
   .service-list-wrapper {
-    width: 30%;
-    margin: 20px 30px 20px 0px;
+    margin: 10px 0px 20px;
     .service-list-image {
+      height: 250px;
+      overflow: hidden;
       img {
         width: 100%;
-        height: 250px;
-        border-top-right-radius: 16px;
-        border-top-left-radius: 16px;
+        min-height: 250px;
+        object-fit: cover;
+        border-radius: 16px;
+        // border-top-right-radius: 16px;
+        // border-top-left-radius: 16px;
       }
     }
     .service-list-content {
       .starting-amount {
         color: #c2114b;
-        font-family: "Open Sans", sans-serif;
         font-size: 16px;
         font-style: normal;
         font-weight: 600;
         line-height: normal;
-        padding: 15px 0px;
+        padding: 10px 0px 5px
       }
       .service-title {
         color: #000;
-        font-family: "Open Sans", sans-serif;
         font-size: 18px;
         font-style: normal;
         font-weight: 600;
@@ -32,7 +34,6 @@
         padding: 0px 0px 15px 0px;
       }
       .service-description {
-        font-family: "Open Sans", sans-serif;
         font-size: 14px;
         font-style: normal;
         font-weight: 600;
@@ -40,28 +41,32 @@
       }
       .service-duration {
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px !important;
         div {
-          font-family: "Open Sans", sans-serif;
           font-size: 13px;
           font-style: normal;
           font-weight: 400;
           color: #aaaaaa;
           line-height: normal;
-          padding-bottom: 10px;
+          margin:3px 10px 3px 0;
         }
       }
     }
     .enquire-btn {
-      width: 100%;
+      width: auto;
       border-radius: 100px;
       height: 40px;
       border: 1px solid #000;
-      display: flex;
+      display: inline-flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
+      min-width: 200px;
+      transition: 0.5s;
+      font-weight: 500;
+      &:hover{
+        background-color: black;
+        color: white;
+      }
     }
   }
 }
@@ -71,20 +76,21 @@
 }
 
 @media only screen and (min-width: 320px) and (max-width: 480px) {
-  .service-list-main .service-list-wrapper {
-    width: 44%;
-    margin-right: 20px;
-  }
+
 
   .talent-all-details-wrapper {
     padding: 20px;
   }
-  .service-list-main .service-list-wrapper .service-list-image img {
-    height: 225px;
-  }
+ 
   .service-list-main {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
   }
+}
+.text-btm{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0 0;
 }
