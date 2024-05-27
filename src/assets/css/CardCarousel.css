@@ -1,9 +1,15 @@
-.talents-carousel-img {
+
+.talentImg{
   border-radius: 10px 10px 0px 0px;
   width: 100%;
   height: 230px;
-  flex-shrink: 0;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.talents-carousel-img {
+  width: 100%;
+  min-height: 230px;
+  object-fit: cover;
 }
 
 .talents-post-details {
@@ -11,14 +17,21 @@
   justify-content: space-between;
   align-items: center;
 }
-.talents-post-details > .talents-likes {
-  color: #373737;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
+.talents-post-details  .leftCont {
+  display: flex;
+  align-items: center;
 }
-.talents-post-details > .talents-date {
+.talents-post-details .insta{ width: 13px; margin-right: 5px; }
+
+.talents-post-details .talents-likes {
+  color: #373737;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: left;
+}
+.talents-post-details .talents-date {
   color: #c2114b;
   font-size: 12px;
   font-style: normal;
@@ -33,14 +46,26 @@
   font-weight: 500;
   text-align: start;
   padding-top: 18px;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+          line-clamp: 2; 
+  -webkit-box-orient: vertical;
 }
 
 .talents-carousel-post-wrapper {
   width: 100%;
-  margin: 0 18px 0px 0px;
+  margin: 0px 8px;
   font-size: 4em;
 }
-
+.talent-info-section .rec-arrow {
+  font-size: 18px !important;
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  line-height: 28px !important;
+}
 .dsyKYi,
 .jsGVec {
   display: none !important;

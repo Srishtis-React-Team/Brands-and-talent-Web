@@ -514,6 +514,25 @@
   width: 100%;
 }
 
+
+
+
+
+
+
+
+@media (max-width: 767px) {
+  .top-brands-wrapper.col-md-4 { width: 25%;}
+  
+
+
+}
+@media (max-width: 480px) {
+  .top-brands-wrapper.col-md-4 { width: 33.2%;}
+  
+
+
+}
 @media only screen and (min-width: 1025px) and (max-width: 1200px) {
   // .brand-sidebar {
   //   width: 30% !important;
@@ -552,13 +571,9 @@
   .talent-profile {
     display: none;
   }
-  .brand-sidebar-container {
-    padding: 10px 15px;
-  }
   .brand-main-container {
     padding: 20px 15px 15px;
     background-color: #eeeeee;
-    margin-bottom: 40px;
   }
   .sidemenu-active {
     margin-top: 0px !important;
@@ -582,6 +597,8 @@
   .brand-content-main {
     padding: 20px;
     width: 100%;
+    background-color: #FFF;
+    border-radius: 10px;
   }
   .brand-home-one {
     padding: 10px;

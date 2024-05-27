@@ -381,658 +381,699 @@ const TalentProfile = () => {
         </div>
       </section>
 
-      <div className="talent-profile-main">
-        <div className="talent-wrapper">
-          <div className="talent-backdrop">
-            <img className="talent-img-backdrop" src={model9}></img>
-            <img
-              className="talent-img"
-              src={`${API.userFilePath}${talentData?.image?.fileData}`}
-            ></img>
-            {/* <div className="talent-status">
-              <span>
-                <img src={blackstar}></img>
-              </span>
-              <span>Pro</span>
-            </div> */}
-          </div>
-          <div className="individual-talents-details">
-            <div className="individual-talent-name">
-              <div className="model-name">{`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}</div>
-              <div className="talent-verified">
-                <span className="blue-shield-wrapper">
-                  <img className="blue-shield" src={blueShield}></img>
-                </span>
-                Verified
-              </div>
-            </div>
-            <div className="talent-details">
-              <div className="talent-details-wrapper">
-                <div className="logo-fill">
-                  <img className="talent-logo" src={pinkStar}></img>
-                </div>
-                <span>5.0 (45 jobs completed)</span>
-              </div>
-              <div className="talent-details-wrapper">
-                <div className="logo-fill">
-                  <img className="talent-logo" src={mapFill}></img>
-                </div>
-                <span>Lorem ipsum dolor sit</span>
-              </div>
-              <div className="talent-details-wrapper">
-                <div className="logo-fill">
-                  <img className="talent-logo" src={userFill}></img>
-                </div>
-                {talentData &&
-                  talentData.profession &&
-                  talentData.profession.map((item, index) => (
-                    <span key={index}>{item.value}</span>
-                  ))}
-              </div>
-            </div>
-            <div className="talents-social-wrapper mt-4">
-              <div className="talents-social">
-                <img src={instaLogo}></img>
-                <div className="social-followers-count-section">
-                  <div className="social-count">
-                    {talentData?.instaFollowers
-                      ? talentData.instaFollowers
-                      : "N/A"}
-                  </div>
-                  <div className="followers-text">Followers</div>
-                </div>
-              </div>
-              <div className="talents-social">
-                <img src={fbIcon}></img>
-                <div className="social-followers-count-section">
-                  <div className="social-count">
-                    {talentData?.facebookFollowers
-                      ? talentData.facebookFollowers
-                      : "N/A"}
-                  </div>
-                  <div className="followers-text">Followers</div>
-                </div>
-              </div>
-              <div className="talents-social">
-                <img src={tiktok}></img>
-                <div className="social-followers-count-section">
-                  <div className="social-count">
-                    {talentData?.tiktokFollowers
-                      ? talentData.tiktokFollowers
-                      : "N/A"}
-                  </div>
-                  <div className="followers-text">Followers</div>
-                </div>
-              </div>
-              <div className="talents-social">
-                <img src={linkdin}></img>
-                <div className="social-followers-count-section">
-                  <div className="social-count">
-                    {talentData?.linkedinFollowers
-                      ? talentData.linkedinFollowers
-                      : "N/A"}
-                  </div>
-                  <div className="followers-text">Followers</div>
-                </div>
-              </div>
-              <div className="talents-social">
-                <img src={twitterLogo}></img>
-
-                <div className="social-followers-count-section">
-                  <div className="social-count">
-                    {talentData?.twitterFollowers
-                      ? talentData.twitterFollowers
-                      : "N/A"}
-                  </div>
-                  <div className="followers-text">Followers</div>
-                </div>
-              </div>
-              <div className="talents-social">
-                <img src={threadLogo}></img>
-
-                <div className="social-followers-count-section">
-                  <div className="social-count">
-                    {talentData?.threadsFollowers
-                      ? talentData.threadsFollowers
-                      : "N/A"}
-                  </div>
-                  <div className="followers-text">Followers</div>
-                </div>
-              </div>
-              <div className="talents-social">
-                <img src={youtubeLogo}></img>
-
-                <div className="social-followers-count-section">
-                  <div className="social-count">
-                    {talentData?.youtubeFollowers
-                      ? talentData.youtubeFollowers
-                      : "N/A"}
-                  </div>
-                  <div className="followers-text">Followers</div>
-                </div>
-              </div>
-            </div>
-
-            {currentUser_type === "brand" && (
-              <>
-                <div
-                  className="invite-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  <img src={whitePlus}></img>
-                  <div>Invite to apply</div>
-                </div>
-                <div className="message-now">
-                  <img src={message}></img>
-                  <div className="message-now-text">Message Now</div>
-                </div>
-              </>
-            )}
-
-            <div
-              className="modal fade"
-              id="exampleModal"
-              tabIndex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog modal-dialog-centered modal-lg signupModal">
-                <div className="modal-content ">
-                  <div className="modal-header">
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <div className="modal-title " style={{ fontSize: "18px" }}>
-                      Invite {talentData?.preferredChildFirstname}
-                      {talentData?.preferredChildLastName} to Apply to your Job
-                    </div>
-
-                    <div className="select-job-invite mt-4">
-                      <label
-                        htmlFor="exampleFormControlTextarea1"
-                        className="form-label"
-                      >
-                        Select Job to invite<span className="mandatory">*</span>
-                      </label>
-                      <Select
-                        placeholder="Select Job to invite"
-                        options={allJobsList.map((job) => ({
-                          value: job._id, // or whatever unique identifier you want to use
-                          label: job.jobTitle,
-                          type: job?.type,
-                        }))}
-                        onChange={handleChange}
-                        isSearchable={true}
-                      />
-                      {jobTitleError && (
-                        <div className="invalid-fields">
-                          Please enter job Title
-                        </div>
-                      )}
-
-                      <div className="mb-3 mt-3">
-                        <label
-                          htmlFor="exampleFormControlTextarea1"
-                          className="form-label"
-                        >
-                          Comments (Optional)
-                        </label>
-                        <textarea
-                          style={{ width: "500px" }}
-                          className="form-control address-textarea"
-                          id="exampleFormControlTextarea1"
-                          value={comments}
-                          rows="3"
-                          onChange={(e) => {
-                            setComments(e.target.value);
-                          }}
-                        ></textarea>
-                      </div>
-                    </div>
-
-                    <div className="register-modal mt-3">
-                      <Button
-                        onClick={(e) => {
-                          inviteToApply();
-                        }}
-                        className="edit-profileimg-btn"
-                        variant="text"
-                        style={{ textTransform: "capitalize" }}
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        Invite Talent
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="talent-rates">
-              <div className="title">
-                {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
-                Rates
-              </div>
-              {talentData &&
-                talentData.profession &&
-                talentData.profession.map((item, index) => (
-                  <>
-                    <div key={index}>
-                      <div className="talent-profession-name">
-                        {item?.value} <span>(Rates Are Negotiable)</span>
-                      </div>
-                      <div className="talent-profession-value">
-                        $ {item?.perHourSalary} per hour{" "}
-                      </div>
-                      <div className="talent-profession-value">
-                        $ {item?.perDaySalary} per day
-                      </div>
-                    </div>
-                  </>
-                ))}
-            </div>
-          </div>
-        </div>
-        <div className="talent-info-section">
-          <div className="talent-info-wrapper">
-            <div className="bio-wrapper">
-              <div className="bio-text">Bio</div>
-
-              {talentData?.childAboutYou?.map((htmlContent, index) => (
-                <div
-                  key={index}
-                  dangerouslySetInnerHTML={{ __html: htmlContent }}
-                />
-              ))}
-
-              {/* <div className="bio-info">
-                dangerouslySetInnerHTML={{ __html: talentData?.childAboutYou }}
-              </div> */}
-            </div>
-
-            <div className="individual-talent-tabs">
-              <div
-                className={
-                  portofolio
-                    ? "individual-talent-tab-first-active-tab  individual-talent-tab-first"
-                    : "individual-talent-tab-first"
-                }
-                onClick={(e) => {
-                  handleForms("portofolio");
-                }}
-              >
-                Home
-              </div>
-              <div
-                className={
-                  photos
-                    ? "active-tab individual-talent-tab"
-                    : "individual-talent-tab"
-                }
-                onClick={(e) => {
-                  handleForms("photos");
-                }}
-              >
-                Portofolio
-              </div>
-              <div
-                className={
-                  services
-                    ? "active-tab individual-talent-tab"
-                    : "individual-talent-tab"
-                }
-                onClick={(e) => {
-                  handleForms("services");
-                }}
-              >
-                Services
-              </div>
-
-              <div
-                className={
-                  videos
-                    ? "active-tab individual-talent-tab"
-                    : "individual-talent-tab"
-                }
-                onClick={(e) => {
-                  handleForms("videos");
-                }}
-              >
-                Videos & Audios
-              </div>
-              <div
-                className={
-                  features
-                    ? "active-tab individual-talent-tab"
-                    : "individual-talent-tab"
-                }
-                onClick={(e) => {
-                  handleForms("features");
-                }}
-              >
-                Features
-              </div>
-              <div
-                className={
-                  reviews
-                    ? "active-tab individual-talent-tab"
-                    : "individual-talent-tab"
-                }
-                onClick={(e) => {
-                  handleForms("reviews");
-                }}
-              >
-                Reviews
-              </div>
-              <div
-                className={
-                  CV
-                    ? "active-tab individual-talent-tab"
-                    : "individual-talent-tab"
-                }
-                onClick={(e) => {
-                  handleForms("CV");
-                }}
-              >
-                CV
-              </div>
-            </div>
-
-            <div className="talent-all-details-wrapper">
-              {portofolio && (
-                <>
-                  <div className="portofolio-section">
-                    <div className="portofolio-title">Portofolio</div>
-                    <div
-                      className="view-all"
-                      onClick={(e) => {
-                        handleForms("photos");
-                      }}
-                    >
-                      View All
-                    </div>
-                  </div>
-                  <div className="photos-slider">
-                    {photosList && photosList.length > 0 && (
-                      <PhotosCarousel photosList={photosList} />
-                    )}
-                  </div>
-                  <div className="portofolio-section">
-                    <div className="portofolio-title">Social media posts</div>
-                    <div className="view-all">View All</div>
-                  </div>
-                  <CardCarousel />
-                  <div className="portofolio-section">
-                    <div className="portofolio-title">Reviews</div>
-                    <div className="view-all">View All</div>
-                  </div>
-                  <div className="reviews-section">
-                    <div className="rating-talent">
-                      <div className="num">4.5</div>
-                      <img src={white_star}></img>
-                    </div>
-                    <div className="content">
-                      <div className="title">
-                        Studio Shoot for Unrecognisable Ecommerce
-                      </div>
-                      <div className="description">
-                        Kate is a delight to work with, beautiful both punctual
-                        & professional. She knew exactly what was required and
-                        everything was effortless.
-                      </div>
-                    </div>
-                    <div className="booked-btn">
-                      <div className="wrapper">
-                        <img src={check}></img>
-                      </div>
-                      <div className="posted-jobs">24 Jobs Booked</div>
-                    </div>
-                  </div>
-
-                  <ServicesCarousel talentData={talentData} />
-
-                  <div className="portofolio-section">
-                    <div className="portofolio-title">Videos & Audios</div>
-                    <div className="view-all">View All</div>
-                  </div>
-
-                  <div className="service-list-main">
-                    {videoAudioList.map((item) => (
-                      <div className="item model-picture-wrapper" key={item.id}>
-                        {item.type === "video" && (
-                          <video className="video-style " controls>
-                            <source
-                              src={`${API.userFilePath}${item.fileData}`}
-                              type="video/mp4"
-                            />
-                            Your browser does not support the video tag.
-                          </video>
-                        )}
-                        {item.type === "audio" && (
-                          <audio controls>
-                            <source
-                              src={`${API.userFilePath}${item.fileData}`}
-                              type="audio/mp3"
-                            />
-                            Your browser does not support the audio tag.
-                          </audio>
-                        )}
-                        <p>{item.title}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="portofolio-section">
-                    <div className="portofolio-title">CV</div>
-                    <div className="view-all">View All</div>
-                  </div>
-
-                  <div className="cvlist-wrapper">
-                    {cvList.map((pdf) => {
-                      console.log(pdf, "pdf");
-                      return (
-                        <>
-                          <>
-                            <div className="cv-card" key={pdf.title}>
-                              <i className="fa-solid fa-file"></i>
-                              <div className="fileName">{pdf.title}</div>
-                              <button
-                                className="view-cv"
-                                onClick={() => handleView(pdf)}
-                              >
-                                View
-                              </button>
-                              {/* {showModal && (
-                                <PdfModal
-                                  pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
-                                  onHide={() => setShowModal(false)}
-                                />
-                              )} */}
-                            </div>
-                          </>
-                        </>
-                      );
-                    })}
-                  </div>
-                </>
-              )}
-              {photos && (
-                <div className="models-photos">
-                  <section className="photos-gallery">
-                    {photosList &&
-                      photosList.map((image, index) => {
-                        console.log(image, "image");
-                        return (
-                          <>
-                            <div className="photos-gallery-image" key={index}>
-                              <img
-                                className=""
-                                src={`${API.userFilePath}${image}`}
-                                alt=""
-                              />
-                            </div>
-                          </>
-                        );
-                      })}
-                  </section>
-                </div>
-              )}
-              {videos && (
-                <div className="models-photos">
-                  {/* {videoAudioList.map((item, index) => {
-                  return (
-                    <div className="model-picture-wrapper" key={index}>
+      <section>
+        <div className="container">
+          <div className="talent-profile-main">
+            <div className="row">
+              <div className="col-md-4 col-lg-3 pr-0">
+                <div className="talent-wrapper">
+                  <div className="talent-backdrop">
+                    <img className="talent-img-backdrop" src={model9}></img>
+                    <div className="profImg">
                       <img
-                        className="model-picture"
-                        src={`${API.userFilePath}${item}`}
+                        className="talent-img"
+                        src={`${API.userFilePath}${talentData?.image?.fileData}`}
                       ></img>
                     </div>
-                  );
-                })} */}
-
-                  {videoAudioList.map((item) => (
-                    <div className="item model-picture-wrapper" key={item.id}>
-                      {item.type === "video" && (
-                        <video className="video-style" controls>
-                          <source
-                            src={`${API.userFilePath}${item.fileData}`}
-                            type="video/mp4"
-                          />
-                          Your browser does not support the video tag.
-                        </video>
-                      )}
-                      {item.type === "audio" && (
-                        <audio controls>
-                          <source
-                            src={`${API.userFilePath}${item.fileData}`}
-                            type="audio/mp3"
-                          />
-                          Your browser does not support the audio tag.
-                        </audio>
-                      )}
-                      <p>{item.title}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {services && (
-                <>
-                  <ServicesCarousel talentData={talentData} />
-                </>
-              )}
-              {features && (
-                <>
-                  <div className="table-container">
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td className="left-column">
-                            <table>
-                              <tbody>
-                                {featuresList
-                                  ?.slice(
-                                    0,
-                                    Math.ceil(featuresList?.length / 2)
-                                  )
-                                  .map((feature, index) => (
-                                    <tr key={feature.label}>
-                                      <td>{feature.label}</td>
-                                      <td>{feature.value}</td>
-                                    </tr>
-                                  ))}
-                              </tbody>
-                            </table>
-                          </td>
-                          <td className="right-column">
-                            <table>
-                              <tbody>
-                                {featuresList
-                                  ?.slice(Math.ceil(featuresList?.length / 2))
-                                  .map((feature, index) => (
-                                    <tr key={feature.label}>
-                                      <td>{feature.label}</td>
-                                      <td>{feature.value}</td>
-                                    </tr>
-                                  ))}
-                              </tbody>
-                            </table>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    {/* <div className="talent-status">
+                      <span>
+                        <img src={blackstar}></img>
+                      </span>
+                      <span>Pro</span>
+                    </div> */}
                   </div>
-                </>
-              )}
-              {CV && (
-                <div>
-                  {cvList.map((pdf) => {
-                    return (
+                  <div className="individual-talents-details">
+                    <div className="individual-talent-name">
+                      <div className="model-name">{`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}</div>
+                      <div className="talent-verified">
+                        <span className="blue-shield-wrapper">
+                          <img className="blue-shield" src={blueShield}></img>
+                        </span>
+                        Verified
+                      </div>
+                    </div>
+                    <div className="talent-details">
+                      <div className="talent-details-wrapper">
+                        <div className="logo-fill">
+                          <img className="talent-logo" src={pinkStar}></img>
+                        </div>
+                        <div className="contSect">
+                          <span>5.0 (45 jobs completed)</span>
+                        </div>
+                      </div>
+                      <div className="talent-details-wrapper">
+                        <div className="logo-fill">
+                          <img className="talent-logo" src={mapFill}></img>
+                        </div>
+                        <div className="contSect">
+                          <span>Lorem ipsum dolor sit</span>
+                        </div>
+                      </div>
+                      <div className="talent-details-wrapper">
+                        <div className="logo-fill">
+                          <img className="talent-logo" src={userFill}></img>
+                        </div>
+                        <div className="contSect">
+                          {talentData &&
+                            talentData.profession &&
+                            talentData.profession.map((item, index) => (
+                              <span key={index}>{item.value}</span>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="talents-social-wrapper mt-4">
+                      <div className="row">
+                      <div className="talents-social col-md-6">
+                        <div className="logoSocial">
+                          <img src={instaLogo}></img>
+                        </div>
+                        <div className="social-followers-count-section">
+                          <div className="social-count">
+                            {talentData?.instaFollowers
+                              ? talentData.instaFollowers
+                              : "N/A"}
+                          </div>
+                          <div className="followers-text">Followers</div>
+                        </div>
+                      </div>
+                      <div className="talents-social col-md-6">
+                        <div className="logoSocial">
+                          <img src={fbIcon}></img>
+                        </div>
+                        <div className="social-followers-count-section">
+                          <div className="social-count">
+                            {talentData?.facebookFollowers
+                              ? talentData.facebookFollowers
+                              : "N/A"}
+                          </div>
+                          <div className="followers-text">Followers</div>
+                        </div>
+                      </div>
+                      <div className="talents-social col-md-6">
+                        <div className="logoSocial">
+                          <img src={tiktok}></img>
+                        </div>
+                        <div className="social-followers-count-section">
+                          <div className="social-count">
+                            {talentData?.tiktokFollowers
+                              ? talentData.tiktokFollowers
+                              : "N/A"}
+                          </div>
+                          <div className="followers-text">Followers</div>
+                        </div>
+                      </div>
+                      <div className="talents-social col-md-6">
+                        <div className="logoSocial">
+                          <img src={linkdin}></img>
+                        </div>
+                        <div className="social-followers-count-section">
+                          <div className="social-count">
+                            {talentData?.linkedinFollowers
+                              ? talentData.linkedinFollowers
+                              : "N/A"}
+                          </div>
+                          <div className="followers-text">Followers</div>
+                        </div>
+                      </div>
+                      <div className="talents-social col-md-6">
+                        <div className="logoSocial">
+                          <img src={twitterLogo}></img>
+                        </div>
+
+                        <div className="social-followers-count-section">
+                          <div className="social-count">
+                            {talentData?.twitterFollowers
+                              ? talentData.twitterFollowers
+                              : "N/A"}
+                          </div>
+                          <div className="followers-text">Followers</div>
+                        </div>
+                      </div>
+                      <div className="talents-social col-md-6">
+                        <div className="logoSocial">
+                          <img src={threadLogo}></img>
+                        </div>
+
+                        <div className="social-followers-count-section">
+                          <div className="social-count">
+                            {talentData?.threadsFollowers
+                              ? talentData.threadsFollowers
+                              : "N/A"}
+                          </div>
+                          <div className="followers-text">Followers</div>
+                        </div>
+                      </div>
+                      <div className="talents-social col-md-6">
+                        <div className="logoSocial">
+                          <img src={youtubeLogo}></img>
+                        </div>
+
+                        <div className="social-followers-count-section">
+                          <div className="social-count">
+                            {talentData?.youtubeFollowers
+                              ? talentData.youtubeFollowers
+                              : "N/A"}
+                          </div>
+                          <div className="followers-text">Followers</div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {currentUser_type === "brand" && (
                       <>
-                        <>
-                          <div className="cv-card" key={pdf.title}>
-                            <i className="fa-solid fa-file"></i>
-                            <div className="fileName">{pdf.title}</div>
-                            <button
-                              className="view-cv"
-                              onClick={() => handleView(pdf)}
-                            >
-                              View PDF
-                            </button>
-                            {/* {showModal && (
-                              <PdfModal
-                                pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
-                                onHide={() => setShowModal(false)}
-                              />
-                            )} */}
-                          </div>
-                        </>
+                        <div
+                          className="invite-btn"
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal"
+                        >
+                          <img src={whitePlus}></img>
+                          <div>Invite to apply</div>
+                        </div>
+                        <div className="message-now">
+                          <img src={message}></img>
+                          <div className="message-now-text">Message Now</div>
+                        </div>
                       </>
-                    );
-                  })}
-                </div>
-              )}
-              {reviews && (
-                <div className="model-reviews">
-                  {reviewsList?.map((item, index) => {
-                    return (
-                      <div className="model-review-wrapper" key={index}>
-                        <div className="review-date">{item.date}</div>
-                        <div className="review-title">{item.title}</div>
-                        <div className="review-content">{item.description}</div>
-                        <div className="reviewer-section">
-                          <div className="reviewers-rating">
-                            {item.rating.map((item, index) => {
-                              return <img key={index} src={pinkStar}></img>;
-                            })}
+                    )}
+
+                    <div
+                      className="modal fade"
+                      id="exampleModal"
+                      tabIndex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div className="modal-dialog modal-dialog-centered modal-lg signupModal">
+                        <div className="modal-content ">
+                          <div className="modal-header">
+                            <button
+                              type="button"
+                              className="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
                           </div>
-                          <div className="reviewer-details">
-                            <div className="initial center">S</div>
-                            <div className="reviewer-name">
-                              {item.reviewer_name}
+                          <div className="modal-body">
+                            <div className="modal-title " style={{ fontSize: "18px" }}>
+                              Invite {talentData?.preferredChildFirstname}
+                              {talentData?.preferredChildLastName} to Apply to your Job
+                            </div>
+
+                            <div className="select-job-invite mt-4">
+                              <label
+                                htmlFor="exampleFormControlTextarea1"
+                                className="form-label"
+                              >
+                                Select Job to invite<span className="mandatory">*</span>
+                              </label>
+                              <Select
+                                placeholder="Select Job to invite"
+                                options={allJobsList.map((job) => ({
+                                  value: job._id, // or whatever unique identifier you want to use
+                                  label: job.jobTitle,
+                                  type: job?.type,
+                                }))}
+                                onChange={handleChange}
+                                isSearchable={true}
+                              />
+                              {jobTitleError && (
+                                <div className="invalid-fields">
+                                  Please enter job Title
+                                </div>
+                              )}
+
+                              <div className="mb-3 mt-3">
+                                <label
+                                  htmlFor="exampleFormControlTextarea1"
+                                  className="form-label"
+                                >
+                                  Comments (Optional)
+                                </label>
+                                <textarea
+                                  style={{ width: "500px" }}
+                                  className="form-control address-textarea"
+                                  id="exampleFormControlTextarea1"
+                                  value={comments}
+                                  rows="3"
+                                  onChange={(e) => {
+                                    setComments(e.target.value);
+                                  }}
+                                ></textarea>
+                              </div>
+                            </div>
+
+                            <div className="register-modal mt-3">
+                              <Button
+                                onClick={(e) => {
+                                  inviteToApply();
+                                }}
+                                className="edit-profileimg-btn"
+                                variant="text"
+                                style={{ textTransform: "capitalize" }}
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                Invite Talent
+                              </Button>
                             </div>
                           </div>
                         </div>
                       </div>
-                    );
-                  })}
+                    </div>
+
+                    <div className="talent-rates">
+                      <div className="title">
+                        {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
+                        Rates
+                      </div>
+                      {talentData &&
+                        talentData.profession &&
+                        talentData.profession.map((item, index) => (
+                          <>
+                            <div key={index}>
+                              <div className="talent-profession-name">
+                                {item?.value} <span>(Rates Are Negotiable)</span>
+                              </div>
+                              <div className="talent-profession-value">
+                                $ {item?.perHourSalary} per hour{" "}
+                              </div>
+                              <div className="talent-profession-value">
+                                $ {item?.perDaySalary} per day
+                              </div>
+                            </div>
+                          </>
+                        ))}
+                    </div>
+                  </div>
                 </div>
-              )}
+              </div>
+              <div className="col-md-8 col-lg-9">
+                <div className="talent-info-section">
+                  <div className="talent-info-wrapper">
+                    <div className="bio-wrapper">
+                      <div className="bio-text">Bio</div>
+
+                      {talentData?.childAboutYou?.map((htmlContent, index) => (
+                        <div
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: htmlContent }}
+                        />
+                      ))}
+
+                      {/* <div className="bio-info">
+                        dangerouslySetInnerHTML={{ __html: talentData?.childAboutYou }}
+                      </div> */}
+                    </div>
+
+                    <div className="individual-talent-tabs">
+                      <div
+                        className={
+                          portofolio
+                            ? "individual-talent-tab-first-active-tab  individual-talent-tab-first"
+                            : "individual-talent-tab-first"
+                        }
+                        onClick={(e) => {
+                          handleForms("portofolio");
+                        }}
+                      >
+                        Home
+                      </div>
+                      <div
+                        className={
+                          photos
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("photos");
+                        }}
+                      >
+                        Portofolio
+                      </div>
+                      <div
+                        className={
+                          services
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("services");
+                        }}
+                      >
+                        Services
+                      </div>
+
+                      <div
+                        className={
+                          videos
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("videos");
+                        }}
+                      >
+                        Videos & Audios
+                      </div>
+                      <div
+                        className={
+                          features
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("features");
+                        }}
+                      >
+                        Features
+                      </div>
+                      <div
+                        className={
+                          reviews
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("reviews");
+                        }}
+                      >
+                        Reviews
+                      </div>
+                      <div
+                        className={
+                          CV
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("CV");
+                        }}
+                      >
+                        CV
+                      </div>
+                    </div>
+
+                    <div className="talent-all-details-wrapper">
+                      {portofolio && (
+                        <>
+                          <div className="portofolio-section">
+                            <div className="portofolio-title">Portofolio</div>
+                            <div
+                              className="view-all"
+                              onClick={(e) => {
+                                handleForms("photos");
+                              }}
+                            >
+                              View All
+                            </div>
+                          </div>
+                          <div className="photos-slider">
+                            {photosList && photosList.length > 0 && (
+                              <PhotosCarousel photosList={photosList} />
+                            )}
+                          </div>
+                          <div className="portofolio-section">
+                            <div className="portofolio-title">Social media posts</div>
+                            <div className="view-all">View All</div>
+                          </div>
+                          <CardCarousel />
+                          <div className="portofolio-section">
+                            <div className="portofolio-title">Reviews</div>
+                            <div className="view-all">View All</div>
+                          </div>
+                          <div className="reviews-section">
+                            <div className="rating-talent">
+                              <div className="num">4.5</div>
+                              <img src={white_star}></img>
+                            </div>
+                            <div className="content">
+                              <div className="title">
+                                Studio Shoot for Unrecognisable Ecommerce
+                              </div>
+                              <div className="description">
+                                Kate is a delight to work with, beautiful both punctual
+                                & professional. She knew exactly what was required and
+                                everything was effortless.
+                              </div>
+                            </div>
+                            <div className="booked-btn">
+                              <div className="wrapper">
+                                <img src={check}></img>
+                              </div>
+                              <div className="posted-jobs">24 Jobs Booked</div>
+                            </div>
+                          </div>
+
+                          <ServicesCarousel talentData={talentData} />
+
+                          <div className="portofolio-section">
+                            <div className="portofolio-title">Videos & Audios</div>
+                            <div className="view-all">View All</div>
+                          </div>
+
+                          <div className="service-list-main">
+                            {videoAudioList.map((item) => (
+                              <div className="item model-picture-wrapper" key={item.id}>
+                                {item.type === "video" && (
+                                  <video className="video-style " controls>
+                                    <source
+                                      src={`${API.userFilePath}${item.fileData}`}
+                                      type="video/mp4"
+                                    />
+                                    Your browser does not support the video tag.
+                                  </video>
+                                )}
+                                {item.type === "audio" && (
+                                  <audio controls>
+                                    <source
+                                      src={`${API.userFilePath}${item.fileData}`}
+                                      type="audio/mp3"
+                                    />
+                                    Your browser does not support the audio tag.
+                                  </audio>
+                                )}
+                                <p>{item.title}</p>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="portofolio-section">
+                            <div className="portofolio-title">CV</div>
+                            <div className="view-all">View All</div>
+                          </div>
+
+                          <div className="cvlist-wrapper">
+                            {cvList.map((pdf) => {
+                              console.log(pdf, "pdf");
+                              return (
+                                <>
+                                  <>
+                                    <div className="cv-card" key={pdf.title}>
+                                      <div className="d-flex align-items-center">
+                                        <i className="fa-solid fa-file"></i>
+                                        <div className="fileName">{pdf.title}</div>
+                                      </div>
+                                      <button
+                                        className="view-cv"
+                                        onClick={() => handleView(pdf)}
+                                      >
+                                        View
+                                      </button>
+                                      {/* {showModal && (
+                                        <PdfModal
+                                          pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
+                                          onHide={() => setShowModal(false)}
+                                        />
+                                      )} */}
+                                    </div>
+                                  </>
+                                </>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
+                      {photos && (
+                        <div className="models-photos">
+                          <section className="photos-gallery row padSpc">
+                            {photosList &&
+                              photosList.map((image, index) => {
+                                console.log(image, "image");
+                                return (
+                                  <>
+                                    <div className="col-lg-3 col-md-4 padSpc">
+                                      <div className="photos-gallery-image" key={index}>
+                                        <img
+                                          className=""
+                                          src={`${API.userFilePath}${image}`}
+                                          alt=""
+                                        />
+                                      </div>
+                                    </div>
+                                  </>
+                                );
+                              })}
+                          </section>
+                        </div>
+                      )}
+                      {videos && (
+                        <div className="models-photos">
+                          {/* {videoAudioList.map((item, index) => {
+                          return (
+                            <div className="model-picture-wrapper" key={index}>
+                              <img
+                                className="model-picture"
+                                src={`${API.userFilePath}${item}`}
+                              ></img>
+                            </div>
+                          );
+                        })} */}
+
+                          {videoAudioList.map((item) => (
+                            <div className="item model-picture-wrapper" key={item.id}>
+                              {item.type === "video" && (
+                                <video className="video-style" controls>
+                                  <source
+                                    src={`${API.userFilePath}${item.fileData}`}
+                                    type="video/mp4"
+                                  />
+                                  Your browser does not support the video tag.
+                                </video>
+                              )}
+                              {item.type === "audio" && (
+                                <audio controls>
+                                  <source
+                                    src={`${API.userFilePath}${item.fileData}`}
+                                    type="audio/mp3"
+                                  />
+                                  Your browser does not support the audio tag.
+                                </audio>
+                              )}
+                              <p>{item.title}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {services && (
+                        <>
+                          <ServicesCarousel talentData={talentData} />
+                        </>
+                      )}
+                      {features && (
+                        <>
+                          <div className="table-container">
+                            <table>
+                              <tbody>
+                                <tr>
+                                  <td className="left-column">
+                                    <table>
+                                      <tbody>
+                                        {featuresList
+                                          ?.slice(
+                                            0,
+                                            Math.ceil(featuresList?.length / 2)
+                                          )
+                                          .map((feature, index) => (
+                                            <tr key={feature.label}>
+                                              <td>{feature.label}</td>
+                                              <td>{feature.value}</td>
+                                            </tr>
+                                          ))}
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                  <td className="right-column">
+                                    <table>
+                                      <tbody>
+                                        {featuresList
+                                          ?.slice(Math.ceil(featuresList?.length / 2))
+                                          .map((feature, index) => (
+                                            <tr key={feature.label}>
+                                              <td>{feature.label}</td>
+                                              <td>{feature.value}</td>
+                                            </tr>
+                                          ))}
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </>
+                      )}
+                      {CV && (
+                        <div>
+                          {cvList.map((pdf) => {
+                            return (
+                              <>
+                                <>
+                                  <div className="cv-card" key={pdf.title}>
+                                    <div className="d-flex align-items-center">
+                                      <i className="fa-solid fa-file"></i>
+                                      <div className="fileName">{pdf.title}</div>
+                                    </div>
+                                    <button
+                                      className="view-cv"
+                                      onClick={() => handleView(pdf)}
+                                    >
+                                      View PDF
+                                    </button>
+                                    {/* {showModal && (
+                                      <PdfModal
+                                        pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
+                                        onHide={() => setShowModal(false)}
+                                      />
+                                    )} */}
+                                  </div>
+                                </>
+                              </>
+                            );
+                          })}
+                        </div>
+                      )}
+                      {reviews && (
+                        <div className="model-reviews row">
+                          {reviewsList?.map((item, index) => {
+                            return (
+                              <div className="col-md-6">
+                                <div className="model-review-wrapper col-md-6" key={index}>
+                                  <div className="review-date">{item.date}</div>
+                                  <div className="review-title">{item.title}</div>
+                                  <div className="review-content">{item.description}</div>
+                                  <div className="reviewer-section">
+                                    <div className="reviewers-rating">
+                                      {item.rating.map((item, index) => {
+                                        return <img key={index} src={pinkStar}></img>;
+                                      })}
+                                    </div>
+                                    <div className="reviewer-details">
+                                      <div className="initial center">S</div>
+                                      <div className="reviewer-name">
+                                        {item.reviewer_name}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div className="find-more">
+            <div className="btn moreBtn">Find More</div>
+          </div>
         </div>
-      </div>
-
-      <div className="find-more">
-        <div>Find More</div>
-      </div>
-
+      </section>
       <Footer />
     </>
   );
