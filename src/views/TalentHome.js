@@ -90,7 +90,7 @@ const TalentHome = () => {
       <div
         id="sidebarBrand"
         className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "not-sidebar"
+          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
         }`}
       >
         <TalentSideMenu />
@@ -103,8 +103,8 @@ const TalentHome = () => {
       >
         <div className="brand-content-main">
           <div className="create-job-title">Welcome To Brands And Talent</div>
-          <div className="home-cards mt-1 row">
-            <div className="col-md-4">
+          <div className="home-cards mt-1 row pad8">
+            <div className="col-md-4 col-lg-3 pad8">
               <Link to="/edit-talent-profile">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
@@ -114,7 +114,7 @@ const TalentHome = () => {
                 </div>
               </Link>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 col-lg-3 pad8">
               <Link to="/talent-dashboard ">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
@@ -124,7 +124,7 @@ const TalentHome = () => {
                 </div>
               </Link>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 col-lg-3 pad8">
               <Link to="/talent-help">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
@@ -134,7 +134,7 @@ const TalentHome = () => {
                 </div>
               </Link>
             </div>
-            <div className="col-md-4" onClick={() => handleNavigation()}>
+            <div className="col-md-4 col-lg-3 pad8" onClick={() => handleNavigation()}>
               <Link>
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">

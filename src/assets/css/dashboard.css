@@ -18,7 +18,8 @@ html {
 body {
   height: 100%;
   width: 100%;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans", sans-serif !important;
+  overflow-x: hidden;
 }
 
 * {
@@ -1512,11 +1513,12 @@ input[type="radio"] {
 .profile-section {
   display: flex;
 }
-
-.dashHeader .hide-nav {
-  display: block;
+.pad8{
+  padding: 0 8px;
 }
-
+.home-cards.row.pad8 {
+  padding: 0 5px;
+}
 .dashHeader .menu-icon {
   padding: 5px;
   width: 35px;
@@ -1528,6 +1530,26 @@ input[type="radio"] {
 .dashHeader .menu-icon .fa-bars {
   font-size: 22px;
 }
+
+.dashHeader .hide-nav {
+  display: flex;
+  align-items: center;
+}
+
+.show-sidebar.hide-sidebar{ display: none; }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* MEDIA-QUERY START */
 
@@ -1655,6 +1677,11 @@ input[type="radio"] {
   .footer-wrapper {
     margin: 20px 0px 10px;
   }
+  .show-sidebar.hide-sidebar {
+    display: block !important;
+  }
+  .show-sidebar{ display: none; }
+  .brand-main-container{ width: 100% !important; }
 }
 
 @media (max-width: 580px) {
@@ -2395,6 +2422,11 @@ input[type="radio"] {
   outline: none !important;
   font-size: 14px;
 }
+
+
+
+
+
 @media (max-width: 430px) {
   .gallery-wrapper {
     width: 47%;
