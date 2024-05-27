@@ -343,17 +343,7 @@
   cursor: pointer;
 }
 
-.doitnow-main {
-  width: 100%;
-  display: flex;
-  .doit-one {
-    width: 70%;
-    padding-right: 40px;
-  }
-  .doit-two {
-    width: 30%;
-  }
-}
+
 
 .adult-form-wrapper {
   margin: 30px 0px;
@@ -669,6 +659,22 @@
 .recent-setone.alignDivs .userBox .recent-gig-company {
   font-size: 14px !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* 481px — 768px: iPads, Tablets */
 
@@ -1213,7 +1219,7 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   width: 100%;
   min-height: 150px;
-  padding: 30px;
+  padding: 10px;
   border-radius: 8px;
   background-color: #ffffff;
   display: flex;
