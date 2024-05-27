@@ -624,9 +624,18 @@
   }
   .btn-img-edit-wrapper {
     display: flex;
-    justify-content: start;
+    justify-content: end;
     .edit-profileimg-btn {
       background-color: #c2114b;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .edit-profileimg-activate {
+      background-color: green;
       color: #fff;
       font-size: 14px;
       font-weight: 500;
@@ -1044,7 +1053,7 @@
   height: 25px;
   position: absolute;
   top: 0;
-  right: -40px;
+  right: 8px;
   border-radius: 50%;
   display: flex;
   justify-content: center;

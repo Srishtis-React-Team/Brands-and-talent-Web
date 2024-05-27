@@ -485,7 +485,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         <div className="dialog-body">
           <div className="kidsform-one container">
             <div className="kids-wrapper row">
-
               <div className="kids-img col-md-4 col-lg-3">
                 <div className="fixImgs">
                   <img src={kidsImage} className="kids-image-sticky" alt="" />
@@ -938,15 +937,11 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   <option value="" disabled selected>
                                     {item.label}
                                   </option>
-                                  {item.options.map((item, index) => {
-                                    return (
-                                      <>
-                                        <option defaultValue value="1">
-                                          {item}
-                                        </option>
-                                      </>
-                                    );
-                                  })}
+                                  {item.options.map((option, idx) => (
+                                    <option key={idx} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
                                 </select>
                               </div>
                             </>

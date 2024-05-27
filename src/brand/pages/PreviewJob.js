@@ -103,8 +103,12 @@ const PreviewJob = ({ data, onButtonClick }) => {
     console.log(jobId, "jobId");
   }, [jobId]);
 
-  const createJob = () => {
-    navigate("/create-jobs");
+  const handleBackClick = () => {
+    if (location.state && location.state.from) {
+      navigate(`/${location.state.from}`);
+    } else {
+      navigate(-1); // Equivalent to history.goBack() in v5
+    }
   };
 
   return (
@@ -126,7 +130,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
           <div className="brand-content-main boxBg">
             <div className="back-create">
               <i className="bi bi-arrow-left-circle-fill"></i>
-              <div onClick={createJob} className="back-to">
+              <div onClick={handleBackClick} className="back-to">
                 Back to Create job
               </div>
             </div>

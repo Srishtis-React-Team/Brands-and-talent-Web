@@ -300,6 +300,7 @@ const TalentHeader = ({ toggleMenu, myState }) => {
             <div className="leftPart">
               <div className="talent-nav-logo">
                 <img
+                  className="btLogo"
                   src={btLogo}
                   alt=""
                   onClick={() => {
@@ -313,7 +314,6 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                 </div>
                 {/* <div className="mydashboard font-styles">My Dashboard</div> */}
               </div>
-              
             </div>
 
             <div className="rightPart">
@@ -329,6 +329,9 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                 </div>
 
                 <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
+                  <div className="navTxt">
+                    <NavLink to="/">Home</NavLink>
+                  </div>
                   <div className="navTxt">
                     <NavLink to="/job-list">Jobs List</NavLink>
                   </div>
@@ -551,8 +554,8 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                       </DialogActions>
                     </BootstrapDialog> */}
                   </React.Fragment>
-                  </div>
-                      {/* <div
+                </div>
+                {/* <div
                         className="offcanvas offcanvas-top search-canvas-top"
                         tabIndex="-1"
                         id="offcanvasTop"
@@ -585,7 +588,7 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                         </div>
                       </div> */}
 
-                      {/* <div className="notification-bell-wrapper">
+                {/* <div className="notification-bell-wrapper">
                         <div className="notification_wrap">
                           <div className="notification_icon ">
                             <i className="bi bi-bell"></i>
@@ -632,7 +635,7 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                               </>
                             )} */}
 
-                      {/* <div className="notify_item">
+                {/* <div className="notify_item">
                               <div className="notify_img">
                                 <img
                                   className="notification-user-image"
@@ -671,11 +674,11 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                                 <span className="notify_time">6 hours ago</span>
                               </div>
                             </div> */}
-                      {/* </div>
+                {/* </div>
                         </div>
                       </div> */}
 
-                      {/* <div className="talent-chat-icon">
+                {/* <div className="talent-chat-icon">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -688,47 +691,46 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                           </svg>
                         </div> */}
 
-                        <Dropdown>
-                          <MenuButton>
-                            <div className="talent-profile-icon">
-                              <img
-                                src={`${API.userFilePath}${talentData?.image?.fileData}`}
-                                alt=""
-                              />
-                            </div>
-                          </MenuButton>
-                          <Menu slots={{ listbox: AnimatedListbox }}>
-                            {isTalentProfilePage === false && (
-                              <MenuItem
-                                style={{ cursor: "pointer" }}
-                                onClick={createHandleMenuClick("profile")}
-                              >
-                                View Profile
-                              </MenuItem>
-                            )}
-                            {isTalentProfilePage === true && (
-                              <MenuItem
-                                style={{ cursor: "pointer" }}
-                                onClick={createHandleMenuClick("dashboard")}
-                              >
-                                DashBoard
-                              </MenuItem>
-                            )}
-                            <MenuItem
-                              style={{ cursor: "pointer" }}
-                              onClick={createHandleMenuClick("edit")}
-                            >
-                              Edit Profile
-                            </MenuItem>
-                            <MenuItem
-                              style={{ cursor: "pointer" }}
-                              onClick={createHandleMenuClick("logout")}
-                            >
-                              Log out
-                            </MenuItem>
-                          </Menu>
-                        </Dropdown>
-                      
+                <Dropdown>
+                  <MenuButton>
+                    <div className="talent-profile-icon">
+                      <img
+                        src={`${API.userFilePath}${talentData?.image?.fileData}`}
+                        alt=""
+                      />
+                    </div>
+                  </MenuButton>
+                  <Menu slots={{ listbox: AnimatedListbox }}>
+                    {isTalentProfilePage === false && (
+                      <MenuItem
+                        style={{ cursor: "pointer" }}
+                        onClick={createHandleMenuClick("profile")}
+                      >
+                        View Profile
+                      </MenuItem>
+                    )}
+                    {isTalentProfilePage === true && (
+                      <MenuItem
+                        style={{ cursor: "pointer" }}
+                        onClick={createHandleMenuClick("dashboard")}
+                      >
+                        DashBoard
+                      </MenuItem>
+                    )}
+                    <MenuItem
+                      style={{ cursor: "pointer" }}
+                      onClick={createHandleMenuClick("edit")}
+                    >
+                      Edit Profile
+                    </MenuItem>
+                    <MenuItem
+                      style={{ cursor: "pointer" }}
+                      onClick={createHandleMenuClick("logout")}
+                    >
+                      Log out
+                    </MenuItem>
+                  </Menu>
+                </Dropdown>
               </div>
             </div>
           </div>

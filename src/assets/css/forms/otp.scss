@@ -4,7 +4,7 @@
   height: 50px;
   text-align: center;
   margin: 0px 10px;
-  border: 1px solid #B1A8A8;
+  border: 1px solid #b1a8a8;
 }
 
 .otp-main {
@@ -57,6 +57,12 @@
   padding: 0px 10px;
 }
 
+.btLogo {
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+}
+
 .otp-title {
   color: #000;
   font-size: 26px;
@@ -82,7 +88,7 @@
 }
 
 .otp-mail {
-  color: #C2114B;
+  color: #c2114b;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
@@ -119,7 +125,7 @@
   text-align: center;
   margin: 10px 0px;
   span {
-    color: #069EED;
+    color: #069eed;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -127,7 +133,7 @@
 
 .otp-back {
   cursor: pointer;
-  color: #C2114B;
+  color: #c2114b;
   text-decoration: underline;
   font-size: 15px;
   font-style: normal;

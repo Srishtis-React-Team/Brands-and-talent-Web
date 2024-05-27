@@ -175,33 +175,7 @@ const EditTalent = () => {
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
-
-  const initialFeatureValues = featuresList.reduce((acc, feature) => {
-    acc[feature.label] = "";
-    return acc;
-  }, {});
-
-  const [features, setFeatures] = useState(initialFeatureValues);
-
-  // Step 2: Use useEffect to update state for Chest and Waist
-  useEffect(() => {
-    const updatedFeatures = {
-      Chest: "1",
-      Waist: "1",
-    };
-    setFeatures((prevFeatures) => ({
-      ...prevFeatures,
-      ...updatedFeatures,
-    }));
-  }, []);
-
-  // Step 3: Handle state changes for the inputs
-  const handleFeaturesChange = (label, value) => {
-    setFeatures((prevFeatures) => ({
-      ...prevFeatures,
-      [label]: value,
-    }));
-  };
+  const [features, setFeatures] = useState();
 
   const customStyles = {
     control: (provided, state) => ({
@@ -533,9 +507,7 @@ const EditTalent = () => {
             );
             setSelectedLanguageOptions(selectedOptions);
             console.log(selectedOptions, "selectedOptions");
-
             setServices(resData.data.data?.services);
-
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
                 console.log(profession, "professionmap");
@@ -547,11 +519,47 @@ const EditTalent = () => {
             );
             console.log(selectedProfessionOptions, "selectedProfessionOptions");
             setSelectedProfessionsEdit(selectedProfessionOptions);
+
+            const updatedFeaturesList = featuresList.map((feature) => {
+              const matchingData = resData?.data?.data?.features?.find(
+                (data) => data.label === feature.label
+              );
+              if (matchingData) {
+                return { ...feature, value: matchingData.value };
+              }
+              return feature;
+            });
+            setFeaturesList(updatedFeaturesList);
           }
         }
       })
       .catch((err) => {});
   };
+
+  const getFeatures = async () => {
+    await ApiHelper.get(API.getFeatures)
+      .then((resData) => {
+        if (resData) {
+          setFeaturesList(resData.data.data[0].features);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const handleFeaturesChange = (label, value) => {
+    const updatedFeaturesList = featuresList.map((feature) => {
+      if (feature.label === label) {
+        return { ...feature, value };
+      }
+      return feature;
+    });
+    setFeaturesList(updatedFeaturesList);
+  };
+
+  useEffect(() => {
+    // Update the initial values based on the data received
+  }, []);
+
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
     console.log(event, "event");
@@ -1399,21 +1407,12 @@ const EditTalent = () => {
 
   const handleEditorChange = (index, editorState) => {
     console.log(index, "index handleEditorStateChange");
+    console.log(editorState, "editorState editorState");
     const newInputs = [...services];
     newInputs[index]["editorState"] = [
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ];
     setServices(newInputs);
-  };
-
-  const getFeatures = async () => {
-    await ApiHelper.get(API.getFeatures)
-      .then((resData) => {
-        if (resData) {
-          setFeaturesList(resData.data.data[0].features);
-        }
-      })
-      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -2335,7 +2334,7 @@ const EditTalent = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={4}>
               <div className="update-portfolio-cards-wrapper">
-                <div className="update-portfolio-title">Resumes</div>
+                <div className="update-portfolio-title">CV</div>
                 {talentData?.cv?.length === 0 && (
                   <div className="no-data">Please Add Files</div>
                 )}
@@ -2437,9 +2436,21 @@ const EditTalent = () => {
                   {services &&
                     services?.length > 0 &&
                     services?.map((eachService, servicesIndex) => {
-                      const updateEditorState = convertHtmlToEditorState(
-                        eachService?.editorState?.join("")
+                      const jobDescriptionhtmlContent =
+                        eachService?.editorState[0];
+
+                      const jobDescriptionContentBlocks = convertFromHTML(
+                        jobDescriptionhtmlContent
                       );
+                      const jobDescriptionContentState = ContentState.createFromBlockArray(
+                        jobDescriptionContentBlocks
+                      );
+
+                      const updateEditorState = EditorState.createWithContent(
+                        jobDescriptionContentState
+                      );
+
+                      console.log(updateEditorState, "updateEditorState");
                       return (
                         <>
                           <div className="edit-service-section-wrapper">
@@ -2500,7 +2511,7 @@ const EditTalent = () => {
                                     editorStyle={{
                                       overflow: "hidden",
                                     }}
-                                    value={updateEditorState}
+                                    editorState={updateEditorState}
                                     onEditorStateChange={(editorState) =>
                                       handleEditorChange(
                                         servicesIndex,
@@ -2673,7 +2684,6 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={6}>
-              <div className="kids-form-title">Features</div>
               {talentData && talentData?.features?.length > 0 && (
                 <div className="features-section">
                   {featuresList.map((item, index) => (
@@ -2682,7 +2692,7 @@ const EditTalent = () => {
                       <select
                         className="form-select features-select"
                         aria-label="Default select example"
-                        value={features[item.label]}
+                        value={item.value}
                         onChange={(e) =>
                           handleFeaturesChange(item.label, e.target.value)
                         }
