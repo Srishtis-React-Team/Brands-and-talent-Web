@@ -70,6 +70,7 @@
                 border-radius: 60px;
                 width: 35px;
                 min-width: 35px;
+                min-height: 35px;
                 height: 35px;
               }
               .recent-gig-count-details {
@@ -676,66 +677,8 @@
 
 
 
-/* 481px — 768px: iPads, Tablets */
 
-@media (min-width: 481px) and (max-width: 768px) {
-  .verification-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    .id-text {
-      padding: 26px 0px;
-    }
-    .select-cv-input {
-      display: none;
-    }
-  }
-}
-/* 769px — 1024px: Small screens, laptops */
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .adult-main {
-    width: 100%;
-    .kids-form-row {
-      display: flex;
-      justify-content: unset;
-      flex-direction: column;
-      .kids-form-section {
-        width: 100%;
-      }
-    }
-  }
-}
-/* 1025px — 1200px: Desktops, large screens */
-
-@media (min-width: 1025px) and (max-width: 1200px) {
-  .adult-main {
-    width: 100%;
-    .kids-form-row {
-      display: flex;
-      justify-content: unset;
-      flex-direction: column;
-      .kids-form-section {
-        width: 100%;
-      }
-    }
-  }
-}
-
-@media (max-width: 1200px) {
-  .kidsform-one .kids-wrapper {
-    margin: 25px 30px;
-    display: flex;
-  }
-  .media-wrapper {
-    margin: 10px 0px !important;
-  }
-  .adult-img-img.fixImgs {
-    display: none;
-  }
-}
 
 .elipsis-icon {
   padding: 10px;
@@ -792,37 +735,11 @@
     font-weight: 600;
   }
 
-  .container-fluid
-    .row
-    .talent-column-one
-    .recent-gigs-main
-    .recent-gigs-wrapper
-    .recent-settwo {
-    display: flex;
-    padding: 20px 0px;
-    justify-content: space-between;
-  }
-
-  .container-fluid
-    .row
-    .talent-column-one
-    .recent-gigs-main
-    .recent-gigs-wrapper
-    .recent-settwo
-    .recent-gigs-count-wrapper {
-    display: flex;
-    align-items: center;
-    padding-right: 30px;
-    flex: 1;
-  }
-
   .add-more-services {
     padding: 20px 0px;
     margin-bottom: 100px;
   }
-  .add-more-services .add-more-services-btn {
-    width: 50%;
-  }
+
 
   .cv-section {
     margin: 15px 0px;
@@ -841,9 +758,6 @@
     justify-content: space-evenly;
     align-items: center;
   }
-  .recent-gig-company {
-    padding-top: 10px;
-  }
   .talent-column-one {
     // margin: 15px;
     width: 100%;
@@ -852,14 +766,7 @@
     // margin: 15px;
     width: 100%;
   }
-  .recent-settwo {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px 0px;
-    .recent-gigs-count-wrapper {
-      margin: 10px;
-    }
-  }
+
 
   .talent-popup-title {
     font-size: 17px;
@@ -944,10 +851,6 @@
     }
   }
 
-  .talent-dashboard-main {
-    padding: 80px 20px;
-    background-color: #eee;
-  }
 }
 
 .apply-now-btn {
@@ -1110,10 +1013,12 @@
 .save-job-icon {
   cursor: pointer;
   color: #c2114b;
+  margin: 0 5px; 
 }
 .remove-job-icon {
   cursor: pointer;
   color: #c2114b;
+  margin: 0 5px; 
 }
 
 .talent-notification-main {
@@ -1294,3 +1199,131 @@
   display: flex;
   justify-content: end;
 }
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1200px) {
+  .kidsform-one .kids-wrapper {
+    margin: 25px 30px;
+    display: flex;
+  }
+  .media-wrapper {
+    margin: 10px 0px !important;
+  }
+  .adult-img-img.fixImgs {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-settwo .recent-gigs-count-wrapper {
+    display: inline-flex;
+    padding: 0 10px 10px 0;
+  }
+  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-settwo{ display: block; }
+
+  .view-gig-btn{ margin-right: 10px; }
+
+  .container-fluid .row .talent-column-one{ padding: 20px; }
+
+
+
+
+
+
+
+
+}
+@media (max-width: 767px) {
+  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper { padding: 15px 0px 5px; }
+  
+  .rightBx { margin-top: 20px; }
+  .header-filter-icon{ padding-right: 0; font-size: 12px;  text-align: end; }
+  .filter-icon {
+    padding: 0px;
+    width: 11px;
+    margin-left: 5px;
+  }
+  .filter-text-wrapper {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+  }
+  .filter-text-wrapper .recent-gigs-title{ margin-bottom: 10px; }
+
+}
+@media (max-width: 580px) {
+  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-setone {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+  }
+  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper{ position: relative; }
+  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .save-job-icon { position: absolute; right: 0; top: 30px; margin: 0;}
+  .recent-setone.alignDivs .userBox {  padding-right: 20px; }
+  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-setone .recent-gig-details {  padding-left: 10px; }
+
+
+
+}
+@media (max-width: 480px) {
+  .recent-setone.alignDivs .recent-img-div { width: 40px; height: 40px; }
+  .recent-setone.alignDivs .recent-img-div img.recent-img{ min-height: 40px; min-height: 40px; }
+  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-setone .recent-gig-details .recent-gig-name{ font-size: 16px; }
+
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .verification-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    .id-text {
+      padding: 26px 0px;
+    }
+    .select-cv-input {
+      display: none;
+    }
+  }
+}
+/* 769px — 1024px: Small screens, laptops */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .adult-main {
+    width: 100%;
+    .kids-form-row {
+      display: flex;
+      justify-content: unset;
+      flex-direction: column;
+      .kids-form-section {
+        width: 100%;
+      }
+    }
+  }
+}
+/* 1025px — 1200px: Desktops, large screens */
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .adult-main {
+    width: 100%;
+    .kids-form-row {
+      display: flex;
+      justify-content: unset;
+      flex-direction: column;
+      .kids-form-section {
+        width: 100%;
+      }
+    }
+  }
+}
+

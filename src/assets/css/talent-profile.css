@@ -1,93 +1,24 @@
-@media (min-width: 1021px) {
-  .talent-profile-main {
-    display: flex;
-    padding: 30px 90px;
-  }
-  .talent-wrapper {
-    width: 25%;
-    border-radius: 10px;
-    border: 1px solid #000;
-    background: #fff;
-    height: 100%;
-  }
 
-  .talent-info-section {
-    width: 75%;
-    border-radius: 10px;
-    border: 1px solid #000;
-    background: #fff;
-    height: 100%;
-    margin-left: 25px;
-  }
+.talent-profile-main {
+  margin: 50px 0 0px;
+  padding: 0;
+}
+.talent-wrapper {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #fff;
+  height: 100%;
+}
+.talent-info-section {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #fff;
+  height: 100%;
 }
 
-@media (min-width: 1025px) and (max-width: 1200px) {
-  .talent-profile-main {
-    display: flex;
-    padding: 30px;
-  }
-  .talent-wrapper {
-    width: 40%;
-    border-radius: 10px;
-    border: 1px solid #000;
-    background: #fff;
-    height: 100%;
-  }
 
-  .talent-info-section {
-    width: 60%;
-    border-radius: 10px;
-    border: 1px solid #000;
-    background: #fff;
-    height: 100%;
-    margin-left: 25px;
-  }
-}
-@media (min-width: 769px) and (max-width: 1024px) {
-  .talent-profile-main {
-    display: flex;
-    padding: 30px;
-  }
-  .talent-wrapper {
-    width: 40%;
-    border-radius: 10px;
-    border: 1px solid #000;
-    background: #fff;
-    height: 100%;
-  }
-
-  .talent-info-section {
-    width: 60%;
-    border-radius: 10px;
-    border: 1px solid #000;
-    background: #fff;
-    height: 100%;
-    margin-left: 25px;
-  }
-}
-@media (min-width: 481px) and (max-width: 768px) {
-  .talent-profile-main {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-  }
-  .talent-wrapper {
-    width: 100%;
-    border-radius: 10px;
-    border: 1px solid #000;
-    background: #fff;
-    height: 100%;
-  }
-
-  .talent-info-section {
-    width: 100%;
-    border-radius: 10px;
-    border: 1px solid #000;
-    background: #fff;
-    height: 100%;
-    margin-left: 25px;
-  }
-}
 
 .message-now {
   display: flex;
@@ -97,7 +28,6 @@
 }
 .message-now-text {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   padding-left: 15px;
   font-style: normal;
@@ -112,34 +42,38 @@
   display: flex;
   flex-wrap: wrap;
 }
-
+.pr-0 {
+  padding-right: 0;
+}
 .talent-verified {
   display: flex;
   align-items: center;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .blue-shield-wrapper {
-  margin-right: 10px;
+  margin-right: 5px;
   border: 1px solid #1669e6;
-  padding: 8px;
+  padding: 3px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.blue-shield-wrapper .blue-shield{ width: 13px; }
 
 .model-review-wrapper {
-  width: 400px;
-  height: 250px;
+  min-height: 250px;
   border-radius: 10px;
   background: #fff;
   box-shadow: 1px 8px 24px 0px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  margin: 15px;
+  margin: 15px 0;
+  width: 100%;
 }
 .review-title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -149,7 +83,6 @@
 .review-date {
   text-align: end;
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
@@ -157,7 +90,6 @@
 }
 .review-content {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 300;
@@ -166,7 +98,6 @@
 .models-bio {
   padding: 40px;
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
@@ -196,7 +127,6 @@
 .reviewer-name {
   padding-left: 8px;
   color: #181818;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
@@ -213,18 +143,16 @@
 
 .model-name {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 20px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   line-height: normal;
-  padding-right: 15px;
+  padding-right: 10px;
   word-break: break-all;
 }
 
 .model-infos {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -239,7 +167,6 @@
 
 .location-text {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
@@ -275,7 +202,6 @@
 
 .message-wrapper > span {
   color: #fff;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 300;
@@ -295,7 +221,6 @@
 
 .text-span {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 300;
@@ -318,7 +243,6 @@
 
 .count-wrapper {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -327,7 +251,6 @@
 
 .count-wrapper > span {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -338,7 +261,7 @@
 .models-photos {
   display: flex;
   flex-wrap: wrap;
-  padding: 20px 0px 0px 40px;
+  padding: 0;
   align-items: center;
   justify-content: space-evenly;
 }
@@ -354,10 +277,6 @@
   padding-bottom: 10px;
 }
 
-.features-section {
-  /* padding: 0px 90px; */
-}
-
 .features-wrapper {
   display: flex;
   border-bottom: 1px solid #b8b3b3;
@@ -366,7 +285,6 @@
 
 .features-heading {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
@@ -377,7 +295,6 @@
 
 .features-value {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
@@ -398,23 +315,32 @@
 
 .talent-backdrop {
   position: relative;
+  justify-content: center;
+  display: flex;
+}
+.talent-backdrop .profImg{
+  border: 2px solid #c2114b;
+  width: 135px;
+  height: 135px;
+  border-radius: 100px;
+  overflow: hidden;
+  margin: 0;
+
+  position: absolute;
+  top: 50%;
+}
+.talent-backdrop .profImg .talent-img {
+  width: 100%;
+  min-height: 100px;
+  object-fit: cover;
 }
 
-.talent-img {
-  width: 50%;
-  height: 90%;
-  position: absolute;
-  border-radius: 50%;
-  border: 2px solid #c2114b;
-  top: 50%;
-  left: 25%;
-}
 
 .individual-talent-name {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 120px 0px 0px 0px;
+  padding: 73px 0px 5px 0px;
 }
 
 .talent-status {
@@ -438,12 +364,11 @@
 .talents-social {
   align-items: center;
   display: flex;
-  width: 50%;
-  height: 78px;
-  flex-shrink: 0;
+  min-height: 50px;
   border-radius: 10px;
   flex-wrap: wrap;
-  /* justify-content: center; */
+  margin: 5px 0;
+
 }
 
 .insta-backdrop {
@@ -475,23 +400,20 @@
   );
 }
 
-.social-count {
+.social-followers-count-section  .social-count {
   color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
 
-.followers-text {
+.social-followers-count-section .followers-text {
   color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  padding-top: 2px;
 }
 
 /* .talent-details {
@@ -500,35 +422,40 @@
 
 .talent-details-wrapper {
   display: flex;
-  align-items: center;
+  align-items: normal;
   padding: 10px 0px;
 }
 
 .talent-details-wrapper > span {
   color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 17px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 300;
+  font-weight:500;
   line-height: normal;
-  padding-left: 10px;
+  padding-left: 7px;
 }
 
 .logo-fill {
-  width: 35px;
-  height: 35px;
+  width: 23px;
+  height: 23px;
   flex-shrink: 0;
   border-radius: 50%;
   border: 1px solid #c2114b;
   background: #fff;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
 }
-
+.talent-details-wrapper .contSect {
+  font-size: 15px;
+  line-height: 20px;
+}
 .talent-logo {
-  width: 20px;
-  height: 20px;
+  width: 13px;
+  height: auto;
+  min-height: 13px;
+  object-fit: cover;
 }
 
 .invite-btn {
@@ -545,7 +472,6 @@
 
 .invite-btn > div {
   color: #fff;
-  font-family: "Open Sans", sans-serif;
   font-size: 19px;
   font-style: normal;
   font-weight: 300;
@@ -556,10 +482,9 @@
 
 .bio-text {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
-  font-size: 19px;
+  font-size: 20px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   line-height: normal;
   padding-bottom: 10px;
 }
@@ -567,7 +492,6 @@
 .bio-info {
   color: #000;
   text-align: justify;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
@@ -585,40 +509,52 @@
   align-items: center;
   padding: 30px 0px;
 }
-
+.talent-all-details-wrapper .portofolio-section {
+  padding: 0px 0px 10px;
+}
 .portofolio-title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
 
 .view-all {
-  width: 93px;
+  min-width: 100px;
   height: 40px;
   flex-shrink: 0;
   cursor: pointer;
-  border-radius: 140px;
+  padding: 5px 15px;
+  border-radius: 60px;
   border: 1px solid #000;
   background: rgba(3, 3, 3, 0);
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
+  font-weight: 500;
+  transition: 0.5s;
 }
+.view-all:hover {
+  background-color: #c2114b;
+  color: white;
+  border: 1px solid #c2114b;
+}
+.padSpc {
+  padding: 0 5px;
+}
+.row.padSpc{  padding: 0 8px; }
 
-.photos-gallery {
-  column-count: 4;
-  --webkit-column-count: 4;
-  --moz-column-count: 4;
-  grid-gap: 0.5rem;
+.photos-gallery .photos-gallery-image {
+  height: 250px;
+  overflow: hidden;
+  margin-bottom: 10px;
 }
 
 .photos-gallery-image img {
-  height: auto;
+  min-height: 250px;
   width: 100%;
-  padding-bottom: 0.5rem;
+  object-fit: cover;
 }
 
 /* Responsive-ness for different screen-sizes */
@@ -758,11 +694,10 @@
 }
 
 .talent-rates {
-  padding: 20px 10px;
+  padding: 20px 0px;
 }
 .talent-rates > .title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -774,7 +709,6 @@
 }
 .talent-rates > .name {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
@@ -783,18 +717,20 @@
 }
 .talent-rates > .value {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
   padding-bottom: 20px;
 }
-
+.talent-all-details-wrapper .photos-slider, .talent-all-details-wrapper .App {
+  margin: 0 0 20px;
+}
 .reviews-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 0 15px;
 }
 .reviews-section > .rating-talent {
   width: 82px;
@@ -808,7 +744,6 @@
 }
 .reviews-section > .rating-talent .num {
   color: #fff;
-  font-family: "Open Sans", sans-serif;
   font-size: 21px;
   font-style: normal;
   font-weight: 600;
@@ -825,17 +760,16 @@
 }
 .reviews-section > .content > .title {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   text-align: start;
   padding: 0px 0px 10px 0px;
+  margin: 0;
 }
 .reviews-section > .content > .description {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 300;
@@ -846,10 +780,10 @@
   display: flex;
   align-items: center;
   padding-left: 10px;
-  width: 229px;
-  height: 53px;
+  min-width: 230px;
+  min-height: 53px;
   flex-shrink: 0;
-  border-radius: 120px;
+  border-radius:60px;
   background: #27970b;
   cursor: pointer;
 }
@@ -865,14 +799,13 @@
 }
 .booked-btn > .posted-jobs {
   color: #fff;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   padding-left: 10px;
 }
-
+.logoSocial img{ max-width: 25px; }
 .talents-social-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -881,8 +814,8 @@
   border: 1px solid #ddd5d5;
   background: #fff;
   width: 100%;
-  height: 35%;
-  padding: 20px;
+  min-height: 35%;
+  padding: 10px 15px;
 }
 
 @media (max-width: 480px) {
@@ -899,7 +832,6 @@
   }
   .model-name {
     color: #000;
-    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -988,11 +920,6 @@
   .models-social-counts {
     width: 390px;
   }
-  .models-photos {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px 0px 0px 20px;
-  }
 
   .model-picture {
     width: 180px;
@@ -1004,8 +931,7 @@
 
 /* CSS */
 .table-container {
-  margin-top: 20px;
-  overflow-x: auto; /* Add horizontal scroll for small screens */
+  overflow-x: auto; 
 }
 
 .table-container table {
@@ -1056,19 +982,19 @@
   justify-content: space-between;
   margin: 10px;
   .fa-file {
-    padding-left: 10px;
+    padding: 5px 10px;
     font-size: 25px;
   }
 }
 
 .view-cv {
-  width: 25%;
+  width: auto;
   height: 30px;
+  padding: 5px 15px;
   border-radius: 25px;
   border: 1px solid #fff;
   background: #c2114b;
   color: #fff;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
@@ -1090,7 +1016,7 @@
 }
 
 .talent-all-details-wrapper {
-  padding: 30px;
+  padding: 25px;
 }
 
 .individual-talent-tabs {
@@ -1098,17 +1024,16 @@
   flex-wrap: wrap;
   border-bottom: 1px solid rgb(189, 189, 189);
   padding-bottom: 4px;
-  margin: 20px 0px;
+  margin: 20px 0px 0;
 }
 
 .individual-talent-tab {
-  margin-left: 1%;
   height: 40px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 160px;
+  min-width: 100px;
   padding: 5px 20px;
 }
 
@@ -1138,36 +1063,34 @@
 }
 
 .social-followers-count-section {
-  padding-left: 15px;
+  padding-left: 7px;
 }
 
 .talent-profession-name {
   color: #c2114b;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  padding: 10px 0px;
+  padding: 10px 0 5px;
 }
 .talent-profession-value {
   color: #000;
-  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  padding: 12px 0px;
+  padding:2px 0px 5px;
 }
 
 .talent-profession-name > span {
   color: #838383;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  line-height: normal;
-  padding: 12px 0px;
+  padding: 0;
+  line-height: 17px;
+  display: inline-block;
 }
 
 .video-style {
@@ -1200,13 +1123,11 @@
     padding-bottom: 4px;
   }
   .individual-talent-tab {
-    margin-left: 16px;
     height: 40px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* max-width: 104px; */
     padding: 15px;
     width: 100%;
   }

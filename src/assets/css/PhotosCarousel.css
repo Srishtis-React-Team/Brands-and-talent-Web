@@ -16,11 +16,15 @@
 .photos-carousel-owl.owl-theme .owl-nav {
   display: none; /* Hide the dots */
 }
-
-.talents-profile-slider-image {
-  max-width: 300px; /* Ensure the image does not exceed its container's width */
-  max-height: 300px; /* Ensure the image does not exceed its container's height */
+.photos-slider .item{ 
+  height: 230px; 
+  overflow: hidden;
   position: relative;
+}
+.photos-slider .item .talents-profile-slider-image {
+  min-height: 230px;
+  width: 100%;
+  object-fit: cover;
 }
 
 .carousel-talent-name {
