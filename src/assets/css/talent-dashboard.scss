@@ -1261,3 +1261,30 @@
   justify-content: center;
   align-items: center;
 }
+
+.job-alert-main {
+  width: 40%;
+  // margin: 0 auto;
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+.job-alert-title {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  color: #c2114b;
+  padding-bottom: 30px;
+}
+
+.job-alert-mail {
+  color: #000;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.job-alert-btn-wrapper {
+  display: flex;
+  justify-content: end;
+}

@@ -70,12 +70,24 @@ const AdultSignup = () => {
         adultEmail: response?.email,
         googleId: response?.sub,
         provider: "google",
+        image: {
+          fileData: "a11fe9fc-f4c3-4b51-9f98-25a9247fcbd9.webp",
+          id: "9f429f86-ca9c-4730-804b-06cd2d3db7c0",
+          title: "blank-profile-picture-973460_640.webp",
+          type: "image",
+        },
       };
     } else if (mediaType == "facebook") {
       formData = {
         adultEmail: response?.data?.email,
         facebookId: response?.data?.id,
         provider: "facebook",
+        image: {
+          fileData: "a11fe9fc-f4c3-4b51-9f98-25a9247fcbd9.webp",
+          id: "9f429f86-ca9c-4730-804b-06cd2d3db7c0",
+          title: "blank-profile-picture-973460_640.webp",
+          type: "image",
+        },
       };
     }
     await ApiHelper.post(API.socialSignup, formData)
@@ -126,9 +138,14 @@ const AdultSignup = () => {
         adultEmail: adultEmail,
         talentPassword: adultPassword,
         confirmPassword: adultConfirmPassword,
+        image: {
+          fileData: "a11fe9fc-f4c3-4b51-9f98-25a9247fcbd9.webp",
+          id: "9f429f86-ca9c-4730-804b-06cd2d3db7c0",
+          title: "blank-profile-picture-973460_640.webp",
+          type: "image",
+        },
       };
       setIsLoading(true);
-
       await ApiHelper.post(API.adultSignUp, formData)
         .then((resData) => {
           setIsLoading(false);

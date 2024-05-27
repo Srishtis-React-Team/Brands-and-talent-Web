@@ -79,10 +79,13 @@ const TalentSettings = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [talentPasswordError, settalentPasswordError] = useState(false);
   const [oldPasswordError, setOldPasswordError] = useState(false);
+  const [allSamePasswordError, setAllSamePasswordError] = useState(false);
   const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
     false
   );
   const [valueTabs, setValueTabs] = React.useState(0);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [showOldPassword, setShowOldPassword] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
@@ -110,6 +113,10 @@ const TalentSettings = () => {
   };
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const toggleOldPasswordVisibility = () => {
+    setShowOldPassword(!showOldPassword);
   };
 
   useEffect(() => {
@@ -187,38 +194,59 @@ const TalentSettings = () => {
     setTalentConfirmPassword(e.target.value);
     setPasswordMatch(e.target.value === talentPassword);
     settalentConfirmPasswordError(false);
+    if (e.target.value === oldPassword) {
+      setAllSamePasswordError(true);
+    } else if (e.target.value != oldPassword) {
+      setAllSamePasswordError(false);
+    }
   };
 
   const updatePassword = async () => {
-    const formData = {
-      talentId: talentId,
-      password: oldPassword,
-      newPassword: talentPassword,
-    };
-    await ApiHelper.post(`${API.updatePassword}`, formData)
-      .then((resData) => {
-        console.log(resData, "resData");
-        if (resData.data.status === true) {
-          setMessage("Password Updated Successfully");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            setTalentOldPassword("");
-            setTalentPassword("");
-            setTalentConfirmPassword("");
-          }, 2000);
-        } else if (resData.data.status === false) {
-          setMessage(resData?.data?.message);
-          setOpenPopUp(true);
-          setOldPasswordError(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            getKidsData();
-          }, 2000);
-        }
-      })
-      .catch((err) => {});
+    if (!allSamePasswordError && passwordMatch) {
+      const formData = {
+        talentId: talentId,
+        password: oldPassword,
+        newPassword: talentPassword,
+      };
+      await ApiHelper.post(`${API.updatePassword}`, formData)
+        .then((resData) => {
+          console.log(resData, "resData");
+          if (resData.data.status === true) {
+            setMessage("Password Updated Successfully");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              setTalentOldPassword("");
+              setTalentPassword("");
+              setTalentConfirmPassword("");
+            }, 2000);
+          } else if (resData.data.status === false) {
+            setMessage(resData?.data?.message);
+            setOpenPopUp(true);
+            setOldPasswordError(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              getKidsData();
+            }, 2000);
+          }
+        })
+        .catch((err) => {});
+    }
   };
+
+  useEffect(() => {
+    if (
+      allSamePasswordError ||
+      !passwordMatch ||
+      oldPassword == "" ||
+      talentPassword == "" ||
+      talentConfirmPassword == ""
+    ) {
+      setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
+    }
+  }, [allSamePasswordError, passwordMatch]);
 
   let line = document.querySelector(".line");
   let text = document.querySelector(".text");
@@ -364,7 +392,7 @@ const TalentSettings = () => {
                     <div className="form-group has-search adult-password-wrapper">
                       <span className="fa fa-lock form-control-feedback"></span>
                       <input
-                        type={showPassword ? "text" : "password"}
+                        type={showOldPassword ? "text" : "password"}
                         className="form-control adult-signup-inputs"
                         placeholder="Old Password"
                         value={oldPassword}
@@ -374,15 +402,15 @@ const TalentSettings = () => {
                           setOldPasswordError(false);
                         }}
                       ></input>
-                      {showPassword ? (
+                      {showOldPassword ? (
                         <span
                           className="fa fa-eye show-password-icon"
-                          onClick={togglePasswordVisibility}
+                          onClick={toggleOldPasswordVisibility}
                         ></span>
                       ) : (
                         <span
                           className="fa fa-eye-slash show-password-icon"
-                          onClick={togglePasswordVisibility}
+                          onClick={toggleOldPasswordVisibility}
                         ></span>
                       )}
                       {oldPasswordError && (
@@ -506,6 +534,7 @@ const TalentSettings = () => {
                       className="edit-profileimg-btn"
                       variant="text"
                       style={{ textTransform: "capitalize" }}
+                      disabled={isButtonDisabled}
                     >
                       Update Password
                     </Button>
@@ -532,8 +561,8 @@ const TalentSettings = () => {
                     </span>
                     &nbsp;:&nbsp;
                     <span className="talent-account-status-inactive">
-                      {talentData?.inActive === true && "Active"}
-                      {talentData?.inActive === false && "In Active"}
+                      {talentData?.inActive === true && "Active Account"}
+                      {talentData?.inActive === false && "DeActivated Account"}
                     </span>
                   </div>
                 </div>

@@ -101,6 +101,8 @@ export const API = {
   removeFavouritesJob: BASEURL + "gigs/removeFavouritesJob	",
   getSavedJobsByTalentId: BASEURL + "gigs/getSavedJobsByTalentId	",
   readNotification: BASEURL + "gigs/readNotification	",
+  createJobAlert: BASEURL + "gigs/createJobAlert	",
+  updateJobAlert: BASEURL + "gigs/updateJobAlert	",
 
   //notifications
   getBrandNotification: BASEURL + "gigs/getBrandNotification/",
@@ -108,6 +110,7 @@ export const API = {
   getCountNotification: BASEURL + "gigs/getCountNotification",
   getAppliedjobs: BASEURL + "gigs/getAppliedjobs",
   updatePassword: BASEURL + "gigs/updatePassword",
+  inviteTalentToApply: BASEURL + "gigs/inviteTalentToApply",
 
   //chat section
   listTalentsForChat: BASEURL + "message/listTalentsForChat",
@@ -134,4 +137,7 @@ export const API = {
   selectedLevelRange: BASEURL + "gigs/selectedLevelRange",
   informSelectedLevel: BASEURL + "gigs/informSelectedLevel",
   getSelectionList: BASEURL + "gigs/getSelectionList",
+
+  //
+  activateBrandUser: BASEURL + "brands/activateBrandUser",
 };

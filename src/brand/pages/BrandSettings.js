@@ -75,18 +75,21 @@ const BrandSettings = () => {
   const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
   const [showSidebar, setShowSidebar] = useState(true);
   const [talentPasswordError, settalentPasswordError] = useState(false);
   const [oldPasswordError, setOldPasswordError] = useState(false);
+  const [allSamePasswordError, setAllSamePasswordError] = useState(false);
   const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
     false
   );
   const [valueTabs, setValueTabs] = React.useState(0);
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
@@ -106,6 +109,7 @@ const BrandSettings = () => {
         if (resData.data.status === true) {
           if (resData.data.data) {
             setBrandData(resData.data.data, "resData.data.data");
+            setEditProfileImage(resData.data.data?.brandImage[0]?.fileData);
           }
         }
       })
@@ -134,16 +138,12 @@ const BrandSettings = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const toggleOldPasswordVisibility = () => {
+    setShowOldPassword(!showOldPassword);
+  };
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
-
-  useEffect(() => {
-    setTalentId(localStorage.getItem("userId"));
-    if (talentId) {
-      getKidsData();
-    }
-  }, [talentId]);
 
   const [alertpop, setAlertpop] = useState({
     status: false,
@@ -151,31 +151,20 @@ const BrandSettings = () => {
     label: "",
   });
 
-  const getKidsData = async () => {
-    await ApiHelper.post(`${API.getTalentById}${talentId}`)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          console.log(resData?.data?.data, "KIDSFETCH");
-          if (resData?.data?.data?.type === "kids") {
-            setTalentData(resData?.data?.data);
-            setEditProfileImage(resData.data.data?.image?.fileData);
-          }
-        }
-      })
-      .catch((err) => {});
-  };
   const activateAccount = async () => {
     const formData = {
-      inActive: false,
+      brandId: brandId,
+      inActive: true,
     };
-    await ApiHelper.post(`${API.activateUser}${talentId}`, formData)
+
+    await ApiHelper.post(`${API.activateBrandUser}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage("Status Changed Successfully");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            getKidsData();
+            getBrand();
           }, 2000);
         }
       })
@@ -183,16 +172,17 @@ const BrandSettings = () => {
   };
   const deActivateAccount = async () => {
     const formData = {
+      brandId: brandId,
       inActive: false,
     };
-    await ApiHelper.post(`${API.activateUser}${talentId}`, formData)
+    await ApiHelper.post(`${API.activateBrandUser}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage("Status Changed Successfully");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            getKidsData();
+            getBrand();
           }, 2000);
         }
       })
@@ -213,39 +203,53 @@ const BrandSettings = () => {
     setTalentConfirmPassword(e.target.value);
     setPasswordMatch(e.target.value === talentPassword);
     settalentConfirmPasswordError(false);
+    if (e.target.value === oldPassword) {
+      setAllSamePasswordError(true);
+    } else if (e.target.value != oldPassword) {
+      setAllSamePasswordError(false);
+    }
   };
 
   const updatePassword = async () => {
-    const formData = {
-      brandId: brandId,
-      password: oldPassword,
-      newPassword: talentPassword,
-    };
-
-    await ApiHelper.post(`${API.updatePasswordInSettings}`, formData)
-      .then((resData) => {
-        console.log(resData, "resData");
-        if (resData.data.status === true) {
-          setMessage("Password Updated Successfully");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            setTalentOldPassword("");
-            setTalentPassword("");
-            setTalentConfirmPassword("");
-          }, 2000);
-        } else if (resData.data.status === false) {
-          setMessage(resData?.data?.message);
-          setOpenPopUp(true);
-          setOldPasswordError(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            getKidsData();
-          }, 2000);
-        }
-      })
-      .catch((err) => {});
+    if (!allSamePasswordError && passwordMatch) {
+      const formData = {
+        brandId: brandId,
+        password: oldPassword,
+        newPassword: talentPassword,
+      };
+      await ApiHelper.post(`${API.updatePasswordInSettings}`, formData)
+        .then((resData) => {
+          console.log(resData, "resData");
+          if (resData.data.status === true) {
+            setMessage("Password Updated Successfully");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              setTalentOldPassword("");
+              setTalentPassword("");
+              setTalentConfirmPassword("");
+            }, 2000);
+          } else if (resData.data.status === false) {
+            setMessage(resData?.data?.message);
+            setOpenPopUp(true);
+            setOldPasswordError(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              getBrand();
+            }, 2000);
+          }
+        })
+        .catch((err) => {});
+    }
   };
+
+  useEffect(() => {
+    if (allSamePasswordError || !passwordMatch) {
+      setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
+    }
+  }, [allSamePasswordError, passwordMatch]);
 
   let line = document.querySelector(".line");
   let text = document.querySelector(".text");
@@ -391,7 +395,7 @@ const BrandSettings = () => {
                     <div className="form-group has-search adult-password-wrapper">
                       <span className="fa fa-lock form-control-feedback"></span>
                       <input
-                        type={showPassword ? "text" : "password"}
+                        type={showOldPassword ? "text" : "password"}
                         className="form-control adult-signup-inputs"
                         placeholder="Old Password"
                         value={oldPassword}
@@ -401,15 +405,15 @@ const BrandSettings = () => {
                           setOldPasswordError(false);
                         }}
                       ></input>
-                      {showPassword ? (
+                      {showOldPassword ? (
                         <span
                           className="fa fa-eye show-password-icon"
-                          onClick={togglePasswordVisibility}
+                          onClick={toggleOldPasswordVisibility}
                         ></span>
                       ) : (
                         <span
                           className="fa fa-eye-slash show-password-icon"
-                          onClick={togglePasswordVisibility}
+                          onClick={toggleOldPasswordVisibility}
                         ></span>
                       )}
                       {oldPasswordError && (
@@ -524,6 +528,13 @@ const BrandSettings = () => {
                           Passwords does not match.
                         </p>
                       )}
+                    {allSamePasswordError &&
+                      talentConfirmPassword &&
+                      talentConfirmPassword.length && (
+                        <p className="password-wrong">
+                          Old and new password can't be same
+                        </p>
+                      )}
                   </div>
                 </div>
                 <div className="add-portfoli-section">
@@ -533,6 +544,7 @@ const BrandSettings = () => {
                       className="edit-profileimg-btn"
                       variant="text"
                       style={{ textTransform: "capitalize" }}
+                      disabled={isButtonDisabled}
                     >
                       Update Password
                     </Button>
@@ -549,18 +561,15 @@ const BrandSettings = () => {
                     src={`${API.userFilePath}${editProfileImage}`}
                     alt=""
                   />
-                  <div className="talent-name">
-                    {talentData?.preferredChildFirstname}&nbsp;
-                    {talentData?.preferredChildLastName}
-                  </div>
+                  <div className="talent-name">{brandData?.brandName}</div>
                   <div className="talent-account-status">
                     <span className="talent-account-status-title">
                       Account Status
                     </span>
                     &nbsp;:&nbsp;
                     <span className="talent-account-status-inactive">
-                      {talentData?.inActive === true && "Active"}
-                      {talentData?.inActive === false && "In Active"}
+                      {brandData?.inActive === true && "Active Account"}
+                      {brandData?.inActive === false && "DeActivated Account"}
                     </span>
                   </div>
                 </div>
@@ -570,7 +579,7 @@ const BrandSettings = () => {
                       setAlertpop({
                         status: true,
                         label:
-                          talentData?.inActive === true
+                          brandData?.inActive === true
                             ? "deActivate"
                             : "Activate",
                       });
@@ -579,8 +588,8 @@ const BrandSettings = () => {
                     variant="text"
                     style={{ textTransform: "capitalize" }}
                   >
-                    {talentData?.inActive === true && "DeActivate"}
-                    {talentData?.inActive === false && "Activate"}
+                    {brandData?.inActive === true && "DeActivate"}
+                    {brandData?.inActive === false && "Activate"}
                   </Button>
                 </div>
               </div>

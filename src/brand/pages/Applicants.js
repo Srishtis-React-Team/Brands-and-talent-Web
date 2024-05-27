@@ -390,11 +390,13 @@ const Applicants = () => {
                           <div className="recent-campaigns-wrapper">
                             <div className="campaigns-wrapper-one">
                               <div className="candidate-image-wrapper">
-                                <img
-                                  className="candidate-image-styling"
-                                  src={`${API.userFilePath}${candidate?.talentDetails?.image[0]?.fileData}`}
-                                  alt=""
-                                />
+                                {candidate?.talentDetails?.image && (
+                                  <img
+                                    className="candidate-image-styling"
+                                    src={`${API.userFilePath}${candidate?.talentDetails?.image[0]?.fileData}`}
+                                    alt=""
+                                  />
+                                )}
                               </div>
                               <div className="campaigns-content-wrapper">
                                 <div className="campaign-paid-wrapper">
