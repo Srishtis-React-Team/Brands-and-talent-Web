@@ -76,6 +76,8 @@ body {
 
 .btLogo {
   cursor: pointer;
+  width: 60px;
+  height: 60px;
 }
 
 .hideAll {
@@ -196,6 +198,8 @@ label {
   padding-right: 30px;
   cursor: pointer;
   border-right: 1px solid #d9d9d9;
+  width: 80px;
+  height: 50px;
 }
 
 .step-wrapper {
@@ -1513,7 +1517,7 @@ input[type="radio"] {
 .profile-section {
   display: flex;
 }
-.pad8{
+.pad8 {
   padding: 0 8px;
 }
 .home-cards.row.pad8 {
@@ -1536,20 +1540,9 @@ input[type="radio"] {
   align-items: center;
 }
 
-.show-sidebar.hide-sidebar{ display: none; }
-
-
-
-
-
-
-
-
-
-
-
-
-
+.show-sidebar.hide-sidebar {
+  display: none;
+}
 
 /* MEDIA-QUERY START */
 
@@ -1680,8 +1673,12 @@ input[type="radio"] {
   .show-sidebar.hide-sidebar {
     display: block !important;
   }
-  .show-sidebar{ display: none; }
-  .brand-main-container{ width: 100% !important; }
+  .show-sidebar {
+    display: none;
+  }
+  .brand-main-container {
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 580px) {
@@ -2422,10 +2419,6 @@ input[type="radio"] {
   outline: none !important;
   font-size: 14px;
 }
-
-
-
-
 
 @media (max-width: 430px) {
   .gallery-wrapper {

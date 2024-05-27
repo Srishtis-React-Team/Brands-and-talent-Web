@@ -172,6 +172,7 @@ const BrandHeader = ({ toggleMenu, myState }) => {
               <div className="talent-nav-logo">
                 <img
                   src={btLogo}
+                  className="btLogo"
                   alt=""
                   onClick={() => {
                     navigate("/");

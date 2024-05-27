@@ -36,6 +36,7 @@ const BrandNotification = () => {
         if (resData.data.status === true) {
           if (resData.data.data) {
             setBrandData(resData.data.data, "resData.data.data");
+            getBrandNotification();
           }
         }
       })
@@ -70,8 +71,9 @@ const BrandNotification = () => {
         }
       })
       .catch((err) => {});
-    navigate("/preview-job-talent", {
+    navigate("/preview-job", {
       state: {
+        from: "brand-notification",
         jobId: item?.gigId,
       },
     });

@@ -240,25 +240,26 @@ const TalentDashBoard = () => {
     let job_full_name;
     let job_type;
     let work_place_type;
+    let job_name;
 
     // Get the select element
     var selectElement = document.getElementById("workPlaceSelect");
     // Get the selected value
-    work_place_type = selectElement.value;
+    work_place_type = selectElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
     console.log(work_place_type, "workPlaceSelect");
 
     // Get the select element
     var selectJobElement = document.getElementById("jobtypeID");
     // Get the selected value
-    job_type = selectJobElement.value;
+    job_type = selectJobElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
     console.log(job_type, "job_type");
 
     // Get the select element
     var selectAgeElement = document.getElementById("ageSelectID");
     // Get the selected value
-    job_age = selectAgeElement.value;
+    job_age = selectAgeElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
     console.log(job_age, "job_age");
 
@@ -268,12 +269,27 @@ const TalentDashBoard = () => {
     if (jobLocationRef?.current) {
       job_location = jobLocationRef?.current?.value;
     }
+    if (jobNameRef?.current) {
+      job_name = jobNameRef?.current?.value;
+    }
     if (jobFullNameRef?.current) {
       job_full_name = jobFullNameRef?.current?.value;
     }
+    console.log(
+      key_word,
+      "key_word",
+      job_location,
+      "job_location",
+      job_age,
+      "job_age",
+      job_type,
+      "job_type",
+      work_place_type,
+      "work_place_type"
+    );
     const formData = {
       keyword: key_word,
-      jobTitle: key_word,
+      jobTitle: job_name,
       jobLocation: job_location,
       age: job_age,
       jobType: job_type,
@@ -284,6 +300,7 @@ const TalentDashBoard = () => {
     setIsLoading(true);
     await ApiHelper.post(API.searchJobs, formData)
       .then((resData) => {
+        console.log();
         if (resData.data.status === true) {
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
@@ -572,7 +589,7 @@ const TalentDashBoard = () => {
                               type="text"
                               className="form-control"
                               placeholder="Enter Keyword"
-                              ref={jobNameRef}
+                              ref={keyWordRef}
                               // onChange={(e) => {
                               //   e.preventDefault();
                               //   setJobName(e.target.value);
@@ -599,6 +616,7 @@ const TalentDashBoard = () => {
                                   className="form-select"
                                   aria-label="Default select example"
                                   style={{ fontSize: "14px" }}
+                                  id="ageSelectID"
                                 >
                                   <option value="" disabled selected>
                                     Select Age
@@ -635,7 +653,7 @@ const TalentDashBoard = () => {
                                   type="text"
                                   className="form-control"
                                   placeholder="Enter Name"
-                                  ref={jobFullNameRef}
+                                  ref={jobNameRef}
                                 ></input>
                               </div>
                             </div>
@@ -646,6 +664,7 @@ const TalentDashBoard = () => {
                                   className="form-select"
                                   aria-label="Default select example"
                                   style={{ fontSize: "14px" }}
+                                  id="jobtypeID"
                                 >
                                   <option value="" disabled selected>
                                     Select Job Type

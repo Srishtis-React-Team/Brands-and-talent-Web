@@ -55,6 +55,7 @@ const SavedJobs = () => {
   };
 
   function PreviewJob(jobId) {
+    console.log(jobId, "jobId");
     navigate("/preview-job-talent", {
       state: {
         jobId: jobId,
@@ -108,7 +109,7 @@ const SavedJobs = () => {
       .then((resData) => {
         console.log(resData, "resDataremoveFromSavedJobs");
         if (resData.data.status === true) {
-          setMessage("Removed From Saved Jobs");
+          setMessage("Jab Removed From Saved Jobs");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -281,7 +282,7 @@ const SavedJobs = () => {
                                       className="preview-work-btn"
                                       onClick={(e) => {
                                         e.preventDefault();
-                                        PreviewJob(job?.gigDetails?._id);
+                                        PreviewJob(job?.gigId);
                                       }}
                                     >
                                       <i className="bi bi-eye-fill post-work-icon"></i>

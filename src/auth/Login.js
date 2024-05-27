@@ -385,7 +385,7 @@ const Login = () => {
           </div> */}
 
           <div className="login-logo">
-            <img src={btLogo} alt="" />
+            <img className="btLogo" src={btLogo} alt="" />
           </div>
         </div>
       </div>

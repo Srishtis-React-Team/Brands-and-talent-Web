@@ -584,7 +584,11 @@ const BrandSettings = () => {
                             : "Activate",
                       });
                     }}
-                    className="edit-profileimg-btn"
+                    className={
+                      brandData?.inActive
+                        ? "edit-profileimg-btn"
+                        : "edit-profileimg-activate"
+                    }
                     variant="text"
                     style={{ textTransform: "capitalize" }}
                   >

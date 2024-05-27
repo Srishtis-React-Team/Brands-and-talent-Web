@@ -130,7 +130,7 @@ const Footer = () => {
           <div className="footer-section row">
             <div className="footer-wrapper col-md-6 col-lg-3">
               <div className="footer-icon">
-                <img src={btLogo}></img>
+                <img className="btLogo" src={btLogo}></img>
               </div>
               <div className="company-info">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam

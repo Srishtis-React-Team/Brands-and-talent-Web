@@ -83,6 +83,7 @@ const TalentPreviewJob = () => {
   }, []);
   useEffect(() => {
     console.log(jobData, "jobData");
+    console.log(jobData?.questions, "jobData questions");
   }, [jobData]);
   useEffect(() => {
     console.log(jobId, "jobId");
@@ -90,6 +91,14 @@ const TalentPreviewJob = () => {
 
   const createJob = () => {
     navigate("/talent-dashboard");
+  };
+
+  const handleBackClick = () => {
+    if (location.state && location.state.from) {
+      navigate(`/${location.state.from}`);
+    } else {
+      navigate(-1); // Equivalent to history.goBack() in v5
+    }
   };
 
   return (
@@ -111,7 +120,7 @@ const TalentPreviewJob = () => {
         <div className="brand-content-main boxBg">
           <div className="back-create">
             <i className="bi bi-arrow-left-circle-fill"></i>
-            <div onClick={createJob} className="back-to">
+            <div onClick={handleBackClick} className="back-to">
               Back to jobs
             </div>
           </div>
@@ -238,17 +247,22 @@ const TalentPreviewJob = () => {
               </div>
             </div>
             <div className="job-questions-section">
-              <div className="job-feature-title">Screening Questions</div>
-              <div>
-                <ul>
-                  {jobData?.questions &&
-                    jobData?.questions.map((question, index) => (
-                      <li className="job-benefits-values" key={index}>
-                        {question}
-                      </li>
-                    ))}
-                </ul>
-              </div>
+              {jobData?.questions?.length > 0 &&
+                jobData?.questions?.some((question) => question) && (
+                  <>
+                    <div className="job-feature-title">Screening Questions</div>
+                    <div>
+                      <ul>
+                        {jobData?.questions &&
+                          jobData?.questions.map((question, index) => (
+                            <li className="job-benefits-values" key={index}>
+                              {question}
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  </>
+                )}
             </div>
             {/* <div className="job-feature-title">Work Samples</div>
 

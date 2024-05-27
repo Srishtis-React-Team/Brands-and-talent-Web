@@ -51,10 +51,14 @@ const AppliedJobs = () => {
 
   function PreviewJob(jobId) {
     navigate("/preview-job-talent", {
-      state: {
-        jobId: jobId,
-      },
+      state: { from: "applied-jobs", jobId: jobId },
     });
+
+    // navigate("/preview-job-talent", {
+    //   state: {
+    //     jobId: jobId,
+    //   },
+    // });
   }
 
   const toggleMenu = () => {

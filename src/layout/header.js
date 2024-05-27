@@ -365,7 +365,7 @@ const Header = ({ onData }) => {
               navigate("/");
             }}
           >
-            <img src={btLogo}></img>
+            <img className="btLogo" src={btLogo}></img>
           </div>
           <div className="header-items">
             <div className=" menu-items">

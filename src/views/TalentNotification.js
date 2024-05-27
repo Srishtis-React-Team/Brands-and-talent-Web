@@ -99,18 +99,16 @@ const TalentNotification = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           console.log(resData?.data?.data, "KIDSFETCH");
-          if (resData?.data?.data?.type === "kids") {
-            setTalentData(resData.data.data, "resData.data.data");
-            console.log(
-              resData?.data?.data?.subscriptionType,
-              "subscriptionType"
-            );
-            setSubscriptionCategory(resData?.data?.data?.subscriptionType);
-            if (resData?.data?.data?.subscriptionType == "weekly") {
-              setWeekly(true);
-            } else if (resData?.data?.data?.subscriptionType == "monthly") {
-              setMonthly(true);
-            }
+          setTalentData(resData.data.data, "resData.data.data");
+          console.log(
+            resData?.data?.data?.subscriptionType,
+            "subscriptionType"
+          );
+          setSubscriptionCategory(resData?.data?.data?.subscriptionType);
+          if (resData?.data?.data?.subscriptionType == "weekly") {
+            setWeekly(true);
+          } else if (resData?.data?.data?.subscriptionType == "monthly") {
+            setMonthly(true);
           }
         }
       })
@@ -201,6 +199,9 @@ const TalentNotification = () => {
   useEffect(() => {
     console.log(notificationList, "notificationListMain");
   }, [notificationList]);
+  useEffect(() => {
+    console.log(talentData, "talentData notificationMain");
+  }, [talentData]);
 
   function setSubscriptionType(e) {
     if (e == "weekly") {

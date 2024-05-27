@@ -158,7 +158,7 @@ const OTPComponent = () => {
       <div className="adult-otp-main">
         <div className="otp-container">
           <div className="adult-otp-logo">
-            <img src={btLogo} alt="" />
+            <img className="btLogo" src={btLogo} alt="" />
           </div>
           <div className="otp-title">OTP Verification</div>
           <div className="otp-enter">Please enter the code we just send to</div>
@@ -189,7 +189,6 @@ const OTPComponent = () => {
             Back
           </div>
         </div>
-       
       </div>
       {openPopUp && <PopUp message={message} />}
     </>

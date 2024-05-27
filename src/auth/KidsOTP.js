@@ -194,7 +194,7 @@ const KidsOTP = () => {
               top: "-30",
             }}
           >
-            <img src={btLogo} alt="" />
+            <img className="btLogo" src={btLogo} alt="" />
           </div>
         </div>
       </div>
