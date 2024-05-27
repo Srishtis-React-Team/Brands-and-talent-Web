@@ -12,6 +12,9 @@ import CardCarousel from "./CardCarousel.js";
 import ServicesCarousel from "./ServicesCarousel.js";
 import TalentHeader from "../layout/TalentHeader.js";
 import PdfModal from "../components/PdfModal.js";
+import Select from "react-select";
+import Button from "@mui/material/Button";
+import BrandHeader from "../brand/pages/BrandHeader.js";
 
 const TalentProfile = () => {
   // const location = useLocation();
@@ -83,8 +86,20 @@ const TalentProfile = () => {
   const [videoAudioList, setVideoAudioList] = useState([]);
   const [featuresList, setFeaturesList] = useState([]);
   const [cvList, setCvList] = useState([]);
-
+  const [allJobsList, setAllJobsList] = useState([]);
+  const [brandId, setBrandId] = useState(null);
+  const [brandImage, setBrandImage] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [jobTitleError, setjobTitleError] = useState(false);
+  const [currentUser_type, setCurrentUserType] = useState("");
+  const [comments, setComments] = useState("");
+  const [selectedJob, setSelectedJob] = useState("");
+  useEffect(() => {
+    setCurrentUserType(localStorage.getItem("currentUserType"));
+  }, []);
+  useEffect(() => {
+    console.log(currentUser_type, "currentUser_type header");
+  }, [currentUser_type]);
 
   const location = useLocation();
   const selectedTalent = location.state && location.state.talentData;
@@ -98,19 +113,14 @@ const TalentProfile = () => {
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     setUserId(storedUserId);
-    if (userId) {
+    if (selectedTalent?._id) {
       getTalentById();
-    }
-  }, [userId]);
-
-  useEffect(() => {
-    if (userId) {
       fetchPhotos();
       fetchVideoAudios();
       fetchFeatures();
       fetchCV();
     }
-  }, [userId]);
+  }, [selectedTalent]);
 
   useEffect(() => {
     console.log(photosList, "photosList");
@@ -203,6 +213,60 @@ const TalentProfile = () => {
         selectedTalent?._id ? selectedTalent?._id : queryString
       }`
     )
+      .then((resData) => {
+        if (resData) {
+          console.log(resData, "resData talentDataProfile");
+          setTalentData(resData.data.data);
+          console.log(resData.data.data, "resData.data");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(talentData, "talentDataProfile");
+  }, [talentData]);
+
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    setBrandImage(localStorage.getItem("currentUserImage"));
+    console.log(brandId, "brandId");
+    console.log(brandImage, "brandImage");
+    if (brandId && brandId != null) {
+      getAllJobs(brandId);
+    }
+  }, [brandId, brandImage]);
+
+  const getAllJobs = async (id) => {
+    await ApiHelper.get(`${API.getBrandPostedJobsByID}${id}`)
+      .then((resData) => {
+        console.log(resData.data.data, "getJobsList");
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setAllJobsList(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleChange = (e) => {
+    console.log(e, "selectedJobID");
+    setSelectedJob(e?.value);
+  };
+
+  const inviteToApply = async () => {
+    const formData = {
+      talentId: talentData?._id,
+      brandId: brandId,
+      gigId: selectedJob,
+      comment: comments,
+    };
+    await ApiHelper.post(`${API.inviteTalentToApply}`, formData)
       .then((resData) => {
         if (resData) {
           setTalentData(resData.data.data);
@@ -303,7 +367,9 @@ const TalentProfile = () => {
   return (
     <>
       {/* <Header /> */}
-      <TalentHeader toggleMenu={toggleMenu} />
+      {currentUser_type == "brand" && <BrandHeader toggleMenu={toggleMenu} />}
+      {currentUser_type == "talent" && <TalentHeader toggleMenu={toggleMenu} />}
+
       <section>
         <div className="popular-header">
           <div className="header-title">Profile</div>
@@ -447,15 +513,108 @@ const TalentProfile = () => {
               </div>
             </div>
 
-            <div className="invite-btn">
-              <img src={whitePlus}></img>
-              <div>Invite to Job</div>
+            {currentUser_type === "brand" && (
+              <>
+                <div
+                  className="invite-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  <img src={whitePlus}></img>
+                  <div>Invite to apply</div>
+                </div>
+                <div className="message-now">
+                  <img src={message}></img>
+                  <div className="message-now-text">Message Now</div>
+                </div>
+              </>
+            )}
+
+            <div
+              className="modal fade"
+              id="exampleModal"
+              tabIndex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered modal-lg signupModal">
+                <div className="modal-content ">
+                  <div className="modal-header">
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <div className="modal-title " style={{ fontSize: "18px" }}>
+                      Invite {talentData?.preferredChildFirstname}
+                      {talentData?.preferredChildLastName} to Apply to your Job
+                    </div>
+
+                    <div className="select-job-invite mt-4">
+                      <label
+                        htmlFor="exampleFormControlTextarea1"
+                        className="form-label"
+                      >
+                        Select Job to invite<span className="mandatory">*</span>
+                      </label>
+                      <Select
+                        placeholder="Select Job to invite"
+                        options={allJobsList.map((job) => ({
+                          value: job._id, // or whatever unique identifier you want to use
+                          label: job.jobTitle,
+                          type: job?.type,
+                        }))}
+                        onChange={handleChange}
+                        isSearchable={true}
+                      />
+                      {jobTitleError && (
+                        <div className="invalid-fields">
+                          Please enter job Title
+                        </div>
+                      )}
+
+                      <div className="mb-3 mt-3">
+                        <label
+                          htmlFor="exampleFormControlTextarea1"
+                          className="form-label"
+                        >
+                          Comments (Optional)
+                        </label>
+                        <textarea
+                          style={{ width: "500px" }}
+                          className="form-control address-textarea"
+                          id="exampleFormControlTextarea1"
+                          value={comments}
+                          rows="3"
+                          onChange={(e) => {
+                            setComments(e.target.value);
+                          }}
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <div className="register-modal mt-3">
+                      <Button
+                        onClick={(e) => {
+                          inviteToApply();
+                        }}
+                        className="edit-profileimg-btn"
+                        variant="text"
+                        style={{ textTransform: "capitalize" }}
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Invite Talent
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="message-now">
-              <img src={message}></img>
-              <div className="message-now-text">Message Now</div>
-            </div>
             <div className="talent-rates">
               <div className="title">
                 {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}

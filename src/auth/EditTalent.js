@@ -170,11 +170,37 @@ const EditTalent = () => {
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [selectedProfessionsEdit, setSelectedProfessionsEdit] = useState([]);
   const [featuresList, setFeaturesList] = useState([]);
-  const [features, setFeature] = useState([]);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
+  };
+
+  const initialFeatureValues = featuresList.reduce((acc, feature) => {
+    acc[feature.label] = "";
+    return acc;
+  }, {});
+
+  const [features, setFeatures] = useState(initialFeatureValues);
+
+  // Step 2: Use useEffect to update state for Chest and Waist
+  useEffect(() => {
+    const updatedFeatures = {
+      Chest: "1",
+      Waist: "1",
+    };
+    setFeatures((prevFeatures) => ({
+      ...prevFeatures,
+      ...updatedFeatures,
+    }));
+  }, []);
+
+  // Step 3: Handle state changes for the inputs
+  const handleFeaturesChange = (label, value) => {
+    setFeatures((prevFeatures) => ({
+      ...prevFeatures,
+      [label]: value,
+    }));
   };
 
   const customStyles = {
@@ -465,7 +491,7 @@ const EditTalent = () => {
             setKidsLegalFirstName(resData?.data?.data?.childFirstName);
             setKidsLegalLastName(resData?.data?.data?.childLastName);
             setDob(resData?.data?.data?.childDob);
-            setFeature(resData?.data?.data?.features);
+            setFeatures(resData?.data?.data?.features);
             // handleSelectedCountry({
             //   value: resData?.data?.data?.parentCountry,
             //   label: resData?.data?.data?.parentCountry,
@@ -1277,7 +1303,7 @@ const EditTalent = () => {
     const formData = {
       talentId: talentData?._id,
       serviceUniqueId: alertpop?.eachService?.uniqueId,
-      element_id: alertpop?.item?.id,
+      fileId: alertpop?.item?.id,
     };
     await ApiHelper.post(`${API.deleteService}`, formData)
       .then((resData) => {
@@ -1378,20 +1404,6 @@ const EditTalent = () => {
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ];
     setServices(newInputs);
-  };
-
-  const handleFeaturesChange = (label, value) => {
-    const updatedValues = [...features];
-    const index = updatedValues.findIndex((item) => item.label === label);
-    if (index !== -1) {
-      updatedValues[index] = { label, value };
-    } else {
-      updatedValues.push({ label, value });
-    }
-    setFeature(updatedValues);
-    // Call your API here with the updated selectedValues array
-    // Example:
-    // callYourApi(selectedValues);
   };
 
   const getFeatures = async () => {
@@ -2664,43 +2676,28 @@ const EditTalent = () => {
               <div className="kids-form-title">Features</div>
               {talentData && talentData?.features?.length > 0 && (
                 <div className="features-section">
-                  {featuresList && (
-                    <>
-                      {featuresList?.map((item, index) => {
-                        return (
-                          <>
-                            <div className="mb-3 features-input-wrapper">
-                              <label className="form-label">{item.label}</label>
-                              <select
-                                className="form-select features-select"
-                                aria-label="Default select example"
-                                value={features}
-                                onChange={(e) =>
-                                  handleFeaturesChange(
-                                    item.label,
-                                    e.target.value
-                                  )
-                                }
-                              >
-                                <option value="" disabled selected>
-                                  {item.label}
-                                </option>
-                                {item?.options?.map((item, index) => {
-                                  return (
-                                    <>
-                                      <option defaultValue value="1">
-                                        {item}
-                                      </option>
-                                    </>
-                                  );
-                                })}
-                              </select>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </>
-                  )}
+                  {featuresList.map((item, index) => (
+                    <div key={index} className="mb-3 features-input-wrapper">
+                      <label className="form-label">{item.label}</label>
+                      <select
+                        className="form-select features-select"
+                        aria-label="Default select example"
+                        value={features[item.label]}
+                        onChange={(e) =>
+                          handleFeaturesChange(item.label, e.target.value)
+                        }
+                      >
+                        <option value="" disabled>
+                          {item.label}
+                        </option>
+                        {item.options.map((option, idx) => (
+                          <option key={idx} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
                 </div>
               )}
             </CustomTabPanel>

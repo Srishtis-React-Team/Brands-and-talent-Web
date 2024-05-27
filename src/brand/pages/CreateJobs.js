@@ -74,6 +74,23 @@ const CreateJobs = () => {
   const [brandId, setBrandId] = useState(null);
   const [brandImage, setBrandImage] = useState(null);
 
+  const categoryList = [
+    "Fashion & Beauty",
+    "Media & Entertainment",
+    "Sports, Fitness, & Wellness",
+    "Creative Arts & Design",
+    "Celebrity",
+    "Writing, Marketing, & Content Creation",
+    "Performing Arts",
+    "Education & Coaching",
+    "Business & Technology",
+    "Luxury & Lifestyle",
+    "Eco-friendly & Sustainability",
+    "Home & Gardening",
+    "Food & Travel",
+    "Diversity & Inclusion",
+  ];
+
   useEffect(() => {
     console.log(editData, "editData");
     if (editData?.value && editData?.type) {
@@ -154,6 +171,7 @@ const CreateJobs = () => {
       setPortofolioFile(editData?.workSamples);
       setJobCurrency(editData?.jobCurrency);
       setLastdateApply(editData?.lastDateForApply);
+      setCategory(editData?.category);
       if (editData?.questions && editData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editData?.questions);
@@ -328,6 +346,8 @@ const CreateJobs = () => {
       setSelectedBenefits(editJobData?.benefits);
       setSelectedApplyOption(editJobData?.howLikeToApply);
       setPortofolioFile(editJobData?.workSamples);
+      setCategory(editData?.category);
+
       setJobCurrency(jobCurrency);
       if (editJobData?.questions && editJobData?.questions?.length > 0) {
         setShowQuestions(true);
@@ -413,7 +433,6 @@ const CreateJobs = () => {
   const [stateError, setStateError] = useState(false);
   const [cityError, setCityError] = useState(false);
   const [professionError, setProfessionError] = useState(false);
-  const [categoryError, setCategoryError] = useState(false);
   const [preferedNameError, setPreferedNameError] = useState(false);
   const [jobTypeError, setjobTypeError] = useState(false);
   const [jobCurrencyError, setJobCurrencyError] = useState(false);
@@ -474,6 +493,8 @@ const CreateJobs = () => {
   const [selectedApplyOption, setSelectedApplyOption] = useState("easy-apply");
   const [hiringCompany, setHiringCompany] = useState("");
   const [dobError, setDobError] = useState(false);
+  const [category, setCategory] = useState("");
+  const [categoryError, setCategoryError] = useState(false);
 
   const handleApplyOption = (e) => {
     console.log(e.target.value, "e.target.value");
@@ -686,6 +707,12 @@ const CreateJobs = () => {
     setGender(event.target.value);
     setGenderError(false);
   };
+
+  const selectCategory = (event) => {
+    setCategory(event.target.value);
+    setCategoryError(false);
+  };
+
   const selectAge = (event) => {
     setAgeRange(event.target.value);
     setAgeRangeError(false);
@@ -762,41 +789,6 @@ const CreateJobs = () => {
     { value: "Other", label: "Other" },
   ];
 
-  const categoryList = [
-    "Fashion",
-    "Parenting and family",
-    "Sports/Martial Arts/Dance",
-    "Arts and photography",
-    "Videography",
-    "Music",
-    "Comedy/Entertainment",
-    "Education",
-    "Transportation",
-    "Food and beverage",
-    "Finance",
-    "Beauty/Cosmetics",
-    "Luxury",
-    "Business and Technology",
-    "Travel/Tourism",
-    "Health/Wellness/Fitness",
-    "Home and Gardening",
-    "Eco-friendly/Nature/Sustainability",
-    "Diversity and inclusion",
-    "Outdoor and nature",
-    "Content Creation",
-    "Lifestyle",
-    "Celebrity",
-    "Animals/Pets",
-    "Web3",
-    "Home and DIY",
-    "Anime/Memes",
-    "Website/Mobile Applications",
-    "Gaming",
-    "Lifecoach/Relationships",
-    "Cosplay/Memes",
-    "Other",
-  ];
-
   const gendersOptions = [
     "Man",
     "Woman",
@@ -809,7 +801,6 @@ const CreateJobs = () => {
   ];
 
   function chooseCategory(category) {
-    setCategoryError(false);
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -954,6 +945,9 @@ const CreateJobs = () => {
     if (kidsCity === "") {
       setCityError(true);
     }
+    if (category == "") {
+      setCategoryError(true);
+    }
     if (
       jobTitle !== "" &&
       zipCode !== "" &&
@@ -966,7 +960,8 @@ const CreateJobs = () => {
       jobCurrency !== "" &&
       country !== "" &&
       state !== "" &&
-      kidsCity !== ""
+      kidsCity !== "" &&
+      category !== ""
     ) {
       const formData = {
         _id: editData?.value,
@@ -994,6 +989,7 @@ const CreateJobs = () => {
         workSamples: portofolioFile,
         brandImage: brandImage,
         lastDateForApply: lastdateApply,
+        category: category,
       };
       if (editData?.type == "Draft") {
         await ApiHelper.post(`${API.editDraft}${editData?.value}`, formData)
@@ -1042,6 +1038,12 @@ const CreateJobs = () => {
           })
           .catch((err) => {});
       }
+    } else {
+      setMessage("Please Fill All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 2000);
     }
   };
   const createGigs = async () => {
@@ -1075,6 +1077,9 @@ const CreateJobs = () => {
     }
     if (country === "") {
       setParentCountryError(true);
+    }
+    if (category == "") {
+      setCategoryError(true);
     }
     console.log(
       jobTitle,
@@ -1113,7 +1118,8 @@ const CreateJobs = () => {
       gender !== "" &&
       languages !== "" &&
       jobCurrency !== "" &&
-      country !== ""
+      country !== "" &&
+      category !== ""
     ) {
       const formData = {
         jobTitle: jobTitle,
@@ -1141,6 +1147,7 @@ const CreateJobs = () => {
         brandId: brandId,
         brandImage: brandImage,
         lastDateForApply: lastdateApply,
+        category: category,
       };
       console.log(formData, "CREATEJOB_PAYLOAD");
       await ApiHelper.post(API.draftJob, formData)
@@ -1167,6 +1174,12 @@ const CreateJobs = () => {
           }
         })
         .catch((err) => {});
+    } else {
+      setMessage("Please Fill All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 2000);
     }
   };
 
@@ -1436,6 +1449,12 @@ const CreateJobs = () => {
   useEffect(() => {
     console.log(lastdateApply, "lastdateApply");
   }, [lastdateApply]);
+  useEffect(() => {
+    console.log(categoryError, "categoryError");
+  }, [categoryError]);
+  useEffect(() => {
+    console.log(category, "category");
+  }, [category]);
 
   return (
     <>
@@ -1513,7 +1532,7 @@ const CreateJobs = () => {
                   <div className="kidsform-one w-100 p-2">
                     <div className="kids-main">
                       <div className="kids-form-row">
-                        <div className="w-100">
+                        <div className="kids-form-section">
                           <div className="mb-4">
                             <label className="form-label">
                               Gig/Job Title
@@ -1532,6 +1551,35 @@ const CreateJobs = () => {
                             {jobTitleError && (
                               <div className="invalid-fields">
                                 Please enter job Title
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="kids-form-section">
+                          <div className="mb-4">
+                            <label className="form-label">
+                              Category
+                              <span className="mandatory">*</span>
+                            </label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              onChange={selectCategory}
+                              value={category}
+                              style={{ fontSize: "14px" }}
+                            >
+                              <option value="" disabled selected>
+                                Select Category
+                              </option>
+                              {categoryList.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                            {categoryError && (
+                              <div className="invalid-fields">
+                                Please Select Category
                               </div>
                             )}
                           </div>

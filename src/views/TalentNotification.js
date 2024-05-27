@@ -7,27 +7,115 @@ import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
-import { formatDistanceToNow, parseISO } from "date-fns";
+import { formatDistanceToNow, parseISO, setWeek } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
 
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 const TalentNotification = () => {
   const [talentId, setTalentId] = useState(null);
+  const [talentEmail, setTalentEmail] = useState(null);
   const [notificationList, setNotifications] = useState([]);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
   const navigate = useNavigate();
+  const [talentData, setTalentData] = useState();
+  const [subscriptionCategory, setSubscriptionCategory] = useState("");
+  const [weekly, setWeekly] = useState(false);
+  const [monthly, setMonthly] = useState(false);
+  const [valueTabs, setValueTabs] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    console.log(newValue, "newValue");
+    setValueTabs(newValue);
+  };
+
+  const handleNavigation = (event) => {
+    console.log(valueTabs, "valueTabs");
+    console.log(event, "event");
+    if (valueTabs === 0 && event === "back") {
+      setValueTabs(0);
+    } else if (event === "next") {
+      setValueTabs(valueTabs + 1);
+    } else if (event === "back") {
+      setValueTabs(valueTabs - 1);
+    } else if (valueTabs === 1) {
+      setValueTabs(1);
+    }
+  };
+
+  const location = useLocation();
+  const data = location.state;
+
+  useEffect(() => {
+    if (data?.isJobAlert) {
+      setValueTabs(1);
+    }
+  }, [data]);
 
   useEffect(() => {
     setTimeout(function() {
       setTalentId(localStorage.getItem("userId"));
+      setTalentEmail(localStorage.getItem("emailID"));
     }, 1000);
 
     console.log(talentId, "talentId");
     if (talentId) {
       getTalentNotification();
+      getKidsData();
     }
   }, [talentId]);
+
+  const getKidsData = async () => {
+    await ApiHelper.post(`${API.getTalentById}${talentId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          console.log(resData?.data?.data, "KIDSFETCH");
+          if (resData?.data?.data?.type === "kids") {
+            setTalentData(resData.data.data, "resData.data.data");
+            console.log(
+              resData?.data?.data?.subscriptionType,
+              "subscriptionType"
+            );
+            setSubscriptionCategory(resData?.data?.data?.subscriptionType);
+            if (resData?.data?.data?.subscriptionType == "weekly") {
+              setWeekly(true);
+            } else if (resData?.data?.data?.subscriptionType == "monthly") {
+              setMonthly(true);
+            }
+          }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const getTalentNotification = async () => {
     await ApiHelper.get(`${API.getTalentNotification}${talentId}`)
@@ -73,9 +161,61 @@ const TalentNotification = () => {
       .catch((err) => {});
   };
 
+  const manageSubscription = async (item) => {
+    if (talentData?.isSubscribed === false) {
+      const formData = {
+        talentId: talentId,
+        subscriptionType: subscriptionCategory,
+      };
+      await ApiHelper.post(`${API.createJobAlert}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setMessage("Subscribed To Job Alert");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              getKidsData();
+            }, 1000);
+          }
+        })
+        .catch((err) => {});
+    } else if (talentData?.isSubscribed === true) {
+      const formData = {
+        talentId: talentId,
+      };
+      await ApiHelper.post(`${API.updateJobAlert}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setMessage("Unsubscribed Successfully");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              getKidsData();
+            }, 1000);
+          }
+        })
+        .catch((err) => {});
+    }
+  };
+
   useEffect(() => {
     console.log(notificationList, "notificationListMain");
   }, [notificationList]);
+
+  function setSubscriptionType(e) {
+    if (e == "weekly") {
+      setWeekly(true);
+      setSubscriptionCategory("weekly");
+    } else {
+      setWeekly(false);
+    }
+    if (e == "monthly") {
+      setMonthly(true);
+      setSubscriptionCategory("monthly");
+    } else {
+      setMonthly(false);
+    }
+  }
 
   return (
     <>
@@ -94,74 +234,174 @@ const TalentNotification = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        <div className="brand-content-main">
-          <div className="create-job-title">Notification</div>
-          <div className="talent-notification-main">
-            {notificationList && notificationList?.length > 0 && (
-              <>
-                {notificationList?.map((item, index) => {
-                  return (
-                    <>
-                      <div
-                        key={index}
-                        className={`talent-notification-card ${
-                          item.read
-                            ? "notification-read"
-                            : "notification-unread"
-                        }`}
-                      >
-                        <div className="notification-card-flex">
-                          <img
-                            className="notification-card-image"
-                            src={`${API.userFilePath}${item?.brandDetails?.brandImage[0]?.fileData}`}
-                            alt=""
-                          />
+        <div className="brand-content-main boxBg">
+          <Box sx={{ width: "100%" }}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                value={valueTabs}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab
+                  label="Notifications"
+                  {...a11yProps(0)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Job Alert"
+                  {...a11yProps(1)}
+                  style={{ textTransform: "capitalize" }}
+                />
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={valueTabs} index={0}>
+              <div className="talent-notification-main">
+                {notificationList && notificationList?.length > 0 && (
+                  <>
+                    {notificationList?.map((item, index) => {
+                      return (
+                        <>
                           <div
-                            className="notification-card-content "
-                            onClick={() => {
-                              viewNotification(item);
-                            }}
+                            key={index}
+                            className={`talent-notification-card ${
+                              item.read
+                                ? "notification-read"
+                                : "notification-unread"
+                            }`}
                           >
-                            {item?.talentNotificationMessage}&nbsp;
-                            {item?.gigDetails?.jobTitle}
-                          </div>
-                        </div>
-
-                        <div className="notification-card-actions">
-                          <div className="notification-card-time">
-                            {formatDistanceToNow(parseISO(item.updatedAt), {
-                              addSuffix: true,
-                            })}
-                          </div>
-                          <i
-                            className="bi bi-three-dots "
-                            id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          ></i>
-                          <ul
-                            className="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton1"
-                          >
-                            <li>
-                              <a
-                                className="dropdown-item"
+                            <div className="notification-card-flex">
+                              <img
+                                className="notification-card-image"
+                                src={`${API.userFilePath}${item?.brandDetails?.brandImage[0]?.fileData}`}
+                                alt=""
+                              />
+                              <div
+                                className="notification-card-content "
                                 onClick={() => {
-                                  deleteNotification(item);
+                                  viewNotification(item);
                                 }}
                               >
-                                Remove Notification
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
+                                {item?.talentNotificationMessage}&nbsp;
+                                {item?.gigDetails?.jobTitle}
+                              </div>
+                            </div>
+
+                            <div className="notification-card-actions">
+                              <div className="notification-card-time">
+                                {formatDistanceToNow(parseISO(item.updatedAt), {
+                                  addSuffix: true,
+                                })}
+                              </div>
+                              <i
+                                className="bi bi-three-dots "
+                                id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              ></i>
+                              <ul
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton1"
+                              >
+                                <li>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() => {
+                                      deleteNotification(item);
+                                    }}
+                                  >
+                                    Remove Notification
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                )}
+                {notificationList?.length == 0 && (
+                  <div>No Notifications Available</div>
+                )}
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={1}>
+              <div className="job-alert-main">
+                <div className="job-alert-title">
+                  Subscribe to job alerts to receive weekly and bi-monthly job
+                  notifications{" "}
+                  {talentEmail && (
+                    <>
+                      on <span className="job-alert-mail"> {talentEmail}</span>
                     </>
-                  );
-                })}
-              </>
-            )}
-          </div>
+                  )}
+                </div>
+                <div className="job-alert-wrapper">
+                  <div className="modal-buttons">
+                    <div
+                      onClick={(e) => {
+                        setSubscriptionType("weekly");
+                      }}
+                      className={
+                        weekly ? "selected-register" : "choose-register"
+                      }
+                    >
+                      Weekly Job Alert
+                    </div>
+                    <div
+                      onClick={(e) => {
+                        setSubscriptionType("monthly");
+                      }}
+                      className={
+                        monthly ? "selected-register" : "choose-register"
+                      }
+                    >
+                      Monthly Job Alert
+                    </div>
+                  </div>
+                  <div className="job-alert-btn-wrapper">
+                    <div className="edit-basicdetails-section-main">
+                      <Button
+                        onClick={(e) => {
+                          manageSubscription();
+                        }}
+                        className="edit-profileimg-btn"
+                        variant="text"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {talentData?.isSubscribed === false && "Subscribe"}
+                        {talentData?.isSubscribed === true && "UnSubscribe"}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CustomTabPanel>
+            <div className="edit-profile-navigations">
+              {valueTabs >= 1 && (
+                <div
+                  className="edit-profile-navigation-btn"
+                  onClick={() => {
+                    handleNavigation("back");
+                  }}
+                >
+                  <i className="bi bi-arrow-left-circle-fill arrow-left-circle"></i>
+                  <span className="edit-profile-navigation-text">Back</span>
+                </div>
+              )}
+              {valueTabs != 1 && (
+                <div
+                  className="edit-profile-navigation-btn"
+                  onClick={() => {
+                    handleNavigation("next");
+                  }}
+                >
+                  <span className="edit-profile-navigation-text">Next</span>
+                  <i className="bi bi-arrow-right-circle-fill"></i>
+                </div>
+              )}
+            </div>
+          </Box>
         </div>
       </main>
 

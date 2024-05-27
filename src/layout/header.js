@@ -11,6 +11,7 @@ import { CssTransition } from "@mui/base/Transitions";
 import { PopupContext } from "@mui/base/Unstable_Popup";
 import PopUp from "../components/PopUp";
 import { API } from "../config/api";
+import { ApiHelper } from "../helpers/ApiHelper";
 
 const Header = ({ onData }) => {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ const Header = ({ onData }) => {
   const [message, setMessage] = useState("");
   const [currentUser_image, setCurrentUserImage] = useState("");
   const [currentUser_type, setCurrentUserType] = useState("");
+  const [talentData, setTalentData] = useState();
+  const [talentId, setTalentId] = useState(null);
 
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
@@ -81,6 +84,32 @@ const Header = ({ onData }) => {
     }
   };
 
+  useEffect(() => {
+    setTimeout(function() {
+      setTalentId(localStorage.getItem("userId"));
+    }, 1000);
+    console.log(talentId, "talentId");
+    if (talentId) {
+      getTalentById();
+    }
+  }, [talentId]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(
+      `${API.getTalentById}${localStorage.getItem("userId")}`
+    )
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const modalRef = useRef(null);
   const openModal = () => {
     const modal = new window.bootstrap.Modal(modalRef.current);
@@ -128,7 +157,7 @@ const Header = ({ onData }) => {
     return () => {
       if (menuItem === "dashboard") {
         if (currentUser_type === "talent") {
-          navigate(`${"/talent-profile"}?${currentUserId}`);
+          navigate("/talent-profile", { state: { talentData: talentData } });
         } else if (currentUser_type === "brand") {
           navigate(`brand-dashboard`);
         }
@@ -348,10 +377,12 @@ const Header = ({ onData }) => {
 
               {currentUser_type === "brand" ||
                 (!currentUserId && (
-                  <div className="navTxt" style={{ cursor: "pointer" }}>
-                    <NavLink onClick={() => handleClick("post-job")}>
-                      Post a Job
-                    </NavLink>
+                  <div
+                    className="navTxt"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleClick("post-job")}
+                  >
+                    Post a Job
                   </div>
                 ))}
 
@@ -376,10 +407,12 @@ const Header = ({ onData }) => {
 
               {currentUser_type === "brand" ||
                 (!currentUserId && (
-                  <div className="navTxt">
-                    <NavLink onClick={() => handleClick("find-talent")}>
-                      Find Talent
-                    </NavLink>
+                  <div
+                    className="navTxt"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleClick("find-talent")}
+                  >
+                    Find Talent
                   </div>
                 ))}
 
@@ -567,12 +600,45 @@ const Header = ({ onData }) => {
               </label>
             </div>
           </div> */}
-              <div className="header-search-wrapper ">
-                <div className="header-search-icon">
-                  <i className="fas fa-search"></i>
+              <div
+                className="searchBtn"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasTop"
+                aria-controls="offcanvasTop"
+              >
+                <i className="fas fa-search"></i>
+              </div>
+
+              <div
+                className="offcanvas offcanvas-top search-canvas-top"
+                tabIndex="-1"
+                id="offcanvasTop"
+                aria-labelledby="offcanvasTopLabel"
+              >
+                <div className="offcanvas-header">
+                  <h5 id="offcanvasTopLabel">Search Anything</h5>
+                  <button
+                    type="button"
+                    className="btn-close text-reset"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                  ></button>
                 </div>
-                <div className="header-search-input">
-                  <input type="text" className="header-search-input-style" />
+                <div className="offcanvas-body">
+                  <form className="d-flex search-bootstrap">
+                    <input
+                      className="form-control me-2"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    ></input>
+                    <button
+                      className="btn btn-outline-success search-bootstrap-btn"
+                      type="submit"
+                    >
+                      Search
+                    </button>
+                  </form>
                 </div>
               </div>
 

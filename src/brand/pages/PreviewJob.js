@@ -157,9 +157,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   )}
                 </div>
               </div>
-              <div className="easy-apply-section">
+              {/* <div className="easy-apply-section">
                 <div className="easy-apply-btn">Easy Apply</div>
-              </div>
+              </div> */}
             </div>
             <div className="preview-section-two">
               <div className="company-name">{jobData?.hiringCompany}</div>
@@ -210,7 +210,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
                           </span>
                         </li>
                         <li className="job-features-li">
-                          <span className="job-feature-heading">Language :</span>
+                          <span className="job-feature-heading">
+                            Language :
+                          </span>
                           <span className="job-feature-values">
                             {jobData?.languages}
                           </span>

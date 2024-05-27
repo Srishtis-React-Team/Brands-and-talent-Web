@@ -15,7 +15,6 @@ const TalentHome = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(function() {
@@ -76,6 +75,15 @@ const TalentHome = () => {
     console.log(notificationList, "notificationListMain");
   }, [notificationList]);
 
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    const data = {
+      isJobAlert: true,
+    };
+    navigate("/talent-notification", { state: data });
+  };
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -126,7 +134,7 @@ const TalentHome = () => {
                 </div>
               </Link>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4" onClick={() => handleNavigation()}>
               <Link>
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
