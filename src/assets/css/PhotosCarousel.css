@@ -16,6 +16,7 @@
 .photos-carousel-owl.owl-theme .owl-nav {
   display: none; /* Hide the dots */
 }
+.brand-home-main .photos-slider .item{   height: auto; min-height: 250px; }
 .photos-slider .item{ 
   height: 230px; 
   overflow: hidden;
