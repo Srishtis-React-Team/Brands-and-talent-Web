@@ -633,7 +633,7 @@ const BrandTalents = () => {
           <div className="brand-content-main">
             <section>
               <div className="brand-filter-section row">
-                <div className="col-md-4">
+                <div className="col-md-5 col-lg-4 leftSides pr-0">
                   <div className="filter-wrapper">
                     <div className="filter-btn-wrapper">
                       <div
@@ -647,7 +647,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper pt-4">
                       <div className="filter-items">Keyword</div>
-                      <div className="filter-input-wrapper">
+                      <div className="filter-input-wrapper inpWid">
                         <input
                           className="keyword-input"
                           placeholder="Search Keyword"
@@ -697,7 +697,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">Full Name</div>
-                      <div className="creators-filter-select">
+                      <div className="creators-filter-select inpWid">
                         <input
                           type="text"
                           className="form-control"
@@ -712,7 +712,7 @@ const BrandTalents = () => {
 
                     <div className="profession-creator-wrapper">
                       <div className="filter-items">Profession</div>
-                      <div className="profession-wrapper talents-profession">
+                      <div className="profession-wrapper talents-profession inpWid">
                         <Select
                           defaultValue={[professionList[2], professionList[3]]}
                           isMulti
@@ -728,7 +728,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">Category</div>
-                      <div className="creators-filter-select">
+                      <div className="creators-filter-select inpWid">
                         <select
                           className="form-select"
                           aria-label="Default select example"
@@ -748,7 +748,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">Country</div>
-                      <div className="creators-filter-select">
+                      <div className="creators-filter-select inpWid">
                         <Select
                           placeholder="Select country..."
                           options={countryList.map((country, index) => ({
@@ -766,7 +766,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">State</div>
-                      <div className="creators-filter-select">
+                      <div className="creators-filter-select inpWid">
                         <Select
                           placeholder="Select state..."
                           options={stateList.map((state) => ({
@@ -782,7 +782,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">City</div>
-                      <div className="creators-filter-select">
+                      <div className="creators-filter-select inpWid">
                         <Select
                           placeholder="Select City..."
                           options={cityList.map((city) => ({
@@ -800,8 +800,8 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">Gender</div>
-                      <div className="creators-filter-select">
-                        <label className="form-label">Gender</label>
+                      <div className="creators-filter-select inpWid">
+                        {/* <label className="form-label">Gender</label> */}
                         <select
                           className="form-select"
                           aria-label="Default select example"
@@ -821,7 +821,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">Age</div>
-                      <div className="creators-filter-select creators-filter-select-range">
+                      <div className="creators-filter-select creators-filter-select-range inpWid">
                         <RangeSlider min={1} max={100} onChange={onRangeChange} />
                         {/* <p>
                     Change in slider:
@@ -830,7 +830,7 @@ const BrandTalents = () => {
                       </div>
                     </div>
                     <div className="keyword-wrapper creator-age-main">
-                      <div className="creators-filter-select creator-age-wrapper">
+                      <div className="creators-filter-select creator-age-wrapper inpWid">
                         <input
                           type="text"
                           className="form-control range-inputs"
@@ -851,7 +851,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">Ethnicity</div>
-                      <div className="creators-filter-select">
+                      <div className="creators-filter-select inpWid">
                         <select
                           className="form-select"
                           aria-label="Default select example"
@@ -871,7 +871,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">Nationality</div>
-                      <div className="creators-filter-select">
+                      <div className="creators-filter-select inpWid">
                         <select
                           className="form-select"
                           aria-label="Default select example"
@@ -891,7 +891,7 @@ const BrandTalents = () => {
                     </div>
                     <div className="keyword-wrapper">
                       <div className="filter-items">Language</div>
-                      <div className="creators-filter-select">
+                      <div className="creators-filter-select inpWid">
                         <Select
                           isMulti
                           name="colors"
@@ -966,68 +966,70 @@ const BrandTalents = () => {
                   </div>
                 </div>
 
-                <div className="col-md-8">
+                <div className="col-md-7 col-lg-8 rightSides">
                   <div className="models-images">
                     <div className="gallery-section">
-                      <div className="gallery-main p-0 m-0">
+                      <div className="gallery-main p-0 row">
                         {talentList?.map((item) => {
                           return (
-                            <div className="gallery-wrapper">
-                              <div className="">
-                                <img
-                                  className="gallery-img"
-                                  src={`${API.userFilePath}${item.image?.fileData}`}
-                                ></img>
-                                <div className="rating">
-                                  <img src={brightStar}></img>
-                                  <img src={brightStar}></img>
-                                  <img src={brightStar}></img>
-                                  <img src={darkStar}></img>
-                                  <img src={darkStar}></img>
+                            <div className="col-md-4 col-lg-3 px-1">
+                              <div className="gallery-wrapper">
+                                <div className="galBox">
+                                  <img
+                                    className="gallery-img"
+                                    src={`${API.userFilePath}${item.image?.fileData}`}
+                                  ></img>
+                                  <div className="rating">
+                                    <img src={brightStar}></img>
+                                    <img src={brightStar}></img>
+                                    <img src={brightStar}></img>
+                                    <img src={darkStar}></img>
+                                    <img src={darkStar}></img>
+                                  </div>
+                                  {!item.isFavorite && (
+                                    <img
+                                      className="heart-icon"
+                                      src={heartIcon}
+                                      onClick={() => addFavorite(item)}
+                                    ></img>
+                                  )}
+                                  {item.isFavorite === true && (
+                                    <img
+                                      className="heart-icon"
+                                      src={favoruiteIcon}
+                                      onClick={() => removeFavorite(item)}
+                                    ></img>
+                                  )}
                                 </div>
-                                {!item.isFavorite && (
-                                  <img
-                                    className="heart-icon"
-                                    src={heartIcon}
-                                    onClick={() => addFavorite(item)}
-                                  ></img>
-                                )}
-                                {item.isFavorite === true && (
-                                  <img
-                                    className="heart-icon"
-                                    src={favoruiteIcon}
-                                    onClick={() => removeFavorite(item)}
-                                  ></img>
-                                )}
-                              </div>
-                              <div className="">
-                                <div className="content">
-                                  <div
-                                    className="find-creator-name"
-                                    onClick={() => openTalent(item)}
-                                  >
-                                    {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
-                                  </div>
-                                  <div className="find-creator-address ">
-                                    {item.profession?.map((profession, index) => (
-                                      <React.Fragment key={index}>
-                                        {profession.value}
-                                        {index !== item.profession.length - 1 &&
-                                          ","}
-                                      </React.Fragment>
-                                    ))}
-                                  </div>
-                                  <div className="user-details">
-                                    <div className="location-wrapper">
-                                      <img src={locationIcon} alt="" />
-                                      <div className="find-creator-location-name ">
-                                        {item?.parentCountry}
-                                      </div>
+                                <div className="">
+                                  <div className="content">
+                                    <div
+                                      className="find-creator-name"
+                                      onClick={() => openTalent(item)}
+                                    >
+                                      {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                     </div>
-                                    <div className="location-wrapper">
-                                      <img src={jobIcon} alt="" />
-                                      <div className="find-creator-location-name">
-                                        25 Jobs Booked
+                                    <div className="find-creator-address ">
+                                      {item.profession?.map((profession, index) => (
+                                        <React.Fragment key={index}>
+                                          {profession.value}
+                                          {index !== item.profession.length - 1 &&
+                                            ","}
+                                        </React.Fragment>
+                                      ))}
+                                    </div>
+                                    <div className="user-details">
+                                      <div className="location-wrapper">
+                                        <img src={locationIcon} alt="" />
+                                        <div className="find-creator-location-name ">
+                                          {item?.parentCountry}
+                                        </div>
+                                      </div>
+                                      <div className="location-wrapper">
+                                        <img src={jobIcon} alt="" />
+                                        <div className="find-creator-location-name">
+                                          25 Jobs Booked
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
