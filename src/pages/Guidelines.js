@@ -6,12 +6,14 @@ const Guidelines = () => {
   return (
     <>
       <Header />{" "}
-      <section style={{ marginTop: "64px" }}>
+      <section className="topSpace mb-2">
         <div className="popular-header">
-          <div className="header-title">Community Guidelines</div>
-          <div className="header-menu">
-            <div>Home</div>
-            <div>Learn</div>
+          <div className="container">
+            <div className="header-title">Community Guidelines</div>
+            <div className="header-menu">
+              <div>Home</div>
+              <div>Learn</div>
+            </div>
           </div>
         </div>
       </section>
