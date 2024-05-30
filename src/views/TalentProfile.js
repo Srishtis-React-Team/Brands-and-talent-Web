@@ -15,11 +15,19 @@ import PdfModal from "../components/PdfModal.js";
 import Select from "react-select";
 import Button from "@mui/material/Button";
 import BrandHeader from "../brand/pages/BrandHeader.js";
+import CurrentUser from "../CurrentUser.js";
 
 const TalentProfile = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+  } = CurrentUser();
+
   // const location = useLocation();
   // const { talentData } = location.state;
-  // console.log(talentData, "talentData");
+  console.log(avatarImage, "avatarImage");
   const girl1 = require("../assets/images/girl.png");
   const model = require("../assets/images/model-profile.png");
   const model1 = require("../assets/images/model1.png");
@@ -30,7 +38,7 @@ const TalentProfile = () => {
   const model6 = require("../assets/images/model6.png");
   const model7 = require("../assets/images/model7.png");
   const model8 = require("../assets/images/model8.png");
-  const model9 = require("../assets/images/model9.png");
+  const model9 = require("../assets/images/whiteBG.png");
   const model10 = require("../assets/images/model10.png");
   const model11 = require("../assets/images/model11.png");
   const model12 = require("../assets/images/model12.png");
@@ -390,10 +398,15 @@ const TalentProfile = () => {
                   <div className="talent-backdrop">
                     <img className="talent-img-backdrop" src={model9}></img>
                     <div className="profImg">
-                      <img
-                        className="talent-img"
-                        src={`${API.userFilePath}${talentData?.image?.fileData}`}
-                      ></img>
+                      {!talentData?.image && (
+                        <img className="talent-img" src={avatarImage}></img>
+                      )}
+                      {talentData?.image && (
+                        <img
+                          className="talent-img"
+                          src={`${API.userFilePath}${talentData?.image?.fileData}`}
+                        ></img>
+                      )}
                     </div>
                     {/* <div className="talent-status">
                       <span>
@@ -804,12 +817,12 @@ const TalentProfile = () => {
                             <div className="portofolio-title">
                               Social media posts
                             </div>
-                            <div className="view-all">View All</div>
+                            {/* <div className="view-all">View All</div> */}
                           </div>
                           <CardCarousel />
                           <div className="portofolio-section">
                             <div className="portofolio-title">Reviews</div>
-                            <div className="view-all">View All</div>
+                            {/* <div className="view-all">View All</div> */}
                           </div>
                           <div className="reviews-section">
                             <div className="rating-talent">
@@ -840,7 +853,14 @@ const TalentProfile = () => {
                             <div className="portofolio-title">
                               Videos & Audios
                             </div>
-                            <div className="view-all">View All</div>
+                            <div
+                              className="view-all"
+                              onClick={(e) => {
+                                handleForms("videos");
+                              }}
+                            >
+                              View All
+                            </div>
                           </div>
 
                           <div className="service-list-main">
@@ -874,7 +894,14 @@ const TalentProfile = () => {
 
                           <div className="portofolio-section">
                             <div className="portofolio-title">CV</div>
-                            <div className="view-all">View All</div>
+                            <div
+                              className="view-all"
+                              onClick={(e) => {
+                                handleForms("CV");
+                              }}
+                            >
+                              View All
+                            </div>
                           </div>
 
                           <div className="cvlist-wrapper">

@@ -906,7 +906,7 @@ const TalentDashBoard = () => {
                   <div className="boxsWhite mb-4">
                     <div className="top-brands-section px-3 pt-3">
                       <div className="top-brands-title py-1">Top Brands</div>
-                      <div className="view-all-brands">View All</div>
+                      {/* <div className="view-all-brands">View All</div> */}
                     </div>
                     {topBrandsList.length && (
                       <div className="top-brands-main p-3">

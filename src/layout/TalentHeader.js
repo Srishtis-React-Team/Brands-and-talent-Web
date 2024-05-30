@@ -23,8 +23,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Select from "react-select";
+import CurrentUser from "../CurrentUser";
 
 const TalentHeader = ({ toggleMenu, myState }) => {
+  const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const model1 = require("../assets/images/girl1.png");
@@ -332,9 +334,13 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                   <div className="navTxt">
                     <NavLink to="/">Home</NavLink>
                   </div>
+
                   <div className="navTxt">
-                    <NavLink to="/job-list">Jobs List</NavLink>
+                    <NavLink to="/talent-dashboard"> Get Booked</NavLink>
                   </div>
+                  {/* <div className="navTxt">
+                    <NavLink to="/job-list">Jobs List</NavLink>
+                  </div> */}
                   <div className="navTxt">
                     <NavLink to="/how-it-works">How it works</NavLink>
                   </div>
@@ -694,10 +700,13 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                 <Dropdown>
                   <MenuButton>
                     <div className="talent-profile-icon">
-                      <img
-                        src={`${API.userFilePath}${talentData?.image?.fileData}`}
-                        alt=""
-                      />
+                      {!talentData?.image && <img src={avatarImage} alt="" />}
+                      {talentData?.image && (
+                        <img
+                          src={`${API.userFilePath}${talentData?.image?.fileData}`}
+                          alt=""
+                        />
+                      )}
                     </div>
                   </MenuButton>
                   <Menu slots={{ listbox: AnimatedListbox }}>

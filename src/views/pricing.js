@@ -146,77 +146,77 @@ const Pricing = () => {
                               <div className="plan-validity">Forever</div>
                             </>
                           )}
-                       
-                        {item.plan_type_annual.length >= 1 && (
-                          <>
-                            <div className="annual-wrapper">
-                              <input
-                                type="radio"
-                                name="click"
-                                value="save"
-                                CHECKED
-                                id={item.planname}
-                                className={
-                                  item.planname == "Pro (Popular)"
-                                    ? "pro-checkbox"
-                                    : "premium-checkbox"
-                                }
-                              ></input>
-                              <label for={item.planname} className="annual">
-                                {item.period}
-                              </label>
-                            </div>
-                            {item.plan_type_annual.map((item) => {
-                              return (
-                                <>
-                                  <div className="plan-amounts">
-                                    <div className="value-wrapper">
-                                      <div className="previous-value">
-                                        {item.beforeValue}
-                                      </div>
-                                      <div className="after-value">
-                                        {item.afterDiscount}
-                                      </div>
-                                    </div>
-                                    <div className="per-value">
-                                      {item.amount}
-                                    </div>
-                                  </div>
-                                  <div className="border-bottom"></div>
-                                </>
-                              );
-                            })}
-                            <div className="monthly-wrapper pt-3">
-                              <div>
+
+                          {item.plan_type_annual.length >= 1 && (
+                            <>
+                              <div className="annual-wrapper">
                                 <input
                                   type="radio"
                                   name="click"
                                   value="save"
                                   CHECKED
-                                  id={item._id}
+                                  id={item.planname}
                                   className={
                                     item.planname == "Pro (Popular)"
                                       ? "pro-checkbox"
                                       : "premium-checkbox"
                                   }
                                 ></input>
-                                <label for={item._id} className="monthly">
-                                  Monthly
+                                <label for={item.planname} className="annual">
+                                  {item.period}
                                 </label>
                               </div>
-                              {item.plan_type_monthly.map((item) => {
+                              {item.plan_type_annual.map((item) => {
                                 return (
                                   <>
-                                    <div className="monthly-amount">
-                                      {item.amount}
+                                    <div className="plan-amounts">
+                                      <div className="value-wrapper">
+                                        <div className="previous-value">
+                                          {item.beforeValue}
+                                        </div>
+                                        <div className="after-value">
+                                          {item.afterDiscount}
+                                        </div>
+                                      </div>
+                                      <div className="per-value">
+                                        {item.amount}
+                                      </div>
                                     </div>
+                                    <div className="border-bottom"></div>
                                   </>
                                 );
                               })}
-                            </div>
-                          </>
-                        )}
-                         </div>
+                              <div className="monthly-wrapper pt-3">
+                                <div>
+                                  <input
+                                    type="radio"
+                                    name="click"
+                                    value="save"
+                                    CHECKED
+                                    id={item._id}
+                                    className={
+                                      item.planname == "Pro (Popular)"
+                                        ? "pro-checkbox"
+                                        : "premium-checkbox"
+                                    }
+                                  ></input>
+                                  <label for={item._id} className="monthly">
+                                    Monthly
+                                  </label>
+                                </div>
+                                {item.plan_type_monthly.map((item) => {
+                                  return (
+                                    <>
+                                      <div className="monthly-amount">
+                                        {item.amount}
+                                      </div>
+                                    </>
+                                  );
+                                })}
+                              </div>
+                            </>
+                          )}
+                        </div>
                         <div
                           className={
                             index == 0

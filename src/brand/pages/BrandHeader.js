@@ -12,7 +12,10 @@ import { styled } from "@mui/system";
 import { CssTransition } from "@mui/base/Transitions";
 import { PopupContext } from "@mui/base/Unstable_Popup";
 import PopUp from "../../components/PopUp";
+import CurrentUser from "../../CurrentUser";
 const BrandHeader = ({ toggleMenu, myState }) => {
+  const { currentUserType, avatarImage } = CurrentUser();
+
   const navigate = useNavigate();
   const btLogo = require("../../assets/icons/Group 56.png");
   const model1 = require("../../assets/images/girl1.png");
@@ -189,17 +192,17 @@ const BrandHeader = ({ toggleMenu, myState }) => {
 
             <div className="rightPart">
               <div className="talent-navbar-functions">
-                  <div
-                    onClick={() => {
-                      setMenuOpen(!menuOpen);
-                      // sendMessageToParent({ menuStatus: menuOpen });
-                    }}
-                    className="menu-icon"
-                  >
-                    <i className="fa-solid fa-bars"></i>
-                  </div>
+                <div
+                  onClick={() => {
+                    setMenuOpen(!menuOpen);
+                    // sendMessageToParent({ menuStatus: menuOpen });
+                  }}
+                  className="menu-icon"
+                >
+                  <i className="fa-solid fa-bars"></i>
+                </div>
                 <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
-                  <nav className="menu-items" >
+                  <nav className="menu-items">
                     <div className="navTxt">
                       <NavLink to="/">Home</NavLink>
                     </div>
@@ -527,10 +530,15 @@ const BrandHeader = ({ toggleMenu, myState }) => {
                 <Dropdown>
                   <MenuButton>
                     <div className="talent-profile-icon">
-                      <img
-                        src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
-                        alt=""
-                      />
+                      {!brandData?.brandImage[0] && (
+                        <img src={avatarImage} alt="" />
+                      )}
+                      {brandData?.brandImage[0] && (
+                        <img
+                          src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
+                          alt=""
+                        />
+                      )}
                     </div>
                   </MenuButton>
                   <Menu slots={{ listbox: AnimatedListbox }}>

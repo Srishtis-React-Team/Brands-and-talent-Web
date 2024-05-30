@@ -75,10 +75,11 @@ const Applicants = () => {
     };
   }
   const sortListCandidate = async (candidate) => {
-    console.log(candidate, "candidate");
+    console.log(candidate?.gigId, "candidate GigId");
     const formData = {
       talentId: candidate?.talentId,
       selectedLevel: "shortlistedCandidates",
+      gigId: candidate?.gigId,
     };
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
@@ -199,6 +200,7 @@ const Applicants = () => {
     const formData = {
       talentId: alertpop?.talentId,
       selectedLevel: "interviewInvitations",
+      gigId: alertpop?.gigId,
     };
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
@@ -239,6 +241,7 @@ const Applicants = () => {
     const formData = {
       talentId: alertpop?.talentId,
       selectedLevel: "interviewInvitations",
+      gigId: alertpop?.gigId,
     };
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
@@ -277,6 +280,7 @@ const Applicants = () => {
     const formData = {
       talentId: alertpop?.talentId,
       selectedLevel: "rejectedCandidates",
+      gigId: alertpop?.gigId,
     };
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
@@ -482,6 +486,7 @@ const Applicants = () => {
                                                   status: true,
                                                   talentId: candidate?.talentId,
                                                   label: "invite",
+                                                  jobId: candidate?.gigId,
                                                 });
                                               }}
                                             >
@@ -498,6 +503,7 @@ const Applicants = () => {
                                                   status: true,
                                                   talentId: candidate?.talentId,
                                                   label: "reject",
+                                                  jobId: candidate?.gigId,
                                                 });
                                               }}
                                             >
