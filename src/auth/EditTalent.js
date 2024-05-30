@@ -448,6 +448,16 @@ const EditTalent = () => {
 
   const [services, setServices] = useState();
 
+  const getFeatures = async () => {
+    await ApiHelper.get(API.getFeatures)
+      .then((resData) => {
+        if (resData) {
+          setFeaturesList(resData.data.data[0].features);
+        }
+      })
+      .catch((err) => {});
+  };
+
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
@@ -465,7 +475,6 @@ const EditTalent = () => {
             setKidsLegalFirstName(resData?.data?.data?.childFirstName);
             setKidsLegalLastName(resData?.data?.data?.childLastName);
             setDob(resData?.data?.data?.childDob);
-            setFeatures(resData?.data?.data?.features);
             // handleSelectedCountry({
             //   value: resData?.data?.data?.parentCountry,
             //   label: resData?.data?.data?.parentCountry,
@@ -520,45 +529,46 @@ const EditTalent = () => {
             console.log(selectedProfessionOptions, "selectedProfessionOptions");
             setSelectedProfessionsEdit(selectedProfessionOptions);
 
-            const updatedFeaturesList = featuresList.map((feature) => {
-              const matchingData = resData?.data?.data?.features?.find(
-                (data) => data.label === feature.label
+            const initialState = featuresList.reduce((acc, curr) => {
+              const initialValueObj = resData?.data?.data?.features?.find(
+                (item) => item.label === curr.label
               );
-              if (matchingData) {
-                return { ...feature, value: matchingData.value };
-              }
-              return feature;
-            });
-            setFeaturesList(updatedFeaturesList);
+              acc[curr.label] = initialValueObj ? initialValueObj.value : "";
+              return acc;
+            }, {});
+            setFeatures(initialState);
+            console.log(initialState, "initialState");
           }
         }
       })
       .catch((err) => {});
   };
 
-  const getFeatures = async () => {
-    await ApiHelper.get(API.getFeatures)
-      .then((resData) => {
-        if (resData) {
-          setFeaturesList(resData.data.data[0].features);
-        }
-      })
-      .catch((err) => {});
+  const featureFirstChange = (event, label) => {
+    const newSelectedValues = {
+      ...features,
+      [label]: event?.target?.value,
+    };
+    setFeatures(newSelectedValues);
+    handleFeaturesChange(newSelectedValues);
   };
 
-  const handleFeaturesChange = (label, value) => {
-    const updatedFeaturesList = featuresList.map((feature) => {
-      if (feature.label === label) {
-        return { ...feature, value };
-      }
-      return feature;
-    });
-    setFeaturesList(updatedFeaturesList);
+  const handleFeaturesChange = (newSelectedValues) => {
+    const updatedFeatures = featuresList?.reduce((acc, curr) => {
+      acc[curr.label] = newSelectedValues[curr.label] || "";
+      return acc;
+    }, {});
+    console.log(updatedFeatures, "updatedFeatures");
+    setFeatures(updatedFeatures);
   };
 
-  useEffect(() => {
-    // Update the initial values based on the data received
-  }, []);
+  useEffect(
+    (features) => {
+      console.log(features, "features");
+      // Update the initial values based on the data received
+    },
+    [features]
+  );
 
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
@@ -605,6 +615,7 @@ const EditTalent = () => {
   };
 
   const basicDetailsUpdate = async () => {
+    setMyState(false);
     const formData = {
       parentFirstName: parentFirstName,
       parentLastName: parentLastName,
@@ -635,6 +646,7 @@ const EditTalent = () => {
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
+            setMyState(true);
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -1194,6 +1206,7 @@ const EditTalent = () => {
   const [myState, setMyState] = useState(false);
 
   const updateProfileImage = async () => {
+    setMyState(false);
     const formData = {
       image: editProfileImageObject,
     };
@@ -1372,6 +1385,33 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Services Updated Successfully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+  const submitFeatures = async () => {
+    console.log(services, "servicessubmitServices");
+    let formData = {
+      features: features,
+    };
+    await ApiHelper.post(`${API.editKids}${talentId}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Features Updated Successfully");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -2685,30 +2725,40 @@ const EditTalent = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={6}>
               {talentData && talentData?.features?.length > 0 && (
-                <div className="features-section">
-                  {featuresList.map((item, index) => (
-                    <div key={index} className="mb-3 features-input-wrapper">
-                      <label className="form-label">{item.label}</label>
-                      <select
-                        className="form-select features-select"
-                        aria-label="Default select example"
-                        value={item.value}
-                        onChange={(e) =>
-                          handleFeaturesChange(item.label, e.target.value)
-                        }
-                      >
-                        <option value="" disabled>
-                          {item.label}
-                        </option>
-                        {item.options.map((option, idx) => (
-                          <option key={idx} value={option}>
-                            {option}
+                <>
+                  <div className="features-section">
+                    {featuresList.map((item, index) => (
+                      <div key={index} className="mb-3 features-input-wrapper">
+                        <label className="form-label">{item.label}</label>
+                        <select
+                          className="form-select features-select"
+                          aria-label="Default select example"
+                          value={features[item.label]}
+                          onChange={(e) => featureFirstChange(e, item.label)}
+                        >
+                          <option value="" disabled>
+                            {item.label}
                           </option>
-                        ))}
-                      </select>
-                    </div>
-                  ))}
-                </div>
+                          {item.options.map((option, idx) => (
+                            <option key={idx} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="add-service-btn-flex">
+                    <Button
+                      onClick={() => submitFeatures()}
+                      className="edit-profileimg-btn"
+                      variant="text"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </>
               )}
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={7}>

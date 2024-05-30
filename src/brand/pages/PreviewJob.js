@@ -265,17 +265,24 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </div>
               </div>
               <div className="job-questions-section">
-                <div className="job-feature-title">Screening Questions</div>
-                <div>
-                  <ul>
-                    {jobData?.questions &&
-                      jobData?.questions.map((question, index) => (
-                        <li className="job-benefits-values" key={index}>
-                          {question}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
+                {jobData?.questions?.length > 0 &&
+                  jobData?.questions?.some((question) => question) && (
+                    <>
+                      <div className="job-feature-title">
+                        Screening Questions
+                      </div>
+                      <div>
+                        <ul>
+                          {jobData?.questions &&
+                            jobData?.questions.map((question, index) => (
+                              <li className="job-benefits-values" key={index}>
+                                {question}
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    </>
+                  )}
               </div>
               {/* <div className="job-feature-title">Work Samples</div>
 

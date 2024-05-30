@@ -12,7 +12,12 @@ import { LoginSocialFacebook } from "reactjs-social-login";
 import { FacebookLoginButton } from "react-social-login-buttons";
 import MyFacebookLoginButton from "./facebookButton";
 import PopUp from "../components/PopUp";
+import { generateToken } from "../auth/firebase";
+
 const AdultSignup = () => {
+  useEffect(() => {
+    generateToken();
+  }, []);
   const navigate = useNavigate();
   const btLogo = require("../assets/icons/Group 56.png");
   const fbLogo = require("../assets/icons/fbLogo.png");

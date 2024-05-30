@@ -577,7 +577,11 @@ const TalentSettings = () => {
                             : "Activate",
                       });
                     }}
-                    className="edit-profileimg-btn"
+                    className={
+                      talentData?.inActive
+                        ? "edit-profileimg-btn"
+                        : "edit-profileimg-activate"
+                    }
                     variant="text"
                     style={{ textTransform: "capitalize" }}
                   >
