@@ -67,19 +67,18 @@ body {
   background-position: center center !important;
 }
 
-.accordion-button::after{
+.accordion-button::after {
   background-image: url("../images/plus_minuse.svg") !important;
   background-repeat: no-repeat;
   background-position: right center;
   transform: inherit !important;
 }
-.accordion-button.collapsed::after{
+.accordion-button.collapsed::after {
   background-image: url("../images/plus_square.svg") !important;
   background-repeat: no-repeat;
   background-position: right center;
   transform: inherit !important;
 }
-
 
 .header-items {
   flex: 1 1;
@@ -101,10 +100,10 @@ body {
   display: flex;
 }
 
-.search-canvas-top {
+/* .search-canvas-top {
   width: 100%;
   height: 175px;
-}
+} */
 .caseBox {
   border-radius: 25px;
   overflow: hidden;
@@ -1559,26 +1558,10 @@ input[type="radio"] {
   display: none;
 }
 
-
-
-.abtWraper .textAlg{
+.abtWraper .textAlg {
   display: flex;
   align-items: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* MEDIA-QUERY START */
 
@@ -2467,12 +2450,15 @@ input[type="radio"] {
 }
 
 .fa-search {
-  color: #c9c9c9;
+  color: #000;
   cursor: pointer;
 }
+
 .fa-search:hover {
+  cursor: pointer;
   color: #c2114b;
 }
+
 .header-search-icon {
   padding-right: 15px;
 }
@@ -2482,6 +2468,17 @@ input[type="radio"] {
   border: none;
   outline: none !important;
   font-size: 14px;
+}
+
+.get-booked-main {
+  margin-top: 50px;
+  background-color: #eeeeee;
+  padding-top: 40px;
+}
+
+.recent-gig-favorite {
+  padding-left: 15px;
+  padding-top: 10px;
 }
 
 @media (max-width: 430px) {

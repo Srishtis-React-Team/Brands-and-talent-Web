@@ -172,6 +172,20 @@ const Header = ({ onData }) => {
     };
   };
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const query = searchQuery.trim().toLowerCase();
+    if (query === "talents") {
+      navigate.push("/talents");
+    } else if (query === "projects") {
+      navigate.push("/");
+    } else {
+      navigate.push(`/search?query=${query}`);
+    }
+  };
+
   return (
     <>
       <div className="mobile-navbar">
@@ -394,7 +408,18 @@ const Header = ({ onData }) => {
                 </div>
               )}
 
-              {currentUser_type === "talent" && (
+              {currentUserId && currentUser_type == "talent" && (
+                <div className="navTxt" style={{ cursor: "pointer" }}>
+                  <NavLink
+                    to="/talent-dashboard"
+                    onClick={() => handleClick("")}
+                  >
+                    Get Booked
+                  </NavLink>
+                </div>
+              )}
+
+              {/* {currentUser_type === "talent" && (
                 <div className="navTxt">
                   <NavLink
                     to="/job-list"
@@ -403,7 +428,7 @@ const Header = ({ onData }) => {
                     Jobs List
                   </NavLink>
                 </div>
-              )}
+              )} */}
 
               {currentUser_type === "brand" ||
                 (!currentUserId && (
@@ -514,132 +539,11 @@ const Header = ({ onData }) => {
                     </li>
                   </ul>
                 </li>
-
-                {/* <NavLink to="/resources" onClick={() => handleClick("")}>
-              Resources
-            </NavLink> */}
-                {/* <a
-                  className="dropdown-toggle"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  data-bs-auto-close="outside"
-                >
-                  Resources
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <NavLink to="/resources" onClick={() => handleClick("")}>
-                      <a className="dropdown-item">About</a>
-                    </NavLink>
-                  </li>
-                  <li className="dropend ">
-                    <a
-                      className="dropdown-item dropdown-toggle"
-                      dropdown-toggle
-                      data-bs-toggle="dropdown"
-                    >
-                      <NavLink to="/blogs" onClick={() => handleClick("")}>
-                        Blogs
-                      </NavLink>
-                    </a>
-                    <ul className="dropdown-menu">
-                      <li>
-                        <a href="" className="dropdown-item">
-                          <NavLink to="/blogs" onClick={() => handleClick("")}>
-                            Industry News & Insights
-                          </NavLink>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" className="dropdown-item">
-                           Case Studies
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" className="dropdown-item">
-                          Talent Diaries
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" className="dropdown-item">
-                           Talent Tips & Tricks
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" className="dropdown-item">
-                           Brand Tips & Tricks
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider"></hr>
-                  </li>
-                  <li>
-                    <a className="dropdown-item">
-                      <NavLink
-                        to="/community-guidelines"
-                        onClick={() => handleClick("")}
-                      >
-                        Community Guidelines
-                      </NavLink>
-                    </a>
-                  </li>
-                </ul> */}
               </div>
             </div>
             <div className="header-functions">
-              {/* <div className="box">
-            <input type="checkbox" id="check"></input>
-            <div className="search-box">
-              <input type="text" placeholder="Type here..."></input>
-              <label htmlFor="check" className="icon">
+              <div className="searchBtn">
                 <i className="fas fa-search"></i>
-              </label>
-            </div>
-          </div> */}
-              <div
-                className="searchBtn"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasTop"
-                aria-controls="offcanvasTop"
-              >
-                <i className="fas fa-search"></i>
-              </div>
-
-              <div
-                className="offcanvas offcanvas-top search-canvas-top"
-                tabIndex="-1"
-                id="offcanvasTop"
-                aria-labelledby="offcanvasTopLabel"
-              >
-                <div className="offcanvas-header">
-                  <h5 id="offcanvasTopLabel">Search Anything</h5>
-                  <button
-                    type="button"
-                    className="btn-close text-reset"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div className="offcanvas-body">
-                  <form className="d-flex search-bootstrap">
-                    <input
-                      className="form-control me-2"
-                      type="search"
-                      placeholder="Search"
-                      aria-label="Search"
-                    ></input>
-                    <button
-                      className="btn btn-outline-success search-bootstrap-btn"
-                      type="submit"
-                    >
-                      Search
-                    </button>
-                  </form>
-                </div>
               </div>
 
               {!currentUserId && (

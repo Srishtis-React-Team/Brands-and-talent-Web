@@ -344,8 +344,6 @@
   cursor: pointer;
 }
 
-
-
 .adult-form-wrapper {
   margin: 30px 0px;
   display: flex;
@@ -634,7 +632,7 @@
 
 .recent-setone.alignDivs .userBox {
   display: flex;
-  align-items: center;
+  align-items: start;
 }
 .recent-setone.alignDivs .userBox .recent-gig-name {
   padding: 0 !important;
@@ -660,25 +658,6 @@
 .recent-setone.alignDivs .userBox .recent-gig-company {
   font-size: 14px !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .elipsis-icon {
   padding: 10px;
@@ -740,7 +719,6 @@
     margin-bottom: 100px;
   }
 
-
   .cv-section {
     margin: 15px 0px;
   }
@@ -766,7 +744,6 @@
     // margin: 15px;
     width: 100%;
   }
-
 
   .talent-popup-title {
     font-size: 17px;
@@ -850,7 +827,6 @@
       display: none;
     }
   }
-
 }
 
 .apply-now-btn {
@@ -1013,12 +989,12 @@
 .save-job-icon {
   cursor: pointer;
   color: #c2114b;
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 .remove-job-icon {
   cursor: pointer;
   color: #c2114b;
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 
 .talent-notification-main {
@@ -1200,16 +1176,6 @@
   justify-content: end;
 }
 
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 1200px) {
   .kidsform-one .kids-wrapper {
     margin: 25px 30px;
@@ -1224,29 +1190,50 @@
 }
 
 @media (max-width: 991px) {
-  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-settwo .recent-gigs-count-wrapper {
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-settwo
+    .recent-gigs-count-wrapper {
     display: inline-flex;
     padding: 0 10px 10px 0;
   }
-  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-settwo{ display: block; }
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-settwo {
+    display: block;
+  }
 
-  .view-gig-btn{ margin-right: 10px; }
+  .view-gig-btn {
+    margin-right: 10px;
+  }
 
-  .container-fluid .row .talent-column-one{ padding: 20px; }
-
-
-
-
-
-
-
-
+  .container-fluid .row .talent-column-one {
+    padding: 20px;
+  }
 }
 @media (max-width: 767px) {
-  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper { padding: 15px 0px 5px; }
-  
-  .rightBx { margin-top: 20px; }
-  .header-filter-icon{ padding-right: 0; font-size: 12px;  text-align: end; }
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper {
+    padding: 15px 0px 5px;
+  }
+
+  .rightBx {
+    margin-top: 20px;
+  }
+  .header-filter-icon {
+    padding-right: 0;
+    font-size: 12px;
+    text-align: end;
+  }
   .filter-icon {
     padding: 0px;
     width: 11px;
@@ -1257,29 +1244,72 @@
     justify-content: start;
     flex-direction: column;
   }
-  .filter-text-wrapper .recent-gigs-title{ margin-bottom: 10px; }
-
+  .filter-text-wrapper .recent-gigs-title {
+    margin-bottom: 10px;
+  }
 }
 @media (max-width: 580px) {
-  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-setone {
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-setone {
     display: flex;
     flex-direction: column;
     justify-content: left;
     align-items: start;
   }
-  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper{ position: relative; }
-  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .save-job-icon { position: absolute; right: 0; top: 30px; margin: 0;}
-  .recent-setone.alignDivs .userBox {  padding-right: 20px; }
-  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-setone .recent-gig-details {  padding-left: 10px; }
-
-
-
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper {
+    position: relative;
+  }
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .save-job-icon {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    margin: 0;
+  }
+  .recent-setone.alignDivs .userBox {
+    padding-right: 20px;
+  }
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-setone
+    .recent-gig-details {
+    padding-left: 10px;
+  }
 }
 @media (max-width: 480px) {
-  .recent-setone.alignDivs .recent-img-div { width: 40px; height: 40px; }
-  .recent-setone.alignDivs .recent-img-div img.recent-img{ min-height: 40px; min-height: 40px; }
-  .container-fluid .row .talent-column-one .recent-gigs-main .recent-gigs-wrapper .recent-setone .recent-gig-details .recent-gig-name{ font-size: 16px; }
-
+  .recent-setone.alignDivs .recent-img-div {
+    width: 40px;
+    height: 40px;
+  }
+  .recent-setone.alignDivs .recent-img-div img.recent-img {
+    min-height: 40px;
+    min-height: 40px;
+  }
+  .container-fluid
+    .row
+    .talent-column-one
+    .recent-gigs-main
+    .recent-gigs-wrapper
+    .recent-setone
+    .recent-gig-details
+    .recent-gig-name {
+    font-size: 16px;
+  }
 }
 @media (min-width: 481px) and (max-width: 768px) {
   .verification-section {
@@ -1326,4 +1356,3 @@
     }
   }
 }
-

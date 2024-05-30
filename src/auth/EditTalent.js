@@ -31,19 +31,6 @@ import Modal from "react-modal";
 import { ta } from "date-fns/locale";
 import { v4 as uuidv4 } from "uuid";
 
-const convertHtmlToEditorState = (html) => {
-  if (!html || typeof html !== "string" || !html.trim()) {
-    // Return an empty editor state if the HTML string is invalid
-    return EditorState.createEmpty();
-  }
-  const blocksFromHTML = convertFromHTML(html);
-  const contentState = ContentState.createFromBlockArray(
-    blocksFromHTML.contentBlocks,
-    blocksFromHTML.entityMap
-  );
-  return EditorState.createWithContent(contentState);
-};
-
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -2186,9 +2173,15 @@ const EditTalent = () => {
             <CustomTabPanel value={valueTabs} index={2}>
               <div className="update-portfolio-section edit-basicdetails-section-main">
                 <div className="update-portfolio-cards-wrapper">
-                  <div className="update-portfolio-title">Portfolio</div>
+                  <div className="update-portfolio-title">Portfolio </div>
+
                   {talentData?.portfolio?.length === 0 && (
-                    <div className="no-data">Please Add Files</div>
+                    <>
+                      <div className="update-portfolio-label">
+                        Add Your work samples here
+                      </div>
+                      <div className="no-data">Please Add Files</div>
+                    </>
                   )}
                   {talentData &&
                     talentData?.portfolio?.length > 0 &&
@@ -2276,8 +2269,14 @@ const EditTalent = () => {
               <div className="update-portfolio-section edit-basicdetails-section-main">
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Video & Audios</div>
+
                   {talentData?.videosAndAudios?.length === 0 && (
-                    <div className="no-data">Please Add Files</div>
+                    <>
+                      <div className="update-portfolio-label">
+                        Add Your work samples here
+                      </div>
+                      <div className="no-data">Please Add Files</div>
+                    </>
                   )}
                   {talentData &&
                     talentData?.videosAndAudios?.length > 0 &&
@@ -2375,8 +2374,14 @@ const EditTalent = () => {
             <CustomTabPanel value={valueTabs} index={4}>
               <div className="update-portfolio-cards-wrapper">
                 <div className="update-portfolio-title">CV</div>
+
                 {talentData?.cv?.length === 0 && (
-                  <div className="no-data">Please Add Files</div>
+                  <>
+                    <div className="update-portfolio-label">
+                      Add Your work samples here
+                    </div>
+                    <div className="no-data">Please Add Files</div>
+                  </>
                 )}
                 {talentData &&
                   talentData?.cv?.length > 0 &&
@@ -2476,21 +2481,20 @@ const EditTalent = () => {
                   {services &&
                     services?.length > 0 &&
                     services?.map((eachService, servicesIndex) => {
-                      const jobDescriptionhtmlContent =
-                        eachService?.editorState[0];
+                      // const jobDescriptionhtmlContent =
+                      //   eachService?.editorState[0];
+                      // const jobDescriptionContentBlocks = convertFromHTML(
+                      //   jobDescriptionhtmlContent
+                      // );
+                      // const jobDescriptionContentState = ContentState.createFromBlockArray(
+                      //   jobDescriptionContentBlocks
+                      // );
 
-                      const jobDescriptionContentBlocks = convertFromHTML(
-                        jobDescriptionhtmlContent
-                      );
-                      const jobDescriptionContentState = ContentState.createFromBlockArray(
-                        jobDescriptionContentBlocks
-                      );
+                      // const updateEditorState = EditorState.createWithContent(
+                      //   jobDescriptionContentState
+                      // );
 
-                      const updateEditorState = EditorState.createWithContent(
-                        jobDescriptionContentState
-                      );
-
-                      console.log(updateEditorState, "updateEditorState");
+                      // console.log(updateEditorState, "updateEditorState");
                       return (
                         <>
                           <div className="edit-service-section-wrapper">
@@ -2551,7 +2555,7 @@ const EditTalent = () => {
                                     editorStyle={{
                                       overflow: "hidden",
                                     }}
-                                    editorState={updateEditorState}
+                                    editorState={""}
                                     onEditorStateChange={(editorState) =>
                                       handleEditorChange(
                                         servicesIndex,

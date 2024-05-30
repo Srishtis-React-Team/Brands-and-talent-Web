@@ -148,7 +148,8 @@ const BrandLogo = () => {
       )
         .then((resData) => {
           if (resData.data.status === true) {
-            console.log(resData.data);
+            console.log(resData.data.data, "brandsSignup");
+            setBrandsLocalStorage(resData.data.data);
             // setIsLoading(false);
             setMessage("Registered SuccessFully!");
             navigate("/brand-activated", {
@@ -176,6 +177,16 @@ const BrandLogo = () => {
           }, 1000);
         });
     }
+  };
+
+  const setBrandsLocalStorage = (data) => {
+    console.log(data, "data otp");
+    localStorage.setItem("brandId", data?.brand_id);
+    localStorage.setItem("currentUser", data?.brand_id);
+    // localStorage.setItem("brandEmail", data?.data?.brandEmail);
+    // localStorage.setItem("brandToken", data?.token);
+    localStorage.setItem("currentUserType", "brand");
+    localStorage.setItem("currentUserImage", data?.brandImage[0]?.fileData);
   };
 
   useEffect(() => {

@@ -8,7 +8,22 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { NavLink } from "react-router-dom";
 import ChatBot from "../components/ChatBot";
+import CurrentUser from "../CurrentUser";
 const Dashboard = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+  } = CurrentUser();
+  console.log(
+    currentUserId,
+    "currentUserId",
+    currentUserImage,
+    "currentUserImage",
+    currentUserType,
+    "currentUserType"
+  );
   const navigate = useNavigate();
   const starIcon = require("../assets/icons/star.png");
   const whiteStar = require("../assets/icons/white_star.png");
@@ -50,6 +65,11 @@ const Dashboard = () => {
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
+  useEffect(() => {
+    console.log(message, "message openPopUp");
+    console.log(openPopUp, "openPopUp openPopUp");
+  }, []);
+
   const [All, showAll] = useState(true);
   const [featuredMembers, setFeaturedMembers] = useState(false);
   const [Actor, showActor] = useState(false);
@@ -396,8 +416,20 @@ const Dashboard = () => {
       });
   };
 
-  const handleClick = () => {
-    window.scrollTo(0, 0); // Scroll to top on link click
+  const handleClick = (data) => {
+    // window.scrollTo(0, 0);
+    if (data == "find-talent") {
+      if (!currentUserId) {
+        setMessage("You Must Be Logged In");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
+      } else if (currentUserType === "brand" && currentUserId) {
+        navigate("/find-creators");
+      }
+    }
   };
 
   const addFavorite = async (data) => {
@@ -741,9 +773,13 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="find-more wraper">
-              <div className="moreBtn">Find More</div>
-            </div>
+            {!currentUserId && (
+              <div className="find-more wraper">
+                <NavLink onClick={() => handleClick("find-talent")}>
+                  <div className="moreBtn">Find More</div>
+                </NavLink>
+              </div>
+            )}
           </div>
         </div>
 
@@ -849,9 +885,13 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="container">
-            <div className="find-more">
-              <div className="moreBtn">Find More</div>
-            </div>
+            {!currentUserId && (
+              <NavLink onClick={() => handleClick("find-talent")}>
+                <div className="find-more wraper">
+                  <div className="moreBtn">Find More</div>
+                </div>
+              </NavLink>
+            )}
           </div>
         </div>
 

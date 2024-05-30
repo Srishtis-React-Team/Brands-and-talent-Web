@@ -169,11 +169,11 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  cursor: pointer;
-  padding-left: 10px;
+  // cursor: pointer;
+  padding-left: 0px;
 }
 .campaign-name:hover {
-  text-decoration: underline;
+  // text-decoration: underline;
 }
 
 .campaign-description {
@@ -185,8 +185,8 @@
   line-height: normal;
   max-height: 150px;
   padding-bottom: 10px;
-  overflow: scroll;
-  overflow-x: hidden;
+  overflow: auto;
+  // overflow-x: hidden;
   margin-bottom: 20px;
   margin-top: 5px;
 }
@@ -515,24 +515,15 @@
   width: 100%;
 }
 
-
-
-
-
-
-
-
 @media (max-width: 767px) {
-  .top-brands-wrapper.col-md-4 { width: 25%;}
-  
-
-
+  .top-brands-wrapper.col-md-4 {
+    width: 25%;
+  }
 }
 @media (max-width: 480px) {
-  .top-brands-wrapper.col-md-4 { width: 33.2%;}
-  
-
-
+  .top-brands-wrapper.col-md-4 {
+    width: 33.2%;
+  }
 }
 @media only screen and (min-width: 1025px) and (max-width: 1200px) {
   // .brand-sidebar {
@@ -598,7 +589,7 @@
   .brand-content-main {
     padding: 20px;
     width: 100%;
-    background-color: #FFF;
+    background-color: #fff;
     border-radius: 10px;
   }
   .brand-home-one {

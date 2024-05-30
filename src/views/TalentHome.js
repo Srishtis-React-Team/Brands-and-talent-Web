@@ -109,7 +109,9 @@ const TalentHome = () => {
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
                     <i className="bi bi-person icons home-card-icons"></i>
-                    <div className="home-cards-names">Update Profile</div>
+                    <div className="home-cards-names">
+                      Create / Update Profile
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -134,7 +136,10 @@ const TalentHome = () => {
                 </div>
               </Link>
             </div>
-            <div className="col-md-4 col-lg-3 pad8" onClick={() => handleNavigation()}>
+            <div
+              className="col-md-4 col-lg-3 pad8"
+              onClick={() => handleNavigation()}
+            >
               <Link>
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
