@@ -322,11 +322,19 @@
   font-weight: 500;
   padding: 10px 0px 20px 0px;
 }
-
+.wraper {
+  float: left;
+  width: 100%;
+}
 .interview-headset {
   color: green;
   font-size: 40px;
 }
+.overall-jobs-main .campaign-description{ padding: 0;   max-height: 175px; }
+
+.overall-jobs-main .campaign-features-title { font-size: 12px; font-weight: 500; }
+
+.overall-jobs-main .campaign-company { margin-top: 12px; }
 
 .overall-jobs-main {
   background-color: #eeeeee !important;
@@ -351,7 +359,7 @@
   }
   .list-jobs-card {
     width: 100%;
-    margin: 20px 0px;
+    margin: 0px 0px 20px;
   }
   .brand-filter-section {
     padding: 20px 0px;
@@ -367,4 +375,24 @@
   .filter-btn-wrapper {
     margin-top: 0px;
   }
+}
+@media only screen and (max-width: 768px) {
+  .overall-job-list {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin: 35px 0 0;
+  }
+  .overall-job-list .campaigns-wrapper-one {  padding-bottom: 5px; }
+  .overall-job-list .campaign-features-wrapper {
+    margin-right: 10px;
+    margin-bottom: 10px !important;
+  }
+  .overall-job-list .campaign-icons-wrapper {
+    width: 35px;
+    height: 35px;
+    margin-right: 8px;
+  }
+
 }
