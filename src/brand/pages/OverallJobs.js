@@ -60,17 +60,17 @@ const OverallJobs = () => {
         <div>
           {allJobsList && allJobsList.length > 0 && (
             <>
-              <div className="overall-jobs-main">
+              <div className="overall-jobs-main wraper">
                 <div className="container">
-                  <div className="overall-job-list">
+                  <div className="overall-job-list wraper">
                     <h5>Our Jobs</h5>
-                    <div className="list-jobs-wrapper">
+                    <div className="list-jobs-wrapper wraper">
                       {allJobsList.map((job, index) => {
                         return (
                           <>
-                            <div key={index} className="list-jobs-card">
-                              <div className="recent-campaigns-wrapper">
-                                <div className="campaigns-wrapper-one">
+                            <div key={index} className="list-jobs-card wraper">
+                              <div className="recent-campaigns-wrapper wraper d-block">
+                                <div className="campaigns-wrapper-one wraper d-block">
                                   <div className="campaigns-content-wrapper">
                                     <div className="campaign-paid-wrapper">
                                       <div className="campaign-name">
@@ -150,7 +150,7 @@ const OverallJobs = () => {
                                     </div>
                                   </div>
                                 </div>
-                                <div className="campaigns-wrapper-two">
+                                <div className="campaigns-wrapper-two wraper d-block">
                                   <div className="campaign-company">
                                     <div className="campaign-company-wrapper">
                                       <div className="campaign-initial">

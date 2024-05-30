@@ -127,6 +127,7 @@
   border-style: dashed;
   border-radius: 8px;
   padding: 10px;
+  align-items: center;
   margin-right: 15px;
 }
 
@@ -639,9 +640,9 @@
     height: 40px;
     margin-right: 15px;
   }
-  .recent-campaigns-wrapper {
-    padding: 30px;
-  }
+  // .recent-campaigns-wrapper {
+  //   padding: 30px;
+  // }
 
   .campaign-company {
     display: flex;
@@ -653,6 +654,5 @@
   .campaign-company-wrapper {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
   }
 }

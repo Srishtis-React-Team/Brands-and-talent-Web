@@ -67,6 +67,20 @@ body {
   background-position: center center !important;
 }
 
+.accordion-button::after{
+  background-image: url("../images/plus_minuse.svg") !important;
+  background-repeat: no-repeat;
+  background-position: right center;
+  transform: inherit !important;
+}
+.accordion-button.collapsed::after{
+  background-image: url("../images/plus_square.svg") !important;
+  background-repeat: no-repeat;
+  background-position: right center;
+  transform: inherit !important;
+}
+
+
 .header-items {
   flex: 1 1;
   display: flex;
@@ -675,7 +689,8 @@ input[type="radio"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* height: 75px; */
+  height: auto;
+  min-height: 64px;
   top: 0;
   position: fixed;
   width: 100%;
@@ -1331,7 +1346,7 @@ input[type="radio"] {
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
   width: 100%;
-  height: 180px;
+  height: 260px;
   object-fit: cover;
 }
 
@@ -1543,6 +1558,27 @@ input[type="radio"] {
 .show-sidebar.hide-sidebar {
   display: none;
 }
+
+
+
+.abtWraper .textAlg{
+  display: flex;
+  align-items: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* MEDIA-QUERY START */
 
@@ -2723,12 +2759,6 @@ input[type="radio"] {
     cursor: pointer;
   }
 
-  .gallery-img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-  }
-
   .gallery-section {
     width: 100%;
     display: flex;
@@ -2763,12 +2793,13 @@ input[type="radio"] {
   }
 
   .tabs > div {
-    margin: 20px;
+    margin: 20px 5px;
     color: #000;
     font-size: 15px;
     font-style: normal;
     font-weight: 300;
     cursor: pointer;
+    padding: 5px 20px;
   }
 
   .white-joinnow > div {
