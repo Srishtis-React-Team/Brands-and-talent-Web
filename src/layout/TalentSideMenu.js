@@ -135,7 +135,10 @@ const TalentSideMenu = ({ myState }) => {
               {/* campaigns : <span>{jobCountNumber && <>{jobCountNumber}</>}</span> */}
             </div>
           </div>
-          <div className="upgrade-btn">Upgrade Now</div>
+
+          <Link to="/pricing">
+            <div className="upgrade-btn">Upgrade Now</div>
+          </Link>
         </div>
 
         <div className="sidenavWraper scroll">

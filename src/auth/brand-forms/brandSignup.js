@@ -12,6 +12,7 @@ import PopUp from "../../components/PopUp";
 import { LoginSocialFacebook } from "reactjs-social-login";
 import { FacebookLoginButton } from "react-social-login-buttons";
 import MyFacebookLoginButton from "../facebookButton";
+
 const BrandSignup = () => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/icons/Group 56.png");

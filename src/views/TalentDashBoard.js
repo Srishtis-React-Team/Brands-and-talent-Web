@@ -695,6 +695,7 @@ const TalentDashBoard = () => {
                 {gigsList.length && (
                   <div className="recent-gigs-main">
                     {gigsList.map((item, index) => {
+                      console.log(item, "item gigsList");
                       return (
                         <>
                           <div className="recent-gigs-wrapper">

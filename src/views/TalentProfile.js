@@ -444,99 +444,99 @@ const TalentProfile = () => {
                     </div>
                     <div className="talents-social-wrapper mt-4">
                       <div className="row">
-                      <div className="talents-social col-md-6">
-                        <div className="logoSocial">
-                          <img src={instaLogo}></img>
-                        </div>
-                        <div className="social-followers-count-section">
-                          <div className="social-count">
-                            {talentData?.instaFollowers
-                              ? talentData.instaFollowers
-                              : "N/A"}
+                        <div className="talents-social col-md-6">
+                          <div className="logoSocial">
+                            <img src={instaLogo}></img>
                           </div>
-                          <div className="followers-text">Followers</div>
-                        </div>
-                      </div>
-                      <div className="talents-social col-md-6">
-                        <div className="logoSocial">
-                          <img src={fbIcon}></img>
-                        </div>
-                        <div className="social-followers-count-section">
-                          <div className="social-count">
-                            {talentData?.facebookFollowers
-                              ? talentData.facebookFollowers
-                              : "N/A"}
+                          <div className="social-followers-count-section">
+                            <div className="social-count">
+                              {talentData?.instaFollowers
+                                ? talentData.instaFollowers
+                                : "N/A"}
+                            </div>
+                            <div className="followers-text">Followers</div>
                           </div>
-                          <div className="followers-text">Followers</div>
                         </div>
-                      </div>
-                      <div className="talents-social col-md-6">
-                        <div className="logoSocial">
-                          <img src={tiktok}></img>
-                        </div>
-                        <div className="social-followers-count-section">
-                          <div className="social-count">
-                            {talentData?.tiktokFollowers
-                              ? talentData.tiktokFollowers
-                              : "N/A"}
+                        <div className="talents-social col-md-6">
+                          <div className="logoSocial">
+                            <img src={fbIcon}></img>
                           </div>
-                          <div className="followers-text">Followers</div>
-                        </div>
-                      </div>
-                      <div className="talents-social col-md-6">
-                        <div className="logoSocial">
-                          <img src={linkdin}></img>
-                        </div>
-                        <div className="social-followers-count-section">
-                          <div className="social-count">
-                            {talentData?.linkedinFollowers
-                              ? talentData.linkedinFollowers
-                              : "N/A"}
+                          <div className="social-followers-count-section">
+                            <div className="social-count">
+                              {talentData?.facebookFollowers
+                                ? talentData.facebookFollowers
+                                : "N/A"}
+                            </div>
+                            <div className="followers-text">Followers</div>
                           </div>
-                          <div className="followers-text">Followers</div>
                         </div>
-                      </div>
-                      <div className="talents-social col-md-6">
-                        <div className="logoSocial">
-                          <img src={twitterLogo}></img>
+                        <div className="talents-social col-md-6">
+                          <div className="logoSocial">
+                            <img src={tiktok}></img>
+                          </div>
+                          <div className="social-followers-count-section">
+                            <div className="social-count">
+                              {talentData?.tiktokFollowers
+                                ? talentData.tiktokFollowers
+                                : "N/A"}
+                            </div>
+                            <div className="followers-text">Followers</div>
+                          </div>
                         </div>
+                        <div className="talents-social col-md-6">
+                          <div className="logoSocial">
+                            <img src={linkdin}></img>
+                          </div>
+                          <div className="social-followers-count-section">
+                            <div className="social-count">
+                              {talentData?.linkedinFollowers
+                                ? talentData.linkedinFollowers
+                                : "N/A"}
+                            </div>
+                            <div className="followers-text">Followers</div>
+                          </div>
+                        </div>
+                        <div className="talents-social col-md-6">
+                          <div className="logoSocial">
+                            <img src={twitterLogo}></img>
+                          </div>
 
-                        <div className="social-followers-count-section">
-                          <div className="social-count">
-                            {talentData?.twitterFollowers
-                              ? talentData.twitterFollowers
-                              : "N/A"}
+                          <div className="social-followers-count-section">
+                            <div className="social-count">
+                              {talentData?.twitterFollowers
+                                ? talentData.twitterFollowers
+                                : "N/A"}
+                            </div>
+                            <div className="followers-text">Followers</div>
                           </div>
-                          <div className="followers-text">Followers</div>
                         </div>
-                      </div>
-                      <div className="talents-social col-md-6">
-                        <div className="logoSocial">
-                          <img src={threadLogo}></img>
-                        </div>
+                        <div className="talents-social col-md-6">
+                          <div className="logoSocial">
+                            <img src={threadLogo}></img>
+                          </div>
 
-                        <div className="social-followers-count-section">
-                          <div className="social-count">
-                            {talentData?.threadsFollowers
-                              ? talentData.threadsFollowers
-                              : "N/A"}
+                          <div className="social-followers-count-section">
+                            <div className="social-count">
+                              {talentData?.threadsFollowers
+                                ? talentData.threadsFollowers
+                                : "N/A"}
+                            </div>
+                            <div className="followers-text">Followers</div>
                           </div>
-                          <div className="followers-text">Followers</div>
                         </div>
-                      </div>
-                      <div className="talents-social col-md-6">
-                        <div className="logoSocial">
-                          <img src={youtubeLogo}></img>
-                        </div>
+                        <div className="talents-social col-md-6">
+                          <div className="logoSocial">
+                            <img src={youtubeLogo}></img>
+                          </div>
 
-                        <div className="social-followers-count-section">
-                          <div className="social-count">
-                            {talentData?.youtubeFollowers
-                              ? talentData.youtubeFollowers
-                              : "N/A"}
+                          <div className="social-followers-count-section">
+                            <div className="social-count">
+                              {talentData?.youtubeFollowers
+                                ? talentData.youtubeFollowers
+                                : "N/A"}
+                            </div>
+                            <div className="followers-text">Followers</div>
                           </div>
-                          <div className="followers-text">Followers</div>
-                        </div>
                         </div>
                       </div>
                     </div>
@@ -576,9 +576,13 @@ const TalentProfile = () => {
                             ></button>
                           </div>
                           <div className="modal-body">
-                            <div className="modal-title " style={{ fontSize: "18px" }}>
+                            <div
+                              className="modal-title "
+                              style={{ fontSize: "18px" }}
+                            >
                               Invite {talentData?.preferredChildFirstname}
-                              {talentData?.preferredChildLastName} to Apply to your Job
+                              {talentData?.preferredChildLastName} to Apply to
+                              your Job
                             </div>
 
                             <div className="select-job-invite mt-4">
@@ -586,7 +590,8 @@ const TalentProfile = () => {
                                 htmlFor="exampleFormControlTextarea1"
                                 className="form-label"
                               >
-                                Select Job to invite<span className="mandatory">*</span>
+                                Select Job to invite
+                                <span className="mandatory">*</span>
                               </label>
                               <Select
                                 placeholder="Select Job to invite"
@@ -654,7 +659,8 @@ const TalentProfile = () => {
                           <>
                             <div key={index}>
                               <div className="talent-profession-name">
-                                {item?.value} <span>(Rates Are Negotiable)</span>
+                                {item?.value}{" "}
+                                <span>(Rates Are Negotiable)</span>
                               </div>
                               <div className="talent-profession-value">
                                 $ {item?.perHourSalary} per hour{" "}
@@ -779,7 +785,7 @@ const TalentProfile = () => {
                       {portofolio && (
                         <>
                           <div className="portofolio-section">
-                            <div className="portofolio-title">Portofolio</div>
+                            <div className="portofolio-title">Portfolio</div>
                             <div
                               className="view-all"
                               onClick={(e) => {
@@ -795,7 +801,9 @@ const TalentProfile = () => {
                             )}
                           </div>
                           <div className="portofolio-section">
-                            <div className="portofolio-title">Social media posts</div>
+                            <div className="portofolio-title">
+                              Social media posts
+                            </div>
                             <div className="view-all">View All</div>
                           </div>
                           <CardCarousel />
@@ -813,9 +821,9 @@ const TalentProfile = () => {
                                 Studio Shoot for Unrecognisable Ecommerce
                               </div>
                               <div className="description">
-                                Kate is a delight to work with, beautiful both punctual
-                                & professional. She knew exactly what was required and
-                                everything was effortless.
+                                Kate is a delight to work with, beautiful both
+                                punctual & professional. She knew exactly what
+                                was required and everything was effortless.
                               </div>
                             </div>
                             <div className="booked-btn">
@@ -829,13 +837,18 @@ const TalentProfile = () => {
                           <ServicesCarousel talentData={talentData} />
 
                           <div className="portofolio-section">
-                            <div className="portofolio-title">Videos & Audios</div>
+                            <div className="portofolio-title">
+                              Videos & Audios
+                            </div>
                             <div className="view-all">View All</div>
                           </div>
 
                           <div className="service-list-main">
                             {videoAudioList.map((item) => (
-                              <div className="item model-picture-wrapper" key={item.id}>
+                              <div
+                                className="item model-picture-wrapper"
+                                key={item.id}
+                              >
                                 {item.type === "video" && (
                                   <video className="video-style " controls>
                                     <source
@@ -873,7 +886,9 @@ const TalentProfile = () => {
                                     <div className="cv-card" key={pdf.title}>
                                       <div className="d-flex align-items-center">
                                         <i className="fa-solid fa-file"></i>
-                                        <div className="fileName">{pdf.title}</div>
+                                        <div className="fileName">
+                                          {pdf.title}
+                                        </div>
                                       </div>
                                       <button
                                         className="view-cv"
@@ -904,7 +919,10 @@ const TalentProfile = () => {
                                 return (
                                   <>
                                     <div className="col-lg-3 col-md-4 padSpc">
-                                      <div className="photos-gallery-image" key={index}>
+                                      <div
+                                        className="photos-gallery-image"
+                                        key={index}
+                                      >
                                         <img
                                           className=""
                                           src={`${API.userFilePath}${image}`}
@@ -932,7 +950,10 @@ const TalentProfile = () => {
                         })} */}
 
                           {videoAudioList.map((item) => (
-                            <div className="item model-picture-wrapper" key={item.id}>
+                            <div
+                              className="item model-picture-wrapper"
+                              key={item.id}
+                            >
                               {item.type === "video" && (
                                 <video className="video-style" controls>
                                   <source
@@ -988,7 +1009,9 @@ const TalentProfile = () => {
                                     <table>
                                       <tbody>
                                         {featuresList
-                                          ?.slice(Math.ceil(featuresList?.length / 2))
+                                          ?.slice(
+                                            Math.ceil(featuresList?.length / 2)
+                                          )
                                           .map((feature, index) => (
                                             <tr key={feature.label}>
                                               <td>{feature.label}</td>
@@ -1013,7 +1036,9 @@ const TalentProfile = () => {
                                   <div className="cv-card" key={pdf.title}>
                                     <div className="d-flex align-items-center">
                                       <i className="fa-solid fa-file"></i>
-                                      <div className="fileName">{pdf.title}</div>
+                                      <div className="fileName">
+                                        {pdf.title}
+                                      </div>
                                     </div>
                                     <button
                                       className="view-cv"
@@ -1039,14 +1064,23 @@ const TalentProfile = () => {
                           {reviewsList?.map((item, index) => {
                             return (
                               <div className="col-md-6">
-                                <div className="model-review-wrapper col-md-6" key={index}>
+                                <div
+                                  className="model-review-wrapper col-md-6"
+                                  key={index}
+                                >
                                   <div className="review-date">{item.date}</div>
-                                  <div className="review-title">{item.title}</div>
-                                  <div className="review-content">{item.description}</div>
+                                  <div className="review-title">
+                                    {item.title}
+                                  </div>
+                                  <div className="review-content">
+                                    {item.description}
+                                  </div>
                                   <div className="reviewer-section">
                                     <div className="reviewers-rating">
                                       {item.rating.map((item, index) => {
-                                        return <img key={index} src={pinkStar}></img>;
+                                        return (
+                                          <img key={index} src={pinkStar}></img>
+                                        );
                                       })}
                                     </div>
                                     <div className="reviewer-details">

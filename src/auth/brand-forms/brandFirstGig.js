@@ -8,6 +8,8 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import Axios from "axios";
 import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
+import { generateToken } from "../firebase";
+
 const BrandFirstGig = () => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/icons/Group 56.png");
@@ -17,6 +19,10 @@ const BrandFirstGig = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [position, setPosition] = useState("");
   const [positionError, setPositionError] = useState(false);
+
+  useEffect(() => {
+    generateToken();
+  }, []);
 
   const positionOptions = [
     "1 job",

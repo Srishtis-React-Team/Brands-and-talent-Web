@@ -28,6 +28,7 @@ const TalentPreviewJob = () => {
   const getJobsByID = async () => {
     await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
       .then((resData) => {
+        console.log(resData.data.data, "getJobsByID");
         setJobData(resData.data.data);
       })
       .catch((err) => {});
@@ -151,9 +152,9 @@ const TalentPreviewJob = () => {
                 )}
               </div>
             </div>
-            {/* <div className="easy-apply-section">
+            <div className="easy-apply-section">
               <div className="easy-apply-btn">Easy Apply</div>
-            </div> */}
+            </div>
           </div>
           <div className="preview-section-two">
             <div className="company-name">{jobData?.hiringCompany}</div>
