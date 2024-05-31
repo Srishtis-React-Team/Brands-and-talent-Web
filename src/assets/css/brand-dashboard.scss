@@ -150,6 +150,7 @@
         font-style: normal;
         font-weight: 600;
         line-height: normal;
+        padding-bottom: 0;
       }
       .talent-category {
         font-size: 13px;
@@ -243,7 +244,9 @@
 .not-sidebar .talent-profile {
   display: none;
 }
-
+.list-jobs-card .recent-img-div {
+  margin-right: 15px;
+}
 .not-sidebar .brand-menu-wrapper {
   display: none;
 }

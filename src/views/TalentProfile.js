@@ -396,7 +396,7 @@ const TalentProfile = () => {
               <div className="col-md-4 col-lg-3 pr-0">
                 <div className="talent-wrapper">
                   <div className="talent-backdrop">
-                    <img className="talent-img-backdrop" src={model9}></img>
+                    {/* <img className="talent-img-backdrop" src={model9}></img> */}
                     <div className="profImg">
                       {talentData && talentData?.image && (
                         <img

@@ -319,19 +319,20 @@
   display: flex;
 }
 .talent-backdrop .profImg{
+
   border: 2px solid #c2114b;
   width: 135px;
   height: 135px;
   border-radius: 100px;
   overflow: hidden;
-  margin: 0;
-
-  position: absolute;
-  top: 50%;
+  margin: 0 auto;
+  /* position: absolute; */
+  /* top: 50%; */
+  margin-top: 35px;
 }
 .talent-backdrop .profImg .talent-img {
   width: 100%;
-  min-height: 100px;
+  min-height: 135px;
   object-fit: cover;
 }
 
@@ -340,7 +341,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 73px 0px 5px 0px;
+  padding: 10px 0px 15px 0px;
 }
 
 .talent-status {
