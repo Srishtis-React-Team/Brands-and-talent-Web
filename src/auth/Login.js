@@ -117,8 +117,8 @@ const Login = () => {
       setIsLoading(true);
       await ApiHelper.post(API.brandsLogin, formData)
         .then((resData) => {
-          console.log("brandLogin response", resData.status);
-          if (resData.status === 200) {
+          console.log("brandLogin response", resData);
+          if (resData.data.status === true) {
             console.log("called");
             setIsLoading(false);
             setMessage("Logged In SuccessFully!");

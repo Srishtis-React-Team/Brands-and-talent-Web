@@ -122,11 +122,15 @@ const TalentProfile = () => {
     const storedUserId = localStorage.getItem("userId");
     setUserId(storedUserId);
     if (selectedTalent?._id) {
-      getTalentById();
+      getTalentById(selectedTalent?._id);
       fetchPhotos();
       fetchVideoAudios();
       fetchFeatures();
       fetchCV();
+    } else if (storedUserId) {
+      getTalentById(storedUserId);
+    } else if (queryString) {
+      getTalentById(queryString);
     }
   }, [selectedTalent]);
 
@@ -215,12 +219,8 @@ const TalentProfile = () => {
       });
   };
 
-  const getTalentById = async () => {
-    await ApiHelper.post(
-      `${API.getTalentById}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
-      }`
-    )
+  const getTalentById = async (talent_id) => {
+    await ApiHelper.post(`${API.getTalentById}${talent_id}`)
       .then((resData) => {
         if (resData) {
           console.log(resData, "resData talentDataProfile");
@@ -398,14 +398,14 @@ const TalentProfile = () => {
                   <div className="talent-backdrop">
                     <img className="talent-img-backdrop" src={model9}></img>
                     <div className="profImg">
-                      {!talentData?.image && (
-                        <img className="talent-img" src={avatarImage}></img>
-                      )}
-                      {talentData?.image && (
+                      {talentData && talentData?.image && (
                         <img
                           className="talent-img"
                           src={`${API.userFilePath}${talentData?.image?.fileData}`}
                         ></img>
+                      )}
+                      {!talentData && !talentData?.image && (
+                        <img className="talent-img" src={avatarImage}></img>
                       )}
                     </div>
                     {/* <div className="talent-status">

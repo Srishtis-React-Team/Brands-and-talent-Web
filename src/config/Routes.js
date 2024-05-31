@@ -78,6 +78,7 @@ function Routing() {
       <Route path="/job-list" element={<OverallJobs />}></Route>
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/reset-password/brand/:token" element={<ResetPassword />} />
       <Route path="/success-password" element={<PasswordSuccess />} />
       <Route path="/talent-dashboard" element={<TalentDashBoard />} />
       <Route path="/talent-signup-basic-details" element={<KidsformOne />} />

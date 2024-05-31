@@ -1563,6 +1563,51 @@ input[type="radio"] {
   align-items: center;
 }
 
+.search-path-options {
+  padding: 15px;
+  margin: 15px 0px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 6px;
+}
+
+.search-path-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 3px;
+}
+
+.search-path-wrapper:hover {
+  background-color: rgb(255, 180, 180);
+  cursor: pointer;
+}
+
+.search-path-icon {
+  font-size: 16px;
+  color: #c2114b;
+}
+.close-icon {
+  cursor: pointer;
+}
+
+.search-path-labels {
+  color: #3d3d3d;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  font-family: sans-serif;
+  cursor: pointer;
+  padding-left: 10px;
+}
+.search-path-labels:hover {
+  color: #000;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  font-family: sans-serif;
+}
+
 /* MEDIA-QUERY START */
 
 @media (max-width: 991px) {
