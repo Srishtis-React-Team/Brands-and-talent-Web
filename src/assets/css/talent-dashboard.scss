@@ -76,12 +76,12 @@
               .recent-gig-count-details {
                 padding-left: 10px;
                 .recent-gigs-count {
-                  min-width: 50px;
+                  min-width: 55px;
                   color: #c2114b;
                   font-size: 14px;
                   font-style: normal;
                   font-weight: 600;
-                  line-height: normal;
+                  line-height: 17px;
                 }
                 .recent-gig-name {
                   font-size: 13px;
@@ -266,12 +266,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  .features-input-wrapper {
-    margin-right: 20px;
-    min-width: 30% !important;
-    .features-select {
-    }
-  }
+
 }
 
 .modal-backdrop.show {
@@ -1124,6 +1119,19 @@
   transition: all 0.3s ease;
 }
 
+.talentNot .talent-notification-main, .talentNot .job-alert-main{ margin: 0; width: 100%; }
+
+.talentNot .job-alert-title{ padding: 0 15px; text-align: center;  margin-bottom: 15px; }
+
+.talentNot .css-19kzrtu{
+  padding: 25px 0;
+}
+.edit_talentprofile .MuiButtonBase-root{
+  font-family: "Open Sans", sans-serif !important;
+}
+.edit_talentprofile .MuiButtonBase-root.Mui-selected{
+  color: #000;
+}
 .home-cards-wrapper:hover {
   .home-cards-names {
     color: #c2114b;
