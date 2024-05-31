@@ -8,24 +8,6 @@ import Header from "../layout/header";
 import { useParams } from "react-router-dom";
 
 const ResetPassword = () => {
-  const urlX =
-    "https://hybrid.sicsglobal.com/project/brandsandtalent/reset-password/brand/7afd61b4c2a13679efb0b87b0ed701da7cd4a091";
-
-  // Split the URL by '/'
-  const parts = urlX.split("/");
-
-  // Find the index of "reset-password"
-  const resetPasswordIndex = parts.indexOf("reset-password");
-
-  // The type is the part after "reset-password" (index + 1)
-  const type = parts[resetPasswordIndex + 1]; // 'brand'
-
-  // The token is the part after the type (index + 1)
-  const token = parts[resetPasswordIndex + 2]; // 'dfs5345ertger56trte4'
-
-  console.log("Type:", type);
-  console.log("Token:", token);
-
   const btLogo = require("../assets/icons/Group 56.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -40,11 +22,22 @@ const ResetPassword = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
 
   // Get the current URL
-  const url = window.location.href;
-  console.log(url, "url");
-  const queryString = url.split("?")[1];
+  const windowUrl = window.location.href;
+  console.log(windowUrl, "windowUrl");
+  const queryString = windowUrl.split("?")[1];
   console.log("Search queryString:", queryString);
   console.log("Search queryString:", typeof queryString);
+
+  // Split the URL path by '/'
+  const pathParts = windowUrl.split("/");
+
+  // Extract type and token from the pathParts array
+  const userType = pathParts[4]; // "brand"
+  const token = pathParts[5]; // "38e9e46b425e7bcbbcaf9d9ecd8adf4242bde1c8"
+
+  console.log("Type: extracted", userType);
+  console.log("Token: extracted", token);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (queryString) {
@@ -80,35 +73,97 @@ const ResetPassword = () => {
   };
 
   const resetPassword = async (enteredOTP) => {
-    const formData = {
-      password: confirmPassword,
-      resetPasswordToken: paramsValue,
-    };
-    setIsLoading(true);
-    console.log(formData, "formData kidsLogin");
-    await ApiHelper.post(API.resetPassword, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          setIsLoading(false);
-          setMessage("Password Reset Successfull!");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            navigate(`/success-password?${paramsValue}`);
-          }, 2000);
-        } else if (resData.data.status === false) {
-          console.log("Error Occured Goback And Try Again!");
-          setIsLoading(false);
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (userType == "brand") {
+      const formData = {
+        password: confirmPassword,
+        resetPasswordToken: token,
+      };
+      setIsLoading(true);
+      console.log(formData, "formData kidsLogin");
+      await ApiHelper.post(API.brandsResetPassword, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Password Reset Successfull!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              navigate(`/success-password?${paramsValue}`);
+            }, 2000);
+          } else if (resData.data.status === false) {
+            console.log("Error Occured Goback And Try Again!");
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (userType == "adult") {
+      const formData = {
+        password: confirmPassword,
+        resetPasswordToken: paramsValue,
+      };
+      setIsLoading(true);
+      console.log(formData, "formData kidsLogin");
+      await ApiHelper.post(API.adultResetPassword, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Password Reset Successfull!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              navigate(`/success-password?${paramsValue}`);
+            }, 2000);
+          } else if (resData.data.status === false) {
+            console.log("Error Occured Goback And Try Again!");
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      const formData = {
+        password: confirmPassword,
+        resetPasswordToken: paramsValue,
+      };
+      setIsLoading(true);
+      console.log(formData, "formData kidsLogin");
+      await ApiHelper.post(API.resetPassword, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Password Reset Successfull!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              navigate(`/success-password?${paramsValue}`);
+            }, 2000);
+          } else if (resData.data.status === false) {
+            console.log("Error Occured Goback And Try Again!");
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -180,7 +235,7 @@ const ResetPassword = () => {
           </div>
         </div>
         <div className="reset-logo">
-          <img src={btLogo} alt="" />
+          <img className="btLogo" src={btLogo} alt="" />
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

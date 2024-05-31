@@ -144,7 +144,7 @@ const ForgotPassword = () => {
           </div>
         </div>
         <div className="forgot-logo">
-          <img src={btLogo} alt="" />
+          <img className="btLogo" src={btLogo} alt="" />
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

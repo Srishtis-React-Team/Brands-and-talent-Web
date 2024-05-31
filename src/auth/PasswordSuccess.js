@@ -50,7 +50,7 @@ const PasswordSuccess = () => {
           </div>
         </div>
         <div className="success-pass-logo">
-          <img src={btLogo} alt="" />
+          <img className="btLogo" src={btLogo} alt="" />
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

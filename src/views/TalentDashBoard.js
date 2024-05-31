@@ -75,7 +75,6 @@ const TalentDashBoard = () => {
   console.log(" queryString:", queryString);
 
   useEffect(() => {
-    getRecentGigs();
     getTopBrands();
     const storedUserId = localStorage.getItem("userId");
     console.log(storedUserId, "storedUserId");
@@ -99,6 +98,7 @@ const TalentDashBoard = () => {
   };
 
   const getRecentGigs = async () => {
+    // alert("getRecentGigs");
     const formData = {
       talentId: userId,
     };
@@ -160,6 +160,9 @@ const TalentDashBoard = () => {
   useEffect(() => {
     setTalentId(localStorage.getItem("userId"));
     console.log(talentId, "brandId");
+    if (talentId) {
+    }
+    getRecentGigs();
   }, [talentId]);
 
   const openSignup = () => {
