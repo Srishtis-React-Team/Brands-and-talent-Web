@@ -235,7 +235,7 @@ const TalentNotification = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        <div className="brand-content-main boxBg">
+        <div className="brand-content-main boxBg talentNot">
           <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs
