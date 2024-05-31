@@ -1474,7 +1474,7 @@ const EditTalent = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        <div className="brand-content-main boxBg">
+        <div className="brand-content-main boxBg edit_talentprofile">
           <div className="create-job-title">Edit Profile</div>
 
           <Box sx={{ width: "100%" }}>
@@ -1528,21 +1528,23 @@ const EditTalent = () => {
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
               <div className="profile-image-edit-section edit-basicdetails-section-main">
-                <img
-                  className="profile-image-edit"
-                  src={`${API.userFilePath}${editProfileImage}`}
-                  alt=""
-                />
-                <div className="image-edit-icon" onClick={File}>
-                  <input
-                    type="file"
-                    className="select-cv-input"
-                    id="profile-image"
-                    accept="image/*"
-                    onChange={profileUpload}
-                    ref={fileInputRef}
+                <div className="profileImg">
+                  <img
+                    className="profile-image-edit"
+                    src={`${API.userFilePath}${editProfileImage}`}
+                    alt=""
                   />
-                  <i className="bi bi-pencil-fill profile-edit-icon"></i>
+                  <div className="image-edit-icon" onClick={File}>
+                    <input
+                      type="file"
+                      className="select-cv-input"
+                      id="profile-image"
+                      accept="image/*"
+                      onChange={profileUpload}
+                      ref={fileInputRef}
+                    />
+                    <i className="bi bi-pencil-fill profile-edit-icon"></i>
+                  </div>
                 </div>
                 <div className="btn-img-edit-wrapper">
                   <Button
@@ -2172,287 +2174,313 @@ const EditTalent = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
               <div className="update-portfolio-section edit-basicdetails-section-main">
-                <div className="update-portfolio-cards-wrapper">
-                  <div className="update-portfolio-title">Portfolio </div>
+               
+                  <div className="update-portfolio-cards-wrapper">
+                    <div className="update-portfolio-title">Portfolio </div>
 
-                  {talentData?.portfolio?.length === 0 && (
-                    <>
-                      <div className="update-portfolio-label">
-                        Add Your work samples here
-                      </div>
-                      <div className="no-data">Please Add Files</div>
-                    </>
-                  )}
-                  {talentData &&
-                    talentData?.portfolio?.length > 0 &&
-                    talentData?.portfolio?.map((item) => {
-                      return (
-                        <>
-                          <div className="update-portfolio-cards">
-                            <div className="update-portfolio-icon">
-                              <div className="file-section">
-                                {item.type === "image" && (
-                                  <div className="fileType">
-                                    <i className="bi bi-card-image"></i>
+                    {talentData?.portfolio?.length === 0 && (
+                      <>
+                        <div className="update-portfolio-label">
+                          Add Your work samples here
+                        </div>
+                        
+                        <div className="no-data">Please Add Files</div>
+                       
+                      </>
+                      
+                    )}
+                     <div className="row">
+                    {talentData &&
+                      talentData?.portfolio?.length > 0 &&
+                      talentData?.portfolio?.map((item) => {
+                        return (
+                          <>
+                            <div className="col-md-6">
+                              <div className="update-portfolio-cards">
+                                <div className="update-portfolio-icon">
+                                  <div className="file-section">
+                                    {item.type === "image" && (
+                                      <div className="fileType">
+                                        <i className="bi bi-card-image"></i>
+                                      </div>
+                                    )}
+                                    <div className="update-portfolio-fileName">
+                                      {item.title}
+                                    </div>
+                                    <div className="update-portfolio-action">
+                                      <i
+                                        className="bi bi-three-dots-vertical"
+                                        type="button"
+                                        id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                      ></i>
+                                      <ul
+                                        className="dropdown-menu"
+                                        aria-labelledby="dropdownMenuButton1"
+                                      >
+                                        <li>
+                                          <a
+                                            className="dropdown-item"
+                                            onClick={() => viewUpdateFile(item)}
+                                          >
+                                            View
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a
+                                            className="dropdown-item"
+                                            onClick={(e) => {
+                                              setAlertpop({
+                                                status: true,
+                                                item: item,
+                                                label: "delete",
+                                                eachService: null,
+                                              });
+                                            }}
+                                          >
+                                            Delete
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </div>
                                   </div>
-                                )}
-                                <div className="update-portfolio-fileName">
-                                  {item.title}
-                                </div>
-                                <div className="update-portfolio-action">
-                                  <i
-                                    className="bi bi-three-dots-vertical"
-                                    type="button"
-                                    id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                  ></i>
-                                  <ul
-                                    className="dropdown-menu"
-                                    aria-labelledby="dropdownMenuButton1"
-                                  >
-                                    <li>
-                                      <a
-                                        className="dropdown-item"
-                                        onClick={() => viewUpdateFile(item)}
-                                      >
-                                        View
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        className="dropdown-item"
-                                        onClick={(e) => {
-                                          setAlertpop({
-                                            status: true,
-                                            item: item,
-                                            label: "delete",
-                                            eachService: null,
-                                          });
-                                        }}
-                                      >
-                                        Delete
-                                      </a>
-                                    </li>
-                                  </ul>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </>
-                      );
-                    })}
-                  <div className="add-portfoli-section">
-                    <div className="add-portfolia-btn">
-                      <input
-                        type="file"
-                        className="select-cv-input"
-                        id="profile-image"
-                        accept="image/*"
-                        onChange={newPortfolioUpload}
-                        ref={portfolioFileInputRef}
-                      />
-                      <Button
-                        onClick={portfolioFile}
-                        className="edit-profileimg-btn"
-                        variant="text"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        Add Portfolio
-                      </Button>
+                          </>
+                        );
+                      })}
+                      </div>
+                    <div className="add-portfoli-section">
+                      <div className="add-portfolia-btn">
+                        <input
+                          type="file"
+                          className="select-cv-input"
+                          id="profile-image"
+                          accept="image/*"
+                          onChange={newPortfolioUpload}
+                          ref={portfolioFileInputRef}
+                        />
+                        <Button
+                          onClick={portfolioFile}
+                          className="edit-profileimg-btn"
+                          variant="text"
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          Add Portfolio
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={3}>
               <div className="update-portfolio-section edit-basicdetails-section-main">
-                <div className="update-portfolio-cards-wrapper">
-                  <div className="update-portfolio-title">Video & Audios</div>
+                
+                    <div className="update-portfolio-cards-wrapper">
+                      <div className="update-portfolio-title">Video & Audios</div>
+                      <div className="row">
+                  <div className="col-md-6">
 
-                  {talentData?.videosAndAudios?.length === 0 && (
-                    <>
-                      <div className="update-portfolio-label">
-                        Add Your work samples here
-                      </div>
-                      <div className="no-data">Please Add Files</div>
-                    </>
-                  )}
-                  {talentData &&
-                    talentData?.videosAndAudios?.length > 0 &&
-                    talentData?.videosAndAudios?.map((item) => {
-                      return (
+
+                      {talentData?.videosAndAudios?.length === 0 && (
                         <>
-                          <div className="update-portfolio-cards">
-                            <div className="update-portfolio-icon">
-                              <div className="file-section">
-                                {item.type === "audio" && (
-                                  <div className="fileType">
-                                    <i className="bi bi-mic-fill"></i>
-                                  </div>
-                                )}
-                                {item.type === "video" && (
-                                  <div className="fileType">
-                                    <i className="bi bi-play-circle-fill"></i>
-                                  </div>
-                                )}
-                                {item.type === "document" && (
-                                  <div className="fileType">
-                                    <i className="bi bi-file-earmark-richtext"></i>
-                                  </div>
-                                )}
-                                <div className="update-portfolio-fileName">
-                                  {item.title}
-                                </div>
-                                <div className="update-portfolio-action">
-                                  <i
-                                    className="bi bi-three-dots-vertical"
-                                    type="button"
-                                    id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                  ></i>
-                                  <ul
-                                    className="dropdown-menu"
-                                    aria-labelledby="dropdownMenuButton1"
-                                  >
-                                    <li>
-                                      <a
-                                        className="dropdown-item"
-                                        onClick={() => viewUpdateFile(item)}
-                                      >
-                                        View
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        className="dropdown-item"
-                                        onClick={(e) => {
-                                          setAlertpop({
-                                            status: true,
-                                            item: item,
-                                            label: "delete",
-                                            eachService: null,
-                                          });
-                                        }}
-                                      >
-                                        Delete
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="update-portfolio-action"></div>
+                          <div className="update-portfolio-label">
+                            Add Your work samples here
                           </div>
+                          <div className="no-data">Please Add Files</div>
                         </>
-                      );
-                    })}
-                  <div className="add-portfoli-section">
-                    <div className="add-portfolia-btn">
-                      <input
-                        type="file"
-                        className="select-cv-input"
-                        id="profile-image"
-                        accept="audio/*,video/*"
-                        onChange={newVideoUpload}
-                        ref={videoFileInputRef}
-                      />
-                      <Button
-                        onClick={videoFile}
-                        className="edit-profileimg-btn"
-                        variant="text"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        Add Videos & Audios
-                      </Button>
+                      )}
+                      {talentData &&
+                        talentData?.videosAndAudios?.length > 0 &&
+                        talentData?.videosAndAudios?.map((item) => {
+                          return (
+                            <>
+                              <div className="update-portfolio-cards">
+                                <div className="update-portfolio-icon">
+                                    <div className="file-section">
+                                        {item.type === "audio" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-mic-fill"></i>
+                                          </div>
+                                        )}
+                                        {item.type === "video" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-play-circle-fill"></i>
+                                          </div>
+                                        )}
+                                        {item.type === "document" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-file-earmark-richtext"></i>
+                                          </div>
+                                        )}
+                                        <div className="update-portfolio-fileName">
+                                          {item.title}
+                                        </div>
+
+                                        <div className="update-portfolio-action">
+                                          <i
+                                            className="bi bi-three-dots-vertical"
+                                            type="button"
+                                            id="dropdownMenuButton1"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                          ></i>
+                                          <ul
+                                            className="dropdown-menu"
+                                            aria-labelledby="dropdownMenuButton1"
+                                          >
+                                            <li>
+                                              <a
+                                                className="dropdown-item"
+                                                onClick={() => viewUpdateFile(item)}
+                                              >
+                                                View
+                                              </a>
+                                            </li>
+                                            <li>
+                                              <a
+                                                className="dropdown-item"
+                                                onClick={(e) => {
+                                                  setAlertpop({
+                                                    status: true,
+                                                    item: item,
+                                                    label: "delete",
+                                                    eachService: null,
+                                                  });
+                                                }}
+                                              >
+                                                Delete
+                                              </a>
+                                            </li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                                 </div>
+
+                                <div className="update-portfolio-action"></div>
+                              </div>
+                            </>
+                          );
+                        })}
+                     
+                      </div>
                     </div>
-                  </div>
+
+                    <div className="add-portfoli-section">
+                        <div className="add-portfolia-btn">
+                          <input
+                            type="file"
+                            className="select-cv-input"
+                            id="profile-image"
+                            accept="audio/*,video/*"
+                            onChange={newVideoUpload}
+                            ref={videoFileInputRef}
+                          />
+                          <Button
+                            onClick={videoFile}
+                            className="edit-profileimg-btn"
+                            variant="text"
+                            style={{ textTransform: "capitalize" }}
+                          >
+                            Add Videos & Audios
+                          </Button>
+                        </div>
+                      </div>
+
+
+                 
                 </div>
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={4}>
               <div className="update-portfolio-cards-wrapper">
                 <div className="update-portfolio-title">CV</div>
-
-                {talentData?.cv?.length === 0 && (
-                  <>
-                    <div className="update-portfolio-label">
-                      Add Your work samples here
-                    </div>
-                    <div className="no-data">Please Add Files</div>
-                  </>
-                )}
-                {talentData &&
-                  talentData?.cv?.length > 0 &&
-                  talentData?.cv?.map((item) => {
-                    return (
-                      <>
-                        <div className="update-portfolio-cards">
-                          <div className="update-portfolio-icon">
-                            <div className="file-section">
-                              {item.type === "audio" && (
-                                <div className="fileType">
-                                  <i className="bi bi-mic-fill"></i>
-                                </div>
-                              )}
-                              {item.type === "video" && (
-                                <div className="fileType">
-                                  <i className="bi bi-play-circle-fill"></i>
-                                </div>
-                              )}
-                              {item.type === "document" && (
-                                <div className="fileType">
-                                  <i className="bi bi-file-earmark-richtext"></i>
-                                </div>
-                              )}
-                              <div className="update-portfolio-fileName">
-                                {item.title}
-                              </div>
-                              <div className="update-portfolio-action">
-                                <i
-                                  className="bi bi-three-dots-vertical"
-                                  type="button"
-                                  id="dropdownMenuButton1"
-                                  data-bs-toggle="dropdown"
-                                  aria-expanded="false"
-                                ></i>
-                                <ul
-                                  className="dropdown-menu"
-                                  aria-labelledby="dropdownMenuButton1"
-                                >
-                                  <li>
-                                    <a
-                                      className="dropdown-item"
-                                      onClick={() => viewUpdateFile(item)}
+                <div className="row">
+                  {talentData?.cv?.length === 0 && (
+                    <>
+                      <div className="update-portfolio-label">
+                        Add Your work samples here
+                      </div>
+                      <div className="no-data">Please Add Files</div>
+                    </>
+                  )}
+                  {talentData &&
+                    talentData?.cv?.length > 0 &&
+                    talentData?.cv?.map((item) => {
+                      return (
+                        <>
+                          <div className="col-md-6">
+                            <div className="update-portfolio-cards">
+                              <div className="update-portfolio-icon">
+                                <div className="file-section">
+                                  {item.type === "audio" && (
+                                    <div className="fileType">
+                                      <i className="bi bi-mic-fill"></i>
+                                    </div>
+                                  )}
+                                  {item.type === "video" && (
+                                    <div className="fileType">
+                                      <i className="bi bi-play-circle-fill"></i>
+                                    </div>
+                                  )}
+                                  {item.type === "document" && (
+                                    <div className="fileType">
+                                      <i className="bi bi-file-earmark-richtext"></i>
+                                    </div>
+                                  )}
+                                  <div className="update-portfolio-fileName">
+                                    {item.title}
+                                  </div>
+                                  <div className="update-portfolio-action">
+                                    <i
+                                      className="bi bi-three-dots-vertical"
+                                      type="button"
+                                      id="dropdownMenuButton1"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    ></i>
+                                    <ul
+                                      className="dropdown-menu"
+                                      aria-labelledby="dropdownMenuButton1"
                                     >
-                                      View
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a
-                                      className="dropdown-item"
-                                      onClick={(e) => {
-                                        setAlertpop({
-                                          status: true,
-                                          item: item,
-                                          label: "delete",
-                                          eachService: null,
-                                        });
-                                      }}
-                                    >
-                                      Delete
-                                    </a>
-                                  </li>
-                                </ul>
+                                      <li>
+                                        <a
+                                          className="dropdown-item"
+                                          onClick={() => viewUpdateFile(item)}
+                                        >
+                                          View
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a
+                                          className="dropdown-item"
+                                          onClick={(e) => {
+                                            setAlertpop({
+                                              status: true,
+                                              item: item,
+                                              label: "delete",
+                                              eachService: null,
+                                            });
+                                          }}
+                                        >
+                                          Delete
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
+                              <div className="update-portfolio-action"></div>
                             </div>
                           </div>
-                          <div className="update-portfolio-action"></div>
-                        </div>
-                      </>
-                    );
-                  })}
+                        </>
+                      );
+                    })}
+                </div>
+
                 <div className="add-portfoli-section">
                   <div className="add-portfolia-btn">
                     <input
@@ -2731,8 +2759,9 @@ const EditTalent = () => {
               {talentData && talentData?.features?.length > 0 && (
                 <>
                   <div className="features-section">
+                    <div className="row">
                     {featuresList.map((item, index) => (
-                      <div key={index} className="mb-3 features-input-wrapper">
+                      <div key={index} className="mb-3 features-input-wrapper col-md-4">
                         <label className="form-label">{item.label}</label>
                         <select
                           className="form-select features-select"
@@ -2751,6 +2780,7 @@ const EditTalent = () => {
                         </select>
                       </div>
                     ))}
+                    </div>
                   </div>
                   <div className="add-service-btn-flex">
                     <Button
