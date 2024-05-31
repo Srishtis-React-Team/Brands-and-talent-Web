@@ -90,9 +90,12 @@
 .job-features-benefits ul {
   padding: 0 0 0 20px;
   margin: 0 0 15px;
-  color: #666;
+  color: #b01818;
   font-size: 14px;
+  
 }
+.job-features-benefits ol span,
+.job-features-benefits ul span{ color: #444; }
 
 .job-feature-title {
   color: #000;
@@ -117,6 +120,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  text-transform: capitalize;
+  padding-left: 5px;
 }
 
 .job-features-li,
