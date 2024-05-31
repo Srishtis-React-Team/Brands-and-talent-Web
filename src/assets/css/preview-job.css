@@ -87,13 +87,20 @@
 }
 
 .job-features-benefits ol,
-.job-features-benefits ul {
+.job-features-benefits ul{
   padding: 0 0 0 20px;
   margin: 0 0 15px;
   color: #b01818;
   font-size: 14px;
   
 }
+.job-questions-section ul{
+  font-size: 15px;
+  padding: 0 0 0 20px;
+  margin: 0 0 15px;
+}
+.job-questions-section ul li { margin-bottom: 10px; }
+
 .job-features-benefits ol span,
 .job-features-benefits ul span{ color: #444; }
 
