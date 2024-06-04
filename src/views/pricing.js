@@ -146,6 +146,12 @@ const Pricing = () => {
                               <div className="plan-validity">Forever</div>
                             </>
                           )}
+                          {item.planname == "Free For ever" && (
+                            <>
+                              <div className="plan-value">Free</div>
+                              <div className="plan-validity">Forever</div>
+                            </>
+                          )}
 
                           {item.plan_type_annual.length >= 1 && (
                             <>
@@ -171,9 +177,9 @@ const Pricing = () => {
                                   <>
                                     <div className="plan-amounts">
                                       <div className="value-wrapper">
-                                        <div className="previous-value">
+                                        {/* <div className="previous-value">
                                           {item.beforeValue}
-                                        </div>
+                                        </div> */}
                                         <div className="after-value">
                                           {item.afterDiscount}
                                         </div>
@@ -251,7 +257,7 @@ const Pricing = () => {
                             );
                           })}
                         </div>
-                        <div className="learn-btn">Learn More</div>
+                        {/* <div className="learn-btn">Learn More</div> */}
                       </div>
                     </div>
                   );

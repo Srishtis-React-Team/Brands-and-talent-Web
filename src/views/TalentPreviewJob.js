@@ -8,8 +8,27 @@ import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
+import CurrentUser from "../CurrentUser.js";
 
 const TalentPreviewJob = () => {
+  const url = window.location.href;
+  const queryString = url.split("?")[1];
+  console.log(" queryString:", queryString);
+
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+  } = CurrentUser();
+
+  useEffect(() => {
+    console.log(currentUserId, "currentUserId");
+    if (!currentUserId) {
+      navigate("/login");
+    }
+  }, [currentUserId]);
+
   const location = useLocation();
   const { jobId } = location.state || {};
   console.log(jobId, "jobId");
@@ -26,7 +45,7 @@ const TalentPreviewJob = () => {
   const [showSidebar, setShowSidebar] = useState(true);
 
   const getJobsByID = async () => {
-    await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+    await ApiHelper.get(`${API.getAnyJobById}${jobId ? jobId : queryString}`)
       .then((resData) => {
         console.log(resData.data.data, "getJobsByID");
         setJobData(resData.data.data);
@@ -43,7 +62,7 @@ const TalentPreviewJob = () => {
   };
 
   const saveAsDraft = async () => {
-    if (jobId) {
+    if (jobId ? jobId : queryString) {
       setMessage("Job Saved To Draft");
       setOpenPopUp(true);
       setTimeout(function() {
@@ -53,7 +72,7 @@ const TalentPreviewJob = () => {
   };
 
   const postJob = async () => {
-    await ApiHelper.post(`${API.postJobByDraft}${jobId}`)
+    await ApiHelper.post(`${API.postJobByDraft}${jobId ? jobId : queryString}`)
       .then((resData) => {
         console.log(resData, "draftedData");
         console.log(resData.data.data._id, "draftedData");
@@ -101,6 +120,42 @@ const TalentPreviewJob = () => {
       navigate(-1); // Equivalent to history.goBack() in v5
     }
   };
+  const [modalData, setModalData] = useState(null);
+
+  const applyjobs = async (data) => {
+    console.log(data, "applyJobData");
+    setModalData(data); // Set data to be displayed in the modal
+    // Open the modal programmatically
+    if (data?.isApplied != "Applied") {
+      const modalElement = document.getElementById("exampleModal");
+      const bootstrapModal = new window.bootstrap.Modal(modalElement);
+      bootstrapModal.show();
+    }
+  };
+
+  const handleCloseModal = async () => {
+    const formData = {
+      talentId: currentUserId,
+      brandId: modalData?.brandId,
+      gigId: modalData?._id,
+    };
+    await ApiHelper.post(API.applyjobs, formData)
+      .then((resData) => {
+        setMessage("Job Applied SuccessFully!");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          getJobsByID();
+          // Close the modal programmatically
+          const modalElement = document.getElementById("exampleModal");
+          const bootstrapModal = new window.bootstrap.Modal(modalElement);
+          bootstrapModal.hide();
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -127,7 +182,9 @@ const TalentPreviewJob = () => {
           </div>
           <div className="preview-section-one">
             <div className="job-main-details">
-              <div className="preview-job-name"><i class="bi bi-suitcase-lg"></i>&nbsp; {jobData?.jobTitle}</div>
+              <div className="preview-job-name">
+                <i class="bi bi-suitcase-lg"></i>&nbsp; {jobData?.jobTitle}
+              </div>
               <div className="job-price">
                 {jobData?.paymentType?.label === "range" && (
                   <>
@@ -153,7 +210,33 @@ const TalentPreviewJob = () => {
               </div>
             </div>
             <div className="easy-apply-section">
-              <div className="easy-apply-btn">Easy Apply</div>
+              <div
+                className={
+                  jobData?.isApplied === "Apply Now" || !jobData?.isApplied
+                    ? "apply-now-btn"
+                    : "apply-now-btn applied-btn"
+                }
+                onClick={() => {
+                  applyjobs(jobData);
+                }}
+              >
+                {jobData?.isApplied == "Applied" && (
+                  <>
+                    <i className="bi bi-check-circle-fill"></i>
+                  </>
+                )}
+                {jobData?.isApplied == "Apply Now" ||
+                  (!jobData?.isApplied && (
+                    <>
+                      <i className="bi bi-briefcase-fill"></i>
+                    </>
+                  ))}
+                {jobData?.isApplied === "Apply Now" ||
+                  (!jobData?.isApplied && <div>Easy Apply</div>)}
+                {jobData?.isApplied === "Applied" && <div>Applied</div>}
+              </div>
+
+              {/* <div className="easy-apply-btn">Easy Apply</div> */}
             </div>
           </div>
           <div className="preview-section-two">
@@ -186,7 +269,9 @@ const TalentPreviewJob = () => {
                       </li>
                       <li className="job-features-li">
                         <span className="job-feature-heading">Age :</span>
-                        <span className="job-feature-values">{jobData?.age}</span>
+                        <span className="job-feature-values">
+                          {jobData?.age}
+                        </span>
                       </li>
                       <li className="job-features-li">
                         <span className="job-feature-heading">Gender :</span>
@@ -195,7 +280,9 @@ const TalentPreviewJob = () => {
                         </span>
                       </li>
                       <li className="job-features-li">
-                        <span className="job-feature-heading">Nationality :</span>
+                        <span className="job-feature-heading">
+                          Nationality :
+                        </span>
                         <span className="job-feature-values">
                           {jobData?.nationality}
                         </span>
@@ -229,7 +316,7 @@ const TalentPreviewJob = () => {
                       {jobData?.benefits &&
                         jobData.benefits.map((benefit, index) => (
                           <li className="job-benefits-values" key={index}>
-                           <span>{benefit}</span>
+                            <span>{benefit}</span>
                           </li>
                         ))}
                     </ul>
@@ -253,7 +340,9 @@ const TalentPreviewJob = () => {
               {jobData?.questions?.length > 0 &&
                 jobData?.questions?.some((question) => question) && (
                   <>
-                    <div className="job-feature-title mt-0">Screening Questions</div>
+                    <div className="job-feature-title mt-0">
+                      Screening Questions
+                    </div>
                     <div>
                       <ul>
                         {jobData?.questions &&
@@ -318,6 +407,88 @@ const TalentPreviewJob = () => {
           </div>
         </div>
       </main>
+
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <p id="exampleModalLabel" className="modal-job-title">
+                {modalData?.jobTitle}
+              </p>
+
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="modal-job-flex">
+                <i className="bi bi-building model-job-icons"></i>
+                <div className="model-job-name">{modalData?.hiringCompany}</div>
+              </div>
+
+              <div className="modal-job-flex">
+                <i className="bi bi-briefcase-fill model-job-icons"></i>
+                <div className="model-job-name">
+                  <span className="modal-job-workplace">
+                    {modalData?.workplaceType}{" "}
+                  </span>{" "}
+                  {modalData?.jobType}
+                </div>
+              </div>
+              <div className="modal-job-flex">
+                <i className="bi bi-list-check model-job-icons"></i>
+                <div className="model-job-name">
+                  {modalData?.skills.map((skill, index) => (
+                    <span key={index}>
+                      {skill}
+                      {index !== modalData?.skills.length - 1 && ", "}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="modal-job-flex">
+                <i className="bi bi-gender-ambiguous model-job-icons"></i>
+                <div className="model-job-name">{modalData?.gender}</div>
+              </div>
+              <div className="modal-job-flex">
+                <i className="bi  bi-cash-coin model-job-icons"></i>
+                <div className="model-job-name">
+                  {modalData?.paymentType?.amount} {modalData?.jobCurrency}
+                </div>
+              </div>
+              <div className="model-about-title">About the job</div>
+              <div className="model-job-about-values">
+                {modalData?.jobDescription &&
+                  modalData?.jobDescription?.map((htmlContent, index) => (
+                    <div
+                      key={index}
+                      dangerouslySetInnerHTML={{ __html: htmlContent }}
+                    />
+                  ))}
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                onClick={handleCloseModal}
+                type="button"
+                className="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {openPopUp && <PopUp message={message} />}
     </>

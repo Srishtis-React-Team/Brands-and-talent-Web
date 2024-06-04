@@ -89,7 +89,8 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const onEditorSummary = (editorState) => {
     console.log(editorState, "editorState");
-    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
+    // setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
+    setAboutYou(editorState);
     setEditorState(editorState);
   };
 

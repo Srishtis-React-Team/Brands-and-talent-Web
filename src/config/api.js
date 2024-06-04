@@ -47,6 +47,7 @@ export const API = {
   favouritesList: BASEURL + "brands/favouritesList",
   getBrandById: BASEURL + "brands/getBrandById/",
   updateBrandPassword: BASEURL + "brands/updateBrandPassword/",
+  postSupportMail: BASEURL + "brands/postSupportMail",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
@@ -75,6 +76,7 @@ export const API = {
   deleteFile: BASEURL + "users/deleteFile/",
   activateUser: BASEURL + "users/activateUser/",
   deleteService: BASEURL + "users/deleteService",
+  deleteIndividualService: BASEURL + "users/deleteIndividualService",
 
   //keyword
   postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",

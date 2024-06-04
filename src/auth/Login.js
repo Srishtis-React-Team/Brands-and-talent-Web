@@ -363,14 +363,24 @@ const Login = () => {
           </div>
 
           {selectedItem === "brand" && (
-            <div onClick={() => brandSignup()} className="signup-login">
-              Sign Up as Brand/Client
-            </div>
+            <>
+              <div className="new-account-wrapper">
+                <span className="need-account">Need an account ?</span>
+                <div onClick={() => brandSignup()} className="signup-login">
+                  Sign Up as Brand/Client
+                </div>
+              </div>
+            </>
           )}
           {selectedItem === "talent" && (
-            <div onClick={() => talentSignup()} className="signup-login">
-              Sign Up as Talent
-            </div>
+            <>
+              <div className="new-account-wrapper">
+                <span className="need-account">Need an account ?</span>
+                <div onClick={() => talentSignup()} className="signup-login">
+                  Sign Up as Talent
+                </div>
+              </div>
+            </>
           )}
           {/* <div className="stroke-wrapper login-input-containers">
             <div className="stroke-div"></div>

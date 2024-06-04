@@ -145,6 +145,7 @@ const BrandHeader = ({ toggleMenu, myState }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "profile") {
+        navigate("/brand-dashboard");
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
@@ -154,6 +155,8 @@ const BrandHeader = ({ toggleMenu, myState }) => {
           setOpenPopUp(false);
           navigate("/");
         }, 1000);
+      } else if (menuItem == "edit") {
+        navigate("/edit-brand-profile");
       }
       console.log(`Clicked on ${menuItem}`);
     };
@@ -548,11 +551,16 @@ const BrandHeader = ({ toggleMenu, myState }) => {
                     >
                       Profile
                     </MenuItem> */}
-
-                    <MenuItem style={{ cursor: "pointer" }}>
+                    <MenuItem
+                      style={{ cursor: "pointer" }}
+                      onClick={createHandleMenuClick("profile")}
+                    >
                       View profile
                     </MenuItem>
-                    <MenuItem style={{ cursor: "pointer" }}>
+                    <MenuItem
+                      style={{ cursor: "pointer" }}
+                      onClick={createHandleMenuClick("edit")}
+                    >
                       Edit profile
                     </MenuItem>
                     <MenuItem

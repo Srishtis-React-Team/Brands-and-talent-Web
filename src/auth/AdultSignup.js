@@ -463,11 +463,11 @@ const AdultSignup = () => {
 
             <div className="stroke-wrapper">
               <div className="stroke-div"></div>
-              <div className="or-signup">Or Signup with</div>
+              {/* <div className="or-signup">Or Signup with</div> */}
               <div className="stroke-div"></div>
             </div>
             <div className="signup-options">
-              <GoogleLogin
+              {/* <GoogleLogin
                 onSuccess={(credentialResponse) => {
                   socialSignup(
                     jwtDecode(credentialResponse?.credential),
@@ -477,11 +477,11 @@ const AdultSignup = () => {
                 onError={() => {
                   console.log("Login Failed");
                 }}
-              />
+              /> */}
               {/* <LoginSocialFacebook>
                 <FacebookLoginButton></FacebookLoginButton>
               </LoginSocialFacebook> */}
-              <LoginSocialFacebook
+              {/* <LoginSocialFacebook
                 appId="7401795359899121"
                 onResolve={(response) => {
                   socialSignup(response, "facebook");
@@ -492,7 +492,7 @@ const AdultSignup = () => {
                 }}
               >
                 <MyFacebookLoginButton />
-              </LoginSocialFacebook>
+              </LoginSocialFacebook> */}
 
               {/* <div className="google-media">
                 <img src={googleLogo} alt="" />
@@ -504,7 +504,8 @@ const AdultSignup = () => {
             </div>
             <div className="signup-terms-linetwo">
               <span>Terms & Conditions</span> and 
-              <span>Privacy Policy</span>
+              <span>Privacy Policy</span> and
+              <span> Community Guidelines</span>
             </div>
           </div>
         </div>

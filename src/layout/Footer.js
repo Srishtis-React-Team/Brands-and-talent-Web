@@ -128,7 +128,7 @@ const Footer = () => {
 
         <section className="footerCommon pt-5">
           <div className="footer-section row">
-            <div className="footer-wrapper col-md-6 col-lg-3">
+            <div className="footer-wrapper col-md-2 col-lg-2">
               <div className="footer-icon">
                 <img className="btLogo" src={btLogo}></img>
               </div>
@@ -145,7 +145,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="footer-wrapper col-md-6 col-lg-3">
+            <div className="footer-wrapper col-md-2 col-lg-2">
               <h6>
                 <Link className="footer-title" onClick={handleClick} to="/">
                   Company
@@ -180,7 +180,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="footer-wrapper col-md-6 col-lg-3">
+            <div className="footer-wrapper col-md-2 col-lg-2">
               <h6>
                 <Link className="footer-title" onClick={handleClick} to="/">
                   Products & Services
@@ -216,7 +216,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="footer-wrapper col-md-6 col-lg-3">
+            <div className="footer-wrapper col-md-2 col-lg-2">
               <h6>
                 <Link className="footer-title" onClick={handleClick} to="/">
                   Resources
@@ -236,6 +236,31 @@ const Footer = () => {
                 <li>
                   <Link to="/" onClick={handleClick}>
                     Talent stories
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="footer-wrapper col-md-2 col-lg-2">
+              <h6>
+                <Link className="footer-title" onClick={handleClick} to="/">
+                  Policy
+                </Link>
+              </h6>
+
+              <ul className="footerLinks">
+                <li>
+                  <Link onClick={handleClick} to="/">
+                    Terms & Conditions
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={handleClick} to="/">
+                    Community Guidelines
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={handleClick}>
+                    Privacy Policy
                   </Link>
                 </li>
               </ul>

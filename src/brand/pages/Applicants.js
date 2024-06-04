@@ -368,7 +368,7 @@ const Applicants = () => {
                   handleForms("interview-invitations");
                 }}
               >
-                Interview Invitations
+                Interview Invitation Message
               </div>
               <div
                 className={

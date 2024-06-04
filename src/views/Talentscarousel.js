@@ -151,34 +151,36 @@ const Talentscarousel = () => {
             console.log(item, "item");
             return (
               <>
-                <div className="item" key={index}>
+                <div
+                  style={{ cursor: "pointer" }}
+                  className="item"
+                  key={index}
+                  onClick={() => openTalent(item)}
+                >
                   <div className="sliderImg">
-                  <img
-                    className="talents-profile-slider-image"
-                    src={`${API.userFilePath}${item?.image?.fileData}`}
-                    alt=""
-                  />
-                  {!item.isFavorite && (
                     <img
-                      className="heart-icon"
-                      style={{ left: "80%" }}
-                      src={heartIcon}
-                      onClick={() => addFavorite(item)}
-                    ></img>
-                  )}
-                  {item.isFavorite === true && (
-                    <img
-                      className="heart-icon"
-                      style={{ left: "80%" }}
-                      src={favoruiteIcon}
-                      onClick={() => removeFavorite(item)}
-                    ></img>
-                  )}
+                      className="talents-profile-slider-image"
+                      src={`${API.userFilePath}${item?.image?.fileData}`}
+                      alt=""
+                    />
+                    {!item.isFavorite && (
+                      <img
+                        className="heart-icon"
+                        style={{ left: "80%" }}
+                        src={heartIcon}
+                        onClick={() => addFavorite(item)}
+                      ></img>
+                    )}
+                    {item.isFavorite === true && (
+                      <img
+                        className="heart-icon"
+                        style={{ left: "80%" }}
+                        src={favoruiteIcon}
+                        onClick={() => removeFavorite(item)}
+                      ></img>
+                    )}
                   </div>
-                  <div
-                    className="carousel-talent-name"
-                    onClick={() => openTalent(item)}
-                  >
+                  <div className="carousel-talent-name">
                     {item?.preferredChildFirstname}
                   </div>
                 </div>

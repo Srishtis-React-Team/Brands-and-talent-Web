@@ -59,6 +59,7 @@ import BrandNotification from "../brand/pages/BrandNotification";
 import BrandSettings from "../brand/pages/BrandSettings";
 import EditBrands from "../brand/pages/EditBrands";
 import GetBooked from "../views/GetBooked";
+import ContactSupport from "../views/ContactSupport";
 function Routing() {
   return (
     <Routes>
@@ -126,6 +127,7 @@ function Routing() {
       <Route path="/talent-help" element={<TalentHelp />} />
       <Route path="/brand-notification" element={<BrandNotification />} />
       <Route path="/get-booked" element={<GetBooked />} />
+      <Route path="/contact-us" element={<ContactSupport />} />
     </Routes>
   );
 }

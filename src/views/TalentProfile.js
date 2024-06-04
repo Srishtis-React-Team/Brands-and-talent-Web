@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../assets/css/findcreators.css";
 import "../assets/css/talent-profile.css";
 import "../assets/css/dashboard.css";
@@ -16,6 +16,8 @@ import Select from "react-select";
 import Button from "@mui/material/Button";
 import BrandHeader from "../brand/pages/BrandHeader.js";
 import CurrentUser from "../CurrentUser.js";
+import PopUp from "../components/PopUp.js";
+import Spinner from "../components/Spinner.js";
 
 const TalentProfile = () => {
   const {
@@ -46,7 +48,7 @@ const TalentProfile = () => {
   const model14 = require("../assets/images/model14.png");
   const model15 = require("../assets/images/model15.png");
   const mapPin = require("../assets/icons/map-pin.png");
-  const message = require("../assets/icons/message-circle.png");
+  const messageIcon = require("../assets/icons/message-circle.png");
   const share = require("../assets/icons/share-2.png");
   const plus = require("../assets/icons/plus-square.png");
   const calander = require("../assets/icons/calendar.png");
@@ -74,12 +76,12 @@ const TalentProfile = () => {
   const elipsis = require("../assets/icons/elipsis.png");
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState();
-  const [showModal, setShowModal] = useState(false);
   const pdfUrl =
     "https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/72e654db-4dd1-4663-89d8-52db0df93ca4.pdf";
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
+  const [isLoading, setIsLoading] = useState(false);
   const [portofolio, showPortofolio] = useState(true);
   const [services, showServices] = useState(false);
   const [photos, showPhotos] = useState(false);
@@ -102,6 +104,8 @@ const TalentProfile = () => {
   const [currentUser_type, setCurrentUserType] = useState("");
   const [comments, setComments] = useState("");
   const [selectedJob, setSelectedJob] = useState("");
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
   useEffect(() => {
     setCurrentUserType(localStorage.getItem("currentUserType"));
   }, []);
@@ -267,25 +271,6 @@ const TalentProfile = () => {
     setSelectedJob(e?.value);
   };
 
-  const inviteToApply = async () => {
-    const formData = {
-      talentId: talentData?._id,
-      brandId: brandId,
-      gigId: selectedJob,
-      comment: comments,
-    };
-    await ApiHelper.post(`${API.inviteTalentToApply}`, formData)
-      .then((resData) => {
-        if (resData) {
-          setTalentData(resData.data.data);
-          console.log(resData.data.data, "resData.data");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleView = (imageUrl) => {
     let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
     window.open(viewImage, "_blank");
@@ -370,6 +355,68 @@ const TalentProfile = () => {
 
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    const modalElement = modalRef.current;
+    if (modalElement) {
+      if (showModal) {
+        new window.bootstrap.Modal(modalElement).show();
+      } else {
+        const modalInstance = window.bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+          modalInstance.hide();
+        }
+      }
+    }
+  }, [showModal]);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+  const messageNow = () => {};
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const inviteToApply = async () => {
+    const formData = {
+      talentId: talentData?._id,
+      brandId: brandId,
+      gigId: selectedJob,
+      comment: comments,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${API.inviteTalentToApply}`, formData)
+      .then((resData) => {
+        if (resData) {
+          console.log(resData, "inviteToApply");
+          if (resData?.data?.status === true) {
+            setShowModal(false);
+            setMessage("Invitation Sent SuccessFully");
+            setIsLoading(false);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 2000);
+          } else {
+            setIsLoading(false);
+            setMessage("Error Occured Try Again");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              setShowModal(false);
+            }, 2000);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -558,14 +605,16 @@ const TalentProfile = () => {
                       <>
                         <div
                           className="invite-btn"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
+                          onClick={() => handleOpenModal()}
                         >
                           <img src={whitePlus}></img>
                           <div>Invite to apply</div>
                         </div>
-                        <div className="message-now">
-                          <img src={message}></img>
+                        <div
+                          className="invite-btn"
+                          onClick={() => messageNow()}
+                        >
+                          <i class="bi bi-chat-fill"></i>
                           <div className="message-now-text">Message Now</div>
                         </div>
                       </>
@@ -577,6 +626,7 @@ const TalentProfile = () => {
                       tabIndex="-1"
                       aria-labelledby="exampleModalLabel"
                       aria-hidden="true"
+                      ref={modalRef}
                     >
                       <div className="modal-dialog modal-dialog-centered modal-lg signupModal">
                         <div className="modal-content ">
@@ -593,9 +643,7 @@ const TalentProfile = () => {
                               className="modal-title "
                               style={{ fontSize: "18px" }}
                             >
-                              Invite {talentData?.preferredChildFirstname}
-                              {talentData?.preferredChildLastName} to Apply to
-                              your Job
+                              Send Invitation
                             </div>
 
                             <div className="select-job-invite mt-4">
@@ -650,8 +698,6 @@ const TalentProfile = () => {
                                 className="edit-profileimg-btn"
                                 variant="text"
                                 style={{ textTransform: "capitalize" }}
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
                               >
                                 Invite Talent
                               </Button>
@@ -1136,6 +1182,8 @@ const TalentProfile = () => {
         </div>
       </section>
       <Footer />
+      {isLoading && <Spinner />}
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };

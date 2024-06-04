@@ -3,19 +3,10 @@ import "../../assets/css/forms/kidsform-one.scss";
 import "../../assets/css/createjobs.scss";
 import "../../assets/css/preview-job.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
-import Select from "react-select";
-import Axios from "axios";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
-import ReactFlagsSelect from "react-flags-select";
 import { useNavigate } from "react-router";
-import nationalityOptions from "../../components/nationalities";
-import languageOptions from "../../components/languages";
 import { useLocation } from "react-router-dom";
 import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
@@ -24,15 +15,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
   const { jobId } = location.state || {};
   console.log(jobId, "jobId");
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
-  const [updateDisabled, setUpdateDisabled] = useState(false);
-  const [jobTitleError, setjobTitleError] = useState(false);
-  const [jobTitle, setjobTitle] = useState("");
   const [jobData, setJobData] = useState("");
   const [message, setMessage] = useState("");
-  const [minPay, setMinPay] = useState("");
-  const [maxPay, setMaxpay] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
 
   const getJobsByID = async () => {
