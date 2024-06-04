@@ -1,4 +1,3 @@
-
 .talent-profile-main {
   margin: 50px 0 0px;
   padding: 0;
@@ -17,8 +16,6 @@
   background: #fff;
   height: 100%;
 }
-
-
 
 .message-now {
   display: flex;
@@ -61,7 +58,9 @@
   justify-content: center;
   align-items: center;
 }
-.blue-shield-wrapper .blue-shield{ width: 13px; }
+.blue-shield-wrapper .blue-shield {
+  width: 13px;
+}
 
 .model-review-wrapper {
   min-height: 250px;
@@ -318,8 +317,7 @@
   justify-content: center;
   display: flex;
 }
-.talent-backdrop .profImg{
-
+.talent-backdrop .profImg {
   border: 2px solid #c2114b;
   width: 135px;
   height: 135px;
@@ -335,7 +333,6 @@
   min-height: 135px;
   object-fit: cover;
 }
-
 
 .individual-talent-name {
   display: flex;
@@ -369,7 +366,6 @@
   border-radius: 10px;
   flex-wrap: wrap;
   margin: 5px 0;
-
 }
 
 .insta-backdrop {
@@ -401,14 +397,13 @@
   );
 }
 
-.social-followers-count-section  .social-count {
+.social-followers-count-section .social-count {
   color: #000;
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
-
 
 .social-followers-count-section .followers-text {
   color: #000;
@@ -417,8 +412,6 @@
   font-weight: 500;
   line-height: normal;
 }
-
-
 
 /* .talent-details {
   margin-top: 15px;
@@ -434,7 +427,7 @@
   color: #000;
   font-size: 14px;
   font-style: normal;
-  font-weight:500;
+  font-weight: 500;
   line-height: normal;
   padding-left: 7px;
 }
@@ -547,7 +540,9 @@
 .padSpc {
   padding: 0 5px;
 }
-.row.padSpc{  padding: 0 8px; }
+.row.padSpc {
+  padding: 0 8px;
+}
 
 .photos-gallery .photos-gallery-image {
   height: 250px;
@@ -727,7 +722,8 @@
   line-height: normal;
   padding-bottom: 20px;
 }
-.talent-all-details-wrapper .photos-slider, .talent-all-details-wrapper .App {
+.talent-all-details-wrapper .photos-slider,
+.talent-all-details-wrapper .App {
   margin: 0 0 20px;
 }
 .reviews-section {
@@ -787,7 +783,7 @@
   min-width: 230px;
   min-height: 53px;
   flex-shrink: 0;
-  border-radius:60px;
+  border-radius: 60px;
   background: #27970b;
   cursor: pointer;
 }
@@ -809,7 +805,9 @@
   line-height: normal;
   padding-left: 10px;
 }
-.logoSocial img{ max-width: 25px; }
+.logoSocial img {
+  max-width: 25px;
+}
 .talents-social-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -935,7 +933,7 @@
 
 /* CSS */
 .table-container {
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
 .table-container table {
@@ -1052,6 +1050,10 @@
   padding: 15px;
 }
 
+.bi-chat-fill {
+  color: #ffffff;
+}
+
 .individual-talent-tab-first-active-tab {
   height: 40px;
   border-top-right-radius: 140px;
@@ -1084,7 +1086,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  padding:2px 0px 5px;
+  padding: 2px 0px 5px;
 }
 
 .talent-profession-name > span {

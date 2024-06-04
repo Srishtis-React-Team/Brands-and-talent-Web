@@ -7,7 +7,7 @@ import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useNavigate } from "react-router-dom";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import RichTextEditor from "./RichTextEditor";
 
 const TalentHelp = () => {
   const [talentId, setTalentId] = useState(null);
@@ -72,9 +72,24 @@ const TalentHelp = () => {
       .catch((err) => {});
   };
 
+  const [editors, setEditors] = useState(["", ""]); // Initial state with two empty editors
   useEffect(() => {
-    console.log(notificationList, "notificationListMain");
-  }, [notificationList]);
+    setValues();
+  }, []);
+
+  const setValues = (value, index) => {
+    setEditors(["<p>Hello</p>", "<p>world</p>"]);
+  };
+
+  const handleEditorChange = (value, index) => {
+    const newEditors = [...editors];
+    newEditors[index] = value;
+    setEditors(newEditors);
+  };
+
+  useEffect(() => {
+    console.log(editors, "editors");
+  }, [editors]);
 
   return (
     <>
@@ -95,6 +110,20 @@ const TalentHelp = () => {
       >
         <div className="brand-content-main">
           <div className="create-job-title">Help And Support</div>
+
+          <div>
+            {editors.map((value, index) => (
+              <div key={index} style={{ marginBottom: "20px" }}>
+                <RichTextEditor
+                  value={value}
+                  onChange={(value) => handleEditorChange(value, index)}
+                />
+              </div>
+            ))}
+            <button onClick={() => setEditors([...editors, ""])}>
+              Add New Editor
+            </button>
+          </div>
         </div>
       </main>
 

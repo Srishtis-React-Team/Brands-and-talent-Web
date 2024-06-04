@@ -185,8 +185,8 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  width: 100%;
-  padding: 10px 0px 0;
+  // width: 100%;
+  // padding: 10px 0px 0;
   text-decoration: underline;
 }
 
@@ -218,6 +218,22 @@
   padding: 0 !important;
   width: 100% !important;
   border-radius: 60px !important;
+}
+
+.need-account {
+  color: blue;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-right: 8px;
+}
+
+.new-account-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  justify-content: end;
 }
 
 // 320px — 480px: Mobile devices

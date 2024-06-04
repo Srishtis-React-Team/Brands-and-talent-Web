@@ -14,6 +14,7 @@ import "../assets/css/forms/kidsform-one.scss";
 import PopUp from "../components/PopUp";
 import { event } from "jquery";
 import { v4 as uuidv4 } from "uuid";
+import RichTextEditor from "../views/RichTextEditor";
 
 const KidsServices = () => {
   const btLogo = require("../assets/icons/Group 56.png");
@@ -136,9 +137,10 @@ const KidsServices = () => {
   const handleEditorStateChange = (index, editorState) => {
     console.log(index, "index handleEditorStateChange");
     const newInputs = [...inputs];
-    newInputs[index]["editorState"] = [
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ];
+    newInputs[index]["editorState"] = editorState;
+    // newInputs[index]["editorState"] = [
+    //   draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    // ];
     setInputs(newInputs);
   };
 
@@ -306,7 +308,7 @@ const KidsServices = () => {
                           <div className="adults-titles">Features</div>
                           <div className="rich-editor">
                             <label className="form-label">Features</label>
-                            <Editor
+                            {/* <Editor
                               editorStyle={{
                                 overflow: "hidden",
                               }}
@@ -332,6 +334,16 @@ const KidsServices = () => {
                                 link: { inDropdown: true },
                                 history: { inDropdown: true },
                               }}
+                            /> */}
+
+                            <RichTextEditor
+                              value={input.editorState}
+                              onChange={(editorState) =>
+                                handleEditorStateChange(
+                                  serviceIndex,
+                                  editorState
+                                )
+                              }
                             />
                           </div>
                           <div className="cv-section">

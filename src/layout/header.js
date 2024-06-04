@@ -632,7 +632,7 @@ const Header = ({ onData }) => {
                   data-bs-toggle="dropdown"
                 >
                   <NavLink to="/blogs" onClick={() => handleClick("")}>
-                    Blogs
+                    Blog
                   </NavLink>
                 </a>
                 <ul className="dropdown-menu mobile-blogs-menu">
@@ -948,9 +948,9 @@ const Header = ({ onData }) => {
                 </div>
               )}
 
-              <div className="gridLogo">
-                <img src={gridLogo} alt="" />
-              </div>
+              {/* <div className="gridLogo">
+                <img src={gridLogo} alt="" /> 
+              </div> */}
 
               {currentUserId && (
                 <Dropdown>
@@ -1042,7 +1042,7 @@ const Header = ({ onData }) => {
                   }}
                   className={brand ? "selected-register" : "choose-register"}
                 >
-                  I'm a Brand/Agency/Client
+                  I'm a Brand/Client
                 </div>
               </div>
               <div className="question-model">

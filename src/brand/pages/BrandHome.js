@@ -105,6 +105,10 @@ const BrandHome = () => {
     console.log(showSidebar, "ChildshowSidebar");
   }, [showSidebar]);
 
+  const contactUs = () => {
+    navigate("/contact-us");
+  };
+
   return (
     <>
       <BrandHeader toggleMenu={toggleMenu} />
@@ -122,7 +126,6 @@ const BrandHome = () => {
       >
         <div className="brand-content-main my-2">
           <div className="brand-home-main row">
-
             <div className="brand-home-left-container col-md-8 col-lg-9">
               <div className="brand-home-one">
                 <div className="row">
@@ -133,14 +136,16 @@ const BrandHome = () => {
                     <div className="home-add-title-wrapper">
                       <div className="home-add-title">Create a Gig/Job</div>
                       <div className="home-add-description">
-                        Provide a clear and concise title for the job position. The
-                        title should accurately reflect the role and
+                        Provide a clear and concise title for the job position.
+                        The title should accurately reflect the role and
                         responsibilities of the job.
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4 col-lg-3 btnSpace">
-                    <div className="home-job-start" onClick={createJob}>Start Now</div>
+                    <div className="home-job-start" onClick={createJob}>
+                      Start Now
+                    </div>
                   </div>
                 </div>
               </div>
@@ -301,7 +306,9 @@ const BrandHome = () => {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Corrupti, voluptatum labore aspernatur at temporibus
                   </div>
-                  <div className="contact-btn">Contact Now</div>
+                  <div className="contact-btn" onClick={() => contactUs()}>
+                    Contact Now
+                  </div>
                 </div>
               </div>
               <div className="brand-plan-section">

@@ -7,13 +7,7 @@ import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
-import { Dropdown } from "@mui/base/Dropdown";
-import { Menu, MenuListboxSlotProps } from "@mui/base/Menu";
-import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
-import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { styled } from "@mui/system";
-import { CssTransition } from "@mui/base/Transitions";
-import { PopupContext } from "@mui/base/Unstable_Popup";
 import Button from "@mui/material/Button";
 // import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
@@ -22,9 +16,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Select from "react-select";
 
 const TalentDashBoard = () => {
   const workPlaceTypesOptions = [
@@ -437,6 +428,10 @@ const TalentDashBoard = () => {
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
     setSelectedSkills(selectedLanguages); // Update languages state with all selected languages
+  };
+
+  const contactUs = () => {
+    navigate("/contact-us");
   };
 
   return (
@@ -903,7 +898,9 @@ const TalentDashBoard = () => {
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Corrupti, voluptatum labore aspernatur at temporibus
                     </div>
-                    <div className="contact-btn">Contact Now</div>
+                    <div className="contact-btn" onClick={() => contactUs()}>
+                      Contact Now
+                    </div>
                   </div>
 
                   <div className="boxsWhite mb-4">

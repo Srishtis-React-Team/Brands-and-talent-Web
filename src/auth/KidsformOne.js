@@ -1278,7 +1278,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                         <div className="kids-form-section">
                           <div className="mb-3">
                             <label className="form-label pay-info">
-                              Profession (choose any 4)
+                              Profession / Skills (Choose any 5)
                               <span className="mandatory">*</span>
                             </label>
                             <div>
@@ -1368,8 +1368,8 @@ const KidsformOne = ({ sendDataToParent }) => {
                       </div>
                     </div>
                     <div className="kids-form-title-sub">
-                      Please select the top 4 categories relevant to your
-                      profile.<span className="mandatory">*</span>
+                      Select 3 to 6 categories relevant to your profile
+                      <span className="mandatory">*</span>
                     </div>
                     <div className="category-list">
                       {categoryList.map((category, index) => (

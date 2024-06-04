@@ -2585,7 +2585,7 @@ const CreateJobs = () => {
                               applications outside this plaform, type the
                               application instructions below)
                             </div>
-                            <div className="how-to-apply-steps">
+                            {/* <div className="how-to-apply-steps">
                               <div>
                                 1. To submit your application, kindly email your
                                 portfolio
@@ -2594,7 +2594,7 @@ const CreateJobs = () => {
                                 2. Applicants will be considered on a rolling
                                 basis.
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -2616,10 +2616,10 @@ const CreateJobs = () => {
                           onChange={portofolioUpload}
                         />
                         <div className="upload-text">
-                          Attach a project brief [optional]
+                          pdf, word and image files
                         </div>
                         <div className="upload-info">
-                          Drag and drop your photos/work samples here.
+                          Any additional information can be attached
                         </div>
                       </div>
 
@@ -2709,9 +2709,9 @@ const CreateJobs = () => {
                       )}
 
                       <div className="job-post-terms">
-                        By clicking Save & Post Now, I agree that Brands&talent
-                        may publish and/or distribute my job advertisement on
-                        its site and through its distribution partners.
+                        By clicking Preview & Post , I agree that Brands &
+                        Talent may publish and distribute my job advertisement
+                        on its site and through its distribution partners.
                       </div>
 
                       <div className="create-job-buttons mt-4 mb-2">

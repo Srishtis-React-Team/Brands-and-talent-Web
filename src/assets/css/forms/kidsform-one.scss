@@ -776,25 +776,42 @@
   border: none !important;
 }
 
-.edit_talentprofile .update-portfolio-title { padding: 0; margin: 0 0 15px; } 
+.edit_talentprofile .update-portfolio-title {
+  padding: 0;
+  margin: 0 0 15px;
+}
 
-.edit_talentprofile .edit-basicdetails-section-main .profileImg{ position: relative; width: 250px; max-width: 100%;   border-radius: 5px; }
+.edit_talentprofile .edit-basicdetails-section-main .profileImg {
+  position: relative;
+  width: 250px;
+  max-width: 100%;
+  border-radius: 5px;
+}
 
-.edit_talentprofile .profile-image-edit-section{ width: 100%; }
+.edit_talentprofile .profile-image-edit-section {
+  width: 100%;
+}
 
-.edit_talentprofile .edit-basicdetails-section-main .profileImg .profile-image-edit{ 
+.edit_talentprofile
+  .edit-basicdetails-section-main
+  .profileImg
+  .profile-image-edit {
   min-width: 250px;
   object-fit: cover;
   min-height: 250px;
 }
-  
 
 .edit_talentprofile .profile-image-edit-section .btn-img-edit-wrapper {
   justify-content: inherit;
   width: auto;
   display: inline-block;
 }
-.edit_talentprofile  .profile-image-edit-section .btn-img-edit-wrapper .update-profileimg-btn{ margin: 10px 0; }
+.edit_talentprofile
+  .profile-image-edit-section
+  .btn-img-edit-wrapper
+  .update-profileimg-btn {
+  margin: 10px 0;
+}
 
 .update-portfolio-title {
   color: #000;
@@ -914,20 +931,25 @@
   display: block;
   width: 100%;
 }
-.edit_talentprofile .update-portfolio-cards{
+.edit_talentprofile .update-portfolio-cards {
   position: relative;
 }
 .edit_talentprofile .update-portfolio-cards .update-portfolio-action {
   position: absolute;
   right: 0;
-} 
+}
 .edit_talentprofile .edit-profileimg-btn {
   margin: 10px 0;
 }
-.edit_talentprofile .edit-basicdetails-section-main{ padding: 0px; }
+.edit_talentprofile .edit-basicdetails-section-main {
+  padding: 0px;
+}
 
-.edit_talentprofile .update-service-cards-wrapper, .edit_talentprofile .update-portfolio-cards-wrapper, .edit_talentprofile  .profile-image-edit-section{ margin: 0; }
-
+.edit_talentprofile .update-service-cards-wrapper,
+.edit_talentprofile .update-portfolio-cards-wrapper,
+.edit_talentprofile .profile-image-edit-section {
+  margin: 0;
+}
 
 .edit-basicdetails-section-main {
   padding: 10px 30px;
@@ -1118,8 +1140,22 @@
 }
 
 .edit-profileimg-btn:disabled {
-  background-color: #cccccc; 
-  color: #666666; 
-  cursor: not-allowed; 
-  opacity: 0.65; 
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.edit-service-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bi-trash {
+  cursor: pointer;
+  font-size: 20px;
+}
+.bi-trash:hover {
+  cursor: pointer;
+  color: #c2114b;
 }
