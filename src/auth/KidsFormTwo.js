@@ -245,8 +245,8 @@ const KidsFormTwo = () => {
                                 return (
                                   <>
                                     <div className="plan-content">
-                                      <div>
-                                        <img src={greenTick} alt="" />
+                                      <div className="icPrice">
+                                        {/* <img src={greenTick} alt="" /> */}
                                       </div>
                                       <div className="plan-content-text">
                                         {item}

@@ -236,18 +236,19 @@ const Pricing = () => {
                         >
                           Choose plan
                         </div>
-                        <div className="include">WHAT'S INCLUDED</div>
+                        <div className="include">What's Included</div>
                         <div className="included-things">
                           {item.data.map((item) => {
                             return (
                               <>
                                 <div className="plan-content">
-                                  <div>
-                                    <img
+                                  <div className="icPrice">
+                                    -
+                                    {/* <img
                                       className="listIc"
                                       src={greenTick}
                                       alt=""
-                                    />
+                                    /> */}
                                   </div>
                                   <div className="plan-content-text">
                                     {item}
