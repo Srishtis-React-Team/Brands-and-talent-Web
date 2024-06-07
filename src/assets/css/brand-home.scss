@@ -111,24 +111,30 @@
 }
 
 .campaign-features {
-  display: flex;
+  display: block;
+}
+.campaigns-content-wrapper.imgSpc {
+  padding-left: 0;
 }
 
+
 .campaigns-wrapper-one {
-  display: flex;
+  // display: flex;
   // justify-content: space-between;
   border-bottom: 1px solid #bab4b4;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
+  width: 100%;
 }
 
 .campaign-features-wrapper {
-  display: flex;
+  display: inline-flex;
   border: 0.5px solid silver;
   border-style: dashed;
   border-radius: 8px;
   padding: 10px;
   align-items: center;
-  margin-right: 15px;
+  margin-right: 10px;
+  margin-bottom: 5px;
 }
 
 .campaign-icons-wrapper {
@@ -238,7 +244,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 .view-campaign {

@@ -134,7 +134,7 @@ const Footer = () => {
 
         <section className="footerCommon pt-5">
           <div className="footer-section row">
-            <div className="footer-wrapper col-md-2 col-lg-2">
+            <div className="footer-wrapper col-md-4 col-lg-4">
               <div className="footer-icon">
                 <img className="btLogo" src={btLogo}></img>
               </div>
@@ -151,7 +151,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="footer-wrapper col-md-2 col-lg-2">
+            <div className="footer-wrapper col-md-4 col-lg-2">
               <h6>
                 <Link className="footer-title" onClick={handleClick} to="/">
                   Company
@@ -186,7 +186,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="footer-wrapper col-md-2 col-lg-2">
+            <div className="footer-wrapper col-md-4 col-lg-2">
               <h6>
                 <Link className="footer-title" onClick={handleClick} to="/">
                   Products & Services
@@ -222,7 +222,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="footer-wrapper col-md-2 col-lg-2">
+            <div className="footer-wrapper col-md-4 col-lg-2">
               <h6>
                 <Link className="footer-title" onClick={handleClick} to="/">
                   Resources
@@ -246,7 +246,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="footer-wrapper col-md-2 col-lg-2">
+            <div className="footer-wrapper col-md-4 col-lg-2">
               <h6>
                 <Link className="footer-title" onClick={handleClick} to="/">
                   Policy
