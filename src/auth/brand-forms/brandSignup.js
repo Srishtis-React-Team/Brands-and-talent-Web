@@ -12,8 +12,18 @@ import PopUp from "../../components/PopUp";
 import { LoginSocialFacebook } from "reactjs-social-login";
 import { FacebookLoginButton } from "react-social-login-buttons";
 import MyFacebookLoginButton from "../facebookButton";
+import CurrentUser from "../../CurrentUser";
 
 const BrandSignup = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
+
+  console.log(fcmToken, "fcmToken");
   const navigate = useNavigate();
   const btLogo = require("../../assets/icons/Group 56.png");
   const fbLogo = require("../../assets/icons/fbLogo.png");
@@ -36,7 +46,6 @@ const BrandSignup = () => {
   const [googleUser, setGoogleUser] = useState();
   const location = useLocation();
   const [receivedData, setReceivedData] = useState(null);
-  const [fireBaseToken, setFireBaseToken] = useState(null);
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
     false
@@ -68,14 +77,6 @@ const BrandSignup = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  useEffect(() => {
-    const fireBaseToken = localStorage.getItem("fcmToken");
-    if (fireBaseToken) {
-      setFireBaseToken(fireBaseToken);
-    }
-    console.log(fireBaseToken, "fireBaseToken");
-  }, [fireBaseToken]);
-
   const socialSignup = async (response, mediaType) => {
     console.log(response, "socialSignupresponse");
     console.log(mediaType, "mediaType");
@@ -87,14 +88,14 @@ const BrandSignup = () => {
         brandEmail: response?.email,
         googleId: response?.sub,
         provider: "google",
-        fcmToken: fireBaseToken,
+        fcmToken: fcmToken,
       };
     } else if (mediaType == "facebook") {
       formData = {
         brandEmail: response?.data?.email,
         facebookId: response?.data?.id,
         provider: "facebook",
-        fcmToken: fireBaseToken,
+        fcmToken: fcmToken,
       };
     }
     setIsLoading(true);
@@ -159,7 +160,7 @@ const BrandSignup = () => {
         brandPassword: adultPassword,
         confirmPassword: adultConfirmPassword,
         position: receivedData,
-        fcmToken: fireBaseToken,
+        fcmToken: fcmToken,
       };
       setIsLoading(true);
       await ApiHelper.post(API.brandsRegister, formData)
@@ -216,6 +217,16 @@ const BrandSignup = () => {
     setAdultConfirmPassword(e.target.value);
     setPasswordMatch(e.target.value === adultPassword);
     settalentConfirmPasswordError(false);
+  };
+
+  const handleCondition = (e) => {
+    if (e == "terms") {
+    }
+    if (e == "privacy") {
+    }
+    if (e == "community") {
+      navigate("/community-guidelines");
+    }
   };
 
   let line = document.querySelector(".line");
@@ -486,13 +497,13 @@ const BrandSignup = () => {
               </div>
             </div>
 
-            <div className="stroke-wrapper">
+            {/* <div className="stroke-wrapper">
               <div className="stroke-div"></div>
               <div className="or-signup">Or Signup with</div>
               <div className="stroke-div"></div>
-            </div>
+            </div> */}
             <div className="signup-options">
-              <GoogleLogin
+              {/* <GoogleLogin
                 onSuccess={(credentialResponse) => {
                   socialSignup(
                     jwtDecode(credentialResponse?.credential),
@@ -502,8 +513,8 @@ const BrandSignup = () => {
                 onError={() => {
                   console.log("Login Failed");
                 }}
-              />
-              <LoginSocialFacebook
+              /> */}
+              {/* <LoginSocialFacebook
                 appId="7401795359899121"
                 onResolve={(response) => {
                   socialSignup(response, "facebook");
@@ -514,7 +525,7 @@ const BrandSignup = () => {
                 }}
               >
                 <MyFacebookLoginButton />
-              </LoginSocialFacebook>
+              </LoginSocialFacebook> */}
 
               {/* <div className="google-media">
                 <img src={googleLogo} alt="" />
@@ -525,8 +536,17 @@ const BrandSignup = () => {
               By registering you confirm that you accept the 
             </div>
             <div className="signup-terms-linetwo">
-              <span>Terms & Conditions</span> and 
-              <span>Privacy Policy</span>
+              <span onClick={() => handleCondition("terms")}>
+                Terms & Conditions
+              </span>{" "}
+              ,&nbsp;
+              <span onClick={() => handleCondition("privacy")}>
+                Privacy Policy
+              </span>
+               and 
+              <span onClick={() => handleCondition("community")}>
+                Community Guidelines
+              </span>
             </div>
           </div>
         </div>

@@ -409,6 +409,8 @@ const HowItWorks = () => {
                 value={valueTabs}
                 onChange={handleChange}
                 aria-label="basic tabs example"
+                variant="fullWidth"
+                centered
               >
                 <Tab
                   label="Brands/Clients"

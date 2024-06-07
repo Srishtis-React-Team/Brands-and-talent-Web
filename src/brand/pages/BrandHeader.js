@@ -12,6 +12,7 @@ import { styled } from "@mui/system";
 import { CssTransition } from "@mui/base/Transitions";
 import { PopupContext } from "@mui/base/Unstable_Popup";
 import PopUp from "../../components/PopUp";
+import SearchHeaderComponent from "../../layout/SearchHeaderComponent";
 import CurrentUser from "../../CurrentUser";
 const BrandHeader = ({ toggleMenu, myState }) => {
   const { currentUserType, avatarImage } = CurrentUser();
@@ -296,7 +297,9 @@ const BrandHeader = ({ toggleMenu, myState }) => {
                   </nav>
                   <React.Fragment>
                     <div className="header-search-wrapper">
-                      <div className="header-search-icon">
+                      <SearchHeaderComponent />
+
+                      {/* <div className="header-search-icon">
                         <i className="fas fa-search"></i>
                       </div>
                       <div className="header-search-input">
@@ -307,7 +310,7 @@ const BrandHeader = ({ toggleMenu, myState }) => {
                       </div>
                       <div className="header-filter-icon">
                         <img className="filter-icon" src={sliderIcon} alt="" />
-                      </div>
+                      </div> */}
                     </div>
                     {/* <BootstrapDialog
                       onClose={handleClose}

@@ -2616,10 +2616,10 @@ const CreateJobs = () => {
                           onChange={portofolioUpload}
                         />
                         <div className="upload-text">
-                          pdf, word and image files
+                          Any additional information can be attached
                         </div>
                         <div className="upload-info">
-                          Any additional information can be attached
+                          (PDF, Word and Image files - optional)
                         </div>
                       </div>
 

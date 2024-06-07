@@ -313,8 +313,8 @@ const AdultFormOne = () => {
       age !== ""
     ) {
       let formData = {
-        childFirstName: adultsLegalFirstName,
-        childLastName: adultsLegalLastName,
+        adultLegalFirstName: adultsLegalFirstName,
+        adultLegalLastName: adultsLegalLastName,
         preferredChildFirstname: adultsPreferedFirstName,
         preferredChildLastName: adultsPreferedLastName,
         profession: selectedProfessions,

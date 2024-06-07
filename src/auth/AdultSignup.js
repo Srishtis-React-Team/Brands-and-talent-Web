@@ -287,6 +287,16 @@ const AdultSignup = () => {
     };
   }
 
+  const handleCondition = (e) => {
+    if (e == "terms") {
+    }
+    if (e == "privacy") {
+    }
+    if (e == "community") {
+      navigate("/community-guidelines");
+    }
+  };
+
   return (
     <>
       <div className="form-dialog">
@@ -503,9 +513,17 @@ const AdultSignup = () => {
               By registering you confirm that you accept the 
             </div>
             <div className="signup-terms-linetwo">
-              <span>Terms & Conditions</span> and 
-              <span>Privacy Policy</span> and
-              <span> Community Guidelines</span>
+              <span onClick={() => handleCondition("terms")}>
+                Terms & Conditions
+              </span>{" "}
+              ,&nbsp;
+              <span onClick={() => handleCondition("privacy")}>
+                Privacy Policy
+              </span>
+               and 
+              <span onClick={() => handleCondition("community")}>
+                Community Guidelines
+              </span>
             </div>
           </div>
         </div>

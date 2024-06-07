@@ -1608,7 +1608,6 @@ input[type="radio"] {
   font-family: sans-serif;
 }
 
-
 .talent-profile-icon {
   border: 1px solid #ddd;
   width: 50px;
@@ -1673,18 +1672,6 @@ input[type="radio"] {
   padding-left: 15px;
   padding-top: 10px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* MEDIA-QUERY START */
 
@@ -2542,6 +2529,54 @@ input[type="radio"] {
   }
 }
 
+.profile-image-header {
+  margin-left: 15px;
+  padding: 0px !important;
+  border: none !important;
+}
+
+.header-search-wrapper {
+  border: 1px solid #c9c9c9;
+  height: 45px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 17px;
+  /* margin: 0 10px 0 10px !important; */
+}
+
+.fa-search {
+  color: #000;
+  cursor: pointer;
+}
+
+.fa-search:hover {
+  cursor: pointer;
+  color: #c2114b;
+}
+
+.header-search-icon {
+  padding-right: 15px;
+}
+.header-search-input-style {
+  height: 40px;
+  border-color: #ffffff;
+  border: none;
+  outline: none !important;
+  font-size: 14px;
+}
+
+.get-booked-main {
+  margin-top: 50px;
+  background-color: #eeeeee;
+  padding-top: 40px;
+}
+
+.recent-gig-favorite {
+  padding-left: 15px;
+  padding-top: 10px;
+}
 
 @media (max-width: 430px) {
   .gallery-wrapper {
@@ -3036,7 +3071,6 @@ input[type="radio"] {
 }
 
 /* 320px — 480px: Mobile devices */
-
 
 @media (min-width: 320px) and (max-width: 480px) {
   .signup-terms {

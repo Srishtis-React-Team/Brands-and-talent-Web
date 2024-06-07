@@ -524,46 +524,98 @@ const EditTalent = () => {
             console.log(selectedProfessionOptions, "selectedProfessionOptions");
             setSelectedProfessionsEdit(selectedProfessionOptions);
 
-            const initialState = featuresList.reduce((acc, curr) => {
-              const initialValueObj = resData?.data?.data?.features?.find(
-                (item) => item.label === curr.label
-              );
-              acc[curr.label] = initialValueObj ? initialValueObj.value : "";
-              return acc;
-            }, {});
-            setFeatures(initialState);
-            console.log(initialState, "initialState");
+            // const initialState = featuresList.reduce((acc, curr) => {
+            //   const initialValueObj = resData?.data?.data?.features?.find(
+            //     (item) => item.label === curr.label
+            //   );
+            //   acc[curr.label] = initialValueObj ? initialValueObj.value : "";
+            //   return acc;
+            // }, {});
+            setFeatures(resData?.data?.data?.features);
+          } else if (resData?.data?.data?.type === "adults") {
+            setTalentData(resData.data.data, "resData.data.data");
+            setEditProfileImage(resData.data.data?.image?.fileData);
+            setKidsFillData(resData.data.data);
+            setParentFirstName(resData?.data?.data?.adultLegalFirstName);
+            setParentLastName(resData?.data?.data?.adultLegalLastName);
+            setParentEmail(resData?.data?.data?.adultEmail);
+            setParentMobile(resData?.data?.data?.childPhone);
+            setAddress(resData?.data?.data?.parentAddress);
+            setKidsLegalFirstName(resData?.data?.data?.childFirstName);
+            setKidsLegalLastName(resData?.data?.data?.childLastName);
+            setDob(resData?.data?.data?.childDob);
+            // handleSelectedCountry({
+            //   value: resData?.data?.data?.parentCountry,
+            //   label: resData?.data?.data?.parentCountry,
+            //   key: 0,
+            // });
+            setCountry(resData?.data?.data?.parentCountry);
+            setState(resData?.data?.data?.parentState);
+            setKidsCity(resData?.data?.data?.childCity);
+            setKidsPreferedFirstName(
+              resData?.data?.data?.preferredChildFirstname
+            );
+            setKidsPreferedLastName(
+              resData?.data?.data?.preferredChildLastName
+            );
+            setGender(resData?.data?.data?.childGender);
+            setLanguages(resData?.data?.data?.languages);
+            setNationality(resData?.data?.data?.childNationality);
+            setMaritalStatus(resData?.data?.data?.maritalStatus);
+            setEthnicity(resData?.data?.data?.childEthnicity);
+            // setKidsEmail(resData?.data?.data?.childEmail);
+            // setKidsPhone(resData?.data?.data?.childPhone);
+            // setKidsLocation(resData?.data?.data?.childLocation);
+            setKidsCity(resData?.data?.data?.childCity);
+            setSelectedCategories([
+              ...selectedCategories,
+              ...resData.data.data?.relevantCategories,
+            ]);
+            setAboutYou(resData.data.data?.childAboutYou);
+            setPortofolioFile(resData.data.data?.portfolio);
+            setVideoAudioFile(resData.data.data?.videosAndAudios);
+            setResumeFile(resData.data.data?.cv);
+            setAge(resData.data.data?.age);
+            const selectedOptions = resData.data.data?.languages.map(
+              (language) => {
+                return languageOptions.find(
+                  (option) => option.label === language
+                );
+              }
+            );
+            setSelectedLanguageOptions(selectedOptions);
+            console.log(selectedOptions, "selectedOptions");
+            setServices(resData.data.data?.services);
+            const selectedProfessionOptions = resData.data.data?.profession.map(
+              (profession) => {
+                console.log(profession, "professionmap");
+                console.log(professionList, "professionList");
+                return professionList.find(
+                  (option) => option.label === profession
+                );
+              }
+            );
+            console.log(selectedProfessionOptions, "selectedProfessionOptions");
+            setSelectedProfessionsEdit(selectedProfessionOptions);
+            setFeatures(resData?.data?.data?.features);
           }
         }
       })
       .catch((err) => {});
   };
 
-  const featureFirstChange = (event, label) => {
-    const newSelectedValues = {
-      ...features,
-      [label]: event?.target?.value,
-    };
-    setFeatures(newSelectedValues);
-    handleFeaturesChange(newSelectedValues);
+  const handleFeaturesChange = (label, value) => {
+    console.log(label, value, "label, value");
+    const updatedValues = [...features];
+    const index = updatedValues.findIndex((item) => item.label === label);
+    if (index !== -1) {
+      updatedValues[index] = { label, value };
+    } else {
+      updatedValues.push({ label, value });
+    }
+    console.log(updatedValues, "updatedValues");
+    setFeatures(updatedValues);
   };
-
-  const handleFeaturesChange = (newSelectedValues) => {
-    const updatedFeatures = featuresList?.reduce((acc, curr) => {
-      acc[curr.label] = newSelectedValues[curr.label] || "";
-      return acc;
-    }, {});
-    console.log(updatedFeatures, "updatedFeatures");
-    setFeatures(updatedFeatures);
-  };
-
-  useEffect(
-    (features) => {
-      console.log(features, "features");
-      // Update the initial values based on the data received
-    },
-    [features]
-  );
 
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
@@ -611,50 +663,98 @@ const EditTalent = () => {
 
   const basicDetailsUpdate = async () => {
     setMyState(false);
-    const formData = {
-      parentFirstName: parentFirstName,
-      parentLastName: parentLastName,
-      parentEmail: parentEmail,
-      parentMobileNo: parentMobile,
-      parentCountry: country,
-      parentState: state,
-      parentAddress: address,
-      relevantCategories: selectedCategories,
-      childFirstName: kidsLegalFirstName,
-      childLastName: kidsLegalLastName,
-      preferredChildFirstname: kidsPreferedFirstName,
-      preferredChildLastName: kidsPreferedLastName,
-      childGender: gender,
-      childNationality: nationality,
-      childEthnicity: ethnicity,
-      languages: languages,
-      childDob: dateOfBirth,
-      childCity: kidsCity,
-      childAboutYou: aboutYou,
-      age: age,
-    };
-    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
+
+    if (talentData?.type === "kids") {
+      const formData = {
+        parentFirstName: parentFirstName,
+        parentLastName: parentLastName,
+        parentEmail: parentEmail,
+        parentMobileNo: parentMobile,
+        parentCountry: country,
+        parentState: state,
+        parentAddress: address,
+        relevantCategories: selectedCategories,
+        childFirstName: kidsLegalFirstName,
+        childLastName: kidsLegalLastName,
+        preferredChildFirstname: kidsPreferedFirstName,
+        preferredChildLastName: kidsPreferedLastName,
+        childGender: gender,
+        childNationality: nationality,
+        childEthnicity: ethnicity,
+        languages: languages,
+        childDob: dateOfBirth,
+        childCity: kidsCity,
+        childAboutYou: aboutYou,
+        age: age,
+      };
+      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Updated SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              setMyState(true);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
           setIsLoading(false);
-          setMessage("Updated SuccessFully!");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            setMyState(true);
-          }, 1000);
-        } else if (resData.data.status === false) {
+        });
+    }
+    if (talentData?.type === "adults") {
+      let formData = {
+        adultLegalFirstName: parentFirstName,
+        adultLegalLastName: parentLastName,
+        preferredChildFirstname: kidsPreferedFirstName,
+        preferredChildLastName: kidsPreferedLastName,
+        profession: selectedProfessions,
+        relevantCategories: selectedCategories,
+        childGender: gender,
+        maritalStatus: maritalStatus,
+        childNationality: nationality,
+        childEthnicity: ethnicity,
+        languages: languages,
+        childDob: dateOfBirth,
+        childPhone: parentMobile,
+        contactEmail: parentEmail,
+        childLocation: address,
+        parentCountry: country,
+        parentState: state,
+        parentAddress: address,
+        childCity: kidsCity,
+        age: age,
+      };
+      await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Updated SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
           setIsLoading(false);
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
+        });
+    }
   };
 
   const [firstNameLetterError, setFirstNameLetterError] = useState(false);
@@ -834,9 +934,14 @@ const EditTalent = () => {
   useEffect(() => {
     console.log(valueTabs, "valueTabs");
   }, [valueTabs]);
+
   useEffect(() => {
     console.log(editProfileImage, "editProfileImage");
   }, [editProfileImage]);
+
+  useEffect(() => {
+    console.log(features, "features");
+  }, [features]);
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -974,7 +1079,13 @@ const EditTalent = () => {
         portfolio: portofolioArray,
       };
     }
-    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+    let apiUrl;
+    if (talentData?.type == "kids") {
+      apiUrl = API.editKids;
+    } else if (talentData?.type == "adults") {
+      apiUrl = API.updateAdults;
+    }
+    await ApiHelper.post(`${apiUrl}${talentData?._id}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
@@ -1036,7 +1147,13 @@ const EditTalent = () => {
         videosAndAudios: portofolioArray,
       };
     }
-    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+    let apiUrl;
+    if (talentData?.type == "kids") {
+      apiUrl = API.editKids;
+    } else if (talentData?.type == "adults") {
+      apiUrl = API.updateAdults;
+    }
+    await ApiHelper.post(`${apiUrl}${talentData?._id}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
@@ -1097,7 +1214,13 @@ const EditTalent = () => {
         cv: portofolioArray,
       };
     }
-    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+    let apiUrl;
+    if (talentData?.type == "kids") {
+      apiUrl = API.editKids;
+    } else if (talentData?.type == "adults") {
+      apiUrl = API.updateAdults;
+    }
+    await ApiHelper.post(`${apiUrl}${talentData?._id}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
@@ -1174,7 +1297,15 @@ const EditTalent = () => {
     let formData = {
       services: myValue,
     };
-    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+
+    let apiUrl;
+    if (talentData?.type == "kids") {
+      apiUrl = API.editKids;
+    } else if (talentData?.type == "adults") {
+      apiUrl = API.updateAdults;
+    }
+
+    await ApiHelper.post(`${apiUrl}${talentData?._id}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
@@ -1205,28 +1336,53 @@ const EditTalent = () => {
     const formData = {
       image: editProfileImageObject,
     };
-    await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
+    if (talentData?.type === "kids") {
+      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Profile Image Update Successfully");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setMyState(true);
+              setOpenPopUp(false);
+            }, 2000);
+          } else if (resData.data.status === false) {
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 2000);
+          }
+        })
+        .catch((err) => {
           setIsLoading(false);
-          setMessage("Profile Image Update Successfully");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setMyState(true);
-            setOpenPopUp(false);
-          }, 2000);
-        } else if (resData.data.status === false) {
+        });
+    } else if (talentData?.type === "adults") {
+      await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Profile Image Update Successfully");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setMyState(true);
+              setOpenPopUp(false);
+            }, 2000);
+          } else if (resData.data.status === false) {
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 2000);
+          }
+        })
+        .catch((err) => {
           setIsLoading(false);
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 2000);
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
+        });
+    }
   };
 
   const fileInputRef = useRef(null);
@@ -1366,7 +1522,13 @@ const EditTalent = () => {
     let formData = {
       services: services,
     };
-    await ApiHelper.post(`${API.editKids}${talentId}`, formData)
+    let apiUrl;
+    if (talentData?.type == "kids") {
+      apiUrl = API.editKids;
+    } else if (talentData?.type == "adults") {
+      apiUrl = API.updateAdults;
+    }
+    await ApiHelper.post(`${apiUrl}${talentId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
@@ -1393,7 +1555,13 @@ const EditTalent = () => {
     let formData = {
       features: features,
     };
-    await ApiHelper.post(`${API.editKids}${talentId}`, formData)
+    let apiUrl;
+    if (talentData?.type == "kids") {
+      apiUrl = API.editKids;
+    } else if (talentData?.type == "adults") {
+      apiUrl = API.updateAdults;
+    }
+    await ApiHelper.post(`${apiUrl}${talentId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
@@ -1587,7 +1755,7 @@ const EditTalent = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
               <div className="kids-main edit-basicdetails-section-main">
-                <div className="kids-form-title">Parent/Guardian Details</div>
+                <div className="kids-form-title">Personal Details</div>
                 <div className="kids-form-row">
                   <div className="kids-form-section">
                     <div className="mb-3">
@@ -1639,334 +1807,61 @@ const EditTalent = () => {
                     </div>
                   </div>
                 </div>
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">
-                        E-mail <span className="mandatory">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        className={`form-control ${
-                          !isValidEmail ? "is-invalid" : "form-control"
-                        }`}
-                        onChange={handleEmailChange}
-                        placeholder="Enter E-mail"
-                        value={parentEmail}
-                        disabled={true}
-                      />
-                      {!isValidEmail && (
-                        <div className="invalid-feedback">
-                          Please enter a valid email address.
-                        </div>
-                      )}
-                      {parentEmailError && (
-                        <div className="invalid-fields">Please enter Email</div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">
-                        Country<span className="mandatory">*</span>
-                      </label>
-                      <Select
-                        placeholder="Search country..."
-                        options={countryList.map((country, index) => ({
-                          value: country,
-                          label: country,
-                          key: index,
-                        }))}
-                        value={{ value: country, label: country }}
-                        onChange={handleSelectedCountry}
-                        isSearchable={true}
-                      />
-                      {parentCountryError && (
-                        <div className="invalid-fields">
-                          Please Select Country
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">
-                        State<span className="mandatory">*</span>
-                      </label>
-                      <Select
-                        placeholder="Select state..."
-                        options={stateList.map((state) => ({
-                          value: state.stateId, // or whatever unique identifier you want to use
-                          label: state.name,
-                        }))}
-                        value={{ value: state, label: state }}
-                        onChange={handleSelectedState}
-                        isSearchable={true}
-                      />
-                      {stateError && (
-                        <div className="invalid-fields">
-                          Please Select State
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">City</label>
-                      <Select
-                        placeholder="Select City..."
-                        options={cityList.map((city) => ({
-                          value: city.cityId, // or whatever unique identifier you want to use
-                          label: city.name,
-                        }))}
-                        value={{ value: kidsCity, label: kidsCity }}
-                        onChange={handleSelectedCity}
-                        isSearchable={true}
-                      />
-                    </div>
-                  </div>
-                </div>
 
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label
-                        htmlFor="exampleFormControlTextarea1"
-                        className="form-label"
-                      >
-                        Address<span className="mandatory">*</span>
-                      </label>
-                      <textarea
-                        style={{ width: "714px" }}
-                        className="form-control address-textarea"
-                        id="exampleFormControlTextarea1"
-                        value={address}
-                        rows="3"
-                        onChange={(e) => {
-                          setAddress(e.target.value);
-                          setAddressError(false);
-                        }}
-                      ></textarea>
-                      {addressError && (
-                        <div className="invalid-fields">
-                          Please Enter Address
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="kids-form-section">
-                    <label className="form-label">
-                      Mobile No <span className="mandatory">*</span>
-                    </label>
-                    <div className="mb-3">
-                      {/* <input
-                            type="text"
-                            className="form-control"
-                            maxLength="15"
-                            pattern="[0-9]{10}"
-                            value={parentMobile}
-                            onChange={(e) => {
-                              handleMobileChange(e);
-                              setParentMobileError(false);
-                            }}
-                            placeholder=" Mobile No"
-                          ></input> */}
-
-                      <MuiPhoneNumber
-                        value={parentMobile}
-                        defaultCountry={"kh"}
-                        className="form-control"
-                        onChange={handleMobileChange}
-                      />
-
-                      {parentMobileError && (
-                        <div className="invalid-fields">
-                          Please enter Mobile Number
-                        </div>
-                      )}
-                      {mobileNumError && (
-                        <div className="invalid-fields">
-                          Only Numbers Allowed
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="kids-form-title">Your Child Details</div>
-                {/* <div className="profession-section-cover">
+                {talentData?.type === "kids" && (
                   <div className="kids-form-row">
                     <div className="kids-form-section">
                       <div className="mb-3">
-                        <label className="form-label pay-info">
-                          Profession (choose any 4)
+                        <label className="form-label">
+                          Legal First Name
                           <span className="mandatory">*</span>
                         </label>
-                        <div>
-                          <Select
-                            defaultValue={[]}
-                            isMulti
-                            name="professions"
-                            options={professionList}
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            placeholder="Search for Category”"
-                            onChange={handleProfessionChange}
-                            styles={customStyles}
-                            value={selectedProfessionsEdit}
-                          />
-                          {professionError && (
-                            <div className="invalid-fields">
-                              Please Choose Profession
-                            </div>
-                          )}
-                        </div>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={(e) => {
+                            KidsLegalFirstNameChange(e);
+                            setkidsLegalFirstNameError(false);
+                          }}
+                          onKeyDown={handleKidsLegalKeyPress}
+                          value={kidsLegalFirstName}
+                          placeholder="Enter Legal First Name"
+                        ></input>
+                        {kidsLegalFirstNameError && (
+                          <div className="invalid-fields">
+                            Please enter First Name
+                          </div>
+                        )}
+                        {kidsLegalFirstLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters Allowed
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="kids-form-section">
+                      <div className="mb-3">
+                        <label className="form-label">Legal Last name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={kidsLegalLastName}
+                          onChange={(e) => {
+                            KidsLegalLastNameChange(e);
+                          }}
+                          onKeyDown={handleKidsLegalLastNameKeyPress}
+                          placeholder="Enter Legal Last name"
+                        ></input>
+                        {kidsLegalLastNameLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters Allowed
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
-                  <div className="profession-content-section">
-                    {selectedProfessions.map((profession, index) => (
-                      <div key={index} className="dynamic-profession">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label} / day
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perDaySalary || ""}
-                            onChange={(e) =>
-                              handleDetailChange(
-                                index,
-                                "perDaySalary",
-                                e.target.value
-                              )
-                            }
-                            placeholder="$/day"
-                          ></input>
-                        </div>
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label} / hr
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perHourSalary || ""}
-                            onChange={(e) =>
-                              handleDetailChange(
-                                index,
-                                "perHourSalary",
-                                e.target.value
-                              )
-                            }
-                            placeholder="$/hr"
-                          ></input>
-                        </div>
-
-                        <div className="offer-wrapper">
-                          <input
-                            className="profession-checkbox"
-                            id={profession.label}
-                            type="checkbox"
-                            checked={profession.openToOffers || false}
-                            onChange={(e) =>
-                              handleDetailChange(
-                                index,
-                                "openToOffers",
-                                e.target.checked
-                              )
-                            }
-                          />
-                          <label
-                            className="form-label offer-label"
-                            htmlFor={profession.label}
-                          >
-                            Open to Offers / Happy to negotiate
-                          </label>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
-                <div className="kids-form-title-sub">
-                  Please select the top 4 categories relevant to your profile.
-                  <span className="mandatory">*</span>
-                </div>
-                <div className="category-list">
-                  {categoryList.map((category, index) => (
-                    <div
-                      className={
-                        selectedCategories.includes(category)
-                          ? "selected-category"
-                          : "category-name"
-                      }
-                      onClick={(e) => {
-                        chooseCategory(category);
-                      }}
-                      key={index}
-                    >
-                      {category}
-                    </div>
-                  ))}
-                </div>
-                {categoryError && (
-                  <div className="invalid-fields">Please Choose Categories</div>
                 )}
-                <div className="kids-form-title">Personal Details</div>
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">
-                        Legal First Name
-                        <span className="mandatory">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        onChange={(e) => {
-                          KidsLegalFirstNameChange(e);
-                          setkidsLegalFirstNameError(false);
-                        }}
-                        onKeyDown={handleKidsLegalKeyPress}
-                        value={kidsLegalFirstName}
-                        placeholder="Enter Legal First Name"
-                      ></input>
-                      {kidsLegalFirstNameError && (
-                        <div className="invalid-fields">
-                          Please enter First Name
-                        </div>
-                      )}
-                      {kidsLegalFirstLetterError && (
-                        <div className="invalid-fields">
-                          Only Letters Allowed
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">Legal Last name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={kidsLegalLastName}
-                        onChange={(e) => {
-                          KidsLegalLastNameChange(e);
-                        }}
-                        onKeyDown={handleKidsLegalLastNameKeyPress}
-                        placeholder="Enter Legal Last name"
-                      ></input>
-                      {kidsLegalLastNameLetterError && (
-                        <div className="invalid-fields">
-                          Only Letters Allowed
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
+
                 <div className="kids-form-row">
                   <div className="kids-form-section">
                     <div className="mb-3">
@@ -2137,7 +2032,7 @@ const EditTalent = () => {
                     </div>
                   </div>
                 </div>
-                <div className="kids-form-row mb-5">
+                <div className="kids-form-row mb-2">
                   <div className="kids-form-section">
                     <div className="mb-3">
                       <label className="form-label">
@@ -2174,6 +2069,7 @@ const EditTalent = () => {
                           className="form-select"
                           aria-label="Default select example"
                           onChange={selectMaritalStatus}
+                          value={maritalStatus}
                         >
                           <option value="" disabled selected>
                             Select Marital Status
@@ -2187,6 +2083,285 @@ const EditTalent = () => {
                     </div>
                   )}
                 </div>
+
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        E-mail <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        className={`form-control ${
+                          !isValidEmail ? "is-invalid" : "form-control"
+                        }`}
+                        onChange={handleEmailChange}
+                        placeholder="Enter E-mail"
+                        value={parentEmail}
+                        disabled={true}
+                      />
+                      {!isValidEmail && (
+                        <div className="invalid-feedback">
+                          Please enter a valid email address.
+                        </div>
+                      )}
+                      {parentEmailError && (
+                        <div className="invalid-fields">Please enter Email</div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        Country<span className="mandatory">*</span>
+                      </label>
+                      <Select
+                        placeholder="Search country..."
+                        options={countryList.map((country, index) => ({
+                          value: country,
+                          label: country,
+                          key: index,
+                        }))}
+                        value={{ value: country, label: country }}
+                        onChange={handleSelectedCountry}
+                        isSearchable={true}
+                      />
+                      {parentCountryError && (
+                        <div className="invalid-fields">
+                          Please Select Country
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">
+                        State<span className="mandatory">*</span>
+                      </label>
+                      <Select
+                        placeholder="Select state..."
+                        options={stateList.map((state) => ({
+                          value: state.stateId, // or whatever unique identifier you want to use
+                          label: state.name,
+                        }))}
+                        value={{ value: state, label: state }}
+                        onChange={handleSelectedState}
+                        isSearchable={true}
+                      />
+                      {stateError && (
+                        <div className="invalid-fields">
+                          Please Select State
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label className="form-label">City</label>
+                      <Select
+                        placeholder="Select City..."
+                        options={cityList.map((city) => ({
+                          value: city.cityId, // or whatever unique identifier you want to use
+                          label: city.name,
+                        }))}
+                        value={{ value: kidsCity, label: kidsCity }}
+                        onChange={handleSelectedCity}
+                        isSearchable={true}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="kids-form-row">
+                  <div className="kids-form-section">
+                    <div className="mb-3">
+                      <label
+                        htmlFor="exampleFormControlTextarea1"
+                        className="form-label"
+                      >
+                        Address<span className="mandatory">*</span>
+                      </label>
+                      <textarea
+                        style={{ width: "714px" }}
+                        className="form-control address-textarea"
+                        id="exampleFormControlTextarea1"
+                        value={address}
+                        rows="3"
+                        onChange={(e) => {
+                          setAddress(e.target.value);
+                          setAddressError(false);
+                        }}
+                      ></textarea>
+                      {addressError && (
+                        <div className="invalid-fields">
+                          Please Enter Address
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-section">
+                    <label className="form-label">
+                      Mobile No <span className="mandatory">*</span>
+                    </label>
+                    <div className="mb-3">
+                      {/* <input
+                            type="text"
+                            className="form-control"
+                            maxLength="15"
+                            pattern="[0-9]{10}"
+                            value={parentMobile}
+                            onChange={(e) => {
+                              handleMobileChange(e);
+                              setParentMobileError(false);
+                            }}
+                            placeholder=" Mobile No"
+                          ></input> */}
+
+                      <MuiPhoneNumber
+                        value={parentMobile}
+                        defaultCountry={"kh"}
+                        className="form-control"
+                        onChange={handleMobileChange}
+                      />
+
+                      {parentMobileError && (
+                        <div className="invalid-fields">
+                          Please enter Mobile Number
+                        </div>
+                      )}
+                      {mobileNumError && (
+                        <div className="invalid-fields">
+                          Only Numbers Allowed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                {talentData?.type === "kids" && (
+                  <div className="kids-form-title">Your Child Details</div>
+                )}
+                {/* <div className="profession-section-cover">
+                  <div className="kids-form-row">
+                    <div className="kids-form-section">
+                      <div className="mb-3">
+                        <label className="form-label pay-info">
+                          Profession (choose any 4)
+                          <span className="mandatory">*</span>
+                        </label>
+                        <div>
+                          <Select
+                            defaultValue={[]}
+                            isMulti
+                            name="professions"
+                            options={professionList}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            placeholder="Search for Category”"
+                            onChange={handleProfessionChange}
+                            styles={customStyles}
+                            value={selectedProfessionsEdit}
+                          />
+                          {professionError && (
+                            <div className="invalid-fields">
+                              Please Choose Profession
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="profession-content-section">
+                    {selectedProfessions.map((profession, index) => (
+                      <div key={index} className="dynamic-profession">
+                        <div className="mb-3">
+                          <label className="form-label">
+                            {profession.label} / day
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control profession-input"
+                            value={profession.perDaySalary || ""}
+                            onChange={(e) =>
+                              handleDetailChange(
+                                index,
+                                "perDaySalary",
+                                e.target.value
+                              )
+                            }
+                            placeholder="$/day"
+                          ></input>
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label">
+                            {profession.label} / hr
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control profession-input"
+                            value={profession.perHourSalary || ""}
+                            onChange={(e) =>
+                              handleDetailChange(
+                                index,
+                                "perHourSalary",
+                                e.target.value
+                              )
+                            }
+                            placeholder="$/hr"
+                          ></input>
+                        </div>
+
+                        <div className="offer-wrapper">
+                          <input
+                            className="profession-checkbox"
+                            id={profession.label}
+                            type="checkbox"
+                            checked={profession.openToOffers || false}
+                            onChange={(e) =>
+                              handleDetailChange(
+                                index,
+                                "openToOffers",
+                                e.target.checked
+                              )
+                            }
+                          />
+                          <label
+                            className="form-label offer-label"
+                            htmlFor={profession.label}
+                          >
+                            Open to Offers / Happy to negotiate
+                          </label>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div> */}
+                <div className="kids-form-title-sub">
+                  Please select the top 4 categories relevant to your profile.
+                  <span className="mandatory">*</span>
+                </div>
+                <div className="category-list">
+                  {categoryList.map((category, index) => (
+                    <div
+                      className={
+                        selectedCategories.includes(category)
+                          ? "selected-category"
+                          : "category-name"
+                      }
+                      onClick={(e) => {
+                        chooseCategory(category);
+                      }}
+                      key={index}
+                    >
+                      {category}
+                    </div>
+                  ))}
+                </div>
+                {categoryError && (
+                  <div className="invalid-fields">Please Choose Categories</div>
+                )}
+
                 <div className="update-profile-flex">
                   <Button
                     onClick={() => basicDetailsUpdate()}
@@ -2785,31 +2960,82 @@ const EditTalent = () => {
             <CustomTabPanel value={valueTabs} index={6}>
               {talentData && talentData?.features?.length > 0 && (
                 <>
+                  <div className="selected-features update-portfolio-cards-wrapper mt-3 mb-5">
+                    {features && (
+                      <>
+                        <div className="table-container">
+                          <table>
+                            <tbody>
+                              <tr>
+                                <td className="left-column">
+                                  <table>
+                                    <tbody>
+                                      {features
+                                        ?.slice(
+                                          0,
+                                          Math.ceil(features?.length / 2)
+                                        )
+                                        .map((feature, index) => (
+                                          <tr key={feature.label}>
+                                            <td>{feature.label}</td>
+                                            <td>{feature.value}</td>
+                                          </tr>
+                                        ))}
+                                    </tbody>
+                                  </table>
+                                </td>
+                                <td className="right-column">
+                                  <table>
+                                    <tbody>
+                                      {features
+                                        ?.slice(Math.ceil(features?.length / 2))
+                                        .map((feature, index) => (
+                                          <tr key={feature.label}>
+                                            <td>{feature.label}</td>
+                                            <td>{feature.value}</td>
+                                          </tr>
+                                        ))}
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </>
+                    )}
+                  </div>
+
                   <div className="features-section">
                     <div className="row">
-                      {/* {featuresList.map((item, index) => (
-                        <div
-                          key={index}
-                          className="mb-3 features-input-wrapper col-md-4"
-                        >
-                          <label className="form-label">{item.label}</label>
-                          <select
-                            className="form-select features-select"
-                            aria-label="Default select example"
-                            value={features[item.label]}
-                            onChange={(e) => featureFirstChange(e, item.label)}
-                          >
-                            <option value="" disabled>
-                              {item.label}
-                            </option>
-                            {item.options.map((option, idx) => (
-                              <option key={idx} value={option}>
-                                {option}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      ))} */}
+                      {featuresList.map((item, index) => {
+                        return (
+                          <>
+                            <div className="mb-3 features-input-wrapper">
+                              <label className="form-label">{item.label}</label>
+                              <select
+                                className="form-select features-select"
+                                aria-label="Default select example"
+                                onChange={(e) =>
+                                  handleFeaturesChange(
+                                    item.label,
+                                    e.target.value
+                                  )
+                                }
+                              >
+                                <option value="" disabled selected>
+                                  {item.label}
+                                </option>
+                                {item.options.map((option, idx) => (
+                                  <option key={idx} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </>
+                        );
+                      })}
                     </div>
                   </div>
                   <div className="add-service-btn-flex">

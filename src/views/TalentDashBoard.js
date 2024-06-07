@@ -89,7 +89,6 @@ const TalentDashBoard = () => {
   };
 
   const getRecentGigs = async () => {
-    // alert("getRecentGigs");
     const formData = {
       talentId: userId,
     };
@@ -152,8 +151,8 @@ const TalentDashBoard = () => {
     setTalentId(localStorage.getItem("userId"));
     console.log(talentId, "brandId");
     if (talentId) {
+      getRecentGigs();
     }
-    getRecentGigs();
   }, [talentId]);
 
   const openSignup = () => {
@@ -289,13 +288,15 @@ const TalentDashBoard = () => {
       jobType: job_type,
       workPlaceType: work_place_type,
       skills: selectedSkills,
+      talentId: talentId,
     };
     console.log(formData, "formData talentFilterData");
     setIsLoading(true);
     await ApiHelper.post(API.searchJobs, formData)
       .then((resData) => {
-        console.log();
+        console.log(resData.data, "searchJobs");
         if (resData.data.status === true) {
+          setGigsList(resData.data.data);
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
           setTimeout(function() {

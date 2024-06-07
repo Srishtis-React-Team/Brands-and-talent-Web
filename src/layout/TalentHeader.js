@@ -24,6 +24,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Select from "react-select";
 import CurrentUser from "../CurrentUser";
+import SearchHeaderComponent from "./SearchHeaderComponent";
 
 const TalentHeader = ({ toggleMenu, myState }) => {
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
@@ -59,6 +60,17 @@ const TalentHeader = ({ toggleMenu, myState }) => {
       zIndex: 9999, // Ensure menu appears above other elements
     }),
   };
+
+  useEffect(() => {
+    setTimeout(function() {
+      setTalentId(localStorage.getItem("userId"));
+    }, 1000);
+    console.log(talentId, "talentId");
+    if (talentId) {
+      getTalentById();
+      getTalentNotification();
+    }
+  }, [talentId]);
 
   useEffect(() => {
     // Function to toggle dropdown when clicking the bell icon
@@ -101,26 +113,6 @@ const TalentHeader = ({ toggleMenu, myState }) => {
     };
   }, []);
 
-  const closeNotification = () => {
-    // var dropdown = document.querySelector(".notification-dropdown");
-    // dropdown.classList.toggle("active");
-  };
-
-  // useEffect(() => {
-  //   getTalentById();
-  // }, []);
-  useEffect(() => {
-    setTimeout(function() {
-      setTalentId(localStorage.getItem("userId"));
-    }, 1000);
-
-    console.log(talentId, "talentId");
-    if (talentId) {
-      getTalentById();
-      getTalentNotification();
-    }
-  }, [talentId]);
-
   console.log(myState, "myState");
 
   useEffect(() => {
@@ -150,7 +142,7 @@ const TalentHeader = ({ toggleMenu, myState }) => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            setTalentData(resData.data.data, "resData.data.data");
+            setTalentData(resData.data.data);
           }
         }
       })
@@ -188,6 +180,14 @@ const TalentHeader = ({ toggleMenu, myState }) => {
         navigate(`${"/talent-dashboard"}?${talentData?._id}`);
       } else if (menuItem === "edit") {
         navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+      }
+      if (menuItem == "find-talent") {
+        setMessage("You need to sign Up as Brand to find talents");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/brand-firstGig");
+        }, 3000);
       }
       console.log(`Clicked on ${menuItem}`);
     };
@@ -334,9 +334,15 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                   <div className="navTxt">
                     <NavLink to="/">Home</NavLink>
                   </div>
-
                   <div className="navTxt">
                     <NavLink to="/talent-dashboard"> Get Booked</NavLink>
+                  </div>
+                  <div
+                    className="navTxt"
+                    style={{ cursor: "pointer" }}
+                    onClick={createHandleMenuClick("find-talent")}
+                  >
+                    Find Talent
                   </div>
                   {/* <div className="navTxt">
                     <NavLink to="/job-list">Jobs List</NavLink>
@@ -422,6 +428,9 @@ const TalentHeader = ({ toggleMenu, myState }) => {
 
                   <React.Fragment>
                     <div className="header-search-wrapper">
+                      <SearchHeaderComponent />
+                    </div>
+                    {/* <div className="header-search-wrapper">
                       <div className="header-search-icon">
                         <i className="fas fa-search"></i>
                       </div>
@@ -437,7 +446,7 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                       >
                         <img className="filter-icon" src={sliderIcon} alt="" />
                       </div>
-                    </div>
+                    </div> */}
                     {/* <BootstrapDialog
                       onClose={handleClose}
                       aria-labelledby="customized-dialog-title"

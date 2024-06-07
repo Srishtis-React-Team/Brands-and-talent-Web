@@ -109,6 +109,7 @@ const MessageTalents = () => {
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
+    console.log(urlUserID, "urlUserID");
     if (urlUserID) {
       setClickedUserId(urlUserID);
     }
@@ -137,6 +138,8 @@ const MessageTalents = () => {
   useEffect(() => {
     // if (socket === null) return;
     if (socket != null) {
+      console.log(socket, "socket");
+      console.log(socket, "currentUserId");
       socket.emit("addNewUser", currentUserId);
       socket.on("getOnlineUsers", (res) => {
         console.log(res, "getOnlineUsers");
@@ -170,7 +173,6 @@ const MessageTalents = () => {
       firstId: currentUserId,
       secondId: clickedUserId,
     };
-
     await ApiHelper.post(API.createChat, formData)
       .then((resData) => {
         if (resData) {
@@ -188,7 +190,9 @@ const MessageTalents = () => {
       .then((resData) => {
         if (resData) {
           setUsersList(resData.data.data);
-          setInitaialUser(resData.data.data, clickedUserId);
+          setClickedUserId(resData.data.data[0]._id);
+          console.log(resData.data.data[0]._id, " resData.data");
+          setInitaialUser(resData.data.data, resData.data.data[0]._id);
         }
       })
       .catch((err) => {

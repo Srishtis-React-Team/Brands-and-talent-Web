@@ -919,17 +919,13 @@ const AdultFormThree = () => {
                                   }
                                 >
                                   <option value="" disabled selected>
-                                    Select {item.label}
+                                    {item.label}
                                   </option>
-                                  {item.options.map((item, index) => {
-                                    return (
-                                      <>
-                                        <option defaultValue value="1">
-                                          {item}
-                                        </option>
-                                      </>
-                                    );
-                                  })}
+                                  {item.options.map((option, idx) => (
+                                    <option key={idx} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
                                 </select>
                               </div>
                             </>

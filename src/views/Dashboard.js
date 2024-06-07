@@ -773,13 +773,11 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {!currentUserId && (
-              <div className="find-more wraper">
-                <NavLink onClick={() => handleClick("find-talent")}>
-                  <div className="moreBtn">Find More</div>
-                </NavLink>
-              </div>
-            )}
+            <div className="find-more wraper">
+              <NavLink onClick={() => handleClick("find-talent")}>
+                <div className="moreBtn">Find More</div>
+              </NavLink>
+            </div>
           </div>
         </div>
 

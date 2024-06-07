@@ -13,6 +13,7 @@ import "../../assets/css/talent-dashboard.scss";
 import "../../assets/css/forms/kidsform-one.scss";
 import PopUp from "../../components/PopUp";
 import { event } from "jquery";
+import RichTextEditor from "../RichTextEditor";
 const AdultFormTwo = () => {
   const btLogo = require("../../assets/icons/Group 56.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -124,9 +125,7 @@ const AdultFormTwo = () => {
   const handleEditorStateChange = (index, editorState) => {
     console.log(index, "index handleEditorStateChange");
     const newInputs = [...inputs];
-    newInputs[index]["editorState"] = [
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ];
+    newInputs[index]["editorState"] = editorState;
     setInputs(newInputs);
   };
 
@@ -286,7 +285,7 @@ const AdultFormTwo = () => {
                           <div className="adults-titles">Features</div>
                           <div className="rich-editor">
                             <label className="form-label">Features</label>
-                            <Editor
+                            {/* <Editor
                               editorStyle={{
                                 overflow: "hidden",
                               }}
@@ -312,6 +311,16 @@ const AdultFormTwo = () => {
                                 link: { inDropdown: true },
                                 history: { inDropdown: true },
                               }}
+                            /> */}
+
+                            <RichTextEditor
+                              value={input.editorState}
+                              onChange={(editorState) =>
+                                handleEditorStateChange(
+                                  serviceIndex,
+                                  editorState
+                                )
+                              }
                             />
                           </div>
                           <div className="cv-section">

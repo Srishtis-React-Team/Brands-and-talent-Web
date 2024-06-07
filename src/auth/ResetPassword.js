@@ -106,7 +106,7 @@ const ResetPassword = () => {
     } else if (userType == "adult") {
       const formData = {
         password: confirmPassword,
-        resetPasswordToken: paramsValue,
+        resetPasswordToken: token,
       };
       setIsLoading(true);
       console.log(formData, "formData kidsLogin");

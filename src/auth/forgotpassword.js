@@ -77,35 +77,82 @@ const ForgotPassword = () => {
           console.log(err);
         });
     } else if (queryString === "talent") {
-      const formData = {
+      let typeData = {
         email: talentEmail,
       };
-      setIsLoading(true);
-      console.log(formData, "formData kidsLogin");
-      await ApiHelper.post(API.forgotPassword, formData)
+      await ApiHelper.post(API.typeChecking, typeData)
         .then((resData) => {
           if (resData.data.status === true) {
-            setIsLoading(false);
-            console.log("true resData");
-            setMessage("Open Your Gmail For Password Reset Link!");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-              // navigate(`/reset-password`);
-            }, 2000);
-          } else if (resData.data.status === false) {
-            setIsLoading(false);
-            setMessage("Error Occured Try Again!");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
+            console.log(resData.data.modelType, "resData.data");
+            if (resData.data.modelType == "adult") {
+              adultForgotPassword();
+            } else {
+              kidsForgotPassword();
+            }
           }
         })
         .catch((err) => {
           console.log(err);
         });
     }
+  };
+
+  const adultForgotPassword = async (enteredOTP) => {
+    const formData = {
+      adultEmail: talentEmail,
+    };
+    await ApiHelper.post(API.adultForgotPassword, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          console.log("true resData");
+          setMessage("Open Your Gmail For Password Reset Link!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            // navigate(`/reset-password`);
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage("Error Occured Try Again!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const kidsForgotPassword = async (enteredOTP) => {
+    const formData = {
+      email: talentEmail,
+    };
+    await ApiHelper.post(API.forgotPassword, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          console.log("true resData");
+          setMessage("Open Your Gmail For Password Reset Link!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            // navigate(`/reset-password`);
+          }, 2000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage("Error Occured Try Again!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

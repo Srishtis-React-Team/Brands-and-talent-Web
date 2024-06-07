@@ -28,6 +28,12 @@ const Footer = () => {
     setEmail("");
   };
 
+  const [data, setData] = useState("");
+
+  const talentSignup = () => {
+    setData("talent-signup");
+  };
+
   const subscribe = async () => {
     if (firstName === "") {
       setFirstNameError(true);
@@ -157,11 +163,11 @@ const Footer = () => {
                     About Us
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link onClick={handleClick} to="/community-guidelines">
                     Community guidelines
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/" onClick={handleClick}>
                     Career
@@ -194,12 +200,12 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link onClick={handleClick} to="/find-creators">
+                  <Link onClick={handleClick} to="/brand-firstGig">
                     Hire Talent
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/" onClick={() => talentSignup()}>
                     Register as Talent
                   </Link>
                 </li>
@@ -224,17 +230,17 @@ const Footer = () => {
               </h6>
               <ul className="footerLinks">
                 <li>
-                  <Link onClick={handleClick} to="/">
+                  <Link onClick={handleClick} to="/blogs">
                     Industry news and insights
                   </Link>
                 </li>
                 <li>
-                  <Link onClick={handleClick} to="/">
+                  <Link onClick={handleClick} to="/blogs">
                     Case studies
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/blogs" onClick={handleClick}>
                     Talent stories
                   </Link>
                 </li>
@@ -254,8 +260,8 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link onClick={handleClick} to="/">
-                    Community Guidelines
+                  <Link onClick={handleClick} to="/community-guidelines">
+                    Community guidelines
                   </Link>
                 </li>
                 <li>

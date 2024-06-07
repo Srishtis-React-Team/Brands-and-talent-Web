@@ -411,10 +411,8 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     } else {
       updatedValues.push({ label, value });
     }
+    console.log(updatedValues, "updatedValues");
     setFeature(updatedValues);
-    // Call your API here with the updated selectedValues array
-    // Example:
-    // callYourApi(selectedValues);
   };
 
   const editKids = async () => {
