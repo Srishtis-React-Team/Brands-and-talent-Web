@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import "../assets/css/service-carousel.scss";
+import { useNavigate } from "react-router";
+import PopUp from "../components/PopUp";
 
 const ServicesCarousel = ({ talentData }) => {
+  const navigate = useNavigate();
+
   console.log(talentData, "talentData ");
   const [servicesList, setServicesList] = useState([]);
   const [userId, setUserId] = useState(null);
   const [videoAudioList, setVideoAudioList] = useState([]);
-
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     setUserId(storedUserId);
@@ -51,6 +56,19 @@ const ServicesCarousel = ({ talentData }) => {
       });
   };
 
+  const messageNow = () => {
+    if (talentData?.planName == "Basic") {
+      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+        navigate(`/pricing`);
+      }, 3000);
+    } else {
+      navigate(`/message?${talentData?._id}`);
+    }
+  };
+
   return (
     <>
       {servicesList && servicesList.length > 0 && (
@@ -68,35 +86,41 @@ const ServicesCarousel = ({ talentData }) => {
             return (
               <>
                 <div className="service-list-wrapper" key={index}>
-                    <div className="row">
-                      <div className="service-list-image col-md-4">
-                        <img
-                          src={`${API.userFilePath}${item?.files[0]?.fileData}`}
-                          alt=""
-                        />
-                      </div>
-                      <div className="service-list-content col-md-8">
-                        <div className="starting-amount">From US $2500</div>
-                        <div className="service-title">{item?.serviceName}</div>
+                  <div className="row">
+                    <div className="service-list-image col-md-4">
+                      <img
+                        src={`${API.userFilePath}${item?.files[0]?.fileData}`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="service-list-content col-md-8">
+                      <div className="starting-amount">From US $2500</div>
+                      <div className="service-title">{item?.serviceName}</div>
+                      <div
+                        className="service-description"
+                        dangerouslySetInnerHTML={{ __html: item?.editorState }}
+                      />
+
+                      <div className="text-btm">
+                        <div className="service-duration">
+                          <div>With In 2 Months</div>
+                          <div>3 Concepts, 2 Revisions</div>
+                        </div>
                         <div
-                          className="service-description"
-                          dangerouslySetInnerHTML={{ __html: item?.editorState }}
-                        />
-                       
-                        <div className="text-btm">
-                          <div className="service-duration">
-                            <div>With In 2 Months</div>
-                            <div>3 Concepts, 2 Revisions</div>
-                          </div>
-                          <div className="enquire-btn">Inquire Now</div>
+                          onClick={() => messageNow()}
+                          className="enquire-btn"
+                        >
+                          Inquire Now
                         </div>
                       </div>
                     </div>
+                  </div>
                 </div>
               </>
             );
           })}
       </div>
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };

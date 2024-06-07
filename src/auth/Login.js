@@ -5,11 +5,36 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
-import { generateToken } from "./firebase";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import CurrentUser from "../CurrentUser";
+import { generateToken } from "./firebase";
 
 const Login = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
+
+  console.log(fcmToken, "fcmToken");
+
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const generatedToken = await generateToken();
+      setToken(generatedToken);
+    };
+
+    fetchToken();
+  }, []);
+  useEffect(() => {
+    console.log(token, "token");
+  }, []);
+
   const btLogo = require("../assets/icons/Group 56.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
   const importIcon = require("../assets/icons/instagram.png");
@@ -30,15 +55,10 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(null);
-  const [fireBaseToken, setFireBaseToken] = useState(null);
   const [emailID, setEmailID] = useState(null);
 
   const [userType, setUserType] = useState("");
   const [currentUser_id, setCUrrentUserID] = useState("");
-
-  useEffect(() => {
-    generateToken();
-  }, []);
 
   useEffect(() => {
     const extractValuesFromURL = () => {
@@ -111,7 +131,7 @@ const Login = () => {
       const formData = {
         brandEmail: talentEmail,
         brandPassword: talentPassword,
-        fcmToken: fireBaseToken,
+        fcmToken: fcmToken,
       };
       console.log(formData, "formData talentLogin");
       setIsLoading(true);
@@ -146,7 +166,7 @@ const Login = () => {
       const formData = {
         email: talentEmail,
         password: talentPassword,
-        fcmToken: fireBaseToken,
+        fcmToken: fcmToken,
       };
       console.log(formData, "formData talentLogin");
       setIsLoading(true);
@@ -213,14 +233,6 @@ const Login = () => {
     );
     setUserId(userId);
   };
-
-  useEffect(() => {
-    const fireBaseToken = localStorage.getItem("fcmToken");
-    if (fireBaseToken) {
-      setFireBaseToken(fireBaseToken);
-    }
-    console.log(fireBaseToken, "fireBaseToken");
-  }, [fireBaseToken]);
 
   const [data, setData] = useState("");
 

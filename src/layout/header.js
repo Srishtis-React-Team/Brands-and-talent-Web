@@ -143,6 +143,13 @@ const Header = ({ onData }) => {
         }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/find-creators");
+      } else if (currentUser_type === "talent" && currentUserId) {
+        setMessage("You need to sign Up as Brand to find talents");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/brand-firstGig");
+        }, 3000);
       }
     }
   };
@@ -588,12 +595,14 @@ const Header = ({ onData }) => {
               </NavLink>
             </div>
           )}
+          {currentUser_type === "talent" && (
+            <div className="navTxt">
+              <NavLink to="/find-creators" onClick={() => handleClick("")}>
+                Find Talent
+              </NavLink>
+            </div>
+          )}
 
-          <div className="navTxt">
-            <NavLink to="/find-creators" onClick={() => handleClick("")}>
-              Find Talent
-            </NavLink>
-          </div>
           <div className="navTxt">
             <NavLink to="/how-it-works" onClick={() => handleClick("")}>
               How It Works
@@ -757,16 +766,13 @@ const Header = ({ onData }) => {
                 </div>
               )} */}
 
-              {currentUser_type === "brand" ||
-                (!currentUserId && (
-                  <div
-                    className="navTxt"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleClick("find-talent")}
-                  >
-                    Find Talent
-                  </div>
-                ))}
+              <div
+                className="navTxt"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleClick("find-talent")}
+              >
+                Find Talent
+              </div>
 
               {/* <div>
             <NavLink to="/get-booked" onClick={() => handleClick("")}>

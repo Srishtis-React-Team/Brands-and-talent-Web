@@ -22,7 +22,6 @@ export const API = {
   otpVerificationAdult: BASEURL + "users/otpVerificationAdult",
   otpResend: BASEURL + "users/otpResend",
   otpResendAdult: BASEURL + "users/otpResendAdult",
-  forgotPassword: BASEURL + "users/forgotPassword",
   resetPassword: BASEURL + "users/resetPassword",
   editKids: BASEURL + "users/editKids/",
   updateAdults: BASEURL + "users/updateAdults/",
@@ -32,6 +31,8 @@ export const API = {
   checkUserStatus: BASEURL + "users/checkUserStatus",
   updateAdultPassword: BASEURL + "users/updateAdultPassword",
   socialSignup: BASEURL + "users/socialSignup",
+  adultFetch: BASEURL + "users/adultFetch/",
+  typeChecking: BASEURL + "users/typeChecking",
 
   //passwords
   brandsForgotPassword: BASEURL + "brands/brandsForgotPassword",
@@ -39,6 +40,7 @@ export const API = {
   forgotPassword: BASEURL + "users/forgotPassword",
   resetPassword: BASEURL + "users/resetPassword",
   adultResetPassword: BASEURL + "users/adultResetPassword",
+  adultForgotPassword: BASEURL + "users/adultForgotPassword",
 
   //brands
   socailSignUpBrands: BASEURL + "brands/socailSignUpBrands",

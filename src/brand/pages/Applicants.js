@@ -20,7 +20,13 @@ import Modal from "react-modal";
 
 const Applicants = () => {
   const [brandId, setBrandId] = useState(null);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(`Hi [Name],
+We think you'd be a great fit for an exciting opportunity with us. We would love for you to apply for the [Job Title/Project] role.
+
+Please apply at [Job Link]. Looking forward to your application! Should you need more info, please feel free to contact us at [email / phone number]
+
+Best,  
+[Your Name]`);
   const [meetLink, setMeetLink] = useState("");
 
   useEffect(() => {
@@ -123,6 +129,7 @@ const Applicants = () => {
     console.log(e, "handleForms");
     if (e == "new-candidates") {
       showNewCandidates(true);
+      getNewCandidates(brandId, "new");
     } else {
       showNewCandidates(false);
     }
@@ -177,7 +184,12 @@ const Applicants = () => {
     console.log(formData, "formDatagetNewCandidates");
     await ApiHelper.post(apiUrl, formData)
       .then((resData) => {
+        console.log(resData, "resData newCandidatesresData");
         if (resData.data.status === true) {
+          console.log(resData.data.data, "newCandidatesresData");
+          setCandidatesList(resData.data.data, "resData.data.data");
+        }
+        if (resData.data.status === false) {
           console.log(resData.data.data, "newCandidatesresData");
           setCandidatesList(resData.data.data, "resData.data.data");
         }
@@ -200,7 +212,7 @@ const Applicants = () => {
     const formData = {
       talentId: alertpop?.talentId,
       selectedLevel: "interviewInvitations",
-      gigId: alertpop?.gigId,
+      gigId: alertpop?.jobId,
     };
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
@@ -241,7 +253,7 @@ const Applicants = () => {
     const formData = {
       talentId: alertpop?.talentId,
       selectedLevel: "interviewInvitations",
-      gigId: alertpop?.gigId,
+      gigId: alertpop?.jobId,
     };
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
@@ -280,7 +292,7 @@ const Applicants = () => {
     const formData = {
       talentId: alertpop?.talentId,
       selectedLevel: "rejectedCandidates",
-      gigId: alertpop?.gigId,
+      gigId: alertpop?.jobId,
     };
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
@@ -312,6 +324,9 @@ const Applicants = () => {
       getNewCandidates(brandId, "new");
     }
   }, [newCandidates, brandId]);
+  useEffect(() => {
+    console.log(alertpop, "alertpop");
+  }, [alertpop]);
 
   return (
     <>
@@ -394,10 +409,10 @@ const Applicants = () => {
                           <div className="recent-campaigns-wrapper">
                             <div className="campaigns-wrapper-one">
                               <div className="candidate-image-wrapper">
-                                {candidate?.talentDetails?.image && (
+                                {candidate?.image && (
                                   <img
                                     className="candidate-image-styling"
-                                    src={`${API.userFilePath}${candidate?.talentDetails?.image[0]?.fileData}`}
+                                    src={`${API.userFilePath}${candidate?.talentDetails?.image?.fileData}`}
                                     alt=""
                                   />
                                 )}
@@ -588,31 +603,31 @@ const Applicants = () => {
               {alertpop?.label == "invite" && (
                 <>
                   <h5 className="interview-model-title">
-                    Choose Interview Format
+                    Invite to Apply/Interview
                   </h5>
-                  <label className="toggleSwitch nolabel">
+                  {/* <label className="toggleSwitch nolabel">
                     <input type="checkbox" onChange={handleToggle} />
                     <a></a>
                     <span>
                       <span className="left-span">Offline</span>
                       <span className="right-span">Online</span>
                     </span>
-                  </label>
+                  </label> */}
                   <div className="invite-box">
                     {interviewMode && interviewMode == "offline" && (
                       <>
                         <div className="mb-3" style={{ textAlign: "left" }}>
                           <label
                             htmlFor="exampleFormControlTextarea1"
-                            className="form-label"
+                            className="form-label pb-2"
                           >
-                            Interview Location
+                            Type your message here:
                           </label>
                           <textarea
-                            className="form-control address-textarea"
+                            className="form-control invite-textarea"
                             id="exampleFormControlTextarea1"
                             value={address}
-                            rows="3"
+                            rows="5"
                             onChange={(e) => {
                               setAddress(e.target.value);
                             }}

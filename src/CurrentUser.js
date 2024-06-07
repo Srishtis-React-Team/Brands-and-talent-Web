@@ -1,21 +1,36 @@
 import { useState, useEffect } from "react";
-
+import { generateToken } from "./auth/firebase";
 const CurrentUser = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [currentUserImage, setCurrentUserImage] = useState("");
   const [currentUserType, setCurrentUserType] = useState("");
   const [avatarImage, setAvatarImage] = useState("");
+  // const [fcmToken, serFcmToken] = useState("");
 
   const avatar = require("../src/assets/images/avatar.webp");
+
+  useEffect(() => {
+    generateToken();
+  }, []);
 
   useEffect(() => {
     setCurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
     setCurrentUserType(localStorage.getItem("currentUserType"));
+    console.log(localStorage.getItem("fcmToken"), "fcmTokenCurrentUs4er5");
+    // serFcmToken(localStorage.getItem("fcmToken"));
     setAvatarImage(avatar);
   }, []);
 
-  return { currentUserId, currentUserImage, currentUserType, avatarImage };
+  let fcmToken = localStorage.getItem("fcmToken");
+
+  return {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  };
 };
 
 export default CurrentUser;

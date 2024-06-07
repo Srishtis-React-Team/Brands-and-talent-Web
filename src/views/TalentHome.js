@@ -127,7 +127,7 @@ const TalentHome = () => {
               </Link>
             </div>
             <div className="col-md-4 col-lg-3 pad8">
-              <Link to="/talent-help">
+              <Link to="/contact-us">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
                     <i className="bi bi-info-circle-fill  home-card-icons"></i>

@@ -5,44 +5,31 @@ import { NavLink } from "react-router-dom";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
-
+import CurrentUser from "../CurrentUser";
 const TalentSideMenu = ({ myState }) => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+  } = CurrentUser();
+
   const location = useLocation();
-  const [createJob, setCreateJob] = useState(null);
-  const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
-  const [jobCountNumber, setJobCountNumber] = useState(null);
   console.log(myState, "myState");
 
   useEffect(() => {
-    if (myState === true) {
+    if (currentUserId) {
       getTalentById();
     }
-  }, [myState]);
-
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-
-  useEffect(() => {
-    setTimeout(function() {
-      setTalentId(localStorage.getItem("userId"));
-    }, 1000);
-    console.log(talentId, "talentId");
-    if (talentId) {
-      getTalentById();
-      jobCount();
-    }
-  }, [talentId]);
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+  }, [currentUserId]);
 
   const getTalentById = async () => {
-    await ApiHelper.post(`${API.getTalentById}${talentId}`)
+    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
+            console.log(resData.data.data, "getTalentById");
             setTalentData(resData.data.data, "resData.data.data");
           }
         }
@@ -52,25 +39,17 @@ const TalentSideMenu = ({ myState }) => {
       });
   };
 
-  const jobCount = async () => {
-    await ApiHelper.post(`${API.jobCount}${talentId}`)
-      .then((resData) => {
-        if (resData) {
-          console.log(resData.data.data[2].count, "countData");
-          setJobCountNumber(resData.data.data[2].count);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
 
   useEffect(() => {
-    console.log(createJob, "createJobStatus setMenu");
-  }, [createJob]);
+    if (myState === true) {
+      getTalentById();
+    }
+  }, [myState]);
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-
   useEffect(() => {
     const handleResize = () => {
       if (
@@ -102,11 +81,16 @@ const TalentSideMenu = ({ myState }) => {
       <nav className="brand-sidebar-container">
         <div className="brand-profile-not-sidemenu">
           <div className="profImg">
-            <img
-              className="profile-img"
-              src={`${API.userFilePath}${talentData?.image?.fileData}`}
-              alt=""
-            />
+            {talentData?.image && (
+              <img
+                className="profile-img"
+                src={`${API.userFilePath}${talentData?.image?.fileData}`}
+                alt=""
+              />
+            )}
+            {!talentData?.image && (
+              <img className="profile-img" src={avatarImage} alt="" />
+            )}
           </div>
         </div>
         <div className="talent-profile">
@@ -224,6 +208,17 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-check-circle icons"></i>
             <div className="brand-menu-text">Applied Jobs</div>
+          </Link>
+          <Link
+            to="/message"
+            className={
+              location.pathname === "/message"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i class="bi bi-chat-dots icons"></i>
+            <div className="brand-menu-text">Chat</div>
           </Link>
 
           <Link

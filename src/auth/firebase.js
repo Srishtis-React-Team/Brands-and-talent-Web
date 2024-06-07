@@ -18,6 +18,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebaseApp);
 
 export const generateToken = async () => {
+  // alert("generateToken");
   const permission = await Notification.requestPermission();
   console.log(permission, "permission");
   let passToken;
@@ -27,13 +28,8 @@ export const generateToken = async () => {
         "BOrRUsFr6qM_RnH76mGZmeCu3_zRjKrl9rshpQSB2QRRe38Q-NbFYEZ2Bm-VTapy9UgzUHw313RFfT1bu8slsp4",
     });
     console.log(token, "permission token");
-    if (token) {
-      setTalentLocalStorage(token);
-      passToken = token;
-    }
+    localStorage.setItem("fcmToken", token);
+    passToken = token;
   }
-};
-
-const setTalentLocalStorage = (data) => {
-  localStorage.setItem("fcmToken", data);
+  return passToken;
 };

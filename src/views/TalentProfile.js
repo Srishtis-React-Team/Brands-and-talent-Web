@@ -18,6 +18,7 @@ import BrandHeader from "../brand/pages/BrandHeader.js";
 import CurrentUser from "../CurrentUser.js";
 import PopUp from "../components/PopUp.js";
 import Spinner from "../components/Spinner.js";
+import { useNavigate } from "react-router";
 
 const TalentProfile = () => {
   const {
@@ -26,7 +27,7 @@ const TalentProfile = () => {
     currentUserType,
     avatarImage,
   } = CurrentUser();
-
+  const navigate = useNavigate();
   // const location = useLocation();
   // const { talentData } = location.state;
   console.log(avatarImage, "avatarImage");
@@ -375,9 +376,38 @@ const TalentProfile = () => {
   }, [showModal]);
 
   const handleOpenModal = () => {
-    setShowModal(true);
+    if (talentData?.planName !== "basic") {
+      if (currentUserType == "talent") {
+        setMessage("Create a brand account and invite talents");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/brand-firstGig");
+        }, 3000);
+      } else if (currentUserType == "brand") {
+        setShowModal(true);
+      }
+    } else {
+      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+        navigate(`/pricing`);
+      }, 3000);
+    }
   };
-  const messageNow = () => {};
+  const messageNow = () => {
+    if (talentData?.planName == "Basic") {
+      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+        navigate(`/pricing`);
+      }, 3000);
+    } else {
+      navigate(`/message?${talentData?._id}`);
+    }
+  };
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -388,7 +418,7 @@ const TalentProfile = () => {
       talentId: talentData?._id,
       brandId: brandId,
       gigId: selectedJob,
-      comment: comments,
+      comments: comments,
     };
     setIsLoading(true);
     await ApiHelper.post(`${API.inviteTalentToApply}`, formData)
@@ -601,24 +631,19 @@ const TalentProfile = () => {
                       </div>
                     </div>
 
-                    {currentUser_type === "brand" && (
-                      <>
-                        <div
-                          className="invite-btn"
-                          onClick={() => handleOpenModal()}
-                        >
-                          <img src={whitePlus}></img>
-                          <div>Invite to apply</div>
-                        </div>
-                        <div
-                          className="invite-btn"
-                          onClick={() => messageNow()}
-                        >
-                          <i class="bi bi-chat-fill"></i>
-                          <div className="message-now-text">Message Now</div>
-                        </div>
-                      </>
-                    )}
+                    <>
+                      <div
+                        className="invite-btn"
+                        onClick={() => handleOpenModal()}
+                      >
+                        <img src={whitePlus}></img>
+                        <div>Invite to apply</div>
+                      </div>
+                      <div className="invite-btn" onClick={() => messageNow()}>
+                        <i class="bi bi-chat-fill"></i>
+                        <div className="message-now-text">Message Now</div>
+                      </div>
+                    </>
 
                     <div
                       className="modal fade"
