@@ -270,15 +270,15 @@ const ListJobs = () => {
 
             {allJobsList && allJobsList.length > 0 && (
               <>
-                <div className="list-jobs-wrapper">
+                <div className="list-jobs-wrapper pt-3">
                   <div className="row">
                   {allJobsList.map((job, index) => {
                     return (
                       <>
                         <div key={index} className="list-jobs-card col-md-6">
-                          <div className="recent-campaigns-wrapper">
+                          <div className="recent-campaigns-wrapper wraper">
                             <div className="campaigns-wrapper-one">
-                              <div className="campaigns-content-wrapper">
+                              <div className="campaigns-content-wrapper imgSpc">
                                 <div className="campaign-paid-wrapper">
                                   <div className="campaign-name">
                                     {job?.jobTitle}

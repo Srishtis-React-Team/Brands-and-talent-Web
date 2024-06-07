@@ -1608,6 +1608,84 @@ input[type="radio"] {
   font-family: sans-serif;
 }
 
+
+.talent-profile-icon {
+  border: 1px solid #ddd;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #eee;
+}
+.talent-profile-icon-img {
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.profile-image-header {
+  margin-left: 15px;
+  padding: 0px !important;
+  border: none !important;
+}
+
+.header-search-wrapper {
+  border: 1px solid #c9c9c9;
+  height: 45px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 17px;
+  margin: 0 10px 0 10px !important;
+}
+
+.fa-search {
+  color: #000;
+  cursor: pointer;
+}
+
+.fa-search:hover {
+  cursor: pointer;
+  color: #c2114b;
+}
+
+.header-search-icon {
+  padding-right: 15px;
+}
+.header-search-input-style {
+  height: 40px;
+  border-color: #ffffff;
+  border: none;
+  outline: none !important;
+  font-size: 14px;
+}
+
+.get-booked-main {
+  margin-top: 50px;
+  background-color: #eeeeee;
+  padding-top: 40px;
+}
+
+.recent-gig-favorite {
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* MEDIA-QUERY START */
 
 @media (max-width: 991px) {
@@ -1740,9 +1818,11 @@ input[type="radio"] {
   .main-footer-wrapper .form-fields .form-group {
     margin-bottom: 15px;
   }
-
+  .footer-wrapper h6 {
+    margin: 0 0 5px;
+  }
   .footer-wrapper {
-    margin: 20px 0px 10px;
+    margin: 20px 0px 0px;
   }
   .sidenavWraper.scroll {
     padding-right: 15px;
@@ -2461,70 +2541,7 @@ input[type="radio"] {
     margin: 0px 15px;
   }
 }
-.talent-profile-icon {
-  border: 1px solid #ddd;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: #eee;
-}
-.talent-profile-icon-img {
-  min-width: 50px;
-  min-height: 50px;
-  max-width: 100%;
-  object-fit: cover;
-  cursor: pointer;
-}
 
-.profile-image-header {
-  margin-left: 15px;
-  padding: 0px !important;
-  border: none !important;
-}
-
-.header-search-wrapper {
-  border: 1px solid #c9c9c9;
-  height: 45px;
-  border-radius: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 17px;
-  margin: 0 10px 0 10px !important;
-}
-
-.fa-search {
-  color: #000;
-  cursor: pointer;
-}
-
-.fa-search:hover {
-  cursor: pointer;
-  color: #c2114b;
-}
-
-.header-search-icon {
-  padding-right: 15px;
-}
-.header-search-input-style {
-  height: 40px;
-  border-color: #ffffff;
-  border: none;
-  outline: none !important;
-  font-size: 14px;
-}
-
-.get-booked-main {
-  margin-top: 50px;
-  background-color: #eeeeee;
-  padding-top: 40px;
-}
-
-.recent-gig-favorite {
-  padding-left: 15px;
-  padding-top: 10px;
-}
 
 @media (max-width: 430px) {
   .gallery-wrapper {
@@ -3019,6 +3036,7 @@ input[type="radio"] {
 }
 
 /* 320px — 480px: Mobile devices */
+
 
 @media (min-width: 320px) and (max-width: 480px) {
   .signup-terms {

@@ -112,7 +112,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
           id="mainBrand"
           className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
         >
-          <div className="brand-content-main boxBg">
+          <div className="brand-content-main boxBg px-4">
             <div className="back-create">
               <i className="bi bi-arrow-left-circle-fill"></i>
               <div onClick={handleBackClick} className="back-to">
@@ -164,7 +164,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </span>
                 <span> {jobData?.jobType}</span>
               </div>
-              <div className="job-features-benefits">
+              <div className="job-features-benefits pb-0">
                 <div className="row">
                   <div className="job-features col-md-6">
                     <div className="job-feature-title">Features</div>
@@ -229,7 +229,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                         {jobData?.benefits &&
                           jobData.benefits.map((benefit, index) => (
                             <li className="job-benefits-values" key={index}>
-                              {benefit}
+                              <span>{benefit}</span>
                             </li>
                           ))}
                       </ul>
