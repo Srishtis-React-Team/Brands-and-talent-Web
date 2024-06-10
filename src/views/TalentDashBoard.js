@@ -16,6 +16,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import Select from "react-select";
 
 const TalentDashBoard = () => {
   const workPlaceTypesOptions = [
@@ -27,6 +28,23 @@ const TalentDashBoard = () => {
     "AworkPlaceType",
     "Other",
     "Prefer not to say",
+  ];
+
+  const categoryList = [
+    "Fashion & Beauty",
+    "Media & Entertainment",
+    "Sports, Fitness, & Wellness",
+    "Creative Arts & Design",
+    "Celebrity",
+    "Writing, Marketing, & Content Creation",
+    "Performing Arts",
+    "Education & Coaching",
+    "Business & Technology",
+    "Luxury & Lifestyle",
+    "Eco-friendly & Sustainability",
+    "Home & Gardening",
+    "Food & Travel",
+    "Diversity & Inclusion",
   ];
 
   const navigate = useNavigate();
@@ -216,6 +234,11 @@ const TalentDashBoard = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const [category, setCategory] = useState("");
+
+  const selectCategory = (event) => {
+    setCategory(event.target.value);
+  };
 
   const [keywordError, setKeywordError] = useState(false);
   const [jobNameError, setJobNameError] = useState(false);
@@ -226,6 +249,16 @@ const TalentDashBoard = () => {
   const [workPlaceType, setWorkPlaceType] = useState("");
   const ageList = ["13-17", "18+"];
 
+  const selectedSkillsRef = useRef([]);
+
+  const selectSkills = (selectedOptions) => {
+    if (!selectedOptions || selectedOptions.length === 0) {
+      selectedSkillsRef.current = []; // Clear the selected skills
+    } else {
+      selectedSkillsRef.current = selectedOptions.map((option) => option.value);
+    }
+  };
+
   const applyFilter = async () => {
     let key_word;
     let job_location;
@@ -234,6 +267,7 @@ const TalentDashBoard = () => {
     let job_type;
     let work_place_type;
     let job_name;
+    let category;
 
     // Get the select element
     var selectElement = document.getElementById("workPlaceSelect");
@@ -255,6 +289,13 @@ const TalentDashBoard = () => {
     job_age = selectAgeElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
     console.log(job_age, "job_age");
+
+    // Get the select element
+    var selectCategoryElement = document.getElementById("selectedCategoryID");
+    // Get the selected value
+    category = selectCategoryElement?.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(category, "job_age");
 
     if (keyWordRef.current) {
       key_word = keyWordRef?.current?.value;
@@ -287,8 +328,9 @@ const TalentDashBoard = () => {
       age: job_age,
       jobType: job_type,
       workPlaceType: work_place_type,
-      skills: selectedSkills,
+      skills: selectedSkillsRef?.current,
       talentId: talentId,
+      category: category,
     };
     console.log(formData, "formData talentFilterData");
     setIsLoading(true);
@@ -416,19 +458,6 @@ const TalentDashBoard = () => {
       });
 
     setOpen(false);
-  };
-
-  const selectSkills = (selectedOptions) => {
-    setSkillsError(false);
-    if (!selectedOptions || selectedOptions.length === 0) {
-      // Handle case when all options are cleared
-      setSelectedSkills([]); // Clear the languages state
-      return;
-    }
-
-    // Extract values of all selected languages
-    const selectedLanguages = selectedOptions.map((option) => option.value);
-    setSelectedSkills(selectedLanguages); // Update languages state with all selected languages
   };
 
   const contactUs = () => {
@@ -570,33 +599,44 @@ const TalentDashBoard = () => {
                       </IconButton>
                       <DialogContent dividers>
                         <div className="search-filter-section">
-                          <div className="search-labels">Keywords</div>
                           <div>
-                            {/* <TextField
-                      autoFocus
-                      required
-                      margin="dense"
-                      id="name"
-                      name="email"
-                      label="Email Address"
-                      type="email"
-                      fullWidth
-                      variant="standard"
-                    /> */}
+                            <div className="kids-form-row mt-3">
+                              <div className="kids-form-section">
+                                <div className="mb-4">
+                                  <label className="form-label">Keywords</label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter Keyword"
+                                    ref={keyWordRef}
+                                  ></input>
+                                </div>
+                              </div>
 
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Enter Keyword"
-                              ref={keyWordRef}
-                              // onChange={(e) => {
-                              //   e.preventDefault();
-                              //   setJobName(e.target.value);
-                              // }}
-                            ></input>
+                              <div className="kids-form-section">
+                                <div className="mb-4">
+                                  <label className="form-label">Category</label>
+                                  <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    style={{ fontSize: "14px" }}
+                                    id="selectedCategoryID"
+                                  >
+                                    <option value="" disabled selected>
+                                      Select Category
+                                    </option>
+                                    {categoryList.map((option, index) => (
+                                      <option key={index} value={option}>
+                                        {option}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
                           </div>
 
-                          <div className="kids-form-row mt-3">
+                          <div className="kids-form-row">
                             <div className="kids-form-section">
                               <div className="mb-3 ">
                                 <label className="form-label">Location</label>
@@ -629,21 +669,22 @@ const TalentDashBoard = () => {
                               </div>
                             </div>
                           </div>
-                          {/* <div className="kids-form-section">
-                            <div className="mb-3">
-                              <label className="form-label">Skills</label>
-                              <Select
-                                isMulti
-                                name="colors"
-                                options={skillsList}
-                                valueField="value"
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                onChange={(value) => selectSkills(value)}
-                                styles={customStyles}
-                              />
+                          <div className="">
+                            <div className="kids-form-section">
+                              <div className="mb-3">
+                                <label className="form-label">Skills</label>
+                                <Select
+                                  isMulti
+                                  name="skills"
+                                  options={skillsList}
+                                  className="basic-multi-select"
+                                  classNamePrefix="select"
+                                  onChange={(value) => selectSkills(value)}
+                                  styles={customStyles}
+                                />
+                              </div>
                             </div>
-                          </div> */}
+                          </div>
                           <div className="kids-form-row mt-3">
                             <div className="kids-form-section">
                               <div className="mb-3 ">

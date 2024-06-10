@@ -166,7 +166,10 @@ const Header = ({ onData }) => {
     return () => {
       if (menuItem === "dashboard") {
         if (currentUser_type === "talent") {
-          navigate("/talent-profile", { state: { talentData: talentData } });
+          // navigate("/talent-profile", { state: { talentData: talentData } });
+          navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
+            state: { talentData },
+          });
         } else if (currentUser_type === "brand") {
           navigate(`brand-dashboard`);
         }
@@ -1104,7 +1107,7 @@ const Header = ({ onData }) => {
                   aria-label="Close"
                   className="kids-select-btn"
                 >
-                  13-17 Years
+                  4-17 Years
                 </div>
                 <div
                   onClick={(e) => {

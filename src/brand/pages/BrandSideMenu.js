@@ -303,9 +303,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           </Link>
 
           <Link
-            to="/talent"
+            to="/message"
             className={
-              location.pathname === "/talent"
+              location.pathname === "/message"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }

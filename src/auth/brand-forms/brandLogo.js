@@ -219,7 +219,7 @@ const BrandLogo = () => {
         </div>
         <div className="dialog-body" style={{ height: "75vh" }}>
           <div className="adult-signup-main">
-            <div className="step-title mb-3">Brand Logo</div>
+            <div className="step-title mb-3">Brand/Client Logo </div>
             <div
               className="cv-section"
               onDrop={handlePortofolioDrop}
@@ -236,8 +236,11 @@ const BrandLogo = () => {
                 multiple
                 onChange={portofolioUpload}
               />
-              <div className="upload-text">Upload Your Brand Logo</div>
-              <div className="upload-info">Drag and drop your Logo here.</div>
+              <div className="upload-text">
+                Upload your company logo or your photo if signing up as an
+                individual client.
+              </div>
+              <div className="upload-info">Drag and drop image here</div>
             </div>
             {portofolioFileError && (
               <div className="invalid-fields">Please Upload Logo</div>

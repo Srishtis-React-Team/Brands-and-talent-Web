@@ -166,7 +166,10 @@ const TalentHeader = ({ toggleMenu, myState }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "profile") {
-        navigate("/talent-profile", { state: { talentData: talentData } });
+        navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
+          state: { talentData },
+        });
+        // navigate("/talent-profile", { state: { talentData: talentData } });
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
@@ -177,7 +180,8 @@ const TalentHeader = ({ toggleMenu, myState }) => {
           navigate("/");
         }, 1000);
       } else if (menuItem === "dashboard") {
-        navigate(`${"/talent-dashboard"}?${talentData?._id}`);
+        // navigate(`${"/talent-dashboard"}?${talentData?._id}`);
+        navigate(`${"/talent-home"}`);
       } else if (menuItem === "edit") {
         navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
       }

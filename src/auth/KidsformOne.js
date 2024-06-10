@@ -252,8 +252,22 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleProfessionChange = (selectedOptions) => {
-    setSelectedProfessions(selectedOptions);
-    setProfessionError(false);
+    // setSelectedProfessions(selectedOptions);
+    // setProfessionError(false);
+
+    if (selectedOptions.length > 5) {
+      // setProfessionError(true);
+      // Optionally show a message to the user
+      setMessage("You can only select up to 5 skills");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 2000);
+      return; // Prevent the state update
+    } else {
+      setSelectedProfessions(selectedOptions);
+      setProfessionError(false);
+    }
   };
 
   const handleDetailChange = (index, field, value) => {
@@ -337,16 +351,43 @@ const KidsformOne = ({ sendDataToParent }) => {
     "Diversity & Inclusion",
   ];
 
-  function chooseCategory(category) {
+  // function chooseCategory(category) {
+  //   setCategoryError(false);
+  //   if (selectedCategories.includes(category)) {
+  //     setSelectedCategories(
+  //       selectedCategories.filter((item) => item !== category)
+  //     );
+  //   } else {
+  //     setSelectedCategories([...selectedCategories, category]);
+  //   }
+  // }
+
+  const chooseCategory = (category) => {
     setCategoryError(false);
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
       );
     } else {
-      setSelectedCategories([...selectedCategories, category]);
+      if (selectedCategories.length < 6) {
+        setSelectedCategories([...selectedCategories, category]);
+      } else {
+        // setCategoryError(true);
+        setMessage("you can only select 6 categories");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 2000);
+      }
     }
-  }
+  };
+  const deleteProfession = (profession, index) => {
+    console.log(profession, "profession");
+    console.log(index, "profession index");
+    setSelectedProfessions((prevSelectedProfessions) =>
+      prevSelectedProfessions.filter((item) => item.value !== profession.value)
+    );
+  };
 
   const getCountries = async () => {
     await ApiHelper.get(API.listCountries)
@@ -896,6 +937,10 @@ const KidsformOne = ({ sendDataToParent }) => {
     };
   }
 
+  useEffect(() => {
+    console.log(selectedProfessions, "selectedProfessions");
+  }, [selectedProfessions]);
+
   return (
     <>
       <>
@@ -1292,6 +1337,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                                 placeholder="Search for Category”"
                                 onChange={handleProfessionChange}
                                 styles={customStyles}
+                                value={selectedProfessions}
                               />
                               {professionError && (
                                 <div className="invalid-fields">
@@ -1341,7 +1387,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                                 placeholder="$/hr"
                               ></input>
                             </div>
-
                             <div className="offer-wrapper">
                               <input
                                 className="profession-checkbox"
@@ -1362,6 +1407,14 @@ const KidsformOne = ({ sendDataToParent }) => {
                               >
                                 Open to Offers / Happy to negotiate
                               </label>
+                            </div>
+                            <div>
+                              <i
+                                onClick={(e) => {
+                                  deleteProfession(profession, index);
+                                }}
+                                class="bi bi-trash"
+                              ></i>
                             </div>
                           </div>
                         ))}

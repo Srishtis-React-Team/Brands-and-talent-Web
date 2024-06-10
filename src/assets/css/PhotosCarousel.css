@@ -16,9 +16,12 @@
 .photos-carousel-owl.owl-theme .owl-nav {
   display: none; /* Hide the dots */
 }
-.brand-home-main .photos-slider .item{   height: auto; min-height: 250px; }
-.photos-slider .item{ 
-  height: 230px; 
+.brand-home-main .photos-slider .item {
+  height: auto;
+  min-height: 250px;
+}
+.photos-slider .item {
+  height: 230px;
   overflow: hidden;
   position: relative;
 }
@@ -26,6 +29,7 @@
   min-height: 230px;
   width: 100%;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .carousel-talent-name {
@@ -54,4 +58,15 @@
     /* width: 140px !important;
     margin-right: 20px !important; */
   }
+}
+
+.talents-profile-slider-image {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+.item {
+  display: inline-block;
+  margin: 10px;
 }
