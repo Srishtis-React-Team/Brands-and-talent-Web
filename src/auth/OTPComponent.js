@@ -65,9 +65,9 @@ const OTPComponent = () => {
     console.log(formData, "formData otpVerification");
     await ApiHelper.post(API.otpVerificationAdult, formData)
       .then((resData) => {
-        console.log("otpVerification response", resData.data);
+        console.log("otpVerification response", resData?.data);
         if (resData.data.status === true) {
-          setMessage("Verification Successful");
+          setMessage("Verification Successful Login to continue");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -75,7 +75,8 @@ const OTPComponent = () => {
           setIsLoading(false);
           setTimeout(function() {
             let successData = "verified";
-            navigate(`/adult-success`);
+            // navigate(`/adult-success`);
+            navigate(`/login?type=talent&user_id=${resData?.data?.data}`);
           }, 1000);
         } else if (resData.data.status === false) {
           console.log("false called");

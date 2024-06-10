@@ -55,14 +55,14 @@ const AdultFormTwo = () => {
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
+          console.log(resData.data, "serviceresponse");
           setIsLoading(false);
           setMessage("Updated SuccessFully!");
           setOpenPopUp(true);
           updateProfileStatus();
-
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-profile?${queryString}`);
+            // navigate(`/talent-profile?${queryString}`);
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -80,7 +80,15 @@ const AdultFormTwo = () => {
 
   const updateProfileStatus = async () => {
     await ApiHelper.post(`${API.updateProfileStatus}${queryString}`)
-      .then((resData) => {})
+      .then((resData) => {
+        let stateObject = resData.data.data;
+        navigate(
+          `/talent-profile/${resData.data.data.preferredChildFirstname}?${queryString}`,
+          {
+            state: { stateObject },
+          }
+        );
+      })
       .catch((err) => {
         setIsLoading(false);
       });
@@ -264,7 +272,9 @@ const AdultFormTwo = () => {
                             </div>
                             <div className="kids-form-section">
                               <div className="mb-3">
-                                <label className="form-label">Duration</label>
+                                <label className="form-label">
+                                  Duration (Weeks/Months)
+                                </label>
                                 <input
                                   type="text"
                                   name="duration"
@@ -277,7 +287,7 @@ const AdultFormTwo = () => {
                                     )
                                   }
                                   className="form-control"
-                                  placeholder="Duration In Months"
+                                  placeholder="Duration (Weeks/Months)"
                                 ></input>
                               </div>
                             </div>

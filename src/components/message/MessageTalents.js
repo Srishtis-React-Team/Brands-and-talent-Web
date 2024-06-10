@@ -190,9 +190,8 @@ const MessageTalents = () => {
       .then((resData) => {
         if (resData) {
           setUsersList(resData.data.data);
-          setClickedUserId(resData.data.data[0]._id);
-          console.log(resData.data.data[0]._id, " resData.data");
-          setInitaialUser(resData.data.data, resData.data.data[0]._id);
+          console.log(resData.data.data, "findPreviousChatUsers resData");
+          setCLickedUser(resData.data.data[0]);
         }
       })
       .catch((err) => {
@@ -346,7 +345,7 @@ const MessageTalents = () => {
   }, [profileFile]);
 
   const setCLickedUser = (data) => {
-    console.log("setCLickedUser");
+    console.log(data, "setCLickedUser");
     setClickedUserId(data?._id);
     setInitaialUser(userList, data?._id);
     if (currentUserId && selectedUser?._id) {
@@ -371,6 +370,24 @@ const MessageTalents = () => {
       });
   };
 
+  // const [currentTime, setCurrentTime] = useState("");
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const date = new Date();
+  //     const hours = date.getHours();
+  //     const minutes = date.getMinutes();
+  //     const ampm = hours >= 12 ? "PM" : "AM";
+  //     const formattedHours = hours % 12 || 12; // Convert 0 to 12
+  //     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // Add leading zero if needed
+  //     setCurrentTime(`${formattedHours}:${formattedMinutes} ${ampm}`);
+  //     console.log(currentTime, "currentTime");
+  //     console.log(typeof currentTime, "currentTime");
+  //   }, 1000); // Update time every second
+
+  //   return () => clearInterval(interval); // Clean up interval on component unmount
+  // }, []);
+
   const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
@@ -382,12 +399,16 @@ const MessageTalents = () => {
       const formattedHours = hours % 12 || 12; // Convert 0 to 12
       const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // Add leading zero if needed
       setCurrentTime(`${formattedHours}:${formattedMinutes} ${ampm}`);
-      console.log(currentTime, "currentTime");
-      console.log(typeof currentTime, "currentTime");
     }, 1000); // Update time every second
 
     return () => clearInterval(interval); // Clean up interval on component unmount
   }, []);
+
+  // Log currentTime only when it updates
+  useEffect(() => {
+    console.log(currentTime, "currentTime");
+    console.log(typeof currentTime, "currentTime");
+  }, [currentTime]);
 
   const setInitaialUser = async (userData, selectedID) => {
     console.log(userData, "userData callingblock");

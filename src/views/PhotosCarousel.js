@@ -5,56 +5,132 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
+import ImageSlider from "./ImageSlider";
+import { Modal, Box, IconButton } from "@mui/material";
+import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+
 const PhotosCarousel = ({ photosList }) => {
-  const model1 = require("../assets/images/model1.png");
-  const model2 = require("../assets/images/model2.png");
-  const model3 = require("../assets/images/model3.png");
-  const model4 = require("../assets/images/model4.png");
-  const model5 = require("../assets/images/model5.png");
-  const model6 = require("../assets/images/model6.png");
-  const model7 = require("../assets/images/model7.png");
-  const model8 = require("../assets/images/model8.png");
-  const model9 = require("../assets/images/model9.png");
-  const instaLogo = require("../assets/icons/instagram.png");
-  const [userId, setUserId] = useState(null);
+  const [isSliderOpen, setSliderOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleImageClick = (index) => {
+    setSliderOpen(true);
+    setCurrentImageIndex(index);
+  };
+
+  const handleClose = () => {
+    // alert("handleCloseSlider");
+    setSliderOpen(false);
+  };
+
+  useEffect(() => {
+    console.log(isSliderOpen, "isSliderOpen ImageSlider");
+  }, [isSliderOpen]);
+  const [currentIndex, setCurrentIndex] = useState(currentImageIndex);
+
+  useEffect(() => {
+    setCurrentIndex(currentImageIndex);
+  }, [currentImageIndex]);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % photosList.length);
+  };
+
+  const handlePrevious = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + photosList.length) % photosList.length
+    );
+  };
 
   return (
     <>
-      <OwlCarousel
-        className="owl-theme photos-carousel-owl"
-        // loop
-        margin={10}
-        nav
-        items={photosList?.length === 1 ? 1 : 5}
-        responsive={{
-          // Breakpoint from 0 up
-          0: {
-            items: 2,
-          },
-          // Breakpoint from 768 up
-          768: {
-            items: 5,
-          },
-        }}
+      <Box>
+        <OwlCarousel
+          className="owl-theme photos-carousel-owl"
+          // loop
+          margin={10}
+          nav
+          items={photosList?.length === 1 ? 1 : 5}
+          responsive={{
+            // Breakpoint from 0 up
+            0: {
+              items: 2,
+            },
+            // Breakpoint from 768 up
+            768: {
+              items: 5,
+            },
+          }}
+        >
+          {photosList &&
+            photosList.length > 0 &&
+            photosList.map((image, index) => {
+              // console.log(photosList, "photosList map");
+              console.log(image, "image");
+              return (
+                <>
+                  <div className="item" key={index}>
+                    <img
+                      className="talents-profile-slider-image"
+                      src={`${API.userFilePath}${image}`}
+                      alt=""
+                      onClick={() => {
+                        handleImageClick(index);
+                      }}
+                    />
+                  </div>
+                </>
+              );
+            })}
+        </OwlCarousel>
+      </Box>
+
+      <Modal
+        open={isSliderOpen}
+        onClose={handleClose}
+        aria-labelledby="image-slider-modal"
       >
-        {photosList &&
-          photosList.length > 0 &&
-          photosList.map((image, index) => {
-            // console.log(photosList, "photosList map");
-            console.log(image, "image");
-            return (
-              <>
-                <div className="item" key={index}>
-                  <img
-                    className="talents-profile-slider-image"
-                    src={`${API.userFilePath}${image}`}
-                    alt=""
-                  />
-                </div>
-              </>
-            );
-          })}
-      </OwlCarousel>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            height: "500px",
+            widows: "500px",
+            paddingTop: "50px",
+            paddingBottom: "50px",
+            paddingRight: "50px",
+            paddingLeft: "50px",
+          }}
+        >
+          <IconButton
+            sx={{ position: "absolute", top: 5, right: 5 }}
+            onClick={handleClose}
+          >
+            <Close />
+          </IconButton>
+          <img
+            src={`${API.userFilePath}${photosList[currentIndex]}`}
+            alt=""
+            style={{ width: "400px", height: "400px" }}
+          />
+          <IconButton
+            sx={{ position: "absolute", top: "50%", left: 8 }}
+            onClick={handlePrevious}
+          >
+            <ArrowBackIos />
+          </IconButton>
+          <IconButton
+            sx={{ position: "absolute", top: "50%", right: 5 }}
+            onClick={handleNext}
+          >
+            <ArrowForwardIos />
+          </IconButton>
+        </Box>
+      </Modal>
     </>
   );
 };

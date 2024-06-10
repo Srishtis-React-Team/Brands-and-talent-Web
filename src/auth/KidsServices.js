@@ -58,12 +58,16 @@ const KidsServices = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Updated SuccessFully Check Your Email");
+          setMessage("Updated SuccessFully Login to Continue");
           setOpenPopUp(true);
           loginTemplate(resData?.data?.data?.email);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-signup-files-success`);
+            // navigate(`/talent-signup-files-success`);
+
+            navigate(
+              `/login?type=talent&user_id=${resData?.data?.data?.user_id}`
+            );
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -80,7 +84,6 @@ const KidsServices = () => {
   };
 
   const loginTemplate = async (email) => {
-    // navigate(`/talent-signup-files-success`);
     const formData = {
       parentEmail: email,
     };
@@ -287,7 +290,9 @@ const KidsServices = () => {
                             </div>
                             <div className="kids-form-section">
                               <div className="mb-3">
-                                <label className="form-label">Duration</label>
+                                <label className="form-label">
+                                  Duration (Weeks/Months)
+                                </label>
                                 <input
                                   type="text"
                                   name="duration"
@@ -300,7 +305,7 @@ const KidsServices = () => {
                                     )
                                   }
                                   className="form-control"
-                                  placeholder="Duration In Months"
+                                  placeholder="Duration (Weeks/Months)"
                                 ></input>
                               </div>
                             </div>

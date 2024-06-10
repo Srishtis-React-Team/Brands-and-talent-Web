@@ -243,13 +243,13 @@ const Pricing = () => {
                               <>
                                 <div className="plan-content">
                                   <div className="icPrice">
-                                    -
-                                    {/* <img
+                                    <i class="bi bi-check-circle-fill"></i>
+                                  </div>
+                                  {/* <img
                                       className="listIc"
                                       src={greenTick}
                                       alt=""
                                     /> */}
-                                  </div>
                                   <div className="plan-content-text">
                                     {item}
                                   </div>

@@ -52,8 +52,18 @@
   cursor: pointer;
 }
 
+.howworks-title {
+  color: #c2114b;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  font-family: sans-serif;
+  line-height: 40px;
+}
+
 .howitworks-labels {
   display: flex;
+  justify-content: center;
 }
 
 .howitworks-labels-text {
@@ -61,9 +71,10 @@
   padding: 0px 10px;
   border-right: 1px solid grey;
   color: #000000;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
+  font-family: sans-serif;
 }
 .howitworks-labels-text:hover {
   color: #c2114b;

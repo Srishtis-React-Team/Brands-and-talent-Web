@@ -283,7 +283,7 @@ const TalentNotification = () => {
                                 }}
                               >
                                 {item?.talentNotificationMessage}&nbsp;
-                                {item?.gigDetails?.jobTitle}
+                                {/* {item?.gigDetails?.jobTitle} */}
                               </div>
                             </div>
 

@@ -86,7 +86,6 @@ const AdultFormOne = () => {
   const [adultsLocationError, setAdultsLocationError] = useState(false);
   const [kidsCityError, setKidsCityError] = useState(false);
   const [countryError, setCountryError] = useState(false);
-  const [stateError, setStateError] = useState(false);
   const [addressError, setAddressError] = useState(false);
   const [genderError, setGenderError] = useState(false);
   const [maritalStatusError, setMaritalStatusError] = useState(false);
@@ -117,7 +116,6 @@ const AdultFormOne = () => {
       countryName: country,
       stateName: state?.label,
     });
-    setStateError(false);
   };
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
@@ -286,9 +284,6 @@ const AdultFormOne = () => {
     if (country === "") {
       setCountryError(true);
     }
-    if (state === "") {
-      setStateError(true);
-    }
     if (address === "") {
       setAddressError(true);
     }
@@ -308,7 +303,6 @@ const AdultFormOne = () => {
       adultsPhone !== "" &&
       kidsEmail !== "" &&
       country !== "" &&
-      state !== "" &&
       address !== "" &&
       age !== ""
     ) {
@@ -397,9 +391,22 @@ const AdultFormOne = () => {
   ];
 
   const handleProfessionChange = (selectedOptions) => {
-    setSelectedProfessions(selectedOptions);
-    setSelectedProfessionsError(false);
-    console.log(selectedOptions, "selectedOptions");
+    // setSelectedProfessions(selectedOptions);
+    // setProfessionError(false);
+
+    if (selectedOptions.length > 5) {
+      // setProfessionError(true);
+      // Optionally show a message to the user
+      setMessage("You can only select up to 5 skills");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 2000);
+      return; // Prevent the state update
+    } else {
+      setSelectedProfessions(selectedOptions);
+      setSelectedProfessionsError(false);
+    }
   };
 
   const handleDetailChange = (index, field, value) => {
@@ -409,50 +416,41 @@ const AdultFormOne = () => {
   };
 
   const categoryList = [
-    "Fashion",
-    "Parenting and family",
-    "Sports/Martial Arts/Dance",
-    "Arts and photography",
-    "Videography",
-    "Music",
-    "Comedy/Entertainment",
-    "Education",
-    "Transportation",
-    "Food and beverage",
-    "Finance",
-    "Beauty/Cosmetics",
-    "Luxury",
-    "Business and Technology",
-    "Travel/Tourism",
-    "Health/Wellness/Fitness",
-    "Home and Gardening",
-    "Eco-friendly/Nature/Sustainability",
-    "Diversity and inclusion",
-    "Outdoor and nature",
-    "Content Creation",
-    "Lifestyle",
+    "Fashion & Beauty",
+    "Media & Entertainment",
+    "Sports, Fitness, & Wellness",
+    "Creative Arts & Design",
     "Celebrity",
-    "Animals/Pets",
-    "Web3",
-    "Home and DIY",
-    "Anime/Memes",
-    "Website/Mobile Applications",
-    "Gaming",
-    "Lifecoach/Relationships",
-    "Cosplay/Memes",
-    "Other",
+    "Writing, Marketing, & Content Creation",
+    "Performing Arts",
+    "Education & Coaching",
+    "Business & Technology",
+    "Luxury & Lifestyle",
+    "Eco-friendly & Sustainability",
+    "Home & Gardening",
+    "Food & Travel",
+    "Diversity & Inclusion",
   ];
 
-  function chooseCategory(category) {
+  const chooseCategory = (category) => {
     setSelectedCategoriesError(false);
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
       );
     } else {
-      setSelectedCategories([...selectedCategories, category]);
+      if (selectedCategories.length < 6) {
+        setSelectedCategories([...selectedCategories, category]);
+      } else {
+        // setCategoryError(true);
+        setMessage("you can only select 6 categories");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 2000);
+      }
     }
-  }
+  };
 
   const selectEthnicity = (event) => {
     setEthnicity(event.target.value);
@@ -601,6 +599,14 @@ const AdultFormOne = () => {
     }
   };
 
+  const deleteProfession = (profession, index) => {
+    console.log(profession, "profession");
+    console.log(index, "profession index");
+    setSelectedProfessions((prevSelectedProfessions) =>
+      prevSelectedProfessions.filter((item) => item.value !== profession.value)
+    );
+  };
+
   return (
     <>
       <>
@@ -636,7 +642,7 @@ const AdultFormOne = () => {
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="adults-titles">
-                          Profession (choose any 4)
+                          Profession / Skills (Choose any 5)
                         </label>
                         <span className="mandatory">*</span>
                         <div>
@@ -647,8 +653,12 @@ const AdultFormOne = () => {
                             options={professionList}
                             className="basic-multi-select"
                             classNamePrefix="select"
+                            placeholder="Search for Category”"
                             onChange={handleProfessionChange}
+                            styles={customStyles}
+                            value={selectedProfessions}
                           />
+
                           {selectedProfessionsError && (
                             <div className="invalid-fields">
                               Please Choose Profession
@@ -718,12 +728,20 @@ const AdultFormOne = () => {
                               Open to Offers / Happy to negotiate
                             </label>
                           </div>
+                          <div>
+                            <i
+                              onClick={(e) => {
+                                deleteProfession(profession, index);
+                              }}
+                              class="bi bi-trash"
+                            ></i>
+                          </div>
                         </div>
                       ))}
                     </div>
                   </div>
                   <div className="adults-titles">
-                    Please select the top 4 categories relevant to your profile.{" "}
+                    Select 3 to 6 categories relevant to your profile
                     <span className="mandatory">*</span>
                   </div>
                   <div className="category-list">
@@ -887,7 +905,6 @@ const AdultFormOne = () => {
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="form-label">State</label>
-                        <span className="mandatory">*</span>
                         <Select
                           placeholder="Select state..."
                           options={stateList.map((state) => ({
@@ -898,11 +915,6 @@ const AdultFormOne = () => {
                           onChange={handleSelectedState}
                           isSearchable={true}
                         />
-                        {stateError && (
-                          <div className="invalid-fields">
-                            Please Select State
-                          </div>
-                        )}
                       </div>
                     </div>
                   </div>

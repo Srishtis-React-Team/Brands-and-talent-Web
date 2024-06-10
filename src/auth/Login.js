@@ -328,7 +328,7 @@ const Login = () => {
               className="login-forgot"
               onClick={() => handleForgotPassword(selectedItem)}
             >
-              Forgot Password Brand/Client?
+              Forgot Password ?
             </div>
           )}
           {selectedItem === "talent" && (
@@ -336,7 +336,7 @@ const Login = () => {
               className="login-forgot"
               onClick={() => handleForgotPassword(selectedItem)}
             >
-              Forgot Password Talent?
+              Forgot Password ?
             </div>
           )}
 

@@ -143,20 +143,17 @@ const HowItWorks = () => {
         <div className="container">
           <div className="resources-main">
             <div className="resources">
-              <div
-                className="resource-description widthParg text-center"
-                id="brand"
-              >
+              <h1 className="howworks-title widthParg text-center" id="brand">
                 Welcome to Brands & Talent (BT), your gateway to a vibrant
                 community of creators, influencers, talent, brands, and clients.
                 Whether you're a brand/client seeking talent or a creator
                 looking to showcase your work, our platform offers a seamless
                 and empowering experience. Here's how it works:
-              </div>
+              </h1>
 
               <div className="howitworks-labels">
                 <div className="howitworks-labels-text">
-                  <a href="#brand">Brand</a>
+                  <a href="#brand">Brands/Clients</a>
                 </div>
                 <div className="howitworks-labels-text">
                   <a href="#talent">Talent</a>

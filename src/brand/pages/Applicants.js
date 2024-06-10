@@ -17,14 +17,13 @@ import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
 import { NavLink } from "react-router-dom";
 import Modal from "react-modal";
+import Spinner from "../../components/Spinner";
 
 const Applicants = () => {
   const [brandId, setBrandId] = useState(null);
   const [address, setAddress] = useState(`Hi [Name],
 We think you'd be a great fit for an exciting opportunity with us. We would love for you to apply for the [Job Title/Project] role.
-
-Please apply at [Job Link]. Looking forward to your application! Should you need more info, please feel free to contact us at [email / phone number]
-
+Please apply at ${`https://hybrid.sicsglobal.com/project/brandsandtalent/preview-job-talent?`}. Looking forward to your application! Should you need more info, please feel free to contact us at [email / phone number]
 Best,  
 [Your Name]`);
   const [meetLink, setMeetLink] = useState("");
@@ -56,6 +55,8 @@ Best,
     jobType: "",
     label: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+
   const jobImage = require("../../assets/icons/jobImage.png");
   const [showSidebar, setShowSidebar] = useState(true);
   const [loader, setLoader] = useState(false);
@@ -232,8 +233,10 @@ Best,
       interviewType: "online",
       meetingLink: meetLink,
     };
+    setIsLoading(true);
     await ApiHelper.post(API.informSelectedLevel, formData)
       .then((resData) => {
+        setIsLoading(false);
         console.log(resData, "onlineInvite resData");
         if (resData.data.status === true) {
           setMessage("An Invite has been send to the candidate");
@@ -246,6 +249,7 @@ Best,
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   };
 
@@ -272,9 +276,13 @@ Best,
       interviewType: "offline",
       officeAddress: address,
     };
+    setIsLoading(true);
+
     await ApiHelper.post(API.informSelectedLevel, formData)
       .then((resData) => {
         if (resData.data.status === true) {
+          setIsLoading(false);
+
           setMessage("An Invite has been send to the candidate");
           setOpenPopUp(true);
           setTimeout(function() {
@@ -284,6 +292,8 @@ Best,
         }
       })
       .catch((err) => {
+        setIsLoading(false);
+
         console.log(err);
       });
   };
@@ -714,6 +724,8 @@ Best,
           </div>
         </div>
       </Modal>
+      {isLoading && <Spinner />}
+
       {openPopUp && <PopUp message={message} />}
     </>
   );

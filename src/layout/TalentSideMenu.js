@@ -209,7 +209,7 @@ const TalentSideMenu = ({ myState }) => {
             <i className="bi bi-check-circle icons"></i>
             <div className="brand-menu-text">Applied Jobs</div>
           </Link>
-          <Link
+          {/* <Link
             to="/message"
             className={
               location.pathname === "/message"
@@ -218,8 +218,8 @@ const TalentSideMenu = ({ myState }) => {
             }
           >
             <i class="bi bi-chat-dots icons"></i>
-            <div className="brand-menu-text">Chat</div>
-          </Link>
+            <div className="brand-menu-text">Messages</div>
+          </Link> */}
 
           <Link
             to="/talent-settings"

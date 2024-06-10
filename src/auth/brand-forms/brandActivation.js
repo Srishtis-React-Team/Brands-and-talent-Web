@@ -72,33 +72,45 @@ const BrandActivation = () => {
                 <div className="">
                   <div className="included-line">
                     <img src={greenTick} alt="" />
-                    <div className="include-text">Create 1  free job posts</div>
-                  </div>
-                  <div className="included-line">
-                    <img src={greenTick} alt="" />
-                    <div className="include-text">2 days Job Post approval</div>
+                    <div className="include-text">Create a profile</div>
                   </div>
                   <div className="included-line">
                     <img src={greenTick} alt="" />
                     <div className="include-text">
-                      View & Manage Job Applications
+                      Portfolio (up to 5 photos + 2 Video/Audio sample works)
                     </div>
                   </div>
                   <div className="included-line">
                     <img src={greenTick} alt="" />
-                    <div className="include-text">Bookmark Talent</div>
+                    <div className="include-text">Bio</div>
+                  </div>
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">
+                      Add your social media accounts
+                    </div>
+                  </div>
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">Add your features</div>
                   </div>
                 </div>
                 <div className="include-wrapper">
                   <div className="included-line">
                     <img src={greenTick} alt="" />
-                    <div className="include-text">Email and chat support</div>
+                    <div className="include-text">Reviews</div>
                   </div>
                   <div className="included-line">
                     <img src={greenTick} alt="" />
-                    <div className="include-text">
-                      Pay the Talent Your Way: Transfer, Gift, or Both
-                    </div>
+                    <div className="include-text">Set your Rates</div>
+                  </div>
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">Access to job postings</div>
+                  </div>
+                  <div className="included-line">
+                    <img src={greenTick} alt="" />
+                    <div className="include-text">Basic customer support</div>
                   </div>
                 </div>
               </div>

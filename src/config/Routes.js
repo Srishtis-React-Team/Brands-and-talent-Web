@@ -65,7 +65,7 @@ function Routing() {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/find-creators" element={<FindCreators />} />
-      <Route path="/talent-profile" element={<TalentProfile />} />
+      <Route path="/talent-profile/:name" element={<TalentProfile />} />
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/resources" element={<Resources />} />
       <Route path="/signup" element={<Register />} />
