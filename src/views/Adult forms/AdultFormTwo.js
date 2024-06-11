@@ -15,7 +15,7 @@ import PopUp from "../../components/PopUp";
 import { event } from "jquery";
 import RichTextEditor from "../RichTextEditor";
 const AdultFormTwo = () => {
-  const btLogo = require("../../assets/icons/Group 56.png");
+  const btLogo = require("../../assets/images/LOGO.jpg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const adultsBanner = require("../../assets/images/adultsBanner.png");

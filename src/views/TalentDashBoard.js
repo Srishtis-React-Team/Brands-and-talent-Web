@@ -55,7 +55,7 @@ const TalentDashBoard = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [isFilled, setIsFilled] = useState(true);
   const girl1 = require("../assets/images/girl1.png");
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const sliderIcon = require("../assets/icons/sliders.png");
   const customStyles = {
     control: (provided, state) => ({

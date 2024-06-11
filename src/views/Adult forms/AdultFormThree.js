@@ -14,7 +14,7 @@ import "../../assets/css/talent-dashboard.scss";
 
 const AdultFormThree = () => {
   const [profileFile, setProfileFile] = useState(null);
-  const btLogo = require("../../assets/icons/Group 56.png");
+  const btLogo = require("../../assets/images/LOGO.jpg");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
