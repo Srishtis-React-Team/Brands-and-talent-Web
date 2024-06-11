@@ -491,6 +491,8 @@ const TalentProfile = () => {
                       </span>
                       <span>Pro</span>
                     </div> */}
+
+                    <div className="planName pro"><span><i class="bi bi-star-fill"></i></span>PRO</div>
                   </div>
                   <div className="individual-talents-details">
                     <div className="individual-talent-name">
@@ -684,8 +686,8 @@ const TalentProfile = () => {
                         <img src={whitePlus}></img>
                         <div>Invite to apply</div>
                       </div>
-                      <div className="invite-btn" onClick={() => messageNow()}>
-                        <i class="bi bi-chat-fill"></i>
+                      <div className="invite-btn msgBtn" onClick={() => messageNow()}>
+                        <i class="bi bi-chat"></i>
                         <div className="message-now-text">Message Now</div>
                       </div>
                     </>
