@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 
 const KidsFormFour = ({ onDataFromChild, ...props }) => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");

@@ -29,7 +29,7 @@ import SearchHeaderComponent from "./SearchHeaderComponent";
 const TalentHeader = ({ toggleMenu, myState }) => {
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
   const navigate = useNavigate();
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const model1 = require("../assets/images/girl1.png");
   const sliderIcon = require("../assets/icons/sliders.png");
   const [menuOpen, setMenuOpen] = useState(false);

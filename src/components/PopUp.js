@@ -3,7 +3,7 @@ import "../assets/css/popup.css";
 
 const PopUp = (props) => {
   console.log(props, "popup props");
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   return (
     <div className="popupbackground">
       <div className="popupcontainer">
