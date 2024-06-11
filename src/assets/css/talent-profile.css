@@ -342,7 +342,7 @@
   font-weight: 700;
 }
 .planName span {
-  border: 1px solid;
+  border: 1px solid #ffffff87;
   padding: 3px;
   border-radius: 30px;
   width: 22px;
@@ -355,16 +355,19 @@
 }
 
 .planName.free{
-  color: #AB7E13;
+  color: #FFF;
   border: 2px solid #AB7E13;
+  background-color: #AB7E13;
 }
 .planName.pro{
-  color: #5F2895;
+  color: #FFF;
   border: 2px solid #5F2895;
+  background-color: #5F2895;
 }
 .planName.premium{
-  color: #106D3E;
+  color: #FFF;
   border: 2px solid #106D3E;
+  background-color: #106D3E;
 }
 .individual-talent-name {
   display: flex;
