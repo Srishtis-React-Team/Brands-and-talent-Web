@@ -172,6 +172,10 @@
 }
 .form-select, .range-inputs, .select__control.css-1oeearl-control, .css-13cymwt-control, .css-13cymwt-control:hover, .css-t3ipsp-control,  .css-13cymwt-control{  outline: 0;  font-size: 14px; height: 50px!important;; min-height: 50px !important; }
 
+.select__control.css-1oeearl-control{
+  height: auto !important;
+}
+
 .check-section {
   display: flex;
   justify-content: space-evenly;
