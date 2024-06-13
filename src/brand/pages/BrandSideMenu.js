@@ -205,7 +205,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
               ></i>
               <div className="brand-menu-text">Create Gig/Job</div>
             </Link> */}
-
           <Link
             to="/brand-dashboard"
             className={
@@ -215,9 +214,8 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             }
           >
             <i className="bi bi-house-door icons"></i>
-            <div className="brand-menu-text">Home</div>
+            <div className="brand-menu-text">Dashboard</div>
           </Link>
-
           <Link
             to="/create-jobs"
             className={
@@ -229,19 +227,19 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             {/* <i className="bi bi-person-plus icons"></i>
             <i class="fa-solid fa-user-tie"></i> */}
             <i class="bi bi-person-add icons"></i>
-            <div className="brand-menu-text">Create Jobs</div>
+            <div className="brand-menu-text">Post a Job</div>
           </Link>
 
           <Link
-            to="/edit-brand-profile"
+            to="/find-talents"
             className={
-              location.pathname === "/edit-brand-profile"
+              location.pathname === "/find-talents"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
           >
             <i class="bi bi-person-gear icons"></i>
-            <div className="brand-menu-text">Edit Profile</div>
+            <div className="brand-menu-text">Invite To Apply</div>
           </Link>
 
           <Link
@@ -276,7 +274,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            
             <i class="bi bi-person-bounding-box icons"></i>
             <div className="brand-menu-text">Find Talent</div>
           </Link>
@@ -315,6 +312,18 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           >
             <i className="bi bi-chat icons"></i>
             <div className="brand-menu-text">Messages</div>
+          </Link>
+
+          <Link
+            to="/edit-brand-profile"
+            className={
+              location.pathname === "/edit-brand-profile"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-person icons"></i>
+            <div className="brand-menu-text">Edit Profile</div>
           </Link>
 
           <Link

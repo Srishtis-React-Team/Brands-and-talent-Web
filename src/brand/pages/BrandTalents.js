@@ -410,7 +410,11 @@ const BrandTalents = () => {
   };
   const openTalent = (item) => {
     console.log(item, "item");
-    navigate("/talent-profile", { state: { talentData: item } });
+    // navigate("/talent-profile", { state: { talentData: item } });
+
+    navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+      state: { talentData: item },
+    });
   };
 
   const handleSelectedState = (state) => {
@@ -790,7 +794,9 @@ const BrandTalents = () => {
                             label: city.name,
                           }))}
                           value={
-                            kidsCity ? { value: kidsCity, label: kidsCity } : null
+                            kidsCity
+                              ? { value: kidsCity, label: kidsCity }
+                              : null
                           }
                           onChange={handleSelectedCity}
                           isSearchable={true}
@@ -822,7 +828,11 @@ const BrandTalents = () => {
                     <div className="keyword-wrapper">
                       <div className="filter-items">Age</div>
                       <div className="creators-filter-select creators-filter-select-range inpWid">
-                        <RangeSlider min={1} max={100} onChange={onRangeChange} />
+                        <RangeSlider
+                          min={1}
+                          max={100}
+                          onChange={onRangeChange}
+                        />
                         {/* <p>
                     Change in slider:
                     {min},{max}
@@ -1010,13 +1020,15 @@ const BrandTalents = () => {
                                       {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                     </div>
                                     <div className="find-creator-address ">
-                                      {item.profession?.map((profession, index) => (
-                                        <React.Fragment key={index}>
-                                          {profession.value}
-                                          {index !== item.profession.length - 1 &&
-                                            ","}
-                                        </React.Fragment>
-                                      ))}
+                                      {item.profession?.map(
+                                        (profession, index) => (
+                                          <React.Fragment key={index}>
+                                            {profession.value}
+                                            {index !==
+                                              item.profession.length - 1 && ","}
+                                          </React.Fragment>
+                                        )
+                                      )}
                                     </div>
                                     <div className="user-details">
                                       <div className="location-wrapper">
@@ -1042,7 +1054,6 @@ const BrandTalents = () => {
                     </div>
                   </div>
                 </div>
-
               </div>
             </section>
           </div>

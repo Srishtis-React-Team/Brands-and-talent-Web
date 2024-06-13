@@ -98,7 +98,7 @@ const Pricing = () => {
             <input type="checkbox" onChange={handleToggle} />
             <a></a>
             <span>
-              <span className="right-span">Brand</span>
+              <span className="right-span">Brands/Clients</span>
               <span className="left-span">Talent</span>
             </span>
           </label>

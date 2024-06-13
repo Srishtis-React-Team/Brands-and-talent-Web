@@ -36,7 +36,8 @@ function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
     <div
-      role="tabpanel" className="editTabs"
+      role="tabpanel"
+      className="editTabs"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
@@ -396,142 +397,124 @@ const EditBrands = () => {
               <div className="kids-main edit-basicdetails-section-main p-0">
                 <div className="kids-form-row row">
                   <div className="kids-form-section col-md-6 mb-3">
-                   
-                      <label className="form-label">Brand Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={brandName}
-                        onChange={(e) => {
-                          handleBrandNameChange(e);
-                          setBrandNameError(false);
-                        }}
-                        onKeyDown={handleKeyPress}
-                        placeholder="Enter Brand Name"
-                      ></input>
-                      {brandNameError && (
-                        <div className="invalid-fields">
-                          Please enter Brand Name
-                        </div>
-                      )}
-                      {brandNameLetterError && (
-                        <div className="invalid-fields">
-                          Only Letters are allowed
-                        </div>
-                      )}
-                   
+                    <label className="form-label">Brand Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={brandName}
+                      onChange={(e) => {
+                        handleBrandNameChange(e);
+                        setBrandNameError(false);
+                      }}
+                      onKeyDown={handleKeyPress}
+                      placeholder="Enter Brand Name"
+                    ></input>
+                    {brandNameError && (
+                      <div className="invalid-fields">
+                        Please enter Brand Name
+                      </div>
+                    )}
+                    {brandNameLetterError && (
+                      <div className="invalid-fields">
+                        Only Letters are allowed
+                      </div>
+                    )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
-                   
-                      <label className="form-label">E-mail</label>
-                      <input
-                        type="email"
-                        className={`form-control ${
-                          !isValidEmail ? "is-invalid" : "form-control"
-                        }`}
-                        placeholder="Enter E-mail"
-                        value={brandEmail}
-                        disabled={true}
-                      />
-                    
+                    <label className="form-label">E-mail</label>
+                    <input
+                      type="email"
+                      className={`form-control ${
+                        !isValidEmail ? "is-invalid" : "form-control"
+                      }`}
+                      placeholder="Enter E-mail"
+                      value={brandEmail}
+                      disabled={true}
+                    />
                   </div>
                 </div>
                 <div className="kids-form-row row">
                   <div className="kids-form-section col-md-6 mb-3">
-                  
-                      <label className="form-label">Zip Code</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={brandZipCode}
-                        onChange={(e) => {
-                          handleZipCodeChange(e);
-                          setBrandZipCodeError(false);
-                        }}
-                        onKeyDown={handleKeyPress}
-                        placeholder="Enter Zip Code"
-                      ></input>
-                      {brandZipCodeError && (
-                        <div className="invalid-fields">
-                          Please enter ZipCode
-                        </div>
-                      )}
-                  
+                    <label className="form-label">Zip Code</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={brandZipCode}
+                      onChange={(e) => {
+                        handleZipCodeChange(e);
+                        setBrandZipCodeError(false);
+                      }}
+                      onKeyDown={handleKeyPress}
+                      placeholder="Enter Zip Code"
+                    ></input>
+                    {brandZipCodeError && (
+                      <div className="invalid-fields">Please enter ZipCode</div>
+                    )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
                     <label className="form-label">Mobile No</label>
-                   
-                      <MuiPhoneNumber
-                        value={brandPhone}
-                        defaultCountry={"kh"}
-                        className="form-control"
-                        onChange={handleMobileChange}
-                      />
-                      {brandPhoneError && (
-                        <div className="invalid-fields">
-                          Please enter Mobile Number
-                        </div>
-                      )}
-                      {mobileNumError && (
-                        <div className="invalid-fields">
-                          Only Numbers Allowed
-                        </div>
-                      )}
-                  
+
+                    <MuiPhoneNumber
+                      value={brandPhone}
+                      defaultCountry={"kh"}
+                      className="form-control"
+                      onChange={handleMobileChange}
+                    />
+                    {brandPhoneError && (
+                      <div className="invalid-fields">
+                        Please enter Mobile Number
+                      </div>
+                    )}
+                    {mobileNumError && (
+                      <div className="invalid-fields">Only Numbers Allowed</div>
+                    )}
                   </div>
                 </div>
                 <div className="kids-form-row row">
-                  <div className="kids-form-section col-md-12 mb-3">
-                  
-                      <label
-                        htmlFor="exampleFormControlTextarea1"
-                        className="form-label"
-                      >
-                        Address
-                      </label>
-                      <textarea
-                        style={{ width: "100%" }}
-                        className="form-control address-textarea"
-                        id="exampleFormControlTextarea1"
-                        value={address}
-                        rows="3"
-                        onChange={(e) => {
-                          setAddress(e.target.value);
-                          setAddressError(false);
-                        }}
-                      ></textarea>
-                      {addressError && (
-                        <div className="invalid-fields">
-                          Please Enter Address
-                        </div>
-                      )}
-                    
-                  </div>
-
                   <div className="kids-form-section col-md-6 mb-3">
-                  
-                      <label className="form-label">Position</label>
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={selectPosition}
-                        value={position}
-                      >
-                        <option value="" disabled selected>
-                          How Many Positions are you looking to staff?
+                    <label className="form-label">Position</label>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      onChange={selectPosition}
+                      value={position}
+                    >
+                      <option value="" disabled selected>
+                        How Many Positions are you looking to staff?
+                      </option>
+                      {positionOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
                         </option>
-                        {positionOptions.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                      {positionError && (
-                        <div className="invalid-fields">
-                          Please Select position
-                        </div>
-                      )}
-                
+                      ))}
+                    </select>
+                    {positionError && (
+                      <div className="invalid-fields">
+                        Please Select position
+                      </div>
+                    )}
+                  </div>
+                  <div className="kids-form-section col-md-12 mb-3">
+                    <label
+                      htmlFor="exampleFormControlTextarea1"
+                      className="form-label"
+                    >
+                      Address
+                    </label>
+                    <textarea
+                      style={{ width: "100%" }}
+                      className="form-control address-textarea"
+                      id="exampleFormControlTextarea1"
+                      value={address}
+                      rows="3"
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                        setAddressError(false);
+                      }}
+                    ></textarea>
+                    {addressError && (
+                      <div className="invalid-fields">Please Enter Address</div>
+                    )}
                   </div>
                 </div>
                 <div className="update-profile-flex">

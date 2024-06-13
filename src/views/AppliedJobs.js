@@ -165,98 +165,66 @@ const AppliedJobs = () => {
                       <div key={index} className="list-jobs-card">
                         <div className="recent-campaigns-wrapper">
                           <div className="campaigns-wrapper-one">
-                            <div className="campaigns-content-wrapper">
-                              <div className="applied-job-wrapper">
-                                <div className="recent-img-div">
-                                  {/* <i className="bi bi-briefcase-fill "></i> */}
-                                  {job?.brandImage && (
-                                    <img
-                                      className="recent-img"
-                                      src={`${API.userFilePath}${job?.brandImage}`}
-                                      alt=""
-                                    />
-                                  )}
-                                  {!job?.brandImage && (
-                                    <img
-                                      className="recent-img"
-                                      src={jobImage}
-                                      alt=""
-                                    />
-                                  )}
-                                </div>
+                            <div className="campaigns-content-wrapper imgSpc">
+                              <div className="campaign-paid-wrapper">
                                 <div className="campaign-name">
                                   {job?.jobTitle}
                                 </div>
-                                {/* <div className="campaign-status">
-                                  <div className="campaign-features-count">
-                                    Paid
-                                  </div>
-                                </div> */}
                               </div>
-                              {job?.jobDescription?.map(
-                                (htmlContent, index) => (
-                                  <div
-                                    className="campaign-description"
-                                    key={index}
-                                    dangerouslySetInnerHTML={{
-                                      __html: htmlContent,
-                                    }}
-                                  />
-                                )
-                              )}
-                              <div className="campaign-features">
-                                <div className="campaign-features-wrapper">
-                                  <div className="campaign-icons-wrapper">
-                                    <i className="bi bi-person-check-fill"></i>
-                                  </div>
-                                  <div>
-                                    <div className="campaign-features-title">
-                                      Followers
-                                    </div>
-                                    <div className="campaign-features-count">
-                                      2000
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="campaign-features-wrapper">
-                                  <div className="campaign-icons-wrapper">
-                                    <i className="bi bi-person-arms-up"></i>
-                                  </div>
-                                  <div>
-                                    <div className="campaign-features-title">
-                                      Age
-                                    </div>
-                                    <div className="campaign-features-count">
-                                      {job?.age}
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="campaign-features-wrapper">
-                                  <div className="campaign-icons-wrapper">
-                                    <i className="bi bi-gender-ambiguous"></i>
-                                  </div>
-                                  <div>
-                                    <div className="campaign-features-title">
-                                      Gender
-                                    </div>
-                                    <div className="campaign-features-count">
-                                      {job?.gender}
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="campaign-features-wrapper">
-                                  <div className="campaign-icons-wrapper">
-                                    <i className="bi bi-geo-alt-fill"></i>
-                                  </div>
-                                  <div>
-                                    <div className="campaign-features-title">
-                                      Location
-                                    </div>
-                                    <div className="campaign-features-count">
-                                      Australia
-                                    </div>
-                                  </div>
-                                </div>
+                              <div className="mb-2">
+                                <img
+                                  className="job-company-logo"
+                                  src={`${API.userFilePath}${job?.brandImage}`}
+                                  alt=""
+                                />
+                                <span className="job-company-name">
+                                  {job?.hiringCompany}
+                                </span>
+                              </div>
+                              <div className="mb-2">
+                                <span className="job-company-name">
+                                  {job?.state}
+                                </span>{" "}
+                                ,
+                                <span className="job-company-name">
+                                  {job?.city}
+                                </span>
+                              </div>
+                              <div className="mb-2">
+                                <span className="job-company-name">
+                                  <i class="bi bi-person-workspace"></i>
+                                </span>{" "}
+                                .
+                                <span className="job-company-name">
+                                  {job?.jobType}
+                                </span>
+                                .
+                                <span className="job-company-name">
+                                  {job?.employmentType}
+                                </span>
+                                .
+                                <span className="job-company-name">
+                                  {Object.keys(job?.compensation)[0]}
+                                </span>
+                              </div>
+                              <div className="mb-2">
+                                <span
+                                  style={{ fontWeight: "bold" }}
+                                  className="job-company-name"
+                                >
+                                  Application Deadline :{" "}
+                                </span>{" "}
+                                <span>
+                                  {" "}
+                                  {new Date(
+                                    job?.lastDateForApply
+                                  ).toLocaleDateString("en-GB", {
+                                    weekday: "long",
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                  })}
+                                </span>
                               </div>
                             </div>
                           </div>

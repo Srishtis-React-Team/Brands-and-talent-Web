@@ -272,197 +272,190 @@ const ListJobs = () => {
               <>
                 <div className="list-jobs-wrapper pt-3">
                   <div className="row">
-                  {allJobsList.map((job, index) => {
-                    return (
-                      <>
-                        <div key={index} className="list-jobs-card col-md-12">
-                          <div className="recent-campaigns-wrapper wraper">
-                            <div className="campaigns-wrapper-one">
-                              <div className="campaigns-content-wrapper imgSpc">
-                                <div className="campaign-paid-wrapper">
-                                  <div className="campaign-name">
-                                    {job?.jobTitle}
-                                  </div>
-                                  <div className="campaign-status">
-                                    <div className="campaign-features-count">
-                                      Paid
+                    {allJobsList.map((job, index) => {
+                      return (
+                        <>
+                          <div key={index} className="list-jobs-card col-md-12">
+                            <div className="recent-campaigns-wrapper wraper">
+                              <div className="campaigns-wrapper-one">
+                                <div className="campaigns-content-wrapper imgSpc">
+                                  <div className="campaign-paid-wrapper">
+                                    <div className="campaign-name">
+                                      {job?.jobTitle}
                                     </div>
                                   </div>
-                                </div>
-
-                                {job?.jobDescription?.map(
-                                  (htmlContent, index) => (
-                                    <div
-                                      className="campaign-description"
-                                      key={index}
-                                      dangerouslySetInnerHTML={{
-                                        __html: htmlContent,
-                                      }}
+                                  <div className="mb-2">
+                                    <img
+                                      className="job-company-logo"
+                                      src={`${API.userFilePath}${job?.brandImage}`}
+                                      alt=""
                                     />
-                                  )
-                                )}
-                                <div className="campaign-features">
-                                  <div className="campaign-features-wrapper">
-                                    <div className="campaign-icons-wrapper">
-                                      <i className="bi bi-person-check-fill"></i>
-                                    </div>
-                                    <div>
-                                      <div className="campaign-features-title">
-                                        Followers
-                                      </div>
-                                      <div className="campaign-features-count">
-                                        2000
-                                      </div>
-                                    </div>
+                                    <span className="job-company-name">
+                                      {job?.hiringCompany}
+                                    </span>
                                   </div>
-                                  <div className="campaign-features-wrapper">
-                                    <div className="campaign-icons-wrapper">
-                                      <i className="bi bi-person-arms-up"></i>
-                                    </div>
-                                    <div>
-                                      <div className="campaign-features-title">
-                                        Age
-                                      </div>
-                                      <div className="campaign-features-count">
-                                        {job?.age}
-                                      </div>
-                                    </div>
+                                  <div className="mb-2">
+                                    <span className="job-company-name">
+                                      {job?.state}
+                                    </span>{" "}
+                                    ,
+                                    <span className="job-company-name">
+                                      {job?.city}
+                                    </span>
                                   </div>
-                                  <div className="campaign-features-wrapper">
-                                    <div className="campaign-icons-wrapper">
-                                      <i className="bi bi-gender-ambiguous"></i>
-                                    </div>
-                                    <div>
-                                      <div className="campaign-features-title">
-                                        Gender
-                                      </div>
-                                      <div className="campaign-features-count">
-                                        {job?.gender}
-                                      </div>
-                                    </div>
+                                  <div className="mb-2">
+                                    <span className="job-company-name">
+                                      <i class="bi bi-person-workspace"></i>
+                                    </span>{" "}
+                                    <i class="bi bi-dot"></i>
+                                    <span className="job-company-name">
+                                      {job?.jobType}
+                                    </span>
+                                    <i class="bi bi-dot"></i>
+                                    <span className="job-company-name">
+                                      {job?.employmentType}
+                                    </span>
+                                    <i class="bi bi-dot"></i>
+                                    <span className="job-company-name">
+                                      {job && job.compensation
+                                        ? Object.keys(job.compensation)[0]
+                                            .split("_")
+                                            .map(
+                                              (word) =>
+                                                word.charAt(0).toUpperCase() +
+                                                word.slice(1)
+                                            )
+                                            .join(" ")
+                                        : ""}
+                                    </span>
                                   </div>
-                                  <div className="campaign-features-wrapper">
-                                    <div className="campaign-icons-wrapper">
-                                      <i className="bi bi-geo-alt-fill"></i>
-                                    </div>
-                                    <div>
-                                      <div className="campaign-features-title">
-                                        Location
-                                      </div>
-                                      <div className="campaign-features-count">
-                                        Australia
-                                      </div>
-                                    </div>
+                                  <div className="mb-2">
+                                    <span
+                                      style={{ fontWeight: "bold" }}
+                                      className="job-company-name"
+                                    >
+                                      Application Deadline :{" "}
+                                    </span>{" "}
+                                    <span>
+                                      {" "}
+                                      {new Date(
+                                        job.lastDateForApply
+                                      ).toLocaleDateString("en-GB", {
+                                        weekday: "long",
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                      })}
+                                    </span>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className="campaigns-wrapper-two">
-                              <div className="campaign-company">
-                                <div className="campaign-company-wrapper">
-                                  <div className="campaign-initial">
-                                    {" "}
-                                    {job?.hiringCompany &&
-                                      job.hiringCompany.charAt(0)}
-                                  </div>
-                                  <div className="campaign-company-name">
-                                    {job?.hiringCompany}
-                                  </div>
-                                </div>
-                                <div className="job-card-buttons">
-                                  <div className="manage-dropdown">
-                                    <div className="dropdown">
-                                      <button
-                                        className="btn manage-btn dropdown-toggle"
-                                        type="button"
-                                        id="dropdownMenuButton1"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                      >
-                                        Manage
-                                      </button>
-                                      <ul
-                                        className="dropdown-menu"
-                                        aria-labelledby="dropdownMenuButton1"
-                                      >
-                                        <li>
-                                          <a
-                                            className="dropdown-item"
-                                            onClick={(e) => {
-                                              setAlertpop({
-                                                status: true,
-                                                jobId: job?._id,
-                                                jobType: job?.type,
-                                                label: "edit",
-                                              });
-                                            }}
-                                          >
-                                            Edit Job
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a
-                                            className="dropdown-item"
-                                            onClick={(e) => {
-                                              setAlertpop({
-                                                status: true,
-                                                jobId: job?._id,
-                                                jobType: job?.type,
-                                                label: "delete",
-                                              });
-                                            }}
-                                          >
-                                            Delete Job
-                                          </a>
-                                        </li>
-                                      </ul>
+                              <div className="campaigns-wrapper-two">
+                                <div className="campaign-company">
+                                  <div className="campaign-company-wrapper">
+                                    <div className="campaign-initial">
+                                      {" "}
+                                      {job?.hiringCompany &&
+                                        job.hiringCompany.charAt(0)}
+                                    </div>
+                                    <div className="campaign-company-name">
+                                      {job?.hiringCompany}
                                     </div>
                                   </div>
-                                  {job?.type == "Draft" && (
-                                    <>
-                                      <div
-                                        className="post-work-btn"
-                                        onClick={(e) => {
-                                          e.preventDefault();
-                                          setAlertpop({
-                                            status: true,
-                                            jobId: job?._id,
-                                            jobType: job?.type,
-                                            label: "post-job",
-                                          });
-                                        }}
-                                      >
-                                        <i className="bi bi-briefcase-fill post-work-icon"></i>
-                                        <div className="post-campaign-text">
-                                          Post Job
-                                        </div>
+                                  <div className="job-card-buttons">
+                                    <div className="manage-dropdown">
+                                      <div className="dropdown">
+                                        <button
+                                          className="btn manage-btn dropdown-toggle"
+                                          type="button"
+                                          id="dropdownMenuButton1"
+                                          data-bs-toggle="dropdown"
+                                          aria-expanded="false"
+                                        >
+                                          Manage
+                                        </button>
+                                        <ul
+                                          className="dropdown-menu"
+                                          aria-labelledby="dropdownMenuButton1"
+                                        >
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              onClick={(e) => {
+                                                setAlertpop({
+                                                  status: true,
+                                                  jobId: job?._id,
+                                                  jobType: job?.type,
+                                                  label: "edit",
+                                                });
+                                              }}
+                                            >
+                                              Edit Job
+                                            </a>
+                                          </li>
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              onClick={(e) => {
+                                                setAlertpop({
+                                                  status: true,
+                                                  jobId: job?._id,
+                                                  jobType: job?.type,
+                                                  label: "delete",
+                                                });
+                                              }}
+                                            >
+                                              Delete Job
+                                            </a>
+                                          </li>
+                                        </ul>
                                       </div>
-                                    </>
-                                  )}
-                                  {job?.type == "Posted" && (
-                                    <>
-                                      <div
-                                        className="preview-work-btn"
-                                        onClick={(e) => {
-                                          e.preventDefault();
-                                          PreviewJob(job?._id);
-                                        }}
-                                      >
-                                        <i className="bi bi-eye-fill post-work-icon"></i>
-                                        <div className="preview-campaign-text">
-                                          Preview Job
+                                    </div>
+                                    {job?.type == "Draft" && (
+                                      <>
+                                        <div
+                                          className="post-work-btn"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            setAlertpop({
+                                              status: true,
+                                              jobId: job?._id,
+                                              jobType: job?.type,
+                                              label: "post-job",
+                                            });
+                                          }}
+                                        >
+                                          <i className="bi bi-briefcase-fill post-work-icon"></i>
+                                          <div className="post-campaign-text">
+                                            Post Job
+                                          </div>
                                         </div>
-                                      </div>
-                                    </>
-                                  )}
+                                      </>
+                                    )}
+                                    {job?.type == "Posted" && (
+                                      <>
+                                        <div
+                                          className="preview-work-btn"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            PreviewJob(job?._id);
+                                          }}
+                                        >
+                                          <i className="bi bi-eye-fill post-work-icon"></i>
+                                          <div className="preview-campaign-text">
+                                            Preview Job
+                                          </div>
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </>
-                    );
-                  })}
+                        </>
+                      );
+                    })}
                   </div>
                 </div>
               </>

@@ -27,6 +27,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { format, parseISO } from "date-fns";
+import { FlashOnTwoTone } from "@mui/icons-material";
 
 const CreateJobs = () => {
   const toggleMenu = () => {
@@ -73,6 +74,41 @@ const CreateJobs = () => {
   const [editJobData, setEditJobData] = useState(null);
   const [brandId, setBrandId] = useState(null);
   const [brandImage, setBrandImage] = useState(null);
+  const [jobCountNumber, setJobCountNumber] = useState(null);
+  const [brandData, setBrandData] = useState(null);
+  const [minPay, setMinPay] = useState(null);
+  const [maxPay, setMaxPay] = useState(null);
+  const [instaMin, setInstaMin] = useState(null);
+  const [instaMax, setInstaMax] = useState(null);
+  const [tikTokMin, setTiktokMin] = useState(null);
+  const [tikTokMax, setTiktokMax] = useState(null);
+  const [linkedInMin, setLinkedInMin] = useState(null);
+  const [linkedInMax, setLinkedInMax] = useState(null);
+  const [fbMin, setFbMin] = useState(null);
+  const [fbMax, setFbMax] = useState(null);
+  const [twitterMin, setTwitterMin] = useState(null);
+  const [twitterMax, setTwitterMax] = useState(null);
+  const [employmentType, setEmploymentType] = useState(null);
+  const [employmentError, setEmploymentError] = useState(null);
+  const companyList = [];
+  const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "resData.data.data");
+            setBrandData(resData.data.data);
+            companyList.push(resData.data.data?.brandName);
+            console.log(companyList, "companyList");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const categoryList = [
     "Fashion & Beauty",
@@ -91,6 +127,18 @@ const CreateJobs = () => {
     "Diversity & Inclusion",
   ];
 
+  const customStylesProfession = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "55px", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
+
   useEffect(() => {
     console.log(editData, "editData");
     if (editData?.value && editData?.type) {
@@ -99,92 +147,88 @@ const CreateJobs = () => {
   }, [editData]);
 
   const updateJobFormDatas = (editData) => {
-    if (editData != null) {
-      const jobDescriptionhtmlContent = editData?.jobDescription[0];
-      const jobDescriptionContentBlocks = convertFromHTML(
-        jobDescriptionhtmlContent
-      );
-      const jobDescriptionContentState = ContentState.createFromBlockArray(
-        jobDescriptionContentBlocks
-      );
-      const updateJobDescription = EditorState.createWithContent(
-        jobDescriptionContentState
-      );
-      setEditorStateJobDescription(updateJobDescription);
-      setJobDescription(editData?.jobDescription);
-      //////
-      const jobRequirementshtmlContent = editData?.additionalRequirements[0];
-      const jobRequirementsContentBlocks = convertFromHTML(
-        jobRequirementshtmlContent
-      );
-      const jobRequirementsContentState = ContentState.createFromBlockArray(
-        jobRequirementsContentBlocks
-      );
-      const updatejobRequirements = EditorState.createWithContent(
-        jobRequirementsContentState
-      );
-      setEditorStateJobRequirements(updatejobRequirements);
-      setJobRequirements(editData?.additionalRequirements);
-      ////////////
-
-      const whyWorkWithUsContent = editData?.whyWorkWithUs[0];
-      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
-      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-        whyWorkWithUsContentBlocks
-      );
-      const updatewhyWorkWithUs = EditorState.createWithContent(
-        whyWorkWithUsContentState
-      );
-      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
-      setWhyWorkWithUs(editData?.whyWorkWithUs);
-      //////////
-
-      const hiringCompanyDescriptionContent =
-        editData?.hiringCompanyDescription[0];
-      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
-        hiringCompanyDescriptionContent
-      );
-      const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
-        hiringCompanyDescriptionContentBlocks
-      );
-      const hiringCompanyDescription = EditorState.createWithContent(
-        hiringCompanyDescriptionContentState
-      );
-      setEditorStateClientDescription(hiringCompanyDescription);
-      setClientDescription(editData?.hiringCompanyDescription);
-      //////////////////
+    // alert("updateJobFormDatas");
+    console.log(editData, "editDataupdateJobFormDatas");
+    if (editData) {
       setjobTitle(editData?.jobTitle);
       setAgeRange(editData?.age);
       setzipCode(editData?.jobLocation);
       setstreetAddress(editData?.streetAddress);
-      setworkPlaceType(editData?.workplaceType);
       setjobType(editData?.jobType);
       setGender(editData?.gender);
       setNationality(editData?.nationality);
-      // editData?.languages;
+      const selectedOptions = editData?.languages.map((language) => {
+        return languageOptions.find((option) => option.label === language);
+      });
+      setSelectedLanguageOptions(selectedOptions);
+
+      const dynamicKey = Object.keys(editData.compensation)[0];
+      const minPayValue = editData.compensation[dynamicKey].minPay;
+      setMinPay(minPayValue);
+
+      const maxPaydynamicKey = Object.keys(editData.compensation)[0];
+      const maxPayValue = editData.compensation[maxPaydynamicKey].maxPay;
+      setMaxPay(maxPayValue);
+
+      const currencydynamicKey = Object.keys(editData.compensation)[0];
+      const currencyValue = editData.compensation[currencydynamicKey].currency;
+      setCurrency(currencyValue);
+
+      const frequencydynamicKey = Object.keys(editData.compensation)[0];
+      const frequencyValue =
+        editData.compensation[frequencydynamicKey].frequency;
+      setfrequency(frequencyValue);
+
       setWhyWorkWithUs(editData?.whyWorkWithUs);
       setSelectedApplyOption(editData?.selectedApplyOption);
       setHiringCompany(editData?.hiringCompany);
       setSkills(editData?.skills);
+      setMinAge(editData?.minAge);
+      setMaxAge(editData?.maxAge);
       setSelectedBenefits(editData?.benefits);
       setSelectedApplyOption(editData?.howLikeToApply);
       setPortofolioFile(editData?.workSamples);
       setJobCurrency(editData?.jobCurrency);
       setLastdateApply(editData?.lastDateForApply);
       setCategory(editData?.category);
+      setInstaMin(editData?.instaMin);
+      setInstaMax(editData?.instaMax);
+      setTiktokMin(editData?.tikTokMin);
+      setTiktokMax(editData?.tikTokMax);
+      setLinkedInMin(editData?.linkedInMin);
+      setLinkedInMax(editData?.linkedInMax);
+      setFbMin(editData?.fbMin);
+      setFbMax(editData?.fbMax);
+      setTwitterMin(editData?.twitterMin);
+      setTwitterMax(editData?.twitterMax);
+      setCountry(editData.country);
+      setState(editData.state);
+      getStates(editData.country);
+      setKidsCity(editData.city);
+      getCities({
+        countryName: editData.country,
+        stateName: editData.state,
+      });
+      setEmploymentType(editData?.employmentType);
       if (editData?.questions && editData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editData?.questions);
       }
 
-      if (editData?.compensation.hasOwnProperty("collaboration_gift")) {
-        setCompensationChange("collaboration_gift");
-        setType(editData?.compensation?.collaboration_gift?.type);
-        setCurrency(editData?.compensation?.collaboration_gift?.currency);
-        setProductName(
-          editData?.compensation?.collaboration_gift?.product_name
+      if (
+        editData?.compensation.hasOwnProperty("paid_collaboration_and_gift")
+      ) {
+        setCompensationChange("paid_collaboration_and_gift");
+        setType(editData?.compensation?.paid_collaboration_and_gift?.type);
+        setCurrency(
+          editData?.compensation?.paid_collaboration_and_gift?.currency
         );
-        setValueUSD(editData?.compensation?.collaboration_gift?.amount_value);
+        setProductName(
+          editData?.compensation?.paid_collaboration_and_gift?.product_name
+        );
+        setValueUSD(
+          editData?.compensation?.paid_collaboration_and_gift?.amount_value
+        );
       } else if (editData?.compensation.hasOwnProperty("paid_collaboration")) {
         setCompensationChange("paid_collaboration");
         setType(editData?.compensation?.paid_collaboration?.type);
@@ -202,7 +246,41 @@ const CreateJobs = () => {
         setSelectedPaymentOption("fixed");
         setAmount(editData?.paymentType?.amount);
       }
-    } else {
+      const jobDescriptionhtmlContent = editData?.jobDescription[0];
+      const jobDescriptionContentBlocks = convertFromHTML(
+        jobDescriptionhtmlContent
+      );
+      const jobDescriptionContentState = ContentState.createFromBlockArray(
+        jobDescriptionContentBlocks
+      );
+      const updateJobDescription = EditorState.createWithContent(
+        jobDescriptionContentState
+      );
+      setEditorStateJobDescription(updateJobDescription);
+      setJobDescription(editData?.jobDescription);
+      const whyWorkWithUsContent = editData?.whyWorkWithUs[0];
+      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+        whyWorkWithUsContentBlocks
+      );
+      const updatewhyWorkWithUs = EditorState.createWithContent(
+        whyWorkWithUsContentState
+      );
+      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+      setWhyWorkWithUs(editData?.whyWorkWithUs);
+      const hiringCompanyDescriptionContent =
+        editData?.hiringCompanyDescription[0];
+      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+        hiringCompanyDescriptionContent
+      );
+      const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
+        hiringCompanyDescriptionContentBlocks
+      );
+      const hiringCompanyDescription = EditorState.createWithContent(
+        hiringCompanyDescriptionContentState
+      );
+      setEditorStateClientDescription(hiringCompanyDescription);
+      setClientDescription(editData?.hiringCompanyDescription);
     }
   };
 
@@ -217,7 +295,7 @@ const CreateJobs = () => {
     if (type == "Posted") {
       await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
         .then((resData) => {
-          console.log(resData.data.data, "getJobsList");
+          console.log(resData, "getEditJobsData");
           if (resData.data.status === true) {
             if (resData.data.data) {
               setEditJobData(resData.data.data, "resData.data.data");
@@ -250,95 +328,17 @@ const CreateJobs = () => {
   }, [editJobData]);
 
   const duplicateJob = () => {
-    if (editJobData != null) {
-      if (
-        editJobData?.jobDescription &&
-        editJobData?.jobDescription.length > 0
-      ) {
-        const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
-        const jobDescriptionContentBlocks = convertFromHTML(
-          jobDescriptionhtmlContent
-        );
-        const jobDescriptionContentState = ContentState.createFromBlockArray(
-          jobDescriptionContentBlocks
-        );
-        const updateJobDescription = EditorState.createWithContent(
-          jobDescriptionContentState
-        );
-        setEditorStateJobDescription(updateJobDescription);
-        setJobDescription(editJobData?.jobDescription);
-      }
-
-      //////
-
-      if (
-        editJobData?.additionalRequirements &&
-        editJobData?.additionalRequirements.length > 0
-      ) {
-        const jobRequirementshtmlContent =
-          editJobData?.additionalRequirements[0];
-        const jobRequirementsContentBlocks = convertFromHTML(
-          jobRequirementshtmlContent
-        );
-        const jobRequirementsContentState = ContentState.createFromBlockArray(
-          jobRequirementsContentBlocks
-        );
-        const updatejobRequirements = EditorState.createWithContent(
-          jobRequirementsContentState
-        );
-        setEditorStateJobRequirements(updatejobRequirements);
-        setJobRequirements(editJobData?.additionalRequirements);
-      }
-
-      ////////////
-      if (editJobData?.whyWorkWithUs && editJobData?.whyWorkWithUs.length > 0) {
-        const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
-        const whyWorkWithUsContentBlocks = convertFromHTML(
-          whyWorkWithUsContent
-        );
-        const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-          whyWorkWithUsContentBlocks
-        );
-        const updatewhyWorkWithUs = EditorState.createWithContent(
-          whyWorkWithUsContentState
-        );
-        setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
-        setWhyWorkWithUs(editJobData?.whyWorkWithUs);
-      }
-
-      //////////
-      if (
-        editJobData?.hiringCompanyDescription &&
-        editJobData?.hiringCompanyDescription.length > 0
-      ) {
-        const hiringCompanyDescriptionContent =
-          editJobData?.hiringCompanyDescription[0];
-        const hiringCompanyDescriptionContentBlocks = convertFromHTML(
-          hiringCompanyDescriptionContent
-        );
-        const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
-          hiringCompanyDescriptionContentBlocks
-        );
-        const hiringCompanyDescription = EditorState.createWithContent(
-          hiringCompanyDescriptionContentState
-        );
-        setEditorStateClientDescription(hiringCompanyDescription);
-        setClientDescription(editJobData?.hiringCompanyDescription);
-      }
-
-      //////////////////
+    console.log(editJobData, "editJobData duplicateJob");
+    if (editJobData) {
       setSelectedTab("create-job");
       setjobTitle(editJobData?.jobTitle);
       setAgeRange(editJobData?.age);
       setzipCode(editJobData?.jobLocation);
       setstreetAddress(editJobData?.streetAddress);
-      setworkPlaceType(editJobData?.workplaceType);
       setjobType(editJobData?.jobType);
       setGender(editJobData?.gender);
       setNationality(editJobData?.nationality);
-      setLastdateApply(editData?.lastDateForApply);
-
-      // editJobData?.languages;
+      setLastdateApply(editJobData?.lastDateForApply);
       setWhyWorkWithUs(editJobData?.whyWorkWithUs);
       setSelectedApplyOption(editJobData?.selectedApplyOption);
       setHiringCompany(editJobData?.hiringCompany);
@@ -346,23 +346,52 @@ const CreateJobs = () => {
       setSelectedBenefits(editJobData?.benefits);
       setSelectedApplyOption(editJobData?.howLikeToApply);
       setPortofolioFile(editJobData?.workSamples);
-      setCategory(editData?.category);
-
+      setCategory(editJobData?.category);
+      setMinAge(editJobData?.minAge);
+      setMaxAge(editJobData?.maxAge);
       setJobCurrency(jobCurrency);
+      setInstaMin(editJobData?.instaMin);
+      setInstaMax(editJobData?.instaMax);
+      setTiktokMin(editJobData?.tikTokMin);
+      setTiktokMax(editJobData?.tikTokMax);
+      setLinkedInMin(editJobData?.linkedInMin);
+      setLinkedInMax(editJobData?.linkedInMax);
+      setFbMin(editJobData?.fbMin);
+      setFbMax(editJobData?.fbMax);
+      setTwitterMin(editJobData?.twitterMin);
+      setTwitterMax(editJobData?.twitterMax);
+      setCountry(editJobData?.country);
+      setState(editJobData?.state);
+      getStates(editJobData?.country);
+      setKidsCity(editJobData?.city);
+      getCities({
+        countryName: editJobData?.country,
+        stateName: editJobData?.state,
+      });
+      setEmploymentType(editJobData?.employmentType);
+      const selectedOptions = editJobData?.languages.map((language) => {
+        return languageOptions.find((option) => option.label === language);
+      });
+      setSelectedLanguageOptions(selectedOptions);
+
       if (editJobData?.questions && editJobData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editJobData?.questions);
       }
 
-      if (editJobData?.compensation.hasOwnProperty("collaboration_gift")) {
-        setCompensationChange("collaboration_gift");
-        setType(editJobData?.compensation?.collaboration_gift?.type);
-        setCurrency(editJobData?.compensation?.collaboration_gift?.currency);
+      if (
+        editJobData?.compensation.hasOwnProperty("paid_collaboration_and_gift")
+      ) {
+        setCompensationChange("paid_collaboration_and_gift");
+        setType(editJobData?.compensation?.paid_collaboration_and_gift?.type);
+        setCurrency(
+          editJobData?.compensation?.paid_collaboration_and_gift?.currency
+        );
         setProductName(
-          editJobData?.compensation?.collaboration_gift?.product_name
+          editJobData?.compensation?.paid_collaboration_and_gift?.product_name
         );
         setValueUSD(
-          editJobData?.compensation?.collaboration_gift?.amount_value
+          editJobData?.compensation?.paid_collaboration_and_gift?.amount_value
         );
       } else if (
         editJobData?.compensation.hasOwnProperty("paid_collaboration")
@@ -383,7 +412,74 @@ const CreateJobs = () => {
         setSelectedPaymentOption("fixed");
         setAmount(editJobData?.paymentType?.amount);
       }
-    } else {
+      if (
+        editJobData?.jobDescription &&
+        editJobData?.jobDescription.length > 0
+      ) {
+        const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
+        const jobDescriptionContentBlocks = convertFromHTML(
+          jobDescriptionhtmlContent
+        );
+        const jobDescriptionContentState = ContentState.createFromBlockArray(
+          jobDescriptionContentBlocks
+        );
+        const updateJobDescription = EditorState.createWithContent(
+          jobDescriptionContentState
+        );
+        setEditorStateJobDescription(updateJobDescription);
+        setJobDescription(editJobData?.jobDescription);
+      }
+
+      if (
+        editJobData?.additionalRequirements &&
+        editJobData?.additionalRequirements.length > 0
+      ) {
+        const jobRequirementshtmlContent =
+          editJobData?.additionalRequirements[0];
+        const jobRequirementsContentBlocks = convertFromHTML(
+          jobRequirementshtmlContent
+        );
+        const jobRequirementsContentState = ContentState.createFromBlockArray(
+          jobRequirementsContentBlocks
+        );
+        const updatejobRequirements = EditorState.createWithContent(
+          jobRequirementsContentState
+        );
+        setEditorStateJobRequirements(updatejobRequirements);
+        setJobRequirements(editJobData?.additionalRequirements);
+      }
+      if (editJobData?.whyWorkWithUs && editJobData?.whyWorkWithUs.length > 0) {
+        const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
+        const whyWorkWithUsContentBlocks = convertFromHTML(
+          whyWorkWithUsContent
+        );
+        const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+          whyWorkWithUsContentBlocks
+        );
+        const updatewhyWorkWithUs = EditorState.createWithContent(
+          whyWorkWithUsContentState
+        );
+        setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+        setWhyWorkWithUs(editJobData?.whyWorkWithUs);
+      }
+      if (
+        editJobData?.hiringCompanyDescription &&
+        editJobData?.hiringCompanyDescription.length > 0
+      ) {
+        const hiringCompanyDescriptionContent =
+          editJobData?.hiringCompanyDescription[0];
+        const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+          hiringCompanyDescriptionContent
+        );
+        const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
+          hiringCompanyDescriptionContentBlocks
+        );
+        const hiringCompanyDescription = EditorState.createWithContent(
+          hiringCompanyDescriptionContentState
+        );
+        setEditorStateClientDescription(hiringCompanyDescription);
+        setClientDescription(editJobData?.hiringCompanyDescription);
+      }
     }
   };
 
@@ -409,6 +505,7 @@ const CreateJobs = () => {
     console.log(brandImage, "brandImage");
     if (brandId && brandId != null) {
       getAllJobs(brandId);
+      getBrand();
     }
   }, [brandId, brandImage]);
 
@@ -448,10 +545,13 @@ const CreateJobs = () => {
   );
   const [kidsLegalFirstNameError, setkidsLegalFirstNameError] = useState(false);
   const [kidsLegalLastNameError, setkidsLegalLastNameError] = useState(false);
-  const [workPlaceTypeError, setworkPlaceTypeError] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedProfessions, setSelectedProfessions] = useState([]);
   const [ageRange, setAgeRange] = useState("");
+  const [minAge, setMinAge] = useState("");
+  const [maxAge, setMaxAge] = useState("");
+  const [minAgeError, setMinAgeError] = useState("");
+  const [maxAgeError, setMaxAgeError] = useState("");
   const [parentLastName, setParentLastName] = useState("");
   const [zipCode, setzipCode] = useState("");
   const [streetAddress, setstreetAddress] = useState("");
@@ -463,13 +563,12 @@ const CreateJobs = () => {
   const [kidsLegalFirstName, setKidsLegalFirstName] = useState("");
   const [kidsLegalLastName, setKidsLegalLastName] = useState("");
   const [kidsCity, setKidsCity] = useState("");
-  const [workPlaceType, setworkPlaceType] = useState("");
   const [jobType, setjobType] = useState("");
   const [gender, setGender] = useState("");
   const [genderError, setGenderError] = useState("");
   const [nationality, setNationality] = useState("");
   const [ethnicity, setEthnicity] = useState("");
-  const [languages, setLanguages] = useState("");
+  const [languages, setLanguages] = useState([]);
   const [dateOfBirth, setDob] = useState("");
   const [profession, setProfession] = useState([]);
   const [jobDescription, setJobDescription] = useState([]);
@@ -506,6 +605,7 @@ const CreateJobs = () => {
   );
   const [type, setType] = useState("");
   const [currency, setCurrency] = useState("");
+  const [frequency, setfrequency] = useState("");
   const [productName, setProductName] = useState("");
   const [valueUSD, setValueUSD] = useState("");
 
@@ -520,6 +620,16 @@ const CreateJobs = () => {
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
+  };
+  const onMinPayChange = (event) => {
+    setMinPay(event.target.value);
+  };
+  const onMaxPayChange = (event) => {
+    setMaxPay(event.target.value);
+  };
+
+  const handleFrequencyChange = (event) => {
+    setfrequency(event.target.value);
   };
 
   const selectJobCurrency = (event) => {
@@ -541,7 +651,10 @@ const CreateJobs = () => {
         data = {
           paid_collaboration: {
             type: type,
+            minPay: minPay,
+            maxPay: maxPay,
             currency: currency,
+            frequency: frequency,
           },
         };
         break;
@@ -549,17 +662,22 @@ const CreateJobs = () => {
         data = {
           product_gift: {
             product_name: productName,
-            amount_value: valueUSD,
+            minPay: minPay,
+            maxPay: maxPay,
+            currency: currency,
+            frequency: frequency,
           },
         };
         break;
-      case "collaboration_gift":
+      case "paid_collaboration_and_gift":
         data = {
-          collaboration_gift: {
+          paid_collaboration_and_gift: {
             type: type,
-            currency: currency,
             product_name: productName,
-            amount_value: valueUSD,
+            minPay: minPay,
+            maxPay: maxPay,
+            currency: currency,
+            frequency: frequency,
           },
         };
         break;
@@ -634,22 +752,18 @@ const CreateJobs = () => {
     "Other",
   ];
 
-  const workPlaceTypesOptions = [
-    "Man",
-    "Woman",
-    "Non binary",
-    "TransworkPlaceType Woman",
-    "TransworkPlaceType Man",
-    "AworkPlaceType",
-    "Other",
-    "Prefer not to say",
+  const frequencyOptions = [
+    "Hourly",
+    "Daily",
+    "Weekly",
+    "Monthly",
+    "Annually",
+    "Per Assignment",
   ];
 
-  const ageList = ["13-17", "18+"];
+  const ageList = ["4-17", "18+"];
 
   const payTypeList = ["Pay Range ", "Exact Pay Amount"];
-
-  const companyList = ["Company Name 1", "Company Name 2", "Company Name 3"];
 
   useEffect(() => {
     getCountries();
@@ -689,17 +803,33 @@ const CreateJobs = () => {
     setEthnicity(event.target.value);
     setEthnicityError(false);
   };
-  const selectworkPlaceType = (event) => {
-    setworkPlaceType(event.target.value);
-    setworkPlaceTypeError(false);
-  };
-  const selectLanguage = (event) => {
-    console.log(event, "selectLanguage");
-    if (event[0].value) {
-      setLanguages(event[0].value);
-      setLanguageError(false);
+
+  // const selectLanguage = (event) => {
+  //   console.log(event, "selectLanguage");
+  //   if (event[0].value) {
+  //     setLanguages(event[0].value);
+  //     setLanguageError(false);
+  //   }
+  // };
+
+  const selectLanguage = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    setLanguageError(false);
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setLanguages([]); // Clear the languages state
+      setSelectedLanguageOptions([]);
+
+      return;
     }
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setLanguages(selectedLanguages); // Update languages state with all selected languages
+
+    setSelectedLanguageOptions(selectedOptions);
   };
+
   const selectNationality = (event) => {
     setNationality(event.target.value);
   };
@@ -720,6 +850,10 @@ const CreateJobs = () => {
   const selectjobType = (event) => {
     setjobType(event.target.value);
     setjobTypeError(false);
+  };
+  const selectEmploymentType = (event) => {
+    setEmploymentType(event.target.value);
+    setEmploymentError(false);
   };
   const selectHiringCompany = (event) => {
     setHiringCompany(event.target.value);
@@ -842,8 +976,6 @@ const CreateJobs = () => {
             resData?.data?.data?.preferredChildFirstname
           );
           setKidsPreferedLastName(resData?.data?.data?.preferredChildLastName);
-          setworkPlaceType(resData?.data?.data?.childworkPlaceType);
-
           // resData?.data?.data?.languages;
           setNationality(resData?.data?.data?.childNationality);
           setjobType(resData?.data?.data?.jobType);
@@ -914,25 +1046,26 @@ const CreateJobs = () => {
     if (zipCode === "") {
       setzipCodeError(true);
     }
-    if (workPlaceType === "") {
-      setworkPlaceTypeError(true);
-    }
+
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
     }
 
-    if (languages === "") {
-      setLanguageError(true);
-    }
-    if (ageRange === "") {
-      setAgeRangeError(true);
-    }
+    // if (languages === "") {
+    //   setLanguageError(true);
+    // }
+    // if (minAge === "") {
+    //   setMinAgeError(true);
+    // }
+    // if (maxAge === "") {
+    //   setMaxAgeError(true);
+    // }
     if (jobType === "") {
       setjobTypeError(true);
     }
-    if (gender === "") {
-      setGenderError(true);
-    }
+    // if (gender === "") {
+    //   setGenderError(true);
+    // }
     if (jobCurrency === "") {
       setJobCurrencyError(true);
     }
@@ -948,32 +1081,36 @@ const CreateJobs = () => {
     if (category == "") {
       setCategoryError(true);
     }
+    if (employmentType == "") {
+      setEmploymentError(true);
+    }
+
     if (
       jobTitle !== "" &&
       zipCode !== "" &&
-      workPlaceType !== "" &&
       jobType !== "" &&
       skills !== "" &&
-      ageRange !== "" &&
-      gender !== "" &&
-      languages !== "" &&
-      jobCurrency !== "" &&
       country !== "" &&
       state !== "" &&
       kidsCity !== "" &&
-      category !== ""
+      category !== "" &&
+      employmentType !== ""
     ) {
       const formData = {
         _id: editData?.value,
         jobTitle: jobTitle,
         jobLocation: zipCode,
         streetAddress: streetAddress,
-        workplaceType: workPlaceType,
+        country: country,
+        state: state,
+        city: kidsCity,
         jobType: jobType,
+        employmentType: employmentType,
         jobDescription: jobDescription,
         skills: skills,
         additionalRequirements: jobRequirements,
-        age: ageRange,
+        minAge: minAge,
+        maxAge: maxAge,
         gender: gender,
         nationality: nationality,
         languages: languages,
@@ -990,6 +1127,16 @@ const CreateJobs = () => {
         brandImage: brandImage,
         lastDateForApply: lastdateApply,
         category: category,
+        instaMin: instaMin,
+        instaMax: instaMax,
+        tikTokMin: tikTokMin,
+        tikTokMax: tikTokMax,
+        linkedInMin: linkedInMin,
+        linkedInMax: linkedInMax,
+        fbMin: fbMin,
+        fbMax: fbMax,
+        twitterMin: twitterMin,
+        twitterMax: twitterMax,
       };
       if (editData?.type == "Draft") {
         await ApiHelper.post(`${API.editDraft}${editData?.value}`, formData)
@@ -1047,31 +1194,32 @@ const CreateJobs = () => {
     }
   };
   const createGigs = async () => {
+    console.log(
+      jobTitle,
+      zipCode,
+      jobType,
+      skills,
+      country,
+      state,
+      kidsCity,
+      category,
+      employmentType,
+      "PAYLOD_PRINT"
+    );
     if (jobTitle === "") {
       setjobTitleError(true);
     }
     if (zipCode === "") {
       setzipCodeError(true);
     }
-    if (workPlaceType === "") {
-      setworkPlaceTypeError(true);
-    }
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
     }
 
-    if (languages === "") {
-      setLanguageError(true);
-    }
-    if (ageRange === "") {
-      setAgeRangeError(true);
-    }
     if (jobType === "") {
       setjobTypeError(true);
     }
-    if (gender === "") {
-      setGenderError(true);
-    }
+
     if (jobCurrency === "") {
       setJobCurrencyError(true);
     }
@@ -1081,56 +1229,32 @@ const CreateJobs = () => {
     if (category == "") {
       setCategoryError(true);
     }
-    console.log(
-      jobTitle,
-      "jobTitle",
-      zipCode,
-      "zipCode",
-      workPlaceType,
-      "workPlaceType",
-      jobType,
-      "jobType",
-      skills,
-      "skills",
-      ageRange,
-      "ageRange",
-      gender,
-      "gender",
-      languages,
-      "languages",
-      jobCurrency,
-      "jobCurrency",
-      country,
-      "country",
-      state,
-      "state",
-      kidsCity,
-      "kidsCity",
-      "sdsd"
-    );
+    if (employmentType == "") {
+      setEmploymentError(true);
+    }
     if (
       jobTitle !== "" &&
       zipCode !== "" &&
-      workPlaceType !== "" &&
       jobType !== "" &&
       skills !== "" &&
-      ageRange !== "" &&
-      gender !== "" &&
-      languages !== "" &&
-      jobCurrency !== "" &&
       country !== "" &&
-      category !== ""
+      category !== "" &&
+      employmentType !== ""
     ) {
       const formData = {
         jobTitle: jobTitle,
         jobLocation: zipCode,
         streetAddress: streetAddress,
-        workplaceType: workPlaceType,
+        country: country,
+        state: state,
+        city: kidsCity,
         jobType: jobType,
+        employmentType: employmentType,
         jobDescription: jobDescription,
         skills: skills,
         additionalRequirements: jobRequirements,
-        age: ageRange,
+        minAge: minAge,
+        maxAge: maxAge,
         gender: gender,
         nationality: nationality,
         languages: languages,
@@ -1148,6 +1272,16 @@ const CreateJobs = () => {
         brandImage: brandImage,
         lastDateForApply: lastdateApply,
         category: category,
+        instaMin: instaMin,
+        instaMax: instaMax,
+        tikTokMin: tikTokMin,
+        tikTokMax: tikTokMax,
+        linkedInMin: linkedInMin,
+        linkedInMax: linkedInMax,
+        fbMin: fbMin,
+        fbMax: fbMax,
+        twitterMin: twitterMin,
+        twitterMax: twitterMax,
       };
       console.log(formData, "CREATEJOB_PAYLOAD");
       await ApiHelper.post(API.draftJob, formData)
@@ -1328,8 +1462,8 @@ const CreateJobs = () => {
 
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("fixed");
   const [amount, setAmount] = useState("");
-  const [minPay, setMinPay] = useState("");
-  const [maxPay, setMaxPay] = useState("");
+  const [minimumPaymnt, setMinimumPayment] = useState("");
+  const [maximumPayment, setMaximumPayment] = useState("");
 
   const handlePaymentOptionChange = (event) => {
     setSelectedPaymentOption(event.target.value);
@@ -1340,11 +1474,23 @@ const CreateJobs = () => {
   };
 
   const handleMinPayChange = (event) => {
-    setMinPay(event.target.value);
+    setMinimumPayment(event.target.value);
   };
 
   const handleMaxPayChange = (event) => {
-    setMaxPay(event.target.value);
+    setMaximumPayment(event.target.value);
+  };
+  const onInstaMinChange = (event) => {
+    setInstaMin(event.target.value);
+  };
+  const onInstaMaxChange = (event) => {
+    setInstaMax(event.target.value);
+  };
+  const onTiktokMinChange = (event) => {
+    setTiktokMin(event.target.value);
+  };
+  const onTiktokMaxChange = (event) => {
+    setTiktokMax(event.target.value);
   };
 
   const paymentOptionValue = () => {
@@ -1360,8 +1506,8 @@ const CreateJobs = () => {
     } else {
       const data = {
         label: "range",
-        minPay: minPay,
-        maxPay: maxPay,
+        minPay: minimumPaymnt,
+        maxPay: maximumPayment,
       };
       console.log(data, "datapaymentType");
       // Perform API call with data
@@ -1419,13 +1565,59 @@ const CreateJobs = () => {
   }, [skills]);
 
   const top100Films = [
-    { title: "Html" },
-    { title: "Css" },
-    { title: "Accounting" },
-    { title: "Tally" },
-    { title: "Javascript" },
-    { title: "Premier Pro" },
-    { title: "Photo Shop" },
+    { title: "Actor" },
+    { title: "Artist" },
+    { title: "Creator" },
+    { title: "Celebrity" },
+    { title: "Influencer" },
+    { title: "Model" },
+    { title: "Event Planner" },
+    { title: "Stylist" },
+    { title: "Hair & Makeup Artist" },
+    { title: "Nail Artist" },
+    { title: "Tattooist" },
+    { title: "Chef/Culinary Artist" },
+    { title: "Personal Trainer" },
+    { title: "Swimming Instructor" },
+    { title: "Driving Instructor" },
+    { title: "Meditation Teacher" },
+    { title: "Yoga Instructor" },
+    { title: "Dance Teacher" },
+    { title: "Music Teacher" },
+    { title: "Sports Instructor" },
+    { title: "Martial Arts Instructor" },
+    { title: "Craftsperson" },
+    { title: "Sculptor" },
+    { title: "Curator" },
+    { title: "Singer" },
+    { title: "Dancer" },
+    { title: "Choreographer" },
+    { title: "Musician" },
+    { title: "Filmmaker" },
+    { title: "Photographer" },
+    { title: "Videographer" },
+    { title: "DJ" },
+    { title: "Video Jockey (VJ)" },
+    { title: "Radio Jockey (RJ)" },
+    { title: "Writer" },
+    { title: "Copywriter" },
+    { title: "Cartoonist" },
+    { title: "Blogger/Vlogger" },
+    { title: "Podcaster" },
+    { title: "Host/MC" },
+    { title: "Voice-over Artist" },
+    { title: "Comedian" },
+    { title: "Public Speaker" },
+    { title: "Life Coach" },
+    { title: "Career Coach" },
+    { title: "Sustainability Consultant" },
+    { title: "Fashion Designer" },
+    { title: "Graphic Designer" },
+    { title: "Web Designer/Developer" },
+    { title: "Interior Designer" },
+    { title: "Illustrator" },
+    { title: "Animator" },
+    { title: "Blockchain Developer" },
   ];
   console.log(skillInputValue, "skillInputValue");
 
@@ -1456,6 +1648,33 @@ const CreateJobs = () => {
     console.log(category, "category");
   }, [category]);
 
+  const onMinChange = (event) => {
+    setMinAge(event.target.value); // Update the state with the new value
+    setMinAgeError(FlashOnTwoTone);
+  };
+  const onMaxChange = (event) => {
+    setMaxAge(event.target.value); // Update the state with the new value
+    setMaxAgeError(false);
+  };
+  const onLinkedInMinChange = (event) => {
+    setLinkedInMin(event.target.value); // Update the state with the new value
+  };
+  const onLinkedInMaxChange = (event) => {
+    setLinkedInMax(event.target.value); // Update the state with the new value
+  };
+  const onFbMinChange = (event) => {
+    setFbMin(event.target.value); // Update the state with the new value
+  };
+  const onFbMaxChange = (event) => {
+    setFbMax(event.target.value); // Update the state with the new value
+  };
+  const onTwitterMinChange = (event) => {
+    setTwitterMin(event.target.value); // Update the state with the new value
+  };
+  const onTwitterMaxChange = (event) => {
+    setTwitterMax(event.target.value); // Update the state with the new value
+  };
+
   return (
     <>
       <>
@@ -1475,8 +1694,10 @@ const CreateJobs = () => {
           <div className="brand-content-main boxBg">
             <div className="create-job-title">
               {editData?.value && "Edit Gig/Job"}
-              {!editData?.value && editJobData == null && "Create Gig/Job"}
-              {editJobData != null && !editData?.value && "Duplicate Gig/Job"}
+              {!editData?.value && editJobData == null && "Post a Job"}
+              {editJobData != null &&
+                !editData?.value &&
+                "Duplicate Existing Job"}
             </div>
             <div className="create-job-toggle">
               <div className="radio-toggles">
@@ -1499,7 +1720,7 @@ const CreateJobs = () => {
                 {!editData?.value && editJobData == null && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
-                      Create New Job
+                      Post a Job
                     </label>
                   </>
                 )}
@@ -1521,7 +1742,7 @@ const CreateJobs = () => {
                   checked={selectedTab == "duplicate-job"}
                 ></input>
                 <label className="create-job-toggle-label" htmlFor="duplicate">
-                  Duplicate Existing Jobs
+                  Duplicate Existing Job
                 </label>
                 <div className="slide-item"></div>
               </div>
@@ -1585,7 +1806,7 @@ const CreateJobs = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="kids-form-row">
+                      <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
                           {/* <div className="mb-4">
                             <label className="form-label">
@@ -1612,7 +1833,7 @@ const CreateJobs = () => {
                             <label className="form-label">
                               Country<span className="mandatory">*</span>
                             </label>
-                            <Select
+                            {/* <Select
                               placeholder="Search country..."
                               options={countryList.map((country, index) => ({
                                 value: country,
@@ -1622,7 +1843,20 @@ const CreateJobs = () => {
                               value={country?.value}
                               onChange={handleSelectedCountry}
                               isSearchable={true}
+                            /> */}
+
+                            <Select
+                              placeholder="Search country..."
+                              options={countryList.map((country, index) => ({
+                                value: country,
+                                label: country,
+                                key: index,
+                              }))}
+                              value={{ value: country, label: country }}
+                              onChange={handleSelectedCountry}
+                              isSearchable={true}
                             />
+
                             {parentCountryError && (
                               <div className="invalid-fields">
                                 Please Select Country
@@ -1639,7 +1873,7 @@ const CreateJobs = () => {
                                 value: state.stateId, // or whatever unique identifier you want to use
                                 label: state.name,
                               }))}
-                              value={state?.label}
+                              value={{ value: state, label: state }}
                               onChange={handleSelectedState}
                               isSearchable={true}
                             />
@@ -1661,7 +1895,7 @@ const CreateJobs = () => {
                                 value: city.cityId, // or whatever unique identifier you want to use
                                 label: city.name,
                               }))}
-                              value={kidsCity?.label}
+                              value={{ value: kidsCity, label: kidsCity }}
                               onChange={handleSelectedCity}
                               isSearchable={true}
                             />
@@ -1683,62 +1917,63 @@ const CreateJobs = () => {
                         </div>
                       </div>
 
-                      <div className="kids-form-row">
-                        <div className="kids-form-section">
-                        
-                            <label className="form-label">
-                              Work Place Type{" "}
-                              <span className="mandatory">*</span>
-                            </label>
-                            <select
-                              className="form-select"
-                              aria-label="Default select example"
-                              onChange={selectworkPlaceType}
-                              value={workPlaceType}
-                              style={{ fontSize: "14px" }}
-                            >
-                              <option value="" disabled selected>
-                                Select Work Place Type
-                              </option>
-                              <option value="onsite" defaultValue>
-                                On Site
-                              </option>
-                              <option value="remote">Remote</option>
-                            </select>
-                            {workPlaceTypeError && (
-                              <div className="invalid-fields">
-                                Please Select Work Place Type
-                              </div>
-                            )}
-                         
-                        </div>
+                      <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                        
-                            <label className="form-label">
-                              Job Type <span className="mandatory">*</span>
-                            </label>
-                            <select
-                              className="form-select"
-                              aria-label="Default select example"
-                              onChange={selectjobType}
-                              value={jobType}
-                              style={{ fontSize: "14px" }}
-                            >
-                              <option value="" disabled selected>
-                                Select Job Type
+                          <label className="form-label">
+                            Job Type
+                            <span className="mandatory">*</span>
+                          </label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={selectjobType}
+                            value={jobType}
+                            style={{ fontSize: "14px" }}
+                          >
+                            <option value="" disabled selected>
+                              Select Job Type
+                            </option>
+                            <option value="onsite" defaultValue>
+                              On Site
+                            </option>
+                            <option value="remote">Remote</option>
+                            <option value="work_From_Anywhere">
+                              Work From AnyWhere
+                            </option>
+                          </select>
+                          {jobTypeError && (
+                            <div className="invalid-fields">
+                              Please Select Job Type
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="kids-form-section">
+                        <div className="mb-4">
+                          <label className="form-label">
+                            Employment Type <span className="mandatory">*</span>
+                          </label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={selectEmploymentType}
+                            value={employmentType}
+                            style={{ fontSize: "14px" }}
+                          >
+                            <option value="" disabled selected>
+                              Select Employment Type
+                            </option>
+                            {jobTypeOptions.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
                               </option>
-                              {jobTypeOptions.map((option, index) => (
-                                <option key={index} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                            {jobTypeError && (
-                              <div className="invalid-fields">
-                                Please Select Job Type
-                              </div>
-                            )}
-                          
+                            ))}
+                          </select>
+                          {employmentError && (
+                            <div className="invalid-fields">
+                              Please Select Employment Type
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -1773,67 +2008,64 @@ const CreateJobs = () => {
 
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          
-                            <label className="form-label">
-                              Last date to apply{" "}
-                              <span className="mandatory">*</span>
-                            </label>
+                          <label className="form-label">
+                            Application Deadline
+                            <span className="mandatory">*</span>
+                          </label>
 
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                              <DatePicker
-                                value={
-                                  lastdateApply ? parseISO(lastdateApply) : null
-                                }
-                                onChange={(newValue) => {
-                                  console.log(newValue, "newValue");
-                                  handleDateChange(newValue);
-                                }}
-                                renderInput={(params) => (
-                                  <TextField {...params} />
-                                )}
-                                disablePast
-                              />
-                            </LocalizationProvider>
-                         
+                          <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                              value={
+                                lastdateApply ? parseISO(lastdateApply) : null
+                              }
+                              onChange={(newValue) => {
+                                console.log(newValue, "newValue");
+                                handleDateChange(newValue);
+                              }}
+                              renderInput={(params) => (
+                                <TextField {...params} />
+                              )}
+                              disablePast
+                            />
+                          </LocalizationProvider>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                          
-                            <label className="form-label">
-                              Profession/Skills (optional)
-                              <span className="mandatory">*</span>
-                            </label>
+                          <label className="form-label">
+                            Profession/Skills (optional)
+                            <span className="mandatory">*</span>
+                          </label>
 
-                            <div className="mb-3">
-                              <div className="form-group add-skill-wrapper">
-                                {/* has-search <span className="fa fa-search form-control-feedback"></span> */}
+                          <div className="mb-3">
+                            <div className="form-group add-skill-wrapper">
+                              {/* has-search <span className="fa fa-search form-control-feedback"></span> */}
 
-                                <Stack spacing={2} sx={{ width: 300 }}>
-                                  <Autocomplete
-                                    freeSolo
-                                    id="free-solo-2-demo"
-                                    disableClearable
-                                    options={top100Films.map(
-                                      (option) => option.title
-                                    )}
-                                    value={skillInputValue}
-                                    onChange={(event, newValue) => {
-                                      setSkillInputValue(newValue);
-                                    }}
-                                    renderInput={(params) => (
-                                      <TextField
-                                        {...params}
-                                        label="Search input"
-                                        InputProps={{
-                                          ...params.InputProps,
-                                          type: "search",
-                                        }}
-                                        onKeyUp={() => handleKeyDown(params)}
-                                      />
-                                    )}
-                                  />
-                                </Stack>
+                              <Stack spacing={2} sx={{ width: 300 }}>
+                                <Autocomplete
+                                  freeSolo
+                                  id="free-solo-2-demo"
+                                  disableClearable
+                                  options={top100Films.map(
+                                    (option) => option.title
+                                  )}
+                                  value={skillInputValue}
+                                  onChange={(event, newValue) => {
+                                    setSkillInputValue(newValue);
+                                  }}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      label="Search input"
+                                      InputProps={{
+                                        ...params.InputProps,
+                                        type: "search",
+                                      }}
+                                      onKeyUp={() => handleKeyDown(params)}
+                                    />
+                                  )}
+                                />
+                              </Stack>
 
-                                {/* <input
+                              {/* <input
                               type="text"
                               className="form-control"
                               placeholder="Add New Skills"
@@ -1841,63 +2073,60 @@ const CreateJobs = () => {
                               onChange={handleInputChange}
                               onKeyDown={handleKeyDown}
                             /> */}
-                                <div
-                                  className="add-skill-btn"
-                                  onClick={addSkillCall}
-                                >
-                                  Add Skill
-                                </div>
+                              <div
+                                className="add-skill-btn"
+                                onClick={addSkillCall}
+                              >
+                                Add Skill
                               </div>
                             </div>
+                          </div>
 
-                            <div className="skills-section">
-                              {skills.map((skill, index) => (
-                                <div className="skills-wrapper" key={index}>
-                                  <div className="skill-text"> {skill}</div>
-                                  <i
-                                    className="bi bi-x"
-                                    onClick={() => removeSkill(index)}
-                                  ></i>
-                                </div>
-                              ))}
-                            </div>
-                          
+                          <div className="skills-section">
+                            {skills.map((skill, index) => (
+                              <div className="skills-wrapper" key={index}>
+                                <div className="skill-text"> {skill}</div>
+                                <i
+                                  className="bi bi-x"
+                                  onClick={() => removeSkill(index)}
+                                ></i>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
 
-                      <div className="rich-editor mb-4">
-                        <label className="form-label">
+                      <div className="rich-editor mb-2">
+                        <label className="form-label additional-requirements-title">
                           Additional RequireMents (Optional)
                         </label>
-                        <Editor
-                          editorState={editorStateJobRequirements}
-                          editorStyle={{ overflow: "hidden" }}
-                          toolbarClassName="toolbarClassName"
-                          wrapperClassName="wrapperClassName"
-                          editorClassName="editorClassName"
-                          onEditorStateChange={onEditorRequirements}
-                          toolbar={{
-                            options: [
-                              "inline",
-                              "blockType",
-                              "fontSize",
-                              "list",
-                              "textAlign",
-                              "history",
-                            ],
-                            inline: { inDropdown: true },
-                            list: { inDropdown: true },
-                            textAlign: { inDropdown: true },
-                            link: { inDropdown: true },
-                            history: { inDropdown: true },
-                          }}
-                        />
                       </div>
-
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                       
-                            <label className="form-label">
+                          <div className="">
+                            <label className="form-label">Age Range</label>
+                            <div className="creators-filter-select creator-age-wrapper">
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Minimum Age"
+                                value={minAge}
+                                onChange={(e) => {
+                                  onMinChange(e);
+                                }}
+                              ></input>
+
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Maximum Age"
+                                value={maxAge}
+                                onChange={(e) => {
+                                  onMaxChange(e);
+                                }}
+                              ></input>
+                            </div>
+                            {/* <label className="form-label">
                               Age <span className="mandatory">*</span>
                             </label>
                             <select
@@ -1920,14 +2149,12 @@ const CreateJobs = () => {
                               <div className="invalid-fields">
                                 Please Select Age
                               </div>
-                            )}
-                        
+                            )} */}
+                          </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                         
-                            <label className="form-label">
-                              Gender <span className="mandatory">*</span>
-                            </label>
+                          <div className="">
+                            <label className="form-label">Gender</label>
                             <select
                               className="form-select"
                               aria-label="Default select example"
@@ -1944,41 +2171,32 @@ const CreateJobs = () => {
                                 </option>
                               ))}
                             </select>
-                            {genderError && (
-                              <div className="invalid-fields">
-                                Please Select Gender
-                              </div>
-                            )}
-                         
+                          </div>
                         </div>
                       </div>
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                         
-                            <label className="form-label">Nationality</label>
-                            <select
-                              className="form-select"
-                              aria-label="Default select example"
-                              onChange={selectNationality}
-                              value={nationality}
-                              style={{ fontSize: "14px" }}
-                            >
-                              <option value="" disabled selected>
-                                Select Nationality
+                          <label className="form-label">Nationality</label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={selectNationality}
+                            value={nationality}
+                            style={{ fontSize: "14px" }}
+                          >
+                            <option value="" disabled selected>
+                              Select Nationality
+                            </option>
+                            {nationalityOptions.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
                               </option>
-                              {nationalityOptions.map((option, index) => (
-                                <option key={index} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                         
+                            ))}
+                          </select>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                       
-                            <label className="form-label">
-                              Languages <span className="mandatory">*</span>
-                            </label>
+                          <div className="">
+                            <label className="form-label">Languages</label>
 
                             <Select
                               isMulti
@@ -1988,7 +2206,8 @@ const CreateJobs = () => {
                               className="basic-multi-select"
                               classNamePrefix="select"
                               onChange={(value) => selectLanguage(value)}
-                              styles={customStyles}
+                              styles={customStylesProfession}
+                              value={selectedLanguageOptions}
                             />
 
                             {/* <select
@@ -2011,57 +2230,209 @@ const CreateJobs = () => {
                                 Please Select Language
                               </div>
                             )}
-                          
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="mb-2">
-                        <label className="screening-questions-label mb-4">
-                          <input
-                            type="checkbox"
-                            className="screening-checkbox profession-checkbox"
-                            onChange={handleCheckboxChange}
-                            checked={showQuestions === true}
-                          />
-                          Add Screening Questions (optional)
-                        </label>
+                        <div className="rich-editor mb-2">
+                          <label className="form-label additional-requirements-title">
+                            Audience Size on Social Media Platforms:
+                          </label>
+                        </div>
 
-                        {showQuestions && (
-                          <div className="kids-form-section col-md-6 mb-3">
-                            {questions.map((question, index) => (
-                              <div className="mb-0" key={index}>
-                                <label className="form-label ">{`Question ${index +
-                                  1}:`}</label>
+                        <div className="kids-form-row row">
+                          <div className="kids-form-section col-md-6">
+                            <div className="mb-4">
+                              <label className="form-label">
+                                <i class="bi bi-instagram followers-social-icons"></i>
+                                Instagram Followers
+                              </label>
+                              <div className="creators-filter-select creator-age-wrapper">
                                 <input
                                   type="text"
-                                  className="form-control "
-                                  placeholder={`Enter Question ${index + 1}`}
-                                  value={question}
-                                  id={`question${index + 1}`}
-                                  onChange={(event) =>
-                                    handleQuestionChange(index, event)
-                                  }
-                                />
-                              </div>
-                            ))}
-                            <div
-                              className="add-more-questions "
-                              onClick={handleAddQuestion}
-                            >
-                              <i className="bi bi-plus-square-fill"></i>
+                                  className="form-control"
+                                  placeholder="Minimum Followers"
+                                  value={instaMin}
+                                  onChange={(e) => {
+                                    onInstaMinChange(e);
+                                  }}
+                                ></input>
 
-                              <div className="add-more-questions-text">
-                                {" "}
-                                Add More
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Maximum Followers"
+                                  value={instaMax}
+                                  onChange={(e) => {
+                                    onInstaMaxChange(e);
+                                  }}
+                                ></input>
                               </div>
                             </div>
                           </div>
-                        )}
-                      </div>
+                          <div className="kids-form-section col-md-6">
+                            <div className="mb-4">
+                              <label className="form-label">
+                                <i class="bi bi-tiktok followers-social-icons"></i>
+                                TikTok Followers
+                              </label>
+                              <div className="creators-filter-select creator-age-wrapper">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Minimum Followers"
+                                  value={tikTokMin}
+                                  onChange={(e) => {
+                                    onTiktokMinChange(e);
+                                  }}
+                                ></input>
 
-                      <div className="mb-0 row">
-                        <div className="kids-form-section col-md-6 mb-3">
-                        
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Maximum Followers"
+                                  value={tikTokMax}
+                                  onChange={(e) => {
+                                    onTiktokMaxChange(e);
+                                  }}
+                                ></input>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="kids-form-section col-md-6">
+                            <div className="mb-4">
+                              <label className="form-label">
+                                <i class="bi bi-linkedin followers-social-icons"></i>
+                                LinkedIn Followers
+                              </label>
+                              <div className="creators-filter-select creator-age-wrapper">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Minimum Followers"
+                                  value={linkedInMin}
+                                  onChange={(e) => {
+                                    onLinkedInMinChange(e);
+                                  }}
+                                ></input>
+
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Maximum Followers"
+                                  value={linkedInMax}
+                                  onChange={(e) => {
+                                    onLinkedInMaxChange(e);
+                                  }}
+                                ></input>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="kids-form-section col-md-6">
+                            <div className="mb-4">
+                              <label className="form-label">
+                                <i class="bi bi-facebook followers-social-icons"></i>
+                                Facebook Followers
+                              </label>
+                              <div className="creators-filter-select creator-age-wrapper">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Minimum Followers"
+                                  value={fbMin}
+                                  onChange={(e) => {
+                                    onFbMinChange(e);
+                                  }}
+                                ></input>
+
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Maximum Followers"
+                                  value={fbMax}
+                                  onChange={(e) => {
+                                    onFbMaxChange(e);
+                                  }}
+                                ></input>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="kids-form-section col-md-6">
+                            <div className="mb-4">
+                              <label className="form-label">
+                                <i class="bi bi-twitter-x followers-social-icons"></i>
+                                Twitter(X) Followers
+                              </label>
+                              <div className="creators-filter-select creator-age-wrapper">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Minimum Followers"
+                                  value={twitterMin}
+                                  onChange={(e) => {
+                                    onTwitterMinChange(e);
+                                  }}
+                                ></input>
+
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Maximum Followers"
+                                  value={twitterMax}
+                                  onChange={(e) => {
+                                    onTwitterMaxChange(e);
+                                  }}
+                                ></input>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mb-2">
+                          <label className="screening-questions-label mb-4">
+                            <input
+                              type="checkbox"
+                              className="screening-checkbox profession-checkbox"
+                              onChange={handleCheckboxChange}
+                              checked={showQuestions === true}
+                            />
+                            Add Screening Questions (optional)
+                          </label>
+
+                          {showQuestions && (
+                            <div className="kids-form-section col-md-6 mb-3">
+                              {questions.map((question, index) => (
+                                <div className="mb-0" key={index}>
+                                  <label className="form-label ">{`Question ${index +
+                                    1}:`}</label>
+                                  <input
+                                    type="text"
+                                    className="form-control "
+                                    placeholder={`Enter Question ${index + 1}`}
+                                    value={question}
+                                    id={`question${index + 1}`}
+                                    onChange={(event) =>
+                                      handleQuestionChange(index, event)
+                                    }
+                                  />
+                                </div>
+                              ))}
+                              <div
+                                className="add-more-questions "
+                                onClick={handleAddQuestion}
+                              >
+                                <i className="bi bi-plus-square-fill"></i>
+
+                                <div className="add-more-questions-text">
+                                  {" "}
+                                  Add More
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="mb-0 row">
+                          <div className="kids-form-section col-md-12 mb-3">
                             <label className="form-label">
                               Benefits <span className="mandatory">*</span>
                             </label>
@@ -2086,161 +2457,72 @@ const CreateJobs = () => {
                                 </label>
                               ))}
                             </div>
-                          
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="seperate-jobform-section row">
-                        <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Compensation <span className="mandatory">*</span>
-                            </label>
-                            <div className="compensation-radios mb-2">
-                              <label
-                                className="compensation-labels"
-                                htmlFor="paid-collab"
-                              >
-                                <input
-                                  id="paid-collab"
-                                  className="screening-checkbox profession-checkbox"
-                                  type="radio"
-                                  value="paid_collaboration"
-                                  checked={
-                                    selectedOption === "paid_collaboration"
-                                  }
-                                  onChange={compensationChange}
-                                />
-                                paid_collaboration
+                        <div className="seperate-jobform-section row">
+                          <div className="kids-form-section col-md-12 mb-3">
+                            <div className="">
+                              <label className="form-label mb-4">
+                                Compensation{" "}
+                                <span className="mandatory">*</span>
                               </label>
-                              <label
-                                className="compensation-labels"
-                                htmlFor="product-gift"
-                              >
-                                <input
-                                  id="product-gift"
-                                  className="screening-checkbox profession-checkbox"
-                                  type="radio"
-                                  value="product_gift"
-                                  checked={selectedOption === "product_gift"}
-                                  onChange={compensationChange}
-                                />
-                                product_gift
-                              </label>
-                              <label
-                                className="compensation-labels"
-                                htmlFor="collab-gift"
-                              >
-                                <input
-                                  id="collab-gift"
-                                  className="screening-checkbox profession-checkbox"
-                                  type="radio"
-                                  value="collaboration_gift"
-                                  checked={
-                                    selectedOption === "collaboration_gift"
-                                  }
-                                  onChange={compensationChange}
-                                />
-                                Paid Collaboration + Gift
-                              </label>
-                            </div>
-                            <div className="mt-3">
-                              {selectedOption === "paid_collaboration" && (
-                                <div className="kids-form-row row">
-                                  <div className="kids-form-section col-md-6 mb-3">
-                                    
-                                      <label className="form-label">Type</label>
-                                      <select
-                                        className="form-select"
-                                        aria-label="Default select example"
-                                        onChange={handleTypeChange}
-                                        value={type}
-                                        style={{
-                                          fontSize: "14px",
-                                        }}
-                                      >
-                                        <option value="" disabled selected>
-                                          Select Type
-                                        </option>
-                                        {compensationType.map(
-                                          (option, index) => (
-                                            <option key={index} value={option}>
-                                              {option}
-                                            </option>
-                                          )
-                                        )}
-                                      </select>
-                                  
-                                  </div>
-                                  <div className="kids-form-section col-md-6 mb-3">
-                                    
-                                      <label className="form-label">
-                                        Currency
-                                      </label>
-                                      <select
-                                        className="form-select"
-                                        aria-label="Default select example"
-                                        value={currency}
-                                        onChange={handleCurrencyChange}
-                                        style={{
-                                          fontSize: "14px",
-                                        }}
-                                      >
-                                        <option value="" disabled selected>
-                                          Select Currency
-                                        </option>
-                                        {currencyList.map((option, index) => (
-                                          <option
-                                            key={index}
-                                            value={option?.value}
-                                          >
-                                            {option?.title}
-                                          </option>
-                                        ))}
-                                      </select>
-                                  
-                                  </div>
-                                </div>
-                              )}
-                              {selectedOption === "product_gift" && (
-                                <div className="kids-form-row row">
-                                  <div className="kids-form-section col-md-6 mb-3">
-                                  
-                                      <label className="form-label">
-                                        Product
-                                      </label>
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        value={productName}
-                                        onChange={handleProductNameChange}
-                                        placeholder="Enter Product Name"
-                                      ></input>
-                                   
-                                  </div>
-                                  <div className="kids-form-section col-md-6 mb-3">
-                                 
-                                      <label className="form-label">
-                                        What is the value of the product (USD)
-                                      </label>
-                                      <input
-                                        type="number"
-                                        className="form-control"
-                                        value={valueUSD}
-                                        onChange={handleValueUSDChange}
-                                        placeholder="Enter Value"
-                                      ></input>
-                                   
-                                  </div>
-                                </div>
-                              )}
-                              {selectedOption === "collaboration_gift" && (
-                                <>
+                              <div className="compensation-radios mb-2">
+                                <label
+                                  className="compensation-labels"
+                                  htmlFor="paid-collab"
+                                >
+                                  <input
+                                    id="paid-collab"
+                                    className="screening-checkbox profession-checkbox"
+                                    type="radio"
+                                    value="paid_collaboration"
+                                    checked={
+                                      selectedOption === "paid_collaboration"
+                                    }
+                                    onChange={compensationChange}
+                                  />
+                                  Paid Collaboration
+                                </label>
+                                <label
+                                  className="compensation-labels"
+                                  htmlFor="product-gift"
+                                >
+                                  <input
+                                    id="product-gift"
+                                    className="screening-checkbox profession-checkbox"
+                                    type="radio"
+                                    value="product_gift"
+                                    checked={selectedOption === "product_gift"}
+                                    onChange={compensationChange}
+                                  />
+                                  Product/ Gift
+                                </label>
+                                <label
+                                  className="compensation-labels"
+                                  htmlFor="collab-gift"
+                                >
+                                  <input
+                                    id="collab-gift"
+                                    className="screening-checkbox profession-checkbox"
+                                    type="radio"
+                                    value="paid_collaboration_and_gift"
+                                    checked={
+                                      selectedOption ===
+                                      "paid_collaboration_and_gift"
+                                    }
+                                    onChange={compensationChange}
+                                  />
+                                  Paid Collaboration + Gift
+                                </label>
+                              </div>
+                              <div className="mt-3">
+                                {selectedOption === "paid_collaboration" && (
                                   <div className="kids-form-row row">
                                     <div className="kids-form-section col-md-6 mb-3">
-                                      
+                                      <div className=" compensation-right-space">
                                         <label className="form-label">
-                                          Type
+                                          Pay Type
                                         </label>
                                         <select
                                           className="form-select"
@@ -2252,7 +2534,7 @@ const CreateJobs = () => {
                                           }}
                                         >
                                           <option value="" disabled selected>
-                                            Select Type
+                                            Select Pay Type
                                           </option>
                                           {compensationType.map(
                                             (option, index) => (
@@ -2265,10 +2547,47 @@ const CreateJobs = () => {
                                             )
                                           )}
                                         </select>
-                                      
+                                      </div>
                                     </div>
                                     <div className="kids-form-section col-md-6 mb-3">
-                                   
+                                      <div className="">
+                                        <label className="form-label">
+                                          Minimum Pay
+                                        </label>
+                                        <div className="creators-filter-select creator-age-wrapper">
+                                          <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Minimum Pay"
+                                            value={minPay}
+                                            onChange={(e) => {
+                                              onMinPayChange(e);
+                                            }}
+                                          ></input>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="kids-form-section col-md-6 mb-3">
+                                      <div className="">
+                                        <label className="form-label">
+                                          Maximum Pay
+                                        </label>
+                                        <div className="creators-filter-select creator-age-wrapper">
+                                          <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Maximum Pay"
+                                            value={maxPay}
+                                            onChange={(e) => {
+                                              onMaxPayChange(e);
+                                            }}
+                                          ></input>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="kids-form-section col-md-6 mb-3">
+                                      <div className="compensation-right-space">
                                         <label className="form-label">
                                           Currency
                                         </label>
@@ -2293,299 +2612,495 @@ const CreateJobs = () => {
                                             </option>
                                           ))}
                                         </select>
-                                     
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className="kids-form-row row">
-                                    <div className="kids-form-section col-md-6 mb-3">
-                                    
-                                        <label className="form-label">
-                                          Product
-                                        </label>
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          value={productName}
-                                          onChange={handleProductNameChange}
-                                          placeholder="Enter Product Name"
-                                        ></input>
-                                      
-                                    </div>
-                                    <div className="kids-form-section col-md-6 mb-3">
-                                     
-                                        <label className="form-label">
-                                          What is the value of the product (USD)
-                                        </label>
 
-                                        <input
-                                          type="number"
-                                          className="form-control"
-                                          value={valueUSD}
-                                          onChange={handleValueUSDChange}
-                                          placeholder="Enter Value"
-                                        ></input>
-                                      
+                                    <div className="kids-form-section col-md-6 mb-3">
+                                      <div className="">
+                                        <label className="form-label">
+                                          frequency
+                                        </label>
+                                        <select
+                                          className="form-select"
+                                          aria-label="Default select example"
+                                          value={frequency}
+                                          onChange={handleFrequencyChange}
+                                          style={{
+                                            fontSize: "14px",
+                                          }}
+                                        >
+                                          <option value="" disabled selected>
+                                            Select frequency
+                                          </option>
+                                          {frequencyOptions.map(
+                                            (option, index) => (
+                                              <option
+                                                key={index}
+                                                value={option}
+                                              >
+                                                {option}
+                                              </option>
+                                            )
+                                          )}
+                                        </select>
+                                      </div>
                                     </div>
                                   </div>
-                                </>
-                              )}
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            {selectedOption === "product_gift" && (
+              <div className="kids-form-row row">
+                <div className="kids-form-section col-md-6 mb-3">
+                  <div className=" compensation-right-space">
+                    <label className="form-label">Product Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={productName}
+                      onChange={handleProductNameChange}
+                      placeholder="Enter Product Name"
+                    ></input>
+                  </div>
+                  <div className="kids-form-section col-md-6 mb-3">
+                    <label className="form-label">Minimum Pay</label>
+                    <div className="creators-filter-select creator-age-wrapper">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Minimum Pay"
+                        value={minPay}
+                        onChange={(e) => {
+                          onMinPayChange(e);
+                        }}
+                      ></input>
+                    </div>
+                  </div>
+                </div>
+                <div className="kids-form-section col-md-6 mb-3">
+                  <div className="">
+                    <label className="form-label">Maximum Pay</label>
+                    <div className="creators-filter-select creator-age-wrapper">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Maximum Pay"
+                        value={maxPay}
+                        onChange={(e) => {
+                          onMaxPayChange(e);
+                        }}
+                      ></input>
+                    </div>
+                  </div>
+                </div>
 
-                      <div className="kids-form-section col-md-6 mb-3">
-                        
-                          <label className="form-label">
-                            Currency <span className="mandatory">*</span>
-                          </label>
-                          <select
-                            className="form-select"
-                            aria-label="Default select example"
+                <div className="kids-form-section col-md-6 mb-3">
+                  <div className="compensation-right-space">
+                    <label className="form-label">Currency</label>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      value={currency}
+                      onChange={handleCurrencyChange}
+                      style={{
+                        fontSize: "14px",
+                      }}
+                    >
+                      <option value="" disabled selected>
+                        Select Currency
+                      </option>
+                      {currencyList.map((option, index) => (
+                        <option key={index} value={option?.value}>
+                          {option?.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="kids-form-section col-md-6 mb-3">
+                  <div className="">
+                    <label className="form-label">frequency</label>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      value={frequency}
+                      onChange={handleFrequencyChange}
+                      style={{
+                        fontSize: "14px",
+                      }}
+                    >
+                      <option value="" disabled selected>
+                        Select frequency
+                      </option>
+                      {frequencyOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                {/* <div className="kids-form-section">
+                                    <div className="mb-4">
+                                      <label className="form-label">
+                                        What is the value of the product (USD)
+                                      </label>
+                                      <input
+                                        type="number"
+                                        className="form-control"
+                                        value={valueUSD}
+                                        onChange={handleValueUSDChange}
+                                        placeholder="Enter Value"
+                                      ></input>
+                                    </div>
+                                  </div> */}
+              </div>
+            )}
+            {selectedOption === "paid_collaboration_and_gift" && (
+              <>
+                <div className="kids-form-row row">
+                  <div className="kids-form-section col-md-6 mb-3">
+                    <div className=" compensation-right-space">
+                      <label className="form-label">Pay Type</label>
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={handleTypeChange}
+                        value={type}
+                        style={{
+                          fontSize: "14px",
+                        }}
+                      >
+                        <option value="" disabled selected>
+                          Select Pay Type
+                        </option>
+                        {compensationType.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <div className=" compensation-right-space">
+                        <label className="form-label">Product Name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={productName}
+                          onChange={handleProductNameChange}
+                          placeholder="Enter Product Name"
+                        ></input>
+                      </div>
+                    </div>
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <div className="">
+                        <label className="form-label">Minimum Pay</label>
+                        <div className="creators-filter-select creator-age-wrapper">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Minimum Pay"
+                            value={minPay}
                             onChange={(e) => {
-                              setJobCurrency(e.target.value);
-                              setJobCurrencyError(false);
+                              onMinPayChange(e);
                             }}
-                            value={jobCurrency}
-                            style={{ fontSize: "14px" }}
-                          >
-                            <option value="" disabled selected>
-                              Select Your Currency
-                            </option>
-                            {currencyList.map((option, index) => (
-                              <option key={index} value={option?.value}>
-                                {option?.title}
-                              </option>
-                            ))}
-                          </select>
-                          {jobCurrencyError && (
-                            <div className="invalid-fields">
-                              Please Select Currency
-                            </div>
-                          )}
-                       
-                      </div>
-
-                      <div className=" seperate-jobform-section">
-                        <div className="kids-form-section">
-                          <div className="mb-4">
-                            <label className="compensation-labels form-label">
-                              Payment type <span className="mandatory">*</span>
-                            </label>
-                            <div className="compensation-radios mb-2">
-                              <input
-                                type="radio"
-                                className="screening-checkbox profession-checkbox"
-                                value="fixed"
-                                checked={selectedPaymentOption === "fixed"}
-                                onChange={handlePaymentOptionChange}
-                                id="fixed_amount"
-                              />
-                              <label
-                                htmlFor="fixed_amount"
-                                className="compensation-labels"
-                              >
-                                Fixed Amount
-                              </label>
-                              <input
-                                className="screening-checkbox profession-checkbox"
-                                type="radio"
-                                value="range"
-                                checked={selectedPaymentOption === "range"}
-                                onChange={handlePaymentOptionChange}
-                                id="range_amount"
-                              />
-                              <label
-                                className="compensation-labels"
-                                htmlFor="range_amount"
-                              >
-                                Range of Amounts
-                              </label>
-                            </div>
-                          <div>
-                              {selectedPaymentOption === "fixed" && (
-                                <div className="amount-wrapper-job">
-                                  <label>Amount:</label>
-                                  <input
-                                    className="form-control"
-                                    type="number"
-                                    value={amount}
-                                    onChange={handleAmountChange}
-                                  />
-                                </div>
-                              )}
-
-                              {selectedPaymentOption === "range" && (
-                                <div className="kids-form-row row">
-                                  <div className="kids-form-section col-md-6 mb-3">
-                                   
-                                      <label className="form-label">
-                                        Min Pay
-                                      </label>
-                                      <input
-                                        type="number"
-                                        className="form-control"
-                                        value={minPay}
-                                        onChange={handleMinPayChange}
-                                        placeholder="Enter Min Pay"
-                                      ></input>
-                                    
-                                  </div>
-                                  <div className="kids-form-section col-md-6 mb-3">
-                                  
-                                      <label className="form-label">
-                                        Max Pay
-                                      </label>
-                                      <input
-                                        type="number"
-                                        className="form-control"
-                                        value={maxPay}
-                                        onChange={handleMaxPayChange}
-                                        placeholder="Enter Max Pay"
-                                      ></input>
-                                   
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
+                          ></input>
                         </div>
                       </div>
+                    </div>
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <div className="">
+                        <label className="form-label">Maximum Pay</label>
+                        <div className="creators-filter-select creator-age-wrapper">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Maximum Pay"
+                            value={maxPay}
+                            onChange={(e) => {
+                              onMaxPayChange(e);
+                            }}
+                          ></input>
+                        </div>
+                      </div>
+                    </div>
 
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <div className=" compensation-right-space">
+                        <label className="form-label">Currency</label>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          value={currency}
+                          onChange={handleCurrencyChange}
+                          style={{
+                            fontSize: "14px",
+                          }}
+                        >
+                          <option value="" disabled selected>
+                            Select Currency
+                          </option>
+                          {currencyList.map((option, index) => (
+                            <option key={index} value={option?.value}>
+                              {option?.title}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                       <div className="kids-form-section col-md-6 mb-3">
-                    
-                          <label className="form-label">
-                            Hiring Company/Client
-                          </label>
+                        <div className="">
+                          <label className="form-label">frequency</label>
                           <select
                             className="form-select"
                             aria-label="Default select example"
-                            onChange={selectHiringCompany}
-                            value={hiringCompany}
-                            style={{ fontSize: "14px" }}
+                            value={frequency}
+                            onChange={handleFrequencyChange}
+                            style={{
+                              fontSize: "14px",
+                            }}
                           >
                             <option value="" disabled selected>
-                              Select
+                              Select frequency
                             </option>
-                            {companyList.map((option, index) => (
+                            {frequencyOptions.map((option, index) => (
                               <option key={index} value={option}>
                                 {option}
                               </option>
                             ))}
                           </select>
-                     
+                        </div>
                       </div>
-
-                      <div className="rich-editor mb-4">
-                        <label className="form-label">Why Work With Us</label>
-                        <Editor
-                          editorState={editorStateWhyWorkWithUs}
-                          editorStyle={{ overflow: "hidden" }}
-                          toolbarClassName="toolbarClassName"
-                          wrapperClassName="wrapperClassName"
-                          editorClassName="editorClassName"
-                          onEditorStateChange={onEditorWhyWorkWithUS}
-                          toolbar={{
-                            options: [
-                              "inline",
-                              "blockType",
-                              "fontSize",
-                              "list",
-                              "textAlign",
-                              "history",
-                            ],
-                            inline: { inDropdown: true },
-                            list: { inDropdown: true },
-                            textAlign: { inDropdown: true },
-                            link: { inDropdown: true },
-                            history: { inDropdown: true },
-                          }}
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            <div className=" seperate-jobform-section">
+              <div className="kids-form-section">
+                <div className="mb-4">
+                  <label className="compensation-labels form-label mb-3">
+                    Payment type <span className="mandatory">*</span>
+                  </label>
+                  <div className="compensation-radios mb-2">
+                    <input
+                      type="radio"
+                      className="screening-checkbox profession-checkbox"
+                      value="fixed"
+                      checked={selectedPaymentOption === "fixed"}
+                      onChange={handlePaymentOptionChange}
+                      id="fixed_amount"
+                    />
+                    <label
+                      htmlFor="fixed_amount"
+                      className="compensation-labels"
+                    >
+                      Fixed Amount
+                    </label>
+                    <input
+                      className="screening-checkbox profession-checkbox"
+                      type="radio"
+                      value="range"
+                      checked={selectedPaymentOption === "range"}
+                      onChange={handlePaymentOptionChange}
+                      id="range_amount"
+                    />
+                    <label
+                      className="compensation-labels"
+                      htmlFor="range_amount"
+                    >
+                      Range of Amounts
+                    </label>
+                  </div>
+                  <div>
+                    {selectedPaymentOption === "fixed" && (
+                      <div className="amount-wrapper-job">
+                        <label>Amount:</label>
+                        <input
+                          className="form-control"
+                          type="number"
+                          value={amount}
+                          onChange={handleAmountChange}
                         />
                       </div>
-                      <div className="rich-editor mb-4">
-                        <label className="form-label">
-                          Hiring Company/Client Description
-                        </label>
-                        <Editor
-                          editorState={editorStateClientDescription}
-                          editorStyle={{ overflow: "hidden" }}
-                          toolbarClassName="toolbarClassName"
-                          wrapperClassName="wrapperClassName"
-                          editorClassName="editorClassName"
-                          onEditorStateChange={onEditorClientDescription}
-                          toolbar={{
-                            options: [
-                              "inline",
-                              "blockType",
-                              "fontSize",
-                              "list",
-                              "textAlign",
-                              "history",
-                            ],
-                            inline: { inDropdown: true },
-                            list: { inDropdown: true },
-                            textAlign: { inDropdown: true },
-                            link: { inDropdown: true },
-                            history: { inDropdown: true },
-                          }}
-                        />
-                      </div>
+                    )}
 
-                      <div className="kids-form-section col-md-6 mb-3">
-                        
-                          <label className="form-label">
-                            How You would like to recieve Application{" "}
-                          </label>
-                          <div className="application-condition-wrapper">
-                            <div className="application-condition-radios">
-                              <input
-                                type="radio"
-                                id="easy_apply"
-                                name="applyGroup"
-                                className="screening-checkbox profession-checkbox"
-                                value="easy-apply"
-                                checked={selectedApplyOption == "easy-apply"}
-                                onChange={handleApplyOption}
-                              />
-                              <label
-                                className="compensation-labels form-label"
-                                htmlFor="easy_apply"
-                              >
-                                Easy Apply
-                              </label>
-                            </div>
-                            <div className="easy-apply-description">
-                              (Easy apply option makes it easier for
+                    {selectedPaymentOption === "range" && (
+                      <div className="kids-form-row row">
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <label className="form-label">Min Pay</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            value={minimumPaymnt}
+                            onChange={handleMinPayChange}
+                            placeholder="Enter Min Pay"
+                          ></input>
+                        </div>
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <label className="form-label">Max Pay</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            value={maximumPayment}
+                            onChange={handleMaxPayChange}
+                            placeholder="Enter Max Pay"
+                          ></input>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="kids-form-section col-md-6 mb-3">
+              <label className="form-label">Hiring Company/Client</label>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                onChange={selectHiringCompany}
+                value={hiringCompany}
+                style={{ fontSize: "14px" }}
+              >
+                <option value="" disabled selected>
+                  Select
+                </option>
+                {[brandData?.brandName].map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="rich-editor mb-4">
+              <label className="form-label">Why Work With Us</label>
+              <Editor
+                editorState={editorStateWhyWorkWithUs}
+                editorStyle={{ overflow: "hidden" }}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onEditorWhyWorkWithUS}
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "list",
+                    "textAlign",
+                    "history",
+                  ],
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                }}
+              />
+            </div>
+            <div className="rich-editor mb-4">
+              <label className="form-label">
+                Hiring Company/Client Description
+              </label>
+              <Editor
+                editorState={editorStateClientDescription}
+                editorStyle={{ overflow: "hidden" }}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onEditorClientDescription}
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "list",
+                    "textAlign",
+                    "history",
+                  ],
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                }}
+              />
+            </div>
+
+            <div className="kids-form-section col-md-12 mb-3">
+              <label className="form-label">
+                How You would like to recieve Application{" "}
+              </label>
+              <div className="application-condition-wrapper">
+                <div className="application-condition-radios">
+                  <input
+                    type="radio"
+                    id="easy_apply"
+                    name="applyGroup"
+                    className="screening-checkbox profession-checkbox"
+                    value="easy-apply"
+                    checked={selectedApplyOption == "easy-apply"}
+                    onChange={handleApplyOption}
+                  />
+                  <label
+                    className="compensation-labels form-label"
+                    htmlFor="easy_apply"
+                  >
+                    Easy Apply
+                  </label>
+                </div>
+                <div className="easy-apply-description">
+                  {/* (Easy apply option makes it easier for
                               applications to share thier profile and apply with
                               a one click. Select "Easy Apply" If you would like
                               to receive and manage applications directly
-                              through your dashboard on this plaform.)
-                            </div>
-                          </div>
-                          <div className="application-condition-wrapper">
-                            <div className="application-condition-radios">
-                              <input
-                                type="radio"
-                                id="how_apply"
-                                name="applyGroup"
-                                className="screening-checkbox profession-checkbox"
-                                value="how_to_apply"
-                                checked={selectedApplyOption == "how_to_apply"}
-                                onChange={handleApplyOption}
-                              />
-                              <label
-                                className="compensation-labels form-label"
-                                htmlFor="how_apply"
-                              >
-                                How to apply
-                              </label>
-                            </div>
-                            <div className="easy-apply-description">
-                              (If you would like to receive and manage
+                              through your dashboard on this plaform.) */}
+                  Make it simple for applicants to apply with one click. Choose
+                  "Easy Apply" to receive and manage applications directly
+                  through your dashboard on our platform.
+                </div>
+              </div>
+              <div className="application-condition-wrapper">
+                <div className="application-condition-radios">
+                  <input
+                    type="radio"
+                    id="how_apply"
+                    name="applyGroup"
+                    className="screening-checkbox profession-checkbox"
+                    value="how_to_apply"
+                    checked={selectedApplyOption == "how_to_apply"}
+                    onChange={handleApplyOption}
+                  />
+                  <label
+                    className="compensation-labels form-label"
+                    htmlFor="how_apply"
+                  >
+                    How to apply
+                  </label>
+                </div>
+                <div className="easy-apply-description">
+                  {/* (If you would like to receive and manage
                               applications outside this plaform, type the
-                              application instructions below)
-                            </div>
-                            {/* <div className="how-to-apply-steps">
+                              application instructions below) */}
+                  Prefer to manage applications outside our platform? Provide
+                  your application instructions below: Sample message:
+                  Interested candidates should submit their resume and a link to
+                  their brandsandtalent.com profile/portfolio to{" "}
+                  <span className="brands-email">{brandData?.brandEmail}</span>.
+                  Please include "Content Creator Application" in the subject
+                  line.
+                </div>
+                {/* <div className="how-to-apply-steps">
                               <div>
                                 1. To submit your application, kindly email your
                                 portfolio
@@ -2595,167 +3110,153 @@ const CreateJobs = () => {
                                 basis.
                               </div>
                             </div> */}
+              </div>
+            </div>
+
+            <div
+              className="cv-section"
+              onDrop={handlePortofolioDrop}
+              onDragOver={handlePortofolioDragOver}
+            >
+              <label className="upload-backdrop" htmlFor="portofolio">
+                <img src={uploadIcon} alt="" />
+              </label>
+              <input
+                type="file"
+                className="select-cv-input"
+                id="portofolio"
+                accept="image/*"
+                multiple
+                onChange={portofolioUpload}
+              />
+              <div className="upload-text">
+                Attach your project brief/TOR/job description (optional)
+              </div>
+              <div className="upload-info">(PDF, Word and Image files)</div>
+            </div>
+
+            {portofolioFile && (
+              <>
+                {portofolioFile.map((item, index) => {
+                  return (
+                    <>
+                      <div key={index} className="uploaded-file-wrapper">
+                        <div className="file-section">
+                          {item.type === "image" && (
+                            <div className="fileType">
+                              <img src={imageType} alt="" />
+                            </div>
+                          )}
+                          {item.type === "audio" && (
+                            <div className="fileType">
+                              <img src={audiotype} alt="" />
+                            </div>
+                          )}
+                          {item.type === "video" && (
+                            <div className="fileType">
+                              <img src={videoType} alt="" />
+                            </div>
+                          )}
+                          {item.type === "document" && (
+                            <div className="fileType">
+                              <img src={docsIcon} alt="" />
+                            </div>
+                          )}
+                          <div className="fileName">{item.title}</div>
+                        </div>
+                        <div className="file-options">
+                          <div className="sucess-tick">
+                            <img src={greenTickCircle} alt="" />
                           </div>
-                      
-                      </div>
-
-                      <div
-                        className="cv-section"
-                        onDrop={handlePortofolioDrop}
-                        onDragOver={handlePortofolioDragOver}
-                      >
-                        <label className="upload-backdrop" htmlFor="portofolio">
-                          <img src={uploadIcon} alt="" />
-                        </label>
-                        <input
-                          type="file"
-                          className="select-cv-input"
-                          id="portofolio"
-                          accept="image/*"
-                          multiple
-                          onChange={portofolioUpload}
-                        />
-                        <div className="upload-text">
-                          Any additional information can be attached
-                        </div>
-                        <div className="upload-info">
-                          (PDF, Word and Image files - optional)
-                        </div>
-                      </div>
-
-                      {portofolioFile && (
-                        <>
-                          {portofolioFile.map((item, index) => {
-                            return (
-                              <>
-                                <div
-                                  key={index}
-                                  className="uploaded-file-wrapper"
-                                >
-                                  <div className="file-section">
-                                    {item.type === "image" && (
-                                      <div className="fileType">
-                                        <img src={imageType} alt="" />
-                                      </div>
-                                    )}
-                                    {item.type === "audio" && (
-                                      <div className="fileType">
-                                        <img src={audiotype} alt="" />
-                                      </div>
-                                    )}
-                                    {item.type === "video" && (
-                                      <div className="fileType">
-                                        <img src={videoType} alt="" />
-                                      </div>
-                                    )}
-                                    {item.type === "document" && (
-                                      <div className="fileType">
-                                        <img src={docsIcon} alt="" />
-                                      </div>
-                                    )}
-                                    <div className="fileName">{item.title}</div>
-                                  </div>
-                                  <div className="file-options">
-                                    <div className="sucess-tick">
-                                      <img src={greenTickCircle} alt="" />
-                                    </div>
-                                    <div className="option-menu">
-                                      <div className="dropdown">
-                                        <img
-                                          onClick={() =>
-                                            setShowOptions(!showOptions)
-                                          }
-                                          src={elipsis}
-                                          alt=""
-                                          className="dropdown-toggle elipsis-icon"
-                                          type="button"
-                                          id="dropdownMenuButton"
-                                          data-bs-toggle="dropdown"
-                                          aria-expanded="false"
-                                        />
-                                        <ul
-                                          className="dropdown-menu"
-                                          aria-labelledby="dropdownMenuButton"
-                                        >
-                                          <li>
-                                            <a
-                                              className="dropdown-item"
-                                              onClick={() => handleView(item)}
-                                              id="view"
-                                            >
-                                              View
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <a
-                                              className="dropdown-item"
-                                              onClick={() =>
-                                                handlePortofolioDelete(item)
-                                              }
-                                              id="delete"
-                                            >
-                                              Delete
-                                            </a>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </>
-                            );
-                          })}
-                        </>
-                      )}
-
-                      <div className="job-post-terms">
-                        By clicking Preview & Post , I agree that Brands &
-                        Talent may publish and distribute my job advertisement
-                        on its site and through its distribution partners.
-                      </div>
-
-                      <div className="create-job-buttons mt-4 mb-2">
-                        <div
-                          onClick={(e) => {
-                            e.preventDefault();
-                            createGigs();
-                          }}
-                          className="save-draft-button"
-                        >
-                          Save Draft
-                        </div>
-                        {editData?.value && (
-                          <>
-                            <div
-                              className="createjob-btn"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                updateJob();
-                              }}
-                            >
-                              Update Job
+                          <div className="option-menu">
+                            <div className="dropdown">
+                              <img
+                                onClick={() => setShowOptions(!showOptions)}
+                                src={elipsis}
+                                alt=""
+                                className="dropdown-toggle elipsis-icon"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              />
+                              <ul
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton"
+                              >
+                                <li>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() => handleView(item)}
+                                    id="view"
+                                  >
+                                    View
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() => handlePortofolioDelete(item)}
+                                    id="delete"
+                                  >
+                                    Delete
+                                  </a>
+                                </li>
+                              </ul>
                             </div>
-                          </>
-                        )}
-                        {!editData?.value && (
-                          <>
-                            <div
-                              className="createjob-btn"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                createGigs();
-                              }}
-                            >
-                              Preview & Post
-                            </div>
-                          </>
-                        )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
+                    </>
+                  );
+                })}
               </>
             )}
+
+            <div className="job-post-terms">
+              By clicking Preview & Post , I agree that Brands & Talent may
+              publish and distribute my job advertisement on its site and
+              through its distribution partners.
+            </div>
+
+            <div className="create-job-buttons mt-4 mb-2">
+              <div
+                onClick={(e) => {
+                  e.preventDefault();
+                  createGigs();
+                }}
+                className="save-draft-button"
+              >
+                Save Draft
+              </div>
+              {editData?.value && (
+                <>
+                  <div
+                    className="createjob-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      updateJob();
+                    }}
+                  >
+                    Update Job
+                  </div>
+                </>
+              )}
+              {!editData?.value && (
+                <>
+                  <div
+                    className="createjob-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      createGigs();
+                    }}
+                  >
+                    Preview & Post
+                  </div>
+                </>
+              )}
+            </div>
+
             {selectedTab === "duplicate-job" && (
               <>
                 <div className="dialog-body mt-0">
