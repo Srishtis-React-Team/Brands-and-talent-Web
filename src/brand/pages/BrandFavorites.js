@@ -151,13 +151,13 @@ const BrandFavorites = () => {
               <div className="models-images" style={{ width: "100%" }}>
                 <div className="gallery-section">
                   <div
-                    className="gallery-main p-0 m-0"
+                    className="gallery-main row"
                     style={{ justifyContent: "unset" }}
                   >
                     {talentList?.length > 0 &&
                       talentList?.map((item) => {
                         return (
-                          <div className="gallery-wrapper">
+                          <div className="gallery-wrapper modalSpc col-md-4">
                             <div className="">
                               <img
                                 className="gallery-img"

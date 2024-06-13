@@ -19,6 +19,7 @@
 .brand-home-main .photos-slider .item {
   height: auto;
   min-height: 250px;
+  width: 100%;
 }
 .photos-slider .item {
   height: 230px;

@@ -172,6 +172,16 @@
 }
 .form-select, .range-inputs, .select__control.css-1oeearl-control, .css-13cymwt-control, .css-13cymwt-control:hover, .css-t3ipsp-control,  .css-13cymwt-control{  outline: 0;  font-size: 14px; height: 50px!important;; min-height: 50px !important; }
 
+.creator-age-main input.form-control.range-inputs{
+  font-size: 12px;
+  height: 35px !important;
+  min-height: 35px !important;
+  padding: 5px 0 5px 5px;
+  font-weight: 500;
+  border: 1px solid #ced4da !important;
+  outline: 0 !important;
+}
+
 .select__control.css-1oeearl-control{
   height: auto !important;
 }
@@ -262,7 +272,12 @@
   outline: 0;
   box-shadow: 0 0 0 0.25rem #e9ecef;
 }
-.models-images .gallery-wrapper {
+.modalSpc{
+  width: auto;
+  padding: 0;
+}
+
+.models-images .gallery-main  .gallery-wrapper.w-100 {
   width: 100%;
   margin: 10px 0;
 }
@@ -326,11 +341,12 @@ select {
 }
 
 .creator-age-wrapper > input:nth-child(1) {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .creator-age-main {
   justify-content: end;
+  padding-top: 0;
 }
 
 .find-creator-name {

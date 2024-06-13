@@ -226,7 +226,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i className="bi bi-person-plus icons"></i>
+            {/* <i className="bi bi-person-plus icons"></i>
+            <i class="fa-solid fa-user-tie"></i> */}
+            <i class="bi bi-person-add icons"></i>
             <div className="brand-menu-text">Create Jobs</div>
           </Link>
 
@@ -238,7 +240,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i className="bi bi-person icons"></i>
+            <i class="bi bi-person-gear icons"></i>
             <div className="brand-menu-text">Edit Profile</div>
           </Link>
 
@@ -262,7 +264,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i className="bi bi-person-workspace icons"></i>
+            <i class="bi bi-people icons"></i>
             <div className="brand-menu-text">Applicants</div>
           </Link>
 
@@ -274,7 +276,8 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i className="bi bi-person-check icons"></i>
+            
+            <i class="bi bi-person-bounding-box icons"></i>
             <div className="brand-menu-text">Find Talent</div>
           </Link>
 

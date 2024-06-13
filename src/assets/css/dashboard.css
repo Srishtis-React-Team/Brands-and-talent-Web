@@ -1013,11 +1013,16 @@ input[type="radio"] {
   margin: 15px 0 0;
 }
 
+
 .sidenavWraper .icons {
   font-size: 18px;
   font-weight: 700;
   width: 33px;
 }
+
+.sidenavWraper .icons.bi-person-gear { font-size: 22px; }
+
+.sidenavWraper .icons.bi-people, .sidenavWraper .bi.bi-person-add { font-size: 20px; }
 
 .sidenavWraper.scroll {
   overflow-y: auto;
