@@ -1004,9 +1004,9 @@ const KidsformOne = ({ sendDataToParent }) => {
                     <div className="kids-form-title">
                       Parent/Guardian Details
                     </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                       
                           <label className="form-label">
                             Legal First Name
                             <span className="mandatory">*</span>
@@ -1032,10 +1032,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Only Letters are allowed
                             </div>
                           )}
-                        </div>
+                        
                       </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                      <div className="kids-form-section col-md-6 mb-3">
+                    
                           <label className="form-label">Legal Last name</label>
                           <input
                             type="text"
@@ -1052,12 +1052,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Only Letters are allowed
                             </div>
                           )}
-                        </div>
+                        
                       </div>
                     </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                       
                           <label className="form-label">
                             E-mail <span className="mandatory">*</span>
                           </label>
@@ -1080,10 +1080,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Please enter Email
                             </div>
                           )}
-                        </div>
+                        
                       </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                      <div className="kids-form-section col-md-6 mb-3">
+                       
                           <label className="form-label">
                             Country<span className="mandatory">*</span>
                           </label>
@@ -1103,12 +1103,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Please Select Country
                             </div>
                           )}
-                        </div>
+                       
                       </div>
                     </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                     
                           <label className="form-label">State</label>
                           <Select
                             placeholder="Select state..."
@@ -1125,10 +1125,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Please Select State
                             </div>
                           )}
-                        </div>
+                      
                       </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                      <div className="kids-form-section col-md-6 mb-3">
+                     
                           <label className="form-label">City</label>
                           <Select
                             placeholder="Select City..."
@@ -1140,12 +1140,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                             onChange={handleSelectedCity}
                             isSearchable={true}
                           />
-                        </div>
+                     
                       </div>
                     </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                      
                           <label className="form-label">
                             Password <span className="mandatory">*</span>
                           </label>
@@ -1203,10 +1203,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                               </div>
                             )}
                           </div>
-                        </div>
+                        
                       </div>
-                      <div className="kids-form-section">
-                        <div className="mb-1">
+                      <div className="kids-form-section col-md-6 mb-3">
+                      
                           <label className="form-label">
                             Confirm Password{" "}
                             <span className="mandatory">*</span>
@@ -1247,15 +1247,15 @@ const KidsformOne = ({ sendDataToParent }) => {
                                 Passwords does not match.
                               </p>
                             )}
-                        </div>
+                      
                       </div>
                     </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
                           Mobile No <span className="mandatory">*</span>
                         </label>
-                        <div className="mb-3">
+                        
                           {/* <input
                             type="text"
                             className="form-control"
@@ -1285,12 +1285,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Only Numbers Allowed
                             </div>
                           )}
-                        </div>
+                    
                       </div>
                     </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-12 mb-3">
+                        
                           <label
                             htmlFor="exampleFormControlTextarea1"
                             className="form-label"
@@ -1298,7 +1298,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             Address<span className="mandatory">*</span>
                           </label>
                           <textarea
-                            style={{ width: "820px" }}
+                            style={{ width: "100%" }}
                             className="form-control address-textarea"
                             id="exampleFormControlTextarea1"
                             value={address}
@@ -1313,15 +1313,15 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Please Enter Address
                             </div>
                           )}
-                        </div>
+                        
                       </div>
                     </div>
 
                     <div className="kids-form-title">Your Child Details</div>
                     <div className="profession-section-cover">
-                      <div className="kids-form-row">
-                        <div className="kids-form-section">
-                          <div className="mb-3">
+                      <div className="kids-form-row row">
+                        <div className="kids-form-section col-md-6 mb-3">
+                          
                             <label className="form-label pay-info">
                               Profession / Skills (Choose any 5)
                               <span className="mandatory">*</span>
@@ -1345,7 +1345,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                                 </div>
                               )}
                             </div>
-                          </div>
+                        
                         </div>
                       </div>
                       <div className="profession-content-section">
@@ -1447,9 +1447,9 @@ const KidsformOne = ({ sendDataToParent }) => {
                       </div>
                     )}
                     <div className="kids-form-title">Personal Details</div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                      
                           <label className="form-label">
                             Legal First Name
                             <span className="mandatory">*</span>
@@ -1475,10 +1475,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Only Letters Allowed
                             </div>
                           )}
-                        </div>
+                        
                       </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                      <div className="kids-form-section col-md-6 mb-3">
+                        
                           <label className="form-label">Legal Last name</label>
                           <input
                             type="text"
@@ -1495,12 +1495,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Only Letters Allowed
                             </div>
                           )}
-                        </div>
+                      
                       </div>
                     </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                        
                           <label className="form-label">
                             Preferred First Name
                             <span className="mandatory">*</span>
@@ -1526,10 +1526,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Only Letters Allowed
                             </div>
                           )}
-                        </div>
+                        
                       </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                      <div className="kids-form-section col-md-6 mb-3">
+                   
                           <label className="form-label">
                             Preferred Last name
                           </label>
@@ -1548,12 +1548,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Only Letters Allowed
                             </div>
                           )}
-                        </div>
+                       
                       </div>
                     </div>
-                    <div className="kids-form-row">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                       
                           <label className="form-label">
                             Gender <span className="mandatory">*</span>
                           </label>
@@ -1578,10 +1578,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Please Select Gender
                             </div>
                           )}
-                        </div>
+                     
                       </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                      <div className="kids-form-section col-md-6 mb-3">
+                       
                           <label className="form-label">
                             Languages <span className="mandatory">*</span>
                           </label>
@@ -1600,12 +1600,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Please Select Language
                             </div>
                           )}
-                        </div>
+                       
                       </div>
                     </div>
-                    <div className="kids-form-row ">
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                     
                           <label className="form-label">
                             Nationality <span className="mandatory">*</span>
                           </label>
@@ -1630,10 +1630,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Please Select Nationality
                             </div>
                           )}
-                        </div>
+                       
                       </div>
-                      <div className="kids-form-section">
-                        <div className="mb-3">
+                      <div className="kids-form-section col-md-6 mb-3">
+                        
                           <label className="form-label">
                             Ethnicity <span className="mandatory">*</span>
                           </label>
@@ -1658,15 +1658,15 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Please Select Ethnicity
                             </div>
                           )}
-                        </div>
+                      
                       </div>
                     </div>
-                    <div className="kids-form-row mb-5">
-                      <div className="kids-form-section">
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
                           Date Of Birth <span className="mandatory">*</span>
                         </label>
-                        <div className="mb-3">
+                        
                           {/* <input
                             type="date"
                             className="form-control"
@@ -1697,7 +1697,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                               Please Select Date Of Birth
                             </div>
                           )}
-                        </div>
+                       
                       </div>
                     </div>
                   </div>

@@ -394,9 +394,9 @@ const EditBrands = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
               <div className="kids-main edit-basicdetails-section-main">
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                <div className="kids-form-row row">
+                  <div className="kids-form-section col-md-6 mb-3">
+                   
                       <label className="form-label">Brand Name</label>
                       <input
                         type="text"
@@ -419,10 +419,10 @@ const EditBrands = () => {
                           Only Letters are allowed
                         </div>
                       )}
-                    </div>
+                   
                   </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                  <div className="kids-form-section col-md-6 mb-3">
+                   
                       <label className="form-label">E-mail</label>
                       <input
                         type="email"
@@ -433,12 +433,12 @@ const EditBrands = () => {
                         value={brandEmail}
                         disabled={true}
                       />
-                    </div>
+                    
                   </div>
                 </div>
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                <div className="kids-form-row row">
+                  <div className="kids-form-section col-md-6 mb-3">
+                  
                       <label className="form-label">Zip Code</label>
                       <input
                         type="text"
@@ -456,11 +456,11 @@ const EditBrands = () => {
                           Please enter ZipCode
                         </div>
                       )}
-                    </div>
+                  
                   </div>
-                  <div className="kids-form-section">
+                  <div className="kids-form-section col-md-6 mb-3">
                     <label className="form-label">Mobile No</label>
-                    <div className="mb-3">
+                   
                       <MuiPhoneNumber
                         value={brandPhone}
                         defaultCountry={"kh"}
@@ -477,12 +477,12 @@ const EditBrands = () => {
                           Only Numbers Allowed
                         </div>
                       )}
-                    </div>
+                  
                   </div>
                 </div>
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                <div className="kids-form-row row">
+                  <div className="kids-form-section col-md-12 mb-3">
+                  
                       <label
                         htmlFor="exampleFormControlTextarea1"
                         className="form-label"
@@ -490,7 +490,7 @@ const EditBrands = () => {
                         Address
                       </label>
                       <textarea
-                        style={{ width: "714px" }}
+                        style={{ width: "100%" }}
                         className="form-control address-textarea"
                         id="exampleFormControlTextarea1"
                         value={address}
@@ -505,11 +505,11 @@ const EditBrands = () => {
                           Please Enter Address
                         </div>
                       )}
-                    </div>
+                    
                   </div>
 
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                  <div className="kids-form-section col-md-6 mb-3">
+                  
                       <label className="form-label">Position</label>
                       <select
                         className="form-select"
@@ -531,7 +531,7 @@ const EditBrands = () => {
                           Please Select position
                         </div>
                       )}
-                    </div>
+                
                   </div>
                 </div>
                 <div className="update-profile-flex">

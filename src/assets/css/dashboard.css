@@ -211,8 +211,9 @@ label {
   padding-right: 30px;
   cursor: pointer;
   border-right: 1px solid #d9d9d9;
-  width: 80px;
+  /* width: 80px; */
   height: 50px;
+  object-fit: cover;
 }
 
 .step-wrapper {

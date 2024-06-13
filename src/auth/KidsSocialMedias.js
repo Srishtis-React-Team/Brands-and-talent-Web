@@ -125,8 +125,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     your followers count
                   </div>
 
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={instagram} alt="" />
@@ -135,7 +135,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={fbLogo} alt="" />
@@ -145,8 +145,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={tikTok} alt="" />
@@ -155,7 +155,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={linkdin} alt="" />
@@ -165,8 +165,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={xTwitter} alt="" />
@@ -175,7 +175,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img className="thread-fill" src={threads} alt="" />
@@ -185,8 +185,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img className="" src={youTube} alt="" />
@@ -199,8 +199,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
 
                   <div className="Or-seperator">Or</div>
 
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={instagram} alt="" />
@@ -217,7 +217,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={fbLogo} alt="" />
@@ -235,8 +235,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={tikTok} alt="" />
@@ -253,7 +253,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={linkdin} alt="" />
@@ -271,8 +271,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={xTwitter} alt="" />
@@ -289,7 +289,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img className="thread-fill" src={threads} alt="" />
@@ -307,8 +307,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row mb-5">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row mb-4">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={youTube} alt="" />
