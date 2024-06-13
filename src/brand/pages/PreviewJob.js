@@ -229,19 +229,21 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     </div>
                     <div className="job-feature-points">
                       <ul>
-                        <li className="job-features-li">
-                          <span className="job-feature-heading">
-                            Compensation :
-                          </span>
-                          <span className="job-feature-values">
-                            {jobData.compensation &&
-                              Object.entries(jobData.compensation).map(
-                                ([key, value]) => (
-                                  <span key={key}>
-                                    <span>{value.currency}</span>
-                                    <span>{value.minPay}/day</span> +&nbsp;
-                                    <span>{value.product_name}</span>
-                                    {/* <p>
+                        {jobData.compensation && (
+                          <>
+                            <li className="job-features-li">
+                              <span className="job-feature-heading">
+                                Compensation :
+                              </span>
+                              <span className="job-feature-values">
+                                {jobData.compensation &&
+                                  Object.entries(jobData.compensation).map(
+                                    ([key, value]) => (
+                                      <span key={key}>
+                                        <span>{value.currency}</span>
+                                        <span>{value.minPay}/day</span> +&nbsp;
+                                        <span>{value.product_name}</span>
+                                        {/* <p>
                                       <strong>{key}</strong>
                                     </p>
                                     <p>Type: {value.type}</p>
@@ -250,11 +252,14 @@ const PreviewJob = ({ data, onButtonClick }) => {
                                     <p>Max Pay: {value.maxPay}</p>
                                     <p>Currency: {value.currency}</p>
                                     <p>Frequency: {value.frequency}</p> */}
-                                  </span>
-                                )
-                              )}
-                          </span>
-                        </li>
+                                      </span>
+                                    )
+                                  )}
+                              </span>
+                            </li>
+                          </>
+                        )}
+
                         <li className="job-features-li">
                           <span className="job-feature-heading">
                             Benefits :
@@ -285,102 +290,119 @@ const PreviewJob = ({ data, onButtonClick }) => {
                         </li>
                         <li className="job-features-li">
                           <span className="job-feature-heading">
-                            Categories :
+                            Category :
                           </span>
                           <span className="job-feature-values">
-                            {/* {jobData?.skills &&
-                              jobData.skills
-                                .map((skill, index) =>
-                                  index === jobData.skills.length - 1
-                                    ? skill
-                                    : skill + ", "
-                                )
-                                .join("")} */}
+                            {jobData?.category}
                           </span>
                         </li>
-                        <li className="job-features-li">
-                          <span className="job-feature-heading">Age :</span>
-                          <span className="job-feature-values">
-                            {jobData?.minAge} -&nbsp;
-                            {jobData?.maxAge}
-                          </span>
-                        </li>
-                        <li className="job-features-li">
-                          <span className="job-feature-heading">Gender :</span>
-                          <span className="job-feature-values">
-                            {jobData?.gender}
-                          </span>
-                        </li>
-                        <li className="job-features-li">
-                          <span className="job-feature-heading">
-                            Languages :
-                          </span>
-                          <span className="job-feature-values">
-                            {jobData?.languages &&
-                              jobData.languages
-                                .map((skill, index) =>
-                                  index === jobData.languages.length - 1
-                                    ? skill
-                                    : skill + ", "
-                                )
-                                .join("")}
-                          </span>
-                        </li>
-                        <li className="job-features-li">
-                          <span className="job-feature-heading">
-                            Nationality :
-                          </span>
-                          <span className="job-feature-values">
-                            {jobData?.nationality}
-                          </span>
-                        </li>
-                        <li className="job-features-li">
-                          <span className="job-feature-heading">
-                            Ethnicity :
-                          </span>
-                          <span className="job-feature-values">
-                            {jobData?.nationality}
-                          </span>
-                        </li>
+                        {jobData?.minAge && (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">Age :</span>
+                            <span className="job-feature-values">
+                              {jobData?.minAge} -&nbsp;
+                              {jobData?.maxAge}
+                            </span>
+                          </li>
+                        )}
+                        {jobData?.gender && (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">
+                              Gender :
+                            </span>
+                            <span className="job-feature-values">
+                              {jobData?.gender}
+                            </span>
+                          </li>
+                        )}
+                        {jobData?.languages && jobData?.languages?.length > 0 && (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">
+                              Languages :
+                            </span>
+                            <span className="job-feature-values">
+                              {jobData?.languages &&
+                                jobData.languages
+                                  .map((skill, index) =>
+                                    index === jobData.languages.length - 1
+                                      ? skill
+                                      : skill + ", "
+                                  )
+                                  .join("")}
+                            </span>
+                          </li>
+                        )}
+                        {jobData?.nationality && (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">
+                              Nationality :
+                            </span>
+                            <span className="job-feature-values">
+                              {jobData?.nationality}
+                            </span>
+                          </li>
+                        )}
+                        {jobData?.ethnicity && (
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">
+                              Ethnicity :
+                            </span>
+                            <span className="job-feature-values">
+                              {jobData?.ethnicity}
+                            </span>
+                          </li>
+                        )}
+
                         <li className="job-features-li">
                           <span className="job-feature-heading">
                             Social Media Followers Count:
                           </span>
                           <ul>
-                            <li>
-                              Instagram Followers:{" "}
-                              <span className="job-feature-values">
-                                {jobData?.linkedInMin} - {jobData?.linkedInMax}
-                              </span>
-                            </li>
+                            {jobData?.instaMin && (
+                              <li>
+                                Instagram Followers:{" "}
+                                <span className="job-feature-values">
+                                  {jobData?.instaMin} - {jobData?.instaMax}
+                                </span>
+                              </li>
+                            )}
 
-                            <li>
-                              TikTok Followers:{" "}
-                              <span className="job-feature-values">
-                                {jobData?.tikTokMin} - {jobData?.tikTokMax}
-                              </span>
-                            </li>
+                            {jobData?.tikTokMin && (
+                              <li>
+                                TikTok Followers:{" "}
+                                <span className="job-feature-values">
+                                  {jobData?.tikTokMin} - {jobData?.tikTokMax}
+                                </span>
+                              </li>
+                            )}
 
-                            <li>
-                              Linkedin Followers:{" "}
-                              <span className="job-feature-values">
-                                {jobData?.linkedInMin} - {jobData?.linkedInMax}
-                              </span>
-                            </li>
+                            {jobData?.linkedInMin && (
+                              <li>
+                                Linkedin Followers:{" "}
+                                <span className="job-feature-values">
+                                  {jobData?.linkedInMin} -{" "}
+                                  {jobData?.linkedInMax}
+                                </span>
+                              </li>
+                            )}
 
-                            <li>
-                              Facebook Followers:{" "}
-                              <span className="job-feature-values">
-                                {jobData?.fbMin} - {jobData?.fbMax}
-                              </span>
-                            </li>
+                            {jobData?.fbMin && (
+                              <li>
+                                Facebook Followers:{" "}
+                                <span className="job-feature-values">
+                                  {jobData?.fbMin} - {jobData?.fbMax}
+                                </span>
+                              </li>
+                            )}
 
-                            <li>
-                              Twitter(X) Followers :{" "}
-                              <span className="job-feature-values">
-                                {jobData?.twitterMin} - {jobData?.twitterMax}
-                              </span>
-                            </li>
+                            {jobData?.twitterMin && (
+                              <li>
+                                Twitter(X) Followers :{" "}
+                                <span className="job-feature-values">
+                                  {jobData?.twitterMin} - {jobData?.twitterMax}
+                                </span>
+                              </li>
+                            )}
                           </ul>
                         </li>
                       </ul>

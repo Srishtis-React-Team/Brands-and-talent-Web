@@ -50,7 +50,7 @@ const GetBooked = () => {
   const [currentUser_image, setCurrentUserImage] = useState("");
   const [currentUser_type, setCurrentUserType] = useState("");
   const girl1 = require("../assets/images/girl1.png");
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const sliderIcon = require("../assets/icons/sliders.png");
   const customStyles = {
     control: (provided, state) => ({
@@ -499,9 +499,9 @@ const GetBooked = () => {
                           ></input>
                         </div>
 
-                        <div className="kids-form-row mt-3">
-                          <div className="kids-form-section">
-                            <div className="mb-3 ">
+                        <div className="kids-form-row mt-3 row">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            
                               <label className="form-label">Location</label>
                               <input
                                 type="text"
@@ -509,10 +509,10 @@ const GetBooked = () => {
                                 placeholder="Location"
                                 ref={jobLocationRef}
                               ></input>
-                            </div>
+                           
                           </div>
-                          <div className="kids-form-section">
-                            <div className="mb-3">
+                          <div className="kids-form-section kids-form-section">
+                          
                               <label className="form-label">Age</label>
                               <select
                                 className="form-select"
@@ -529,7 +529,7 @@ const GetBooked = () => {
                                   </option>
                                 ))}
                               </select>
-                            </div>
+                           
                           </div>
                         </div>
                         {/* <div className="kids-form-section">
@@ -547,9 +547,9 @@ const GetBooked = () => {
                               />
                             </div>
                           </div> */}
-                        <div className="kids-form-row mt-3">
-                          <div className="kids-form-section">
-                            <div className="mb-3 ">
+                        <div className="kids-form-row mt-3 row">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            
                               <label className="form-label">Job Name</label>
                               <input
                                 type="text"
@@ -557,10 +557,14 @@ const GetBooked = () => {
                                 placeholder="Enter Name"
                                 ref={jobNameRef}
                               ></input>
-                            </div>
+
+
+
+                              
+                           
                           </div>
-                          <div className="kids-form-section">
-                            <div className="mb-3 ">
+                          <div className="kids-form-section col-md-6 mb-3">
+                          
                               <label className="form-label">Job Type</label>
                               <select
                                 className="form-select"
@@ -577,7 +581,7 @@ const GetBooked = () => {
                                   </option>
                                 ))}
                               </select>
-                            </div>
+                           
                           </div>
                         </div>
                       </div>

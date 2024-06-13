@@ -224,7 +224,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i className="bi bi-person-plus icons"></i>
+            {/* <i className="bi bi-person-plus icons"></i>
+            <i class="fa-solid fa-user-tie"></i> */}
+            <i class="bi bi-person-add icons"></i>
             <div className="brand-menu-text">Post a Job</div>
           </Link>
 
@@ -236,7 +238,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i className="bi bi-person-check icons"></i>
+            <i class="bi bi-person-gear icons"></i>
             <div className="brand-menu-text">Invite To Apply</div>
           </Link>
 
@@ -260,8 +262,20 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i className="bi bi-person-workspace icons"></i>
+            <i class="bi bi-people icons"></i>
             <div className="brand-menu-text">Applicants</div>
+          </Link>
+
+          <Link
+            to="/find-talents"
+            className={
+              location.pathname === "/find-talents"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i class="bi bi-person-bounding-box icons"></i>
+            <div className="brand-menu-text">Find Talent</div>
           </Link>
 
           <Link

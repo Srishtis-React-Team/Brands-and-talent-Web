@@ -28,7 +28,7 @@ const AdultFormOne = () => {
     }),
   };
 
-  const btLogo = require("../../assets/icons/Group 56.png");
+  const btLogo = require("../../assets/images/LOGO.jpg");
   const adultsBanner = require("../../assets/images/adultsBanner.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -638,9 +638,9 @@ const AdultFormOne = () => {
                 </div>
                 <div className="adult-main" style={{ paddingLeft: "400px" }}>
                   <div className="adults-form-title">Complete your Profile</div>{" "}
-                  <div className="profession-section-cover">
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                  <div className="profession-section-cover row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                     
                         <label className="adults-titles">
                           Profession / Skills (Choose any 5)
                         </label>
@@ -665,7 +665,7 @@ const AdultFormOne = () => {
                             </div>
                           )}
                         </div>
-                      </div>
+                    
                     </div>
                     <div className="profession-content-section">
                       {selectedProfessions.map((profession, index) => (
@@ -767,9 +767,9 @@ const AdultFormOne = () => {
                     </div>
                   )}
                   <div className="adults-titles">Personal Details</div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                      
                         <label className="form-label">Legal First Name</label>{" "}
                         <span className="mandatory">*</span>
                         <input
@@ -792,10 +792,10 @@ const AdultFormOne = () => {
                             Only Letters Allowed
                           </div>
                         )}
-                      </div>
+                     
                     </div>
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                    <div className="kids-form-section col-md-6 mb-3">
+                 
                         <label className="form-label">Legal Last name</label>{" "}
                         <span className="mandatory">*</span>
                         <input
@@ -818,12 +818,12 @@ const AdultFormOne = () => {
                             Only Letters Allowed
                           </div>
                         )}
-                      </div>
+                     
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                    
                         <label className="form-label">
                           Preferred First Name
                         </label>{" "}
@@ -848,10 +848,10 @@ const AdultFormOne = () => {
                             Only Letters Allowed
                           </div>
                         )}
-                      </div>
+                      
                     </div>
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                    <div className="kids-form-section col-md-6 mb-3">
+                    
                         <label className="form-label">
                           Preferred Last name
                         </label>{" "}
@@ -876,12 +876,12 @@ const AdultFormOne = () => {
                             Only Letters Allowed
                           </div>
                         )}
-                      </div>
+                    
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                     
                         <label className="form-label">Country</label>
                         <span className="mandatory">*</span>
                         <Select
@@ -900,10 +900,10 @@ const AdultFormOne = () => {
                             Please Select Country
                           </div>
                         )}
-                      </div>
+                      
                     </div>
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                    <div className="kids-form-section col-md-6 mb-3">
+                   
                         <label className="form-label">State</label>
                         <Select
                           placeholder="Select state..."
@@ -915,12 +915,12 @@ const AdultFormOne = () => {
                           onChange={handleSelectedState}
                           isSearchable={true}
                         />
-                      </div>
+                     
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                     
                         <label className="form-label">City</label>
                         <Select
                           placeholder="Select City..."
@@ -932,11 +932,11 @@ const AdultFormOne = () => {
                           onChange={handleSelectedCity}
                           isSearchable={true}
                         />
-                      </div>
+                      
                     </div>
                   </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                  <div className="kids-form-section col-md-6 mb-3">
+                
                       <label
                         htmlFor="exampleFormControlTextarea1"
                         className="form-label"
@@ -959,11 +959,11 @@ const AdultFormOne = () => {
                           Please Select Address
                         </div>
                       )}
-                    </div>
+                   
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                     
                         <label className="form-label">Gender</label>
                         <span className="mandatory">*</span>
                         <select
@@ -985,10 +985,10 @@ const AdultFormOne = () => {
                             Please Select Gender
                           </div>
                         )}
-                      </div>
+                      
                     </div>
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                    <div className="kids-form-section col-md-6 mb-3">
+                   
                         <label className="form-label">Marital Status</label>
                         <select
                           className="form-select"
@@ -1003,12 +1003,12 @@ const AdultFormOne = () => {
                           </option>
                           <option value="unmarried">UnMarried</option>
                         </select>
-                      </div>
+                     
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                    
                         <label className="form-label">Ethnicity</label>
                         <select
                           className="form-select"
@@ -1024,10 +1024,10 @@ const AdultFormOne = () => {
                             </option>
                           ))}
                         </select>
-                      </div>
+                     
                     </div>
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                    <div className="kids-form-section col-md-6 mb-3">
+                     
                         <label className="form-label">Nationality</label>
                         <select
                           className="form-select"
@@ -1043,11 +1043,11 @@ const AdultFormOne = () => {
                             </option>
                           ))}
                         </select>
-                      </div>
+                    
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">Date Of Birth</label>
                       <span className="mandatory">*</span>
                       <div className="mb-3">
@@ -1069,8 +1069,8 @@ const AdultFormOne = () => {
                         )}
                       </div>
                     </div>
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                    <div className="kids-form-section col-md-6 mb-3">
+                    
                         <label className="form-label">Language</label>
                         <span className="mandatory">*</span>
                         <Select
@@ -1088,13 +1088,13 @@ const AdultFormOne = () => {
                             Please Select Language
                           </div>
                         )}
-                      </div>
+                      
                     </div>
                   </div>
                   <div className="adults-titles">Contact Details</div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="mb-5">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                     
                         <label className="form-label">Phone</label>
                         <span className="mandatory">*</span>
                         {/* <input
@@ -1117,10 +1117,10 @@ const AdultFormOne = () => {
                             Please Enter Phone Number
                           </div>
                         )}
-                      </div>
+                   
                     </div>
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                    <div className="kids-form-section col-md-6 mb-3">
+                  
                         <label className="form-label">Email</label>
                         <span className="mandatory">*</span>
                         <input
@@ -1142,7 +1142,7 @@ const AdultFormOne = () => {
                             Please Enter Email
                           </div>
                         )}
-                      </div>
+                     
                     </div>
                   </div>
                 </div>

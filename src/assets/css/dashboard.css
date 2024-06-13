@@ -89,8 +89,8 @@ body {
 
 .btLogo {
   cursor: pointer;
-  width: 60px;
-  height: 60px;
+  width: auto;
+  height: 47px;
 }
 
 .hideAll {
@@ -211,8 +211,9 @@ label {
   padding-right: 30px;
   cursor: pointer;
   border-right: 1px solid #d9d9d9;
-  width: 80px;
+  /* width: 80px; */
   height: 50px;
+  object-fit: cover;
 }
 
 .step-wrapper {
@@ -1012,11 +1013,16 @@ input[type="radio"] {
   margin: 15px 0 0;
 }
 
+
 .sidenavWraper .icons {
   font-size: 18px;
   font-weight: 700;
   width: 33px;
 }
+
+.sidenavWraper .icons.bi-person-gear { font-size: 22px; }
+
+.sidenavWraper .icons.bi-people, .sidenavWraper .bi.bi-person-add { font-size: 20px; }
 
 .sidenavWraper.scroll {
   overflow-y: auto;

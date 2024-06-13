@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 
 const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const uploadIcon = require("../assets/icons/uploadIcon.png");
   const imageType = require("../assets/icons/imageType.png");
   const videoType = require("../assets/icons/videoType.png");
@@ -960,9 +960,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     security
                   </div>
 
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="mb-3 mt-3">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3 mt-3">
+                     
                         <label className="form-label">ID Type</label>
                         <select
                           className="form-select"
@@ -979,7 +979,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                           </option>
                           <option value="passport">Passport</option>
                         </select>
-                      </div>
+                      
                     </div>
                   </div>
 

@@ -815,7 +815,7 @@ const FindCreators = () => {
                   type="text"
                   className="form-control range-inputs"
                   placeholder="Min"
-                  value={`Min Age :${min}`}
+                  value={`Min Age: ${min}`}
                   onChange={onMinChange}
                   readOnly
                 ></input>
@@ -823,7 +823,7 @@ const FindCreators = () => {
                   type="text"
                   className="form-control range-inputs"
                   placeholder="Max"
-                  value={`Max Age :${max}`}
+                  value={`Max Age: ${max}`}
                   onChange={onMaxChange}
                   readOnly
                 ></input>

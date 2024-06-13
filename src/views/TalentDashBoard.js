@@ -55,7 +55,7 @@ const TalentDashBoard = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [isFilled, setIsFilled] = useState(true);
   const girl1 = require("../assets/images/girl1.png");
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const sliderIcon = require("../assets/icons/sliders.png");
   const customStyles = {
     control: (provided, state) => ({
@@ -599,125 +599,111 @@ const TalentDashBoard = () => {
                       </IconButton>
                       <DialogContent dividers>
                         <div className="search-filter-section">
-                          <div>
-                            <div className="kids-form-row mt-3">
-                              <div className="kids-form-section">
-                                <div className="mb-4">
-                                  <label className="form-label">Keywords</label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter Keyword"
-                                    ref={keyWordRef}
-                                  ></input>
-                                </div>
-                              </div>
+                          <div className="kids-form-row row mt-3">
+                            <div className="kids-form-section col-md-6 mb-3">
+                              <label className="form-label">Keywords</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter Keyword"
+                                ref={keyWordRef}
+                              ></input>
+                            </div>
 
-                              <div className="kids-form-section">
-                                <div className="mb-4">
-                                  <label className="form-label">Category</label>
-                                  <select
-                                    className="form-select"
-                                    aria-label="Default select example"
-                                    style={{ fontSize: "14px" }}
-                                    id="selectedCategoryID"
-                                  >
-                                    <option value="" disabled selected>
-                                      Select Category
-                                    </option>
-                                    {categoryList.map((option, index) => (
-                                      <option key={index} value={option}>
-                                        {option}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
+                            <div className="kids-form-section col-md-6 mb-3">
+                              <label className="form-label">Category</label>
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                                id="selectedCategoryID"
+                              >
+                                <option value="" disabled selected>
+                                  Select Category
+                                </option>
+                                {categoryList.map((option, index) => (
+                                  <option key={index} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
                             </div>
                           </div>
+                        </div>
 
-                          <div className="kids-form-row">
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
-                                <label className="form-label">Location</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Location"
-                                  ref={jobLocationRef}
-                                ></input>
-                              </div>
-                            </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3">
-                                <label className="form-label">Age</label>
-                                <select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  style={{ fontSize: "14px" }}
-                                  id="ageSelectID"
-                                >
-                                  <option value="" disabled selected>
-                                    Select Age
-                                  </option>
-                                  {ageList.map((option, index) => (
-                                    <option key={index} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </div>
+                        <div className="kids-form-row row">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Location</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Location"
+                              ref={jobLocationRef}
+                            ></input>
                           </div>
-                          <div className="">
-                            <div className="kids-form-section">
-                              <div className="mb-3">
-                                <label className="form-label">Skills</label>
-                                <Select
-                                  isMulti
-                                  name="skills"
-                                  options={skillsList}
-                                  className="basic-multi-select"
-                                  classNamePrefix="select"
-                                  onChange={(value) => selectSkills(value)}
-                                  styles={customStyles}
-                                />
-                              </div>
-                            </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Age</label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              style={{ fontSize: "14px" }}
+                              id="ageSelectID"
+                            >
+                              <option value="" disabled selected>
+                                Select Age
+                              </option>
+                              {ageList.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
                           </div>
-                          <div className="kids-form-row mt-3">
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
-                                <label className="form-label">Job Name</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Enter Name"
-                                  ref={jobNameRef}
-                                ></input>
-                              </div>
-                            </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
-                                <label className="form-label">
-                                  Employment Type
-                                </label>
-                                <select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  style={{ fontSize: "14px" }}
-                                  id="jobtypeID"
-                                >
-                                  <option value="" disabled selected>
-                                    Select Employment Type
+                        </div>
+                        <div className="row">
+                          <div className="kids-form-section col-md-12 mb-3">
+                            <label className="form-label">Skills</label>
+                            <Select
+                              isMulti
+                              name="skills"
+                              options={skillsList}
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={(value) => selectSkills(value)}
+                              styles={customStyles}
+                            />
+                          </div>
+                        </div>
+                        <div className="kids-form-row row mt-3">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Job Name</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Name"
+                              ref={jobNameRef}
+                            ></input>
+                          </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <div className=" ">
+                              <label className="form-label">
+                                Employment Type
+                              </label>
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                                id="jobtypeID"
+                              >
+                                <option value="" disabled selected>
+                                  Select Employment Type
+                                </option>
+                                {jobTypeOptions.map((option, index) => (
+                                  <option key={index} value={option}>
+                                    {option}
                                   </option>
-                                  {jobTypeOptions.map((option, index) => (
-                                    <option key={index} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
+                                ))}
+                              </select>
                             </div>
                           </div>
                         </div>
