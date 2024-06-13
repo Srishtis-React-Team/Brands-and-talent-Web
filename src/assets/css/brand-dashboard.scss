@@ -254,6 +254,54 @@
   display: none;
 }
 
+.editTabs .MuiBox-root, .editTabs .edit-basicdetails-section-main{
+  padding-bottom: 0;
+}
+.editTabs .profile-image-edit-section .profile-image-edit {
+  border-radius: 10px;
+  width: 250px;
+  border: 1px solid #ddd;
+  object-fit: cover;
+  height: auto;
+  max-width: 100%;
+}
+.editTabs .image-edit-icon {
+  width: 20px;
+  height: 20px;
+  padding: 16px;
+  top: 6px;
+  right: 7px;
+}
+.editTabs {
+  padding-bottom: 20px;
+}
+.editTabs .profile-image-edit-section .btn-img-edit-wrapper {
+  display: flex;
+  justify-content: left;
+  margin-bottom: 40px;
+}
+.editTabs .image-edit-icon .profile-edit-icon {
+  font-size: 17px;
+}
+.editTabs .profile-image-edit-section {
+  width: auto;
+  position: relative;
+  display: inline-block;
+}
+.edit-profile-navigations.editOnly .edit-profile-navigation-text{ padding-left: 0; }
+
+.edit-profile-navigations.editOnly .bi.arrow-left-circle{ padding-right: 10px; }
+
+
+.edit-profile-navigations.editOnly {
+  margin-top: -57px;
+  display: inline-flex;
+  width: auto;
+  float: left;
+  padding: 0 0 0 25px !important;
+  z-index: 10;
+  position: relative;
+}
 .brand-content-main {
 
   .create-job-title {

@@ -55,7 +55,7 @@ const TalentDashBoard = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [isFilled, setIsFilled] = useState(true);
   const girl1 = require("../assets/images/girl1.png");
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const sliderIcon = require("../assets/icons/sliders.png");
   const customStyles = {
     control: (provided, state) => ({
@@ -600,9 +600,9 @@ const TalentDashBoard = () => {
                       <DialogContent dividers>
                         <div className="search-filter-section">
                           <div>
-                            <div className="kids-form-row mt-3">
-                              <div className="kids-form-section">
-                                <div className="mb-4">
+                            <div className="kids-form-row row mt-3">
+                              <div className="kids-form-section col-md-6 mb-3">
+                               
                                   <label className="form-label">Keywords</label>
                                   <input
                                     type="text"
@@ -610,11 +610,11 @@ const TalentDashBoard = () => {
                                     placeholder="Enter Keyword"
                                     ref={keyWordRef}
                                   ></input>
-                                </div>
+                                
                               </div>
 
-                              <div className="kids-form-section">
-                                <div className="mb-4">
+                              <div className="kids-form-section col-md-6 mb-3">
+                               
                                   <label className="form-label">Category</label>
                                   <select
                                     className="form-select"
@@ -631,14 +631,14 @@ const TalentDashBoard = () => {
                                       </option>
                                     ))}
                                   </select>
-                                </div>
+                                
                               </div>
                             </div>
                           </div>
 
-                          <div className="kids-form-row">
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
+                          <div className="kids-form-row row">
+                            <div className="kids-form-section col-md-6 mb-3">
+                              \
                                 <label className="form-label">Location</label>
                                 <input
                                   type="text"
@@ -646,10 +646,10 @@ const TalentDashBoard = () => {
                                   placeholder="Location"
                                   ref={jobLocationRef}
                                 ></input>
-                              </div>
+                             \
                             </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3">
+                            <div className="kids-form-section col-md-6 mb-3">
+                              
                                 <label className="form-label">Age</label>
                                 <select
                                   className="form-select"
@@ -666,12 +666,12 @@ const TalentDashBoard = () => {
                                     </option>
                                   ))}
                                 </select>
-                              </div>
+                            
                             </div>
                           </div>
-                          <div className="">
-                            <div className="kids-form-section">
-                              <div className="mb-3">
+                          <div className="row">
+                            <div className="kids-form-section col-md-6 mb-3">
+                              
                                 <label className="form-label">Skills</label>
                                 <Select
                                   isMulti
@@ -682,12 +682,12 @@ const TalentDashBoard = () => {
                                   onChange={(value) => selectSkills(value)}
                                   styles={customStyles}
                                 />
-                              </div>
+                             
                             </div>
                           </div>
-                          <div className="kids-form-row mt-3">
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
+                          <div className="kids-form-row row mt-3">
+                            <div className="kids-form-section col-md-6 mb-3">
+                          
                                 <label className="form-label">Job Name</label>
                                 <input
                                   type="text"
@@ -695,10 +695,10 @@ const TalentDashBoard = () => {
                                   placeholder="Enter Name"
                                   ref={jobNameRef}
                                 ></input>
-                              </div>
+                             
                             </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
+                            <div className="kids-form-section col-md-6 mb-3">
+                              
                                 <label className="form-label">Job Type</label>
                                 <select
                                   className="form-select"
@@ -715,7 +715,7 @@ const TalentDashBoard = () => {
                                     </option>
                                   ))}
                                 </select>
-                              </div>
+                            
                             </div>
                           </div>
                         </div>

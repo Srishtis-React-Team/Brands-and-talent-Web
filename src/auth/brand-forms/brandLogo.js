@@ -11,7 +11,7 @@ import PopUp from "../../components/PopUp";
 const BrandLogo = () => {
   const navigate = useNavigate();
   const uploadIcon = require("../../assets/icons/uploadIcon.png");
-  const btLogo = require("../../assets/icons/Group 56.png");
+  const btLogo = require("../../assets/images/LOGO.jpg");
   const imageType = require("../../assets/icons/imageType.png");
   const videoType = require("../../assets/icons/videoType.png");
   const audiotype = require("../../assets/icons/audiotype.png");

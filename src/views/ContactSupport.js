@@ -145,9 +145,9 @@ const ContactSupport = () => {
             with in 1-2 bussiness days.{" "}
           </p>
 
-          <div className="update-password-main">
-            <div className="kids-form-section">
-              <div className="mb-3">
+          <div className="update-password-main row">
+            <div className="kids-form-section col-md-6 mb-3">
+             
                 <label className="form-label">
                   Name <span className="mandatory">*</span>
                 </label>
@@ -166,10 +166,10 @@ const ContactSupport = () => {
                     <div className="invalid-fields">Please Enter Your Name</div>
                   )}
                 </div>
-              </div>
+             
             </div>
-            <div className="kids-form-section w-40">
-              <div className="mb-3">
+            <div className="kids-form-section col-md-6 mb-3">
+             
                 <label className="form-label">
                   E-mail <span className="mandatory">*</span>
                 </label>
@@ -190,13 +190,13 @@ const ContactSupport = () => {
                 {emailError && (
                   <div className="invalid-fields">Please enter Email</div>
                 )}
-              </div>
+              
             </div>
-            <div className="kids-form-section w-40">
+            <div className="kids-form-section col-md-6 mb-3">
               <label className="form-label">
                 Mobile No <span className="optional">(Optional)</span>
               </label>
-              <div className="mb-3">
+           
                 <MuiPhoneNumber
                   defaultCountry={"kh"}
                   className="form-control"
@@ -211,10 +211,10 @@ const ContactSupport = () => {
                 {mobileNumError && (
                   <div className="invalid-fields">Only Numbers Allowed</div>
                 )}
-              </div>
+              
             </div>
-            <div className="kids-form-section w-40">
-              <div className="mb-3">
+            <div className="kids-form-section col-md-6 mb-3">
+              
                 <label
                   htmlFor="exampleFormControlTextarea1"
                   className="form-label"
@@ -235,7 +235,7 @@ const ContactSupport = () => {
                 {enquiryError && (
                   <div className="invalid-fields">Please Enter Enquiry</div>
                 )}
-              </div>
+             
             </div>
             <div className="add-portfoli-section">
               <div className="add-portfolia-btn">

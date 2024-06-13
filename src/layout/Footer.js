@@ -9,7 +9,7 @@ import { API } from "../config/api";
 const Footer = () => {
   const navigate = useNavigate();
   const fieldsBackground = require("../assets/images/fields-background.png");
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const socialIcons = require("../assets/icons/Social.png");
   const fbBlack = require("../assets/icons/social-media-icons/fb-black.png");
   const twitterBlack = require("../assets/icons/social-media-icons/twitter-black.png");

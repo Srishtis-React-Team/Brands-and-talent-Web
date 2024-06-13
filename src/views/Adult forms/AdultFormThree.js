@@ -14,7 +14,7 @@ import "../../assets/css/talent-dashboard.scss";
 
 const AdultFormThree = () => {
   const [profileFile, setProfileFile] = useState(null);
-  const btLogo = require("../../assets/icons/Group 56.png");
+  const btLogo = require("../../assets/images/LOGO.jpg");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -945,8 +945,8 @@ const AdultFormThree = () => {
                     your followers count
                   </div>
 
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={instagram} alt="" />
@@ -955,7 +955,7 @@ const AdultFormThree = () => {
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={fbLogo} alt="" />
@@ -965,8 +965,8 @@ const AdultFormThree = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={tikTok} alt="" />
@@ -975,7 +975,7 @@ const AdultFormThree = () => {
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={linkdin} alt="" />
@@ -985,8 +985,8 @@ const AdultFormThree = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={xTwitter} alt="" />
@@ -995,7 +995,7 @@ const AdultFormThree = () => {
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img className="thread-fill" src={threads} alt="" />
@@ -1005,8 +1005,8 @@ const AdultFormThree = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img className="thread-fill" src={threads} alt="" />
@@ -1019,8 +1019,8 @@ const AdultFormThree = () => {
 
                   <div className="Or-seperator">Or</div>
 
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={instagram} alt="" />
@@ -1037,7 +1037,7 @@ const AdultFormThree = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={fbLogo} alt="" />
@@ -1055,8 +1055,8 @@ const AdultFormThree = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={tikTok} alt="" />
@@ -1073,7 +1073,7 @@ const AdultFormThree = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={linkdin} alt="" />
@@ -1091,8 +1091,8 @@ const AdultFormThree = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={xTwitter} alt="" />
@@ -1109,7 +1109,7 @@ const AdultFormThree = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img className="thread-fill" src={threads} alt="" />
@@ -1128,7 +1128,7 @@ const AdultFormThree = () => {
                     </div>
                   </div>
                   <div className="kids-form-row">
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={youTube} alt="" />

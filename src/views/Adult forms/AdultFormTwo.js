@@ -15,7 +15,7 @@ import PopUp from "../../components/PopUp";
 import { event } from "jquery";
 import RichTextEditor from "../RichTextEditor";
 const AdultFormTwo = () => {
-  const btLogo = require("../../assets/icons/Group 56.png");
+  const btLogo = require("../../assets/images/LOGO.jpg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const adultsBanner = require("../../assets/images/adultsBanner.png");
@@ -250,9 +250,9 @@ const AdultFormTwo = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="kids-form-row">
-                            <div className="kids-form-section">
-                              <div className="mb-3">
+                          <div className="kids-form-row row">
+                            <div className="kids-form-section col-md-6 mb-3">
+                           
                                 <label className="form-label">Amount</label>
                                 <input
                                   type="number"
@@ -268,10 +268,10 @@ const AdultFormTwo = () => {
                                   className="form-control"
                                   placeholder="Enter Amount In $"
                                 ></input>
-                              </div>
+                            
                             </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3">
+                            <div className="kids-form-section col-md-6 mb-3">
+                             
                                 <label className="form-label">
                                   Duration (Weeks/Months)
                                 </label>
@@ -289,7 +289,7 @@ const AdultFormTwo = () => {
                                   className="form-control"
                                   placeholder="Duration (Weeks/Months)"
                                 ></input>
-                              </div>
+                              
                             </div>
                           </div>
                           <div className="adults-titles">Features</div>

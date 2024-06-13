@@ -18,7 +18,7 @@ const BrandHeader = ({ toggleMenu, myState }) => {
   const { currentUserType, avatarImage } = CurrentUser();
 
   const navigate = useNavigate();
-  const btLogo = require("../../assets/icons/Group 56.png");
+  const btLogo = require("../../assets/images/LOGO.jpg");
   const model1 = require("../../assets/images/girl1.png");
   const [menuOpen, setMenuOpen] = useState(false);
   const [brandId, setBrandId] = useState(null);

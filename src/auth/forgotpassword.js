@@ -6,7 +6,7 @@ import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
 const ForgotPassword = () => {
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const googleLogo = require("../assets/icons/googleLogo.png");
   const importIcon = require("../assets/icons/instagram.png");
   const userIcon = require("../assets/icons/user.png");

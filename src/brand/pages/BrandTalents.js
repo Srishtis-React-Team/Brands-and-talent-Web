@@ -835,7 +835,7 @@ const BrandTalents = () => {
                           type="text"
                           className="form-control range-inputs"
                           placeholder="Min"
-                          value={`Min Age :${min}`}
+                          value={`Min Age: ${min}`}
                           onChange={onMinChange}
                           readOnly
                         ></input>
@@ -843,7 +843,7 @@ const BrandTalents = () => {
                           type="text"
                           className="form-control range-inputs"
                           placeholder="Max"
-                          value={`Max Age :${max}`}
+                          value={`Max Age: ${max}`}
                           onChange={onMaxChange}
                           readOnly
                         ></input>
@@ -973,7 +973,7 @@ const BrandTalents = () => {
                         {talentList?.map((item) => {
                           return (
                             <div className="col-md-4 col-lg-3 px-1">
-                              <div className="gallery-wrapper">
+                              <div className="gallery-wrapper w-100">
                                 <div className="galBox">
                                   <img
                                     className="gallery-img"

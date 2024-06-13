@@ -275,7 +275,7 @@ const ListJobs = () => {
                   {allJobsList.map((job, index) => {
                     return (
                       <>
-                        <div key={index} className="list-jobs-card col-md-6">
+                        <div key={index} className="list-jobs-card col-md-12">
                           <div className="recent-campaigns-wrapper wraper">
                             <div className="campaigns-wrapper-one">
                               <div className="campaigns-content-wrapper imgSpc">

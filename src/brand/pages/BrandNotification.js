@@ -117,9 +117,10 @@ const BrandNotification = () => {
           id="mainBrand"
           className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
         >
-          <div className="brand-content-main my-2">
+          <div className="brand-content-main my-2 boxBg px-4">
             <div className="create-job-title">Notification</div>
-            <div className="talent-notification-main">
+
+            <div className="talent-notification-main w-100 mt-2 mb-3">
               {notificationList && notificationList?.length > 0 && (
                 <>
                   {notificationList?.map((item, index) => {

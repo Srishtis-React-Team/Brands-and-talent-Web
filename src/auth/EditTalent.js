@@ -92,7 +92,7 @@ const EditTalent = () => {
   const userId = urlParams.get("userId");
   const userEmail = urlParams.get("userEmail");
   const navigate = useNavigate();
-  const btLogo = require("../assets/icons/Group 56.png");
+  const btLogo = require("../assets/images/LOGO.jpg");
   const kidsImage = require("../assets/images/kidsImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -1756,9 +1756,8 @@ const EditTalent = () => {
             <CustomTabPanel value={valueTabs} index={1}>
               <div className="kids-main edit-basicdetails-section-main">
                 <div className="kids-form-title">Personal Details</div>
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                <div className="row">
+                  <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">
                         Legal First Name
                         <span className="mandatory">*</span>
@@ -1784,10 +1783,9 @@ const EditTalent = () => {
                           Only Letters are allowed
                         </div>
                       )}
-                    </div>
+                   
                   </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                  <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">Legal Last name</label>
                       <input
                         type="text"
@@ -1804,14 +1802,13 @@ const EditTalent = () => {
                           Only Letters are allowed
                         </div>
                       )}
-                    </div>
+                    
                   </div>
                 </div>
 
                 {talentData?.type === "kids" && (
-                  <div className="kids-form-row">
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                  <div className="row">
+                    <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
                           Legal First Name
                           <span className="mandatory">*</span>
@@ -1837,10 +1834,10 @@ const EditTalent = () => {
                             Only Letters Allowed
                           </div>
                         )}
-                      </div>
+                   
                     </div>
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                    <div className="kids-form-section col-md-6 mb-3">
+                    
                         <label className="form-label">Legal Last name</label>
                         <input
                           type="text"
@@ -1857,14 +1854,14 @@ const EditTalent = () => {
                             Only Letters Allowed
                           </div>
                         )}
-                      </div>
+                      
                     </div>
                   </div>
                 )}
 
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                <div className="row">
+                  <div className="kids-form-section  col-md-6 mb-3">
+                  
                       <label className="form-label">
                         Preferred First Name
                         <span className="mandatory">*</span>
@@ -1890,10 +1887,10 @@ const EditTalent = () => {
                           Only Letters Allowed
                         </div>
                       )}
-                    </div>
+                    
                   </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                  <div className="kids-form-section col-md-6 mb-3">
+                  
                       <label className="form-label">Preferred Last name</label>
                       <input
                         type="text"
@@ -1910,13 +1907,13 @@ const EditTalent = () => {
                           Only Letters Allowed
                         </div>
                       )}
-                    </div>
+                    
                   </div>
                 </div>
 
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                <div className="row">
+                  <div className="kids-form-section col-md-6 mb-3">
+                    
                       <label className="form-label">
                         Ethnicity <span className="mandatory">*</span>
                       </label>
@@ -1941,10 +1938,10 @@ const EditTalent = () => {
                           Please Select Ethnicity
                         </div>
                       )}
-                    </div>
+                  
                   </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                  <div className="kids-form-section col-md-6 mb-3">
+                   
                       <label className="form-label">
                         Nationality <span className="mandatory">*</span>
                       </label>
@@ -1969,15 +1966,15 @@ const EditTalent = () => {
                           Please Select Nationality
                         </div>
                       )}
-                    </div>
+                  
                   </div>
                 </div>
-                <div className="kids-form-row ">
-                  <div className="kids-form-section">
+                <div className="row">
+                  <div className="kids-form-section col-md-6 mb-3">
                     <label className="form-label">
                       Date Of Birth <span className="mandatory">*</span>
                     </label>
-                    <div className="mb-3">
+                   
                       {/* <input
                             type="date"
                             className="form-control"
@@ -2006,10 +2003,10 @@ const EditTalent = () => {
                           Please Select Date Of Birth
                         </div>
                       )}
-                    </div>
+                  
                   </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                  <div className="kids-form-section col-md-6 mb-3">
+                   
                       <label className="form-label">
                         Language <span className="mandatory">*</span>
                       </label>
@@ -2029,12 +2026,11 @@ const EditTalent = () => {
                           Please Select Language
                         </div>
                       )}
-                    </div>
+                   
                   </div>
                 </div>
-                <div className="kids-form-row mb-2">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
+                <div className="row">
+                  <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">
                         Gender <span className="mandatory">*</span>
                       </label>
@@ -2059,11 +2055,11 @@ const EditTalent = () => {
                           Please Select Gender
                         </div>
                       )}
-                    </div>
+                   
                   </div>
                   {talentData?.type != "kids" && (
-                    <div className="kids-form-section">
-                      <div className="mb-3">
+                    <div className="kids-form-section col-md-6 mb-3">
+                     
                         <label className="form-label">Marital Status</label>
                         <select
                           className="form-select"
@@ -2079,133 +2075,17 @@ const EditTalent = () => {
                           </option>
                           <option value="unmarried">UnMarried</option>
                         </select>
-                      </div>
+                      
                     </div>
                   )}
-                </div>
+                {/* </div>
 
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">
-                        E-mail <span className="mandatory">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        className={`form-control ${
-                          !isValidEmail ? "is-invalid" : "form-control"
-                        }`}
-                        onChange={handleEmailChange}
-                        placeholder="Enter E-mail"
-                        value={parentEmail}
-                        disabled={true}
-                      />
-                      {!isValidEmail && (
-                        <div className="invalid-feedback">
-                          Please enter a valid email address.
-                        </div>
-                      )}
-                      {parentEmailError && (
-                        <div className="invalid-fields">Please enter Email</div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">
-                        Country<span className="mandatory">*</span>
-                      </label>
-                      <Select
-                        placeholder="Search country..."
-                        options={countryList.map((country, index) => ({
-                          value: country,
-                          label: country,
-                          key: index,
-                        }))}
-                        value={{ value: country, label: country }}
-                        onChange={handleSelectedCountry}
-                        isSearchable={true}
-                      />
-                      {parentCountryError && (
-                        <div className="invalid-fields">
-                          Please Select Country
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">
-                        State<span className="mandatory">*</span>
-                      </label>
-                      <Select
-                        placeholder="Select state..."
-                        options={stateList.map((state) => ({
-                          value: state.stateId, // or whatever unique identifier you want to use
-                          label: state.name,
-                        }))}
-                        value={{ value: state, label: state }}
-                        onChange={handleSelectedState}
-                        isSearchable={true}
-                      />
-                      {stateError && (
-                        <div className="invalid-fields">
-                          Please Select State
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label className="form-label">City</label>
-                      <Select
-                        placeholder="Select City..."
-                        options={cityList.map((city) => ({
-                          value: city.cityId, // or whatever unique identifier you want to use
-                          label: city.name,
-                        }))}
-                        value={{ value: kidsCity, label: kidsCity }}
-                        onChange={handleSelectedCity}
-                        isSearchable={true}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="kids-form-row">
-                  <div className="kids-form-section">
-                    <div className="mb-3">
-                      <label
-                        htmlFor="exampleFormControlTextarea1"
-                        className="form-label"
-                      >
-                        Address<span className="mandatory">*</span>
-                      </label>
-                      <textarea
-                        style={{ width: "714px" }}
-                        className="form-control address-textarea"
-                        id="exampleFormControlTextarea1"
-                        value={address}
-                        rows="3"
-                        onChange={(e) => {
-                          setAddress(e.target.value);
-                          setAddressError(false);
-                        }}
-                      ></textarea>
-                      {addressError && (
-                        <div className="invalid-fields">
-                          Please Enter Address
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="kids-form-section">
+                <div className="row"> */}
+                <div className="kids-form-section col-md-6 mb-3">
                     <label className="form-label">
                       Mobile No <span className="mandatory">*</span>
                     </label>
-                    <div className="mb-3">
+                    
                       {/* <input
                             type="text"
                             className="form-control"
@@ -2236,14 +2116,130 @@ const EditTalent = () => {
                           Only Numbers Allowed
                         </div>
                       )}
-                    </div>
+                  
                   </div>
+                  <div className="kids-form-section col-md-6 mb-3">
+                 
+                      <label className="form-label">
+                        E-mail <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        className={`form-control ${
+                          !isValidEmail ? "is-invalid" : "form-control"
+                        }`}
+                        onChange={handleEmailChange}
+                        placeholder="Enter E-mail"
+                        value={parentEmail}
+                        disabled={true}
+                      />
+                      {!isValidEmail && (
+                        <div className="invalid-feedback">
+                          Please enter a valid email address.
+                        </div>
+                      )}
+                      {parentEmailError && (
+                        <div className="invalid-fields">Please enter Email</div>
+                      )}
+                  
+                  </div>
+                  <div className="kids-form-section col-md-6 mb-3">
+                    
+                      <label className="form-label">
+                        Country<span className="mandatory">*</span>
+                      </label>
+                      <Select
+                        placeholder="Search country..."
+                        options={countryList.map((country, index) => ({
+                          value: country,
+                          label: country,
+                          key: index,
+                        }))}
+                        value={{ value: country, label: country }}
+                        onChange={handleSelectedCountry}
+                        isSearchable={true}
+                      />
+                      {parentCountryError && (
+                        <div className="invalid-fields">
+                          Please Select Country
+                        </div>
+                      )}
+                    
+                  </div>
+               
+                  <div className="kids-form-section col-md-6 mb-3">
+                   
+                      <label className="form-label">
+                        State<span className="mandatory">*</span>
+                      </label>
+                      <Select
+                        placeholder="Select state..."
+                        options={stateList.map((state) => ({
+                          value: state.stateId, // or whatever unique identifier you want to use
+                          label: state.name,
+                        }))}
+                        value={{ value: state, label: state }}
+                        onChange={handleSelectedState}
+                        isSearchable={true}
+                      />
+                      {stateError && (
+                        <div className="invalid-fields">
+                          Please Select State
+                        </div>
+                      )}
+                  
+                  </div>
+                  <div className="kids-form-section col-md-6 mb-3">
+                 
+                      <label className="form-label">City</label>
+                      <Select
+                        placeholder="Select City..."
+                        options={cityList.map((city) => ({
+                          value: city.cityId, // or whatever unique identifier you want to use
+                          label: city.name,
+                        }))}
+                        value={{ value: kidsCity, label: kidsCity }}
+                        onChange={handleSelectedCity}
+                        isSearchable={true}
+                      />
+                   
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="kids-form-section col-md-12 mb-3">
+                  
+                      <label
+                        htmlFor="exampleFormControlTextarea1"
+                        className="form-label"
+                      >
+                        Address<span className="mandatory">*</span>
+                      </label>
+                      <textarea
+                        
+                        className="form-control address-textarea"
+                        id="exampleFormControlTextarea1"
+                        value={address}
+                        rows="3"
+                        onChange={(e) => {
+                          setAddress(e.target.value);
+                          setAddressError(false);
+                        }}
+                      ></textarea>
+                      {addressError && (
+                        <div className="invalid-fields">
+                          Please Enter Address
+                        </div>
+                      )}
+                   
+                  </div>
+                
                 </div>
                 {talentData?.type === "kids" && (
                   <div className="kids-form-title">Your Child Details</div>
                 )}
                 {/* <div className="profession-section-cover">
-                  <div className="kids-form-row">
+                  <div className="row">
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="form-label pay-info">
@@ -2720,9 +2716,9 @@ const EditTalent = () => {
                                 ></i>
                               </div>
                             </div>
-                            <div className="kids-form-row">
-                              <div className="kids-form-section">
-                                <div className="mb-3">
+                            <div className="row">
+                              <div className="kids-form-section col-md-6 mb-3">
+                                
                                   <label className="form-label">
                                     Service Name
                                     <span className="mandatory">*</span>
@@ -2740,10 +2736,10 @@ const EditTalent = () => {
                                       )
                                     }
                                   ></input>
-                                </div>
+                               
                               </div>
-                              <div className="kids-form-section">
-                                <div className="mb-3">
+                              <div className="kids-form-section col-md-6 mb-3">
+                              
                                   <label className="form-label">
                                     Service Amount
                                     <span className="mandatory">*</span>
@@ -2761,12 +2757,12 @@ const EditTalent = () => {
                                       )
                                     }
                                   ></input>
-                                </div>
+                               
                               </div>
                             </div>
-                            <div className="kids-form-row">
-                              <div className="kids-form-section">
-                                <div className="mb-3">
+                            <div className="row">
+                              <div className="kids-form-section col-md-6 mb-2">
+                               
                                   <label className="form-label">
                                     Features
                                     <span className="mandatory">*</span>
@@ -2808,10 +2804,10 @@ const EditTalent = () => {
                                       )
                                     }
                                   />
-                                </div>
+                              
                               </div>
-                              <div className="kids-form-section">
-                                <div className="mb-3">
+                              <div className="kids-form-section col-md-6 mb-3">
+                             
                                   <label className="form-label">
                                     Service Duration
                                   </label>
@@ -2828,7 +2824,7 @@ const EditTalent = () => {
                                       )
                                     }
                                   ></input>
-                                </div>
+                                
                               </div>
                             </div>
                             <div className="service-files-main">
