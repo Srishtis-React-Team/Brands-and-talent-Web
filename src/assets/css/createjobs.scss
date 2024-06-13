@@ -57,13 +57,32 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: normal;
+  line-height: 25px;
+  word-spacing: 4px;
+}
+.job-company-name {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  padding-left: 2px;
 }
 
 .create-job-buttons {
   display: flex;
   justify-content: end;
   align-items: center;
+}
+
+.followers-social-icons {
+  padding-right: 8px;
+  color: #c2114b;
+}
+
+.job-company-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 }
 
 .createjob-btn {
@@ -357,6 +376,25 @@
   margin-top: 30px;
   background-color: #ffffff;
   border-radius: 8px;
+}
+
+.additional-requirements-title {
+  font-size: 15px;
+  font-family: sans-serif;
+  color: #000;
+  font-weight: 400;
+}
+
+.compensation-right-space {
+  margin-right: 12px !important;
+}
+
+.brands-email {
+  color: blue;
+  font-family: sans-serif;
+  cursor: pointer;
+  font-size: 15px;
+  text-decoration: underline;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 768px) {

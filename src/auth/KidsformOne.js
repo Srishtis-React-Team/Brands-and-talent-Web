@@ -974,12 +974,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                 </div>
                 <div className="kids-form col-md-8 col-lg-9">
                   <div className="kids-title">
-                    Welcome to Kids & Teen Talent ( 13-17 years ) Registration
+                    Welcome to Kids & Teen Talent ( 4-17 years ) Registration
                     Form
                   </div>
                   <div className="kids-description">
                     Unleash your kid's inner star! ✨ Brands & Talent is your
-                    gateway to exciting opportunities for young creators ( 13-17
+                    gateway to exciting opportunities for young creators ( 4-17
                     )!  Imagine their talent shining on the big stage,
                     collaborating with renowned brands on fun gigs and
                     influencer projects.  This registration form is your first

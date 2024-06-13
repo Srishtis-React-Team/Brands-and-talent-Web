@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0px;
+  padding: 8px 0px;
 }
 
 .back-create {
@@ -42,6 +42,31 @@
   font-weight: 600;
   line-height: normal;
 }
+.how-apply-terms {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.how-apply-terms-bold {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+}
+
+.how-apply-terms-link {
+  color: blue;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  cursor: pointer;
+  text-decoration: underline;
+}
 
 .company-name {
   color: #c2114b;
@@ -49,6 +74,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  padding-left: 8px;
 }
 
 .job-to-pay {
@@ -87,26 +113,29 @@
 }
 
 .job-features-benefits ol,
-.job-features-benefits ul{
+.job-features-benefits ul {
   padding: 0 0 0 20px;
   margin: 0 0 15px;
   color: #b01818;
   font-size: 14px;
-  
 }
-.job-questions-section ul{
+.job-questions-section ul {
   font-size: 15px;
   padding: 0 0 0 20px;
   margin: 0 0 15px;
 }
-.job-questions-section ul li { margin-bottom: 10px; }
+.job-questions-section ul li {
+  margin-bottom: 10px;
+}
 
 .job-features-benefits ol span,
-.job-features-benefits ul span{ color: #444; }
+.job-features-benefits ul span {
+  color: #444;
+}
 
 .job-feature-title {
   color: #000;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;

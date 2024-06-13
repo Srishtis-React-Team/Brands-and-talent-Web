@@ -19,6 +19,8 @@ import CurrentUser from "../CurrentUser.js";
 import PopUp from "../components/PopUp.js";
 import Spinner from "../components/Spinner.js";
 import { useNavigate } from "react-router";
+import { Modal, Box, IconButton } from "@mui/material";
+import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 
 const TalentProfile = () => {
   const {
@@ -376,7 +378,7 @@ const TalentProfile = () => {
   }, [showModal]);
 
   const handleOpenModal = () => {
-    if (talentData?.planName === "Basic") {
+    if (currentUserType == "brand" && talentData?.planName === "Basic") {
       setMessage("Purchase Pro or Premium Plan to unlock this feature");
       setOpenPopUp(true);
       setTimeout(function() {
@@ -449,6 +451,38 @@ const TalentProfile = () => {
       });
   };
 
+  const [isSliderOpen, setSliderOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleImageClick = (index) => {
+    setSliderOpen(true);
+    setCurrentImageIndex(index);
+  };
+
+  const handleClose = () => {
+    // alert("handleCloseSlider");
+    setSliderOpen(false);
+  };
+
+  useEffect(() => {
+    console.log(isSliderOpen, "isSliderOpen ImageSlider");
+  }, [isSliderOpen]);
+  const [currentIndex, setCurrentIndex] = useState(currentImageIndex);
+
+  useEffect(() => {
+    setCurrentIndex(currentImageIndex);
+  }, [currentImageIndex]);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % photosList.length);
+  };
+
+  const handlePrevious = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + photosList.length) % photosList.length
+    );
+  };
+
   return (
     <>
       {/* <Header /> */}
@@ -495,12 +529,12 @@ const TalentProfile = () => {
                   <div className="individual-talents-details">
                     <div className="individual-talent-name">
                       <div className="model-name">{`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}</div>
-                      <div className="talent-verified">
+                      {/* <div className="talent-verified">
                         <span className="blue-shield-wrapper">
                           <img className="blue-shield" src={blueShield}></img>
                         </span>
                         Verified
-                      </div>
+                      </div> */}
                     </div>
                     <div className="talent-details">
                       <div className="talent-details-wrapper">
@@ -1069,9 +1103,12 @@ const TalentProfile = () => {
                                         key={index}
                                       >
                                         <img
-                                          className=""
+                                          className="photo-gallery-ind-image"
                                           src={`${API.userFilePath}${image}`}
                                           alt=""
+                                          onClick={() => {
+                                            handleImageClick(index);
+                                          }}
                                         />
                                       </div>
                                     </div>
@@ -1256,6 +1293,52 @@ const TalentProfile = () => {
       <Footer />
       {isLoading && <Spinner />}
       {openPopUp && <PopUp message={message} />}
+      <Modal
+        open={isSliderOpen}
+        onClose={handleClose}
+        aria-labelledby="image-slider-modal"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            height: "500px",
+            widows: "500px",
+            paddingTop: "50px",
+            paddingBottom: "50px",
+            paddingRight: "50px",
+            paddingLeft: "50px",
+          }}
+        >
+          <IconButton
+            sx={{ position: "absolute", top: 5, right: 5 }}
+            onClick={handleClose}
+          >
+            <Close />
+          </IconButton>
+          <img
+            src={`${API.userFilePath}${photosList[currentIndex]}`}
+            alt=""
+            style={{ width: "400px", height: "400px" }}
+          />
+          <IconButton
+            sx={{ position: "absolute", top: "50%", left: 8 }}
+            onClick={handlePrevious}
+          >
+            <ArrowBackIos />
+          </IconButton>
+          <IconButton
+            sx={{ position: "absolute", top: "50%", right: 5 }}
+            onClick={handleNext}
+          >
+            <ArrowForwardIos />
+          </IconButton>
+        </Box>
+      </Modal>
     </>
   );
 };

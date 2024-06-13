@@ -399,7 +399,11 @@ const FindCreators = () => {
   };
   const openTalent = (item) => {
     console.log(item, "item");
-    navigate("/talent-profile", { state: { talentData: item } });
+    // navigate("/talent-profile", { state: { talentData: item } });
+
+    navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+      state: { talentData: item },
+    });
   };
 
   const handleSelectedState = (state) => {

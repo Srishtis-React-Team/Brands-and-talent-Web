@@ -477,7 +477,14 @@ const EditTalent = () => {
             // });
             setCountry(resData?.data?.data?.parentCountry);
             setState(resData?.data?.data?.parentState);
+            getStates(resData?.data?.data?.parentCountry);
             setKidsCity(resData?.data?.data?.childCity);
+
+            getCities({
+              countryName: resData?.data?.data?.parentCountry,
+              stateName: resData?.data?.data?.parentState,
+            });
+
             setKidsPreferedFirstName(
               resData?.data?.data?.preferredChildFirstname
             );
@@ -492,7 +499,6 @@ const EditTalent = () => {
             // setKidsEmail(resData?.data?.data?.childEmail);
             // setKidsPhone(resData?.data?.data?.childPhone);
             // setKidsLocation(resData?.data?.data?.childLocation);
-            setKidsCity(resData?.data?.data?.childCity);
             setSelectedCategories([
               ...selectedCategories,
               ...resData.data.data?.relevantCategories,

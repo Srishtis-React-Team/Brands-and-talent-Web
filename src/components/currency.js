@@ -4,12 +4,8 @@ const currencyList = [
     value: "USD",
   },
   {
-    title: "EUR - Euro",
-    value: "EUR",
-  },
-  {
-    title: "JPY - Japanese Yen",
-    value: "JPY",
+    title: "CAD - Canadian Dollar",
+    value: "CAD",
   },
   {
     title: "GBP - British Pound Sterling",
@@ -20,8 +16,41 @@ const currencyList = [
     value: "AUD",
   },
   {
-    title: "CAD - Canadian Dollar",
-    value: "CAD",
+    title: "EUR - Euro",
+    value: "EUR",
+  },
+  {
+    title: "INR - Indian Rupees",
+    value: "INR",
+  },
+
+  {
+    title: "RUB - Russian Ruble",
+    value: "RUB",
+  },
+  {
+    title: "THB - Thai Baht",
+    value: "THB",
+  },
+  {
+    title: "PHP - Philippine Peso",
+    value: "PHP",
+  },
+  {
+    title: "HKD - Hong Kong Dollar",
+    value: "HKD",
+  },
+  {
+    title: "CNY - Chinese Yuan",
+    value: "CNY",
+  },
+  {
+    title: "AED - United Arab Emirates Dirham",
+    value: "AED",
+  },
+  {
+    title: "JPY - Japanese Yen",
+    value: "JPY",
   },
 ];
 

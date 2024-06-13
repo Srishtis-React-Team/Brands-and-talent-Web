@@ -171,7 +171,7 @@ const Header = ({ onData }) => {
             state: { talentData },
           });
         } else if (currentUser_type === "brand") {
-          navigate(`brand-dashboard`);
+          navigate(`/brand-dashboard`);
         }
       }
       if (menuItem === "edit") {

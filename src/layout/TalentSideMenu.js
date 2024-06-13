@@ -135,7 +135,7 @@ const TalentSideMenu = ({ myState }) => {
             }
           >
             <i className="bi bi-house-door icons"></i>
-            <div className="brand-menu-text">Home</div>
+            <div className="brand-menu-text">Dashboard</div>
           </Link>
 
           <Link

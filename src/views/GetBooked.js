@@ -221,7 +221,7 @@ const GetBooked = () => {
   const [skillsError, setSkillsError] = useState(false);
   const [jobTypeError, setJobTypeError] = useState(false);
   const [workPlaceType, setWorkPlaceType] = useState("");
-  const ageList = ["13-17", "18+"];
+  const ageList = ["4-17", "18+"];
 
   const applyFilter = async () => {
     let key_word;
@@ -825,7 +825,7 @@ const GetBooked = () => {
                 <i className="bi bi-briefcase-fill model-job-icons"></i>
                 <div className="model-job-name">
                   <span className="modal-job-workplace">
-                    {modalData?.workplaceType}{" "}
+                    {modalData?.employmentType}{" "}
                   </span>{" "}
                   {modalData?.jobType}
                 </div>
