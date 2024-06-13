@@ -268,9 +268,9 @@ const KidsServices = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="kids-form-row">
-                            <div className="kids-form-section">
-                              <div className="mb-3">
+                          <div className="kids-form-row row">
+                            <div className="kids-form-section col-md-6 mb-3">
+                        
                                 <label className="form-label">Amount</label>
                                 <input
                                   type="number"
@@ -286,10 +286,10 @@ const KidsServices = () => {
                                   className="form-control"
                                   placeholder="Enter Amount In $"
                                 ></input>
-                              </div>
+                             
                             </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3">
+                            <div className="kids-form-section col-md-6 mb-3">
+                             
                                 <label className="form-label">
                                   Duration (Weeks/Months)
                                 </label>
@@ -307,7 +307,7 @@ const KidsServices = () => {
                                   className="form-control"
                                   placeholder="Duration (Weeks/Months)"
                                 ></input>
-                              </div>
+                            
                             </div>
                           </div>
                           <div className="adults-titles">Features</div>
@@ -453,7 +453,7 @@ const KidsServices = () => {
                     ))}
                   </div>
 
-                  <div className="add-more-services">
+                  <div className="add-more-services mb-3">
                     <div
                       onClick={handleAddMore}
                       className="add-more-services-btn"

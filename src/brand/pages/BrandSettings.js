@@ -386,9 +386,9 @@ const BrandSettings = () => {
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
-              <div className="update-password-main">
-                <div className="kids-form-section">
-                  <div className="mb-3">
+              <div className="update-password-main row">
+                <div className="kids-form-section col-md-6 mb-3">
+                  
                     <label className="form-label">
                       Old Password <span className="mandatory">*</span>
                     </label>
@@ -422,10 +422,10 @@ const BrandSettings = () => {
                         </div>
                       )}
                     </div>
-                  </div>
+                  
                 </div>
-                <div className="kids-form-section w-40">
-                  <div className="mb-3">
+                <div className="kids-form-section col-md-6 mb-3">
+                  
                     <label className="form-label">
                       New Password <span className="mandatory">*</span>
                     </label>
@@ -484,10 +484,10 @@ const BrandSettings = () => {
                         </div>
                       )}
                     </div>
-                  </div>
+                 
                 </div>
-                <div className="kids-form-section w-40">
-                  <div className="mb-1">
+                <div className="kids-form-section col-md-6 mb-3">
+               
                     <label className="form-label">
                       Confirm New Password <span className="mandatory">*</span>
                     </label>
@@ -535,7 +535,7 @@ const BrandSettings = () => {
                           Old and new password can't be same
                         </p>
                       )}
-                  </div>
+                  
                 </div>
                 <div className="add-portfoli-section">
                   <div className="add-portfolia-btn">

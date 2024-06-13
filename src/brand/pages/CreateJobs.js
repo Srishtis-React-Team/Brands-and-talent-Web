@@ -1531,8 +1531,8 @@ const CreateJobs = () => {
                 <div className="dialog-body mt-0">
                   <div className="kidsform-one w-100 p-2">
                     <div className="kids-main">
-                      <div className="kids-form-row">
-                        <div className="kids-form-section">
+                      <div className="kids-form-row row">
+                        <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-4">
                             <label className="form-label">
                               Gig/Job Title
@@ -1555,7 +1555,7 @@ const CreateJobs = () => {
                             )}
                           </div>
                         </div>
-                        <div className="kids-form-section">
+                        <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-4">
                             <label className="form-label">
                               Category
@@ -1586,7 +1586,7 @@ const CreateJobs = () => {
                         </div>
                       </div>
                       <div className="kids-form-row">
-                        <div className="kids-form-section">
+                        <div className="kids-form-section col-md-6 mb-3">
                           {/* <div className="mb-4">
                             <label className="form-label">
                               Job Location
@@ -1630,7 +1630,7 @@ const CreateJobs = () => {
                             )}
                           </div>
                         </div>
-                        <div className="kids-form-section">
+                        <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-3">
                             <label className="form-label">State</label>
                             <Select
@@ -1651,8 +1651,8 @@ const CreateJobs = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="kids-form-row">
-                        <div className="kids-form-section">
+                      <div className="kids-form-row row">
+                        <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-3">
                             <label className="form-label">City</label>
                             <Select
@@ -1667,7 +1667,7 @@ const CreateJobs = () => {
                             />
                           </div>
                         </div>
-                        <div className="kids-form-section">
+                        <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-4">
                             <label className="form-label">Street Address</label>
                             <input
@@ -1685,7 +1685,7 @@ const CreateJobs = () => {
 
                       <div className="kids-form-row">
                         <div className="kids-form-section">
-                          <div className="mb-4">
+                        
                             <label className="form-label">
                               Work Place Type{" "}
                               <span className="mandatory">*</span>
@@ -1710,10 +1710,10 @@ const CreateJobs = () => {
                                 Please Select Work Place Type
                               </div>
                             )}
-                          </div>
+                         
                         </div>
-                        <div className="kids-form-section">
-                          <div className="mb-4">
+                        <div className="kids-form-section col-md-6 mb-3">
+                        
                             <label className="form-label">
                               Job Type <span className="mandatory">*</span>
                             </label>
@@ -1738,7 +1738,7 @@ const CreateJobs = () => {
                                 Please Select Job Type
                               </div>
                             )}
-                          </div>
+                          
                         </div>
                       </div>
 
@@ -1771,9 +1771,9 @@ const CreateJobs = () => {
                         />
                       </div>
 
-                      <div className="kids-form-row">
-                        <div className="kids-form-section">
-                          <div className="mb-4">
+                      <div className="kids-form-row row">
+                        <div className="kids-form-section col-md-6 mb-3">
+                          
                             <label className="form-label">
                               Last date to apply{" "}
                               <span className="mandatory">*</span>
@@ -1794,10 +1794,10 @@ const CreateJobs = () => {
                                 disablePast
                               />
                             </LocalizationProvider>
-                          </div>
+                         
                         </div>
-                        <div className="kids-form-section">
-                          <div className="mb-4">
+                        <div className="kids-form-section col-md-6 mb-3">
+                          
                             <label className="form-label">
                               Profession/Skills (optional)
                               <span className="mandatory">*</span>
@@ -1861,7 +1861,7 @@ const CreateJobs = () => {
                                 </div>
                               ))}
                             </div>
-                          </div>
+                          
                         </div>
                       </div>
 
@@ -1894,9 +1894,9 @@ const CreateJobs = () => {
                         />
                       </div>
 
-                      <div className="kids-form-row">
-                        <div className="kids-form-section">
-                          <div className="mb-4">
+                      <div className="kids-form-row row">
+                        <div className="kids-form-section col-md-6 mb-3">
+                       
                             <label className="form-label">
                               Age <span className="mandatory">*</span>
                             </label>
@@ -1921,10 +1921,10 @@ const CreateJobs = () => {
                                 Please Select Age
                               </div>
                             )}
-                          </div>
+                        
                         </div>
-                        <div className="kids-form-section">
-                          <div className="mb-4">
+                        <div className="kids-form-section col-md-6 mb-3">
+                         
                             <label className="form-label">
                               Gender <span className="mandatory">*</span>
                             </label>
@@ -1949,12 +1949,12 @@ const CreateJobs = () => {
                                 Please Select Gender
                               </div>
                             )}
-                          </div>
+                         
                         </div>
                       </div>
-                      <div className="kids-form-row mb-2">
-                        <div className="kids-form-section">
-                          <div className="mb-4">
+                      <div className="kids-form-row row">
+                        <div className="kids-form-section col-md-6 mb-3">
+                         
                             <label className="form-label">Nationality</label>
                             <select
                               className="form-select"
@@ -1972,10 +1972,10 @@ const CreateJobs = () => {
                                 </option>
                               ))}
                             </select>
-                          </div>
+                         
                         </div>
-                        <div className="kids-form-section">
-                          <div className="mb-4">
+                        <div className="kids-form-section col-md-6 mb-3">
+                       
                             <label className="form-label">
                               Languages <span className="mandatory">*</span>
                             </label>
@@ -2011,7 +2011,7 @@ const CreateJobs = () => {
                                 Please Select Language
                               </div>
                             )}
-                          </div>
+                          
                         </div>
                       </div>
 
@@ -2027,9 +2027,9 @@ const CreateJobs = () => {
                         </label>
 
                         {showQuestions && (
-                          <div className="kids-form-section">
+                          <div className="kids-form-section col-md-6 mb-3">
                             {questions.map((question, index) => (
-                              <div className="mb-4" key={index}>
+                              <div className="mb-0" key={index}>
                                 <label className="form-label ">{`Question ${index +
                                   1}:`}</label>
                                 <input
@@ -2059,9 +2059,9 @@ const CreateJobs = () => {
                         )}
                       </div>
 
-                      <div className="mb-2">
-                        <div className="kids-form-section">
-                          <div className="mb-4">
+                      <div className="mb-0 row">
+                        <div className="kids-form-section col-md-6 mb-3">
+                        
                             <label className="form-label">
                               Benefits <span className="mandatory">*</span>
                             </label>
@@ -2086,12 +2086,12 @@ const CreateJobs = () => {
                                 </label>
                               ))}
                             </div>
-                          </div>
+                          
                         </div>
                       </div>
 
-                      <div className=" seperate-jobform-section">
-                        <div className="kids-form-section">
+                      <div className="seperate-jobform-section row">
+                        <div className="kids-form-section col-md-6 mb-3">
                           <div className="mb-3">
                             <label className="form-label">
                               Compensation <span className="mandatory">*</span>
@@ -2146,9 +2146,9 @@ const CreateJobs = () => {
                             </div>
                             <div className="mt-3">
                               {selectedOption === "paid_collaboration" && (
-                                <div className="kids-form-row">
-                                  <div className="kids-form-section">
-                                    <div className="mb-4">
+                                <div className="kids-form-row row">
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                    
                                       <label className="form-label">Type</label>
                                       <select
                                         className="form-select"
@@ -2170,10 +2170,10 @@ const CreateJobs = () => {
                                           )
                                         )}
                                       </select>
-                                    </div>
+                                  
                                   </div>
-                                  <div className="kids-form-section">
-                                    <div className="mb-4">
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                    
                                       <label className="form-label">
                                         Currency
                                       </label>
@@ -2198,14 +2198,14 @@ const CreateJobs = () => {
                                           </option>
                                         ))}
                                       </select>
-                                    </div>
+                                  
                                   </div>
                                 </div>
                               )}
                               {selectedOption === "product_gift" && (
-                                <div className="kids-form-row">
-                                  <div className="kids-form-section">
-                                    <div className="mb-4">
+                                <div className="kids-form-row row">
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                  
                                       <label className="form-label">
                                         Product
                                       </label>
@@ -2216,10 +2216,10 @@ const CreateJobs = () => {
                                         onChange={handleProductNameChange}
                                         placeholder="Enter Product Name"
                                       ></input>
-                                    </div>
+                                   
                                   </div>
-                                  <div className="kids-form-section">
-                                    <div className="mb-4">
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                 
                                       <label className="form-label">
                                         What is the value of the product (USD)
                                       </label>
@@ -2230,15 +2230,15 @@ const CreateJobs = () => {
                                         onChange={handleValueUSDChange}
                                         placeholder="Enter Value"
                                       ></input>
-                                    </div>
+                                   
                                   </div>
                                 </div>
                               )}
                               {selectedOption === "collaboration_gift" && (
                                 <>
-                                  <div className="kids-form-row">
-                                    <div className="kids-form-section">
-                                      <div className="mb-4">
+                                  <div className="kids-form-row row">
+                                    <div className="kids-form-section col-md-6 mb-3">
+                                      
                                         <label className="form-label">
                                           Type
                                         </label>
@@ -2265,10 +2265,10 @@ const CreateJobs = () => {
                                             )
                                           )}
                                         </select>
-                                      </div>
+                                      
                                     </div>
-                                    <div className="kids-form-section">
-                                      <div className="mb-4">
+                                    <div className="kids-form-section col-md-6 mb-3">
+                                   
                                         <label className="form-label">
                                           Currency
                                         </label>
@@ -2293,12 +2293,12 @@ const CreateJobs = () => {
                                             </option>
                                           ))}
                                         </select>
-                                      </div>
+                                     
                                     </div>
                                   </div>
-                                  <div className="kids-form-row">
-                                    <div className="kids-form-section">
-                                      <div className="mb-4">
+                                  <div className="kids-form-row row">
+                                    <div className="kids-form-section col-md-6 mb-3">
+                                    
                                         <label className="form-label">
                                           Product
                                         </label>
@@ -2309,10 +2309,10 @@ const CreateJobs = () => {
                                           onChange={handleProductNameChange}
                                           placeholder="Enter Product Name"
                                         ></input>
-                                      </div>
+                                      
                                     </div>
-                                    <div className="kids-form-section">
-                                      <div className="mb-4">
+                                    <div className="kids-form-section col-md-6 mb-3">
+                                     
                                         <label className="form-label">
                                           What is the value of the product (USD)
                                         </label>
@@ -2324,7 +2324,7 @@ const CreateJobs = () => {
                                           onChange={handleValueUSDChange}
                                           placeholder="Enter Value"
                                         ></input>
-                                      </div>
+                                      
                                     </div>
                                   </div>
                                 </>
@@ -2334,8 +2334,8 @@ const CreateJobs = () => {
                         </div>
                       </div>
 
-                      <div className="kids-form-section">
-                        <div className="mb-4">
+                      <div className="kids-form-section col-md-6 mb-3">
+                        
                           <label className="form-label">
                             Currency <span className="mandatory">*</span>
                           </label>
@@ -2363,7 +2363,7 @@ const CreateJobs = () => {
                               Please Select Currency
                             </div>
                           )}
-                        </div>
+                       
                       </div>
 
                       <div className=" seperate-jobform-section">
@@ -2402,7 +2402,7 @@ const CreateJobs = () => {
                                 Range of Amounts
                               </label>
                             </div>
-                            <div>
+                          <div>
                               {selectedPaymentOption === "fixed" && (
                                 <div className="amount-wrapper-job">
                                   <label>Amount:</label>
@@ -2416,9 +2416,9 @@ const CreateJobs = () => {
                               )}
 
                               {selectedPaymentOption === "range" && (
-                                <div className="kids-form-row">
-                                  <div className="kids-form-section">
-                                    <div className="mb-4">
+                                <div className="kids-form-row row">
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                   
                                       <label className="form-label">
                                         Min Pay
                                       </label>
@@ -2429,10 +2429,10 @@ const CreateJobs = () => {
                                         onChange={handleMinPayChange}
                                         placeholder="Enter Min Pay"
                                       ></input>
-                                    </div>
+                                    
                                   </div>
-                                  <div className="kids-form-section">
-                                    <div className="mb-4">
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                  
                                       <label className="form-label">
                                         Max Pay
                                       </label>
@@ -2443,7 +2443,7 @@ const CreateJobs = () => {
                                         onChange={handleMaxPayChange}
                                         placeholder="Enter Max Pay"
                                       ></input>
-                                    </div>
+                                   
                                   </div>
                                 </div>
                               )}
@@ -2452,8 +2452,8 @@ const CreateJobs = () => {
                         </div>
                       </div>
 
-                      <div className="kids-form-section">
-                        <div className="mb-4">
+                      <div className="kids-form-section col-md-6 mb-3">
+                    
                           <label className="form-label">
                             Hiring Company/Client
                           </label>
@@ -2473,7 +2473,7 @@ const CreateJobs = () => {
                               </option>
                             ))}
                           </select>
-                        </div>
+                     
                       </div>
 
                       <div className="rich-editor mb-4">
@@ -2531,8 +2531,8 @@ const CreateJobs = () => {
                         />
                       </div>
 
-                      <div className="kids-form-section">
-                        <div className="mb-4">
+                      <div className="kids-form-section col-md-6 mb-3">
+                        
                           <label className="form-label">
                             How You would like to recieve Application{" "}
                           </label>
@@ -2596,7 +2596,7 @@ const CreateJobs = () => {
                               </div>
                             </div> */}
                           </div>
-                        </div>
+                      
                       </div>
 
                       <div

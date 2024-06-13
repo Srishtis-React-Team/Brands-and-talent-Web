@@ -1,7 +1,7 @@
 <div className="kids-main mt-4">
-  <div className="kids-form-row">
-    <div className="kids-form-section">
-      <div className="mb-3">
+  <div className="kids-form-row row">
+    <div className="kids-form-section col-md-6 mb-3">
+     
         <label className="form-label">
           Preferred First Name
           <span className="mandatory">*</span>
@@ -25,10 +25,10 @@
         {kidsPrefferedFirstNameLetterError && (
           <div className="invalid-fields">Only Letters Allowed</div>
         )}
-      </div>
+      
     </div>
-    <div className="kids-form-section">
-      <div className="mb-3">
+    <div className="kids-form-section col-md-6 mb-3">
+    
         <label className="form-label">Preferred Last name</label>
         <input
           type="text"
@@ -43,12 +43,12 @@
         {kidsPrefferedLastNameLetterError && (
           <div className="invalid-fields">Only Letters Allowed</div>
         )}
-      </div>
+    
     </div>
   </div>
-  <div className="kids-form-row">
-    <div className="kids-form-section">
-      <div className="mb-3">
+  <div className="kids-form-row row">
+    <div className="kids-form-section col-md-6 mb-3">
+     
         <label className="form-label">
           E-mail <span className="mandatory">*</span>
         </label>
@@ -69,10 +69,10 @@
         {parentEmailError && (
           <div className="invalid-fields">Please enter Email</div>
         )}
-      </div>
+      
     </div>
-    <div className="kids-form-section">
-      <div className="mb-3">
+    <div className="kids-form-section col-md-6 mb-3">
+      
         <label className="form-label">
           Country<span className="mandatory">*</span>
         </label>
@@ -90,12 +90,12 @@
         {parentCountryError && (
           <div className="invalid-fields">Please Select Country</div>
         )}
-      </div>
+    
     </div>
   </div>
-  <div className="kids-form-row">
-    <div className="kids-form-section">
-      <div className="mb-3">
+  <div className="kids-form-row row">
+    <div className="kids-form-section col-md-6 mb-3">
+      
         <label className="form-label">
           State<span className="mandatory">*</span>
         </label>
@@ -112,10 +112,10 @@
         {stateError && (
           <div className="invalid-fields">Please Select State</div>
         )}
-      </div>
+     
     </div>
-    <div className="kids-form-section">
-      <div className="mb-3">
+    <div className="kids-form-section col-md-6 mb-3">
+     
         <label className="form-label">City</label>
         <Select
           placeholder="Select City..."
@@ -127,13 +127,13 @@
           onChange={handleSelectedCity}
           isSearchable={true}
         />
-      </div>
+      
     </div>
   </div>
 
-  <div className="kids-form-row">
-    <div className="kids-form-section">
-      <div className="mb-3">
+  <div className="kids-form-row row">
+    <div className="kids-form-section col-md-6 mb-3">
+      
         <label className="form-label">
           Gender <span className="mandatory">*</span>
         </label>
@@ -156,10 +156,10 @@
         {genderError && (
           <div className="invalid-fields">Please Select Gender</div>
         )}
-      </div>
+     
     </div>
-    <div className="kids-form-section">
-      <div className="mb-3">
+    <div className="kids-form-section col-md-6 mb-3">
+      
         <label className="form-label">
           Marital Status <span className="mandatory">*</span>
         </label>
@@ -181,12 +181,12 @@
         {maritalError && (
           <div className="invalid-fields">Please Select Marital Status</div>
         )}
-      </div>
+     
     </div>
   </div>
-  <div className="kids-form-row">
-    <div className="kids-form-section">
-      <div className="mb-3">
+  <div className="kids-form-row row">
+    <div className="kids-form-section col-md-6 mb-3">
+  
         <label className="form-label">
           Ethnicity <span className="mandatory">*</span>
         </label>
@@ -209,10 +209,10 @@
         {ethnicityError && (
           <div className="invalid-fields">Please Select Ethnicity</div>
         )}
-      </div>
+      
     </div>
-    <div className="kids-form-section">
-      <div className="mb-3">
+    <div className="kids-form-section col-md-6 mb-3">
+    
         <label className="form-label">
           Nationality <span className="mandatory">*</span>
         </label>
@@ -235,15 +235,15 @@
         {nationalityError && (
           <div className="invalid-fields">Please Select Nationality</div>
         )}
-      </div>
+      
     </div>
   </div>
-  <div className="kids-form-row">
-    <div className="kids-form-section">
+  <div className="kids-form-row row">
+    <div className="kids-form-section col-md-6 mb-3">
       <label className="form-label">
         Date Of Birth <span className="mandatory">*</span>
       </label>
-      <div className="mb-3">
+    
         {/* <input
             type="date"
             className="form-control"
@@ -269,10 +269,10 @@
         {dobError && (
           <div className="invalid-fields">Please Select Date Of Birth</div>
         )}
-      </div>
+      
     </div>
-    <div className="kids-form-section">
-      <div className="mb-3">
+    <div className="kids-form-section col-md-6 mb-3">
+    
         <label className="form-label">
           Language <span className="mandatory">*</span>
         </label>
@@ -290,12 +290,12 @@
         {languageError && (
           <div className="invalid-fields">Please Select Language</div>
         )}
-      </div>
+    
     </div>
   </div>
-  <div className="kids-form-row mb-3">
-    <div className="kids-form-section">
-      <div className="mb-3">
+  <div className="kids-form-row row mb-3">
+    <div className="kids-form-section col-md-6 mb-3">
+      
         <label htmlFor="exampleFormControlTextarea1" className="form-label">
           Address<span className="mandatory">*</span>
         </label>
@@ -313,13 +313,13 @@
         {addressError && (
           <div className="invalid-fields">Please Enter Address</div>
         )}
-      </div>
+      
     </div>
-    <div className="kids-form-section">
+    <div className="kids-form-section col-md-6 mb-3">
       <label className="form-label">
         Mobile No <span className="mandatory">*</span>
       </label>
-      <div className="mb-3">
+     
         {/* <input
             type="text"
             className="form-control"
@@ -346,7 +346,7 @@
         {mobileNumError && (
           <div className="invalid-fields">Only Numbers Allowed</div>
         )}
-      </div>
+    
     </div>
   </div>
   <div className="update-profile-flex">
