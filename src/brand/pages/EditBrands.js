@@ -36,7 +36,7 @@ function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
     <div
-      role="tabpanel"
+      role="tabpanel" className="editTabs"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
@@ -363,7 +363,7 @@ const EditBrands = () => {
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
-              <div className="profile-image-edit-section edit-basicdetails-section-main">
+              <div className="profile-image-edit-section edit-basicdetails-section-main p-0 mb-5 mt-2 mx-0">
                 <img
                   className="profile-image-edit"
                   src={`${API.userFilePath}${editProfileImage}`}
@@ -393,7 +393,7 @@ const EditBrands = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
-              <div className="kids-main edit-basicdetails-section-main">
+              <div className="kids-main edit-basicdetails-section-main p-0">
                 <div className="kids-form-row row">
                   <div className="kids-form-section col-md-6 mb-3">
                    
@@ -546,7 +546,8 @@ const EditBrands = () => {
                 </div>
               </div>
             </CustomTabPanel>
-            <div className="edit-profile-navigations">
+
+            <div className="edit-profile-navigations editOnly p-0">
               {valueTabs >= 1 && (
                 <div
                   className="edit-profile-navigation-btn"
