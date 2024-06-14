@@ -14,17 +14,18 @@
   background: #fff;
   box-shadow: 2px 4px 24px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-
   height: auto;
   min-height: 97%;
-
 }
-.plans-section .col-md-4:first-child{
+
+.plans-section .col-md-4:first-child {
   width: 29%;
 }
+
 .plans-section .col-md-4:nth-child(2), .plans-section .col-md-4:nth-child(3) {
   width: 35.5%;
 }
+
 .bordered {
   border: 3px solid #c2114b !important;
 }
@@ -51,15 +52,18 @@
   align-items: center;
   margin: 25px 0;
 }
-.free-plans .choose-btn, .plans-section .col-md-4:first-child .choose-btn{
+
+.free-plans .choose-btn, .plans-section .col-md-4:first-child .choose-btn {
   background-color: #AB7E13;
   color: #fff;
 }
-.pro-plans .choose-btn, .plans-section .col-md-4:nth-child(2) .choose-btn{
+
+.pro-plans .choose-btn, .plans-section .col-md-4:nth-child(2) .choose-btn {
   background-color: #5F2895;
   color: #fff;
 }
-.premium-plans .choose-btn, .plans-section .col-md-4:nth-child(3) .choose-btn{
+
+.premium-plans .choose-btn, .plans-section .col-md-4:nth-child(3) .choose-btn {
   background-color: #0b70db;
   color: #fff;
 }
@@ -67,16 +71,20 @@
 .subscriptions-wrapper .col-md-4:first-child .plans-wrapper {
   border-top: 11px solid #AB7E13 !important;
 }
+
 .subscriptions-wrapper .col-md-4:nth-child(2) .plans-wrapper {
   border-top: 11px solid #5F2895 !important;
 }
+
 .subscriptions-wrapper .col-md-4:nth-child(3) .plans-wrapper {
   border-top: 11px solid #106D3E !important;
 }
 
-.subscriptions-wrapper  .plan-name {  min-height: 55px; }
+.subscriptions-wrapper .plan-name {
+  min-height: 55px;
+}
 
-.subscribe-form{
+.subscribe-form {
   margin-bottom: 50px;
 }
 
@@ -89,10 +97,12 @@
   letter-spacing: -0.25px;
   padding-bottom: 20px;
 }
+
 .disabled-plan {
   opacity: 0.5;
-  cursor: unset !important ;
+  cursor: unset !important;
 }
+
 .first-plan-choose {
   margin-top: 64px !important;
 }
@@ -101,20 +111,17 @@
   padding: 10px 0px;
 }
 
-.fixImgs{
+.fixImgs {
   position: relative;
 }
 
 .fixImgs .kids-image-sticky {
   position: fixed;
   max-width: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   width: 20%;
 }
-
-
-
-
 
 @media only screen and (max-width: 1399px) {
   .fixImgs .kids-image-sticky {
@@ -131,21 +138,16 @@
     padding-left: 10px;
     width: 100%;
   }
-
-
-
 }
-
 @media only screen and (max-width: 767px) {
   .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
     width: 37%;
     margin-left: 15px;
   }
-
   .plans-section .col-md-4:first-child, .plans-section .col-md-4:nth-child(2), .plans-section .col-md-4:nth-child(3) {
     width: 100%;
   }
-  .priceHeight { min-height: 80px; }
-
-  
-}
+  .priceHeight {
+    min-height: 80px;
+  }
+}/*# sourceMappingURL=kidsformthree.css.map */

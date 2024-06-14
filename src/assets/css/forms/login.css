@@ -1,0 +1,265 @@
+.login-container {
+  width: 400px;
+  max-width: 100%;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  padding: 30px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form,
+.login-inputs {
+  width: 350px;
+  margin: 15px 0px;
+}
+
+.forgot-info,
+.resend-forgot {
+  text-align: center;
+  padding-bottom: 20px;
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+}
+
+.resend-forgot {
+  padding: 15px 0px;
+  cursor: pointer;
+}
+
+.resend-forgot > span {
+  color: blue;
+  text-decoration: underline;
+}
+
+.login-logo {
+  position: absolute;
+  background-color: #fff;
+  top: -31px;
+  padding: 0px 20px;
+}
+
+.forgot-logo {
+  position: absolute;
+  background-color: #fff;
+  top: 315px;
+  padding: 0px 20px;
+}
+
+.reset-logo {
+  position: absolute;
+  background-color: #fff;
+  top: 315px;
+  padding: 0px 20px;
+}
+
+.success-pass-logo {
+  position: absolute;
+  background-color: #fff;
+  top: 350px;
+  padding: 0px 20px;
+  font-size: 13px !important;
+}
+
+.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId {
+  font-weight: 500;
+}
+
+.login-main {
+  align-items: center;
+  display: flex;
+  height: auto;
+  justify-content: center;
+  min-height: 96vh;
+  padding-top: 105px;
+}
+
+.choose-who {
+  display: flex;
+  padding: 25px 0px 15px;
+}
+
+.iam-brand,
+.iam-talent {
+  cursor: pointer;
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+}
+
+.login-forgot {
+  color: #c2114b;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor: pointer;
+  padding: 0px 0px 10px;
+  text-align: left;
+  width: 100%;
+}
+
+.iam-brand,
+.iam-talent {
+  padding: 5px;
+  color: #858585;
+}
+
+.iam-talent {
+  margin-left: 25px;
+}
+
+.selected {
+  border: 1px solid #c2114b;
+  color: #c2114b;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.login-input-containers {
+  width: 100%;
+}
+
+.login-btn {
+  width: 100%;
+  border-radius: 245px;
+  border: 1px solid #fff;
+  background: #c2114b;
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 10px 0px;
+  height: 50px;
+}
+
+.nsm7Bb-HzV7m-LgbsSe {
+  border-radius: 60px !important;
+  border: 1px solid rgba(65, 65, 65, 0.3607843137);
+  min-height: 45px;
+}
+
+.gmail-options {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid grey;
+  padding: 10px 20px;
+  border-radius: 245px;
+}
+
+.bi-eye-fill,
+.bi-eye-slash-fill {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.form-switch {
+  margin: 0px 15px;
+}
+
+.success-text {
+  color: #c2114b;
+  font-size: 28px;
+}
+
+.success-info {
+  padding: 30px 0px;
+  font-weight: 400;
+}
+
+.signup-login {
+  cursor: pointer;
+  text-align: center;
+  color: #c2114b;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-decoration: underline;
+}
+
+.signup-login:hover {
+  text-decoration: underline;
+}
+
+.login-or {
+  text-align: center;
+  padding: 5px 0px 10px;
+  color: #000;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.google-login {
+  width: 100%;
+  height: 50px;
+  border-radius: 60px;
+}
+
+.google-login iframe {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.google-login .haAclf {
+  padding: 0 !important;
+  width: 100% !important;
+  border-radius: 60px !important;
+}
+
+.need-account {
+  color: blue;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-right: 8px;
+}
+
+.new-account-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  justify-content: end;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .login-container {
+    width: 50%;
+  }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .login-container {
+    width: 70%;
+  }
+}
+@media (min-width: 320px) and (max-width: 480px) {
+  .login-container {
+    width: 90%;
+  }
+}
+.haAclf {
+  display: inline-block;
+  width: 94% !important;
+}/*# sourceMappingURL=login.css.map */
