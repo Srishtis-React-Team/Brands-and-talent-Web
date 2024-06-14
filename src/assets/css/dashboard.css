@@ -90,7 +90,8 @@ body {
 .btLogo {
   cursor: pointer;
   width: auto;
-  height: 47px;
+  object-fit: cover;
+  height: 45px;
 }
 
 .hideAll {
@@ -1182,7 +1183,7 @@ input[type="radio"] {
 }
 
 .mobile-signup {
-  margin: 0px 30px;
+  margin: 0px 20px;
 }
 
 .brand-section {
@@ -1679,7 +1680,95 @@ input[type="radio"] {
   padding-top: 10px;
 }
 
+.profile-image-header {
+  margin-left: 15px;
+  padding: 0px !important;
+  border: none !important;
+}
+
+.header-search-wrapper {
+  border: 1px solid #c9c9c9;
+  height: 45px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 17px;
+  /* margin: 0 10px 0 10px !important; */
+}
+
+.fa-search {
+  color: #000;
+  cursor: pointer;
+}
+
+.fa-search:hover {
+  cursor: pointer;
+  color: #c2114b;
+}
+
+.header-search-icon {
+  padding-right: 15px;
+}
+.header-search-input-style {
+  height: 40px;
+  border-color: #ffffff;
+  border: none;
+  outline: none !important;
+  font-size: 14px;
+}
+
+.get-booked-main {
+  margin-top: 50px;
+  background-color: #eeeeee;
+  padding-top: 40px;
+}
+
+.recent-gig-favorite {
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* MEDIA-QUERY START */
+
+@media (max-width: 1399px) {
+
+  .menu-items > div.navTxt{  padding-right: 18px; }
+  .header-items .loginTxt {  margin-right: 10px; }
+
+
+
+}
 
 @media (max-width: 991px) {
   .brand-section {
@@ -1772,6 +1861,9 @@ input[type="radio"] {
   }
 }
 @media (max-width: 767px) {
+
+  .btLogo {height: 35px; }
+
   .gallery-wrapper {
     width: 31%;
     float: left;
@@ -1841,6 +1933,11 @@ input[type="radio"] {
   .header-search-wrapper .header-search-icon {
     padding: 0 !important;
   }
+  .mobile-nav-functions .login-text {
+    margin-right: 0 !important;
+  }
+
+
 }
 
 @media (max-width: 580px) {
@@ -2531,57 +2628,8 @@ input[type="radio"] {
   .mobile-signup {
     min-width: 140px;
     height: 35px;
-    margin: 0px 15px;
+    margin: 0px 10px;
   }
-}
-
-.profile-image-header {
-  margin-left: 15px;
-  padding: 0px !important;
-  border: none !important;
-}
-
-.header-search-wrapper {
-  border: 1px solid #c9c9c9;
-  height: 45px;
-  border-radius: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 17px;
-  /* margin: 0 10px 0 10px !important; */
-}
-
-.fa-search {
-  color: #000;
-  cursor: pointer;
-}
-
-.fa-search:hover {
-  cursor: pointer;
-  color: #c2114b;
-}
-
-.header-search-icon {
-  padding-right: 15px;
-}
-.header-search-input-style {
-  height: 40px;
-  border-color: #ffffff;
-  border: none;
-  outline: none !important;
-  font-size: 14px;
-}
-
-.get-booked-main {
-  margin-top: 50px;
-  background-color: #eeeeee;
-  padding-top: 40px;
-}
-
-.recent-gig-favorite {
-  padding-left: 15px;
-  padding-top: 10px;
 }
 
 @media (max-width: 430px) {
@@ -3030,9 +3078,9 @@ input[type="radio"] {
     font-size: 14px;
     font-weight: 500;
   }
-  .mobile-nav-functions .login-text {
+  /* .mobile-nav-functions .login-text {
     margin-right: 15px;
-  }
+  } */
 
   a.active {
     max-width: unset;

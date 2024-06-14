@@ -1,0 +1,90 @@
+.service-list-main {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.service-list-main .service-list-wrapper {
+  margin: 10px 0px 20px;
+}
+.service-list-main .service-list-wrapper .service-list-image {
+  height: 250px;
+  overflow: hidden;
+}
+.service-list-main .service-list-wrapper .service-list-image img {
+  width: 100%;
+  min-height: 250px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 16px;
+}
+.service-list-main .service-list-wrapper .service-list-content .starting-amount {
+  color: #c2114b;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 10px 0px 5px;
+}
+.service-list-main .service-list-wrapper .service-list-content .service-title {
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 0px 0px 15px 0px;
+}
+.service-list-main .service-list-wrapper .service-list-content .service-description {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.service-list-main .service-list-wrapper .service-list-content .service-duration {
+  display: flex;
+}
+.service-list-main .service-list-wrapper .service-list-content .service-duration div {
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  color: #aaaaaa;
+  line-height: normal;
+  margin: 3px 10px 3px 0;
+}
+.service-list-main .service-list-wrapper .enquire-btn {
+  width: auto;
+  border-radius: 100px;
+  height: 40px;
+  border: 1px solid #000;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  min-width: 200px;
+  transition: 0.5s;
+  font-weight: 500;
+}
+.service-list-main .service-list-wrapper .enquire-btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.model-picture-wrapper {
+  margin-right: 20px;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .talent-all-details-wrapper {
+    padding: 20px;
+  }
+  .service-list-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+.text-btm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0 0;
+}/*# sourceMappingURL=service-carousel.css.map */
