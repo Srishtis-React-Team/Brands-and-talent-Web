@@ -188,6 +188,7 @@ body {
 label {
   font-size: 14px;
   color: rgb(175, 175, 175);
+  font-weight: 600;
 }
 
 .dialog-footer {
@@ -799,7 +800,7 @@ input[type="radio"] {
 .boxBg {
   background: #fff;
   border-radius: 10px;
-  padding: 15px;
+  padding: 15px 20px;
   box-shadow: rgb(0 0 0 / 11%) 0px 2px 8px;
 }
 

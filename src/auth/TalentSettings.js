@@ -361,7 +361,7 @@ const TalentSettings = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        <div className="brand-content-main boxBg">
+        <div className="brand-content-main talentSet boxBg">
           <div className="create-job-title">Settings</div>
           <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -543,14 +543,16 @@ const TalentSettings = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
-              Manage Account
+              <h6 className="subtitles">Manage Account</h6>
               <div className="profile-image-edit-section edit-basicdetails-section-main">
                 <div>
-                  <img
-                    className="account-active-image"
-                    src={`${API.userFilePath}${editProfileImage}`}
-                    alt=""
-                  />
+                  <div className="imgBx text-center">
+                    <img
+                      className="account-active-image"
+                      src={`${API.userFilePath}${editProfileImage}`}
+                      alt=""
+                    />
+                  </div>
                   <div className="talent-name userName-n">
                     {talentData?.preferredChildFirstname}&nbsp;
                     {talentData?.preferredChildLastName}
