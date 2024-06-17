@@ -117,7 +117,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
               <div className="kids-form col-md-8 col-lg-9">
                 <div className="kids-main">
                   <div className="kids-form-title">
-                    Explore Your Social Media Presence
+                    <span>Explore Your Social Media Presence</span>
                   </div>
                   <div className="explore-info">
                     If you want to display your actual follower count, please
