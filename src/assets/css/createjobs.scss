@@ -85,6 +85,21 @@
   border-radius: 60px;
   object-fit: cover;
 }
+.browseJob .job-company_dtls{
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+  padding-right: 5px;
+}
+
+.browseJob .job-company-logo {
+  border-radius: 0;
+}
+.browseJob .logoSpc .job-company-name{ 
+  padding-left: 15px;
+  font-weight: 600;
+  font-size: 16px; 
+}
 
 .createjob-btn {
   width: auto;
@@ -446,4 +461,10 @@
     height: 35px;
     margin-right: 8px;
   }
+
+  .browseJob .recent-set-three.col-md-5 {
+    justify-content: center;
+  }
+
+  
 }

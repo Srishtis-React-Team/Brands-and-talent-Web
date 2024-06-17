@@ -275,16 +275,16 @@ const ListJobs = () => {
                     {allJobsList.map((job, index) => {
                       return (
                         <>
-                          <div key={index} className="list-jobs-card col-md-12">
-                            <div className="recent-campaigns-wrapper wraper">
+                          <div key={index} className="list-jobs-card col-md-12 ">
+                            <div className="recent-campaigns-wrapper wraper browseJob">
                               <div className="campaigns-wrapper-one">
                                 <div className="campaigns-content-wrapper imgSpc">
                                   <div className="campaign-paid-wrapper">
                                     <div className="campaign-name">
                                       {job?.jobTitle}
                                     </div>
-                                  </div>
-                                  <div className="mb-2">
+                                  </div> 
+                                  <div className="mb-2 logoSpc">
                                     <img
                                       className="job-company-logo"
                                       src={`${API.userFilePath}${job?.brandImage}`}
