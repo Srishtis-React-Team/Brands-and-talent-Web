@@ -1002,7 +1002,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                   </div>
                   <div className="kids-main">
                     <div className="kids-form-title">
-                      Parent/Guardian Details
+                      <span>Parent/Guardian Details</span>
                     </div>
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-6 mb-3">
@@ -1317,7 +1317,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                       </div>
                     </div>
 
-                    <div className="kids-form-title">Your Child Details</div>
+                    <div className="kids-form-title"><span>Your Child Details</span></div>
                     <div className="profession-section-cover">
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
@@ -1446,7 +1446,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                         Please Choose Categories
                       </div>
                     )}
-                    <div className="kids-form-title">Personal Details</div>
+                    <div className="kids-form-title"><span>Personal Details</span></div>
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-6 mb-3">
                       
@@ -1661,7 +1661,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                       
                       </div>
                     </div>
-                    <div className="kids-form-row row">
+                    <div className="kids-form-row row mb-3">
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
                           Date Of Birth <span className="mandatory">*</span>

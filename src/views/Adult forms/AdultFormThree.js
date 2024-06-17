@@ -473,15 +473,17 @@ const AdultFormThree = () => {
             ></button>
           </div>
           <div className="dialog-body">
-            <div className="kidsform-one">
-              <div className="adult-form-wrapper">
-                <div className="adult-img-img">
-                  <img src={adultsBanner} alt="" />
+            <div className="kidsform-one container">
+              <div className="adult-form-wrapper row ml-0 mr-0">
+                <div className="col-md-4 col-lg-3">
+                  <div className="fixImgs">
+                    <img src={adultsBanner} className="kids-image-sticky " alt="img" />
+                  </div>
                 </div>
-                <div className="adult-main" style={{ paddingLeft: "400px" }}>
+                <div className="adult-main remvSpc col-md-8 col-lg-9">
                   <div className="adults-form-title">Complete your Profile</div>
-                  <div className="adults-titles">
-                    Profile Picture <span className="astrix">*</span>
+                  <div className="adults-titles kids-form-title">
+                    <span>Profile Picture <span className="astrix">*</span></span>
                   </div>
                   <div
                     className="cv-section"
@@ -562,7 +564,7 @@ const AdultFormThree = () => {
                     </>
                   )}
 
-                  <div className="adults-titles">Bio</div>
+                  <div className="adults-titles kids-form-title"><span>Bio</span></div>
                   <div className="rich-editor mb-5">
                     <label className="form-label">About You</label>
                     <Editor
@@ -589,11 +591,11 @@ const AdultFormThree = () => {
                     />
                   </div>
 
-                  <div className="adults-titles">
-                    Portofolio<span className="astrix">*</span>
+                  <div className="adults-titles kids-form-title">
+                    <span>Portofolio<span className="astrix">*</span></span>
                   </div>
                   <div
-                    className="cv-section"
+                    className="cv-section mt-0"
                     onDrop={handlePortofolioDrop}
                     onDragOver={handlePortofolioDragOver}
                   >
@@ -792,7 +794,7 @@ const AdultFormThree = () => {
                       })}
                     </>
                   )}
-                  <div className="adults-titles">CV</div>
+                  <div className="adults-titles kids-form-title"><span>CV</span></div>
                   <div
                     className="cv-section"
                     onDrop={handleResumeDrop}
@@ -899,40 +901,44 @@ const AdultFormThree = () => {
                   <div className="adults-titles">Features (Optional)</div>
 
                   <div className="features-section">
-                    {featuresList && (
-                      <>
-                        {featuresList.map((item, index) => {
-                          return (
-                            <>
-                              <div className="mb-3 features-input-wrapper">
-                                <label className="form-label">
-                                  {item.label}
-                                </label>
-                                <select
-                                  className="form-select features-select"
-                                  aria-label="Default select example"
-                                  onChange={(e) =>
-                                    handleFeaturesChange(
-                                      item.label,
-                                      e.target.value
-                                    )
-                                  }
-                                >
-                                  <option value="" disabled selected>
-                                    {item.label}
-                                  </option>
-                                  {item.options.map((option, idx) => (
-                                    <option key={idx} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </>
-                          );
-                        })}
-                      </>
-                    )}
+                    <div className="row">
+                      {featuresList && (
+                        <>
+                          {featuresList.map((item, index) => {
+                            return (
+                              <>
+                                <div className="col-md-2 col-sm-6">
+                                  <div className="mb-3 mr-3 features-input-wrapper">
+                                    <label className="form-label">
+                                      {item.label}
+                                    </label>
+                                    <select
+                                      className="form-select features-select"
+                                      aria-label="Default select example"
+                                      onChange={(e) =>
+                                        handleFeaturesChange(
+                                          item.label,
+                                          e.target.value
+                                        )
+                                      }
+                                    >
+                                      <option value="" disabled selected>
+                                        {item.label}
+                                      </option>
+                                      {item.options.map((option, idx) => (
+                                        <option key={idx} value={option}>
+                                          {option}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })}
+                        </>
+                      )}
+                    </div>
                   </div>
 
                   <div className="adults-titles">
@@ -1147,7 +1153,7 @@ const AdultFormThree = () => {
                     </div>
                   </div>
 
-                  <div className="kids-form-title">ID Verification</div>
+                  <div className="kids-form-title"><span>ID Verification</span></div>
 
                   <div className="id-verify-info">
                     To ensure authenticity and compliance, please upload a clear
@@ -1158,7 +1164,7 @@ const AdultFormThree = () => {
                   </div>
 
                   <div className="kids-form-row mb-5">
-                    <div className="kids-form-section">
+                    <div className="kids-form-section col-md-6">
                       <div className="mb-3 mt-3">
                         <label className="form-label">ID Type</label>
                         <select
