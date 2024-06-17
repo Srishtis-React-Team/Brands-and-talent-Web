@@ -726,67 +726,130 @@ const TalentDashBoard = () => {
                       console.log(item, "item gigsList");
                       return (
                         <>
-                          <div className="recent-gigs-wrapper">
+                          <div className="recent-gigs-wrapper browseJob">
                             <div className="recent-setone alignDivs mb-2">
-                              <div className="userBox">
+                              <div className="userBox w-100 d-block">
                                 <div className="">
                                   <div className="campaigns-content-wrapper imgSpc">
                                     <div className="campaign-paid-wrapper">
                                       <div className="campaign-name">
                                         {item?.jobTitle}
                                       </div>
-                                    </div>
-                                    <div className="mb-2">
-                                      {item?.brandImage && (
-                                        <img
-                                          className="job-company-logo"
-                                          src={`${API.userFilePath}${item?.brandImage}`}
-                                          alt=""
-                                        />
-                                      )}
 
-                                      {!item?.brandImage && (
-                                        <img
-                                          className="recent-img"
-                                          src={jobImage}
-                                          alt=""
-                                        />
-                                      )}
+                                      <div className="recent-gig-description">
+                                        {!item?.isFavorite && (
+                                          <i
+                                            className="bi bi-heart save-job-icon"
+                                            onClick={() => {
+                                              addToSavedJobs(item);
+                                            }}
+                                          ></i>
+                                        )}
+                                        {item?.isFavorite && (
+                                          <i
+                                            className="bi bi-heart-fill remove-job-icon"
+                                            onClick={() => {
+                                              removeFromSavedJobs(item);
+                                            }}
+                                          ></i>
+                                        )}
+                                      </div>
 
-                                      <span className="job-company-name">
-                                        {item?.hiringCompany}
-                                      </span>
                                     </div>
+
+                                    <div className="row">
+                                      <div className="mb-2 col-md-7 logoSpc">
+                                        {item?.brandImage && (
+                                          <img
+                                            className="job-company-logo"
+                                            src={`${API.userFilePath}${item?.brandImage}`}
+                                            alt=""
+                                          />
+                                        )}
+
+                                        {!item?.brandImage && (
+                                          <img
+                                            className="recent-img"
+                                            src={jobImage}
+                                            alt=""
+                                          />
+                                        )}
+
+                                        <span className="job-company-name">
+                                          {item?.hiringCompany}
+                                        </span>
+                                      </div>
+
+                                      <div className="recent-set-three col-md-5">
+                                        <div
+                                          className="view-gig-btn"
+                                          onClick={() => {
+                                            viewJob(item?._id);
+                                          }}
+                                        >
+                                          <i className="bi bi-eye-fill"></i>
+                                          <div>View Job</div>
+                                        </div>
+                                        <div
+                                          className={
+                                            item?.isApplied === "Apply Now"
+                                              ? "apply-now-btn"
+                                              : "apply-now-btn applied-btn"
+                                          }
+                                          onClick={() => {
+                                            applyjobs(item);
+                                          }}
+                                        >
+                                          {item?.isApplied == "Applied" && (
+                                            <>
+                                              <i className="bi bi-check-circle-fill"></i>
+                                            </>
+                                          )}
+                                          {item?.isApplied == "Apply Now" && (
+                                            <>
+                                              <i className="bi bi-briefcase-fill"></i>
+                                            </>
+                                          )}
+                                          {item?.isApplied === "Apply Now" && (
+                                            <div>Apply Now</div>
+                                          )}
+                                          {item?.isApplied === "Applied" && (
+                                            <div>Applied</div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+
                                     <div className="mb-2">
-                                      <span className="job-company-name">
+                                      <span className="job-company_dtls">
                                         {item?.state}
                                       </span>{" "}
                                       ,
-                                      <span className="job-company-name">
+                                      <span className="job-company_dtls">
                                         {item?.city}
                                       </span>
                                     </div>
                                     <div className="mb-2">
-                                      <span className="job-company-name">
+                                      <span className="job-company_dtls">
                                         <i class="bi bi-person-workspace"></i>
                                       </span>{" "}
-                                      .
-                                      <span className="job-company-name">
+                                      {/* . */}
+                                      <span className="job-company_dtls">
                                         {item?.jobType}
                                       </span>
                                       .
-                                      <span className="job-company-name">
+                                      <span className="job-company_dtls">
                                         {item?.employmentType}
                                       </span>
                                       .
-                                      <span className="job-company-name">
+                                      <span className="job-company_dtls">
                                         {Object.keys(item?.compensation)[0]}
                                       </span>
                                     </div>
                                     <div className="mb-2">
                                       <span
                                         style={{ fontWeight: "bold" }}
-                                        className="job-company-name"
+                                        className="job-company_dtls"
                                       >
                                         Application Deadline :{" "}
                                       </span>{" "}
@@ -805,62 +868,8 @@ const TalentDashBoard = () => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="recent-gig-description">
-                                {!item?.isFavorite && (
-                                  <i
-                                    className="bi bi-heart save-job-icon"
-                                    onClick={() => {
-                                      addToSavedJobs(item);
-                                    }}
-                                  ></i>
-                                )}
-                                {item?.isFavorite && (
-                                  <i
-                                    className="bi bi-heart-fill remove-job-icon"
-                                    onClick={() => {
-                                      removeFromSavedJobs(item);
-                                    }}
-                                  ></i>
-                                )}
-                              </div>
-                              <div className="recent-set-three">
-                                <div
-                                  className="view-gig-btn"
-                                  onClick={() => {
-                                    viewJob(item?._id);
-                                  }}
-                                >
-                                  <i className="bi bi-eye-fill"></i>
-                                  <div>View Job</div>
-                                </div>
-                                <div
-                                  className={
-                                    item?.isApplied === "Apply Now"
-                                      ? "apply-now-btn"
-                                      : "apply-now-btn applied-btn"
-                                  }
-                                  onClick={() => {
-                                    applyjobs(item);
-                                  }}
-                                >
-                                  {item?.isApplied == "Applied" && (
-                                    <>
-                                      <i className="bi bi-check-circle-fill"></i>
-                                    </>
-                                  )}
-                                  {item?.isApplied == "Apply Now" && (
-                                    <>
-                                      <i className="bi bi-briefcase-fill"></i>
-                                    </>
-                                  )}
-                                  {item?.isApplied === "Apply Now" && (
-                                    <div>Apply Now</div>
-                                  )}
-                                  {item?.isApplied === "Applied" && (
-                                    <div>Applied</div>
-                                  )}
-                                </div>
-                              </div>
+                             
+
                             </div>
                           </div>
                         </>
