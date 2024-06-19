@@ -631,118 +631,122 @@ const AdultFormOne = () => {
             ></button>
           </div>
           <div className="dialog-body">
-            <div className="kidsform-one">
-              <div className="adult-form-wrapper">
-                <div className="adult-img-img">
-                  <img src={adultsBanner} alt="" />
+            <div className="kidsform-one container">
+              <div className="adult-form-wrapper row ml-0 mr-0">
+                <div className="col-md-4 col-lg-3">
+                  <div className="fixImgs">
+                    <img src={adultsBanner} className="kids-image-sticky" alt="img" />
+                  </div>
                 </div>
-                <div className="adult-main" style={{ paddingLeft: "400px" }}>
+                <div className="adult-main remvSpc col-md-8 col-lg-9">
                   <div className="adults-form-title">Complete your Profile</div>{" "}
-                  <div className="profession-section-cover row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                     
-                        <label className="adults-titles">
-                          Profession / Skills (Choose any 5)
-                        </label>
-                        <span className="mandatory">*</span>
-                        <div>
-                          <Select
-                            defaultValue={[]}
-                            isMulti
-                            name="professions"
-                            options={professionList}
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            placeholder="Search for Category”"
-                            onChange={handleProfessionChange}
-                            styles={customStyles}
-                            value={selectedProfessions}
-                          />
-
-                          {selectedProfessionsError && (
-                            <div className="invalid-fields">
-                              Please Choose Profession
-                            </div>
-                          )}
-                        </div>
-                    
-                    </div>
-                    <div className="profession-content-section">
-                      {selectedProfessions.map((profession, index) => (
-                        <div key={index} className="dynamic-profession">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              {profession.label} / day
-                            </label>
-                            <input
-                              type="number"
-                              className="form-control profession-input-adult"
-                              value={profession.perDaySalary || ""}
-                              onChange={(e) =>
-                                handleDetailChange(
-                                  index,
-                                  "perDaySalary",
-                                  e.target.value
-                                )
-                              }
-                              placeholder="$/day"
-                            ></input>
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label">
-                              {profession.label} / hour
-                            </label>
-                            <input
-                              type="number"
-                              className="form-control profession-input-adult"
-                              value={profession.perHourSalary || ""}
-                              onChange={(e) =>
-                                handleDetailChange(
-                                  index,
-                                  "perHourSalary",
-                                  e.target.value
-                                )
-                              }
-                              placeholder="$/day"
-                            ></input>
-                          </div>
-
-                          <div className="offer-wrapper">
-                            <input
-                              className="profession-checkbox-adult"
-                              id={profession.label}
-                              type="checkbox"
-                              checked={profession.openToOffers || false}
-                              onChange={(e) =>
-                                handleDetailChange(
-                                  index,
-                                  "openToOffers",
-                                  e.target.checked
-                                )
-                              }
-                            />
-                            <label
-                              className="form-label offer-label"
-                              htmlFor={profession.label}
-                            >
-                              Open to Offers / Happy to negotiate
-                            </label>
-                          </div>
+                  <div className="profession-section-cover">
+                    <div className="row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                      
+                          <label className="adults-titles">
+                            Profession / Skills (Choose any 5)  <span className="mandatory">*</span>
+                          </label>
+                         
                           <div>
-                            <i
-                              onClick={(e) => {
-                                deleteProfession(profession, index);
-                              }}
-                              class="bi bi-trash"
-                            ></i>
+                            <Select
+                              defaultValue={[]}
+                              isMulti
+                              name="professions"
+                              options={professionList}
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              placeholder="Search for Category”"
+                              onChange={handleProfessionChange}
+                              styles={customStyles}
+                              value={selectedProfessions}
+                            />
+
+                            {selectedProfessionsError && (
+                              <div className="invalid-fields">
+                                Please Choose Profession
+                              </div>
+                            )}
                           </div>
-                        </div>
-                      ))}
+                      
+                      </div>
+                      <div className="profession-content-section">
+                        {selectedProfessions.map((profession, index) => (
+                          <div key={index} className="dynamic-profession">
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label} / day
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input-adult"
+                                value={profession.perDaySalary || ""}
+                                onChange={(e) =>
+                                  handleDetailChange(
+                                    index,
+                                    "perDaySalary",
+                                    e.target.value
+                                  )
+                                }
+                                placeholder="$/day"
+                              ></input>
+                            </div>
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label} / hour
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input-adult"
+                                value={profession.perHourSalary || ""}
+                                onChange={(e) =>
+                                  handleDetailChange(
+                                    index,
+                                    "perHourSalary",
+                                    e.target.value
+                                  )
+                                }
+                                placeholder="$/day"
+                              ></input>
+                            </div>
+
+                            <div className="offer-wrapper">
+                              <input
+                                className="profession-checkbox-adult"
+                                id={profession.label}
+                                type="checkbox"
+                                checked={profession.openToOffers || false}
+                                onChange={(e) =>
+                                  handleDetailChange(
+                                    index,
+                                    "openToOffers",
+                                    e.target.checked
+                                  )
+                                }
+                              />
+                              <label
+                                className="form-label offer-label"
+                                htmlFor={profession.label}
+                              >
+                                Open to Offers / Happy to negotiate
+                              </label>
+                            </div>
+                            <div>
+                              <i
+                                onClick={(e) => {
+                                  deleteProfession(profession, index);
+                                }}
+                                class="bi bi-trash"
+                              ></i>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                  <div className="adults-titles">
-                    Select 3 to 6 categories relevant to your profile
-                    <span className="mandatory">*</span>
+                  <div className="adults-titles kids-form-title">
+                    <span>Select 3 to 6 categories relevant to your profile <span className="mandatory">*</span></span>
+                    
                   </div>
                   <div className="category-list">
                     {categoryList.map((category, index) => (
@@ -766,7 +770,7 @@ const AdultFormOne = () => {
                       Please Choose categories
                     </div>
                   )}
-                  <div className="adults-titles">Personal Details</div>
+                  <div className="adults-titles kids-form-title mt-3"><span>Personal Details</span></div>
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
                       
@@ -1091,8 +1095,8 @@ const AdultFormOne = () => {
                       
                     </div>
                   </div>
-                  <div className="adults-titles">Contact Details</div>
-                  <div className="kids-form-row row">
+                  <div className="adults-titles kids-form-title"><span>Contact Details</span></div>
+                  <div className="kids-form-row row mb-3">
                     <div className="kids-form-section col-md-6 mb-3">
                      
                         <label className="form-label">Phone</label>

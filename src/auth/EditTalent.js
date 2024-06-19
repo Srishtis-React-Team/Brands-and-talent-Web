@@ -1761,7 +1761,7 @@ const EditTalent = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
               <div className="kids-main edit-basicdetails-section-main">
-                <div className="kids-form-title">Personal Details</div>
+                <div className="kids-form-title kids-form-title"><span>Personal Details</span></div>
                 <div className="row">
                   <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">
@@ -3013,7 +3013,7 @@ const EditTalent = () => {
                       {featuresList.map((item, index) => {
                         return (
                           <>
-                            <div className="mb-3 features-input-wrapper">
+                            <div className="mb-3 mr-3 features-input-wrapper">
                               <label className="form-label">{item.label}</label>
                               <select
                                 className="form-select features-select"
