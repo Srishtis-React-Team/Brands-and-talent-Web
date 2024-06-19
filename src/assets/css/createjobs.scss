@@ -65,7 +65,7 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  padding-left: 2px;
+  padding-left: 10px;
 }
 
 .create-job-buttons {
@@ -156,6 +156,14 @@
   font-weight: 400;
   line-height: normal;
   padding: 10px 0px;
+}
+
+.mandatory-label {
+  color: #000;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 // .toolbarClassName {

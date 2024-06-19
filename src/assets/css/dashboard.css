@@ -1028,16 +1028,20 @@ input[type="radio"] {
   margin: 15px 0 0;
 }
 
-
 .sidenavWraper .icons {
   font-size: 18px;
   font-weight: 700;
   width: 33px;
 }
 
-.sidenavWraper .icons.bi-person-gear { font-size: 22px; }
+.sidenavWraper .icons.bi-person-gear {
+  font-size: 22px;
+}
 
-.sidenavWraper .icons.bi-people, .sidenavWraper .bi.bi-person-add { font-size: 20px; }
+.sidenavWraper .icons.bi-people,
+.sidenavWraper .bi.bi-person-add {
+  font-size: 20px;
+}
 
 .sidenavWraper.scroll {
   overflow-y: auto;
@@ -2646,6 +2650,62 @@ input[type="radio"] {
   }
 }
 
+<<<<<<< HEAD
+.profile-image-header {
+  margin-left: 15px;
+  padding: 0px !important;
+  border: none !important;
+}
+
+.header-search-wrapper {
+  border: 1px solid #c9c9c9;
+  height: 45px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 17px;
+  /* margin: 0 10px 0 10px !important; */
+}
+
+.fa-search {
+  color: #000;
+  cursor: pointer;
+}
+
+.fa-search:hover {
+  cursor: pointer;
+  color: #c2114b;
+}
+
+.header-search-icon {
+  padding-right: 15px;
+}
+.header-search-input-style {
+  height: 40px;
+  border-color: #ffffff;
+  border: none;
+  outline: none !important;
+  font-size: 14px;
+}
+
+.get-booked-main {
+  margin-top: 50px;
+  background-color: #eeeeee;
+  padding-top: 40px;
+}
+
+.recent-gig-favorite {
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+.fileName {
+  padding-left: 8px;
+}
+
+=======
+>>>>>>> 6cb9df34a3ed2aba43d5e210cba6434d4bb98a63
 @media (max-width: 430px) {
   .gallery-wrapper {
     width: 47%;

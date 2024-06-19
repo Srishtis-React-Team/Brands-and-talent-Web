@@ -189,35 +189,39 @@ const TalentPreviewJob = () => {
             <div className="job-main-details">
               <div className="preview-job-name">{jobData?.jobTitle}</div>
             </div>
-            <div className="easy-apply-section">
-              <div
-                className={
-                  jobData?.isApplied === "Apply Now" || !jobData?.isApplied
-                    ? "apply-now-btn"
-                    : "apply-now-btn applied-btn"
-                }
-                onClick={() => {
-                  applyjobs(jobData);
-                }}
-              >
-                {jobData?.isApplied == "Applied" && (
-                  <>
-                    <i className="bi bi-check-circle-fill"></i>
-                  </>
-                )}
-                {jobData?.isApplied == "Apply Now" ||
-                  (!jobData?.isApplied && (
-                    <>
-                      <i className="bi bi-briefcase-fill"></i>
-                    </>
-                  ))}
-                {jobData?.isApplied === "Apply Now" ||
-                  (!jobData?.isApplied && <div>Easy Apply</div>)}
-                {jobData?.isApplied === "Applied" && <div>Applied</div>}
-              </div>
 
-              {/* <div className="easy-apply-btn">Easy Apply</div> */}
-            </div>
+            {jobData?.howLikeToApply === "easy-apply" && (
+              <div className="easy-apply-section">
+                <div
+                  className={
+                    jobData?.isApplied === "Apply Now" || !jobData?.isApplied
+                      ? "apply-now-btn"
+                      : "apply-now-btn applied-btn"
+                  }
+                  onClick={() => {
+                    applyjobs(jobData);
+                  }}
+                >
+                  {jobData?.isApplied == "Applied" && (
+                    <>
+                      <i className="bi bi-check-circle-fill"></i>
+                    </>
+                  )}
+                  {jobData?.isApplied == "Apply Now" ||
+                    (!jobData?.isApplied && (
+                      <>
+                        <i className="bi bi-briefcase-fill"></i>
+                      </>
+                    ))}
+                  {jobData?.isApplied === "Apply Now" ||
+                    (!jobData?.isApplied && <div>Easy Apply</div>)}
+                  {jobData?.isApplied === "Applied" && <div>Applied</div>}
+                </div>
+
+                {/* <div className="easy-apply-btn">Easy Apply</div> */}
+              </div>
+            )}
+
             {/* <div className="easy-apply-section">
                 <div className="easy-apply-btn">Easy Apply</div>
               </div> */}
@@ -257,9 +261,8 @@ const TalentPreviewJob = () => {
               </span>
             </div>
 
-            <div className="company-location">
+            {/* <div className="company-location">
               <span>Payment :&nbsp; </span>
-              {/* {jobData?.paymentType?.label} */}
               <span>
                 {jobData?.paymentType?.label === "range" && (
                   <>
@@ -283,7 +286,7 @@ const TalentPreviewJob = () => {
                   </>
                 )}
               </span>
-            </div>
+            </div> */}
 
             <div className="company-location">
               <span>Job Type :&nbsp; </span>
@@ -430,40 +433,58 @@ const TalentPreviewJob = () => {
                           Social Media Followers Count:
                         </span>
                         <ul>
-                          <li>
-                            Instagram Followers:{" "}
-                            <span className="job-feature-values">
-                              {jobData?.linkedInMin} - {jobData?.linkedInMax}
-                            </span>
-                          </li>
+                          {jobData?.instaMin && (
+                            <li>
+                              Instagram Followers:{" "}
+                              <span className="job-feature-values">
+                                {jobData?.instaMin} - {jobData?.instaMax}
+                              </span>
+                            </li>
+                          )}
 
-                          <li>
-                            TikTok Followers:{" "}
-                            <span className="job-feature-values">
-                              {jobData?.tikTokMin} - {jobData?.tikTokMax}
-                            </span>
-                          </li>
+                          {jobData?.tikTokMin && (
+                            <li>
+                              TikTok Followers:{" "}
+                              <span className="job-feature-values">
+                                {jobData?.tikTokMin} - {jobData?.tikTokMax}
+                              </span>
+                            </li>
+                          )}
 
-                          <li>
-                            Linkedin Followers:{" "}
-                            <span className="job-feature-values">
-                              {jobData?.linkedInMin} - {jobData?.linkedInMax}
-                            </span>
-                          </li>
+                          {jobData?.linkedInMin && (
+                            <li>
+                              Linkedin Followers:{" "}
+                              <span className="job-feature-values">
+                                {jobData?.linkedInMin} - {jobData?.linkedInMax}
+                              </span>
+                            </li>
+                          )}
 
-                          <li>
-                            Facebook Followers:{" "}
-                            <span className="job-feature-values">
-                              {jobData?.fbMin} - {jobData?.fbMax}
-                            </span>
-                          </li>
+                          {jobData?.fbMin && (
+                            <li>
+                              Facebook Followers:{" "}
+                              <span className="job-feature-values">
+                                {jobData?.fbMin} - {jobData?.fbMax}
+                              </span>
+                            </li>
+                          )}
 
-                          <li>
-                            Twitter(X) Followers :{" "}
-                            <span className="job-feature-values">
-                              {jobData?.twitterMin} - {jobData?.twitterMax}
-                            </span>
-                          </li>
+                          {jobData?.twitterMin && (
+                            <li>
+                              Twitter(X) Followers :{" "}
+                              <span className="job-feature-values">
+                                {jobData?.twitterMin} - {jobData?.twitterMax}
+                              </span>
+                            </li>
+                          )}
+                          {jobData?.youTubeMin && (
+                            <li>
+                              YouTube Followers :{" "}
+                              <span className="job-feature-values">
+                                {jobData?.youTubeMin} - {jobData?.youTubeMax}
+                              </span>
+                            </li>
+                          )}
                         </ul>
                       </li>
                     </ul>
@@ -543,7 +564,7 @@ const TalentPreviewJob = () => {
               </div>
             </div>
             <div className="job-about-section">
-              <div className="job-feature-title">Work Samples</div>
+              <div className="job-feature-title">Project brief / TOR</div>
               <div className="service-files-main">
                 <div>
                   {jobData?.workSamples?.length > 0 &&
@@ -613,24 +634,17 @@ const TalentPreviewJob = () => {
               <div className="job-about-section">
                 <div className="job-feature-title">How to Apply</div>
                 <div className="job-about-values">
-                  <p className="mb-3 how-apply-terms">
-                    Email your resume along with your Brands & Talent portfolio
-                    to brandsntalent@gmail.com.
-                  </p>
-                  <p className="mb-3 how-apply-terms">
-                    For more information: Call us at +855 855 855.
-                  </p>
-                  <p>
-                    <span className="how-apply-terms-bold">
-                      {" "}
-                      View all jobs at Brands & Talent:
-                    </span>
-                    &nbsp;
-                    <span className="how-apply-terms-link">
-                      {" "}
-                      brandsandtalent.com/company/brandsandtalent/jobs
-                    </span>
-                  </p>
+                  Interested candidates should submit their resume and a link
+                  that contains portfolio from brands and talent website to
+                  <span className="how-apply-terms-link">
+                    {/* {brandData?.brandEmail} */}
+                    weudapepeubru-2731@yopmail.com
+                  </span>
+                  Please include
+                  <span className="how-apply-terms-link">
+                    {jobData?.jobTitle}
+                  </span>
+                  in the subject line.
                 </div>
               </div>
             )}

@@ -357,7 +357,7 @@ const BrandSignup = () => {
           }}
         >
           <div className="adult-signup-main">
-            <div className="step-title">Brands Sign up</div>
+            <div className="step-title">Brand/Client Sign Up</div>
             <div className="mb-3">
               <label className="form-label">
                 Email<span className="mandatory">*</span>

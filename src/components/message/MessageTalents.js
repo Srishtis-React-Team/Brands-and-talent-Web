@@ -9,16 +9,13 @@ import Axios from "axios";
 import { Dropdown } from "react-bootstrap";
 import PopUp from "../PopUp";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router-dom";
+import { create } from "@mui/material/styles/createTransitions";
 
 const MessageTalents = () => {
-  const imageType = require("../../assets/icons/imageType.png");
-  const videoType = require("../../assets/icons/videoType.png");
-  const audiotype = require("../../assets/icons/audiotype.png");
-  const docsIcon = require("../../assets/icons/docsIcon.png");
-  const elipsis = require("../../assets/icons/elipsis.png");
+  const location = useLocation();
   const avatar = require("../../assets/images/avatar.webp");
   const navigate = useNavigate();
-
   const [userList, setUsersList] = useState([]);
   const [selectedUSerImage, setSelectedUSerIMage] = useState("");
   const [currentUserId, setcurrentUserId] = useState(null);
@@ -37,6 +34,8 @@ const MessageTalents = () => {
   const [profileFile, setProfileFile] = useState(null);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [popupMessage, setPopUpMessage] = useState("");
+  const [socketId, setSocketId] = useState(null);
+
   const fileInputRef = useRef(null);
   const handleAttachmentClick = () => {
     // Trigger click on file input
@@ -63,6 +62,14 @@ const MessageTalents = () => {
       return "pdf";
     } else {
       return "other";
+    }
+  };
+
+  const handleBackClick = () => {
+    if (location.state && location.state.from) {
+      navigate(`/${location.state.from}`);
+    } else {
+      navigate(-1); // Equivalent to history.goBack() in v5
     }
   };
 
@@ -107,22 +114,46 @@ const MessageTalents = () => {
   let urlUserID = url.split("?")[1];
 
   useEffect(() => {
+    console.log("FIND_MESSAGE_LOPP_useEffect1");
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
     console.log(urlUserID, "urlUserID");
     if (urlUserID) {
+      console.log("FIND_MESSAGE_LOPP_useEffect1");
       setClickedUserId(urlUserID);
+      getMessageByUser(urlUserID);
+      fetchUserData(urlUserID);
+      createChat(urlUserID);
     }
     if (currentUserId) {
-      getMessageByUser(urlUserID);
+      console.log("FIND_MESSAGE_LOPP_useEffect1");
+      // alert("findPreviousChatUsers currentUserId");
+      getMessageByUser(currentUserId);
       findPreviousChatUsers();
+      // fetchUserData(currentUserId);
     }
   }, [currentUserId, urlUserID]);
 
+  const fetchUserData = async (user_id) => {
+    await ApiHelper.post(`${API.fetchUserData}${user_id}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "getUserByIDRESPONSE");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   //socket codes
   useEffect(() => {
+    console.log("FIND_MESSAGE_LOPP_newSocket");
     console.log(currentUserId, "currentUserId");
     const newSocket = io("http://13.234.177.61:4014");
+    console.log(newSocket, "newSocket");
     setSocket(newSocket);
     return () => {
       newSocket.disconnect();
@@ -130,16 +161,18 @@ const MessageTalents = () => {
   }, [currentUserId]);
 
   useEffect(() => {
+    console.log("FIND_MESSAGE_LOPP_setuserType");
+
     setuserType(localStorage.getItem("currentUserType"));
-    if (userType) {
-    }
   }, [userType]);
 
   useEffect(() => {
     // if (socket === null) return;
     if (socket != null) {
+      console.log("FIND_MESSAGE_LOPP_getOnlineUsers");
       console.log(socket, "socket");
       console.log(socket, "currentUserId");
+      console.log(currentUserId, "currentUserIdSocketONline");
       socket.emit("addNewUser", currentUserId);
       socket.on("getOnlineUsers", (res) => {
         console.log(res, "getOnlineUsers");
@@ -147,16 +180,19 @@ const MessageTalents = () => {
       });
     }
   }, [socket]);
+
   useEffect(() => {
     // if (socket === null) return;
     if (socket != null) {
-      const formData = {
-        firstId: currentUserId,
-        secondId: clickedUserId,
-      };
-      socket.emit("createChat", formData);
+      socket.on("connect", () => {
+        console.log("Socket connected with ID:");
+        console.log(socket.id, "socket_ID");
+        // console.log(typeof socket.id, "socket_ID");
+        socket.emit("createChat", currentUserId, clickedUserId, socket.id);
+        setSocketId(socket.id);
+      });
       socket.on("chatCreated", (res) => {
-        console.log(res, "chatCreated");
+        console.log(res, "chatCreatedRESPONSE");
         if (res) {
           findPreviousChatUsers();
         }
@@ -165,33 +201,56 @@ const MessageTalents = () => {
   }, [socket]);
 
   useEffect(() => {
+    if (socketId) {
+      console.log(socketId, "socketId");
+      // createChat("fromSocketID");
+    }
+  }, [socketId]);
+
+  const createChat = async (secand_id) => {
+    console.log(
+      currentUserId,
+      secand_id,
+      socketId,
+      "socketId CREATECHAT_FORMDATA"
+    );
+    if (currentUserId && secand_id) {
+      const formData = {
+        firstId: currentUserId,
+        secondId: secand_id,
+        socketId: socketId,
+      };
+      console.log(formData, "CREATECHAT_FORMDATA");
+      await ApiHelper.post(API.createChat, formData)
+        .then((resData) => {
+          if (resData) {
+            setCurrentChat(resData?.data);
+            findPreviousChatUsers();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  useEffect(() => {
     console.log(userList, "userList");
   }, [userList]);
-
-  const createChat = async () => {
-    const formData = {
-      firstId: currentUserId,
-      secondId: clickedUserId,
-    };
-    await ApiHelper.post(API.createChat, formData)
-      .then((resData) => {
-        if (resData) {
-          setCurrentChat(resData?.data);
-          findPreviousChatUsers();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   const findPreviousChatUsers = async () => {
     await ApiHelper.post(`${API.findPreviousChatUsers}${currentUserId}`)
       .then((resData) => {
+        console.log(resData, "resData findPreviousChatUsers");
         if (resData) {
-          setUsersList(resData.data.data);
-          console.log(resData.data.data, "findPreviousChatUsers resData");
-          setCLickedUser(resData.data.data[0]);
+          setUsersList(resData?.data?.data);
+          if (resData.data.data.length > 0) {
+            setInitaialUser(resData.data.data, resData.data.data[0]?._id);
+          }
+          if (resData?.data?.status === false) {
+            // alert("findPreviousChatUsersELSE");
+            createChat(urlUserID);
+          }
         }
       })
       .catch((err) => {
@@ -215,6 +274,7 @@ const MessageTalents = () => {
       let current_chat = currentChat?._id;
       let userImage = currentUserImage;
       let chat_file = fileObj;
+      console.log("FIND_MESSAGE_LOPP_socket.emitsendMessage");
       socket.emit("sendMessage", {
         current_chat,
         text,
@@ -222,6 +282,7 @@ const MessageTalents = () => {
         userImage,
         currentTime: currentTime,
         chatFile: chat_file ? chat_file : null,
+        senderId: currentUserId,
       });
     }
     /////socket ends
@@ -232,9 +293,11 @@ const MessageTalents = () => {
       text: text,
       userImage: currentUserImage,
       currentTime: currentTime,
-      receiverId: clickedUserId,
+      receiverId: clickedUserId ? clickedUserId : selectedUser?._id,
       chatFile: chat_file ? chat_file : null,
     };
+    console.log("FIND_MESSAGE_LOPP_socket.createMessageAPICALL");
+
     await ApiHelper.post(API.createMessage, formData)
       .then((resData) => {
         if (resData) {
@@ -249,6 +312,7 @@ const MessageTalents = () => {
   };
 
   const getMessages = async () => {
+    console.log("FIND_MESSAGE_LOPP_socketgetMessagesAPICALL");
     await ApiHelper.get(`${API.getMessages}${currentChat?._id}`)
       .then((resData) => {
         if (resData) {
@@ -261,8 +325,14 @@ const MessageTalents = () => {
 
   useEffect(() => {
     if (socket != null) {
+      console.log("FIND_MESSAGE_LOPP_ socket.ongetMessage");
       socket.on("getMessage", (res) => {
         console.log(res, "SocketgetMessage");
+        setClickedUserId(res?.senderId);
+        createChat(res?.senderId);
+        // findPreviousChatUsers();
+        getMessageByUser(res?.senderId);
+        console.log(currentChat?._id, "currentChat?._id");
         if (currentChat?._id !== res?.current_chat) return;
         setMessagesList((prev) => [...prev, res]);
         // setApiMessage((prev) => [...prev, res]);
@@ -274,6 +344,7 @@ const MessageTalents = () => {
   }, [socket, currentChat]);
 
   useEffect(() => {
+    console.log(selectedUser, "selectedUser");
     if (selectedUser) {
       if (selectedUser.brandImage && selectedUser.brandImage.length > 0) {
         setSelectedUSerIMage(selectedUser.brandImage[0]?.fileData);
@@ -281,6 +352,9 @@ const MessageTalents = () => {
       if (selectedUser?.image && selectedUser?.image?.fileData) {
         setSelectedUSerIMage(selectedUser?.image?.fileData);
       }
+      // createChat("fromSelectedUSer");
+      // findChat();
+      // getMessageByUser(selectedUser?._id);
     }
   }, [selectedUser]);
 
@@ -300,6 +374,7 @@ const MessageTalents = () => {
         console.log(err);
       });
   };
+
   const handleDelete = async (data) => {
     const formData = {
       messageId: data?._id,
@@ -347,10 +422,11 @@ const MessageTalents = () => {
   const setCLickedUser = (data) => {
     console.log(data, "setCLickedUser");
     setClickedUserId(data?._id);
-    setInitaialUser(userList, data?._id);
+    setSelectedUser(data);
     if (currentUserId && selectedUser?._id) {
-      createChat();
-      findChat();
+      console.log("FIND_MESSAGE_LOPP_ socket.setCLickedUser");
+      // createChat("createChatFromsetCLickedUser");
+      // findChat();
       getMessageByUser(data?._id);
     }
   };
@@ -360,6 +436,8 @@ const MessageTalents = () => {
   }, [clickedUserId]);
 
   const findChat = async () => {
+    console.log("FIND_MESSAGE_LOPP_ socket.findChatAPICALL");
+
     await ApiHelper.get(`${API.findChat}${currentUserId}/${clickedUserId}`)
       .then((resData) => {
         if (resData) {
@@ -411,24 +489,29 @@ const MessageTalents = () => {
   }, [currentTime]);
 
   const setInitaialUser = async (userData, selectedID) => {
+    console.log("FIND_MESSAGE_LOPP_ socket.setInitaialUser");
     console.log(userData, "userData callingblock");
     console.log(selectedID, "selectedID callingblock");
     if (userData.length > 0) {
-      // Find the object with the matching id
       const obj = userData.find((item) => item._id === selectedID);
       console.log(obj, "obj callingblock");
-      // Update the state with the filtered object
       setSelectedUser(obj);
       console.log(selectedUser, "selectedUser callingblock");
+      if (currentUserId && selectedID) {
+        // console.log("FIND_MESSAGE_LOPP_ socket.setCLickedUser");
+        // createChat("createChatFromsetInitaialUser");
+        // findChat();
+        getMessageByUser(selectedID);
+      }
     }
   };
 
-  useEffect(() => {
-    if (clickedUserId && currentUserId) {
-      createChat();
-      findChat();
-    }
-  }, [clickedUserId, currentUserId]);
+  // useEffect(() => {
+  //   if (clickedUserId && currentUserId) {
+  //     createChat();
+  //     findChat();
+  //   }
+  // }, [clickedUserId, currentUserId]);
 
   const getMessageByUser = async (sender_id) => {
     console.log(currentUserId, "currentUserId getMessageByUser");
@@ -437,6 +520,8 @@ const MessageTalents = () => {
       receiverId: currentUserId,
     };
     console.log(formData, "getMessageByUserPAYLOAD");
+    console.log("FIND_MESSAGE_LOPP_ socket.getMessageByUserAPICALL");
+
     await ApiHelper.post(API.getMessageByUser, formData)
       .then((resData) => {
         if (resData) {
@@ -516,7 +601,12 @@ const MessageTalents = () => {
                     <div className="message-user-time">Just Now</div>
                   </div>
                 </div>
-                <div className="message-more">More</div>
+                <div>
+                  <div className="message-more">More</div>
+                  <div className="go-dashboard" onClick={handleBackClick}>
+                    Go to Dashboard
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -530,7 +620,7 @@ const MessageTalents = () => {
                       here)
                     </div>
                   )}
-                  {userList &&
+                  {userList.length > 0 &&
                     userList?.map((item, index) => (
                       <>
                         <div
@@ -633,22 +723,22 @@ const MessageTalents = () => {
                                   <div className="message-file-type">
                                     {item?.chatFile?.type === "image" && (
                                       <div className="fileType">
-                                        <img src={imageType} alt="" />
+                                        <i className="bi bi-card-image"></i>
                                       </div>
                                     )}
                                     {item?.chatFile?.type === "audio" && (
                                       <div className="fileType">
-                                        <img src={audiotype} alt="" />
+                                        <i className="bi bi-mic-fill"></i>
                                       </div>
                                     )}
                                     {item?.chatFile?.type === "video" && (
                                       <div className="fileType">
-                                        <img src={videoType} alt="" />
+                                        <i className="bi bi-play-circle-fill"></i>
                                       </div>
                                     )}
                                     {item?.chatFile?.type === "document" && (
                                       <div className="fileType">
-                                        <img src={docsIcon} alt="" />
+                                        <i className="bi bi-file-earmark-richtext"></i>
                                       </div>
                                     )}
                                   </div>

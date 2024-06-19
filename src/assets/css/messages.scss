@@ -22,10 +22,22 @@
   // display: inline-block;
 }
 
+.go-dashboard {
+  color: #c2114b;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 4px 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .message-file-title {
   color: #000000;
   font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -204,21 +216,21 @@
 
 .conversation-left-user-img {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
 }
 
 .conversation-right-user-img {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   margin-left: 20px;
 }
 
 .conversation-left-message-container {
   border-radius: 8px;
   background-color: #e1efff;
-  padding: 15px;
+  padding: 10px;
   // width: 40%;
   margin-left: 20px;
   display: flex;
@@ -227,7 +239,7 @@
 .conversation-right-message-container {
   border-radius: 8px;
   background-color: #f0f0f0;
-  padding: 20px;
+  padding: 10px;
   width: 40%;
   margin-left: 20px;
 }
@@ -252,7 +264,7 @@
 .conversation-message {
   color: #000000;
   font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

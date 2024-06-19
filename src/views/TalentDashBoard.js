@@ -754,7 +754,6 @@ const TalentDashBoard = () => {
                                           ></i>
                                         )}
                                       </div>
-
                                     </div>
 
                                     <div className="row">
@@ -868,8 +867,6 @@ const TalentDashBoard = () => {
                                   </div>
                                 </div>
                               </div>
-                             
-
                             </div>
                           </div>
                         </>

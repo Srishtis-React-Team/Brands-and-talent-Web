@@ -295,13 +295,17 @@ const ListJobs = () => {
                                     </span>
                                   </div>
                                   <div className="mb-2">
-                                    <span className="job-company-name">
-                                      {job?.state}
-                                    </span>{" "}
+                                    {job?.state && (
+                                      <span className="job-company-name">
+                                        {job?.state}
+                                      </span>
+                                    )}
                                     ,
-                                    <span className="job-company-name">
-                                      {job?.city}
-                                    </span>
+                                    {job?.city && (
+                                      <span className="job-company-name">
+                                        {job?.city}
+                                      </span>
+                                    )}
                                   </div>
                                   <div className="mb-2">
                                     <span className="job-company-name">

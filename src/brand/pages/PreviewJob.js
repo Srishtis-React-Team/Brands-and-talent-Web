@@ -50,6 +50,30 @@ const PreviewJob = ({ data, onButtonClick }) => {
       }, 2000);
     }
   };
+  const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
+
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+    if (brandId && brandId != null) {
+      getBrand();
+    }
+  }, [brandId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const postJob = async () => {
     await ApiHelper.post(`${API.postJobByDraft}${jobId}`)
@@ -167,9 +191,8 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </span>
               </div>
 
-              <div className="company-location">
+              {/* <div className="company-location">
                 <span>Payment :&nbsp; </span>
-                {/* {jobData?.paymentType?.label} */}
                 <span>
                   {jobData?.paymentType?.label === "range" && (
                     <>
@@ -193,7 +216,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     </>
                   )}
                 </span>
-              </div>
+              </div> */}
 
               <div className="company-location">
                 <span>Job Type :&nbsp; </span>
@@ -203,9 +226,8 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </span>
               </div>
 
-              <div className="company-location">
+              {/* <div className="company-location">
                 <span>Application Type :&nbsp; </span>
-                {/* {jobData?.paymentType?.label} */}
                 <span>
                   <span className="">
                     {jobData?.howLikeToApply
@@ -219,7 +241,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       : ""}
                   </span>
                 </span>
-              </div>
+              </div> */}
 
               <div className="job-features-benefits pb-0">
                 <div className="row">
@@ -403,6 +425,15 @@ const PreviewJob = ({ data, onButtonClick }) => {
                                 </span>
                               </li>
                             )}
+
+                            {jobData?.youTubeMin && (
+                              <li>
+                                YouTube Followers :{" "}
+                                <span className="job-feature-values">
+                                  {jobData?.youTubeMin} - {jobData?.youTubeMax}
+                                </span>
+                              </li>
+                            )}
                           </ul>
                         </li>
                       </ul>
@@ -484,7 +515,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 </div>
               </div>
               <div className="job-about-section">
-                <div className="job-feature-title">Work Samples</div>
+                <div className="job-feature-title">Project brief / TOR</div>
                 <div className="service-files-main">
                   <div>
                     {jobData?.workSamples?.length > 0 &&
@@ -554,24 +585,16 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 <div className="job-about-section">
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
-                    <p className="mb-3 how-apply-terms">
-                      Email your resume along with your Brands & Talent
-                      portfolio to brandsntalent@gmail.com.
-                    </p>
-                    <p className="mb-3 how-apply-terms">
-                      For more information: Call us at +855 855 855.
-                    </p>
-                    <p>
-                      <span className="how-apply-terms-bold">
-                        {" "}
-                        View all jobs at Brands & Talent:
-                      </span>
-                      &nbsp;
-                      <span className="how-apply-terms-link">
-                        {" "}
-                        brandsandtalent.com/company/brandsandtalent/jobs
-                      </span>
-                    </p>
+                    Interested candidates should submit their resume and a link
+                    that contains portfolio from brands and talent website to
+                    <span className="how-apply-terms-link">
+                      {brandData?.brandEmail}
+                    </span>
+                    Please include
+                    <span className="how-apply-terms-link">
+                      {jobData?.jobTitle}
+                    </span>
+                    in the subject line.
                   </div>
                 </div>
               )}

@@ -273,7 +273,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             <div className="brand-menu-text">Applicants</div>
           </Link>
 
-          <Link
+          {/* <Link
             to="/find-talents"
             className={
               location.pathname === "/find-talents"
@@ -283,7 +283,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           >
             <i class="bi bi-person-bounding-box icons"></i>
             <div className="brand-menu-text">Find Talent</div>
-          </Link>
+          </Link> */}
 
           <Link
             to="/favorite-talents"

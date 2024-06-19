@@ -953,33 +953,31 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   <div className="kids-form-title"><span>ID Verification</span></div>
 
                   <div className="id-verify-info">
-                    To ensure authenticity and compliance, please upload a clear
-                    and legible copy of your government-issued ID. After
-                    successful verification, your ID will be promptly removed
-                    from our database to prioritize your privacy and data
-                    security
+                    Stand out and secure more jobs and projects by becoming
+                    Verified Talent! Submit your government-issued ID to get a
+                    blue verification sticker on your profile. Your ID will be
+                    permanently deleted from our database immediately after
+                    verification, ensuring your data privacy.
                   </div>
 
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3 mt-3">
-                     
-                        <label className="form-label">ID Type</label>
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                          onChange={(e) => {
-                            setIdType(e.target.value);
-                          }}
-                        >
-                          <option defaultValue value="universal_id">
-                            National ID/Citizenship Card
-                          </option>
-                          <option defaultValue value="licence">
-                            Licence
-                          </option>
-                          <option value="passport">Passport</option>
-                        </select>
-                      
+                      <label className="form-label">ID Type</label>
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={(e) => {
+                          setIdType(e.target.value);
+                        }}
+                      >
+                        <option defaultValue value="universal_id">
+                          National ID/Citizenship Card
+                        </option>
+                        <option defaultValue value="licence">
+                          Licence
+                        </option>
+                        <option value="passport">Passport</option>
+                      </select>
                     </div>
                   </div>
 
