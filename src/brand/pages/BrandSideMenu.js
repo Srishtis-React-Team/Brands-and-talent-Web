@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
+const postJob = require("../../assets/icons/postJob.png");
+const postJobHv = require("../../assets/icons/postJob-h.png");
 
 const BrandSideMenu = ({ onChildClick, myState }) => {
   // useEffect(() => {
@@ -226,7 +228,10 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           >
             {/* <i className="bi bi-person-plus icons"></i>
             <i class="fa-solid fa-user-tie"></i> */}
-            <i class="bi bi-person-add icons"></i>
+            {/* <i class="bi bi-person-add icons"></i> */}
+            <img src={postJob} className="iconMenu normal" alt="icon" />
+            <img src={postJobHv} className="iconMenu hover" alt="icon" />
+            
             <div className="brand-menu-text">Post a Job</div>
           </Link>
 
@@ -238,7 +243,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i class="bi bi-person-gear icons"></i>
+            {/* <i class="bi bi-person-gear icons"></i> */}
+
+            <i class="bi bi-send icons"></i>
             <div className="brand-menu-text">Invite To Apply</div>
           </Link>
 

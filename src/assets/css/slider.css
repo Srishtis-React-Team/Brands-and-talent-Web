@@ -1,0 +1,48 @@
+.rangeslider {
+  display: flex;
+  align-items: center;
+}
+
+.rangeslider-label {
+  flex: 0 0 auto;
+}
+
+.rangeslider-track {
+  height: 8px;
+  border-radius: 2px;
+  background-color: #eaebef;
+  box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin: 0 30px;
+  flex: 1 1 auto;
+}
+
+.rangeslider-track-active {
+  height: 100%;
+  width: 148px;
+  border-radius: 1px;
+  background-color: #c2114b;
+  position: absolute;
+}
+
+.rangeslider-track-button-min,
+.rangeslider-track-button-max {
+  box-sizing: border-box;
+  height: 25px;
+  width: 25px;
+  border: 1px solid #c4c4cc;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px -3px #000000;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.rangeslider-track-button-min {
+  display: block;
+}
+
+.rangeslider-track-button-max {
+  display: block;
+}/*# sourceMappingURL=slider.css.map */

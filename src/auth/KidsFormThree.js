@@ -496,7 +496,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                 </div>
                 <div className="kids-main">
                   <div className="kids-form-title pb-0">
-                    Profile Picture <span className="astrix">*</span>
+                    <span>Profile Picture <span className="astrix">*</span></span>
                   </div>
                   <div
                     className="cv-section"
@@ -577,7 +577,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div className="kids-form-title pb-1">Bio</div>
+                  <div className="kids-form-title pb-1"><span>Bio</span></div>
 
                   <div className="rich-editor">
                     <label className="form-label">About You</label>
@@ -607,7 +607,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
 
                   <div className="kids-form-title pb-0">
-                    Portfolio <span className="astrix">*</span>
+                    <span>Portfolio <span className="astrix">*</span></span>
                   </div>
                   <div
                     className="cv-section"
@@ -808,7 +808,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       })}
                     </>
                   )}
-                  <div className="kids-form-title pb-0">CV</div>
+                  <div className="kids-form-title pb-0"><span>CV</span></div>
                   <div
                     className="cv-section"
                     onDrop={handleResumeDrop}
@@ -911,7 +911,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div className="kids-form-title">Features (Optional)</div>
+                  <div className="kids-form-title"><span>Features (Optional)</span></div>
 
                   <div className="features-section">
                     {featuresList && (
@@ -919,7 +919,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                         {featuresList.map((item, index) => {
                           return (
                             <>
-                              <div className="mb-3 features-input-wrapper">
+                              <div className="mb-3 mr-3 features-input-wrapper">
                                 <label className="form-label">
                                   {item.label}
                                 </label>
@@ -950,7 +950,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     )}
                   </div>
 
-                  <div className="kids-form-title">ID Verification</div>
+                  <div className="kids-form-title"><span>ID Verification</span></div>
 
                   <div className="id-verify-info">
                     Stand out and secure more jobs and projects by becoming

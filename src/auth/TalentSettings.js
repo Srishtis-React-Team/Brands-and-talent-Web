@@ -361,7 +361,7 @@ const TalentSettings = () => {
         id="mainBrand"
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
-        <div className="brand-content-main">
+        <div className="brand-content-main talentSet boxBg">
           <div className="create-job-title">Settings</div>
           <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -383,7 +383,7 @@ const TalentSettings = () => {
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
-              <div className="update-password-main row">
+              <div className="update-password-main w-100 py-3 px-0 row">
                 <div className="kids-form-section col-md-6 mb-3">
                
                     <label className="form-label">
@@ -543,15 +543,17 @@ const TalentSettings = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
-              Manage Account
+              <h6 className="subtitles">Manage Account</h6>
               <div className="profile-image-edit-section edit-basicdetails-section-main">
                 <div>
-                  <img
-                    className="account-active-image"
-                    src={`${API.userFilePath}${editProfileImage}`}
-                    alt=""
-                  />
-                  <div className="talent-name">
+                  <div className="imgBx text-center">
+                    <img
+                      className="account-active-image"
+                      src={`${API.userFilePath}${editProfileImage}`}
+                      alt=""
+                    />
+                  </div>
+                  <div className="talent-name userName-n">
                     {talentData?.preferredChildFirstname}&nbsp;
                     {talentData?.preferredChildLastName}
                   </div>
@@ -566,7 +568,7 @@ const TalentSettings = () => {
                     </span>
                   </div>
                 </div>
-                <div className="btn-img-edit-wrapper">
+                <div className="btn-img-edit-wrapper" style={{justifyContent: "left"}}>
                   <Button
                     onClick={(e) => {
                       setAlertpop({
