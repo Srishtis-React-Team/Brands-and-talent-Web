@@ -758,13 +758,18 @@ const TalentDashBoard = () => {
                                       </span>
                                     </div>
                                     <div className="mb-2">
-                                      <span className="job-company-name">
-                                        {item?.state}
-                                      </span>{" "}
-                                      ,
-                                      <span className="job-company-name">
-                                        {item?.city}
-                                      </span>
+                                      {item?.state && (
+                                        <span className="job-company-name">
+                                          {item?.state}
+                                        </span>
+                                      )}
+                                      {item?.state && item?.city && <>,</>}
+
+                                      {item?.city && (
+                                        <span className="job-company-name">
+                                          {item?.city}
+                                        </span>
+                                      )}
                                     </div>
                                     <div className="mb-2">
                                       <span className="job-company-name">
@@ -780,7 +785,18 @@ const TalentDashBoard = () => {
                                       </span>
                                       .
                                       <span className="job-company-name">
-                                        {Object.keys(item?.compensation)[0]}
+                                        {item && item.compensation
+                                          ? Object.keys(item.compensation)[0]
+                                              .split("_")
+                                              .map(
+                                                (word) =>
+                                                  word.charAt(0).toUpperCase() +
+                                                  word.slice(1)
+                                              )
+                                              .join(" ")
+                                          : ""}
+
+                                        {/* {Object.keys(item?.compensation)[0]} */}
                                       </span>
                                     </div>
                                     <div className="mb-2">

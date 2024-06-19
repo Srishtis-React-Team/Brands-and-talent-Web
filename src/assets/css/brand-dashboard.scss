@@ -92,24 +92,23 @@
 .brand-profile-not-sidemenu {
   display: none;
 }
-.profImg{
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 2px solid #c2114b;
-    margin-right: 10px;
-    overflow: hidden;
+.profImg {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  margin-right: 10px;
+  overflow: hidden;
 }
 .profImg .profile-img {
-    min-width: 45px;
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    min-height: 45px;
-    margin: 0;
-    padding: 0;
-    object-fit: cover;
-    border: 0;
+  min-width: 45px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  min-height: 45px;
+  margin: 0;
+  padding: 0;
+  object-fit: cover;
+  border: 0;
 }
 
 .talent-profile {
@@ -123,13 +122,12 @@
     flex-wrap: wrap;
     align-items: start;
     align-items: center;
-    .profImg{
-      width: 45px;
-      height: 45px;
+    .profImg {
+      width: 75px;
+      height: 75px;
       border-radius: 50%;
-      border: 2px solid #c2114b;
       margin-right: 10px;
-      background-color: #FFF;
+      background-color: #fff;
       overflow: hidden;
       .profile-img {
         min-width: 45px;
@@ -203,10 +201,13 @@
   }
   // justify-content: space-evenly;
 }
-.sidenavWraper i.bi-person, .sidenavWraper i.bi-person-plus, .sidenavWraper i.bi-person-check  {
+.sidenavWraper i.bi-person,
+.sidenavWraper i.bi-person-plus,
+.sidenavWraper i.bi-person-check {
   font-size: 22px;
 }
-.sidenavWraper .bi-person::before, .sidenavWraper .bi-person-check::before {
+.sidenavWraper .bi-person::before,
+.sidenavWraper .bi-person-check::before {
   content: "\f4e1";
   margin: 0 0 0 -2px;
 }
@@ -254,7 +255,8 @@
   display: none;
 }
 
-.editTabs .MuiBox-root, .editTabs .edit-basicdetails-section-main{
+.editTabs .MuiBox-root,
+.editTabs .edit-basicdetails-section-main {
   padding-bottom: 0;
 }
 .editTabs .profile-image-edit-section .profile-image-edit {
@@ -288,10 +290,13 @@
   position: relative;
   display: inline-block;
 }
-.edit-profile-navigations.editOnly .edit-profile-navigation-text{ padding-left: 0; }
+.edit-profile-navigations.editOnly .edit-profile-navigation-text {
+  padding-left: 0;
+}
 
-.edit-profile-navigations.editOnly .bi.arrow-left-circle{ padding-right: 10px; }
-
+.edit-profile-navigations.editOnly .bi.arrow-left-circle {
+  padding-right: 10px;
+}
 
 .edit-profile-navigations.editOnly {
   margin-top: -57px;
@@ -303,7 +308,6 @@
   position: relative;
 }
 .brand-content-main {
-
   .create-job-title {
     color: #000;
     font-size: 19px;
@@ -397,21 +401,16 @@ input[type="radio"]:checked + .create-job-toggle-label {
 // 1025px — 1200px: Desktops, large screens
 // 1201px and more —  Extra large screens, TV
 
-
 @media (max-width: 767px) {
-
-  .show-sidebar { 
+  .show-sidebar {
     width: 300px;
-    max-width: 100%; 
+    max-width: 100%;
     box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.05), 0 3px 6px rgba(0, 0, 0, 0.1);
-    border-right: 1px solid #e3e6e8; 
+    border-right: 1px solid #e3e6e8;
   }
-
-
 }
 
 @media only screen and (min-width: 320px) and (max-width: 768px) {
-
   .create-job-toggle .radio-toggles {
     align-items: center;
     background: #eee;

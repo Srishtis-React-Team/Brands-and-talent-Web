@@ -399,16 +399,17 @@ const TalentProfile = () => {
     }
   };
   const messageNow = () => {
-    if (talentData?.planName == "Basic") {
-      setMessage("Upgrade to Pro/Premium member");
-      setOpenPopUp(true);
-      setTimeout(function() {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 3000);
-    } else {
-      navigate(`/message?${talentData?._id}`);
-    }
+    navigate(`/message?${talentData?._id}`);
+    // if (talentData?.planName == "Basic") {
+    //   setMessage("Upgrade to Pro/Premium member");
+    //   setOpenPopUp(true);
+    //   setTimeout(function() {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 3000);
+    // } else {
+    //   navigate(`/message?${talentData?._id}`);
+    // }
   };
 
   const handleCloseModal = () => {
@@ -526,7 +527,12 @@ const TalentProfile = () => {
                       <span>Pro</span>
                     </div> */}
 
-                    <div className="planName pro"><span><i class="bi bi-star-fill"></i></span>PRO</div>
+                    <div className="planName pro">
+                      <span>
+                        <i class="bi bi-star-fill"></i>
+                      </span>
+                      PRO
+                    </div>
                   </div>
                   <div className="individual-talents-details">
                     <div className="individual-talent-name">
@@ -720,7 +726,10 @@ const TalentProfile = () => {
                         <img src={whitePlus}></img>
                         <div>Invite to apply</div>
                       </div>
-                      <div className="invite-btn msgBtn" onClick={() => messageNow()}>
+                      <div
+                        className="invite-btn msgBtn"
+                        onClick={() => messageNow()}
+                      >
                         <i class="bi bi-chat"></i>
                         <div className="message-now-text">Message Now</div>
                       </div>
