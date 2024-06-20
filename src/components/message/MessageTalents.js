@@ -549,275 +549,285 @@ const MessageTalents = () => {
       {userType && userType == "brand" && (
         <BrandHeader toggleMenu={toggleMenu} />
       )}
-      <div className="message-main">
-        <div className="messages-section">
-          <div className="message-header">
-            <div className="message-header-main">
-              <div className="message-search">
-                <div className="mb-0">
-                  <div className="form-group has-search">
-                    <span className="fa fa-search form-control-feedback "></span>
-                    <input
-                      type="text"
-                      className="form-control adult-signup-inputs"
-                      placeholder="Search"
-                      onChange={(e) => {
-                        searchNames(e.target.value);
-                      }}
-                    ></input>
-                  </div>
-                </div>
-              </div>
-              <div className="message-user-wrapper">
-                <div className="message-userdetails-wrapper">
-                  <div className="message-images-position">
-                    {selectedUSerImage && (
-                      <img
-                        className="message-user-image"
-                        src={`${API.userFilePath}${selectedUSerImage}`}
-                        alt=""
-                      />
-                    )}
-                    {!selectedUSerImage && (
-                      <img className="message-user-image" src={avatar} alt="" />
-                    )}
-                    {selectedUser?.isOnline === true && (
-                      <div className="online-dot"></div>
-                    )}
-                    {selectedUser?.isOnline === false && (
-                      <div className="offline-dot"></div>
-                    )}
-                  </div>
-                  <div className="message-user-details">
-                    {selectedUser?.brandName && (
-                      <div className="message-user-name">
-                        {`${selectedUser?.brandName}`}
+      <div className="message-main px-2">
+        <div className="container-fluid">
+          <div className="messages-section m-0">
+            <div className="message-header">
+              <div className="message-header-main row">
+               
+                  <div className="col-md-4 col-lg-3">
+                    <div className="message-search">
+                      <div className="mb-0">
+                        <div className="form-group has-search">
+                          <span className="fa fa-search form-control-feedback "></span>
+                          <input
+                            type="text"
+                            className="form-control adult-signup-inputs"
+                            placeholder="Search"
+                            onChange={(e) => {
+                              searchNames(e.target.value);
+                            }}
+                          ></input>
+                        </div>
                       </div>
-                    )}
-                    {selectedUser?.preferredChildFirstname && (
-                      <div className="message-user-name">
-                        {`${selectedUser?.preferredChildFirstname}${selectedUser?.preferredChildLastName}`}
-                      </div>
-                    )}
-
-                    <div className="message-user-time">Just Now</div>
-                  </div>
-                </div>
-                <div>
-                  <div className="message-more">More</div>
-                  <div className="go-dashboard" onClick={handleBackClick}>
-                    Go to Dashboard
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="message-container-wrapper">
-            <div className="message-sidebar">
-              <div className="message-leftmenu-main">
-                <div className="message-list-wrapper">
-                  {userList.length === 0 && (
-                    <div className="no-data">
-                      Connect With a Brand (Your Brands Profile will appear
-                      here)
                     </div>
-                  )}
-                  {userList.length > 0 &&
-                    userList?.map((item, index) => (
-                      <>
-                        <div
-                          className={
-                            item?._id == selectedUser?._id
-                              ? "message-userdetails-menu-wrapper-selected"
-                              : "message-userdetails-menu-wrapper"
-                          }
-                          onClick={() => setCLickedUser(item)}
-                          key={index}
-                        >
-                          <div className="message-images-position">
-                            {item?.brandImage &&
-                              item?.brandImage.length > 0 && (
-                                <img
-                                  className="message-user-image"
-                                  src={`${API.userFilePath}${item?.brandImage[0]?.fileData}`}
-                                  alt=""
-                                />
-                              )}
-                            {item?.image && item?.image?.fileData && (
-                              <img
-                                className="message-user-image"
-                                src={`${API.userFilePath}${item?.image?.fileData}`}
-                                alt=""
-                              />
-                            )}
-                            {item?.isOnline === true && (
-                              <div className="online-dot"></div>
-                            )}
-                            {item?.isOnline === false && (
-                              <div className="offline-dot"></div>
-                            )}
-                          </div>
-                          <div className="message-user-details">
-                            <div className="message-user-name">
-                              {item?.brandName && (
-                                <div className="message-user-name">
-                                  {`${item?.brandName}`}
-                                </div>
-                              )}
-                              {item?.preferredChildFirstname && (
-                                <div className="message-user-name">
-                                  {`${item?.preferredChildFirstname}${item?.preferredChildLastName}`}
-                                </div>
-                              )}
-                              <span
-                                style={{
-                                  fontSize: "12px",
-                                  fontWeight: "400",
-                                }}
-                              >
-                                Send a message
-                              </span>
-                            </div>
-                            <div className="message-user-time">Just Now</div>
-                          </div>
+                  </div>
+                  <div className="col-md-8 col-lg-9">
+                    <div className="message-user-wrapper">
+                      <div className="message-userdetails-wrapper">
+                        <div className="message-images-position">
+                          {selectedUSerImage && (
+                            <img
+                              className="message-user-image"
+                              src={`${API.userFilePath}${selectedUSerImage}`}
+                              alt=""
+                            />
+                          )}
+                          {!selectedUSerImage && (
+                            <img className="message-user-image" src={avatar} alt="" />
+                          )}
+                          {selectedUser?.isOnline === true && (
+                            <div className="online-dot"></div>
+                          )}
+                          {selectedUser?.isOnline === false && (
+                            <div className="offline-dot"></div>
+                          )}
                         </div>
-                      </>
-                    ))}
-                </div>
+                        <div className="message-user-details">
+                          {selectedUser?.brandName && (
+                            <div className="message-user-name">
+                              {`${selectedUser?.brandName}`}
+                            </div>
+                          )}
+                          {selectedUser?.preferredChildFirstname && (
+                            <div className="message-user-name">
+                              {`${selectedUser?.preferredChildFirstname}${selectedUser?.preferredChildLastName}`}
+                            </div>
+                          )}
+
+                          <div className="message-user-time">Just Now</div>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="message-more">More</div>
+                        <div className="go-dashboard" onClick={handleBackClick}>
+                          Go to Dashboard
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              
               </div>
             </div>
-            <div className="conversation-section">
-              <div className="conversation-main">
-                {messagesList &&
-                  messagesList?.length > 0 &&
-                  messagesList?.map((item, index) => {
-                    return (
-                      <>
-                        <div className="conversation-left-side">
-                          <div
-                            className={`conversation-all-wrapper ${
-                              item.senderId === currentUserId
-                                ? "conversation-allign-right"
-                                : "conversation-allign-left"
-                            }`}
-                          >
-                            <div>
-                              <img
-                                className="conversation-left-user-img"
-                                src={`${API.userFilePath}${item?.userImage}`}
-                                alt=""
-                              />
-                            </div>
-                            <div
-                              className={`conversation-left-message-container ${
-                                item.senderId === currentUserId
-                                  ? "conversation-allign-right-message"
-                                  : "conversation-allign-left-message"
-                              }`}
-                            >
-                              {item?.text && (
-                                <div className="conversation-message">
-                                  {item.text}
-                                </div>
-                              )}
-                              {item?.chatFile && (
-                                <div className="message-files">
-                                  <div className="message-file-type">
-                                    {item?.chatFile?.type === "image" && (
-                                      <div className="fileType">
-                                        <i className="bi bi-card-image"></i>
-                                      </div>
-                                    )}
-                                    {item?.chatFile?.type === "audio" && (
-                                      <div className="fileType">
-                                        <i className="bi bi-mic-fill"></i>
-                                      </div>
-                                    )}
-                                    {item?.chatFile?.type === "video" && (
-                                      <div className="fileType">
-                                        <i className="bi bi-play-circle-fill"></i>
-                                      </div>
-                                    )}
-                                    {item?.chatFile?.type === "document" && (
-                                      <div className="fileType">
-                                        <i className="bi bi-file-earmark-richtext"></i>
-                                      </div>
-                                    )}
-                                  </div>
-                                  <div className="message-file-title">
-                                    {item?.chatFile?.title}
-                                  </div>
-                                  <div className="message-file-options">
-                                    <i
-                                      className="bi bi-eye-fill view-file-icon"
-                                      onClick={() => handleView(item?.chatFile)}
-                                    ></i>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                            {item.senderId === currentUserId && (
-                              <div>
-                                <Dropdown className="reportDrop">
-                                  <Dropdown.Toggle className="dropColorHead message-elips-dropdown">
-                                    {/* <img
-                                    className="message-elipsis-options"
-                                    src={elipsis}
-                                    alt=""
-                                  /> */}
-                                  </Dropdown.Toggle>
-                                  <Dropdown.Menu>
-                                    {/* <Dropdown.Item
-                                      onClick={() => handleView(item?.chatFile)}
-                                    >
-                                      Edit
-                                    </Dropdown.Item> */}
-                                    <Dropdown.Item
-                                      onClick={() => handleDelete(item)}
-                                    >
-                                      Delete
-                                    </Dropdown.Item>
-                                  </Dropdown.Menu>
-                                </Dropdown>
-                              </div>
-                            )}
-                          </div>
+            <div className="message-container-wrapper">
+              <div className="row">
+                <div className="message-sidebar col-md-4 col-lg-3">
+                  <div className="message-leftmenu-main scroll">
+                    <div className="message-list-wrapper">
+                      {userList.length === 0 && (
+                        <div className="no-data">
+                          Connect With a Brand (Your Brands Profile will appear
+                          here)
                         </div>
-                      </>
-                    );
-                  })}
-              </div>
-              <div className="conversation-input-section">
-                <div onClick={handleAttachmentClick}>
-                  <i className="bi bi-paperclip conversation-attachment-icon"></i>
+                      )}
+                      {userList.length > 0 &&
+                        userList?.map((item, index) => (
+                          <>
+                            <div
+                              className={
+                                item?._id == selectedUser?._id
+                                  ? "message-userdetails-menu-wrapper-selected"
+                                  : "message-userdetails-menu-wrapper"
+                              }
+                              onClick={() => setCLickedUser(item)}
+                              key={index}
+                            >
+                              <div className="message-images-position">
+                                {item?.brandImage &&
+                                  item?.brandImage.length > 0 && (
+                                    <img
+                                      className="message-user-image"
+                                      src={`${API.userFilePath}${item?.brandImage[0]?.fileData}`}
+                                      alt=""
+                                    />
+                                  )}
+                                {item?.image && item?.image?.fileData && (
+                                  <img
+                                    className="message-user-image"
+                                    src={`${API.userFilePath}${item?.image?.fileData}`}
+                                    alt=""
+                                  />
+                                )}
+                                {item?.isOnline === true && (
+                                  <div className="online-dot"></div>
+                                )}
+                                {item?.isOnline === false && (
+                                  <div className="offline-dot"></div>
+                                )}
+                              </div>
+                              <div className="message-user-details">
+                                <div className="message-user-name">
+                                  {item?.brandName && (
+                                    <div className="message-user-name">
+                                      {`${item?.brandName}`}
+                                    </div>
+                                  )}
+                                  {item?.preferredChildFirstname && (
+                                    <div className="message-user-name">
+                                      {`${item?.preferredChildFirstname}${item?.preferredChildLastName}`}
+                                    </div>
+                                  )}
+                                  <span
+                                    style={{
+                                      fontSize: "12px",
+                                      fontWeight: "400",
+                                    }}
+                                  >
+                                    Send a message
+                                  </span>
+                                </div>
+                                <div className="message-user-time">Just Now</div>
+                              </div>
+                            </div>
+                          </>
+                        ))}
+                    </div>
+                  </div>
                 </div>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={profileUpload}
-                  style={{ display: "none" }}
-                  accept=".pdf,.doc,.docx,.txt,.rtf"
-                />
-                <div className="conversation-input-wrapper">
-                  <input
-                    type="text"
-                    className="form-control conversation-input"
-                    placeholder="Search"
-                    value={text}
-                    onChange={(e) => {
-                      setMessage(e.target.value);
-                    }}
-                    onKeyPress={handleKeyPress}
-                  ></input>
-                </div>
-                <div>
-                  <div className="conversation-send">
-                    <i className="bi bi-send conversation-send-icon"></i>
-                    <div
-                      onClick={() => sendMessage()}
-                      className="conversation-send-text"
-                    >
-                      Send
+                <div className="conversation-section col-md-8 col-lg-9">
+                  <div className="conversation-main scroll">
+                    {messagesList &&
+                      messagesList?.length > 0 &&
+                      messagesList?.map((item, index) => {
+                        return (
+                          <>
+                            <div className="conversation-left-side">
+                              <div
+                                className={`conversation-all-wrapper ${
+                                  item.senderId === currentUserId
+                                    ? "conversation-allign-right"
+                                    : "conversation-allign-left"
+                                }`}
+                              >
+                                <div>
+                                  <img
+                                    className="conversation-left-user-img"
+                                    src={`${API.userFilePath}${item?.userImage}`}
+                                    alt=""
+                                  />
+                                </div>
+                                <div
+                                  className={`conversation-left-message-container ${
+                                    item.senderId === currentUserId
+                                      ? "conversation-allign-right-message"
+                                      : "conversation-allign-left-message"
+                                  }`}
+                                >
+                                  {item?.text && (
+                                    <div className="conversation-message">
+                                      {item.text}
+                                    </div>
+                                  )}
+                                  {item?.chatFile && (
+                                    <div className="message-files">
+                                      <div className="message-file-type">
+                                        {item?.chatFile?.type === "image" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-card-image"></i>
+                                          </div>
+                                        )}
+                                        {item?.chatFile?.type === "audio" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-mic-fill"></i>
+                                          </div>
+                                        )}
+                                        {item?.chatFile?.type === "video" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-play-circle-fill"></i>
+                                          </div>
+                                        )}
+                                        {item?.chatFile?.type === "document" && (
+                                          <div className="fileType">
+                                            <i className="bi bi-file-earmark-richtext"></i>
+                                          </div>
+                                        )}
+                                      </div>
+                                      <div className="message-file-title">
+                                        {item?.chatFile?.title}
+                                      </div>
+                                      <div className="message-file-options">
+                                        <i
+                                          className="bi bi-eye-fill view-file-icon"
+                                          onClick={() => handleView(item?.chatFile)}
+                                        ></i>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                                {item.senderId === currentUserId && (
+                                  <div>
+                                    <Dropdown className="reportDrop">
+                                      <Dropdown.Toggle className="dropColorHead message-elips-dropdown">
+                                        {/* <img
+                                        className="message-elipsis-options"
+                                        src={elipsis}
+                                        alt=""
+                                      /> */}
+                                      </Dropdown.Toggle>
+                                      <Dropdown.Menu>
+                                        {/* <Dropdown.Item
+                                          onClick={() => handleView(item?.chatFile)}
+                                        >
+                                          Edit
+                                        </Dropdown.Item> */}
+                                        <Dropdown.Item
+                                          onClick={() => handleDelete(item)}
+                                        >
+                                          Delete
+                                        </Dropdown.Item>
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                  </div>
+                  <div className="conversation-input-section">
+                    <div onClick={handleAttachmentClick}>
+                      <i className="bi bi-paperclip conversation-attachment-icon"></i>
+                    </div>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={profileUpload}
+                      style={{ display: "none" }}
+                      accept=".pdf,.doc,.docx,.txt,.rtf"
+                    />
+                    <div className="conversation-input-wrapper">
+                      <input
+                        type="text"
+                        className="form-control conversation-input"
+                        placeholder="Search"
+                        value={text}
+                        onChange={(e) => {
+                          setMessage(e.target.value);
+                        }}
+                        onKeyPress={handleKeyPress}
+                      ></input>
+                    </div>
+                    <div>
+                      <div className="conversation-send">
+                        <i className="bi bi-send conversation-send-icon"></i>
+                        <div
+                          onClick={() => sendMessage()}
+                          className="conversation-send-text"
+                        >
+                          Send
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

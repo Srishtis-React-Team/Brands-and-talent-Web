@@ -64,7 +64,7 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  padding-left: 2px;
+  padding-left: 10px;
 }
 
 .create-job-buttons {
@@ -84,6 +84,23 @@
   border-radius: 60px;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.browseJob .job-company_dtls {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 20px;
+  padding-right: 5px;
+}
+
+.browseJob .job-company-logo {
+  border-radius: 0;
+}
+
+.browseJob .logoSpc .job-company-name {
+  padding-left: 15px;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .createjob-btn {
@@ -142,6 +159,14 @@
   font-weight: 400;
   line-height: normal;
   padding: 10px 0px;
+}
+
+.mandatory-label {
+  color: #000;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .campaign-features-wrapper {
@@ -432,5 +457,8 @@
     width: 35px;
     height: 35px;
     margin-right: 8px;
+  }
+  .browseJob .recent-set-three.col-md-5 {
+    justify-content: center;
   }
 }/*# sourceMappingURL=createjobs.css.map */

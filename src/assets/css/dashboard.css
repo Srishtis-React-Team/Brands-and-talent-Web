@@ -133,11 +133,11 @@ body {
 
 .form-control,
 .form-select {
-  height: 50px !important;
+  height: 45px !important;
 }
 
 .css-13cymwt-control {
-  height: 50px !important;
+  height: 45px !important;
 }
 
 .select-text {
@@ -583,21 +583,21 @@ a:hover {
 .signup-terms-linetwo {
   color: #000;
   text-align: center;
-  font-size: 15px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
   text-align: center;
   padding: 0px 0px;
   width: 100%;
   margin: 0 auto;
-  line-height: 25px;
+  line-height: 20px;
   text-align: center;
 }
 
 .signup-terms-linetwo > span {
   color: #c2114b;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 600;
   cursor: pointer;
@@ -1747,9 +1747,23 @@ input[type="radio"] {
   padding-top: 10px;
 }
 
+.favTalent .gallery-wrapper.modalSpc{
+  width: 100%;
+  margin: 15px 0 5px;
+}
+.favTalent .contSpc{ margin-bottom: 15px; }
 
+.headerDashboard .dropdown-menu, .header .dropdown-menu{
+  right: 0 !important;
+  left: inherit !important;
+  transform: translate(0px, 22px) !important;
+  top: 0 !important;
+}
+.headerDashboard ul.blogs-menu, .header ul.blogs-menu  {
+  right: -105px !important;
+}
 
-
+.creatorPage-Wraper{ }
 
 
 
@@ -1787,8 +1801,13 @@ input[type="radio"] {
 
 
 }
+@media (max-width: 1200px) {
+  .btLogo { height: 35px !important; }
+  .navTxt {  padding-right: 25px; }
 
+}
 @media (max-width: 991px) {
+
   .brand-section {
     min-height: auto;
   }
@@ -1879,8 +1898,6 @@ input[type="radio"] {
   }
 }
 @media (max-width: 767px) {
-
-  .btLogo {height: 35px; }
 
   .gallery-wrapper {
     width: 31%;

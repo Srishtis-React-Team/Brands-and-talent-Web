@@ -292,6 +292,7 @@
   justify-content: center;
   width: 100%;
   margin-top: 70px;
+  overflow: inherit;
 }
 
 .brands-form-wrapper {
@@ -303,15 +304,19 @@
   padding-left: 2.375rem;
 }
 
+.form-group.has-search {
+  position: relative;
+}
+
 .has-search .form-control-feedback {
   position: absolute;
   display: block;
   width: 2.375rem;
-  height: 2.375rem;
-  line-height: 3.375rem;
   text-align: center;
   pointer-events: none;
   color: #aaa;
+  height: 100%;
+  line-height: 48px;
 }
 
 .adult-signup-main {
@@ -319,7 +324,7 @@
   max-width: 100%;
   border: 1px solid #aaa;
   border-radius: 20px;
-  padding: 15px 25px;
+  padding: 15px 25px 25px;
   border-radius: 20px;
 }
 

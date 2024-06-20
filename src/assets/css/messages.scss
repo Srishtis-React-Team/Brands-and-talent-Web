@@ -45,42 +45,49 @@
 }
 
 .message-container-wrapper {
-  display: flex;
-  height: 700px;
-  overflow: scroll;
+  // display: flex;
+  // height: 700px;
+  // overflow: scroll;
   // padding-top: 20px;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  // overflow-x: hidden;
+  // overflow-y: hidden;
+  width: 100%;
 }
 
 .message-sidebar {
-  width: 20%;
-  height: 700px;
-  overflow: scroll;
-  padding-top: 20px;
-  padding-right: 20px;
-  overflow-x: hidden;
+  padding: 15px 15px 0 10px;
+  border-right: 1px solid #ddd;
+  margin: 10px 0;
 }
+.message-leftmenu-main.scroll {
+  min-height: 59vh;
+  height: 100%;
+  max-height: 59vh;
+}
+.conversation-main {
+  padding: 30px;
 
-.conversation-section {
-  width: 80%;
-  height: 700px;
-  overflow: scroll;
+  min-height: 56vh;
+  height: 100%;
+  max-height: 56vh;
+}
+.conversation-section .scroll, .message-sidebar .scroll {
+  overflow-y: auto;
   overflow-x: hidden;
-  overflow-y: hidden;
 }
 
 .message-header-main {
-  display: flex;
+  // display: flex;
   // justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
   border-bottom: 1px solid #969595;
+  width: 100%;
 }
 
 .message-search {
-  width: 15%;
-  margin-left: 30px;
+  width: 100%;
+  margin: 0;
 }
 
 .message-user-image {
@@ -124,13 +131,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 85%;
+  width: 100%;
 }
 
 .message-userdetails-wrapper {
   display: flex;
   align-items: center;
-  padding-left: 100px;
+  padding-left: 20px;
+
 }
 
 .message-userdetails-menu-wrapper {
@@ -185,7 +193,12 @@
 .message-more:hover {
   color: #c2114b;
 }
-
+.message-search .form-group.has-search {
+  position: relative;
+}
+.message-search .form-group.has-search .form-control-feedback{
+  height: 100%;
+}
 .message-user-time {
   color: #b1b1b1;
   font-family: "Open Sans", sans-serif;
@@ -196,12 +209,7 @@
   padding: 4px 0px;
 }
 
-.conversation-main {
-  padding: 30px;
-  height: 640px;
-  overflow: scroll;
-  overflow-x: hidden;
-}
+
 
 .conversation-left-side {
   // display: flex;
@@ -277,12 +285,10 @@
   border-radius: 50px;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
-  // position: fixed;
-  // bottom: 105px;
+  padding: 10px 10px;
   height: 60px;
-  width: 98%;
-  margin-left: 15px;
+  width: 100%;
+  margin: 10px 0 0;
 }
 
 .conversation-send {
@@ -376,46 +382,7 @@
   background-color: e1efff;
 }
 
-@media only screen and (min-width: 769px) and (max-width: 1200px) {
-  .conversation-input-section {
-    display: flex;
-    border: 1px solid #c3c3c3;
-    border-radius: 50px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    // position: fixed;
-    // bottom: 105px;
-    height: 60px;
-    width: 90%;
-    margin-left: 15px;
-  }
 
-  .message-sidebar {
-    width: 45%;
-    height: 700px;
-    overflow: scroll;
-    padding-top: 20px;
-    padding-right: 20px;
-    overflow-x: hidden;
-  }
-  .conversation-section {
-    width: 65%;
-    height: 700px;
-    overflow: scroll;
-    overflow-x: hidden;
-    overflow-y: hidden;
-  }
-  .message-search {
-    width: 48%;
-    margin-left: 30px;
-  }
-  .message-userdetails-wrapper {
-    display: flex;
-    align-items: center;
-    padding-left: 25px;
-  }
-}
 
 @media only screen and (min-width: 320px) and (max-width: 768px) {
   .message-main {
@@ -433,22 +400,5 @@
   .message-user-wrapper {
     display: none;
   }
-  .message-search {
-    width: 100%;
-    margin-left: 0px;
-  }
-  .conversation-section {
-    width: 80%;
-    height: 630px;
-    overflow: scroll;
-    overflow-x: hidden;
-    display: none;
-  }
-  .message-sidebar {
-    width: 100%;
-    height: 700px;
-    overflow: scroll;
-    padding-top: 20px;
-    overflow-x: hidden;
-  }
+
 }

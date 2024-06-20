@@ -16,10 +16,22 @@
   display: flex;
 }
 
+.go-dashboard {
+  color: #c2114b;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 4px 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .message-file-title {
   color: #000000;
   font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -27,40 +39,43 @@
 }
 
 .message-container-wrapper {
-  display: flex;
-  height: 700px;
-  overflow: scroll;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  width: 100%;
 }
 
 .message-sidebar {
-  width: 20%;
-  height: 700px;
-  overflow: scroll;
-  padding-top: 20px;
-  padding-right: 20px;
-  overflow-x: hidden;
+  padding: 15px 15px 0 10px;
+  border-right: 1px solid #ddd;
+  margin: 10px 0;
 }
 
-.conversation-section {
-  width: 80%;
-  height: 700px;
-  overflow: scroll;
+.message-leftmenu-main.scroll {
+  min-height: 59vh;
+  height: 100%;
+  max-height: 59vh;
+}
+
+.conversation-main {
+  padding: 30px;
+  min-height: 56vh;
+  height: 100%;
+  max-height: 56vh;
+}
+
+.conversation-section .scroll, .message-sidebar .scroll {
+  overflow-y: auto;
   overflow-x: hidden;
-  overflow-y: hidden;
 }
 
 .message-header-main {
-  display: flex;
   align-items: center;
   padding-bottom: 20px;
   border-bottom: 1px solid #969595;
+  width: 100%;
 }
 
 .message-search {
-  width: 15%;
-  margin-left: 30px;
+  width: 100%;
+  margin: 0;
 }
 
 .message-user-image {
@@ -107,13 +122,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 85%;
+  width: 100%;
 }
 
 .message-userdetails-wrapper {
   display: flex;
   align-items: center;
-  padding-left: 100px;
+  padding-left: 20px;
 }
 
 .message-userdetails-menu-wrapper {
@@ -169,6 +184,14 @@
   color: #c2114b;
 }
 
+.message-search .form-group.has-search {
+  position: relative;
+}
+
+.message-search .form-group.has-search .form-control-feedback {
+  height: 100%;
+}
+
 .message-user-time {
   color: #b1b1b1;
   font-family: "Open Sans", sans-serif;
@@ -179,34 +202,27 @@
   padding: 4px 0px;
 }
 
-.conversation-main {
-  padding: 30px;
-  height: 640px;
-  overflow: scroll;
-  overflow-x: hidden;
-}
-
 .conversation-right-side {
   margin: 30px 0px;
 }
 
 .conversation-left-user-img {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
 }
 
 .conversation-right-user-img {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   margin-left: 20px;
 }
 
 .conversation-left-message-container {
   border-radius: 8px;
   background-color: #e1efff;
-  padding: 15px;
+  padding: 10px;
   margin-left: 20px;
   display: flex;
 }
@@ -214,7 +230,7 @@
 .conversation-right-message-container {
   border-radius: 8px;
   background-color: #f0f0f0;
-  padding: 20px;
+  padding: 10px;
   width: 40%;
   margin-left: 20px;
 }
@@ -240,7 +256,7 @@
 .conversation-message {
   color: #000000;
   font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -253,10 +269,10 @@
   border-radius: 50px;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 10px 10px;
   height: 60px;
-  width: 98%;
-  margin-left: 15px;
+  width: 100%;
+  margin: 10px 0 0;
 }
 
 .conversation-send {
@@ -348,43 +364,6 @@
   background-color: e1efff;
 }
 
-@media only screen and (min-width: 769px) and (max-width: 1200px) {
-  .conversation-input-section {
-    display: flex;
-    border: 1px solid #c3c3c3;
-    border-radius: 50px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    height: 60px;
-    width: 90%;
-    margin-left: 15px;
-  }
-  .message-sidebar {
-    width: 45%;
-    height: 700px;
-    overflow: scroll;
-    padding-top: 20px;
-    padding-right: 20px;
-    overflow-x: hidden;
-  }
-  .conversation-section {
-    width: 65%;
-    height: 700px;
-    overflow: scroll;
-    overflow-x: hidden;
-    overflow-y: hidden;
-  }
-  .message-search {
-    width: 48%;
-    margin-left: 30px;
-  }
-  .message-userdetails-wrapper {
-    display: flex;
-    align-items: center;
-    padding-left: 25px;
-  }
-}
 @media only screen and (min-width: 320px) and (max-width: 768px) {
   .message-main {
     background-color: #eeeeee;
@@ -400,23 +379,5 @@
   }
   .message-user-wrapper {
     display: none;
-  }
-  .message-search {
-    width: 100%;
-    margin-left: 0px;
-  }
-  .conversation-section {
-    width: 80%;
-    height: 630px;
-    overflow: scroll;
-    overflow-x: hidden;
-    display: none;
-  }
-  .message-sidebar {
-    width: 100%;
-    height: 700px;
-    overflow: scroll;
-    padding-top: 20px;
-    overflow-x: hidden;
   }
 }/*# sourceMappingURL=messages.css.map */

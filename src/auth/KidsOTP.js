@@ -161,7 +161,7 @@ const KidsOTP = () => {
           <div className="otp-enter">Please enter the code we just send to</div>
           <div className="otp-mail">{queryString}</div>
           <div className="otp-boxes">
-            <form action="" className="mt-5 otp-form">
+            <form action="" className="mt-4 otp-form">
               {otp.map((digit, index) => (
                 <input
                   key={index}
