@@ -48,7 +48,7 @@
   vertical-align: middle;
 }
 .premium-checkbox[type="radio"] {
-  accent-color: #106d3e;
+  accent-color: #0b70db;
   height: 20px;
   width: 20px;
   vertical-align: middle;
@@ -195,7 +195,7 @@
 }
 
 .premium-btn {
-  background: #106d3e;
+  background: #0b70db;
 }
 .giftSize{
   text-align: center;

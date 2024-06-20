@@ -92,10 +92,9 @@
 }
 
 .profImg {
-  width: 45px;
-  height: 45px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
-  border: 2px solid #c2114b;
   margin-right: 10px;
   overflow: hidden;
 }
@@ -126,12 +125,11 @@
   align-items: center;
 }
 .talent-profile .talent-data-wrapper .profImg {
-  width: 45px;
-  height: 45px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
-  border: 2px solid #c2114b;
   margin-right: 10px;
-  background-color: #FFF;
+  background-color: #fff;
   overflow: hidden;
 }
 .talent-profile .talent-data-wrapper .profImg .profile-img {
@@ -203,11 +201,14 @@
   text-align: center;
 }
 
-.sidenavWraper i.bi-person, .sidenavWraper i.bi-person-plus, .sidenavWraper i.bi-person-check {
+.sidenavWraper i.bi-person,
+.sidenavWraper i.bi-person-plus,
+.sidenavWraper i.bi-person-check {
   font-size: 22px;
 }
 
-.sidenavWraper .bi-person::before, .sidenavWraper .bi-person-check::before {
+.sidenavWraper .bi-person::before,
+.sidenavWraper .bi-person-check::before {
   content: "\f4e1";
   margin: 0 0 0 -2px;
 }
@@ -260,7 +261,8 @@
   display: none;
 }
 
-.editTabs .MuiBox-root, .editTabs .edit-basicdetails-section-main {
+.editTabs .MuiBox-root,
+.editTabs .edit-basicdetails-section-main {
   padding-bottom: 0;
 }
 

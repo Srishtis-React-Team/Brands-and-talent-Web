@@ -161,8 +161,8 @@ const BrandFavorites = () => {
                     {talentList?.length > 0 &&
                       talentList?.map((item) => {
                         return (
-                          <div className="gallery-wrapper modalSpc col-md-4">
-                            <div className="">
+                          <div className="col-md-4 col-lg-3 favTalent">
+                            <div className="gallery-wrapper modalSpc">
                               <img
                                 className="gallery-img"
                                 src={`${API.userFilePath}${item.image?.fileData}`}
@@ -189,7 +189,7 @@ const BrandFavorites = () => {
                                 ></img>
                               )}
                             </div>
-                            <div className="">
+                            <div className="contSpc">
                               <div className="content">
                                 <div
                                   className="find-creator-name"
