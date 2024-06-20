@@ -145,7 +145,7 @@ const ContactSupport = () => {
             with in 1-2 bussiness days.{" "}
           </p>
 
-          <div className="update-password-main row">
+          <div className="update-password-main w-100 row">
             <div className="kids-form-section col-md-6 mb-3">
              
                 <label className="form-label">
@@ -222,8 +222,8 @@ const ContactSupport = () => {
                   Enquiry<span className="mandatory">*</span>
                 </label>
                 <textarea
-                  style={{ width: "710px" }}
-                  className="form-control address-textarea"
+                  
+                  className="form-control address-textarea w-100"
                   id="exampleFormControlTextarea1"
                   value={enquiry}
                   rows="3"
