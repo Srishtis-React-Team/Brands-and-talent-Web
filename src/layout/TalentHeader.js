@@ -185,16 +185,27 @@ const TalentHeader = ({ toggleMenu, myState }) => {
       } else if (menuItem === "edit") {
         navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
       }
-      if (menuItem == "find-talent") {
-        setMessage("You need to sign Up as Brand to find talents");
+      if (talentData?.planName == "Basic") {
+        setMessage("Purchase Pro or Premium Plan to unlock this feature");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
-          navigate("/brand-firstGig");
+          navigate("/pricing");
         }, 3000);
+      } else if (talentData?.planName != "Basic") {
+        navigate("/find-creators");
       }
       console.log(`Clicked on ${menuItem}`);
     };
+
+    // if (menuItem == "find-talent") {
+    //   setMessage("You need to sign Up as Brand to find talents");
+    //   setOpenPopUp(true);
+    //   setTimeout(function() {
+    //     setOpenPopUp(false);
+    //     navigate("/brand-firstGig");
+    //   }, 3000);
+    // }
   };
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
