@@ -144,15 +144,32 @@ const Header = ({ onData }) => {
         }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/find-creators");
-      } else if (currentUser_type === "talent" && currentUserId) {
-        setMessage("You need to sign Up as Brand to find talents");
+      } else if (
+        currentUser_type === "talent" &&
+        talentData?.planName == "Basic"
+      ) {
+        setMessage("Purchase Pro or Premium Plan to unlock this feature");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
-          navigate("/brand-firstGig");
+          navigate("/pricing");
         }, 3000);
+      } else if (
+        currentUser_type === "talent" &&
+        talentData?.planName != "Basic"
+      ) {
+        navigate("/find-creators");
       }
     }
+
+    // else if (currentUser_type === "talent" && currentUserId) {
+    //   setMessage("You need to sign Up as Brand to find talents");
+    //   setOpenPopUp(true);
+    //   setTimeout(function() {
+    //     setOpenPopUp(false);
+    //     navigate("/brand-firstGig");
+    //   }, 3000);
+    // }
   };
 
   useEffect(() => {

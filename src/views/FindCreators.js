@@ -955,7 +955,7 @@ const FindCreators = () => {
                 {talentList?.map((item) => {
                   return (
                     <div className="gallery-wrapper">
-                      <div className="">
+                      <div className="" onClick={() => openTalent(item)}>
                         <img
                           className="gallery-img"
                           src={`${API.userFilePath}${item.image?.fileData}`}
@@ -984,10 +984,7 @@ const FindCreators = () => {
                       </div>
                       <div className="">
                         <div className="content">
-                          <div
-                            className="find-creator-name"
-                            onClick={() => openTalent(item)}
-                          >
+                          <div className="find-creator-name">
                             {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                           </div>
                           <div className="find-creator-address ">

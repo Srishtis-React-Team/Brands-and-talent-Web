@@ -983,7 +983,10 @@ const BrandTalents = () => {
                         {talentList?.map((item) => {
                           return (
                             <div className="col-md-4 col-lg-3 px-1">
-                              <div className="gallery-wrapper w-100">
+                              <div
+                                className="gallery-wrapper w-100"
+                                onClick={() => openTalent(item)}
+                              >
                                 <div className="galBox">
                                   <img
                                     className="gallery-img"
@@ -1013,10 +1016,7 @@ const BrandTalents = () => {
                                 </div>
                                 <div className="">
                                   <div className="content">
-                                    <div
-                                      className="find-creator-name"
-                                      onClick={() => openTalent(item)}
-                                    >
+                                    <div className="find-creator-name">
                                       {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                     </div>
                                     <div className="find-creator-address ">

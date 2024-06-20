@@ -122,7 +122,7 @@ const MessageTalents = () => {
       console.log("FIND_MESSAGE_LOPP_useEffect1");
       setClickedUserId(urlUserID);
       getMessageByUser(urlUserID);
-      fetchUserData(urlUserID);
+      // fetchUserData(urlUserID);
       createChat(urlUserID);
     }
     if (currentUserId) {
@@ -133,20 +133,6 @@ const MessageTalents = () => {
       // fetchUserData(currentUserId);
     }
   }, [currentUserId, urlUserID]);
-
-  const fetchUserData = async (user_id) => {
-    await ApiHelper.post(`${API.fetchUserData}${user_id}`)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          if (resData.data.data) {
-            console.log(resData.data.data, "getUserByIDRESPONSE");
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   //socket codes
   useEffect(() => {
@@ -244,7 +230,7 @@ const MessageTalents = () => {
         console.log(resData, "resData findPreviousChatUsers");
         if (resData) {
           setUsersList(resData?.data?.data);
-          if (resData.data.data.length > 0) {
+          if (resData.data.data.length > 0 && userList.length === 0) {
             setInitaialUser(resData.data.data, resData.data.data[0]?._id);
           }
           if (resData?.data?.status === false) {
@@ -331,6 +317,7 @@ const MessageTalents = () => {
         setClickedUserId(res?.senderId);
         createChat(res?.senderId);
         // findPreviousChatUsers();
+        setRecivedUser(res?.senderId);
         getMessageByUser(res?.senderId);
         console.log(currentChat?._id, "currentChat?._id");
         if (currentChat?._id !== res?.current_chat) return;
@@ -342,6 +329,21 @@ const MessageTalents = () => {
       };
     }
   }, [socket, currentChat]);
+
+  const setRecivedUser = async (sender_id) => {
+    await ApiHelper.post(`${API.fetchUserData}${sender_id}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "getUserByIDRESPONSE");
+            setSelectedUser(resData.data.data);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     console.log(selectedUser, "selectedUser");
