@@ -356,18 +356,18 @@
 
 .planName.free{
   color: #FFF;
-  border: 2px solid #AB7E13;
-  background-color: #AB7E13;
+  border: 2px solid #ADD8E6;
+  background-color: #ADD8E6;
 }
 .planName.pro{
   color: #FFF;
-  border: 2px solid #5F2895;
-  background-color: #5F2895;
+  border: 2px solid #9370DB;
+  background-color: #9370DB;
 }
 .planName.premium{
   color: #FFF;
-  border: 2px solid #0b70db;
-  background-color: #0b70db;
+  border: 2px solid #FFD700;
+  background-color: #FFD700;
 }
 .individual-talent-name {
   display: flex;
