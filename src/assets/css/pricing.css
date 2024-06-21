@@ -42,13 +42,13 @@
 }
 
 .pro-checkbox[type="radio"] {
-  accent-color: #5f2895;
+  accent-color: #9370DB;
   height: 20px;
   width: 20px;
   vertical-align: middle;
 }
 .premium-checkbox[type="radio"] {
-  accent-color: #0b70db;
+  accent-color: #FFD700;
   height: 20px;
   width: 20px;
   vertical-align: middle;
@@ -59,18 +59,18 @@
   display: inline-block;
 }
 
-.pro-plans .icPrice { color: #5F2895; }
+.pro-plans .icPrice { color: #9370DB; }
 
 .premium-plans .icPrice { 
   /* color: #106D3E;  */
-  color: #0b70db; 
+  color: #FFD700; 
 }
 
-.free-plans .icPrice { color: #AB7E13; }
+.free-plans .icPrice { color: #ADD8E6; }
 
 .plan-content {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: 5px 0px;
 }
 .plan-content .listIc {
@@ -91,15 +91,15 @@
 }
 
 .free-plans {
-  border-top: 11px solid #AB7E13;
+  border-top: 11px solid #ADD8E6;
 }
 
 .pro-plans {
-  border-top: 11px solid #5F2895;
+  border-top: 11px solid #9370DB;
 }
 
 .premium-plans {
-  border-top: 11px solid #0b70db;
+  border-top: 11px solid #FFD700;
 }
 
 .plan-name {
@@ -187,15 +187,15 @@
 }
 
 .free-btn {
-  background: #ab7e13;
+  background: #ADD8E6;
 }
 
 .pro-btn {
-  background: #5f2895;
+  background: #9370DB;
 }
 
 .premium-btn {
-  background: #0b70db;
+  background: #FFD700;
 }
 .giftSize{
   text-align: center;
@@ -206,10 +206,10 @@
   margin: 7px 0 10px;
 }
 .pro-gift {
-  color: #5f2895;
+  color: #9370DB;
 }
 .premium-gift {
-  color: #0b70db;
+  color: #FFD700;
 }
 
 .save-plan {
