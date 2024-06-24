@@ -608,7 +608,7 @@ const FindCreators = () => {
     <>
       <Header />
       <section>
-        <div className="popular-header" style={{marginTop: '64px'}}>
+        <div className="popular-header" style={{ marginTop: "64px" }}>
           <div className="container">
             <div className="header-title">Popular Talents</div>
             <div className="header-menu">
@@ -745,7 +745,9 @@ const FindCreators = () => {
                           label: country,
                           key: index,
                         }))}
-                        value={country ? { value: country, label: country } : null}
+                        value={
+                          country ? { value: country, label: country } : null
+                        }
                         onChange={handleSelectedCountry}
                         isSearchable={true}
                       />
@@ -776,7 +778,9 @@ const FindCreators = () => {
                           value: city.cityId, // or whatever unique identifier you want to use
                           label: city.name,
                         }))}
-                        value={kidsCity ? { value: kidsCity, label: kidsCity } : null}
+                        value={
+                          kidsCity ? { value: kidsCity, label: kidsCity } : null
+                        }
                         onChange={handleSelectedCity}
                         isSearchable={true}
                         noOptionsMessage={customNoOptionsMessageCity}
@@ -960,71 +964,77 @@ const FindCreators = () => {
                   <div className="gallery-section">
                     <div className="gallery-main p-0 m-0">
                       <div className="row favTalent px-2 mb-3">
-                          {talentList?.map((item) => {
-                            return (
-                              <div className="col-sm-6 col-md-4 col-lg-3 px-1">
-                                <div className="gallery-wrapper modalSpc">
-                                  <div className="imgBox" onClick={() => openTalent(item)}>
-                                    <img
-                                      className="gallery-img"
-                                      src={`${API.userFilePath}${item.image?.fileData}`}
-                                    ></img>
-                                    <div className="rating">
-                                      <img src={brightStar}></img>
-                                      <img src={brightStar}></img>
-                                      <img src={brightStar}></img>
-                                      <img src={darkStar}></img>
-                                      <img src={darkStar}></img>
-                                    </div>
-                                    {!item.isFavorite && (
-                                      <img
-                                        className="heart-icon"
-                                        src={heartIcon}
-                                        onClick={() => addFavorite(item)}
-                                      ></img>
-                                    )}
-                                    {item.isFavorite === true && (
-                                      <img
-                                        className="heart-icon"
-                                        src={favoruiteIcon}
-                                        onClick={() => removeFavorite(item)}
-                                      ></img>
-                                    )}
+                        {talentList?.map((item) => {
+                          return (
+                            <div className="col-sm-6 col-md-4 col-lg-3 px-1">
+                              <div
+                                className="gallery-wrapper modalSpc"
+                                onClick={() => openTalent(item)}
+                              >
+                                <div className="imgBox">
+                                  <img
+                                    className="gallery-img"
+                                    src={`${API.userFilePath}${item.image?.fileData}`}
+                                  ></img>
+                                  <div className="rating">
+                                    <img src={brightStar}></img>
+                                    <img src={brightStar}></img>
+                                    <img src={brightStar}></img>
+                                    <img src={darkStar}></img>
+                                    <img src={darkStar}></img>
                                   </div>
-                                  <div className="galCont">
-                                    <div className="content">
-                                      <div className="find-creator-name">
-                                        {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
-                                      </div>
-                                      <div className="find-creator-address ">
-                                        {item.profession?.map((profession, index) => (
+                                  {!item.isFavorite && (
+                                    <img
+                                      className="heart-icon"
+                                      src={heartIcon}
+                                      onClick={() => addFavorite(item)}
+                                    ></img>
+                                  )}
+                                  {item.isFavorite === true && (
+                                    <img
+                                      className="heart-icon"
+                                      src={favoruiteIcon}
+                                      onClick={() => removeFavorite(item)}
+                                    ></img>
+                                  )}
+                                </div>
+                                <div className="galCont">
+                                  <div className="content">
+                                    <div className="find-creator-name">
+                                      {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
+                                    </div>
+                                    <div className="find-creator-address ">
+                                      {item.profession?.map(
+                                        (profession, index) => (
                                           <React.Fragment key={index}>
                                             {profession.value}
-                                            {index !== item.profession.length - 1 && ","}
+                                            {index !==
+                                              item.profession.length - 1 && ","}
                                           </React.Fragment>
-                                        ))}
-                                      </div>
-                                      <div className="user-details">
-                                        <div className="location-wrapper">
-                                          <img src={locationIcon} alt="" />
-                                          <div className="find-creator-location-name ">
-                                            {item?.parentCountry}
-                                          </div>
+                                        )
+                                      )}
+                                    </div>
+                                    <div className="user-details">
+                                      <div className="location-wrapper">
+                                        <img src={locationIcon} alt="" />
+                                        <div className="find-creator-location-name ">
+                                          {item?.parentCountry}
                                         </div>
-                                        <div className="location-wrapper">
-                                          <img src={jobIcon} alt="" />
-                                          <div className="find-creator-location-name">
-                                            25 Jobs Booked
-                                          </div>
+                                      </div>
+                                      <div className="location-wrapper">
+                                        <img src={jobIcon} alt="" />
+                                        <div className="find-creator-location-name">
+                                          25 Jobs Booked
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            );
-                          })}
-                        </div>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -47,6 +47,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [threadsFollowers, setThreadsFollowers] = useState("");
   const [tiktoksFollowers, setTiktoksFollowers] = useState("");
   const [youtubesFollowers, setYoutubesFollowers] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [urls, setUrls] = useState([]);
+
   const [idType, setIdType] = useState("");
   const [verificationID, setVerificationID] = useState("");
   const [loader, setLoader] = useState(false);
@@ -129,6 +132,22 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleResumeDragOver = (e) => {
     e.preventDefault();
+  };
+
+  const handleUrlChange = (e) => {
+    setVideoUrl(e.target.value);
+  };
+
+  const handleAddUrl = () => {
+    if (videoUrl.trim() !== "") {
+      setUrls([...urls, videoUrl]);
+      setVideoUrl("");
+    }
+  };
+
+  const handleDeleteUrl = (index) => {
+    const newUrls = urls.filter((url, i) => i !== index);
+    setUrls(newUrls);
   };
 
   const profileUpload = (event) => {
@@ -433,6 +452,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       verificationId: verificationID,
       features: features,
       childAboutYou: aboutYou,
+      videoAudioUrls: videoUrl,
     };
     setIsLoading(true);
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
@@ -496,7 +516,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                 </div>
                 <div className="kids-main">
                   <div className="kids-form-title pb-0">
-                    <span>Profile Picture <span className="astrix">*</span></span>
+                    <span>
+                      Profile Picture <span className="astrix">*</span>
+                    </span>
                   </div>
                   <div
                     className="cv-section"
@@ -577,7 +599,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div className="kids-form-title pb-1"><span>Bio</span></div>
+                  <div className="kids-form-title pb-1">
+                    <span>Bio</span>
+                  </div>
 
                   <div className="rich-editor">
                     <label className="form-label">About You</label>
@@ -607,7 +631,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
 
                   <div className="kids-form-title pb-0">
-                    <span>Portfolio <span className="astrix">*</span></span>
+                    <span>
+                      Portfolio <span className="astrix">*</span>
+                    </span>
                   </div>
                   <div
                     className="cv-section"
@@ -713,7 +739,89 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">Videos & Audios</label>
+                      <div className="videos-label">
+                        ( Upload your previous work samples videos/audios.)
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <input
+                          type="text"
+                          className="form-control mt-2 ml-3"
+                          value={videoUrl}
+                          onChange={(e) => {
+                            handleUrlChange(e);
+                          }}
+                          placeholder="Paste Videos/Audios Url"
+                        ></input>
+                        <i
+                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
+                          onClick={handleAddUrl}
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  {urls && (
+                    <>
+                      {urls.map((url, index) => {
+                        return (
+                          <>
+                            <div key={index} className="uploaded-file-wrapper">
+                              <div className="file-section">
+                                <a
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="fileName"
+                                >
+                                  {url}
+                                </a>
+                              </div>
+                              <div className="file-options">
+                                <div className="sucess-tick">
+                                  <img src={greenTickCircle} alt="" />
+                                </div>
+                                <div className="option-menu">
+                                  <div className="dropdown">
+                                    <img
+                                      onClick={() =>
+                                        setShowOptions(!showOptions)
+                                      }
+                                      src={elipsis}
+                                      alt=""
+                                      className="dropdown-toggle elipsis-icon"
+                                      type="button"
+                                      id="resumeDropdown"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    />
+                                    <ul
+                                      className="dropdown-menu"
+                                      aria-labelledby="resumeDropdown"
+                                    >
+                                      <li>
+                                        <a
+                                          className="dropdown-item"
+                                          onClick={() => handleDeleteUrl(index)}
+                                          id="delete"
+                                        >
+                                          Delete
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </>
+                  )}
+
+                  {/* <div
                     className="cv-section"
                     onDrop={handleVideoDrop}
                     onDragOver={handleVideoDragOver}
@@ -807,8 +915,11 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                         );
                       })}
                     </>
-                  )}
-                  <div className="kids-form-title pb-0"><span>CV</span></div>
+                  )} */}
+
+                  <div className="kids-form-title pb-0">
+                    <span>CV</span>
+                  </div>
                   <div
                     className="cv-section"
                     onDrop={handleResumeDrop}
@@ -911,7 +1022,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </>
                   )}
 
-                  <div className="kids-form-title"><span>Features (Optional)</span></div>
+                  <div className="kids-form-title">
+                    <span>Features (Optional)</span>
+                  </div>
 
                   <div className="features-section">
                     {featuresList && (
@@ -950,7 +1063,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     )}
                   </div>
 
-                  <div className="kids-form-title"><span>ID Verification</span></div>
+                  <div className="kids-form-title">
+                    <span>ID Verification</span>
+                  </div>
 
                   <div className="id-verify-info">
                     Stand out and secure more jobs and projects by becoming

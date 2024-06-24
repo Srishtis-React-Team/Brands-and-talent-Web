@@ -185,14 +185,14 @@ const TalentHeader = ({ toggleMenu, myState }) => {
       } else if (menuItem === "edit") {
         navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
       }
-      if (talentData?.planName == "Basic") {
+      if (menuItem == "find-talent" && talentData?.planName == "Basic") {
         setMessage("Purchase Pro or Premium Plan to unlock this feature");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
           navigate("/pricing");
         }, 3000);
-      } else if (talentData?.planName != "Basic") {
+      } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
         navigate("/find-creators");
       }
       console.log(`Clicked on ${menuItem}`);

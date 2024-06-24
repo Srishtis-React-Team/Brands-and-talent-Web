@@ -57,25 +57,28 @@ const ServicesCarousel = ({ talentData }) => {
   };
 
   const messageNow = () => {
-    if (talentData?.planName == "Basic") {
-      setMessage("Purchase Pro or Premium Plan to unlock this feature");
-      setOpenPopUp(true);
-      setTimeout(function() {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 3000);
-    } else {
-      navigate(`/message?${talentData?._id}`);
-    }
+    navigate(`/message?${talentData?._id}`);
+
+    // if (talentData?.planName == "Basic") {
+    //   setMessage("Purchase Pro or Premium Plan to unlock this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function() {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 3000);
+    // } else {
+    //   navigate(`/message?${talentData?._id}`);
+    // }
   };
 
   return (
     <>
       {servicesList && servicesList.length > 0 && (
-        <div className="portofolio-section">
-          <div className="portofolio-title">Services</div>
-          <div className="view-all">View All</div>
-        </div>
+        <></>
+        // <div className="portofolio-section">
+        //   <div className="portofolio-title">Services</div>
+        //   <div className="view-all">View All</div>
+        // </div>
       )}
 
       <div className="service-list-main">
@@ -94,16 +97,17 @@ const ServicesCarousel = ({ talentData }) => {
                       />
                     </div>
                     <div className="service-list-content col-md-8">
-                      <div className="starting-amount">From US $2500</div>
+                      <div className="starting-amount">
+                        {item?.serviceAmount} USD
+                      </div>
                       <div className="service-title">{item?.serviceName}</div>
                       <div
                         className="service-description"
                         dangerouslySetInnerHTML={{ __html: item?.editorState }}
                       />
-
                       <div className="text-btm">
                         <div className="service-duration">
-                          <div>With In 2 Months</div>
+                          <div>{item?.serviceDuration}</div>
                           <div>3 Concepts, 2 Revisions</div>
                         </div>
                         <div

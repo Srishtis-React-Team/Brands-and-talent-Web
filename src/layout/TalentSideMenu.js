@@ -112,7 +112,7 @@ const TalentSideMenu = ({ myState }) => {
           </div>
           <div className="talents-plan-info">
             <div className="talent-plan-name">
-              Plan : <span>Basic</span>
+              Plan : <span>{talentData?.planName}</span>
             </div>
 
             <div className="talent-plan-name">

@@ -80,6 +80,7 @@ export const API = {
   activateUser: BASEURL + "users/activateUser/",
   deleteService: BASEURL + "users/deleteService",
   deleteIndividualService: BASEURL + "users/deleteIndividualService",
+  reviewsPosting: BASEURL + "users/reviewsPosting",
 
   //keyword
   postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",

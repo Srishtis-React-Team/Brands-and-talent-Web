@@ -1,5 +1,5 @@
 .kidsform-one {
-  .select__control{
+  .select__control {
     font-size: 15px;
     min-height: 50px;
   }
@@ -693,19 +693,18 @@
   position: relative;
 }
 .kids-form-title::after {
-    content: "";
-    display: block;
-    height: 1px;
-    width: 100%;
-    margin: 0;
-    border: 1px solid black;
-    position: absolute;
-    z-index: -1;
-
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 0;
+  border: 1px solid black;
+  position: absolute;
+  z-index: -1;
 }
 .kids-form-title > span {
   display: inline-block;
-  background-color: #FFF;
+  background-color: #fff;
   padding: 5px 15px 5px 0;
 }
 
@@ -741,7 +740,8 @@
 .splitter {
   padding: 20px 0px;
 }
-.category-name, .selected-category{
+.category-name,
+.selected-category {
   padding: 8px 16px;
   background-color: rgb(219, 219, 219);
   margin: 8px 5px 0px 0px;
@@ -989,8 +989,8 @@
 }
 
 .no-data {
-  font-size: 12px;
-  color: red;
+  font-size: 14px;
+  color: #c2114b;
   font-family: sans-serif;
 }
 
@@ -1023,7 +1023,7 @@
   border-radius: 100px;
   object-fit: cover;
 }
-.talentSet .subtitles{
+.talentSet .subtitles {
   margin: 10px 0;
   font-size: 16px;
   font-weight: 600;
@@ -1119,12 +1119,10 @@
 .bi-arrow-left-circle-fill:hover {
   color: #c2114b;
 }
-.userName-n{
+.userName-n {
   font-size: 20px;
   padding: 10px 0 5px;
 }
-
-
 
 .edit-profile-navigation-text {
   font-size: 12px;
@@ -1135,7 +1133,9 @@
   cursor: pointer;
 }
 
-.update-password-main .password_strength_box{ margin-top: 0; }
+.update-password-main .password_strength_box {
+  margin-top: 0;
+}
 
 .edit-profile-navigation-text:hover {
   font-size: 12px;
