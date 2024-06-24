@@ -97,8 +97,10 @@ const TalentProfile = () => {
   const [talentData, setTalentData] = useState([]);
   const [photosList, setPhotosList] = useState([]);
   const [videoAudioList, setVideoAudioList] = useState([]);
+  const [videoAudioUrls, setVideoAudioUrls] = useState([]);
   const [featuresList, setFeaturesList] = useState([]);
   const [cvList, setCvList] = useState([]);
+  const [reviewsList, setreviewsList] = useState([]);
   const [allJobsList, setAllJobsList] = useState([]);
   const [brandId, setBrandId] = useState(null);
   const [brandImage, setBrandImage] = useState(null);
@@ -127,6 +129,11 @@ const TalentProfile = () => {
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
+    setVideoAudioUrls([
+      "https://youtu.be/zO85jBI7Jxs?si=JtdIwdSDPxjnDv9R",
+      "https://vimeo.com/956864989",
+      "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3",
+    ]);
     setUserId(storedUserId);
     if (selectedTalent?._id) {
       getTalentById(selectedTalent?._id);
@@ -134,6 +141,7 @@ const TalentProfile = () => {
       fetchVideoAudios();
       fetchFeatures();
       fetchCV();
+      fetchReviews();
     } else if (storedUserId) {
       getTalentById(storedUserId);
     } else if (queryString) {
@@ -225,6 +233,22 @@ const TalentProfile = () => {
         console.log(err);
       });
   };
+  const fetchReviews = async () => {
+    await ApiHelper.post(
+      `${API.unifiedDataFetch}${
+        selectedTalent?._id ? selectedTalent?._id : queryString
+      }/7`
+    )
+      .then((resData) => {
+        console.log(resData.data.data, "resData Reviews");
+        if (resData.data.status === true) {
+          setreviewsList(resData.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getTalentById = async (talent_id) => {
     await ApiHelper.post(`${API.getTalentById}${talent_id}`)
@@ -278,25 +302,6 @@ const TalentProfile = () => {
     let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
     window.open(viewImage, "_blank");
   };
-
-  const reviewsList = [
-    {
-      date: "23 Nov 2023",
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...",
-      rating: [4],
-      reviewer_name: "Sanjay Manuel",
-    },
-    {
-      date: "23 Nov 2023",
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed auctor velit, ut lacinia ante. Etiam eget nunc bibendum...",
-      rating: [4],
-      reviewer_name: "Sanjay Manuel",
-    },
-  ];
 
   function handleForms(e) {
     setTest("features set");
@@ -484,6 +489,36 @@ const TalentProfile = () => {
     );
   };
 
+  const isVideoUrl = (url) => {
+    return /\.(mp4|webm|ogg|avi|mov|wmv|flv|mkv)$/i.test(url);
+  };
+
+  const isAudioUrl = (url) => {
+    return /\.(mp3|wav|ogg|aac|flac|m4a)$/i.test(url);
+  };
+
+  const isYouTubeUrl = (url) => {
+    return /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/i.test(url);
+  };
+
+  const isVimeoUrl = (url) => {
+    return /^(https?:\/\/)?(www\.)?vimeo\.com\/.+$/i.test(url);
+  };
+
+  const getYouTubeEmbedUrl = (url) => {
+    const match = url.match(
+      /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    );
+    return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+  };
+
+  const getVimeoEmbedUrl = (url) => {
+    const match = url.match(
+      /(?:vimeo\.com\/(?:[^\/\n\s]+\/\S+\/|(?:video|e(?:mbed)?)\/|\S*?[?&]video=)|vimeo\.com\/)([0-9]+)/
+    );
+    return match ? `https://player.vimeo.com/video/${match[1]}` : null;
+  };
+
   return (
     <>
       {/* <Header /> */}
@@ -531,7 +566,7 @@ const TalentProfile = () => {
                       <span>
                         <i class="bi bi-star-fill"></i>
                       </span>
-                      PRO
+                      {talentData?.planName}
                     </div>
                   </div>
                   <div className="individual-talents-details">
@@ -1010,7 +1045,22 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
-                          <ServicesCarousel talentData={talentData} />
+                          {talentData && talentData?.services?.length > 0 && (
+                            <>
+                              <div className="portofolio-section">
+                                <div className="portofolio-title">Services</div>
+                                <div
+                                  className="view-all"
+                                  onClick={(e) => {
+                                    handleForms("services");
+                                  }}
+                                >
+                                  View All
+                                </div>
+                              </div>
+                              <ServicesCarousel talentData={talentData} />
+                            </>
+                          )}
 
                           <div className="portofolio-section">
                             <div className="portofolio-title">
@@ -1026,7 +1076,7 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
-                          <div className="service-list-main">
+                          {/* <div className="service-list-main">
                             {videoAudioList.map((item) => (
                               <div
                                 className="item model-picture-wrapper"
@@ -1054,6 +1104,7 @@ const TalentProfile = () => {
                               </div>
                             ))}
                           </div>
+                           */}
 
                           <div className="portofolio-section">
                             <div className="portofolio-title">CV</div>
@@ -1142,7 +1193,7 @@ const TalentProfile = () => {
                           );
                         })} */}
 
-                          {videoAudioList.map((item) => (
+                          {/* {videoAudioList.map((item) => (
                             <div
                               className="item model-picture-wrapper"
                               key={item.id}
@@ -1167,7 +1218,54 @@ const TalentProfile = () => {
                               )}
                               <p>{item.title}</p>
                             </div>
-                          ))}
+                          ))} */}
+
+                          <div className="service-list-main">
+                            {videoAudioUrls.map((url, index) => (
+                              <div key={index} className="media-item">
+                                {isYouTubeUrl(url) ? (
+                                  <iframe
+                                    src={getYouTubeEmbedUrl(url)}
+                                    title={`youtube-video-${index}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="video-frame"
+                                  ></iframe>
+                                ) : isVimeoUrl(url) ? (
+                                  <iframe
+                                    src={getVimeoEmbedUrl(url)}
+                                    title={`vimeo-video-${index}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="video-frame"
+                                  ></iframe>
+                                ) : isVideoUrl(url) ? (
+                                  <video
+                                    controls
+                                    src={url}
+                                    className="video-frame"
+                                  >
+                                    Your browser does not support the video tag.
+                                  </video>
+                                ) : isAudioUrl(url) ? (
+                                  <audio
+                                    controls
+                                    src={url}
+                                    className="audio-player"
+                                  >
+                                    Your browser does not support the audio
+                                    element.
+                                  </audio>
+                                ) : (
+                                  <div className="unsupported-media">
+                                    Unsupported media type
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       )}
                       {services && (
@@ -1252,7 +1350,7 @@ const TalentProfile = () => {
                           })}
                         </div>
                       )}
-                      {reviews && (
+                      {reviews && reviewsList?.length > 0 && (
                         <div className="model-reviews row">
                           {reviewsList?.map((item, index) => {
                             return (
@@ -1261,25 +1359,41 @@ const TalentProfile = () => {
                                   className="model-review-wrapper col-md-6"
                                   key={index}
                                 >
-                                  <div className="review-date">{item.date}</div>
+                                  <div className="review-date">
+                                    {new Date(
+                                      item.reviewDate
+                                    ).toLocaleDateString("en-GB", {
+                                      day: "2-digit",
+                                      month: "long",
+                                      year: "numeric",
+                                    })}
+                                  </div>
                                   <div className="review-title">
-                                    {item.title}
+                                    {item.comment}
                                   </div>
-                                  <div className="review-content">
-                                    {item.description}
-                                  </div>
+                                  {/* <div className="review-content">
+                                    {item.comment}
+                                  </div> */}
                                   <div className="reviewer-section">
                                     <div className="reviewers-rating">
-                                      {item.rating.map((item, index) => {
-                                        return (
-                                          <img key={index} src={pinkStar}></img>
-                                        );
-                                      })}
+                                      {[...Array(Number(item.starRatings))].map(
+                                        (_, starIndex) => (
+                                          <img
+                                            key={starIndex}
+                                            src={pinkStar}
+                                            alt="Star"
+                                          />
+                                        )
+                                      )}
                                     </div>
                                     <div className="reviewer-details">
-                                      <div className="initial center">S</div>
+                                      <div className="initial center">
+                                        {" "}
+                                        {item.reviewerName &&
+                                          item.reviewerName.charAt(0)}
+                                      </div>
                                       <div className="reviewer-name">
-                                        {item.reviewer_name}
+                                        {item.reviewerName}
                                       </div>
                                     </div>
                                   </div>

@@ -14,6 +14,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { Avatar } from "@mui/material";
+import CurrentUser from "../CurrentUser.js";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -40,6 +42,14 @@ function a11yProps(index) {
   };
 }
 const TalentNotification = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
+
   const [talentId, setTalentId] = useState(null);
   const [talentEmail, setTalentEmail] = useState(null);
   const [notificationList, setNotifications] = useState([]);
@@ -276,6 +286,15 @@ const TalentNotification = () => {
                                 src={`${API.userFilePath}${item?.brandDetails?.brandImage[0]?.fileData}`}
                                 alt=""
                               />
+                              {!item?.brandDetails?.brandImage[0] && (
+                                <>
+                                  <img
+                                    className="notification-card-image"
+                                    src={avatarImage}
+                                    alt=""
+                                  />
+                                </>
+                              )}
                               <div
                                 className="notification-card-content "
                                 onClick={() => {

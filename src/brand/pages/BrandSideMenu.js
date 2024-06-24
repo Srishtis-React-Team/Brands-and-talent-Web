@@ -183,7 +183,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           </div>
           <div className="talents-plan-info">
             <div className="talent-plan-name">
-              Plan : <span>Basic</span>
+              Plan : <span>{brandData?.planName}</span>
             </div>
 
             <div className="talent-plan-name">
@@ -231,7 +231,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             {/* <i class="bi bi-person-add icons"></i> */}
             <img src={postJob} className="iconMenu normal" alt="icon" />
             <img src={postJobHv} className="iconMenu hover" alt="icon" />
-            
+
             <div className="brand-menu-text">Post a Job</div>
           </Link>
 

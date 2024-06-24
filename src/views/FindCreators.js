@@ -608,7 +608,7 @@ const FindCreators = () => {
     <>
       <Header />
       <section>
-        <div className="popular-header" style={{marginTop: '64px'}}>
+        <div className="popular-header" style={{ marginTop: "64px" }}>
           <div className="container">
             <div className="header-title">Popular Talents</div>
             <div className="header-menu">
@@ -745,7 +745,9 @@ const FindCreators = () => {
                           label: country,
                           key: index,
                         }))}
-                        value={country ? { value: country, label: country } : null}
+                        value={
+                          country ? { value: country, label: country } : null
+                        }
                         onChange={handleSelectedCountry}
                         isSearchable={true}
                       />
@@ -776,7 +778,9 @@ const FindCreators = () => {
                           value: city.cityId, // or whatever unique identifier you want to use
                           label: city.name,
                         }))}
-                        value={kidsCity ? { value: kidsCity, label: kidsCity } : null}
+                        value={
+                          kidsCity ? { value: kidsCity, label: kidsCity } : null
+                        }
                         onChange={handleSelectedCity}
                         isSearchable={true}
                         noOptionsMessage={customNoOptionsMessageCity}
@@ -961,8 +965,11 @@ const FindCreators = () => {
                     <div className="gallery-main p-0 m-0">
                       {talentList?.map((item) => {
                         return (
-                          <div className="gallery-wrapper">
-                            <div className="" onClick={() => openTalent(item)}>
+                          <div
+                            className="gallery-wrapper"
+                            onClick={() => openTalent(item)}
+                          >
+                            <div className="">
                               <img
                                 className="gallery-img"
                                 src={`${API.userFilePath}${item.image?.fileData}`}
@@ -998,7 +1005,8 @@ const FindCreators = () => {
                                   {item.profession?.map((profession, index) => (
                                     <React.Fragment key={index}>
                                       {profession.value}
-                                      {index !== item.profession.length - 1 && ","}
+                                      {index !== item.profession.length - 1 &&
+                                        ","}
                                     </React.Fragment>
                                   ))}
                                 </div>

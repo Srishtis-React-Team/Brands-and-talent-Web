@@ -14,7 +14,7 @@ import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import nationalitiesArray from "../components/NationalitiesArray";
 const KidsformOne = ({ sendDataToParent }) => {
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
@@ -69,7 +69,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [kidsCity, setKidsCity] = useState("");
   const [gender, setGender] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
-  const [nationality, setNationality] = useState("");
+  const [nationality, setNationality] = useState([]);
   const [ethnicity, setEthnicity] = useState("");
   const [languages, setLanguages] = useState([]);
   const [dateOfBirth, setDob] = useState("");
@@ -88,6 +88,9 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [age, setAge] = useState("");
+  const [selectedNationalityOptions, setSelectedNationalityOptions] = useState(
+    []
+  );
 
   const ethnicityOptions = [
     "South Asian",
@@ -230,10 +233,23 @@ const KidsformOne = ({ sendDataToParent }) => {
     setLanguages(selectedLanguages); // Update languages state with all selected languages
   };
 
-  const selectNationality = (event) => {
-    setNationality(event.target.value);
+  const selectNationality = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setNationality([]); // Clear the languages state
+      setSelectedNationalityOptions([]);
+
+      return;
+    }
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setNationality(selectedLanguages); // Update languages state with all selected languages
+    setSelectedNationalityOptions(selectedOptions);
     setNationalityError(false);
   };
+
   const selectMaritalStatus = (event) => {
     setMaritalStatus(event.target.value);
     setMaritalError(false);
@@ -529,7 +545,7 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (nationality === "") {
       setNationalityError(true);
     }
-    if (ethnicity === "") {
+    if (ethnicity.length === 0) {
       setEthnicityError(true);
     }
     if (languages.length === 0) {
@@ -1006,248 +1022,231 @@ const KidsformOne = ({ sendDataToParent }) => {
                     </div>
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-6 mb-3">
-                       
-                          <label className="form-label">
-                            Legal First Name
-                            <span className="mandatory">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={parentFirstName}
-                            onChange={(e) => {
-                              handleFirstNameChange(e);
-                              setparentFirstNameError(false);
-                            }}
-                            onKeyDown={handleKeyPress}
-                            placeholder="Enter Legal First Name"
-                          ></input>
-                          {parentFirstNameError && (
-                            <div className="invalid-fields">
-                              Please enter First Name
-                            </div>
-                          )}
-                          {firstNameLetterError && (
-                            <div className="invalid-fields">
-                              Only Letters are allowed
-                            </div>
-                          )}
-                        
-                      </div>
-                      <div className="kids-form-section col-md-6 mb-3">
-                    
-                          <label className="form-label">Legal Last name</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={parentLastName}
-                            onChange={(e) => {
-                              handleLastNameChange(e);
-                            }}
-                            onKeyDown={handleLastNameKeyPress}
-                            placeholder="Enter Legal Last name"
-                          ></input>
-                          {lastNameLetterError && (
-                            <div className="invalid-fields">
-                              Only Letters are allowed
-                            </div>
-                          )}
-                        
-                      </div>
-                    </div>
-                    <div className="kids-form-row row">
-                      <div className="kids-form-section col-md-6 mb-3">
-                       
-                          <label className="form-label">
-                            E-mail <span className="mandatory">*</span>
-                          </label>
-                          <input
-                            type="email"
-                            className={`form-control ${
-                              !isValidEmail ? "is-invalid" : "form-control"
-                            }`}
-                            onChange={handleEmailChange}
-                            placeholder="Enter E-mail"
-                            value={parentEmail}
-                          />
-                          {!isValidEmail && (
-                            <div className="invalid-feedback">
-                              Please enter a valid email address.
-                            </div>
-                          )}
-                          {parentEmailError && (
-                            <div className="invalid-fields">
-                              Please enter Email
-                            </div>
-                          )}
-                        
-                      </div>
-                      <div className="kids-form-section col-md-6 mb-3">
-                       
-                          <label className="form-label">
-                            Country<span className="mandatory">*</span>
-                          </label>
-                          <Select
-                            placeholder="Search country..."
-                            options={countryList.map((country, index) => ({
-                              value: country,
-                              label: country,
-                              key: index,
-                            }))}
-                            value={country?.value}
-                            onChange={handleSelectedCountry}
-                            isSearchable={true}
-                          />
-                          {parentCountryError && (
-                            <div className="invalid-fields">
-                              Please Select Country
-                            </div>
-                          )}
-                       
-                      </div>
-                    </div>
-                    <div className="kids-form-row row">
-                      <div className="kids-form-section col-md-6 mb-3">
-                     
-                          <label className="form-label">State</label>
-                          <Select
-                            placeholder="Select state..."
-                            options={stateList.map((state) => ({
-                              value: state.stateId, // or whatever unique identifier you want to use
-                              label: state.name,
-                            }))}
-                            value={state?.label}
-                            onChange={handleSelectedState}
-                            isSearchable={true}
-                          />
-                          {stateError && (
-                            <div className="invalid-fields">
-                              Please Select State
-                            </div>
-                          )}
-                      
-                      </div>
-                      <div className="kids-form-section col-md-6 mb-3">
-                     
-                          <label className="form-label">City</label>
-                          <Select
-                            placeholder="Select City..."
-                            options={cityList.map((city) => ({
-                              value: city.cityId, // or whatever unique identifier you want to use
-                              label: city.name,
-                            }))}
-                            value={kidsCity?.label}
-                            onChange={handleSelectedCity}
-                            isSearchable={true}
-                          />
-                     
-                      </div>
-                    </div>
-                    <div className="kids-form-row row">
-                      <div className="kids-form-section col-md-6 mb-3">
-                      
-                          <label className="form-label">
-                            Password <span className="mandatory">*</span>
-                          </label>
-                          <div className="form-group has-search adult-password-wrapper">
-                            <span className="fa fa-lock form-control-feedback"></span>
-                            <input
-                              type={showPassword ? "text" : "password"}
-                              className="form-control password adult-signup-inputs"
-                              placeholder="Password"
-                              onChange={(e) => {
-                                handlePasswordChange(e);
-                                setTalentPassword(e.target.value);
-                                settalentPasswordError(false);
-                              }}
-                            ></input>
-                            <div className="password_strength_box">
-                              <div className="password_strength">
-                                <p className="text">Weak</p>
-                                <div className="line_box">
-                                  <div className="line"></div>
-                                </div>
-                              </div>
-                              <div className="tool_tip_box">
-                                <span>
-                                  <i className="bi bi-question-circle"></i>
-                                </span>
-                                <div className="tool_tip">
-                                  <p style={{ listStyleType: "none" }}>
-                                    <b>Password must be:</b>
-                                  </p>
-                                  <p>At least 8 character long</p>
-                                  <p>At least 1 uppercase letter</p>
-                                  <p>At least 1 lowercase letter</p>
-                                  <p>At least 1 number</p>
-                                  <p>
-                                    At least 1 special character from !@#$%^&*
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                            {showPassword ? (
-                              <span
-                                className="fa fa-eye show-password-icon"
-                                onClick={togglePasswordVisibility}
-                              ></span>
-                            ) : (
-                              <span
-                                className="fa fa-eye-slash show-password-icon"
-                                onClick={togglePasswordVisibility}
-                              ></span>
-                            )}
-                            {talentPasswordError && (
-                              <div className="invalid-fields">
-                                Please enter Password
-                              </div>
-                            )}
+                        <label className="form-label">
+                          Legal First Name
+                          <span className="mandatory">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={parentFirstName}
+                          onChange={(e) => {
+                            handleFirstNameChange(e);
+                            setparentFirstNameError(false);
+                          }}
+                          onKeyDown={handleKeyPress}
+                          placeholder="Enter Legal First Name"
+                        ></input>
+                        {parentFirstNameError && (
+                          <div className="invalid-fields">
+                            Please enter First Name
                           </div>
-                        
+                        )}
+                        {firstNameLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters are allowed
+                          </div>
+                        )}
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
-                      
-                          <label className="form-label">
-                            Confirm Password{" "}
-                            <span className="mandatory">*</span>
-                          </label>
-                          <div className="form-group has-search adult-confirm-password-wrapper">
-                            <span className="fa fa-lock form-control-feedback"></span>
-                            <input
-                              type={showConfirmPassword ? "text" : "password"}
-                              className="form-control adult-signup-inputs"
-                              placeholder="Confirm Password"
-                              onChange={(e) => {
-                                handleConfirmPasswordChange(e);
-                                setTalentConfirmPassword(e.target.value);
-                                settalentConfirmPasswordError(false);
-                              }}
-                            ></input>
-                            {showConfirmPassword ? (
-                              <span
-                                className="fa fa-eye show-confirm-password-icon"
-                                onClick={toggleConfirmPasswordVisibility}
-                              ></span>
-                            ) : (
-                              <span
-                                className="fa fa-eye-slash show-confirm-password-icon"
-                                onClick={toggleConfirmPasswordVisibility}
-                              ></span>
-                            )}
-                            {talentConfirmPasswordError && (
-                              <div className="invalid-fields">
-                                Please enter Password
-                              </div>
-                            )}
+                        <label className="form-label">Legal Last name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={parentLastName}
+                          onChange={(e) => {
+                            handleLastNameChange(e);
+                          }}
+                          onKeyDown={handleLastNameKeyPress}
+                          placeholder="Enter Legal Last name"
+                        ></input>
+                        {lastNameLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters are allowed
                           </div>
-                          {!passwordMatch &&
-                            talentConfirmPassword &&
-                            talentConfirmPassword.length && (
-                              <p className="password-wrong">
-                                Passwords does not match.
-                              </p>
-                            )}
-                      
+                        )}
+                      </div>
+                    </div>
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                        <label className="form-label">
+                          E-mail <span className="mandatory">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          className={`form-control ${
+                            !isValidEmail ? "is-invalid" : "form-control"
+                          }`}
+                          onChange={handleEmailChange}
+                          placeholder="Enter E-mail"
+                          value={parentEmail}
+                        />
+                        {!isValidEmail && (
+                          <div className="invalid-feedback">
+                            Please enter a valid email address.
+                          </div>
+                        )}
+                        {parentEmailError && (
+                          <div className="invalid-fields">
+                            Please enter Email
+                          </div>
+                        )}
+                      </div>
+                      <div className="kids-form-section col-md-6 mb-3">
+                        <label className="form-label">
+                          Country<span className="mandatory">*</span>
+                        </label>
+                        <Select
+                          placeholder="Search country..."
+                          options={countryList.map((country, index) => ({
+                            value: country,
+                            label: country,
+                            key: index,
+                          }))}
+                          value={country?.value}
+                          onChange={handleSelectedCountry}
+                          isSearchable={true}
+                        />
+                        {parentCountryError && (
+                          <div className="invalid-fields">
+                            Please Select Country
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                        <label className="form-label">State</label>
+                        <Select
+                          placeholder="Select state..."
+                          options={stateList.map((state) => ({
+                            value: state.stateId, // or whatever unique identifier you want to use
+                            label: state.name,
+                          }))}
+                          value={state?.label}
+                          onChange={handleSelectedState}
+                          isSearchable={true}
+                        />
+                        {stateError && (
+                          <div className="invalid-fields">
+                            Please Select State
+                          </div>
+                        )}
+                      </div>
+                      <div className="kids-form-section col-md-6 mb-3">
+                        <label className="form-label">City</label>
+                        <Select
+                          placeholder="Select City..."
+                          options={cityList.map((city) => ({
+                            value: city.cityId, // or whatever unique identifier you want to use
+                            label: city.name,
+                          }))}
+                          value={kidsCity?.label}
+                          onChange={handleSelectedCity}
+                          isSearchable={true}
+                        />
+                      </div>
+                    </div>
+                    <div className="kids-form-row row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                        <label className="form-label">
+                          Password <span className="mandatory">*</span>
+                        </label>
+                        <div className="form-group has-search adult-password-wrapper">
+                          <span className="fa fa-lock form-control-feedback"></span>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            className="form-control password adult-signup-inputs"
+                            placeholder="Password"
+                            onChange={(e) => {
+                              handlePasswordChange(e);
+                              setTalentPassword(e.target.value);
+                              settalentPasswordError(false);
+                            }}
+                          ></input>
+                          <div className="password_strength_box">
+                            <div className="password_strength">
+                              <p className="text">Weak</p>
+                              <div className="line_box">
+                                <div className="line"></div>
+                              </div>
+                            </div>
+                            <div className="tool_tip_box">
+                              <span>
+                                <i className="bi bi-question-circle"></i>
+                              </span>
+                              <div className="tool_tip">
+                                <p style={{ listStyleType: "none" }}>
+                                  <b>Password must be:</b>
+                                </p>
+                                <p>At least 8 character long</p>
+                                <p>At least 1 uppercase letter</p>
+                                <p>At least 1 lowercase letter</p>
+                                <p>At least 1 number</p>
+                                <p>
+                                  At least 1 special character from !@#$%^&*
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          {showPassword ? (
+                            <span
+                              className="fa fa-eye show-password-icon"
+                              onClick={togglePasswordVisibility}
+                            ></span>
+                          ) : (
+                            <span
+                              className="fa fa-eye-slash show-password-icon"
+                              onClick={togglePasswordVisibility}
+                            ></span>
+                          )}
+                          {talentPasswordError && (
+                            <div className="invalid-fields">
+                              Please enter Password
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="kids-form-section col-md-6 mb-3">
+                        <label className="form-label">
+                          Confirm Password <span className="mandatory">*</span>
+                        </label>
+                        <div className="form-group has-search adult-confirm-password-wrapper">
+                          <span className="fa fa-lock form-control-feedback"></span>
+                          <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            className="form-control adult-signup-inputs"
+                            placeholder="Confirm Password"
+                            onChange={(e) => {
+                              handleConfirmPasswordChange(e);
+                              setTalentConfirmPassword(e.target.value);
+                              settalentConfirmPasswordError(false);
+                            }}
+                          ></input>
+                          {showConfirmPassword ? (
+                            <span
+                              className="fa fa-eye show-confirm-password-icon"
+                              onClick={toggleConfirmPasswordVisibility}
+                            ></span>
+                          ) : (
+                            <span
+                              className="fa fa-eye-slash show-confirm-password-icon"
+                              onClick={toggleConfirmPasswordVisibility}
+                            ></span>
+                          )}
+                          {talentConfirmPasswordError && (
+                            <div className="invalid-fields">
+                              Please enter Password
+                            </div>
+                          )}
+                        </div>
+                        {!passwordMatch &&
+                          talentConfirmPassword &&
+                          talentConfirmPassword.length && (
+                            <p className="password-wrong">
+                              Passwords does not match.
+                            </p>
+                          )}
                       </div>
                     </div>
                     <div className="kids-form-row row">
@@ -1255,8 +1254,8 @@ const KidsformOne = ({ sendDataToParent }) => {
                         <label className="form-label">
                           Mobile No <span className="mandatory">*</span>
                         </label>
-                        
-                          {/* <input
+
+                        {/* <input
                             type="text"
                             className="form-control"
                             maxLength="15"
@@ -1269,83 +1268,80 @@ const KidsformOne = ({ sendDataToParent }) => {
                             placeholder=" Mobile No"
                           ></input> */}
 
-                          <MuiPhoneNumber
-                            defaultCountry={"kh"}
-                            className="form-control"
-                            onChange={handleMobileChange}
-                          />
+                        <MuiPhoneNumber
+                          defaultCountry={"kh"}
+                          className="form-control"
+                          onChange={handleMobileChange}
+                        />
 
-                          {parentMobileError && (
-                            <div className="invalid-fields">
-                              Please enter Mobile Number
-                            </div>
-                          )}
-                          {mobileNumError && (
-                            <div className="invalid-fields">
-                              Only Numbers Allowed
-                            </div>
-                          )}
-                    
+                        {parentMobileError && (
+                          <div className="invalid-fields">
+                            Please enter Mobile Number
+                          </div>
+                        )}
+                        {mobileNumError && (
+                          <div className="invalid-fields">
+                            Only Numbers Allowed
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-12 mb-3">
-                        
-                          <label
-                            htmlFor="exampleFormControlTextarea1"
-                            className="form-label"
-                          >
-                            Address<span className="mandatory">*</span>
-                          </label>
-                          <textarea
-                            style={{ width: "100%" }}
-                            className="form-control address-textarea"
-                            id="exampleFormControlTextarea1"
-                            value={address}
-                            rows="3"
-                            onChange={(e) => {
-                              setAddress(e.target.value);
-                              setAddressError(false);
-                            }}
-                          ></textarea>
-                          {addressError && (
-                            <div className="invalid-fields">
-                              Please Enter Address
-                            </div>
-                          )}
-                        
+                        <label
+                          htmlFor="exampleFormControlTextarea1"
+                          className="form-label"
+                        >
+                          Address<span className="mandatory">*</span>
+                        </label>
+                        <textarea
+                          style={{ width: "100%" }}
+                          className="form-control address-textarea"
+                          id="exampleFormControlTextarea1"
+                          value={address}
+                          rows="3"
+                          onChange={(e) => {
+                            setAddress(e.target.value);
+                            setAddressError(false);
+                          }}
+                        ></textarea>
+                        {addressError && (
+                          <div className="invalid-fields">
+                            Please Enter Address
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    <div className="kids-form-title"><span>Your Child Details</span></div>
+                    <div className="kids-form-title">
+                      <span>Your Child Details</span>
+                    </div>
                     <div className="profession-section-cover">
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          
-                            <label className="form-label pay-info">
-                              Profession / Skills (Choose any 5)
-                              <span className="mandatory">*</span>
-                            </label>
-                            <div>
-                              <Select
-                                defaultValue={[]}
-                                isMulti
-                                name="professions"
-                                options={professionList}
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                placeholder="Search for Category”"
-                                onChange={handleProfessionChange}
-                                styles={customStyles}
-                                value={selectedProfessions}
-                              />
-                              {professionError && (
-                                <div className="invalid-fields">
-                                  Please Choose Profession
-                                </div>
-                              )}
-                            </div>
-                        
+                          <label className="form-label pay-info">
+                            Profession / Skills (Choose any 5)
+                            <span className="mandatory">*</span>
+                          </label>
+                          <div>
+                            <Select
+                              defaultValue={[]}
+                              isMulti
+                              name="professions"
+                              options={professionList}
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              placeholder="Search for Category”"
+                              onChange={handleProfessionChange}
+                              styles={customStyles}
+                              value={selectedProfessions}
+                            />
+                            {professionError && (
+                              <div className="invalid-fields">
+                                Please Choose Profession
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                       <div className="profession-content-section">
@@ -1446,219 +1442,202 @@ const KidsformOne = ({ sendDataToParent }) => {
                         Please Choose Categories
                       </div>
                     )}
-                    <div className="kids-form-title"><span>Personal Details</span></div>
+                    <div className="kids-form-title">
+                      <span>Personal Details</span>
+                    </div>
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-6 mb-3">
-                      
-                          <label className="form-label">
-                            Legal First Name
-                            <span className="mandatory">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            onChange={(e) => {
-                              KidsLegalFirstNameChange(e);
-                              setkidsLegalFirstNameError(false);
-                            }}
-                            onKeyDown={handleKidsLegalKeyPress}
-                            value={kidsLegalFirstName}
-                            placeholder="Enter Legal First Name"
-                          ></input>
-                          {kidsLegalFirstNameError && (
-                            <div className="invalid-fields">
-                              Please enter First Name
-                            </div>
-                          )}
-                          {kidsLegalFirstLetterError && (
-                            <div className="invalid-fields">
-                              Only Letters Allowed
-                            </div>
-                          )}
-                        
+                        <label className="form-label">
+                          Legal First Name
+                          <span className="mandatory">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={(e) => {
+                            KidsLegalFirstNameChange(e);
+                            setkidsLegalFirstNameError(false);
+                          }}
+                          onKeyDown={handleKidsLegalKeyPress}
+                          value={kidsLegalFirstName}
+                          placeholder="Enter Legal First Name"
+                        ></input>
+                        {kidsLegalFirstNameError && (
+                          <div className="invalid-fields">
+                            Please enter First Name
+                          </div>
+                        )}
+                        {kidsLegalFirstLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters Allowed
+                          </div>
+                        )}
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
-                        
-                          <label className="form-label">Legal Last name</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={kidsLegalLastName}
-                            onChange={(e) => {
-                              KidsLegalLastNameChange(e);
-                            }}
-                            onKeyDown={handleKidsLegalLastNameKeyPress}
-                            placeholder="Enter Legal Last name"
-                          ></input>
-                          {kidsLegalLastNameLetterError && (
-                            <div className="invalid-fields">
-                              Only Letters Allowed
-                            </div>
-                          )}
-                      
+                        <label className="form-label">Legal Last name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={kidsLegalLastName}
+                          onChange={(e) => {
+                            KidsLegalLastNameChange(e);
+                          }}
+                          onKeyDown={handleKidsLegalLastNameKeyPress}
+                          placeholder="Enter Legal Last name"
+                        ></input>
+                        {kidsLegalLastNameLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters Allowed
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-6 mb-3">
-                        
-                          <label className="form-label">
-                            Preferred First Name
-                            <span className="mandatory">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={kidsPreferedFirstName}
-                            onChange={(e) => {
-                              kidsPreferedFirstNameChange(e);
-                              setPreferedNameError(false);
-                            }}
-                            onKeyDown={handleKidsPrefferedFirstNameKeyPress}
-                            placeholder="Enter Preferred  First Name"
-                          ></input>
-                          {preferedNameError && (
-                            <div className="invalid-fields">
-                              Please Enter Preferred First Name
-                            </div>
-                          )}
-                          {kidsPrefferedFirstNameLetterError && (
-                            <div className="invalid-fields">
-                              Only Letters Allowed
-                            </div>
-                          )}
-                        
+                        <label className="form-label">
+                          Preferred First Name
+                          <span className="mandatory">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={kidsPreferedFirstName}
+                          onChange={(e) => {
+                            kidsPreferedFirstNameChange(e);
+                            setPreferedNameError(false);
+                          }}
+                          onKeyDown={handleKidsPrefferedFirstNameKeyPress}
+                          placeholder="Enter Preferred  First Name"
+                        ></input>
+                        {preferedNameError && (
+                          <div className="invalid-fields">
+                            Please Enter Preferred First Name
+                          </div>
+                        )}
+                        {kidsPrefferedFirstNameLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters Allowed
+                          </div>
+                        )}
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
-                   
-                          <label className="form-label">
-                            Preferred Last name
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={kidsPreferedLastName}
-                            onChange={(e) => {
-                              kidsPreferedLastNameChange(e);
-                            }}
-                            onKeyDown={handleKidsPrefferedLasttNameKeyPress}
-                            placeholder="Enter Preferred  Last name"
-                          ></input>
-                          {kidsPrefferedLastNameLetterError && (
-                            <div className="invalid-fields">
-                              Only Letters Allowed
-                            </div>
-                          )}
-                       
+                        <label className="form-label">
+                          Preferred Last name
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={kidsPreferedLastName}
+                          onChange={(e) => {
+                            kidsPreferedLastNameChange(e);
+                          }}
+                          onKeyDown={handleKidsPrefferedLasttNameKeyPress}
+                          placeholder="Enter Preferred  Last name"
+                        ></input>
+                        {kidsPrefferedLastNameLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters Allowed
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-6 mb-3">
-                       
-                          <label className="form-label">
-                            Gender <span className="mandatory">*</span>
-                          </label>
-                          <select
-                            className="form-select"
-                            aria-label="Default select example"
-                            onChange={selectGender}
-                            style={{ fontSize: "14px" }}
-                            value={gender}
-                          >
-                            <option value="" disabled selected>
-                              Select Gender
+                        <label className="form-label">
+                          Gender <span className="mandatory">*</span>
+                        </label>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          onChange={selectGender}
+                          style={{ fontSize: "14px" }}
+                          value={gender}
+                        >
+                          <option value="" disabled selected>
+                            Select Gender
+                          </option>
+                          {gendersOptions.map((option, index) => (
+                            <option key={index} value={option}>
+                              {option}
                             </option>
-                            {gendersOptions.map((option, index) => (
-                              <option key={index} value={option}>
-                                {option}
-                              </option>
-                            ))}
-                          </select>
-                          {genderError && (
-                            <div className="invalid-fields">
-                              Please Select Gender
-                            </div>
-                          )}
-                     
+                          ))}
+                        </select>
+                        {genderError && (
+                          <div className="invalid-fields">
+                            Please Select Gender
+                          </div>
+                        )}
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
-                       
-                          <label className="form-label">
-                            Languages <span className="mandatory">*</span>
-                          </label>
-                          <Select
-                            isMulti
-                            name="colors"
-                            options={languageOptions}
-                            valueField="value"
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            onChange={(value) => selectLanguage(value)}
-                            styles={customStylesProfession}
-                          />
-                          {languageError && (
-                            <div className="invalid-fields">
-                              Please Select Language
-                            </div>
-                          )}
-                       
+                        <label className="form-label">
+                          Languages <span className="mandatory">*</span>
+                        </label>
+                        <Select
+                          isMulti
+                          name="colors"
+                          options={languageOptions}
+                          valueField="value"
+                          className="basic-multi-select"
+                          classNamePrefix="select"
+                          onChange={(value) => selectLanguage(value)}
+                          styles={customStylesProfession}
+                        />
+                        {languageError && (
+                          <div className="invalid-fields">
+                            Please Select Language
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="kids-form-row row">
                       <div className="kids-form-section col-md-6 mb-3">
-                     
-                          <label className="form-label">
-                            Nationality <span className="mandatory">*</span>
-                          </label>
-                          <select
-                            className="form-select"
-                            aria-label="Default select example"
-                            onChange={selectNationality}
-                            value={nationality}
-                            style={{ fontSize: "14px" }}
-                          >
-                            <option value="" disabled selected>
-                              Select Nationality
-                            </option>
-                            {nationalityOptions.map((option, index) => (
-                              <option key={index} value={option}>
-                                {option}
-                              </option>
-                            ))}
-                          </select>
-                          {nationalityError && (
-                            <div className="invalid-fields">
-                              Please Select Nationality
-                            </div>
-                          )}
-                       
+                        <label className="form-label">
+                          Nationality <span className="mandatory">*</span>
+                        </label>
+
+                        <Select
+                          isMulti
+                          name="colors"
+                          options={nationalitiesArray}
+                          valueField="value"
+                          className="basic-multi-select"
+                          classNamePrefix="select"
+                          onChange={(value) => selectNationality(value)}
+                          styles={customStylesProfession}
+                          value={selectedNationalityOptions}
+                        />
+
+                        {nationalityError && (
+                          <div className="invalid-fields">
+                            Please Select Nationality
+                          </div>
+                        )}
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
-                        
-                          <label className="form-label">
-                            Ethnicity <span className="mandatory">*</span>
-                          </label>
-                          <select
-                            className="form-select"
-                            aria-label="Default select example"
-                            onChange={selectEthnicity}
-                            value={ethnicity}
-                            style={{ fontSize: "14px" }}
-                          >
-                            <option value="" disabled>
-                              Select Ethnicity
+                        <label className="form-label">
+                          Ethnicity <span className="mandatory">*</span>
+                        </label>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          onChange={selectEthnicity}
+                          value={ethnicity}
+                          style={{ fontSize: "14px" }}
+                        >
+                          <option value="" disabled>
+                            Select Ethnicity
+                          </option>
+                          {ethnicityOptions.map((option, index) => (
+                            <option key={index} value={option}>
+                              {option}
                             </option>
-                            {ethnicityOptions.map((option, index) => (
-                              <option key={index} value={option}>
-                                {option}
-                              </option>
-                            ))}
-                          </select>
-                          {ethnicityError && (
-                            <div className="invalid-fields">
-                              Please Select Ethnicity
-                            </div>
-                          )}
-                      
+                          ))}
+                        </select>
+                        {ethnicityError && (
+                          <div className="invalid-fields">
+                            Please Select Ethnicity
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="kids-form-row row mb-3">
@@ -1666,8 +1645,8 @@ const KidsformOne = ({ sendDataToParent }) => {
                         <label className="form-label">
                           Date Of Birth <span className="mandatory">*</span>
                         </label>
-                        
-                          {/* <input
+
+                        {/* <input
                             type="date"
                             className="form-control"
                             value={dateOfBirth}
@@ -1678,26 +1657,23 @@ const KidsformOne = ({ sendDataToParent }) => {
                             placeholder=""
                           ></input> */}
 
-                          <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-                              value={value}
-                              onChange={(newValue) => {
-                                console.log(newValue, "newValue");
-                                handleDateChange(newValue);
-                              }}
-                              renderInput={(params) => (
-                                <TextField {...params} />
-                              )}
-                              disableFuture
-                            />
-                          </LocalizationProvider>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                          <DatePicker
+                            value={value}
+                            onChange={(newValue) => {
+                              console.log(newValue, "newValue");
+                              handleDateChange(newValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} />}
+                            disableFuture
+                          />
+                        </LocalizationProvider>
 
-                          {dobError && (
-                            <div className="invalid-fields">
-                              Please Select Date Of Birth
-                            </div>
-                          )}
-                       
+                        {dobError && (
+                          <div className="invalid-fields">
+                            Please Select Date Of Birth
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

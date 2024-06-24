@@ -540,6 +540,13 @@ const MessageTalents = () => {
     let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
     window.open(viewImage, "_blank");
   };
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTop = contentRef.current.scrollHeight;
+    }
+  }, [messagesList]);
 
   return (
     <>
@@ -554,69 +561,75 @@ const MessageTalents = () => {
           <div className="messages-section m-0">
             <div className="message-header">
               <div className="message-header-main row">
-               
-                  <div className="col-md-4 col-lg-3">
-                    <div className="message-search">
-                      <div className="mb-0">
-                        <div className="form-group has-search">
-                          <span className="fa fa-search form-control-feedback "></span>
-                          <input
-                            type="text"
-                            className="form-control adult-signup-inputs"
-                            placeholder="Search"
-                            onChange={(e) => {
-                              searchNames(e.target.value);
-                            }}
-                          ></input>
-                        </div>
+                <div className="col-md-4 col-lg-3">
+                  <div className="message-search">
+                    <div className="mb-0">
+                      <div className="form-group has-search">
+                        <span className="fa fa-search form-control-feedback "></span>
+                        <input
+                          type="text"
+                          className="form-control adult-signup-inputs"
+                          placeholder="Search"
+                          onChange={(e) => {
+                            searchNames(e.target.value);
+                          }}
+                        ></input>
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-8 col-lg-9">
-                    <div className="message-user-wrapper">
-                      <div className="message-userdetails-wrapper">
-                        <div className="message-images-position">
-                          {selectedUSerImage && (
-                            <img
-                              className="message-user-image"
-                              src={`${API.userFilePath}${selectedUSerImage}`}
-                              alt=""
-                            />
-                          )}
-                          {!selectedUSerImage && (
-                            <img className="message-user-image" src={avatar} alt="" />
-                          )}
-                          {selectedUser?.isOnline === true && (
-                            <div className="online-dot"></div>
-                          )}
-                          {selectedUser?.isOnline === false && (
-                            <div className="offline-dot"></div>
-                          )}
-                        </div>
-                        <div className="message-user-details">
-                          {selectedUser?.brandName && (
-                            <div className="message-user-name">
-                              {`${selectedUser?.brandName}`}
-                            </div>
-                          )}
-                          {selectedUser?.preferredChildFirstname && (
-                            <div className="message-user-name">
-                              {`${selectedUser?.preferredChildFirstname}${selectedUser?.preferredChildLastName}`}
-                            </div>
-                          )}
-
-                          <div className="message-user-time">Just Now</div>
-                        </div>
+                </div>
+                <div className="col-md-8 col-lg-9">
+                  <div className="message-user-wrapper">
+                    <div className="message-userdetails-wrapper">
+                      <div className="message-images-position">
+                        {selectedUSerImage && (
+                          <img
+                            className="message-user-image"
+                            src={`${API.userFilePath}${selectedUSerImage}`}
+                            alt=""
+                          />
+                        )}
+                        {!selectedUSerImage && (
+                          <img
+                            className="message-user-image"
+                            src={avatar}
+                            alt=""
+                          />
+                        )}
+                        {selectedUser?.isOnline === true && (
+                          <div className="online-dot"></div>
+                        )}
+                        {selectedUser?.isOnline === false && (
+                          <div className="offline-dot"></div>
+                        )}
                       </div>
-                      <div>
-                        <div className="message-more">More</div>
-                        <div className="go-dashboard" onClick={handleBackClick}>
-                          Go to Dashboard
-                        </div>
+                      <div className="message-user-details">
+                        {selectedUser?.brandName && (
+                          <div className="message-user-name">
+                            {`${selectedUser?.brandName}`}
+                          </div>
+                        )}
+                        {selectedUser?.preferredChildFirstname && (
+                          <div className="message-user-name">
+                            {`${selectedUser?.preferredChildFirstname}${selectedUser?.preferredChildLastName}`}
+                          </div>
+                        )}
+                        {selectedUser?.preferredChildFirstname && (
+                          <>
+                            {" "}
+                            <div className="message-user-time">Just Now</div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="message-more">More</div>
+                      <div className="go-dashboard" onClick={handleBackClick}>
+                        Go to Dashboard
                       </div>
                     </div>
                   </div>
-              
+                </div>
               </div>
             </div>
             <div className="message-container-wrapper">
@@ -626,8 +639,8 @@ const MessageTalents = () => {
                     <div className="message-list-wrapper">
                       {userList.length === 0 && (
                         <div className="no-data">
-                          Connect With a Brand (Your Brands Profile will appear
-                          here)
+                          <p>When an Brand/Client or Talent contact you</p>
+                          <p>You will see them Here</p>
                         </div>
                       )}
                       {userList.length > 0 &&
@@ -686,7 +699,9 @@ const MessageTalents = () => {
                                     Send a message
                                   </span>
                                 </div>
-                                <div className="message-user-time">Just Now</div>
+                                <div className="message-user-time">
+                                  Just Now
+                                </div>
                               </div>
                             </div>
                           </>
@@ -695,7 +710,13 @@ const MessageTalents = () => {
                   </div>
                 </div>
                 <div className="conversation-section col-md-8 col-lg-9">
-                  <div className="conversation-main scroll">
+                  <div
+                    className="conversation-main scroll"
+                    ref={contentRef}
+                    style={{
+                      overflowY: "auto",
+                    }}
+                  >
                     {messagesList &&
                       messagesList?.length > 0 &&
                       messagesList?.map((item, index) => {
@@ -746,7 +767,8 @@ const MessageTalents = () => {
                                             <i className="bi bi-play-circle-fill"></i>
                                           </div>
                                         )}
-                                        {item?.chatFile?.type === "document" && (
+                                        {item?.chatFile?.type ===
+                                          "document" && (
                                           <div className="fileType">
                                             <i className="bi bi-file-earmark-richtext"></i>
                                           </div>
@@ -758,7 +780,9 @@ const MessageTalents = () => {
                                       <div className="message-file-options">
                                         <i
                                           className="bi bi-eye-fill view-file-icon"
-                                          onClick={() => handleView(item?.chatFile)}
+                                          onClick={() =>
+                                            handleView(item?.chatFile)
+                                          }
                                         ></i>
                                       </div>
                                     </div>
@@ -794,6 +818,17 @@ const MessageTalents = () => {
                           </>
                         );
                       })}
+                    {/* {messagesList && messagesList?.length === 0 && (
+                      <>
+                        <div className="no-messages-wrapper">
+                          <div className="no-messages-title">
+                            Welcome To Messages
+                          </div>
+                          <p>When an Brand/Client or Talent contact you</p>
+                          <p>You will see messages Here</p>
+                        </div>
+                      </>
+                    )} */}
                   </div>
                   <div className="conversation-input-section">
                     <div onClick={handleAttachmentClick}>

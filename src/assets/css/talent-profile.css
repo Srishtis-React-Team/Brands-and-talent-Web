@@ -63,7 +63,7 @@
 }
 
 .model-review-wrapper {
-  min-height: 250px;
+  max-height: 250px;
   border-radius: 10px;
   background: #fff;
   box-shadow: 1px 8px 24px 0px rgba(0, 0, 0, 0.1);
@@ -73,9 +73,9 @@
 }
 .review-title {
   color: #000;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: normal;
   padding: 15px 0px;
 }
@@ -84,7 +84,7 @@
   color: #c2114b;
   font-size: 15px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 500;
   line-height: normal;
 }
 .review-content {
@@ -335,7 +335,7 @@
   bottom: -8px;
   right: 10px;
   z-index: 1;
-  background-color: #FFF;
+  background-color: #fff;
   padding: 2px 10px 2px 3px;
   font-size: 13px;
   border-radius: 30px;
@@ -354,18 +354,18 @@
   font-size: 13px;
 }
 
-.planName.free{
-  color: #FFF;
-  border: 2px solid #AB7E13;
-  background-color: #AB7E13;
+.planName.free {
+  color: #fff;
+  border: 2px solid #ab7e13;
+  background-color: #ab7e13;
 }
-.planName.pro{
-  color: #FFF;
-  border: 2px solid #5F2895;
-  background-color: #5F2895;
+.planName.pro {
+  color: #fff;
+  border: 2px solid #5f2895;
+  background-color: #5f2895;
 }
-.planName.premium{
-  color: #FFF;
+.planName.premium {
+  color: #fff;
   border: 2px solid #0b70db;
   background-color: #0b70db;
 }
@@ -513,11 +513,12 @@
   padding-left: 9px;
 }
 .invite-btn.msgBtn {
-  background: #FFF;
+  background: #fff;
   color: #c2114b;
   border: 1px solid #c2114b;
 }
-.invite-btn.msgBtn > div, .invite-btn.msgBtn .bi{
+.invite-btn.msgBtn > div,
+.invite-btn.msgBtn .bi {
   color: #c2114b;
 }
 

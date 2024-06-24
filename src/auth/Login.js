@@ -210,18 +210,19 @@ const Login = () => {
 
   // Function to set user ID
   const setTalentLocalStorage = (data) => {
-    console.log(data?.user, "data otp");
+    console.log(data?.user, "TalentObject");
     localStorage.setItem("userId", data?.user?._id);
     localStorage.setItem("emailID", data?.email);
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
     localStorage.setItem("currentUserType", data?.user?.userType);
     localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
+    localStorage.setItem("talentName", data);
     setUserId(userId);
   };
 
   const setBrandsLocalStorage = (data) => {
-    console.log(data, "data otp");
+    console.log(data, "brandObject");
     localStorage.setItem("brandId", data?.data?._id);
     localStorage.setItem("currentUser", data?.data?._id);
     localStorage.setItem("brandEmail", data?.data?.brandEmail);
@@ -231,6 +232,7 @@ const Login = () => {
       "currentUserImage",
       data?.data?.brandImage[0]?.fileData
     );
+    localStorage.setItem("brandName", data?.data?.brandName);
     setUserId(userId);
   };
 
