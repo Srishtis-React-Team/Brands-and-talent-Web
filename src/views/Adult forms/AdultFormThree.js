@@ -907,8 +907,8 @@ const AdultFormThree = () => {
                           {featuresList.map((item, index) => {
                             return (
                               <>
-                                <div className="col-md-2 col-sm-6">
-                                  <div className="mb-3 mr-3 features-input-wrapper">
+                                <div className="col-lg-3 col-md-4 col-sm-6">
+                                  <div className="mb-3 features-input-wrapper">
                                     <label className="form-label">
                                       {item.label}
                                     </label>
