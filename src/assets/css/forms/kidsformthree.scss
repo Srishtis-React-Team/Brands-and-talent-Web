@@ -25,6 +25,14 @@
 .plans-section .col-md-4:nth-child(3) {
   width: 35.5%;
 }
+
+.plans-section .col-md-4:first-child .icPrice, .plans-section .col-md-4:first-child .subcribe-gift{  color: #ADD8E6; } 
+
+.plans-section .col-md-4:nth-child(2) .icPrice, .plans-section .col-md-4:nth-child(2) .subcribe-gift {  color: #9370DB; } 
+
+.plans-section .col-md-4:nth-child(3) .icPrice, .plans-section .col-md-4:nth-child(3) .subcribe-gift { color: #FFD700; }
+
+
 .bordered {
   border: 3px solid #c2114b !important;
 }
@@ -86,21 +94,21 @@
 }
 
 .subcribe-gift {
-  color: #c2114b !important;
+  color: #c2114b;
+
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 500;
-  letter-spacing: -0.25px;
-  padding-bottom: 20px;
+  font-weight: 600;
+  padding: 0;
+  margin: 7px 0 10px;
 }
 .disabled-plan {
   opacity: 0.5;
   cursor: unset !important ;
 }
-.first-plan-choose {
-  margin-top: 64px !important;
-}
+
+
 
 .add-vidoe-icon {
   color: #c2114b;
@@ -138,10 +146,16 @@
     width: 19%;
   }
 }
+
+
 @media only screen and (max-width: 1199px) {
   .kids-form.col-md-8 {
     padding-left: 3%;
   }
+
+
+
+
 }
 @media only screen and (max-width: 1149px) {
   .kids-form.col-md-8 {
@@ -150,12 +164,19 @@
   }
 }
 
+
 @media only screen and (max-width: 767px) {
   .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
     width: 37%;
     margin-left: 15px;
   }
-
+  .fixImgs{ text-align: center; }
+  .fixImgs .kids-image-sticky{ 
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto; 
+  }
   .plans-section .col-md-4:first-child,
   .plans-section .col-md-4:nth-child(2),
   .plans-section .col-md-4:nth-child(3) {

@@ -1,8 +1,9 @@
 html {
-  height: 100%;
+  height: auto;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 0;
+  margin: 0;
+  padding: 0;
 }
 
 * {
@@ -16,8 +17,10 @@ html {
 }
 
 body {
-  height: 100%;
+  height: auto;
   width: 100%;
+  margin: 0;
+  padding: 0;
   font-family: "Open Sans", sans-serif !important;
   overflow-x: hidden;
 }
@@ -196,7 +199,7 @@ label {
   border-top: 1px solid rgb(173, 173, 173);
   display: flex;
   justify-content: center;
-  padding: 10px 0px 10px;
+  padding: 10px 10px;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -426,9 +429,12 @@ a {
   position: absolute;
   background-color: #fff;
   border-radius: 30px;
-  padding: 4px;
-  top: 5px;
-  right: 160px;
+  padding: 5px;
+
+  bottom: 10px;
+  top: inherit;
+  left: 5px;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1658,12 +1664,6 @@ input[type="radio"] {
   cursor: pointer;
 }
 
-.profile-image-header {
-  margin-left: 15px;
-  padding: 0px !important;
-  border: none !important;
-}
-
 .header-search-wrapper {
   border: 1px solid #c9c9c9;
   height: 45px;
@@ -1707,10 +1707,15 @@ input[type="radio"] {
   padding-top: 10px;
 }
 
+.base-MenuItem-root {  outline: 0 !important; }
+
 .profile-image-header {
   margin-left: 15px;
   padding: 0px !important;
   border: none !important;
+  outline: 0 !important;
+  box-shadow: inherit !important;
+  background: transparent !important;
 }
 
 .header-search-wrapper {
@@ -1776,8 +1781,18 @@ input[type="radio"] {
   right: -105px !important;
 }
 
-.creatorPage-Wraper {
+.header .dropdown-menu a.active{ display: inline-block; }
+
+
+.adult-main.remvSpc.col-md-8.col-lg-9{
+  background-color: #FFF;
+  z-index: 0;
 }
+
+
+
+
+
 
 /* MEDIA-QUERY START */
 
@@ -2061,24 +2076,6 @@ input[type="radio"] {
     justify-content: space-evenly !important;
   }
 
-  .step-continue {
-    width: 140px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 245px;
-    border: 1px solid #fff;
-    background: #c2114b;
-    color: #fff;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 30px;
-  }
 
   .ageverify-title {
     color: #c2114b;
@@ -2480,15 +2477,16 @@ input[type="radio"] {
   }
   .modal-logo {
     padding-right: 20px;
+    height: 30px;
   }
   .step-text {
     padding-left: 20px;
     border-left: 1px solid #d9d9d9;
     height: 47px;
     color: #060606;
-    font-size: 17px;
+    font-size: 16px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 34px;
     text-transform: capitalize;
     display: flex;
@@ -2558,18 +2556,18 @@ input[type="radio"] {
   }
 
   .step-back {
-    width: 150px;
+    width: auto;
     height: 40px;
+    min-width: 100px;
     flex-shrink: 0;
-    border-radius: 245px;
+    border-radius: 60px;
     border: 1px solid #fff;
     background: #000;
     color: #fff;
     font-size: 17px;
     font-style: normal;
     font-weight: 300;
-    line-height: normal;
-    cursor: pointer;
+    line-height: 20px;
   }
 
   .step-continue {
@@ -2743,6 +2741,91 @@ head .profile-image-header {
 .rating-text-area {
   height: 130px !important;
 }
+
+
+.showContent .gallery-content{ 
+  display: block; 
+  position: relative;
+  background: transparent;
+  color: #000;
+  padding: 5px 5px 10px;
+}
+
+.showContent .gallery-content .name, .showContent .gallery-content .address, .showContent .gallery-content .location-name{
+  color: #000;
+}
+.showContent .gallery-content .location-wrapper > img {
+  filter: inherit;
+}
+
+
+
+.address {
+  color: #ffffff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 0px;
+  margin-bottom: 5px;
+}
+
+.location-name {
+  color: #ffffff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  padding: 0px 0 0 5px;
+}
+
+.name {
+  color: #ffffff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 0px;
+  margin: 5px 0;
+  text-transform: capitalize;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 3%;
+  left: 85%;
+  cursor: pointer;
+}
+
+.gallery-section {
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+  flex-wrap: wrap;
+}
+.gallery-main {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0px;
+  justify-content: center;
+  margin: 0 -1%;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 430px) {
   .gallery-wrapper {
@@ -2982,57 +3065,7 @@ head .profile-image-header {
     background-repeat: no-repeat;
   }
 
-  .address {
-    color: #ffffff;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    padding: 0px;
-    margin-bottom: 5px;
-  }
-
-  .location-name {
-    color: #ffffff;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    padding: 0px 0 0 5px;
-  }
-
-  .name {
-    color: #ffffff;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    padding: 0px;
-    margin: 5px 0;
-    text-transform: capitalize;
-  }
-
-  .heart-icon {
-    position: absolute;
-    top: 3%;
-    left: 85%;
-    cursor: pointer;
-  }
-
-  .gallery-section {
-    width: 100%;
-    display: flex;
-    /* justify-content: center; */
-    flex-wrap: wrap;
-  }
-  .gallery-main {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0px;
-    justify-content: center;
-    margin: 0 -1%;
-    width: 100%;
-  }
+  
 
   .case-study-main {
     width: 100%;
@@ -3263,7 +3296,7 @@ head .profile-image-header {
 
   .dialog-footer {
     justify-content: center !important;
-    padding: 15px 0px !important;
+    padding: 15px 15px !important;
   }
   .search-bootstrap {
     width: 100% !important;
@@ -3468,4 +3501,24 @@ head .profile-image-header {
   .search-bootstrap {
     width: 50% !important;
   }
+}
+
+@media (max-width: 580px) {
+  .header-wrapper {  padding: 4px 20px; }
+  .header-wrapper .step-text {
+    height: auto;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .header-wrapper .btn-close {
+    width: 0.5em;
+    height: 0.5em;
+    padding: 3px;
+  }
+  
+  .adults-form-title { font-size: 20px;  }
+  .adults-titles, .kids-form-title{  font-size: 15px !important; padding: 10px 0px; }
+  
+
+
 }
