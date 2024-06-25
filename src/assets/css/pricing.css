@@ -1,13 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-
-.plans-wrapper{
+.plans-wrapper {
   font-family: "Montserrat", sans-serif;
 }
-.plan-name{
+.plan-name {
   font-family: "Libre Baskerville", serif;
 }
 
@@ -29,7 +26,6 @@
   align-items: center;
 }
 
-
 .select-pricing-title {
   color: #000;
   font-size: 18px;
@@ -42,13 +38,13 @@
 }
 
 .pro-checkbox[type="radio"] {
-  accent-color: #9370DB;
+  accent-color: #9370db;
   height: 20px;
   width: 20px;
   vertical-align: middle;
 }
 .premium-checkbox[type="radio"] {
-  accent-color: #FFD700;
+  accent-color: #ffd700;
   height: 20px;
   width: 20px;
   vertical-align: middle;
@@ -59,14 +55,18 @@
   display: inline-block;
 }
 
-.pro-plans .icPrice { color: #9370DB; }
-
-.premium-plans .icPrice { 
-  /* color: #106D3E;  */
-  color: #FFD700; 
+.pro-plans .icPrice {
+  color: #9370db;
 }
 
-.free-plans .icPrice { color: #ADD8E6; }
+.premium-plans .icPrice {
+  /* color: #106D3E;  */
+  color: #ffd700;
+}
+
+.free-plans .icPrice {
+  color: #add8e6;
+}
 
 .plan-content {
   display: flex;
@@ -91,15 +91,15 @@
 }
 
 .free-plans {
-  border-top: 11px solid #ADD8E6;
+  border-top: 11px solid #add8e6;
 }
 
 .pro-plans {
-  border-top: 11px solid #9370DB;
+  border-top: 11px solid #9370db;
 }
 
 .premium-plans {
-  border-top: 11px solid #FFD700;
+  border-top: 11px solid #ffd700;
 }
 
 .plan-name {
@@ -144,11 +144,11 @@
   min-height: 250px;
 }
 
-.plans-wrapper .choose-btn{     
+.plans-wrapper .choose-btn {
   margin: 15px 0 25px;
   font-family: "Libre Baskerville", serif;
   text-transform: uppercase;
-  letter-spacing: 0.5px; 
+  letter-spacing: 0.5px;
 }
 
 .include {
@@ -179,7 +179,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px; 
+  line-height: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -187,17 +187,17 @@
 }
 
 .free-btn {
-  background: #ADD8E6;
+  background: #add8e6;
 }
 
 .pro-btn {
-  background: #9370DB;
+  background: #9370db;
 }
 
 .premium-btn {
-  background: #FFD700;
+  background: #ffd700;
 }
-.giftSize{
+.giftSize {
   text-align: center;
   font-size: 16px;
   font-style: normal;
@@ -206,10 +206,10 @@
   margin: 7px 0 10px;
 }
 .pro-gift {
-  color: #9370DB;
+  color: #9370db;
 }
 .premium-gift {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .save-plan {
@@ -218,7 +218,7 @@
   font-size: 15px;
   font-style: normal;
   font-weight: 300;
-  line-height: 28px; 
+  line-height: 28px;
   letter-spacing: -0.25px;
 }
 
@@ -248,7 +248,8 @@
   justify-content: space-between;
   padding: 12px 0px 12px;
 }
-.annual, .monthly {
+.annual,
+.monthly {
   color: #000;
   text-align: center;
   font-size: 16px;
@@ -264,7 +265,6 @@
   width: 30%;
 }
 
-
 .plan-amounts {
   display: flex;
   justify-content: space-between;
@@ -275,7 +275,7 @@
 .border-bottom {
   width: 100%;
   height: 2px;
-  background-color: #332A2A;
+  background-color: #332a2a;
   text-align: center;
   margin: 0 auto;
 }
@@ -305,7 +305,8 @@
   font-weight: 400;
   cursor: pointer;
 }
-.per-value, .monthly-amount {
+.per-value,
+.monthly-amount {
   font-size: 15px;
   font-weight: 600;
 }
@@ -485,13 +486,16 @@
   left: 50%;
 }
 
+.annual-main-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
 /*  End Toggle Switch  */
 
 /* 320px — 480px: Mobile devices */
 
 @media (min-width: 320px) and (max-width: 480px) {
   .plans-section {
-    
     display: flex;
     flex-wrap: wrap;
   }
@@ -503,7 +507,6 @@
 /* 481px — 768px: iPads, Tablets */
 
 @media (min-width: 481px) and (max-width: 768px) {
-
   .plans-wrapper {
     width: 100%;
     margin-top: 20px;
@@ -512,7 +515,6 @@
 /* 769px — 1024px: Small screens, laptops */
 
 @media (min-width: 769px) and (max-width: 1024px) {
-
   .plans-wrapper {
     width: 40%;
     margin-top: 20px;
@@ -521,15 +523,20 @@
 /* 1025px — 1200px: Desktops, large screens */
 
 @media (min-width: 1025px) and (max-width: 1200px) {
-
   .plans-wrapper {
     width: 40%;
     margin-top: 20px;
   }
-  .plan-name {  font-size: 22px; }
+  .plan-name {
+    font-size: 22px;
+  }
 
-  .after-value, .monthly-amount, .previous-value, .per-value { font-size: 14px; }
-
+  .after-value,
+  .monthly-amount,
+  .previous-value,
+  .per-value {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -539,7 +546,6 @@
   .select-pricing-title {
     padding-bottom: 15px;
   }
-
 
   .plans-section {
     padding: 0px;

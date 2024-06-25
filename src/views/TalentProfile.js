@@ -97,6 +97,7 @@ const TalentProfile = () => {
   const [talentData, setTalentData] = useState([]);
   const [photosList, setPhotosList] = useState([]);
   const [videoAudioList, setVideoAudioList] = useState([]);
+  const [urlsList, setURLList] = useState([]);
   const [videoAudioUrls, setVideoAudioUrls] = useState([]);
   const [featuresList, setFeaturesList] = useState([]);
   const [cvList, setCvList] = useState([]);
@@ -142,6 +143,7 @@ const TalentProfile = () => {
       fetchFeatures();
       fetchCV();
       fetchReviews();
+      fetchURLS();
     } else if (storedUserId) {
       getTalentById(storedUserId);
     } else if (queryString) {
@@ -195,6 +197,23 @@ const TalentProfile = () => {
             "resData.data.data[0].videosAndAudios"
           );
           setVideoAudioList(resData.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const fetchURLS = async () => {
+    await ApiHelper.post(
+      `${API.unifiedDataFetch}${
+        selectedTalent?._id ? selectedTalent?._id : queryString
+      }/8`
+    )
+      .then((resData) => {
+        console.log(resData, "resData videos");
+        if (resData.data.status === true) {
+          console.log(resData.data.videoAudioUrls, "resData.data.dataURL");
+          setURLList(resData.data.videoAudioUrls);
         }
       })
       .catch((err) => {
@@ -561,23 +580,56 @@ const TalentProfile = () => {
                       </span>
                       <span>Pro</span>
                     </div> */}
-
-                    <div className="planName pro">
-                      <span>
-                        <i class="bi bi-star-fill"></i>
-                      </span>
-                      {talentData?.planName}
-                    </div>
+                    {talentData?.planName != "Basic" && (
+                      <>
+                        <div
+                          className={`planName ${
+                            talentData?.planName === "Premium"
+                              ? "premium"
+                              : "pro"
+                          }`}
+                        >
+                          <span>
+                            <i class="bi bi-star-fill"></i>
+                          </span>
+                          {talentData?.planName}
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="individual-talents-details">
                     <div className="individual-talent-name">
                       <div className="model-name">{`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}</div>
-                      {/* <div className="talent-verified">
-                        <span className="blue-shield-wrapper">
-                          <img className="blue-shield" src={blueShield}></img>
-                        </span>
-                        Verified
-                      </div> */}
+                      {talentData?.planName != "Basic" && (
+                        <>
+                          <div
+                            className={`planName ${
+                              talentData?.planName === "Premium"
+                                ? "premium"
+                                : "pro"
+                            }`}
+                          >
+                            <span>
+                              <i class="bi bi-star-fill"></i>
+                            </span>
+                            {talentData?.planName}
+                          </div>
+                        </>
+                      )}
+
+                      {talentData?.planName != "Basic" && (
+                        <>
+                          <div className="talent-verified">
+                            <span className="blue-shield-wrapper">
+                              <img
+                                className="blue-shield"
+                                src={blueShield}
+                              ></img>
+                            </span>
+                            Verified
+                          </div>
+                        </>
+                      )}
                     </div>
                     <div className="talent-details">
                       <div className="talent-details-wrapper">
@@ -585,7 +637,8 @@ const TalentProfile = () => {
                           <img className="talent-logo" src={pinkStar}></img>
                         </div>
                         <div className="contSect">
-                          <span>5.0 (45 jobs completed)</span>
+                          <span>{talentData?.averageStarRatings}</span>
+                          {/* <span>{talentData?.averageStarRatings} (0 jobs completed)</span> */}
                         </div>
                       </div>
                       <div className="talent-details-wrapper">
@@ -594,24 +647,31 @@ const TalentProfile = () => {
                         </div>
                         <div className="contSect">
                           <span>
-                            {talentData?.parentAddress}, {talentData?.childCity}
-                            ,{talentData?.parentState},{" "}
+                            {talentData?.childCity},{talentData?.parentState},{" "}
                             {talentData?.parentCountry}
                           </span>
                         </div>
                       </div>
-                      <div className="talent-details-wrapper">
-                        <div className="logo-fill">
-                          <img className="talent-logo" src={userFill}></img>
-                        </div>
-                        <div className="contSect">
-                          {talentData &&
-                            talentData.profession &&
-                            talentData.profession.map((item, index) => (
-                              <span key={index}>{item.value}</span>
-                            ))}
-                        </div>
-                      </div>
+                      {talentData.profession &&
+                        talentData.profession.length > 0 && (
+                          <>
+                            <div className="talent-details-wrapper">
+                              <div className="logo-fill">
+                                <img
+                                  className="talent-logo"
+                                  src={userFill}
+                                ></img>
+                              </div>
+                              <div className="contSect">
+                                {talentData &&
+                                  talentData.profession &&
+                                  talentData.profession.map((item, index) => (
+                                    <span key={index}>{item.value}</span>
+                                  ))}
+                              </div>
+                            </div>
+                          </>
+                        )}
                     </div>
                     {talentData?.instaFollowers ||
                       talentData?.facebookFollowers ||
@@ -925,7 +985,7 @@ const TalentProfile = () => {
                           handleForms("photos");
                         }}
                       >
-                        Portofolio
+                        Portfolio
                       </div>
 
                       <div
@@ -1024,7 +1084,9 @@ const TalentProfile = () => {
                           </div>
                           <div className="reviews-section">
                             <div className="rating-talent">
-                              <div className="num">4.5</div>
+                              <div className="num">
+                                {talentData?.averageStarRatings}
+                              </div>
                               <img src={white_star}></img>
                             </div>
                             <div className="content">
@@ -1074,6 +1136,53 @@ const TalentProfile = () => {
                             >
                               View All
                             </div>
+                          </div>
+
+                          <div className="service-list-main">
+                            {urlsList.map((url, index) => (
+                              <div key={index} className="media-item">
+                                {isYouTubeUrl(url) ? (
+                                  <iframe
+                                    src={getYouTubeEmbedUrl(url)}
+                                    title={`youtube-video-${index}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="video-frame"
+                                  ></iframe>
+                                ) : isVimeoUrl(url) ? (
+                                  <iframe
+                                    src={getVimeoEmbedUrl(url)}
+                                    title={`vimeo-video-${index}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="video-frame"
+                                  ></iframe>
+                                ) : isVideoUrl(url) ? (
+                                  <video
+                                    controls
+                                    src={url}
+                                    className="video-frame"
+                                  >
+                                    Your browser does not support the video tag.
+                                  </video>
+                                ) : isAudioUrl(url) ? (
+                                  <audio
+                                    controls
+                                    src={url}
+                                    className="audio-player"
+                                  >
+                                    Your browser does not support the audio
+                                    element.
+                                  </audio>
+                                ) : (
+                                  <div className="unsupported-media">
+                                    Unsupported media type
+                                  </div>
+                                )}
+                              </div>
+                            ))}
                           </div>
 
                           {/* <div className="service-list-main">
@@ -1221,7 +1330,7 @@ const TalentProfile = () => {
                           ))} */}
 
                           <div className="service-list-main">
-                            {videoAudioUrls.map((url, index) => (
+                            {urlsList.map((url, index) => (
                               <div key={index} className="media-item">
                                 {isYouTubeUrl(url) ? (
                                   <iframe
@@ -1426,21 +1535,19 @@ const TalentProfile = () => {
         <Box
           sx={{
             position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "background.paper",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            bgcolor: "#000",
             boxShadow: 24,
-            height: "500px",
-            widows: "500px",
-            paddingTop: "50px",
-            paddingBottom: "50px",
-            paddingRight: "50px",
-            paddingLeft: "50px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <IconButton
-            sx={{ position: "absolute", top: 5, right: 5 }}
+            sx={{ position: "absolute", top: 5, right: 5, color: "#ffffff" }}
             onClick={handleClose}
           >
             <Close />
@@ -1451,13 +1558,18 @@ const TalentProfile = () => {
             style={{ width: "400px", height: "400px" }}
           />
           <IconButton
-            sx={{ position: "absolute", top: "50%", left: 8 }}
+            sx={{ position: "absolute", top: "50%", left: 8, color: "#ffffff" }}
             onClick={handlePrevious}
           >
             <ArrowBackIos />
           </IconButton>
           <IconButton
-            sx={{ position: "absolute", top: "50%", right: 5 }}
+            sx={{
+              position: "absolute",
+              top: "50%",
+              right: 5,
+              color: "#ffffff",
+            }}
             onClick={handleNext}
           >
             <ArrowForwardIos />

@@ -98,7 +98,7 @@ const Pricing = () => {
             <input type="checkbox" onChange={handleToggle} />
             <a></a>
             <span>
-              <span className="right-span">Brands/Clients</span>
+              <span className="right-span">Brand /Clients</span>
               <span className="left-span">Talent</span>
             </span>
           </label>
@@ -155,23 +155,29 @@ const Pricing = () => {
 
                           {item.plan_type_annual.length >= 1 && (
                             <>
-                              <div className="annual-wrapper">
-                                <input
-                                  type="radio"
-                                  name="click"
-                                  value="save"
-                                  CHECKED
-                                  id={item.planname}
-                                  className={
-                                    item.planname == "Pro (Popular)"
-                                      ? "pro-checkbox"
-                                      : "premium-checkbox"
-                                  }
-                                ></input>
-                                <label for={item.planname} className="annual">
-                                  {item.period}
-                                </label>
+                              <div className="annual-main-wrapper">
+                                <div className="annual-wrapper">
+                                  <input
+                                    type="radio"
+                                    name="click"
+                                    value="save"
+                                    CHECKED
+                                    id={item.planname}
+                                    className={
+                                      item.planname == "Pro (Popular)"
+                                        ? "pro-checkbox"
+                                        : "premium-checkbox"
+                                    }
+                                  ></input>
+                                  <label for={item.planname} className="annual">
+                                    {item.period}
+                                  </label>
+                                </div>
+                                <div className="per-value">
+                                  {item.annualTotalAmount}
+                                </div>
                               </div>
+
                               {item.plan_type_annual.map((item) => {
                                 return (
                                   <>
@@ -184,9 +190,9 @@ const Pricing = () => {
                                           {item.afterDiscount}
                                         </div>
                                       </div>
-                                      <div className="per-value">
+                                      {/* <div className="per-value">
                                         {item.amount}
-                                      </div>
+                                      </div> */}
                                     </div>
                                     <div className="border-bottom"></div>
                                   </>

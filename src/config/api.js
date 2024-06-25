@@ -81,6 +81,8 @@ export const API = {
   deleteService: BASEURL + "users/deleteService",
   deleteIndividualService: BASEURL + "users/deleteIndividualService",
   reviewsPosting: BASEURL + "users/reviewsPosting",
+  countUsers: BASEURL + "users/countUsers",
+  deleteVideoUrls: BASEURL + "users/deleteVideoUrls",
 
   //keyword
   postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",

@@ -92,8 +92,8 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const onEditorSummary = (editorState) => {
     console.log(editorState, "editorState");
-    // setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
-    setAboutYou(editorState);
+    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
+    // setAboutYou(editorState);
     setEditorState(editorState);
   };
 
@@ -136,13 +136,23 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleUrlChange = (e) => {
     setVideoUrl(e.target.value);
+    console.log(e.target.value, "handleUrlChange");
   };
 
   const handleAddUrl = () => {
     if (videoUrl.trim() !== "") {
       setUrls([...urls, videoUrl]);
+      console.log([...urls, videoUrl], "handleAddUrl");
       setVideoUrl("");
     }
+  };
+
+  const handlePaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+    setVideoUrl(pastedText);
+    console.log(pastedText, "handlePaste");
   };
 
   const handleDeleteUrl = (index) => {
@@ -440,7 +450,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       image: profileFile,
       cv: resumeFile,
       portfolio: portofolioFile,
-      videosAndAudios: videoAUdioFile,
+      videosAndAudios: urls,
       instaFollowers: instagramFollowers,
       tiktokFollowers: tiktoksFollowers,
       twitterFollowers: xtwitterFollowers,
@@ -452,7 +462,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       verificationId: verificationID,
       features: features,
       childAboutYou: aboutYou,
-      videoAudioUrls: videoUrl,
+      videoAudioUrls: urls,
     };
     setIsLoading(true);
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
@@ -478,6 +488,11 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const goBack = () => {
     navigate(`/talent-signup-plan-details?userId=${userId}`);
   };
+
+  useEffect(() => {
+    console.log(videoUrl, "videoUrl");
+    console.log(urls, "urls");
+  }, []);
 
   return (
     <>
@@ -753,6 +768,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                           onChange={(e) => {
                             handleUrlChange(e);
                           }}
+                          onPaste={handlePaste}
                           placeholder="Paste Videos/Audios Url"
                         ></input>
                         <i
@@ -768,13 +784,13 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       {urls.map((url, index) => {
                         return (
                           <>
-                            <div key={index} className="uploaded-file-wrapper">
+                            <div key={index} className="url-file-wrapper">
                               <div className="file-section">
                                 <a
                                   href={url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="fileName"
+                                  className="url-fileName"
                                 >
                                   {url}
                                 </a>

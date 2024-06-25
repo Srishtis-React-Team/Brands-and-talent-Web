@@ -45,6 +45,15 @@ const MessageTalents = () => {
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
+      // Check if file size is less than 1MB (1048576 bytes)
+      if (fileData.size > 1048576) {
+        setPopUpMessage("File size should be less than 1MB");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 3000);
+        return;
+      }
       console.log(fileData, "fileData");
       uploadProfile(fileData);
     }
@@ -135,10 +144,25 @@ const MessageTalents = () => {
   }, [currentUserId, urlUserID]);
 
   //socket codes
+  // useEffect(() => {
+  //   console.log("FIND_MESSAGE_LOPP_newSocket");
+  //   console.log(currentUserId, "currentUserId");
+  //   const newSocket = io(
+  //     "https://hybrid.sicsglobal.com/project/brandsandtalent"
+  //   );
+  //   console.log(newSocket, "newSocket");
+  //   setSocket(newSocket);
+  //   return () => {
+  //     newSocket.disconnect();
+  //   };
+  // }, [currentUserId]);
+
   useEffect(() => {
     console.log("FIND_MESSAGE_LOPP_newSocket");
     console.log(currentUserId, "currentUserId");
-    const newSocket = io("http://13.234.177.61:4014");
+    const newSocket = io("https://hybrid.sicsglobal.com", {
+      path: "/project/brandsandtalent/socket.io",
+    });
     console.log(newSocket, "newSocket");
     setSocket(newSocket);
     return () => {

@@ -428,12 +428,13 @@ a {
   border-radius: 30px;
   padding: 4px;
   top: 5px;
-  right: 160px;
+  right: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
   cursor: pointer;
+  width: 65px;
 }
 
 .rating > img {
@@ -1777,6 +1778,18 @@ input[type="radio"] {
 }
 
 .creatorPage-Wraper {
+}
+
+.rating-filled-star {
+  color: gold;
+  font-size: 11px;
+  padding-right: 1px;
+}
+
+.rating-unfilled-star {
+  color: gray;
+  font-size: 11px;
+  padding-right: 1px;
 }
 
 /* MEDIA-QUERY START */
