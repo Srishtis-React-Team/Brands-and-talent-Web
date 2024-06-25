@@ -66,6 +66,7 @@ Best,
   const [sortListedCandidates, showsortListedCandidates] = useState(false);
   const [interviewInvitations, showinterviewInvitations] = useState(false);
   const [rejectedCandidates, showRejectedCandidates] = useState(false);
+  const [bookedCandidates, showBookedCandidates] = useState(false);
   const [candidatesList, setCandidatesList] = useState([]);
 
   const toggleMenu = () => {
@@ -96,6 +97,29 @@ Best,
           setOpenPopUp(true);
           setTimeout(function() {
             handleForms("sortlisted-candidates");
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const bookCandidate = async (candidate) => {
+    console.log(candidate?.gigId, "candidate GigId");
+    const formData = {
+      talentId: candidate?.talentId,
+      selectedLevel: "bookedCandidates",
+      gigId: candidate?.gigId,
+    };
+    await ApiHelper.post(API.selectedLevelRange, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          // getNewCandidates(brandId, "new");
+          setMessage("Candidate Booked SuccessFully!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            handleForms("booked-candidates");
             setOpenPopUp(false);
           }, 1000);
         }
@@ -152,9 +176,16 @@ Best,
     } else {
       showRejectedCandidates(false);
     }
+    if (e == "booked-candidates") {
+      showBookedCandidates(true);
+      getNewCandidates(brandId, "bookedCandidates");
+    } else {
+      showBookedCandidates(false);
+    }
   }
 
   const getNewCandidates = async (id, filterCandidates) => {
+    alert("getNewCandidates");
     let apiUrl;
     let formData;
     if (filterCandidates == "new") {
@@ -369,7 +400,7 @@ Best,
                   handleForms("new-candidates");
                 }}
               >
-                New Candidates
+                New
               </div>
               <div
                 className={
@@ -381,7 +412,7 @@ Best,
                   handleForms("sortlisted-candidates");
                 }}
               >
-                ShortListed Candidates
+                ShortListed
               </div>
               <div
                 className={
@@ -393,7 +424,19 @@ Best,
                   handleForms("interview-invitations");
                 }}
               >
-                Interview Invitation Message
+                Invite to Interview
+              </div>
+              <div
+                className={
+                  bookedCandidates
+                    ? "active-tab individual-talent-tab candidates-tabs"
+                    : "individual-talent-tab candidates-tabs"
+                }
+                onClick={(e) => {
+                  handleForms("booked-candidates");
+                }}
+              >
+                Booked
               </div>
               <div
                 className={
@@ -405,7 +448,7 @@ Best,
                   handleForms("rejected-candidates");
                 }}
               >
-                Rejected Candidates
+                Rejected
               </div>
             </div>
 
@@ -498,7 +541,7 @@ Best,
                                                 sortListCandidate(candidate);
                                               }}
                                             >
-                                              Shortlist Candidate
+                                              Shortlist
                                             </a>
                                           </li>
                                         )}
@@ -519,6 +562,18 @@ Best,
                                             </a>
                                           </li>
                                         )}
+                                        {!bookedCandidates && (
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              onClick={(e) => {
+                                                bookCandidate(candidate);
+                                              }}
+                                            >
+                                              Book
+                                            </a>
+                                          </li>
+                                        )}
                                         {!rejectedCandidates && (
                                           <li>
                                             <a
@@ -532,7 +587,7 @@ Best,
                                                 });
                                               }}
                                             >
-                                              Reject Candidate
+                                              Reject
                                             </a>
                                           </li>
                                         )}
@@ -585,6 +640,16 @@ Best,
                   </div>
                 </>
               )}
+            {bookedCandidates && candidatesList.length == 0 && (
+              <>
+                <div
+                  style={{ textAlign: "center", padding: "20px" }}
+                  className="list-jobs-wrapper"
+                >
+                  No Candidates Available
+                </div>
+              </>
+            )}
             {rejectedCandidates && candidatesList.length == 0 && (
               <>
                 <div
@@ -664,6 +729,7 @@ Best,
                   </div>
                 </>
               )}
+
               {alertpop?.label == "reject" && (
                 <>
                   <h5 className="interview-model-title">
@@ -671,16 +737,6 @@ Best,
                   </h5>
                 </>
               )}
-              {/* {alertpop?.label == "delete" && (
-                <>
-                  <h5>Are you sure you want to Delete this Job ? </h5>
-                </>
-              )}
-              {alertpop?.label == "post-job" && (
-                <>
-                  <h5>Are you sure you want to Post this Job ? </h5>
-                </>
-              )} */}
             </div>
           </div>
           <div className="alert-button-section">

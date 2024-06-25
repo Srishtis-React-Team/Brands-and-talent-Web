@@ -239,12 +239,26 @@
     padding: 10px 15px;
     width: 100%;
   }
+  .url-file-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 10px 0px;
+    width: 100%;
+  }
   .file-section,
   .file-options {
     display: flex;
   }
   .fileName {
     padding-left: 10px;
+  }
+  .url-fileName {
+    padding-left: 0px;
+  }
+  .url-fileName:hover {
+    padding-left: 0px;
+    text-decoration: underline;
   }
   .option-menu {
     padding: 0px 10px;
@@ -954,6 +968,10 @@
   display: block;
   width: 100%;
 }
+// .bi-three-dots-vertical {
+//   padding-right: 10px;
+//   padding-left: 10px;
+// }
 .edit_talentprofile .update-portfolio-cards {
   position: relative;
 }
@@ -1202,4 +1220,38 @@
 .bi-trash:hover {
   cursor: pointer;
   color: #c2114b;
+}
+
+.urls-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.uploaded-file-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 10px 15px;
+  width: 100%;
+}
+.url-file-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 10px 0px;
+  width: 100%;
+}
+.file-section,
+.file-options {
+  display: flex;
+}
+.fileName {
+  padding-left: 10px;
+}
+.url-fileName {
+  padding-left: 0px;
+}
+.url-fileName:hover {
+  padding-left: 0px;
+  text-decoration: underline;
 }

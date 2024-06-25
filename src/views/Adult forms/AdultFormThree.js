@@ -58,7 +58,8 @@ const AdultFormThree = () => {
   console.log("Search queryString:", typeof queryString);
   const navigate = useNavigate();
   const [updateDisabled, setUpdateDisabled] = useState(false);
-
+  const [videoUrl, setVideoUrl] = useState("");
+  const [urls, setUrls] = useState([]);
   useEffect(() => {
     getFeatures();
   }, []);
@@ -123,6 +124,7 @@ const AdultFormThree = () => {
       verificationId: verificationID,
       childAboutYou: aboutYou,
       features: features,
+      videoAudioUrls: urls,
     };
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {
@@ -449,6 +451,32 @@ const AdultFormThree = () => {
     });
   };
 
+  const handleUrlChange = (e) => {
+    setVideoUrl(e.target.value);
+    console.log(e.target.value, "handleUrlChange");
+  };
+
+  const handleAddUrl = () => {
+    if (videoUrl.trim() !== "") {
+      setUrls([...urls, videoUrl]);
+      console.log([...urls, videoUrl], "handleAddUrl");
+      setVideoUrl("");
+    }
+  };
+
+  const handlePaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+    setVideoUrl(pastedText);
+    console.log(pastedText, "handlePaste");
+  };
+
+  const handleDeleteUrl = (index) => {
+    const newUrls = urls.filter((url, i) => i !== index);
+    setUrls(newUrls);
+  };
+
   return (
     <>
       <>
@@ -477,13 +505,19 @@ const AdultFormThree = () => {
               <div className="adult-form-wrapper row ml-0 mr-0">
                 <div className="col-md-4 col-lg-3">
                   <div className="fixImgs">
-                    <img src={adultsBanner} className="kids-image-sticky " alt="img" />
+                    <img
+                      src={adultsBanner}
+                      className="kids-image-sticky "
+                      alt="img"
+                    />
                   </div>
                 </div>
                 <div className="adult-main remvSpc col-md-8 col-lg-9">
                   <div className="adults-form-title">Complete your Profile</div>
                   <div className="adults-titles kids-form-title">
-                    <span>Profile Picture <span className="astrix">*</span></span>
+                    <span>
+                      Profile Picture <span className="astrix">*</span>
+                    </span>
                   </div>
                   <div
                     className="cv-section"
@@ -564,7 +598,9 @@ const AdultFormThree = () => {
                     </>
                   )}
 
-                  <div className="adults-titles kids-form-title"><span>Bio</span></div>
+                  <div className="adults-titles kids-form-title">
+                    <span>Bio</span>
+                  </div>
                   <div className="rich-editor mb-5">
                     <label className="form-label">About You</label>
                     <Editor
@@ -592,7 +628,9 @@ const AdultFormThree = () => {
                   </div>
 
                   <div className="adults-titles kids-form-title">
-                    <span>Portofolio<span className="astrix">*</span></span>
+                    <span>
+                      Portofolio<span className="astrix">*</span>
+                    </span>
                   </div>
                   <div
                     className="cv-section mt-0"
@@ -698,7 +736,90 @@ const AdultFormThree = () => {
                     </>
                   )}
 
-                  <div
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">Videos & Audios</label>
+                      <div className="videos-label">
+                        ( Upload your previous work samples videos/audios.)
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <input
+                          type="text"
+                          className="form-control mt-2 ml-3"
+                          value={videoUrl}
+                          onChange={(e) => {
+                            handleUrlChange(e);
+                          }}
+                          onPaste={handlePaste}
+                          placeholder="Paste Videos/Audios Url"
+                        ></input>
+                        <i
+                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
+                          onClick={handleAddUrl}
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  {urls && (
+                    <>
+                      {urls.map((url, index) => {
+                        return (
+                          <>
+                            <div key={index} className="url-file-wrapper">
+                              <div className="file-section">
+                                <a
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="url-fileName"
+                                >
+                                  {url}
+                                </a>
+                              </div>
+                              <div className="file-options">
+                                <div className="sucess-tick">
+                                  <img src={greenTickCircle} alt="" />
+                                </div>
+                                <div className="option-menu">
+                                  <div className="dropdown">
+                                    <img
+                                      onClick={() =>
+                                        setShowOptions(!showOptions)
+                                      }
+                                      src={elipsis}
+                                      alt=""
+                                      className="dropdown-toggle elipsis-icon"
+                                      type="button"
+                                      id="resumeDropdown"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    />
+                                    <ul
+                                      className="dropdown-menu"
+                                      aria-labelledby="resumeDropdown"
+                                    >
+                                      <li>
+                                        <a
+                                          className="dropdown-item"
+                                          onClick={() => handleDeleteUrl(index)}
+                                          id="delete"
+                                        >
+                                          Delete
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </>
+                  )}
+
+                  {/* <div
                     className="cv-section"
                     onDrop={handleVideoDrop}
                     onDragOver={handleVideoDragOver}
@@ -718,7 +839,7 @@ const AdultFormThree = () => {
                     <div className="upload-info">
                       Upload your previous work samples videos/audios.
                     </div>
-                  </div>
+                  </div> */}
                   {videoAUdioFile && (
                     <>
                       {videoAUdioFile.map((item, index) => {
@@ -794,7 +915,9 @@ const AdultFormThree = () => {
                       })}
                     </>
                   )}
-                  <div className="adults-titles kids-form-title"><span>CV</span></div>
+                  <div className="adults-titles kids-form-title">
+                    <span>CV</span>
+                  </div>
                   <div
                     className="cv-section"
                     onDrop={handleResumeDrop}
@@ -1153,7 +1276,9 @@ const AdultFormThree = () => {
                     </div>
                   </div>
 
-                  <div className="kids-form-title"><span>ID Verification</span></div>
+                  <div className="kids-form-title">
+                    <span>ID Verification</span>
+                  </div>
 
                   <div className="id-verify-info">
                     Stand out and secure more jobs and projects by becoming

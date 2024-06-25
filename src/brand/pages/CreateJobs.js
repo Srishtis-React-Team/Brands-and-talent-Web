@@ -554,7 +554,7 @@ const CreateJobs = () => {
     // setEditorStateHowToApply(howToApplyDescription);
     // setHowToApplyDescription(initialHowToApply);
     let initialHowToApply = [
-      "<p>Interested candidates should submit their resume and a link that contains portfolio from brands and talent website to yourgmail.com</p>\n",
+      "<p>Interested candidates should submit their resume and a link that contains portfolio from brands and talent website to your gmail.com’ to ‘Email your resume along with your Brands & Talent portfolio to brandsntalent@gmail.com.for more information: Call us at +855 855 855.  View all jobs at Brands & Talent: brandsandtalent.com/company/brandsandtalent/jobs</p>\n",
     ];
     const whyWorkWithUsContent = initialHowToApply[0];
     const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
@@ -1823,7 +1823,7 @@ const CreateJobs = () => {
           <div className="brand-content-main boxBg">
             <div className="create-job-title">
               {editData?.value && "Edit Gig/Job"}
-              {!editData?.value && editJobData == null && "Create New Job"}
+              {!editData?.value && editJobData == null && "Post a Job"}
               {editJobData != null &&
                 !editData?.value &&
                 "Duplicate Existing Job"}
@@ -1852,7 +1852,7 @@ const CreateJobs = () => {
                 {!editData?.value && editJobData == null && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
-                      Post a Job
+                      Create New Job
                     </label>
                   </>
                 )}
@@ -2866,14 +2866,14 @@ const CreateJobs = () => {
                                     <div className="kids-form-section col-md-3 mb-3">
                                       <div className=" compensation-right-space">
                                         <label className="form-label">
-                                          Product Name
+                                          Product/Gift Name
                                         </label>
                                         <input
                                           type="text"
                                           className="form-control"
                                           value={productName}
                                           onChange={handleProductNameChange}
-                                          placeholder="Enter Product Name"
+                                          placeholder="Enter Product/Gift Name"
                                         ></input>
                                       </div>
                                     </div>
@@ -2881,13 +2881,13 @@ const CreateJobs = () => {
                                     <div className="kids-form-section col-md-3 mb-3">
                                       <div className="">
                                         <label className="form-label">
-                                          Product Value
+                                          Product/Gift Value
                                         </label>
                                         <div className="creators-filter-select creator-age-wrapper">
                                           <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Product Value"
+                                            placeholder="Product/Gift Value"
                                             value={productValue}
                                             onChange={(e) => {
                                               handleProductValueChange(e);
@@ -2960,101 +2960,6 @@ const CreateJobs = () => {
                                 {selectedOption ===
                                   "paid_collaboration_and_gift" && (
                                   <>
-                                    <div className="compensation-row row">
-                                      <div className="kids-form-section col-md-2 mb-3">
-                                        <div className=" compensation-right-space">
-                                          <label className="form-label">
-                                            Product Name
-                                          </label>
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            value={productName}
-                                            onChange={handleProductNameChange}
-                                            placeholder="Enter Product Name"
-                                          ></input>
-                                        </div>
-                                      </div>
-                                      <div className="kids-form-section col-md-2 mb-3">
-                                        <div className="">
-                                          <label className="form-label">
-                                            Product Value
-                                          </label>
-                                          <div className="creators-filter-select creator-age-wrapper">
-                                            <input
-                                              type="text"
-                                              className="form-control"
-                                              placeholder="Product Value"
-                                              value={productValue}
-                                              onChange={(e) => {
-                                                handleProductValueChange(e);
-                                              }}
-                                            ></input>
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                      <div className="kids-form-section col-md-2 mb-3">
-                                        <div className=" compensation-right-space">
-                                          <label className="form-label">
-                                            Currency
-                                          </label>
-                                          <select
-                                            className="form-select"
-                                            aria-label="Default select example"
-                                            value={currency}
-                                            onChange={handleCurrencyChange}
-                                            style={{
-                                              fontSize: "14px",
-                                            }}
-                                          >
-                                            <option value="" disabled selected>
-                                              Select Currency
-                                            </option>
-                                            {currencyList.map(
-                                              (option, index) => (
-                                                <option
-                                                  key={index}
-                                                  value={option?.value}
-                                                >
-                                                  {option?.title}
-                                                </option>
-                                              )
-                                            )}
-                                          </select>
-                                        </div>
-                                      </div>
-                                      <div className="kids-form-section col-md-2 mb-3">
-                                        <div className="">
-                                          <label className="form-label">
-                                            frequency
-                                          </label>
-                                          <select
-                                            className="form-select"
-                                            aria-label="Default select example"
-                                            value={frequency}
-                                            onChange={handleFrequencyChange}
-                                            style={{
-                                              fontSize: "14px",
-                                            }}
-                                          >
-                                            <option value="" disabled selected>
-                                              Select frequency
-                                            </option>
-                                            {frequencyOptions.map(
-                                              (option, index) => (
-                                                <option
-                                                  key={index}
-                                                  value={option}
-                                                >
-                                                  {option}
-                                                </option>
-                                              )
-                                            )}
-                                          </select>
-                                        </div>
-                                      </div>
-                                    </div>
                                     <div className="compensation-row row">
                                       <div className="kids-form-section col-md-2 mb-3">
                                         <div className=" compensation-right-space">
@@ -3144,6 +3049,101 @@ const CreateJobs = () => {
                                           </div>
                                         </>
                                       )}
+                                      <div className="kids-form-section col-md-2 mb-3">
+                                        <div className=" compensation-right-space">
+                                          <label className="form-label">
+                                            Currency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={currency}
+                                            onChange={handleCurrencyChange}
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select Currency
+                                            </option>
+                                            {currencyList.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option?.value}
+                                                >
+                                                  {option?.title}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div className="kids-form-section col-md-2 mb-3">
+                                        <div className="">
+                                          <label className="form-label">
+                                            frequency
+                                          </label>
+                                          <select
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                            value={frequency}
+                                            onChange={handleFrequencyChange}
+                                            style={{
+                                              fontSize: "14px",
+                                            }}
+                                          >
+                                            <option value="" disabled selected>
+                                              Select frequency
+                                            </option>
+                                            {frequencyOptions.map(
+                                              (option, index) => (
+                                                <option
+                                                  key={index}
+                                                  value={option}
+                                                >
+                                                  {option}
+                                                </option>
+                                              )
+                                            )}
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="compensation-row row">
+                                      <div className="kids-form-section col-md-2 mb-3">
+                                        <div className=" compensation-right-space">
+                                          <label className="form-label">
+                                            Product/Gift Name
+                                          </label>
+                                          <input
+                                            type="text"
+                                            className="form-control"
+                                            value={productName}
+                                            onChange={handleProductNameChange}
+                                            placeholder="Enter Product/Gift Name"
+                                          ></input>
+                                        </div>
+                                      </div>
+                                      <div className="kids-form-section col-md-2 mb-3">
+                                        <div className="">
+                                          <label className="form-label">
+                                            Product/Gift Value
+                                          </label>
+                                          <div className="creators-filter-select creator-age-wrapper">
+                                            <input
+                                              type="text"
+                                              className="form-control"
+                                              placeholder="Product/Gift Value"
+                                              value={productValue}
+                                              onChange={(e) => {
+                                                handleProductValueChange(e);
+                                              }}
+                                            ></input>
+                                          </div>
+                                        </div>
+                                      </div>
+
                                       <div className="kids-form-section col-md-2 mb-3">
                                         <div className=" compensation-right-space">
                                           <label className="form-label">
@@ -3568,9 +3568,9 @@ const CreateJobs = () => {
                 )}
 
                 <div className="job-post-terms">
-                  By clicking Preview & Post , I agree that Brands & Talent may
-                  publish and distribute my job advertisement on its site and
-                  through its distribution partners.
+                  By clicking Preview & Post , I agree that Brand / Client &
+                  Talent may publish and distribute my job advertisement on its
+                  site and through its distribution partners.
                 </div>
 
                 <div className="create-job-buttons mt-4 mb-2">

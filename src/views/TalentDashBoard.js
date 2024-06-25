@@ -501,7 +501,7 @@ const TalentDashBoard = () => {
                 <div className="doitnow-main row">
                   <div className="doit-one col-md-8">
                     <div className="talent-popup-title">
-                      Welcome To Brands And Talent
+                      Welcome To Brand / Client And Talent
                     </div>
                     <div className="talent-popup-enter">
                       Complete Your{" "}
@@ -898,7 +898,9 @@ const TalentDashBoard = () => {
 
                   <div className="boxsWhite mb-4">
                     <div className="top-brands-section px-3 pt-3">
-                      <div className="top-brands-title py-1">Top Brands</div>
+                      <div className="top-brands-title py-1">
+                        Top Brand / Client
+                      </div>
                       {/* <div className="view-all-brands">View All</div> */}
                     </div>
                     {topBrandsList.length && (

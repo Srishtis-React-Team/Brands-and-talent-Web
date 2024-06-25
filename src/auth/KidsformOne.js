@@ -994,10 +994,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                     Form
                   </div>
                   <div className="kids-description">
-                    Unleash your kid's inner star! ✨ Brands & Talent is your
-                    gateway to exciting opportunities for young creators ( 4-17
-                    )!  Imagine their talent shining on the big stage,
-                    collaborating with renowned brands on fun gigs and
+                    Unleash your kid's inner star! ✨ Brand / Client & Talent is
+                    your gateway to exciting opportunities for young creators (
+                    4-17 )!  Imagine their talent shining on the big stage,
+                    collaborating with renowned Brand / Client on fun gigs and
                     influencer projects.  This registration form is your first
                     step to making their dreams a reality. Register now and
                     unlock a world of possibilities for your kid!
