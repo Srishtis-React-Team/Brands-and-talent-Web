@@ -135,8 +135,12 @@ const KidsFormTwo = () => {
                                   : "none",
                             }}
                           >
-                            <div className="plan-name">{item.planname}</div>
-                            <div className="subcribe-gift">{item.gift}</div>
+<div className="priceHeight">
+                          
+                            <div className="plan-name">{item.planname}
+                              <div className="subcribe-gift">{item.gift}</div>
+                            </div>
+                          
 
                             {item.planname == "Basic" && (
                               <>
@@ -165,7 +169,8 @@ const KidsFormTwo = () => {
                                   <label for={item.planname} className="annual">
                                     {item.period}
                                   </label>
-                                </div>
+                                </div> 
+                                
                                 {item.plan_type_annual.map((item) => {
                                   return (
                                     <>
@@ -220,6 +225,8 @@ const KidsFormTwo = () => {
                               </>
                             )}
 
+</div>
+
                             <button
                               className={
                                 index === 0
@@ -245,9 +252,7 @@ const KidsFormTwo = () => {
                                 return (
                                   <>
                                     <div className="plan-content">
-                                      <div className="icPrice">
-                                        {/* <img src={greenTick} alt="" /> */}
-                                      </div>
+                                      <div class="icPrice"><i class="bi bi-check-circle-fill"></i></div>
                                       <div className="plan-content-text">
                                         {item}
                                       </div>

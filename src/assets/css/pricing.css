@@ -38,17 +38,19 @@
 }
 
 .pro-checkbox[type="radio"] {
-  accent-color: #9370db;
+  accent-color: #8158d5;
   height: 20px;
   width: 20px;
   vertical-align: middle;
 }
-.premium-checkbox[type="radio"] {
-  accent-color: #ffd700;
+input[type="radio"].premium-checkbox {
+  accent-color: #af93006e;
+
   height: 20px;
   width: 20px;
   vertical-align: middle;
 }
+
 .icPrice {
   font-weight: 700;
   font-size: 20px;
