@@ -3395,24 +3395,9 @@ head .profile-image-header {
   }
 
   .location-name {
-    color: #000;
     font-size: 12px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    padding: 0px 10px;
   }
-  .rating {
-    position: absolute;
-    background-color: #fff;
-    border-radius: 30px;
-    padding: 4px;
-    top: 54%;
-    right: 5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+
   .card-picture {
     border-radius: 104px;
     border: 1px solid #fff;
