@@ -275,7 +275,10 @@ const ListJobs = () => {
                     {allJobsList.map((job, index) => {
                       return (
                         <>
-                          <div key={index} className="list-jobs-card col-md-12 ">
+                          <div
+                            key={index}
+                            className="list-jobs-card col-md-12 "
+                          >
                             <div className="recent-campaigns-wrapper wraper browseJob">
                               <div className="campaigns-wrapper-one">
                                 <div className="campaigns-content-wrapper imgSpc">
@@ -283,7 +286,7 @@ const ListJobs = () => {
                                     <div className="campaign-name">
                                       {job?.jobTitle}
                                     </div>
-                                  </div> 
+                                  </div>
                                   <div className="mb-2 logoSpc">
                                     <img
                                       className="job-company-logo"
@@ -300,7 +303,8 @@ const ListJobs = () => {
                                         {job?.state}
                                       </span>
                                     )}
-                                    ,
+                                    {job?.state && <>,</>}
+
                                     {job?.city && (
                                       <span className="job-company-name">
                                         {job?.city}

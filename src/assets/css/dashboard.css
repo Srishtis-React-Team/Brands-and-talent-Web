@@ -440,6 +440,7 @@ a {
   justify-content: center;
   z-index: 1;
   cursor: pointer;
+  width: 65px;
 }
 
 .rating > img {
@@ -1707,7 +1708,9 @@ input[type="radio"] {
   padding-top: 10px;
 }
 
-.base-MenuItem-root {  outline: 0 !important; }
+.base-MenuItem-root {
+  outline: 0 !important;
+}
 
 .profile-image-header {
   margin-left: 15px;
@@ -1781,18 +1784,26 @@ input[type="radio"] {
   right: -105px !important;
 }
 
-.header .dropdown-menu a.active{ display: inline-block; }
+.header .dropdown-menu a.active {
+  display: inline-block;
+}
 
-
-.adult-main.remvSpc.col-md-8.col-lg-9{
-  background-color: #FFF;
+.adult-main.remvSpc.col-md-8.col-lg-9 {
+  background-color: #fff;
   z-index: 0;
 }
 
+.rating-filled-star {
+  color: gold;
+  font-size: 11px;
+  padding-right: 1px;
+}
 
-
-
-
+.rating-unfilled-star {
+  color: gray;
+  font-size: 11px;
+  padding-right: 1px;
+}
 
 /* MEDIA-QUERY START */
 
@@ -2075,7 +2086,6 @@ input[type="radio"] {
     display: flex;
     justify-content: space-evenly !important;
   }
-
 
   .ageverify-title {
     color: #c2114b;
@@ -2742,23 +2752,22 @@ head .profile-image-header {
   height: 130px !important;
 }
 
-
-.showContent .gallery-content{ 
-  display: block; 
+.showContent .gallery-content {
+  display: block;
   position: relative;
   background: transparent;
   color: #000;
   padding: 5px 5px 10px;
 }
 
-.showContent .gallery-content .name, .showContent .gallery-content .address, .showContent .gallery-content .location-name{
+.showContent .gallery-content .name,
+.showContent .gallery-content .address,
+.showContent .gallery-content .location-name {
   color: #000;
 }
 .showContent .gallery-content .location-wrapper > img {
   filter: inherit;
 }
-
-
 
 .address {
   color: #ffffff;
@@ -2811,21 +2820,6 @@ head .profile-image-header {
   margin: 0 -1%;
   width: 100%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media (max-width: 430px) {
   .gallery-wrapper {
@@ -3064,8 +3058,6 @@ head .profile-image-header {
     background-size: cover;
     background-repeat: no-repeat;
   }
-
-  
 
   .case-study-main {
     width: 100%;
@@ -3504,7 +3496,9 @@ head .profile-image-header {
 }
 
 @media (max-width: 580px) {
-  .header-wrapper {  padding: 4px 20px; }
+  .header-wrapper {
+    padding: 4px 20px;
+  }
   .header-wrapper .step-text {
     height: auto;
     font-size: 12px;
@@ -3515,10 +3509,13 @@ head .profile-image-header {
     height: 0.5em;
     padding: 3px;
   }
-  
-  .adults-form-title { font-size: 20px;  }
-  .adults-titles, .kids-form-title{  font-size: 15px !important; padding: 10px 0px; }
-  
 
-
+  .adults-form-title {
+    font-size: 20px;
+  }
+  .adults-titles,
+  .kids-form-title {
+    font-size: 15px !important;
+    padding: 10px 0px;
+  }
 }

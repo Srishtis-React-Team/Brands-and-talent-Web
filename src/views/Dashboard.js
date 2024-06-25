@@ -15,15 +15,11 @@ const Dashboard = () => {
     currentUserImage,
     currentUserType,
     avatarImage,
+    talentName,
+    brandName,
   } = CurrentUser();
-  console.log(
-    currentUserId,
-    "currentUserId",
-    currentUserImage,
-    "currentUserImage",
-    currentUserType,
-    "currentUserType"
-  );
+  console.log(talentName, "talentName");
+  console.log(brandName, "brandName");
   const navigate = useNavigate();
   const starIcon = require("../assets/icons/star.png");
   const whiteStar = require("../assets/icons/white_star.png");
@@ -98,6 +94,11 @@ const Dashboard = () => {
   const [photoGraphersList, setphotoGraphersList] = useState([]);
   const [messageFromHeader, setMessageFromHeader] = useState("");
   const [hideAll, setHideAll] = useState(false);
+  const [adultUserCount, setAdultUserCount] = useState(0);
+  const [kidsUserCount, setKidsUserCount] = useState(0);
+  const [brandUserCount, setBrandUserCount] = useState(0);
+  const [talentCount, setTalentCount] = useState(0);
+  const [allUsersCount, setAllUsersCount] = useState(0);
 
   function userType(e) {
     if (e == "above_18") {
@@ -404,12 +405,47 @@ const Dashboard = () => {
       // },
     ]);
     getDemo();
+    getUsersCount();
   }, []);
 
   const getDemo = async () => {
     await ApiHelper.post(API.getDemo)
       .then((resData) => {
         console.log("getDemo", resData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getUsersCount = async () => {
+    await ApiHelper.get(API.countUsers)
+      .then((resData) => {
+        console.log("countUsers", resData?.data?.data);
+        const data = resData?.data?.data;
+        if (data) {
+          data.forEach((item) => {
+            switch (item.type) {
+              case "adultUserCount":
+                setAdultUserCount(item.count);
+                break;
+              case "kidsUserCount":
+                setKidsUserCount(item.count);
+                break;
+              case "brandUserCount":
+                setBrandUserCount(item.count);
+                break;
+              case "talentCount":
+                setTalentCount(item.count);
+                break;
+              case "allUsersCount":
+                setAllUsersCount(item.count);
+                break;
+              default:
+                break;
+            }
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -433,33 +469,77 @@ const Dashboard = () => {
   };
 
   const addFavorite = async (data) => {
-    const formData = {
-      type: data?.type,
-    };
-    await ApiHelper.post(`${API.setUserFavorite}${data._id}`, formData)
-      .then((resData) => {
-        if (resData.status === false) {
-        }
-        setMessage("You Need To Register First");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {});
+    if (!currentUserId) {
+      setMessage("You Must Be Logged In");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 2000);
+    } else {
+      const formData = {
+        type: data?.type,
+        user: data?._id,
+      };
+      await ApiHelper.post(`${API.setUserFavorite}${data._id}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setMessage("Added The Talent To Your Favorites ");
+            setOpenPopUp(true);
+            getTalentList();
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            setMessage("Please Login First");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {});
+    }
   };
 
-  const removeFavorite = (item) => {
-    console.log(item, "item");
-    const modifiedTalents = talentList?.map((obj) => {
-      console.log(obj, "obj");
-      if (obj.id === item.id) {
-        return { ...obj, isFavorite: false };
-      }
-      return obj;
-    });
-    setTalentList(modifiedTalents);
-    console.log(modifiedTalents, "modifiedTalents");
+  const removeFavorite = async (item) => {
+    if (!currentUserId) {
+      setMessage("You Must Be Logged In");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 2000);
+    } else {
+      const formData = {
+        type: item?.type,
+        user: item?._id,
+      };
+      await ApiHelper.post(
+        `${API.removeFavorite}${currentUserId}`,
+        formData,
+        true
+      )
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setMessage("Removed Talent From Favorites");
+            setOpenPopUp(true);
+            getTalentList();
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -600,7 +680,7 @@ const Dashboard = () => {
     const formData = {
       comment: comments,
       starRatings: starCount,
-      reviewerName: talent?.preferredChildFirstname,
+      reviewerName: talentName ? talentName : brandName,
       reviewerId: currentUserId,
       talentId: talent?._id,
     };
@@ -613,7 +693,8 @@ const Dashboard = () => {
           const modalElement = document.getElementById("ratingModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
-        }, 1000);
+          getTalentList();
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
@@ -660,10 +741,10 @@ const Dashboard = () => {
                 <div className="brand-options">
                   <div className="section-title">Get Booked</div>
                   <div className="section-description brand-secription">
-                    Get discovered by top brands, set your own rates, and keep
-                    100% of your earnings. Chat directly with brands you love
-                    and build lasting relationships. We put creators first. Sign
-                    up today and start earning!
+                    Get discovered by top Brand / Client, set your own rates,
+                    and keep 100% of your earnings. Chat directly with Brand /
+                    Client you love and build lasting relationships. We put
+                    creators first. Sign up today and start earning!
                   </div>
                   <div
                     className="Join-now-wrapper"
@@ -779,16 +860,38 @@ const Dashboard = () => {
                           className="gallery-img"
                           src={`${API.userFilePath}${item.image?.fileData}`}
                         ></img>
-                        <div
-                          className="rating"
-                          onClick={() => rateTalent(item)}
-                        >
-                          <img src={brightStar}></img>
-                          <img src={brightStar}></img>
-                          <img src={brightStar}></img>
-                          <img src={darkStar}></img>
-                          <img src={darkStar}></img>
-                        </div>
+
+                        {(() => {
+                          const starRatings = parseInt(
+                            item?.averageStarRatings,
+                            10
+                          );
+                          const totalStars = 5;
+                          const filledStars =
+                            !isNaN(starRatings) && starRatings > 0
+                              ? starRatings
+                              : 0;
+
+                          return (
+                            <div
+                              className="rating"
+                              onClick={() => rateTalent(item)}
+                            >
+                              {[...Array(totalStars)].map((_, starIndex) => (
+                                <i
+                                  key={starIndex}
+                                  className={
+                                    starIndex < filledStars
+                                      ? "bi bi-star-fill rating-filled-star"
+                                      : "bi bi-star rating-unfilled-star"
+                                  }
+                                  alt="Star"
+                                ></i>
+                              ))}
+                            </div>
+                          );
+                        })()}
+
                         {!item.isFavorite && (
                           <img
                             className="heart-icon"
@@ -862,22 +965,22 @@ const Dashboard = () => {
             <div className="row">
               <div className="col-md-4">
                 <div className="community-card-wrapper card-background">
-                  <div className="count">5,258,451</div>
+                  <div className="count">{talentCount}</div>
                   <div className="cards-text">Talents in community</div>
                 </div>
               </div>
 
               <div className="col-md-4">
                 <div className="community-card-wrapper  card-background">
-                  <div className="count">5,258,451</div>
-                  <div className="cards-text">Brands Professionals</div>
+                  <div className="count">0</div>
+                  <div className="cards-text">Brand / Client Professionals</div>
                 </div>
               </div>
 
               <div className="col-md-4">
                 <div className="community-card-wrapper  card-background">
-                  <div className="count">5,258,451</div>
-                  <div className="cards-text">Brands</div>
+                  <div className="count">{brandUserCount}</div>
+                  <div className="cards-text">Brand / Client</div>
                 </div>
               </div>
             </div>
@@ -908,8 +1011,8 @@ const Dashboard = () => {
                   </div>
                   <div className="card-title">Hire Talent</div>
                   <div className="cards-description">
-                    The platform will help brands find, attract, and hire the
-                    best talent as per their ...
+                    The platform will help Brand / Client find, attract, and
+                    hire the best talent as per their ...
                   </div>
                 </div>
               </div>
@@ -921,8 +1024,8 @@ const Dashboard = () => {
                   </div>
                   <div className="card-title">Find Jobs</div>
                   <div className="cards-description">
-                    Talent can  build and manage their personal brands and will
-                    have a unique url ...
+                    Talent can  build and manage their personal Brand / Client
+                    and will have a unique url ...
                   </div>
                 </div>
               </div>
@@ -1121,7 +1224,7 @@ const Dashboard = () => {
         <div className="secSpac logoWraper wraper my-4">
           <div className="container">
             <div className="title brands-row-title">
-              Trusted by renowned brands
+              Trusted by renowned Brand / Client
             </div>
             <div className="brands-section">
               <div className="logospc">

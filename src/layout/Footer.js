@@ -216,7 +216,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link to="/resources" onClick={handleClick}>
-                    Brands & Talent Store
+                    Brand / Client & Talent Store
                   </Link>
                 </li>
               </ul>
@@ -275,7 +275,9 @@ const Footer = () => {
         </section>
         <section>
           <div className="copyright-section">
-            <p>© Copyright 2024 Brandsandtalent All Right Reserved.</p>
+            <p>
+              © Copyright 2024 Brand / Client andt alent All Right Reserved.
+            </p>
           </div>
         </section>
       </div>

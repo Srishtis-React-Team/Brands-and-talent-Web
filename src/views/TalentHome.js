@@ -102,7 +102,9 @@ const TalentHome = () => {
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main">
-          <div className="create-job-title">Welcome To Brands And Talent</div>
+          <div className="create-job-title">
+            Welcome To Brand / Client And Talent
+          </div>
           <div className="home-cards mt-1 row pad8">
             <div className="col-md-4 col-lg-3 pad8">
               <Link to="/edit-talent-profile">

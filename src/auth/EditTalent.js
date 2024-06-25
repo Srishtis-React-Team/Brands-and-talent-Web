@@ -166,6 +166,8 @@ const EditTalent = () => {
   const [featuresList, setFeaturesList] = useState([]);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
+  const [videoUrl, setVideoUrl] = useState("");
+  const [urls, setUrls] = useState([]);
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -1428,6 +1430,11 @@ const EditTalent = () => {
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
 
+  const viewVideoFile = (item) => {
+    console.log(item, "viewFile");
+    window.open(item, "_blank");
+  };
+
   const customStylesAlert = {
     content: {
       top: "50%",
@@ -1658,6 +1665,124 @@ const EditTalent = () => {
       });
   };
 
+  const handleUrlChange = (e) => {
+    setVideoUrl(e.target.value);
+    console.log(e.target.value, "handleUrlChange");
+  };
+
+  const handleAddUrl = async () => {
+    if (videoUrl.trim() !== "") {
+      // setUrls([...urls, videoUrl]);
+      // console.log([...urls, videoUrl], "handleAddUrl");
+      setVideoUrl("");
+      // navigate(`/talent-signup-files-success`);
+      const formData = {
+        videosAndAudios: [...talentData?.videoAudioUrls, videoUrl],
+        videoAudioUrls: [...talentData?.videoAudioUrls, videoUrl],
+      };
+      setIsLoading(true);
+      await ApiHelper.post(`${API.editKids}${talentId}`, formData)
+        .then((resData) => {
+          console.log(resData, "resData");
+          console.log(resData.data, "resData.data");
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Updated SuccessFully");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              getKidsData();
+            }, 1000);
+          } else {
+          }
+        })
+        .catch((err) => {
+          setIsLoading(false);
+        });
+    }
+  };
+
+  const handlePaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+    setVideoUrl(pastedText);
+    console.log(pastedText, "handlePaste");
+  };
+
+  const submitVideoAudios = async () => {
+    // navigate(`/talent-signup-files-success`);
+    const formData = {
+      videosAndAudios: urls,
+      videoAudioUrls: urls,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${API.editKids}${talentId}`, formData)
+      .then((resData) => {
+        console.log(resData, "resData");
+        console.log(resData.data, "resData.data");
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Updated SuccessFully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getKidsData();
+          }, 1000);
+        } else {
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const deleteVideoUrls = async (item, index) => {
+    // navigate(`/talent-signup-files-success`);
+    const formData = {
+      talentId: talentId,
+      index: index,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${API.deleteVideoUrls}`, formData)
+      .then((resData) => {
+        console.log(resData, "resDatadeleteVideoUrls");
+        console.log(resData.data, "resData.data");
+        if (resData.data.message === "URL deleted successfully") {
+          setIsLoading(false);
+          setMessage("Deleted SuccessFully");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getKidsData();
+          }, 1000);
+        } else {
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleDeleteUrl = (index) => {
+    const newUrls = urls.filter((url, i) => i !== index);
+    setUrls(newUrls);
+  };
+  const [showOptions, setShowOptions] = useState(false);
+
+  const handleOptionClick = (option) => {
+    // Handle the option click here
+    if (option === "view") {
+      // Code to view the image in a new window
+      window.open("your-image-url", "_blank");
+    } else if (option === "delete") {
+      // Code to delete the image
+    }
+
+    // Hide the options after selection
+    setShowOptions(false);
+  };
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} myState={myState} />
@@ -1761,9 +1886,60 @@ const EditTalent = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
               <div className="kids-main edit-basicdetails-section-main">
-                <div className="kids-form-title kids-form-title"><span>Personal Details</span></div>
+                <div className="kids-form-title kids-form-title">
+                  <span>Personal Details</span>
+                </div>
                 <div className="row">
                   <div className="kids-form-section col-md-6 mb-3">
+                    <label className="form-label">
+                      Legal First Name
+                      <span className="mandatory">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={parentFirstName}
+                      onChange={(e) => {
+                        handleFirstNameChange(e);
+                        setparentFirstNameError(false);
+                      }}
+                      onKeyDown={handleKeyPress}
+                      placeholder="Enter Legal First Name"
+                    ></input>
+                    {parentFirstNameError && (
+                      <div className="invalid-fields">
+                        Please enter First Name
+                      </div>
+                    )}
+                    {firstNameLetterError && (
+                      <div className="invalid-fields">
+                        Only Letters are allowed
+                      </div>
+                    )}
+                  </div>
+                  <div className="kids-form-section col-md-6 mb-3">
+                    <label className="form-label">Legal Last name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={parentLastName}
+                      onChange={(e) => {
+                        handleLastNameChange(e);
+                      }}
+                      onKeyDown={handleLastNameKeyPress}
+                      placeholder="Enter Legal Last name"
+                    ></input>
+                    {lastNameLetterError && (
+                      <div className="invalid-fields">
+                        Only Letters are allowed
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {talentData?.type === "kids" && (
+                  <div className="row">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">
                         Legal First Name
                         <span className="mandatory">*</span>
@@ -1771,208 +1947,142 @@ const EditTalent = () => {
                       <input
                         type="text"
                         className="form-control"
-                        value={parentFirstName}
                         onChange={(e) => {
-                          handleFirstNameChange(e);
-                          setparentFirstNameError(false);
+                          KidsLegalFirstNameChange(e);
+                          setkidsLegalFirstNameError(false);
                         }}
-                        onKeyDown={handleKeyPress}
+                        onKeyDown={handleKidsLegalKeyPress}
+                        value={kidsLegalFirstName}
                         placeholder="Enter Legal First Name"
                       ></input>
-                      {parentFirstNameError && (
+                      {kidsLegalFirstNameError && (
                         <div className="invalid-fields">
                           Please enter First Name
                         </div>
                       )}
-                      {firstNameLetterError && (
+                      {kidsLegalFirstLetterError && (
                         <div className="invalid-fields">
-                          Only Letters are allowed
+                          Only Letters Allowed
                         </div>
                       )}
-                   
-                  </div>
-                  <div className="kids-form-section col-md-6 mb-3">
+                    </div>
+                    <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">Legal Last name</label>
                       <input
                         type="text"
                         className="form-control"
-                        value={parentLastName}
+                        value={kidsLegalLastName}
                         onChange={(e) => {
-                          handleLastNameChange(e);
+                          KidsLegalLastNameChange(e);
                         }}
-                        onKeyDown={handleLastNameKeyPress}
+                        onKeyDown={handleKidsLegalLastNameKeyPress}
                         placeholder="Enter Legal Last name"
                       ></input>
-                      {lastNameLetterError && (
+                      {kidsLegalLastNameLetterError && (
                         <div className="invalid-fields">
-                          Only Letters are allowed
+                          Only Letters Allowed
                         </div>
                       )}
-                    
-                  </div>
-                </div>
-
-                {talentData?.type === "kids" && (
-                  <div className="row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                        <label className="form-label">
-                          Legal First Name
-                          <span className="mandatory">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          onChange={(e) => {
-                            KidsLegalFirstNameChange(e);
-                            setkidsLegalFirstNameError(false);
-                          }}
-                          onKeyDown={handleKidsLegalKeyPress}
-                          value={kidsLegalFirstName}
-                          placeholder="Enter Legal First Name"
-                        ></input>
-                        {kidsLegalFirstNameError && (
-                          <div className="invalid-fields">
-                            Please enter First Name
-                          </div>
-                        )}
-                        {kidsLegalFirstLetterError && (
-                          <div className="invalid-fields">
-                            Only Letters Allowed
-                          </div>
-                        )}
-                   
-                    </div>
-                    <div className="kids-form-section col-md-6 mb-3">
-                    
-                        <label className="form-label">Legal Last name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={kidsLegalLastName}
-                          onChange={(e) => {
-                            KidsLegalLastNameChange(e);
-                          }}
-                          onKeyDown={handleKidsLegalLastNameKeyPress}
-                          placeholder="Enter Legal Last name"
-                        ></input>
-                        {kidsLegalLastNameLetterError && (
-                          <div className="invalid-fields">
-                            Only Letters Allowed
-                          </div>
-                        )}
-                      
                     </div>
                   </div>
                 )}
 
                 <div className="row">
                   <div className="kids-form-section  col-md-6 mb-3">
-                  
-                      <label className="form-label">
-                        Preferred First Name
-                        <span className="mandatory">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={kidsPreferedFirstName}
-                        onChange={(e) => {
-                          kidsPreferedFirstNameChange(e);
-                          setPreferedNameError(false);
-                        }}
-                        onKeyDown={handleKidsPrefferedFirstNameKeyPress}
-                        placeholder="Enter Preferred  First Name"
-                      ></input>
-                      {preferedNameError && (
-                        <div className="invalid-fields">
-                          Please Enter Preferred First Name
-                        </div>
-                      )}
-                      {kidsPrefferedFirstNameLetterError && (
-                        <div className="invalid-fields">
-                          Only Letters Allowed
-                        </div>
-                      )}
-                    
+                    <label className="form-label">
+                      Preferred First Name
+                      <span className="mandatory">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={kidsPreferedFirstName}
+                      onChange={(e) => {
+                        kidsPreferedFirstNameChange(e);
+                        setPreferedNameError(false);
+                      }}
+                      onKeyDown={handleKidsPrefferedFirstNameKeyPress}
+                      placeholder="Enter Preferred  First Name"
+                    ></input>
+                    {preferedNameError && (
+                      <div className="invalid-fields">
+                        Please Enter Preferred First Name
+                      </div>
+                    )}
+                    {kidsPrefferedFirstNameLetterError && (
+                      <div className="invalid-fields">Only Letters Allowed</div>
+                    )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
-                  
-                      <label className="form-label">Preferred Last name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={kidsPreferedLastName}
-                        onChange={(e) => {
-                          kidsPreferedLastNameChange(e);
-                        }}
-                        onKeyDown={handleKidsPrefferedLasttNameKeyPress}
-                        placeholder="Enter Preferred  Last name"
-                      ></input>
-                      {kidsPrefferedLastNameLetterError && (
-                        <div className="invalid-fields">
-                          Only Letters Allowed
-                        </div>
-                      )}
-                    
+                    <label className="form-label">Preferred Last name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={kidsPreferedLastName}
+                      onChange={(e) => {
+                        kidsPreferedLastNameChange(e);
+                      }}
+                      onKeyDown={handleKidsPrefferedLasttNameKeyPress}
+                      placeholder="Enter Preferred  Last name"
+                    ></input>
+                    {kidsPrefferedLastNameLetterError && (
+                      <div className="invalid-fields">Only Letters Allowed</div>
+                    )}
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="kids-form-section col-md-6 mb-3">
-                    
-                      <label className="form-label">
-                        Ethnicity <span className="mandatory">*</span>
-                      </label>
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={selectEthnicity}
-                        value={ethnicity}
-                        style={{ fontSize: "14px" }}
-                      >
-                        <option value="" disabled>
-                          Select Ethnicity
+                    <label className="form-label">
+                      Ethnicity <span className="mandatory">*</span>
+                    </label>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      onChange={selectEthnicity}
+                      value={ethnicity}
+                      style={{ fontSize: "14px" }}
+                    >
+                      <option value="" disabled>
+                        Select Ethnicity
+                      </option>
+                      {ethnicityOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
                         </option>
-                        {ethnicityOptions.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                      {ethnicityError && (
-                        <div className="invalid-fields">
-                          Please Select Ethnicity
-                        </div>
-                      )}
-                  
+                      ))}
+                    </select>
+                    {ethnicityError && (
+                      <div className="invalid-fields">
+                        Please Select Ethnicity
+                      </div>
+                    )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
-                   
-                      <label className="form-label">
-                        Nationality <span className="mandatory">*</span>
-                      </label>
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={selectNationality}
-                        value={nationality}
-                        style={{ fontSize: "14px" }}
-                      >
-                        <option value="" disabled selected>
-                          Select Nationality
+                    <label className="form-label">
+                      Nationality <span className="mandatory">*</span>
+                    </label>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      onChange={selectNationality}
+                      value={nationality}
+                      style={{ fontSize: "14px" }}
+                    >
+                      <option value="" disabled selected>
+                        Select Nationality
+                      </option>
+                      {nationalityOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
                         </option>
-                        {nationalityOptions.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                      {nationalityError && (
-                        <div className="invalid-fields">
-                          Please Select Nationality
-                        </div>
-                      )}
-                  
+                      ))}
+                    </select>
+                    {nationalityError && (
+                      <div className="invalid-fields">
+                        Please Select Nationality
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="row">
@@ -1980,8 +2090,8 @@ const EditTalent = () => {
                     <label className="form-label">
                       Date Of Birth <span className="mandatory">*</span>
                     </label>
-                   
-                      {/* <input
+
+                    {/* <input
                             type="date"
                             className="form-control"
                             value={dateOfBirth}
@@ -1992,107 +2102,99 @@ const EditTalent = () => {
                             placeholder=""
                           ></input> */}
 
-                      <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                          value={dateOfBirth}
-                          onChange={(newValue) => {
-                            console.log(newValue, "newValue");
-                            handleDateChange(newValue);
-                          }}
-                          renderInput={(params) => <TextField {...params} />}
-                          disableFuture
-                        />
-                      </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        value={dateOfBirth}
+                        onChange={(newValue) => {
+                          console.log(newValue, "newValue");
+                          handleDateChange(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                        disableFuture
+                      />
+                    </LocalizationProvider>
 
-                      {dobError && (
-                        <div className="invalid-fields">
-                          Please Select Date Of Birth
-                        </div>
-                      )}
-                  
+                    {dobError && (
+                      <div className="invalid-fields">
+                        Please Select Date Of Birth
+                      </div>
+                    )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
-                   
-                      <label className="form-label">
-                        Language <span className="mandatory">*</span>
-                      </label>
-                      <Select
-                        isMulti
-                        name="colors"
-                        options={languageOptions}
-                        valueField="value"
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        onChange={(value) => selectLanguage(value)}
-                        styles={customStylesProfession}
-                        value={selectedLanguageOptions}
-                      />
-                      {languageError && (
-                        <div className="invalid-fields">
-                          Please Select Language
-                        </div>
-                      )}
-                   
+                    <label className="form-label">
+                      Language <span className="mandatory">*</span>
+                    </label>
+                    <Select
+                      isMulti
+                      name="colors"
+                      options={languageOptions}
+                      valueField="value"
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      onChange={(value) => selectLanguage(value)}
+                      styles={customStylesProfession}
+                      value={selectedLanguageOptions}
+                    />
+                    {languageError && (
+                      <div className="invalid-fields">
+                        Please Select Language
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="row">
                   <div className="kids-form-section col-md-6 mb-3">
-                      <label className="form-label">
-                        Gender <span className="mandatory">*</span>
-                      </label>
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={selectGender}
-                        style={{ fontSize: "14px" }}
-                        value={gender}
-                      >
-                        <option value="" disabled selected>
-                          Select Gender
+                    <label className="form-label">
+                      Gender <span className="mandatory">*</span>
+                    </label>
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      onChange={selectGender}
+                      style={{ fontSize: "14px" }}
+                      value={gender}
+                    >
+                      <option value="" disabled selected>
+                        Select Gender
+                      </option>
+                      {gendersOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
                         </option>
-                        {gendersOptions.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                      {genderError && (
-                        <div className="invalid-fields">
-                          Please Select Gender
-                        </div>
-                      )}
-                   
+                      ))}
+                    </select>
+                    {genderError && (
+                      <div className="invalid-fields">Please Select Gender</div>
+                    )}
                   </div>
                   {talentData?.type != "kids" && (
                     <div className="kids-form-section col-md-6 mb-3">
-                     
-                        <label className="form-label">Marital Status</label>
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                          onChange={selectMaritalStatus}
-                          value={maritalStatus}
-                        >
-                          <option value="" disabled selected>
-                            Select Marital Status
-                          </option>
-                          <option defaultValue value="married">
-                            Married
-                          </option>
-                          <option value="unmarried">UnMarried</option>
-                        </select>
-                      
+                      <label className="form-label">Marital Status</label>
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={selectMaritalStatus}
+                        value={maritalStatus}
+                      >
+                        <option value="" disabled selected>
+                          Select Marital Status
+                        </option>
+                        <option defaultValue value="married">
+                          Married
+                        </option>
+                        <option value="unmarried">UnMarried</option>
+                      </select>
                     </div>
                   )}
-                {/* </div>
+                  {/* </div>
 
                 <div className="row"> */}
-                <div className="kids-form-section col-md-6 mb-3">
+                  <div className="kids-form-section col-md-6 mb-3">
                     <label className="form-label">
                       Mobile No <span className="mandatory">*</span>
                     </label>
-                    
-                      {/* <input
+
+                    {/* <input
                             type="text"
                             className="form-control"
                             maxLength="15"
@@ -2105,141 +2207,122 @@ const EditTalent = () => {
                             placeholder=" Mobile No"
                           ></input> */}
 
-                      <MuiPhoneNumber
-                        value={parentMobile}
-                        defaultCountry={"kh"}
-                        className="form-control"
-                        onChange={handleMobileChange}
-                      />
+                    <MuiPhoneNumber
+                      value={parentMobile}
+                      defaultCountry={"kh"}
+                      className="form-control"
+                      onChange={handleMobileChange}
+                    />
 
-                      {parentMobileError && (
-                        <div className="invalid-fields">
-                          Please enter Mobile Number
-                        </div>
-                      )}
-                      {mobileNumError && (
-                        <div className="invalid-fields">
-                          Only Numbers Allowed
-                        </div>
-                      )}
-                  
+                    {parentMobileError && (
+                      <div className="invalid-fields">
+                        Please enter Mobile Number
+                      </div>
+                    )}
+                    {mobileNumError && (
+                      <div className="invalid-fields">Only Numbers Allowed</div>
+                    )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
-                 
-                      <label className="form-label">
-                        E-mail <span className="mandatory">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        className={`form-control ${
-                          !isValidEmail ? "is-invalid" : "form-control"
-                        }`}
-                        onChange={handleEmailChange}
-                        placeholder="Enter E-mail"
-                        value={parentEmail}
-                        disabled={true}
-                      />
-                      {!isValidEmail && (
-                        <div className="invalid-feedback">
-                          Please enter a valid email address.
-                        </div>
-                      )}
-                      {parentEmailError && (
-                        <div className="invalid-fields">Please enter Email</div>
-                      )}
-                  
+                    <label className="form-label">
+                      E-mail <span className="mandatory">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      className={`form-control ${
+                        !isValidEmail ? "is-invalid" : "form-control"
+                      }`}
+                      onChange={handleEmailChange}
+                      placeholder="Enter E-mail"
+                      value={parentEmail}
+                      disabled={true}
+                    />
+                    {!isValidEmail && (
+                      <div className="invalid-feedback">
+                        Please enter a valid email address.
+                      </div>
+                    )}
+                    {parentEmailError && (
+                      <div className="invalid-fields">Please enter Email</div>
+                    )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
-                    
-                      <label className="form-label">
-                        Country<span className="mandatory">*</span>
-                      </label>
-                      <Select
-                        placeholder="Search country..."
-                        options={countryList.map((country, index) => ({
-                          value: country,
-                          label: country,
-                          key: index,
-                        }))}
-                        value={{ value: country, label: country }}
-                        onChange={handleSelectedCountry}
-                        isSearchable={true}
-                      />
-                      {parentCountryError && (
-                        <div className="invalid-fields">
-                          Please Select Country
-                        </div>
-                      )}
-                    
+                    <label className="form-label">
+                      Country<span className="mandatory">*</span>
+                    </label>
+                    <Select
+                      placeholder="Search country..."
+                      options={countryList.map((country, index) => ({
+                        value: country,
+                        label: country,
+                        key: index,
+                      }))}
+                      value={{ value: country, label: country }}
+                      onChange={handleSelectedCountry}
+                      isSearchable={true}
+                    />
+                    {parentCountryError && (
+                      <div className="invalid-fields">
+                        Please Select Country
+                      </div>
+                    )}
                   </div>
-               
+
                   <div className="kids-form-section col-md-6 mb-3">
-                   
-                      <label className="form-label">
-                        State<span className="mandatory">*</span>
-                      </label>
-                      <Select
-                        placeholder="Select state..."
-                        options={stateList.map((state) => ({
-                          value: state.stateId, // or whatever unique identifier you want to use
-                          label: state.name,
-                        }))}
-                        value={{ value: state, label: state }}
-                        onChange={handleSelectedState}
-                        isSearchable={true}
-                      />
-                      {stateError && (
-                        <div className="invalid-fields">
-                          Please Select State
-                        </div>
-                      )}
-                  
+                    <label className="form-label">
+                      State<span className="mandatory">*</span>
+                    </label>
+                    <Select
+                      placeholder="Select state..."
+                      options={stateList.map((state) => ({
+                        value: state.stateId, // or whatever unique identifier you want to use
+                        label: state.name,
+                      }))}
+                      value={{ value: state, label: state }}
+                      onChange={handleSelectedState}
+                      isSearchable={true}
+                    />
+                    {stateError && (
+                      <div className="invalid-fields">Please Select State</div>
+                    )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
-                 
-                      <label className="form-label">City</label>
-                      <Select
-                        placeholder="Select City..."
-                        options={cityList.map((city) => ({
-                          value: city.cityId, // or whatever unique identifier you want to use
-                          label: city.name,
-                        }))}
-                        value={{ value: kidsCity, label: kidsCity }}
-                        onChange={handleSelectedCity}
-                        isSearchable={true}
-                      />
-                   
+                    <label className="form-label">City</label>
+                    <Select
+                      placeholder="Select City..."
+                      options={cityList.map((city) => ({
+                        value: city.cityId, // or whatever unique identifier you want to use
+                        label: city.name,
+                      }))}
+                      value={{ value: kidsCity, label: kidsCity }}
+                      onChange={handleSelectedCity}
+                      isSearchable={true}
+                    />
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="kids-form-section col-md-12 mb-3">
-                  
-                      <label
-                        htmlFor="exampleFormControlTextarea1"
-                        className="form-label"
-                      >
-                        Address<span className="mandatory">*</span>
-                      </label>
-                      <textarea
-                        
-                        className="form-control address-textarea"
-                        id="exampleFormControlTextarea1"
-                        value={address}
-                        rows="3"
-                        onChange={(e) => {
-                          setAddress(e.target.value);
-                          setAddressError(false);
-                        }}
-                      ></textarea>
-                      {addressError && (
-                        <div className="invalid-fields">
-                          Please Enter Address
-                        </div>
-                      )}
-                   
+                    <label
+                      htmlFor="exampleFormControlTextarea1"
+                      className="form-label"
+                    >
+                      Address<span className="mandatory">*</span>
+                    </label>
+                    <textarea
+                      className="form-control address-textarea"
+                      id="exampleFormControlTextarea1"
+                      value={address}
+                      rows="3"
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                        setAddressError(false);
+                      }}
+                    ></textarea>
+                    {addressError && (
+                      <div className="invalid-fields">Please Enter Address</div>
+                    )}
                   </div>
-                
                 </div>
                 {talentData?.type === "kids" && (
                   <div className="kids-form-title">Your Child Details</div>
@@ -2482,7 +2565,7 @@ const EditTalent = () => {
                   <div className="update-portfolio-title">Video & Audios</div>
                   <div className="row">
                     <div className="col-md-6">
-                      {talentData?.videosAndAudios?.length === 0 && (
+                      {talentData?.videoAudioUrls?.length === 0 && (
                         <>
                           <div className="update-portfolio-label">
                             Add Your work samples here
@@ -2491,30 +2574,28 @@ const EditTalent = () => {
                         </>
                       )}
                       {talentData &&
-                        talentData?.videosAndAudios?.length > 0 &&
-                        talentData?.videosAndAudios?.map((item) => {
+                        talentData?.videoAudioUrls?.length > 0 &&
+                        talentData?.videoAudioUrls?.map((item, index) => {
                           return (
                             <>
                               <div className="update-portfolio-cards">
                                 <div className="update-portfolio-icon">
                                   <div className="file-section">
-                                    {item.type === "audio" && (
+                                    {/* {item.type === "audio" && (
                                       <div className="fileType">
                                         <i className="bi bi-mic-fill"></i>
                                       </div>
                                     )}
-                                    {item.type === "video" && (
-                                      <div className="fileType">
-                                        <i className="bi bi-play-circle-fill"></i>
-                                      </div>
-                                    )}
-                                    {item.type === "document" && (
+                                                                        {item.type === "document" && (
                                       <div className="fileType">
                                         <i className="bi bi-file-earmark-richtext"></i>
                                       </div>
-                                    )}
+                                    )} */}
+                                    <div className="fileType">
+                                      <i className="bi bi-play-circle-fill"></i>
+                                    </div>
                                     <div className="update-portfolio-fileName">
-                                      {item.title}
+                                      {item}
                                     </div>
 
                                     <div className="update-portfolio-action">
@@ -2532,7 +2613,7 @@ const EditTalent = () => {
                                         <li>
                                           <a
                                             className="dropdown-item"
-                                            onClick={() => viewUpdateFile(item)}
+                                            onClick={() => viewVideoFile(item)}
                                           >
                                             View
                                           </a>
@@ -2540,14 +2621,9 @@ const EditTalent = () => {
                                         <li>
                                           <a
                                             className="dropdown-item"
-                                            onClick={(e) => {
-                                              setAlertpop({
-                                                status: true,
-                                                item: item,
-                                                label: "delete",
-                                                eachService: null,
-                                              });
-                                            }}
+                                            onClick={() =>
+                                              deleteVideoUrls(item, index)
+                                            }
                                           >
                                             Delete
                                           </a>
@@ -2565,24 +2641,110 @@ const EditTalent = () => {
                     </div>
                   </div>
 
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                      {/* <label className="form-label">Videos & Audios</label> */}
+                      <div className="videos-label">
+                        ( Upload your previous work samples videos/audios.)
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <input
+                          type="text"
+                          className="form-control mt-2 ml-3"
+                          value={videoUrl}
+                          onChange={(e) => {
+                            handleUrlChange(e);
+                          }}
+                          onPaste={handlePaste}
+                          placeholder="Paste Videos/Audios Url"
+                        ></input>
+                        <i
+                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
+                          onClick={handleAddUrl}
+                        ></i>
+                      </div>
+                      {urls && (
+                        <>
+                          {urls.map((url, index) => {
+                            return (
+                              <>
+                                <div key={index} className="url-file-wrapper">
+                                  <div className="file-section">
+                                    <a
+                                      href={url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="url-fileName"
+                                    >
+                                      {url}
+                                    </a>
+                                  </div>
+                                  <div className="file-options">
+                                    <div className="sucess-tick">
+                                      <img src={greenTickCircle} alt="" />
+                                    </div>
+                                    <div className="option-menu">
+                                      <div className="dropdown">
+                                        <img
+                                          onClick={() =>
+                                            setShowOptions(!showOptions)
+                                          }
+                                          src={elipsis}
+                                          alt=""
+                                          className="dropdown-toggle elipsis-icon"
+                                          type="button"
+                                          id="resumeDropdown"
+                                          data-bs-toggle="dropdown"
+                                          aria-expanded="false"
+                                        />
+                                        <ul
+                                          className="dropdown-menu"
+                                          aria-labelledby="resumeDropdown"
+                                        >
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              onClick={() =>
+                                                handleDeleteUrl(index)
+                                              }
+                                              id="delete"
+                                            >
+                                              Delete
+                                            </a>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })}
+                        </>
+                      )}
+                    </div>
+                  </div>
+
                   <div className="add-portfoli-section">
                     <div className="add-portfolia-btn">
-                      <input
+                      {/* <input
                         type="file"
                         className="select-cv-input"
                         id="profile-image"
                         accept="audio/*,video/*"
                         onChange={newVideoUpload}
                         ref={videoFileInputRef}
-                      />
-                      <Button
-                        onClick={videoFile}
+                      /> */}
+                      {/* <Button
+                        onClick={() => {
+                          submitVideoAudios();
+                        }}
                         className="edit-profileimg-btn"
                         variant="text"
                         style={{ textTransform: "capitalize" }}
                       >
-                        Add Videos & Audios
-                      </Button>
+                        Submit
+                      </Button> */}
                     </div>
                   </div>
                 </div>
@@ -2724,56 +2886,51 @@ const EditTalent = () => {
                             </div>
                             <div className="row">
                               <div className="kids-form-section col-md-6 mb-3">
-                                
-                                  <label className="form-label">
-                                    Service Name
-                                    <span className="mandatory">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="service name"
-                                    value={eachService.serviceName}
-                                    onChange={(e) =>
-                                      handleInputChange(
-                                        servicesIndex,
-                                        "serviceName",
-                                        e.target.value
-                                      )
-                                    }
-                                  ></input>
-                               
+                                <label className="form-label">
+                                  Service Name
+                                  <span className="mandatory">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="service name"
+                                  value={eachService.serviceName}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      servicesIndex,
+                                      "serviceName",
+                                      e.target.value
+                                    )
+                                  }
+                                ></input>
                               </div>
                               <div className="kids-form-section col-md-6 mb-3">
-                              
-                                  <label className="form-label">
-                                    Service Amount
-                                    <span className="mandatory">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="service amount"
-                                    value={eachService.serviceAmount}
-                                    onChange={(e) =>
-                                      handleInputChange(
-                                        servicesIndex,
-                                        "serviceAmount",
-                                        e.target.value
-                                      )
-                                    }
-                                  ></input>
-                               
+                                <label className="form-label">
+                                  Service Amount
+                                  <span className="mandatory">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="service amount"
+                                  value={eachService.serviceAmount}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      servicesIndex,
+                                      "serviceAmount",
+                                      e.target.value
+                                    )
+                                  }
+                                ></input>
                               </div>
                             </div>
                             <div className="row">
                               <div className="kids-form-section col-md-6 mb-2">
-                               
-                                  <label className="form-label">
-                                    Features
-                                    <span className="mandatory">*</span>
-                                  </label>
-                                  {/* 
+                                <label className="form-label">
+                                  Features
+                                  <span className="mandatory">*</span>
+                                </label>
+                                {/* 
                                   <Editor
                                     editorStyle={{
                                       overflow: "hidden",
@@ -2801,36 +2958,33 @@ const EditTalent = () => {
                                       history: { inDropdown: true },
                                     }}
                                   /> */}
-                                  <RichTextEditor
-                                    value={eachService?.editorState}
-                                    onChange={(editorState) =>
-                                      handleEditorChange(
-                                        servicesIndex,
-                                        editorState
-                                      )
-                                    }
-                                  />
-                              
+                                <RichTextEditor
+                                  value={eachService?.editorState}
+                                  onChange={(editorState) =>
+                                    handleEditorChange(
+                                      servicesIndex,
+                                      editorState
+                                    )
+                                  }
+                                />
                               </div>
                               <div className="kids-form-section col-md-6 mb-3">
-                             
-                                  <label className="form-label">
-                                    Service Duration
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Service Duration"
-                                    value={eachService.serviceDuration}
-                                    onChange={(e) =>
-                                      handleInputChange(
-                                        servicesIndex,
-                                        "serviceDuration",
-                                        e.target.value
-                                      )
-                                    }
-                                  ></input>
-                                
+                                <label className="form-label">
+                                  Service Duration
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Service Duration"
+                                  value={eachService.serviceDuration}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      servicesIndex,
+                                      "serviceDuration",
+                                      e.target.value
+                                    )
+                                  }
+                                ></input>
                               </div>
                             </div>
                             <div className="service-files-main">

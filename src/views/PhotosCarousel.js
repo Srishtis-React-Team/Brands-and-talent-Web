@@ -58,7 +58,7 @@ const PhotosCarousel = ({ photosList }) => {
             },
             // Breakpoint from 768 up
             768: {
-              items: 5,
+              items: 4,
             },
           }}
         >
@@ -93,21 +93,19 @@ const PhotosCarousel = ({ photosList }) => {
         <Box
           sx={{
             position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "background.paper",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            bgcolor: "#000",
             boxShadow: 24,
-            height: "500px",
-            widows: "500px",
-            paddingTop: "50px",
-            paddingBottom: "50px",
-            paddingRight: "50px",
-            paddingLeft: "50px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <IconButton
-            sx={{ position: "absolute", top: 5, right: 5 }}
+            sx={{ position: "absolute", top: 5, right: 5, color: "#ffffff" }}
             onClick={handleClose}
           >
             <Close />
@@ -118,13 +116,18 @@ const PhotosCarousel = ({ photosList }) => {
             style={{ width: "400px", height: "400px" }}
           />
           <IconButton
-            sx={{ position: "absolute", top: "50%", left: 8 }}
+            sx={{ position: "absolute", top: "50%", left: 8, color: "#ffffff" }}
             onClick={handlePrevious}
           >
             <ArrowBackIos />
           </IconButton>
           <IconButton
-            sx={{ position: "absolute", top: "50%", right: 5 }}
+            sx={{
+              position: "absolute",
+              top: "50%",
+              right: 5,
+              color: "#ffffff",
+            }}
             onClick={handleNext}
           >
             <ArrowForwardIos />

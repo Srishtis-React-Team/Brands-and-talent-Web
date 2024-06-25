@@ -217,7 +217,10 @@ const Login = () => {
     localStorage.setItem("currentUser", data?.user?._id);
     localStorage.setItem("currentUserType", data?.user?.userType);
     localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
-    localStorage.setItem("talentName", data);
+    localStorage.setItem(
+      "talentName",
+      `${data?.user?.preferredChildFirstname} ${data?.user?.preferredChildLastName}`
+    );
     setUserId(userId);
   };
 

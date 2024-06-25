@@ -237,7 +237,7 @@ const TalentPreviewJob = () => {
             </div>
 
             <div className="company-location">
-              <span>Location :&nbsp; </span>
+              <span className="job-feature-heading">Location :&nbsp; </span>
               {/* {jobData?.paymentType?.label} */}
               <span>
                 <span className="">
@@ -247,8 +247,10 @@ const TalentPreviewJob = () => {
             </div>
 
             <div className="company-location">
-              <span>
+              <span className="job-feature-heading">
                 Application Deadline :&nbsp;
+              </span>
+              <span>
                 {new Date(jobData?.lastDateForApply).toLocaleDateString(
                   "en-GB",
                   {
@@ -289,16 +291,15 @@ const TalentPreviewJob = () => {
             </div> */}
 
             <div className="company-location">
-              <span>Job Type :&nbsp; </span>
+              <span className="job-feature-heading">Job Type :&nbsp; </span>
               {/* {jobData?.paymentType?.label} */}
               <span>
                 <span className="">{jobData?.jobType}</span>
               </span>
             </div>
-
+            {/* 
             <div className="company-location">
               <span>Application Type :&nbsp; </span>
-              {/* {jobData?.paymentType?.label} */}
               <span>
                 <span className="">
                   {jobData?.howLikeToApply
@@ -311,7 +312,7 @@ const TalentPreviewJob = () => {
                     : ""}
                 </span>
               </span>
-            </div>
+            </div> */}
 
             <div className="job-features-benefits pb-0">
               <div className="row">
@@ -635,7 +636,8 @@ const TalentPreviewJob = () => {
                 <div className="job-feature-title">How to Apply</div>
                 <div className="job-about-values">
                   Interested candidates should submit their resume and a link
-                  that contains portfolio from brands and talent website to
+                  that contains portfolio from Brand / Client and talent website
+                  to
                   <span className="how-apply-terms-link">
                     {/* {brandData?.brandEmail} */}
                     weudapepeubru-2731@yopmail.com
