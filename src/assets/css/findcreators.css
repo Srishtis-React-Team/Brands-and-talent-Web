@@ -365,8 +365,10 @@ select {
 .models-images .gallery-img {
   height: 210px;
 }
-.models-images .rating { top: 185px; }
-
+/* .models-images .rating { top: 185px; } */
+.imgBox {
+  position: relative;
+}
 .models-images .gallery-main {  margin: 0; }
 
 .find-creator-address {
@@ -476,7 +478,7 @@ select {
   }
 }
 @media (max-width: 767px) {
-  .col-md-4.col-lg-3.px-1 {
+  .favTalent  .col-md-4.col-lg-3.px-1 {
     width: 50%;
   }
   .models-images {
@@ -556,6 +558,7 @@ select {
   }
   .filter-section {
     margin-top: 20px;
+    padding: 10px 0px;
   }
  
   
@@ -649,6 +652,12 @@ select {
   .creators-filter-select-range {
     margin: 20px 0px;
   }
+
+  .favTalent .col-md-4.col-lg-3.px-1 {
+    width: 100%;
+  }
+
+
 }
 
 
