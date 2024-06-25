@@ -770,7 +770,7 @@ const Dashboard = () => {
 
           <div className="container">
             <div className="gallery-section wraper">
-              <div className="gallery-main">
+              <div className="gallery-main showContent">
                 {talentsList?.map((item) => {
                   return (
                     <div className="gallery-wrapper">
@@ -804,6 +804,7 @@ const Dashboard = () => {
                           ></img>
                         )}
                       </div>
+
                       <div
                         className="gallery-content"
                         onClick={() => openTalent(item)}
@@ -840,6 +841,7 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
+
                     </div>
                   );
                 })}

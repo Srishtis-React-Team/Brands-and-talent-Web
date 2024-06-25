@@ -800,7 +800,7 @@
     max-width: 160px;
   }
   .adult-form-wrapper {
-    margin: 20px 25px;
+    margin: 20px 25px 45px;
     display: flex;
     flex-direction: column;
   }
@@ -921,10 +921,10 @@
 }
 
 .model-job-about-values {
-  max-height: 350px;
-  overflow: scroll;
+  max-height: 265px;
+  overflow-y: auto;
   overflow-x: hidden;
-  /* overflow-y: hidden; */
+  font-size: 15px;
 }
 
 .modal-job-flex {
@@ -1356,13 +1356,13 @@
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .adult-main {
-    width: 100%;
+    // width: 100%;
     .kids-form-row {
       display: flex;
       justify-content: unset;
       flex-direction: column;
       .kids-form-section {
-        width: 100%;
+        // width: 100%;
       }
     }
   }
@@ -1371,14 +1371,15 @@
 
 @media (min-width: 1025px) and (max-width: 1200px) {
   .adult-main {
-    width: 100%;
+    // width: 100%;
     .kids-form-row {
       display: flex;
       justify-content: unset;
       flex-direction: column;
       .kids-form-section {
-        width: 100%;
+        // width: 100%;
       }
     }
   }
 }
+

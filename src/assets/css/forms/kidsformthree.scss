@@ -138,10 +138,16 @@
     width: 19%;
   }
 }
+
+
 @media only screen and (max-width: 1199px) {
   .kids-form.col-md-8 {
     padding-left: 3%;
   }
+
+
+
+
 }
 @media only screen and (max-width: 1149px) {
   .kids-form.col-md-8 {
@@ -150,12 +156,19 @@
   }
 }
 
+
 @media only screen and (max-width: 767px) {
   .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
     width: 37%;
     margin-left: 15px;
   }
-
+  .fixImgs{ text-align: center; }
+  .fixImgs .kids-image-sticky{ 
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto; 
+  }
   .plans-section .col-md-4:first-child,
   .plans-section .col-md-4:nth-child(2),
   .plans-section .col-md-4:nth-child(3) {
