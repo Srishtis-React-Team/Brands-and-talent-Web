@@ -1,0 +1,41 @@
+/* body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+} */
+
+.bt-container {
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.bt-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.bt-updated-date {
+  text-align: left;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.bt-intro {
+  margin-bottom: 20px;
+}
+
+.bt-heading {
+  font-size: 1.25em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.bt-paragraph {
+  margin-bottom: 20px;
+}

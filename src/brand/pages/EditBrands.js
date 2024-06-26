@@ -31,6 +31,7 @@ import Modal from "react-modal";
 import { ta } from "date-fns/locale";
 import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
+import CurrentUser from "../../CurrentUser";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,6 +61,13 @@ function a11yProps(index) {
 }
 
 const EditBrands = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -81,6 +89,12 @@ const EditBrands = () => {
   const [brandData, setBrandData] = useState(null);
   const [editProfileImage, setEditProfileImage] = useState("");
   const [editProfileImageObject, setEditProfileImageObject] = useState(null);
+  const [personalProfileImage, setPersonalProfileImage] = useState(
+    "cd2f455f-de24-48d1-a91a-a45b3ad74d94.webp"
+  );
+  const [personalProfileImageObject, setPersonalProfileImageObject] = useState(
+    null
+  );
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [addressError, setAddressError] = useState(false);
   const [address, setAddress] = useState("");
@@ -91,6 +105,10 @@ const EditBrands = () => {
   const [brandZipCodeError, setBrandZipCodeError] = useState();
   const [position, setPosition] = useState("");
   const [positionError, setPositionError] = useState(false);
+  const [websiteLink, setWebsiteLink] = useState("");
+  const [websiteLinkError, setWebsiteLinkError] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userNameError, setUserNameError] = useState(false);
 
   const positionOptions = [
     "1 job",
@@ -124,6 +142,13 @@ const EditBrands = () => {
             setBrandPhone(resData.data.data?.brandPhone);
             setBrandZipCode(resData.data.data?.brandZipCode);
             setPosition(resData.data.data?.position);
+            setUserName(resData.data.data?.userName);
+            setPersonalProfileImage(
+              resData.data.data?.profileImage[0]?.fileData
+            );
+            setEditProfileImageObject(resData.data.data?.brandImage);
+            setPersonalProfileImageObject(resData.data.data?.profileImage);
+            setWebsiteLink(resData.data.data?.websiteLink);
           }
         }
       })
@@ -178,6 +203,22 @@ const EditBrands = () => {
     }
   };
 
+  const personalFileRef = useRef(null);
+
+  const personalFile = () => {
+    if (personalFileRef.current) {
+      personalFileRef.current.click(); // Trigger the click event on the file input
+    }
+  };
+
+  const personalImageUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
+      uploadPersonalProfile(fileData);
+    }
+  };
+
   const getFileType = (fileType) => {
     // Extract main category from MIME type
     if (fileType.startsWith("image/")) {
@@ -215,7 +256,36 @@ const EditBrands = () => {
           };
           console.log(fileObj, "fileObj");
           setEditProfileImage(fileObj?.fileData);
-          setEditProfileImageObject(fileObj);
+          setEditProfileImageObject([fileObj]);
+          // updateProfile(fileObj);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const uploadPersonalProfile = async (fileData) => {
+    const params = new FormData();
+    params.append("file", fileData);
+    params.append("fileName", fileData.name);
+    params.append("fileType", getFileType(fileData.type));
+    /* await ApiHelper.post(API.uploadFile, params) */
+    await Axios.post(API.uploadFile, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((resData) => {
+        console.log(resData, "uploadProfileDATA");
+        if (resData?.data?.status === true) {
+          let fileObj = {
+            id: resData.data.data.fileId,
+            title: fileData.name,
+            fileData: resData.data.data.filename,
+            type: resData?.data?.data?.filetype,
+          };
+          console.log(fileObj, "fileObj");
+          setPersonalProfileImage(fileObj?.fileData);
+          setPersonalProfileImageObject([fileObj]);
           // updateProfile(fileObj);
         }
       })
@@ -253,6 +323,10 @@ const EditBrands = () => {
       brandZipCode: brandZipCode,
       address: address,
       position: position,
+      profileImage: personalProfileImageObject,
+      websiteLink: websiteLink,
+      brandImage: editProfileImageObject,
+      userName: userName,
     };
     await ApiHelper.post(`${API.editBrands}${brandId}`, formData)
       .then((resData) => {
@@ -261,6 +335,7 @@ const EditBrands = () => {
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
+            setMyState(true);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
@@ -286,6 +361,14 @@ const EditBrands = () => {
       setBrandName(value);
       setBrandNameLetterError(false);
     }
+  };
+  const handleWebsiteLink = (e) => {
+    setWebsiteLink(e.target.value);
+    setWebsiteLinkError(false);
+  };
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
+    setUserNameError(false);
   };
 
   const handleKeyPress = (e) => {
@@ -327,6 +410,10 @@ const EditBrands = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(editProfileImage, "editProfileImage");
+  }, [editProfileImage]);
+
   return (
     <>
       <BrandHeader toggleMenu={toggleMenu} myState={myState} />
@@ -352,169 +439,75 @@ const EditBrands = () => {
                 aria-label="basic tabs example"
               >
                 <Tab
-                  label="Profile Image"
+                  label="Personal Info"
                   {...a11yProps(0)}
                   style={{ textTransform: "capitalize" }}
                 />
                 <Tab
-                  label="Personal Info"
+                  label="Company Info"
                   {...a11yProps(1)}
                   style={{ textTransform: "capitalize" }}
                 />
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
-              <div className="profile-image-edit-section edit-basicdetails-section-main p-0 mb-5 mt-2 mx-0">
-                <img
-                  className="profile-image-edit"
-                  src={`${API.userFilePath}${editProfileImage}`}
-                  alt=""
-                />
-                <div className="image-edit-icon" onClick={File}>
-                  <input
-                    type="file"
-                    className="select-cv-input"
-                    id="profile-image"
-                    accept="image/*"
-                    onChange={profileUpload}
-                    ref={fileInputRef}
-                  />
-                  <i className="bi bi-pencil-fill profile-edit-icon"></i>
-                </div>
-                <div className="btn-img-edit-wrapper">
-                  <Button
-                    onClick={() => updateProfileImage()}
-                    className="update-profileimg-btn"
-                    variant="text"
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    Update Image
-                  </Button>
-                </div>
-              </div>
-            </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={1}>
               <div className="kids-main edit-basicdetails-section-main p-0">
-                <div className="kids-form-row row">
-                  <div className="kids-form-section col-md-6 mb-3">
-                    <label className="form-label">Brand Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={brandName}
-                      onChange={(e) => {
-                        handleBrandNameChange(e);
-                        setBrandNameError(false);
-                      }}
-                      onKeyDown={handleKeyPress}
-                      placeholder="Enter Brand Name"
-                    ></input>
-                    {brandNameError && (
-                      <div className="invalid-fields">
-                        Please enter Brand Name
-                      </div>
-                    )}
-                    {brandNameLetterError && (
-                      <div className="invalid-fields">
-                        Only Letters are allowed
-                      </div>
-                    )}
-                  </div>
-                  <div className="kids-form-section col-md-6 mb-3">
-                    <label className="form-label">E-mail</label>
-                    <input
-                      type="email"
-                      className={`form-control ${
-                        !isValidEmail ? "is-invalid" : "form-control"
-                      }`}
-                      placeholder="Enter E-mail"
-                      value={brandEmail}
-                      disabled={true}
-                    />
-                  </div>
+                <div className="kids-form-section col-md-4 mb-3">
+                  <label className="form-label">Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={userName}
+                    onChange={(e) => {
+                      handleUserNameChange(e);
+                      setUserNameError(false);
+                    }}
+                    onKeyDown={handleKeyPress}
+                    placeholder="Enter User Name"
+                  ></input>
+                  {userNameError && (
+                    <div className="invalid-fields">Please enter User Name</div>
+                  )}
+                  {brandNameLetterError && (
+                    <div className="invalid-fields">
+                      Only Letters are allowed
+                    </div>
+                  )}
                 </div>
                 <div className="kids-form-row row">
-                  <div className="kids-form-section col-md-6 mb-3">
-                    <label className="form-label">Zip Code</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={brandZipCode}
-                      onChange={(e) => {
-                        handleZipCodeChange(e);
-                        setBrandZipCodeError(false);
-                      }}
-                      onKeyDown={handleKeyPress}
-                      placeholder="Enter Zip Code"
-                    ></input>
-                    {brandZipCodeError && (
-                      <div className="invalid-fields">Please enter ZipCode</div>
-                    )}
-                  </div>
-                  <div className="kids-form-section col-md-6 mb-3">
-                    <label className="form-label">Mobile No</label>
+                  <div className="kids-form-section col-md-3">
+                    <div className="profile-image-edit-section edit-basicdetails-section-main p-0 mt-2 mx-0">
+                      <div>
+                        <label className="form-label">Profile Image</label>
+                      </div>
+                      {!personalProfileImage && (
+                        <img
+                          className="profile-image-edit"
+                          src={avatarImage}
+                          alt=""
+                        />
+                      )}
+                      {personalProfileImage && (
+                        <img
+                          className="profile-image-edit"
+                          src={`${API.userFilePath}${personalProfileImage}`}
+                          alt=""
+                        />
+                      )}
 
-                    <MuiPhoneNumber
-                      value={brandPhone}
-                      defaultCountry={"kh"}
-                      className="form-control"
-                      onChange={handleMobileChange}
-                    />
-                    {brandPhoneError && (
-                      <div className="invalid-fields">
-                        Please enter Mobile Number
+                      <div className="image-edit-icon" onClick={personalFile}>
+                        <input
+                          type="file"
+                          className="select-cv-input"
+                          id="profile-image"
+                          accept="image/*"
+                          onChange={personalImageUpload}
+                          ref={personalFileRef}
+                        />
+                        <i className="bi bi-pencil-fill profile-edit-icon"></i>
                       </div>
-                    )}
-                    {mobileNumError && (
-                      <div className="invalid-fields">Only Numbers Allowed</div>
-                    )}
-                  </div>
-                </div>
-                <div className="kids-form-row row">
-                  <div className="kids-form-section col-md-6 mb-3">
-                    <label className="form-label">Position</label>
-                    <select
-                      className="form-select"
-                      aria-label="Default select example"
-                      onChange={selectPosition}
-                      value={position}
-                    >
-                      <option value="" disabled selected>
-                        How Many Positions are you looking to staff?
-                      </option>
-                      {positionOptions.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                    {positionError && (
-                      <div className="invalid-fields">
-                        Please Select position
-                      </div>
-                    )}
-                  </div>
-                  <div className="kids-form-section col-md-12 mb-3">
-                    <label
-                      htmlFor="exampleFormControlTextarea1"
-                      className="form-label"
-                    >
-                      Address
-                    </label>
-                    <textarea
-                      style={{ width: "100%" }}
-                      className="form-control address-textarea"
-                      id="exampleFormControlTextarea1"
-                      value={address}
-                      rows="3"
-                      onChange={(e) => {
-                        setAddress(e.target.value);
-                        setAddressError(false);
-                      }}
-                    ></textarea>
-                    {addressError && (
-                      <div className="invalid-fields">Please Enter Address</div>
-                    )}
+                      <div className="btn-img-edit-wrapper"></div>
+                    </div>
                   </div>
                 </div>
                 <div className="update-profile-flex">
@@ -524,7 +517,204 @@ const EditBrands = () => {
                     variant="text"
                     style={{ textTransform: "capitalize" }}
                   >
-                    Update
+                    Update Personal Info
+                  </Button>
+                </div>
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={1}>
+              <div className="kids-main edit-basicdetails-section-main p-0">
+                <div className="kids-form-row row">
+                  <div className="kids-form-section col-md-3">
+                    <div className="profile-image-edit-section edit-basicdetails-section-main p-0 mt-2 mx-0">
+                      <div>
+                        <label className="form-label">Brand Logo</label>
+                      </div>
+                      <img
+                        className="profile-image-edit"
+                        src={`${API.userFilePath}${editProfileImage}`}
+                        alt=""
+                      />
+                      <div className="image-edit-icon" onClick={File}>
+                        <input
+                          type="file"
+                          className="select-cv-input"
+                          id="profile-image"
+                          accept="image/*"
+                          onChange={profileUpload}
+                          ref={fileInputRef}
+                        />
+                        <i className="bi bi-pencil-fill profile-edit-icon"></i>
+                      </div>
+                      {/* <div className="btn-img-edit-wrapper">
+                        <Button
+                          onClick={() => updateProfileImage()}
+                          className="update-profileimg-btn"
+                          variant="text"
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          Update Logo
+                        </Button>
+                      </div> */}
+                    </div>
+                  </div>
+                  <div className="kids-form-row row mt-3">
+                    <div className="kids-form-section col-md-6 mb-3 ">
+                      <label className="form-label">Brand Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={brandName}
+                        onChange={(e) => {
+                          handleBrandNameChange(e);
+                          setBrandNameError(false);
+                        }}
+                        onKeyDown={handleKeyPress}
+                        placeholder="Enter Brand Name"
+                      ></input>
+                      {brandNameError && (
+                        <div className="invalid-fields">
+                          Please enter Brand Name
+                        </div>
+                      )}
+                      {brandNameLetterError && (
+                        <div className="invalid-fields">
+                          Only Letters are allowed
+                        </div>
+                      )}
+                    </div>
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">E-mail</label>
+                      <input
+                        type="email"
+                        className={`form-control ${
+                          !isValidEmail ? "is-invalid" : "form-control"
+                        }`}
+                        placeholder="Enter E-mail"
+                        value={brandEmail}
+                        disabled={true}
+                      />
+                    </div>
+                  </div>
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">Zip Code</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={brandZipCode}
+                        onChange={(e) => {
+                          handleZipCodeChange(e);
+                          setBrandZipCodeError(false);
+                        }}
+                        onKeyDown={handleKeyPress}
+                        placeholder="Enter Zip Code"
+                      ></input>
+                      {brandZipCodeError && (
+                        <div className="invalid-fields">
+                          Please enter ZipCode
+                        </div>
+                      )}
+                    </div>
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">Mobile No</label>
+
+                      <MuiPhoneNumber
+                        value={brandPhone}
+                        defaultCountry={"kh"}
+                        className="form-control"
+                        onChange={handleMobileChange}
+                      />
+                      {brandPhoneError && (
+                        <div className="invalid-fields">
+                          Please enter Mobile Number
+                        </div>
+                      )}
+                      {mobileNumError && (
+                        <div className="invalid-fields">
+                          Only Numbers Allowed
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">Position</label>
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={selectPosition}
+                        value={position}
+                      >
+                        <option value="" disabled selected>
+                          How Many Positions are you looking to staff?
+                        </option>
+                        {positionOptions.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      {positionError && (
+                        <div className="invalid-fields">
+                          Please Select position
+                        </div>
+                      )}
+                    </div>
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">Website Link</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={websiteLink}
+                        onChange={(e) => {
+                          handleWebsiteLink(e);
+                          setWebsiteLinkError(false);
+                        }}
+                        onKeyDown={handleKeyPress}
+                        placeholder="Website Link"
+                      ></input>
+                      {brandZipCodeError && (
+                        <div className="invalid-fields">
+                          Please enter ZipCode
+                        </div>
+                      )}
+                    </div>
+                    <div className="kids-form-section col-md-12 mb-3">
+                      <label
+                        htmlFor="exampleFormControlTextarea1"
+                        className="form-label"
+                      >
+                        Address
+                      </label>
+                      <textarea
+                        style={{ width: "100%" }}
+                        className="form-control address-textarea"
+                        id="exampleFormControlTextarea1"
+                        value={address}
+                        rows="3"
+                        onChange={(e) => {
+                          setAddress(e.target.value);
+                          setAddressError(false);
+                        }}
+                      ></textarea>
+                      {addressError && (
+                        <div className="invalid-fields">
+                          Please Enter Address
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="update-profile-flex">
+                  <Button
+                    onClick={() => basicDetailsUpdate()}
+                    className="edit-profileimg-btn"
+                    variant="text"
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    Update Company Info
                   </Button>
                 </div>
               </div>

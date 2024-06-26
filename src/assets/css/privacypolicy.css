@@ -1,0 +1,45 @@
+/* body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+} */
+
+.policy-container {
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.policy-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.policy-updated-date {
+  text-align: left;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.policy-intro {
+  margin-bottom: 20px;
+}
+
+.policy-heading {
+  font-size: 1.25em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.policy-paragraph {
+  margin-bottom: 20px;
+}
+
+.policy-conclusion {
+  margin-top: 20px;
+}

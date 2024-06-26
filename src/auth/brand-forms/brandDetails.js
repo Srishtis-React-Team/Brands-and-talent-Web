@@ -38,10 +38,10 @@ const BrandDetails = () => {
   }, [location.state]);
 
   useEffect(() => {
-    console.log(receivedData, "receivedData");
-    if (receivedData?.brandName) {
-      setBrandName(receivedData?.brandName);
-    }
+    // console.log(receivedData, "receivedData");
+    // if (receivedData?.brandName) {
+    //   setBrandName(receivedData?.brandName);
+    // }
   }, [receivedData]);
 
   const aboutUsOptions = [

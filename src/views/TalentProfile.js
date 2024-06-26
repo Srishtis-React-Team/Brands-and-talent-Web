@@ -600,7 +600,7 @@ const TalentProfile = () => {
                   <div className="individual-talents-details">
                     <div className="individual-talent-name">
                       <div className="model-name">{`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}</div>
-                      {talentData?.planName != "Basic" && (
+                      {/* {talentData?.planName != "Basic" && (
                         <>
                           <div
                             className={`planName ${
@@ -615,7 +615,7 @@ const TalentProfile = () => {
                             {talentData?.planName}
                           </div>
                         </>
-                      )}
+                      )} */}
 
                       {talentData?.planName != "Basic" && (
                         <>
