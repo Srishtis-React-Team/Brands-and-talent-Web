@@ -722,8 +722,8 @@ const Dashboard = () => {
       <div className="dashboard-main">
         <Header sendMessageToParent={handleMessageFromHeader} />
 
-        <section className="section-1 wraper">
-          <div className="container-fluid">
+        <section className="section-1 bannerImg wraper">
+          <div className="container-fluid relCont">
             <div className="row banner-content">
               <div className="col-lg-12">
                 <div className="brand-section flex-column banner-title-section">

@@ -322,8 +322,7 @@ const AdultSignup = () => {
         <div
           className="dialog-body"
           style={{
-            paddingBottom: "100px",
-            paddingTop: "15px",
+        
             height: "unset",
           }}
         >
