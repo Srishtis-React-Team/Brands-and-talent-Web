@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useRef } from "react-router-dom";
+import { Routes, Route, useRef, Navigate } from "react-router-dom";
 import Dashboard from "../views/Dashboard";
 import FindCreators from "../views/FindCreators";
 import TalentProfile from "../views/TalentProfile";
@@ -60,18 +60,36 @@ import BrandSettings from "../brand/pages/BrandSettings";
 import EditBrands from "../brand/pages/EditBrands";
 import GetBooked from "../views/GetBooked";
 import ContactSupport from "../views/ContactSupport";
+import ContactUs from "../views/ContactUs";
+import TermsConditions from "../pages/TermsConditions";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import CurrentUser from "../CurrentUser";
+
 function Routing() {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/find-creators" element={<FindCreators />} />
       <Route path="/talent-profile/:name" element={<TalentProfile />} />
-      <Route path="/pricing" element={<Pricing />} />
+      {/* <Route path="/pricing" element={<Pricing />} /> */}
+      <Route
+        path="/pricing"
+        element={currentUserId ? <Pricing /> : <Navigate to="/login" replace />}
+      />
       <Route path="/resources" element={<Resources />} />
       <Route path="/signup" element={<Register />} />
       <Route path="/otp" element={<OTPComponent />} />
       <Route path="/about-us" element={<About />} />
       <Route path="/community-guidelines" element={<Guidelines />} />
+      <Route path="/terms-conditions" element={<TermsConditions />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/post-job" element={<PostJob />} />
       <Route path="/how-it-works" element={<HowItWorks />} />
@@ -105,6 +123,7 @@ function Routing() {
       <Route path="/brand-firstGig" element={<BrandFirstGig />} />
       <Route path="/brand-details" element={<BrandDetails />} />
       <Route path="/brand-logo" element={<BrandLogo />} />
+      <Route path="/contactUs" element={<ContactUs />} />
       <Route path="/brand-activated" element={<BrandActivation />} />
       <Route path="/brand-dashboard" element={<BrandHome />} />
       <Route path="/list-jobs" element={<ListJobs />} />

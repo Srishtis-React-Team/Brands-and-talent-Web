@@ -6,7 +6,15 @@ import { useNavigate, useOutletContext } from "react-router";
 import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
+import CurrentUser from "../CurrentUser";
 const Footer = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
   const navigate = useNavigate();
   const fieldsBackground = require("../assets/images/fields-background.png");
   const btLogo = require("../assets/images/LOGO.jpg");
@@ -179,7 +187,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/contactUs" onClick={handleClick}>
                     Contact Us
                   </Link>
                 </li>
@@ -209,11 +217,27 @@ const Footer = () => {
                     Register as Talent
                   </Link>
                 </li>
-                <li>
-                  <Link to="/" onClick={handleClick}>
-                    Get Hired
-                  </Link>
-                </li>
+
+                {!currentUserId && (
+                  <>
+                    <li>
+                      <Link to="/get-booked" onClick={handleClick}>
+                        Get Hired
+                      </Link>
+                    </li>
+                  </>
+                )}
+
+                {currentUserId && currentUserType == "talent" && (
+                  <>
+                    <li>
+                      <Link to="/talent-dashboard" onClick={handleClick}>
+                        Get Hired
+                      </Link>
+                    </li>
+                  </>
+                )}
+
                 <li>
                   <Link to="/resources" onClick={handleClick}>
                     Brand / Client & Talent Store
@@ -255,7 +279,7 @@ const Footer = () => {
 
               <ul className="footerLinks">
                 <li>
-                  <Link onClick={handleClick} to="/">
+                  <Link onClick={handleClick} to="/terms-conditions">
                     Terms & Conditions
                   </Link>
                 </li>
@@ -265,7 +289,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/privacy-policy" onClick={handleClick}>
                     Privacy Policy
                   </Link>
                 </li>

@@ -43,8 +43,10 @@ const Pricing = () => {
       });
   };
 
-  const selectPricing = (event) => {
-    setPricing(event.target.value);
+  const choosePlan = (event) => {
+    // setPricing(event.target.value);
+    window.location.href =
+      "https://buymeacoffee.com/brandsandtalent/membership";
   };
 
   function handleForms(e) {
@@ -239,6 +241,7 @@ const Pricing = () => {
                               ? "choose-btn premium-btn"
                               : ""
                           }
+                          onClick={() => choosePlan()}
                         >
                           Choose plan
                         </div>

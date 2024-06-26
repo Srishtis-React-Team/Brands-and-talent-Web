@@ -24,7 +24,7 @@ import CurrentUser from "../CurrentUser";
 import BrandHeader from "../brand/pages/BrandHeader";
 import BrandSideMenu from "../brand/pages/BrandSideMenu";
 import Spinner from "../components/Spinner";
-const ContactSupport = () => {
+const ContactUs = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const {
@@ -122,21 +122,7 @@ const ContactSupport = () => {
 
   return (
     <>
-      {currentUserType == "talent" && <TalentHeader toggleMenu={toggleMenu} />}
-      {currentUserType == "brand" && <BrandHeader toggleMenu={toggleMenu} />}
-      <div
-        id="sidebarBrand"
-        className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-        }`}
-      >
-        {currentUserType == "talent" && <TalentSideMenu />}
-        {currentUserType == "brand" && <BrandSideMenu />}
-      </div>
-      <main
-        id="mainBrand"
-        className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
-      >
+      <main style={{ margin: "30px" }} id="mainBrand" className="">
         <div className="brand-content-main boxBg edit_talentprofile">
           <div className="create-job-title">How Can we help?</div>
           <p>
@@ -250,4 +236,4 @@ const ContactSupport = () => {
   );
 };
 
-export default ContactSupport;
+export default ContactUs;

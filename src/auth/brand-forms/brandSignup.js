@@ -155,7 +155,7 @@ const BrandSignup = () => {
       passwordMatch === true
     ) {
       const formData = {
-        brandName: adultName,
+        userName: adultName,
         brandEmail: adultEmail,
         brandPassword: adultPassword,
         confirmPassword: adultConfirmPassword,
@@ -221,8 +221,10 @@ const BrandSignup = () => {
 
   const handleCondition = (e) => {
     if (e == "terms") {
+      navigate("/terms-conditions");
     }
     if (e == "privacy") {
+      navigate("/privacy-policy");
     }
     if (e == "community") {
       navigate("/community-guidelines");

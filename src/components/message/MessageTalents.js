@@ -156,19 +156,31 @@ const MessageTalents = () => {
   //     newSocket.disconnect();
   //   };
   // }, [currentUserId]);
+  // const newSocket = io("https://hybrid.sicsglobal.com", {
+  //   path: "/project/brandsandtalent/socket.io",
+  // });
 
   useEffect(() => {
     console.log("FIND_MESSAGE_LOPP_newSocket");
     console.log(currentUserId, "currentUserId");
-    const newSocket = io("https://hybrid.sicsglobal.com", {
-      path: "/project/brandsandtalent/socket.io",
-    });
+    const newSocket = io("http://13.234.177.61:4014");
     console.log(newSocket, "newSocket");
     setSocket(newSocket);
     return () => {
       newSocket.disconnect();
     };
   }, [currentUserId]);
+
+  // useEffect(() => {
+  //   console.log("FIND_MESSAGE_LOPP_newSocket");
+  //   console.log(currentUserId, "currentUserId");
+  //   const newSocket = io("http://13.234.177.61:4014");
+  //   console.log(newSocket, "newSocket");
+  //   setSocket(newSocket);
+  //   return () => {
+  //     newSocket.disconnect();
+  //   };
+  // }, [currentUserId]);
 
   useEffect(() => {
     console.log("FIND_MESSAGE_LOPP_setuserType");
