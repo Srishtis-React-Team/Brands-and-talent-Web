@@ -351,8 +351,6 @@ const BrandSignup = () => {
         <div
           className="dialog-body"
           style={{
-            paddingBottom: "100px",
-            paddingTop: "45px",
             height: "unset",
           }}
         >
