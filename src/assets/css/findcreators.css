@@ -390,10 +390,10 @@ select {
 }
 .models-images .gallery-main {  margin: 0; }
 
-.models-images .rating {
+/* .models-images .rating {
   top: 6px;
   left: 5px;
-}
+} */
 
 .models-images .gallery-main {
   margin: 0;
