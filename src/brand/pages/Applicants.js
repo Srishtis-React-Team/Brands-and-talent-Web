@@ -177,6 +177,7 @@ Best,
       showRejectedCandidates(false);
     }
     if (e == "booked-candidates") {
+      console.log("booked-candidatesCAlled");
       showBookedCandidates(true);
       getNewCandidates(brandId, "bookedCandidates");
     } else {
@@ -185,7 +186,7 @@ Best,
   }
 
   const getNewCandidates = async (id, filterCandidates) => {
-    alert("getNewCandidates");
+    console.log(filterCandidates, "filterCandidates");
     let apiUrl;
     let formData;
     if (filterCandidates == "new") {
@@ -211,6 +212,13 @@ Best,
       formData = {
         brandId: id,
         selectedLevel: "rejectedCandidates",
+      };
+    } else if (filterCandidates == "bookedCandidates") {
+      console.log("bookedCandidatesFROMDATASETTING");
+      apiUrl = `${API.getSelectionList}`;
+      formData = {
+        brandId: id,
+        selectedLevel: "bookedCandidates ",
       };
     }
     console.log(formData, "formDatagetNewCandidates");
@@ -506,16 +514,35 @@ Best,
                             <div className="campaigns-wrapper-two">
                               <div className="campaign-company">
                                 <div className="campaign-company-wrapper">
-                                  <div className="campaign-initial">
-                                    {" "}
-                                    {candidate?.talentDetails?.parentEmail &&
-                                      candidate?.talentDetails?.parentEmail.charAt(
-                                        0
-                                      )}
-                                  </div>
-                                  <div className="campaign-company-name">
-                                    {candidate?.talentDetails?.parentEmail}
-                                  </div>
+                                  {candidate?.talentDetails?.parentEmail && (
+                                    <>
+                                      <div className="campaign-initial">
+                                        {" "}
+                                        {candidate?.talentDetails
+                                          ?.parentEmail &&
+                                          candidate?.talentDetails?.parentEmail.charAt(
+                                            0
+                                          )}
+                                      </div>
+                                      <div className="campaign-company-name">
+                                        {candidate?.talentDetails?.parentEmail}
+                                      </div>
+                                    </>
+                                  )}
+                                  {candidate?.talentDetails?.adultEmail && (
+                                    <>
+                                      <div className="campaign-initial">
+                                        {" "}
+                                        {candidate?.talentDetails?.adultEmail &&
+                                          candidate?.talentDetails?.adultEmail.charAt(
+                                            0
+                                          )}
+                                      </div>
+                                      <div className="campaign-company-name">
+                                        {candidate?.talentDetails?.adultEmail}
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
                                 <div className="job-card-buttons">
                                   <div className="manage-dropdown">

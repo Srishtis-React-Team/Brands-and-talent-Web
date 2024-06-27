@@ -11,8 +11,51 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
+import CurrentUser from "../../src/CurrentUser";
 
 const KidsFormThree = ({ onDataFromChild, ...props }) => {
+  const paramsValues = window.location.search;
+  const urlParams = new URLSearchParams(paramsValues);
+  const [updateDisabled, setUpdateDisabled] = useState(false);
+
+  const userId = urlParams.get("userId");
+  console.log(userId, "userId");
+
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
+
+  const [talentData, setTalentData] = useState();
+
+  useEffect(() => {
+    if (userId) {
+      getTalentById();
+    }
+  }, [userId]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${userId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "getTalentById");
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(talentData, "talentDataKidsThree");
+  }, [talentData]);
+
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.jpg");
   const uploadIcon = require("../assets/icons/uploadIcon.png");
@@ -56,12 +99,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const kidsImage = require("../assets/images/kidsImage.png");
-  const paramsValues = window.location.search;
-  const urlParams = new URLSearchParams(paramsValues);
-  const [updateDisabled, setUpdateDisabled] = useState(false);
-
-  const userId = urlParams.get("userId");
-  console.log(userId, "userId");
 
   useEffect(() => {
     getFeatures();
@@ -475,7 +512,17 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-signup-service-details?${userId}`);
+            // navigate(`/talent-signup-service-details?${userId}`);
+            if (talentData?.planName == "Basic") {
+              navigate(
+                `/talent-profile/${talentData.preferredChildFirstname}`,
+                {
+                  state: { talentData: talentData },
+                }
+              );
+            } else {
+              navigate(`/adult-signup-service-details?${userId}`);
+            }
           }, 1000);
         } else {
         }
@@ -1101,13 +1148,13 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                           setIdType(e.target.value);
                         }}
                       >
-                        <option defaultValue value="universal_id">
-                          National ID/Citizenship Card
+                        <option defaultValue value="National ID Card">
+                          National ID Card
                         </option>
-                        <option defaultValue value="licence">
-                          Licence
+                        <option defaultValue value="Driving License">
+                          Driving License
                         </option>
-                        <option value="passport">Passport</option>
+                        <option value="Passport">Passport</option>
                       </select>
                     </div>
                   </div>

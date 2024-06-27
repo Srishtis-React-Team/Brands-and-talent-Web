@@ -741,8 +741,8 @@ const Dashboard = () => {
                 <div className="brand-options">
                   <div className="section-title">Get Booked</div>
                   <div className="section-description brand-secription">
-                    Get discovered by top Brand / Client, set your own rates,
-                    and keep 100% of your earnings. Chat directly with Brand /
+                    Get discovered by top Brands / Client, set your own rates,
+                    and keep 100% of your earnings. Chat directly with Brands /
                     Client you love and build lasting relationships. We put
                     creators first. Sign up today and start earning!
                   </div>
@@ -944,7 +944,6 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
-
                     </div>
                   );
                 })}
@@ -973,14 +972,16 @@ const Dashboard = () => {
               <div className="col-md-4">
                 <div className="community-card-wrapper  card-background">
                   <div className="count">0</div>
-                  <div className="cards-text">Brand / Client Professionals</div>
+                  <div className="cards-text">
+                    Brands / Client Professionals
+                  </div>
                 </div>
               </div>
 
               <div className="col-md-4">
                 <div className="community-card-wrapper  card-background">
                   <div className="count">{brandUserCount}</div>
-                  <div className="cards-text">Brand / Client</div>
+                  <div className="cards-text">Brands / Client</div>
                 </div>
               </div>
             </div>
@@ -1011,7 +1012,7 @@ const Dashboard = () => {
                   </div>
                   <div className="card-title">Hire Talent</div>
                   <div className="cards-description">
-                    The platform will help Brand / Client find, attract, and
+                    The platform will help Brands / Client find, attract, and
                     hire the best talent as per their ...
                   </div>
                 </div>
@@ -1024,7 +1025,7 @@ const Dashboard = () => {
                   </div>
                   <div className="card-title">Find Jobs</div>
                   <div className="cards-description">
-                    Talent can  build and manage their personal Brand / Client
+                    Talent can  build and manage their personal Brands / Client
                     and will have a unique url ...
                   </div>
                 </div>
@@ -1224,7 +1225,7 @@ const Dashboard = () => {
         <div className="secSpac logoWraper wraper my-4">
           <div className="container">
             <div className="title brands-row-title">
-              Trusted by renowned Brand / Client
+              Trusted by renowned Brands / Client
             </div>
             <div className="brands-section">
               <div className="logospc">

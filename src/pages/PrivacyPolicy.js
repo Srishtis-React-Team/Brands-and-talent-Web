@@ -12,10 +12,10 @@ const PrivacyPolicy = () => {
         <div className="popular-header">
           <div className="container">
             <div className="header-title">Privacy Policy</div>
-            <div className="header-menu">
+            {/* <div className="header-menu">
               <div>Home</div>
               <div>Learn</div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

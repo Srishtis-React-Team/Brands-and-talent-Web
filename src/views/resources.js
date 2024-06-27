@@ -79,10 +79,10 @@ const Resources = () => {
       <section>
         <div className="popular-header" style={{ marginTop: "64px" }}>
           <div className="header-title">Resources</div>
-          <div className="header-menu">
+          {/* <div className="header-menu">
             <div>Home</div>
             <div>Resources</div>
-          </div>
+          </div> */}
         </div>
       </section>
       <div className="container-fluid">

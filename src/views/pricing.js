@@ -85,10 +85,10 @@ const Pricing = () => {
         <div className="popular-header">
           <div className="container">
             <div className="header-title">Popular Talents</div>
-            <div className="header-menu">
+            {/* <div className="header-menu">
               <div>Home</div>
               <div>Talent</div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -100,7 +100,7 @@ const Pricing = () => {
             <input type="checkbox" onChange={handleToggle} />
             <a></a>
             <span>
-              <span className="right-span">Brand /Clients</span>
+              <span className="right-span">Brands /Clients</span>
               <span className="left-span">Talent</span>
             </span>
           </label>

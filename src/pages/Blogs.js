@@ -64,14 +64,13 @@ const Blogs = () => {
         <div className="popular-header">
           <div className="container">
             <div className="header-title">Blog</div>
-            <div className="header-menu">
+            {/* <div className="header-menu">
               <div>Home</div>
               <div>Learn</div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
-
       <section>
         <div className="container">
           <div className="blogs-main row">
@@ -83,10 +82,16 @@ const Blogs = () => {
                       <>
                         <div className="blogs-wrapper">
                           <div className="blogimg-bx">
-                            <img className="blogs-image" src={item?.image} alt="" />
+                            <img
+                              className="blogs-image"
+                              src={item?.image}
+                              alt=""
+                            />
                           </div>
                           <div className="blogs-content-wrapper">
-                            <div className="blogs-subhead">{item?.subheading}</div>
+                            <div className="blogs-subhead">
+                              {item?.subheading}
+                            </div>
                             <div className="blogs-heading">{item?.heading}</div>
                             <div className="blogs-description">
                               {item?.description}
@@ -111,7 +116,6 @@ const Blogs = () => {
           </div>
         </div>
       </section>
-
       <Footer />
     </>
   );

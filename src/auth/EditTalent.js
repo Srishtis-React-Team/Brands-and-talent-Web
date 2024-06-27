@@ -190,67 +190,78 @@ const EditTalent = () => {
   }, []);
 
   const professionList = [
-    { value: "Model", label: "Model" },
-    { value: "Celebrity", label: "Celebrity" },
+    { value: "Actor", label: "Actor" },
+    { value: "Artist", label: "Artist" },
     { value: "Creator", label: "Creator" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Influencer", label: "Influencer" },
+    { value: "Model", label: "Model" },
+    { value: "Event Planner", label: "Event Planner" },
     { value: "Stylist", label: "Stylist" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Nail Artist", label: "Nail Artist" },
+    { value: "Tattooist", label: "Tattooist" },
+    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Swimming Instructor", label: "Swimming Instructor" },
+    { value: "Driving Instructor", label: "Driving Instructor" },
+    { value: "Meditation Teacher", label: "Meditation Teacher" },
+    { value: "Yoga Instructor", label: "Yoga Instructor" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Music Teacher", label: "Music Teacher" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Craftsperson", label: "Craftsperson" },
+    { value: "Sculptor", label: "Sculptor" },
+    { value: "Curator", label: "Curator" },
+    { value: "Singer", label: "Singer" },
+    { value: "Dancer", label: "Dancer" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Musician", label: "Musician" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "Cinematographer", label: "Cinematographer" },
     { value: "Photographer", label: "Photographer" },
     { value: "Videographer", label: "Videographer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Actor", label: "Actor" },
-    { value: "Singer", label: "Singer" },
-    { value: "Writer", label: "Writer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "RJ", label: "RJ" },
     { value: "DJ", label: "DJ" },
-    { value: "VJ", label: "VJ" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Yoga Teacher", label: "Yoga Teacher" },
-    { value: "Webapp Developer", label: "Webapp Developer" },
-    { value: "Virtual Assistant", label: "Virtual Assistant" },
-    { value: "AI Influencer", label: "AI Influencer" },
+    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
+    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
+    { value: "Writer", label: "Writer" },
+    { value: "Copywriter", label: "Copywriter" },
+    { value: "Cartoonist", label: "Cartoonist" },
+    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
+    { value: "Podcaster", label: "Podcaster" },
+    { value: "Host/MC", label: "Host/MC" },
+    { value: "Voice-over Artist", label: "Voice-over Artist" },
+    { value: "Comedian", label: "Comedian" },
+    { value: "Public Speaker", label: "Public Speaker" },
+    { value: "Life Coach", label: "Life Coach" },
+    { value: "Career Coach", label: "Career Coach" },
+    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
     { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Other", label: "Other" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
+    { value: "Interior Designer", label: "Interior Designer" },
+    { value: "Illustrator", label: "Illustrator" },
+    { value: "Animator", label: "Animator" },
+    { value: "Blockchain Developer", label: "Blockchain Developer" },
   ];
 
   const categoryList = [
-    "Fashion",
-    "Parenting and family",
-    "Sports/Martial Arts/Dance",
-    "Arts and photography",
-    "Videography",
-    "Music",
-    "Comedy/Entertainment",
-    "Education",
-    "Transportation",
-    "Food and beverage",
-    "Finance",
-    "Beauty/Cosmetics",
-    "Luxury",
-    "Business and Technology",
-    "Travel/Tourism",
-    "Health/Wellness/Fitness",
-    "Home and Gardening",
-    "Eco-friendly/Nature/Sustainability",
-    "Diversity and inclusion",
-    "Outdoor and nature",
-    "Content Creation",
-    "Lifestyle",
+    "Fashion & Beauty",
+    "Media & Entertainment",
+    "Sports, Fitness, & Wellness",
+    "Creative Arts & Design",
     "Celebrity",
-    "Animals/Pets",
-    "Web3",
-    "Home and DIY",
-    "Anime/Memes",
-    "Website/Mobile Applications",
-    "Gaming",
-    "Lifecoach/Relationships",
-    "Cosplay/Memes",
-    "Other",
+    "Writing, Marketing, & Content Creation",
+    "Performing Arts",
+    "Education & Coaching",
+    "Business & Technology",
+    "Luxury & Lifestyle",
+    "Eco-friendly & Sustainability",
+    "Home & Gardening",
+    "Food & Travel",
+    "Diversity & Inclusion",
+    "Kids & Teens",
   ];
 
   function chooseCategory(category) {
@@ -277,23 +288,36 @@ const EditTalent = () => {
   };
 
   const ethnicityOptions = [
-    "South Asian",
-    "Indian/Pakistani",
-    "South East Asian",
-    "Khmer",
-    "Vietnamese",
-    "Indonesian",
-    "Thai",
-    "Middle-East",
-    "Black",
     "African",
-    "Latino/Hispanic",
-    "Russian",
-    "Ukrainian",
-    "Nordic",
-    "Scandinavian",
+    "Arab",
+    "Asian",
+    "Black",
+    "Central Asian",
+    "Chinese",
     "European",
-    "Italian",
+    "Filipino",
+    "Indian",
+    "Indonesian",
+    "Japanese",
+    "Khmer",
+    "Korean",
+    "Latino/Hispanic",
+    "Middle-Eastern",
+    "Native American",
+    "Native Hawaiian/Pacific Islander",
+    "Nepali",
+    "Other",
+    "Pakistani",
+    "Persian",
+    "Russian",
+    "Scandinavian",
+    "South-Asian",
+    "South-East Asian",
+    "Thai",
+    "Turk",
+    "Ukrainian",
+    "Vietnamese",
+    "White",
   ];
 
   const gendersOptions = [
@@ -2325,14 +2349,14 @@ const EditTalent = () => {
                   </div>
                 </div>
                 {talentData?.type === "kids" && (
-                  <div className="kids-form-title">Your Child Details</div>
+                  <div className="kids-form-title mb-3">Your Child Details</div>
                 )}
-                {/* <div className="profession-section-cover">
+                <div className="profession-section-cover">
                   <div className="row">
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="form-label pay-info">
-                          Profession (choose any 4)
+                          Profession / Skills (Choose any 5)
                           <span className="mandatory">*</span>
                         </label>
                         <div>
@@ -2421,9 +2445,9 @@ const EditTalent = () => {
                       </div>
                     ))}
                   </div>
-                </div> */}
+                </div>
                 <div className="kids-form-title-sub">
-                  Please select the top 4 categories relevant to your profile.
+                  Select 3 to 6 categories relevant to your profile
                   <span className="mandatory">*</span>
                 </div>
                 <div className="category-list">

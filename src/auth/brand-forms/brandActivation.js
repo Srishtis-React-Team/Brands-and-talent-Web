@@ -72,41 +72,31 @@ const BrandActivation = () => {
                 <div className="">
                   <div className="included-line">
                     <img src={greenTick} alt="" />
-                    <div className="include-text">Create a profile</div>
-                  </div>
-                  <div className="included-line">
-                    <img src={greenTick} alt="" />
                     <div className="include-text">
-                      Portfolio (up to 5 photos + 2 Video/Audio sample works)
+                      Create up to 3 job posts per month
                     </div>
                   </div>
                   <div className="included-line">
                     <img src={greenTick} alt="" />
-                    <div className="include-text">Bio</div>
+                    <div className="include-text">Browse Talent</div>
                   </div>
                   <div className="included-line">
                     <img src={greenTick} alt="" />
                     <div className="include-text">
-                      Add your social media accounts
+                      Quick 2-day job post approval
                     </div>
-                  </div>
-                  <div className="included-line">
-                    <img src={greenTick} alt="" />
-                    <div className="include-text">Add your features</div>
                   </div>
                 </div>
                 <div className="include-wrapper">
                   <div className="included-line">
                     <img src={greenTick} alt="" />
-                    <div className="include-text">Reviews</div>
+                    <div className="include-text">
+                      View and manage job applicants
+                    </div>
                   </div>
                   <div className="included-line">
                     <img src={greenTick} alt="" />
-                    <div className="include-text">Set your Rates</div>
-                  </div>
-                  <div className="included-line">
-                    <img src={greenTick} alt="" />
-                    <div className="include-text">Access to job postings</div>
+                    <div className="include-text">Bookmark Talent</div>
                   </div>
                   <div className="included-line">
                     <img src={greenTick} alt="" />

@@ -94,10 +94,10 @@ const CreateJobs = () => {
   const [employmentError, setEmploymentError] = useState(null);
   const companyList = [];
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
+  const [selectedGenderOptions, setSelectedGenderOptions] = useState([]);
   const [selectedNationalityOptions, setSelectedNationalityOptions] = useState(
     []
   );
-  const [selectedGenderOptions, setSelectedGenderOptions] = useState([]);
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
@@ -653,7 +653,7 @@ const CreateJobs = () => {
   const [kidsLegalLastName, setKidsLegalLastName] = useState("");
   const [kidsCity, setKidsCity] = useState("");
   const [jobType, setjobType] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState([]);
   const [genderError, setGenderError] = useState("");
   const [nationality, setNationality] = useState([]);
   const [ethnicity, setEthnicity] = useState("");
@@ -946,9 +946,26 @@ const CreateJobs = () => {
     setSelectedNationalityOptions(selectedOptions);
   };
 
-  const selectGender = (event) => {
-    setGender(event.target.value);
+  // const selectGender = (event) => {
+  //   setGender(event.target.value);
+  //   setGenderError(false);
+  // };
+
+  const selectGender = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
     setGenderError(false);
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setGender([]); // Clear the languages state
+      setSelectedGenderOptions([]);
+
+      return;
+    }
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setGender(selectedLanguages); // Update languages state with all selected languages
+    setSelectedGenderOptions(selectedOptions);
   };
 
   const selectCategory = (event) => {
@@ -1717,6 +1734,7 @@ const CreateJobs = () => {
     { title: "Choreographer" },
     { title: "Musician" },
     { title: "Filmmaker" },
+    { title: "Cinematographer" },
     { title: "Photographer" },
     { title: "Videographer" },
     { title: "DJ" },
@@ -2245,6 +2263,7 @@ const CreateJobs = () => {
                             <div className="creators-filter-select creator-age-wrapper">
                               <input
                                 type="text"
+                                style={{ height: "50px" }}
                                 className="form-control"
                                 placeholder="Minimum Age"
                                 value={minAge}
@@ -2255,6 +2274,7 @@ const CreateJobs = () => {
 
                               <input
                                 type="text"
+                                style={{ height: "50px" }}
                                 className="form-control"
                                 placeholder="Maximum Age"
                                 value={maxAge}
@@ -2832,7 +2852,7 @@ const CreateJobs = () => {
                                     <div className="kids-form-section col-md-3 mb-3">
                                       <div className="">
                                         <label className="form-label">
-                                          frequency
+                                          Frequency
                                         </label>
                                         <select
                                           className="form-select"
@@ -2844,7 +2864,7 @@ const CreateJobs = () => {
                                           }}
                                         >
                                           <option value="" disabled selected>
-                                            Select frequency
+                                            Select Frequency
                                           </option>
                                           {frequencyOptions.map(
                                             (option, index) => (
@@ -2928,7 +2948,7 @@ const CreateJobs = () => {
                                     <div className="kids-form-section col-md-3 mb-3">
                                       <div className="">
                                         <label className="form-label">
-                                          frequency
+                                          Frequency
                                         </label>
                                         <select
                                           className="form-select"
@@ -2940,7 +2960,7 @@ const CreateJobs = () => {
                                           }}
                                         >
                                           <option value="" disabled selected>
-                                            Select frequency
+                                            Select Frequency
                                           </option>
                                           {frequencyOptions.map(
                                             (option, index) => (
@@ -3082,7 +3102,7 @@ const CreateJobs = () => {
                                       <div className="kids-form-section col-md-2 mb-3">
                                         <div className="">
                                           <label className="form-label">
-                                            frequency
+                                            Frequency
                                           </label>
                                           <select
                                             className="form-select"
@@ -3094,7 +3114,7 @@ const CreateJobs = () => {
                                             }}
                                           >
                                             <option value="" disabled selected>
-                                              Select frequency
+                                              Select Frequency
                                             </option>
                                             {frequencyOptions.map(
                                               (option, index) => (
@@ -3177,7 +3197,7 @@ const CreateJobs = () => {
                                       <div className="kids-form-section col-md-2 mb-3">
                                         <div className="">
                                           <label className="form-label">
-                                            frequency
+                                            Frequency
                                           </label>
                                           <select
                                             className="form-select"
@@ -3189,7 +3209,7 @@ const CreateJobs = () => {
                                             }}
                                           >
                                             <option value="" disabled selected>
-                                              Select frequency
+                                              Select Frequency
                                             </option>
                                             {frequencyOptions.map(
                                               (option, index) => (
@@ -3375,7 +3395,7 @@ const CreateJobs = () => {
 
                 <div className="kids-form-section col-md-12 mb-3">
                   <label className="form-label">
-                    How You would like to recieve Application{" "}
+                    How you would like to receive Application{" "}
                   </label>
                   <div className="application-condition-wrapper">
                     <div className="application-condition-radios">
@@ -3421,7 +3441,7 @@ const CreateJobs = () => {
                         className="compensation-labels form-label"
                         htmlFor="how_apply"
                       >
-                        How to apply
+                        How to Apply
                       </label>
                     </div>
                     <div className="easy-apply-description">

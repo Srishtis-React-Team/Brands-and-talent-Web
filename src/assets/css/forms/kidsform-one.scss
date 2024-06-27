@@ -12,9 +12,9 @@
       .kids-title,
       .kids-form-title {
         color: #000;
-        font-size: 26px;
+        font-size: 20px;
         font-style: normal;
-        font-weight: 600;
+        font-weight: 500;
         line-height: normal;
         padding: 20px 0px;
         width: 100%;
@@ -46,7 +46,7 @@
         padding: 20px 0px;
       }
       .kids-form-title {
-        font-size: 22px;
+        font-size: 20px;
         padding-top: 15px 0px 0px 0px;
       }
       .splitter {
@@ -697,9 +697,9 @@
 
 .kids-form-title {
   color: #000;
-  font-size: 26px;
+  font-size: 20px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
   padding: 20px 0px;
   width: 100%;
@@ -739,7 +739,7 @@
   padding: 20px 0px;
 }
 .kids-form-title {
-  font-size: 22px;
+  font-size: 20px;
   padding: 15px 0px 0;
 }
 // .features-section .features-input-wrapper {
@@ -1254,4 +1254,9 @@
 .url-fileName:hover {
   padding-left: 0px;
   text-decoration: underline;
+}
+.uploaded-file-wrapper-main {
+  max-height: 450px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }

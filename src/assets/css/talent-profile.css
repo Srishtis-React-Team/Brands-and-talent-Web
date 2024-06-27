@@ -376,6 +376,10 @@
   padding: 10px 0px 15px 0px;
 }
 
+.chat-icon-profile {
+  color: #ffffff;
+}
+
 .talent-status {
   display: flex;
   border-radius: 130px;

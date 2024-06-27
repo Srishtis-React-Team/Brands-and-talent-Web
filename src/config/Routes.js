@@ -64,6 +64,7 @@ import ContactUs from "../views/ContactUs";
 import TermsConditions from "../pages/TermsConditions";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import CurrentUser from "../CurrentUser";
+import AdultSocialMedias from "../views/Adult forms/AdultSocialMedias";
 
 function Routing() {
   const {
@@ -114,6 +115,10 @@ function Routing() {
       <Route path="/adult-signup-basic-details" element={<AdultFormOne />} />
       <Route path="/adult-signup-service-details" element={<AdultFormTwo />} />
       <Route path="/adult-signup-files-details" element={<AdultFormThree />} />
+      <Route
+        path="/adult-social-medias-details"
+        element={<AdultSocialMedias />}
+      />
       <Route path="/adult-signup" element={<AdultSignup />} />
       <Route path="/otp-verification" element={<OTPComponent />} />
       <Route path="/otp-verification-brands" element={<BrandsOtp />} />

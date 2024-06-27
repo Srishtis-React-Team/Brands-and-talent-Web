@@ -183,20 +183,27 @@ const Header = ({ onData }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "dashboard") {
+        // alert("createHandleMenuClick");
         if (currentUser_type === "talent") {
           // navigate("/talent-profile", { state: { talentData: talentData } });
+          // alert("navigatetotalentprofile");
+
           navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
             state: { talentData },
           });
         } else if (currentUser_type === "brand") {
+          // alert("navigate to brandprofile");
+
           navigate(`/brand-dashboard`);
         }
       }
       if (menuItem === "edit") {
         if (currentUser_type === "talent") {
+          // alert("navigate to edittalent");
           navigate(`${"/edit-talent-profile"}?${currentUserId}`);
         } else if (currentUser_type === "brand") {
-          navigate(`/`);
+          navigate(`/edit-brand-profile`);
+          // alert("navigate to edit brand");
         }
       }
     };
@@ -1125,7 +1132,7 @@ const Header = ({ onData }) => {
                   aria-label="Close"
                   className="kids-select-btn"
                 >
-                  4-17 Years
+                  4 - 17 Years
                 </div>
                 <div
                   onClick={(e) => {
