@@ -363,7 +363,7 @@ const Login = () => {
             </div>
           )}
 
-          <div className="login-or">OR</div>
+          {/* <div className="login-or">OR</div>
 
           <div className="google-login">
             <GoogleLogin
@@ -377,7 +377,7 @@ const Login = () => {
                 console.log("Login Failed");
               }}
             />
-          </div>
+          </div> */}
 
           {selectedItem === "brand" && (
             <>

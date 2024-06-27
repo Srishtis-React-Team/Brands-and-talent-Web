@@ -93,23 +93,36 @@ const KidsformOne = ({ sendDataToParent }) => {
   );
 
   const ethnicityOptions = [
-    "South Asian",
-    "Indian/Pakistani",
-    "South East Asian",
-    "Khmer",
-    "Vietnamese",
-    "Indonesian",
-    "Thai",
-    "Middle-East",
-    "Black",
     "African",
-    "Latino/Hispanic",
-    "Russian",
-    "Ukrainian",
-    "Nordic",
-    "Scandinavian",
+    "Arab",
+    "Asian",
+    "Black",
+    "Central Asian",
+    "Chinese",
     "European",
-    "Italian",
+    "Filipino",
+    "Indian",
+    "Indonesian",
+    "Japanese",
+    "Khmer",
+    "Korean",
+    "Latino/Hispanic",
+    "Middle-Eastern",
+    "Native American",
+    "Native Hawaiian/Pacific Islander",
+    "Nepali",
+    "Other",
+    "Pakistani",
+    "Persian",
+    "Russian",
+    "Scandinavian",
+    "South-Asian",
+    "South-East Asian",
+    "Thai",
+    "Turk",
+    "Ukrainian",
+    "Vietnamese",
+    "White",
   ];
 
   const gendersOptions = [
@@ -311,6 +324,8 @@ const KidsformOne = ({ sendDataToParent }) => {
     { value: "Tattooist", label: "Tattooist" },
     { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
     { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Swimming Instructor", label: "Swimming Instructor" },
+    { value: "Driving Instructor", label: "Driving Instructor" },
     { value: "Meditation Teacher", label: "Meditation Teacher" },
     { value: "Yoga Instructor", label: "Yoga Instructor" },
     { value: "Dance Teacher", label: "Dance Teacher" },
@@ -318,12 +333,14 @@ const KidsformOne = ({ sendDataToParent }) => {
     { value: "Sports Instructor", label: "Sports Instructor" },
     { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
     { value: "Craftsperson", label: "Craftsperson" },
+    { value: "Sculptor", label: "Sculptor" },
     { value: "Curator", label: "Curator" },
     { value: "Singer", label: "Singer" },
     { value: "Dancer", label: "Dancer" },
     { value: "Choreographer", label: "Choreographer" },
     { value: "Musician", label: "Musician" },
     { value: "Filmmaker", label: "Filmmaker" },
+    { value: "Cinematographer", label: "Cinematographer" },
     { value: "Photographer", label: "Photographer" },
     { value: "Videographer", label: "Videographer" },
     { value: "DJ", label: "DJ" },
@@ -365,6 +382,7 @@ const KidsformOne = ({ sendDataToParent }) => {
     "Home & Gardening",
     "Food & Travel",
     "Diversity & Inclusion",
+    "Kids & Teens",
   ];
 
   // function chooseCategory(category) {
@@ -462,17 +480,26 @@ const KidsformOne = ({ sendDataToParent }) => {
     console.log(event, "event");
     console.log(event?.value, "event?.value");
     setCountry(event?.value);
+    // setState("");
+    // handleSelectedState("");
     getStates(event?.value);
     console.log(country, "country");
   };
   const handleSelectedState = (state) => {
+    console.log(state, "state");
     setStateError(false);
     setState(state?.label);
+    // setKidsCity("");
     getCities({
       countryName: country,
       stateName: state?.label,
     });
   };
+
+  useEffect(() => {
+    console.log(state, "stateUseeffect");
+  }, [state]);
+
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
     setCityError(false);
@@ -994,10 +1021,10 @@ const KidsformOne = ({ sendDataToParent }) => {
                     Form
                   </div>
                   <div className="kids-description">
-                    Unleash your kid's inner star! ✨ Brand / Client & Talent is
-                    your gateway to exciting opportunities for young creators (
-                    4-17 )!  Imagine their talent shining on the big stage,
-                    collaborating with renowned Brand / Client on fun gigs and
+                    Unleash your kid's inner star! ✨ Brands / Client & Talent
+                    is your gateway to exciting opportunities for young creators
+                    ( 4-17 )!  Imagine their talent shining on the big stage,
+                    collaborating with renowned Brands / Client on fun gigs and
                     influencer projects.  This registration form is your first
                     step to making their dreams a reality. Register now and
                     unlock a world of possibilities for your kid!

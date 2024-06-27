@@ -679,10 +679,10 @@ const FindCreators = () => {
         <div className="popular-header" style={{ marginTop: "64px" }}>
           <div className="container">
             <div className="header-title">Popular Talents</div>
-            <div className="header-menu">
+            {/* <div className="header-menu">
               <div>Home</div>
               <div>Talents</div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/dashboard.css";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import CurrentUser from "../CurrentUser";
+import Header from "./header";
 const Footer = () => {
   const {
     currentUserId,
@@ -31,6 +32,17 @@ const Footer = () => {
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [signupCategory, setSignupCategory] = useState("talent");
+  const [above_18, setAbove_18] = useState(false);
+  const [below_18, setBelow_18] = useState(false);
+  const [talent, setTalent] = useState(true);
+  const [brand, setBrand] = useState(false);
+
+  const [currentUser_image, setCurrentUserImage] = useState("");
+  const [currentUser_type, setCurrentUserType] = useState("");
+  const [talentData, setTalentData] = useState();
+  const [talentId, setTalentId] = useState(null);
   const clear = () => {
     setFirstName("");
     setEmail("");
@@ -38,9 +50,10 @@ const Footer = () => {
 
   const [data, setData] = useState("");
 
-  const talentSignup = () => {
-    setData("talent-signup");
-  };
+  // const talentSignup = () => {
+  //   // setData("talent-signup");
+  //   handleRegister();
+  // };
 
   const subscribe = async () => {
     if (firstName === "") {
@@ -80,12 +93,58 @@ const Footer = () => {
     window.scrollTo(0, 0); // Scroll to top on link click
   };
 
+  function userType(e) {
+    if (e == "talent") {
+      setTalent(true);
+      setSignupCategory("talent");
+    } else {
+      setTalent(false);
+    }
+    if (e == "brand") {
+      setBrand(true);
+      setSignupCategory("brand");
+    } else {
+      setBrand(false);
+    }
+  }
+
+  // const handleRegister = () => {
+  //   if (brand === true) {
+  //     navigate("/signup", {
+  //       state: { signupCategory: signupCategory },
+  //     });
+  //   } else if (talent === true) {
+  //     setTimeout(() => {
+  //       // sendMessageToParent("open-kids-form");
+  //       openModal();
+  //     }, 800);
+  //   }
+  // };
+
+  const modalRef = useRef(null);
+  const openModal = () => {
+    const modal = new window.bootstrap.Modal(modalRef.current);
+    modal.show();
+  };
+
   // useEffect(() => {
   //   window.scrollTo(0, 0);
   // }, [navigate]);
 
+  // const handleMessageFromHeader = (message) => {
+  //   console.log(message, "message from header");
+  //   if (message === "open-kids-form") {
+  //     openModal();
+  //   }
+  //   if (message.menuStatus === false) {
+  //     setHideAll(true);
+  //   }
+  //   setMessageFromHeader(message);
+  // };
+
   return (
     <>
+      {/* <Header sendMessageToParent={handleMessageFromHeader} /> */}
       <div className="container">
         <div className="main-footer-wrapper mb-4">
           <section className="main-footer-form">
@@ -213,7 +272,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={() => talentSignup()}>
+                  <Link to="/" onClick={() => openModal()}>
                     Register as Talent
                   </Link>
                 </li>
@@ -299,13 +358,62 @@ const Footer = () => {
         </section>
         <section>
           <div className="copyright-section">
-            <p>
-              © Copyright 2024 Brand / Client andt alent All Right Reserved.
-            </p>
+            <p>© Copyright 2024 Brands and Talent All Right Reserved.</p>
           </div>
         </section>
       </div>
       {openPopUp && <PopUp message={message} />}
+
+      <div
+        ref={modalRef}
+        className="modal fade"
+        id="verify_age"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="ageverify-title">Select Your Age Group</div>
+              <div className="modal-buttons ageverify-buttons">
+                <div
+                  onClick={(e) => {
+                    navigate("/signup", {
+                      state: { signupCategory: "kids" },
+                    });
+                  }}
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  className="kids-select-btn"
+                >
+                  4 - 17 Years
+                </div>
+                <div
+                  onClick={(e) => {
+                    navigate("/signup", {
+                      state: { signupCategory: "adults" },
+                    });
+                  }}
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  className="adults-select-btn"
+                >
+                  18 Years or Older
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

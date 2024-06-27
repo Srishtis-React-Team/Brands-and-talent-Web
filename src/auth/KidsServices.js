@@ -236,18 +236,19 @@ const KidsServices = () => {
 
                 <div className="adult-main remvSpc col-md-8 col-lg-9">
                   <div className="adults-form-title">Complete your Profile</div>
+                  <div className="adults-titles">Services (Optional)</div>
                   <div>
                     {inputs.map((input, serviceIndex) => (
                       <>
-                        <div className="adults-titles">
+                        {/* <div className="adults-titles">
                           {inputs.length > 1 && serviceIndex === 0
                             ? "Services"
                             : `Services (set ${serviceIndex + 1})`}
-                        </div>
+                        </div> */}
                         <div key={serviceIndex}>
                           <div className="">
                             <div className="">
-                              <div className="mb-3">
+                              <div className="mb-3 mt-3">
                                 <label className="form-label">
                                   Service name
                                 </label>
@@ -270,44 +271,40 @@ const KidsServices = () => {
                           </div>
                           <div className="kids-form-row row">
                             <div className="kids-form-section col-md-6 mb-3">
-                        
-                                <label className="form-label">Amount</label>
-                                <input
-                                  type="number"
-                                  name="amount"
-                                  value={input.serviceAmount}
-                                  onChange={(e) =>
-                                    handleInputChange(
-                                      serviceIndex,
-                                      "serviceAmount",
-                                      e.target.value
-                                    )
-                                  }
-                                  className="form-control"
-                                  placeholder="Enter Amount In $"
-                                ></input>
-                             
+                              <label className="form-label">Amount</label>
+                              <input
+                                type="number"
+                                name="amount"
+                                value={input.serviceAmount}
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    serviceIndex,
+                                    "serviceAmount",
+                                    e.target.value
+                                  )
+                                }
+                                className="form-control"
+                                placeholder="Enter Amount In $"
+                              ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">
-                             
-                                <label className="form-label">
-                                  Duration (Weeks/Months)
-                                </label>
-                                <input
-                                  type="text"
-                                  name="duration"
-                                  value={input.serviceDuration}
-                                  onChange={(e) =>
-                                    handleInputChange(
-                                      serviceIndex,
-                                      "serviceDuration",
-                                      e.target.value
-                                    )
-                                  }
-                                  className="form-control"
-                                  placeholder="Duration (Weeks/Months)"
-                                ></input>
-                            
+                              <label className="form-label">
+                                Duration (Weeks/Months)
+                              </label>
+                              <input
+                                type="text"
+                                name="duration"
+                                value={input.serviceDuration}
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    serviceIndex,
+                                    "serviceDuration",
+                                    e.target.value
+                                  )
+                                }
+                                className="form-control"
+                                placeholder="Duration (Weeks/Months)"
+                              ></input>
                             </div>
                           </div>
                           <div className="adults-titles">Features</div>

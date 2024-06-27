@@ -14,7 +14,42 @@ import "../../assets/css/forms/kidsform-one.scss";
 import PopUp from "../../components/PopUp";
 import { event } from "jquery";
 import RichTextEditor from "../RichTextEditor";
+import CurrentUser from "../../CurrentUser";
 const AdultFormTwo = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
+  const [talentData, setTalentData] = useState();
+
+  useEffect(() => {
+    if (currentUserId) {
+      getTalentById();
+    }
+  }, [currentUserId]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "getTalentById");
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+
   const btLogo = require("../../assets/images/LOGO.jpg");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -62,7 +97,9 @@ const AdultFormTwo = () => {
           updateProfileStatus();
           setTimeout(function() {
             setOpenPopUp(false);
-            // navigate(`/talent-profile?${queryString}`);
+            navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
+              state: { talentData: talentData },
+            });
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -200,7 +237,7 @@ const AdultFormTwo = () => {
                 }}
                 src={btLogo}
               ></img>
-              <div className="step-text">Step 3 of 3</div>
+              <div className="step-text">Step 4 of 4</div>
             </div>
             <button
               type="button"
@@ -215,19 +252,24 @@ const AdultFormTwo = () => {
               <div className="adult-form-wrapper row ml-0 mr-0">
                 <div className="col-md-4 col-lg-3">
                   <div className="fixImgs">
-                    <img src={adultsBanner} className="kids-image-sticky " alt="img" />
+                    <img
+                      src={adultsBanner}
+                      className="kids-image-sticky "
+                      alt="img"
+                    />
                   </div>
                 </div>
                 <div className="adult-main remvSpc col-md-8 col-lg-9">
                   <div className="adults-form-title">Complete your Profile</div>
+                  <div className="adults-titles">Services (Optional)</div>
                   <div>
                     {inputs.map((input, serviceIndex) => (
                       <>
-                        <div className="adults-titles">
+                        {/* <div className="adults-titles">
                           {inputs.length > 1 && serviceIndex === 0
                             ? "Services"
                             : `Services (set ${serviceIndex + 1})`}
-                        </div>
+                        </div> */}
                         <div key={serviceIndex}>
                           <div className="">
                             <div className="">
@@ -254,44 +296,40 @@ const AdultFormTwo = () => {
                           </div>
                           <div className="kids-form-row row">
                             <div className="kids-form-section col-md-6 mb-3">
-                           
-                                <label className="form-label">Amount</label>
-                                <input
-                                  type="number"
-                                  name="amount"
-                                  value={input.serviceAmount}
-                                  onChange={(e) =>
-                                    handleInputChange(
-                                      serviceIndex,
-                                      "serviceAmount",
-                                      e.target.value
-                                    )
-                                  }
-                                  className="form-control"
-                                  placeholder="Enter Amount In $"
-                                ></input>
-                            
+                              <label className="form-label">Amount</label>
+                              <input
+                                type="number"
+                                name="amount"
+                                value={input.serviceAmount}
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    serviceIndex,
+                                    "serviceAmount",
+                                    e.target.value
+                                  )
+                                }
+                                className="form-control"
+                                placeholder="Enter Amount In $"
+                              ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">
-                             
-                                <label className="form-label">
-                                  Duration (Weeks/Months)
-                                </label>
-                                <input
-                                  type="text"
-                                  name="duration"
-                                  value={input.serviceDuration}
-                                  onChange={(e) =>
-                                    handleInputChange(
-                                      serviceIndex,
-                                      "serviceDuration",
-                                      e.target.value
-                                    )
-                                  }
-                                  className="form-control"
-                                  placeholder="Duration (Weeks/Months)"
-                                ></input>
-                              
+                              <label className="form-label">
+                                Duration (Weeks/Months)
+                              </label>
+                              <input
+                                type="text"
+                                name="duration"
+                                value={input.serviceDuration}
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    serviceIndex,
+                                    "serviceDuration",
+                                    e.target.value
+                                  )
+                                }
+                                className="form-control"
+                                placeholder="Duration (Weeks/Months)"
+                              ></input>
                             </div>
                           </div>
                           <div className="adults-titles">Features</div>
@@ -437,7 +475,7 @@ const AdultFormTwo = () => {
                     ))}
                   </div>
 
-                  <div className="add-more-services">
+                  <div className="add-more-services mb-5">
                     <div
                       onClick={handleAddMore}
                       className="add-more-services-btn"
@@ -453,7 +491,7 @@ const AdultFormTwo = () => {
             <button
               type="button"
               onClick={(e) => {
-                navigate("/adult-signup-basic-details");
+                navigate(`/adult-signup-files-details?${queryString}`);
               }}
               className="step-back"
             >

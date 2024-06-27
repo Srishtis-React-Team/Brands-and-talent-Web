@@ -289,8 +289,10 @@ const AdultSignup = () => {
 
   const handleCondition = (e) => {
     if (e == "terms") {
+      navigate("/terms-conditions");
     }
     if (e == "privacy") {
+      navigate("/privacy-policy");
     }
     if (e == "community") {
       navigate("/community-guidelines");
@@ -322,7 +324,6 @@ const AdultSignup = () => {
         <div
           className="dialog-body"
           style={{
-        
             height: "unset",
           }}
         >

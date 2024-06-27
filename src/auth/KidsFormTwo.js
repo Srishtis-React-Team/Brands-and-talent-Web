@@ -110,167 +110,183 @@ const KidsFormTwo = () => {
           ></button>
         </div>
 
-
         <div className="dialog-body">
           <div className="container">
             <div className="subscribe-form">
-
               <div className="subscriptions-wrapper">
                 {pricingList.length && (
                   <div className="plans-section kids-pan-section">
                     <div className="row">
-                    {pricingList.map((item, index) => {
-                      return (
-                        <div className="col-md-4">
-                          <div
-                            className={
-                              index === 0
-                                ? "plans-wrapper disabled-plan"
-                                : "plans-wrapper"
-                            }
-                            style={{
-                              border:
-                                selectedPlan && selectedIndex === index
-                                  ? "4px solid #c2114b"
-                                  : "none",
-                            }}
-                          >
-<div className="priceHeight">
-                          
-                            <div className="plan-name">{item.planname}
-                              <div className="subcribe-gift">{item.gift}</div>
-                            </div>
-                          
-
-                            {item.planname == "Basic" && (
-                              <>
-                                <div className="plan-value">Free</div>
-                                <div className="plan-validity">Forever</div>
-                              </>
-                            )}
-                            {item.plan_type_annual.length >= 1 && (
-                              <>
-                                <div className="annual-wrapper">
-                                  <input
-                                    type="radio"
-                                    name="click"
-                                    value="save"
-                                    CHECKED
-                                    onChange={(event) =>
-                                      handleRadioChange(event, item, "anual")
-                                    }
-                                    id={item.planname}
+                      {pricingList.map((item, index) => {
+                        return (
+                          <div className="col-md-4">
+                            <div
+                              className={
+                                index == 0
+                                  ? "plans-wrapper free-plans"
+                                  : "" || index == 1
+                                  ? "plans-wrapper pro-plans"
+                                  : "" || index == 2
+                                  ? "plans-wrapper premium-plans"
+                                  : ""
+                              }
+                            >
+                              <div className="priceHeight">
+                                <div className="plan-name">
+                                  {item.planname}
+                                  <div
                                     className={
-                                      item.planname == "Pro (Popular)"
-                                        ? "pro-checkbox"
-                                        : "premium-checkbox"
+                                      index == 1
+                                        ? "pro-gift giftSize"
+                                        : "" || index == 2
+                                        ? "premium-gift giftSize"
+                                        : ""
                                     }
-                                  ></input>
-                                  <label for={item.planname} className="annual">
-                                    {item.period}
-                                  </label>
-                                </div> 
-                                
-                                {item.plan_type_annual.map((item) => {
+                                  >
+                                    {item.gift}
+                                  </div>
+                                </div>
+
+                                {item.planname == "Basic" && (
+                                  <>
+                                    <div className="plan-value">Free</div>
+                                    <div className="plan-validity">Forever</div>
+                                  </>
+                                )}
+                                {item.planname == "Free For ever" && (
+                                  <>
+                                    <div className="plan-value">Free</div>
+                                    <div className="plan-validity">Forever</div>
+                                  </>
+                                )}
+
+                                {item.plan_type_annual.length >= 1 && (
+                                  <>
+                                    <div className="annual-main-wrapper">
+                                      <div className="annual-wrapper">
+                                        <input
+                                          type="radio"
+                                          name="click"
+                                          value="save"
+                                          CHECKED
+                                          id={item.planname}
+                                          className={
+                                            item.planname == "Pro (Popular)"
+                                              ? "pro-checkbox"
+                                              : "premium-checkbox"
+                                          }
+                                        ></input>
+                                        <label
+                                          for={item.planname}
+                                          className="annual"
+                                        >
+                                          {item.period}
+                                        </label>
+                                      </div>
+                                      <div className="per-value">
+                                        {item.annualTotalAmount}
+                                      </div>
+                                    </div>
+
+                                    {item.plan_type_annual.map((item) => {
+                                      return (
+                                        <>
+                                          <div className="plan-amounts">
+                                            <div className="value-wrapper">
+                                              {/* <div className="previous-value">
+                                          {item.beforeValue}
+                                        </div> */}
+                                              <div className="after-value">
+                                                {item.afterDiscount}
+                                              </div>
+                                            </div>
+                                            {/* <div className="per-value">
+                                        {item.amount}
+                                      </div> */}
+                                          </div>
+                                          <div className="border-bottom"></div>
+                                        </>
+                                      );
+                                    })}
+                                    <div className="monthly-wrapper pt-3">
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="click"
+                                          value="save"
+                                          CHECKED
+                                          id={item._id}
+                                          className={
+                                            item.planname == "Pro (Popular)"
+                                              ? "pro-checkbox"
+                                              : "premium-checkbox"
+                                          }
+                                        ></input>
+                                        <label
+                                          for={item._id}
+                                          className="monthly"
+                                        >
+                                          Monthly
+                                        </label>
+                                      </div>
+                                      {item.plan_type_monthly.map((item) => {
+                                        return (
+                                          <>
+                                            <div className="monthly-amount">
+                                              {item.amount}
+                                            </div>
+                                          </>
+                                        );
+                                      })}
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                              <div
+                                className={
+                                  index == 0
+                                    ? "choose-btn free-btn"
+                                    : "" || index == 1
+                                    ? "choose-btn pro-btn"
+                                    : "" || index == 2
+                                    ? "choose-btn premium-btn"
+                                    : ""
+                                }
+                                onClick={() => choosePlan()}
+                              >
+                                Choose plan
+                              </div>
+                              <div className="include">What's Included</div>
+                              <div className="included-things">
+                                {item.data.map((item) => {
                                   return (
                                     <>
-                                      <div className="plan-amounts">
-                                        <div className="value-wrapper">
-                                          <div className="previous-value">
-                                            {item.beforeValue}
-                                          </div>
-                                          <div className="after-value">
-                                            {item.afterDiscount}
-                                          </div>
+                                      <div className="plan-content">
+                                        <div className="icPrice">
+                                          <i class="bi bi-check-circle-fill"></i>
                                         </div>
-                                        <div className="per-value">
-                                          {item.amount}
+                                        {/* <img
+                                      className="listIc"
+                                      src={greenTick}
+                                      alt=""
+                                    /> */}
+                                        <div className="plan-content-text">
+                                          {item}
                                         </div>
                                       </div>
-                                      <div className="border-bottom"></div>
                                     </>
                                   );
                                 })}
-                                <div className="monthly-wrapper pt-3">
-                                  <div>
-                                    <input
-                                      type="radio"
-                                      name="click"
-                                      value="save"
-                                      CHECKED
-                                      id={item._id}
-                                      onChange={(event) =>
-                                        handleRadioChange(event, item, "monthly")
-                                      }
-                                      className={
-                                        item.planname == "Pro (Popular)"
-                                          ? "pro-checkbox"
-                                          : "premium-checkbox"
-                                      }
-                                    ></input>
-                                    <label for={item._id} className="monthly">
-                                      Monthly
-                                    </label>
-                                  </div>
-                                  {item.plan_type_monthly.map((item) => {
-                                    return (
-                                      <>
-                                        <div className="monthly-amount">
-                                          {item.amount}
-                                        </div>
-                                      </>
-                                    );
-                                  })}
-                                </div>
-                              </>
-                            )}
-
-</div>
-
-                            <button
-                              className={
-                                index === 0
-                                  ? "choose-btn disabled-plan first-plan-choose"
-                                  : "choose-btn"
-                              }
-                              onClick={(e) => {
-                                subscriptionPlan(index);
-                              }}
-                              disabled={index === 0}
-                            >
-                              Choose plan
-                            </button>
-                            <div
-                              className={
-                                index === 0 ? "include disabled-plan" : "include"
-                              }
-                            >
-                              WHAT'S INCLUDED
+                              </div>
+                              {/* <div className="learn-btn">Learn More</div> */}
                             </div>
-                            <div className="included-things">
-                              {item.data.map((item) => {
-                                return (
-                                  <>
-                                    <div className="plan-content">
-                                      <div class="icPrice"><i class="bi bi-check-circle-fill"></i></div>
-                                      <div className="plan-content-text">
-                                        {item}
-                                      </div>
-                                    </div>
-                                  </>
-                                );
-                              })}
-                            </div>
-                            {/* <div className="learn-btn">Learn More</div> */}
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
               </div>
-
             </div>
           </div>
         </div>

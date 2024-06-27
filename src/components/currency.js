@@ -1,29 +1,44 @@
 const currencyList = [
   {
-    title: "USD - United States Dollar",
-    value: "USD",
-  },
-  {
-    title: "CAD - Canadian Dollar",
-    value: "CAD",
-  },
-  {
-    title: "GBP - British Pound Sterling",
-    value: "GBP",
+    title: "AED - United Arab Emirates Dirham",
+    value: "AED",
   },
   {
     title: "AUD - Australian Dollar",
     value: "AUD",
   },
   {
+    title: "CAD - Canadian Dollar",
+    value: "CAD",
+  },
+  {
+    title: "CNY - Chinese Yuan",
+    value: "CNY",
+  },
+  {
     title: "EUR - Euro",
     value: "EUR",
+  },
+  {
+    title: "GBP - British Pound Sterling",
+    value: "GBP",
+  },
+  {
+    title: "HKD - Hong Kong Dollar",
+    value: "HKD",
   },
   {
     title: "INR - Indian Rupees",
     value: "INR",
   },
-
+  {
+    title: "JPY - Japanese Yen",
+    value: "JPY",
+  },
+  {
+    title: "PHP - Philippine Peso",
+    value: "PHP",
+  },
   {
     title: "RUB - Russian Ruble",
     value: "RUB",
@@ -33,24 +48,8 @@ const currencyList = [
     value: "THB",
   },
   {
-    title: "PHP - Philippine Peso",
-    value: "PHP",
-  },
-  {
-    title: "HKD - Hong Kong Dollar",
-    value: "HKD",
-  },
-  {
-    title: "CNY - Chinese Yuan",
-    value: "CNY",
-  },
-  {
-    title: "AED - United Arab Emirates Dirham",
-    value: "AED",
-  },
-  {
-    title: "JPY - Japanese Yen",
-    value: "JPY",
+    title: "USD - United States Dollar",
+    value: "USD",
   },
 ];
 

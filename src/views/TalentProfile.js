@@ -92,6 +92,7 @@ const TalentProfile = () => {
   const [features, showFeatures] = useState(false);
   const [reviews, setReviews] = useState(false);
   const [CV, showCV] = useState(false);
+  const [socialMedia, showSocialMedia] = useState(false);
   const [test, setTest] = useState("");
   const [data, setData] = useState([]);
   const [talentData, setTalentData] = useState([]);
@@ -359,6 +360,11 @@ const TalentProfile = () => {
     } else {
       showCV(false);
     }
+    if (e == "social-media") {
+      showSocialMedia(true);
+    } else {
+      showSocialMedia(false);
+    }
   }
 
   const [selectedPDF, setSelectedPDF] = useState(null);
@@ -547,11 +553,11 @@ const TalentProfile = () => {
       <section>
         <div className="popular-header">
           <div className="header-title">Profile</div>
-          <div className="header-menu">
+          {/* <div className="header-menu">
             <div>Home</div>
             <div>Talents</div>
             <div>Profile</div>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -663,11 +669,13 @@ const TalentProfile = () => {
                                 ></img>
                               </div>
                               <div className="contSect">
-                                {talentData &&
-                                  talentData.profession &&
-                                  talentData.profession.map((item, index) => (
-                                    <span key={index}>{item.value}</span>
-                                  ))}
+                                {talentData && talentData.profession && (
+                                  <span>
+                                    {talentData.profession
+                                      .map((item) => item.value)
+                                      .join(", ")}
+                                  </span>
+                                )}
                               </div>
                             </div>
                           </>
@@ -821,11 +829,8 @@ const TalentProfile = () => {
                         <img src={whitePlus}></img>
                         <div>Invite to apply</div>
                       </div>
-                      <div
-                        className="invite-btn msgBtn"
-                        onClick={() => messageNow()}
-                      >
-                        <i class="bi bi-chat"></i>
+                      <div className="invite-btn" onClick={() => messageNow()}>
+                        <i class="bi bi-chat chat-icon-profile"></i>
                         <div className="message-now-text">Message Now</div>
                       </div>
                     </>
@@ -1003,6 +1008,45 @@ const TalentProfile = () => {
 
                       <div
                         className={
+                          features
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("features");
+                        }}
+                      >
+                        Features
+                      </div>
+
+                      <div
+                        className={
+                          reviews
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("reviews");
+                        }}
+                      >
+                        Reviews
+                      </div>
+
+                      <div
+                        className={
+                          CV
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("CV");
+                        }}
+                      >
+                        CV
+                      </div>
+
+                      <div
+                        className={
                           services
                             ? "active-tab individual-talent-tab"
                             : "individual-talent-tab"
@@ -1016,39 +1060,15 @@ const TalentProfile = () => {
 
                       <div
                         className={
-                          features
+                          socialMedia
                             ? "active-tab individual-talent-tab"
                             : "individual-talent-tab"
                         }
                         onClick={(e) => {
-                          handleForms("features");
+                          handleForms("social-media");
                         }}
                       >
-                        Features
-                      </div>
-                      <div
-                        className={
-                          reviews
-                            ? "active-tab individual-talent-tab"
-                            : "individual-talent-tab"
-                        }
-                        onClick={(e) => {
-                          handleForms("reviews");
-                        }}
-                      >
-                        Reviews
-                      </div>
-                      <div
-                        className={
-                          CV
-                            ? "active-tab individual-talent-tab"
-                            : "individual-talent-tab"
-                        }
-                        onClick={(e) => {
-                          handleForms("CV");
-                        }}
-                      >
-                        CV
+                        Social Media Postes
                       </div>
                     </div>
 
@@ -1380,6 +1400,11 @@ const TalentProfile = () => {
                       {services && (
                         <>
                           <ServicesCarousel talentData={talentData} />
+                        </>
+                      )}
+                      {socialMedia && (
+                        <>
+                          <CardCarousel />
                         </>
                       )}
                       {features && (

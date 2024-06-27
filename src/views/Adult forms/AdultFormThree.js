@@ -11,8 +11,44 @@ import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import PopUp from "../../components/PopUp";
 import "../../assets/css/talent-dashboard.scss";
+import CurrentUser from "../../CurrentUser";
 
 const AdultFormThree = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
+
+  const [talentData, setTalentData] = useState();
+
+  useEffect(() => {
+    if (currentUserId) {
+      getTalentById();
+    }
+  }, [currentUserId]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "getTalentById");
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+
   const [profileFile, setProfileFile] = useState(null);
   const btLogo = require("../../assets/images/LOGO.jpg");
   const [loader, setLoader] = useState(false);
@@ -112,14 +148,6 @@ const AdultFormThree = () => {
       image: profileFile,
       cv: resumeFile,
       portfolio: portofolioFile,
-      videosAndAudios: videoAUdioFile,
-      instaFollowers: instagramFollowers,
-      tiktokFollowers: tiktoksFollowers,
-      twitterFollowers: xtwitterFollowers,
-      youtubeFollowers: youtubesFollowers,
-      facebookFollowers: facebookFollowers,
-      linkedinFollowers: linkedinFollowers,
-      threadsFollowers: threadsFollowers,
       idType: idType,
       verificationId: verificationID,
       childAboutYou: aboutYou,
@@ -134,7 +162,16 @@ const AdultFormThree = () => {
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/adult-signup-service-details?${queryString}`);
+            if (talentData?.planName == "Basic") {
+              navigate(
+                `/talent-profile/${talentData.preferredChildFirstname}`,
+                {
+                  state: { talentData: talentData },
+                }
+              );
+            } else {
+              navigate(`/adult-signup-service-details?${queryString}`);
+            }
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -294,6 +331,27 @@ const AdultFormThree = () => {
   };
 
   const uploadFile = async (fileData) => {
+    const planLimits = {
+      Basic: 5,
+      Pro: 15,
+      Premium: Infinity, // Unlimited photos
+    };
+
+    const userPlan = talentData?.planName;
+    const maxPhotos = planLimits[userPlan] || 0;
+
+    if (portofolioFile.length >= maxPhotos) {
+      setMessage(
+        `You can only upload up to ${maxPhotos} photos as a ${userPlan} member.`
+      );
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 3000);
+
+      return;
+    }
+
     setLoader(true);
     const params = new FormData();
     params.append("file", fileData);
@@ -457,6 +515,26 @@ const AdultFormThree = () => {
   };
 
   const handleAddUrl = () => {
+    const planLimits = {
+      Basic: 2,
+      Pro: 5,
+      Premium: Infinity, // Unlimited URLs
+    };
+
+    const userPlan = talentData?.planName;
+    const maxUrls = planLimits[userPlan] || 0;
+
+    if (urls.length >= maxUrls) {
+      setMessage(
+        `You can only add up to ${maxUrls} URLs as a ${userPlan} member.`
+      );
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 3000);
+      return;
+    }
+
     if (videoUrl.trim() !== "") {
       setUrls([...urls, videoUrl]);
       console.log([...urls, videoUrl], "handleAddUrl");
@@ -490,7 +568,7 @@ const AdultFormThree = () => {
                 }}
                 src={btLogo}
               ></img>
-              <div className="step-text">Step 2 of 3</div>
+              <div className="step-text">Step 3 of 4</div>
             </div>
             <button
               type="button"
@@ -539,6 +617,7 @@ const AdultFormThree = () => {
                       Drag and drop your Profile Photo here.
                     </div>
                   </div>
+
                   {profileFile && (
                     <>
                       <div className="uploaded-file-wrapper">
@@ -654,87 +733,92 @@ const AdultFormThree = () => {
                     </div>
                   </div>
 
-                  {portofolioFile && (
-                    <>
-                      {portofolioFile.map((item, index) => {
-                        return (
-                          <>
-                            <div key={index} className="uploaded-file-wrapper">
-                              <div className="file-section">
-                                {item.type === "image" && (
-                                  <div className="fileType">
-                                    <img src={imageType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "audio" && (
-                                  <div className="fileType">
-                                    <img src={audiotype} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "video" && (
-                                  <div className="fileType">
-                                    <img src={videoType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "document" && (
-                                  <div className="fileType">
-                                    <img src={docsIcon} alt="" />
-                                  </div>
-                                )}
-                                <div className="fileName">{item.title}</div>
-                              </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
+                  <div className="uploaded-file-wrapper-main">
+                    {portofolioFile && (
+                      <>
+                        {portofolioFile.map((item, index) => {
+                          return (
+                            <>
+                              <div
+                                key={index}
+                                className="uploaded-file-wrapper"
+                              >
+                                <div className="file-section">
+                                  {item.type === "image" && (
+                                    <div className="fileType">
+                                      <img src={imageType} alt="" />
+                                    </div>
+                                  )}
+                                  {item.type === "audio" && (
+                                    <div className="fileType">
+                                      <img src={audiotype} alt="" />
+                                    </div>
+                                  )}
+                                  {item.type === "video" && (
+                                    <div className="fileType">
+                                      <img src={videoType} alt="" />
+                                    </div>
+                                  )}
+                                  {item.type === "document" && (
+                                    <div className="fileType">
+                                      <img src={docsIcon} alt="" />
+                                    </div>
+                                  )}
+                                  <div className="fileName">{item.title}</div>
                                 </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="dropdownMenuButton"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="dropdownMenuButton"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleView(item)}
-                                          id="view"
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() =>
-                                            handlePortofolioDelete(item)
-                                          }
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
+                                <div className="file-options">
+                                  <div className="sucess-tick">
+                                    <img src={greenTickCircle} alt="" />
+                                  </div>
+                                  <div className="option-menu">
+                                    <div className="dropdown">
+                                      <img
+                                        onClick={() =>
+                                          setShowOptions(!showOptions)
+                                        }
+                                        src={elipsis}
+                                        alt=""
+                                        className="dropdown-toggle elipsis-icon"
+                                        type="button"
+                                        id="dropdownMenuButton"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                      />
+                                      <ul
+                                        className="dropdown-menu"
+                                        aria-labelledby="dropdownMenuButton"
+                                      >
+                                        <li>
+                                          <a
+                                            className="dropdown-item"
+                                            onClick={() => handleView(item)}
+                                            id="view"
+                                          >
+                                            View
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a
+                                            className="dropdown-item"
+                                            onClick={() =>
+                                              handlePortofolioDelete(item)
+                                            }
+                                            id="delete"
+                                          >
+                                            Delete
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </>
-                  )}
+                            </>
+                          );
+                        })}
+                      </>
+                    )}
+                  </div>
 
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
@@ -1063,219 +1147,6 @@ const AdultFormThree = () => {
                       )}
                     </div>
                   </div>
-
-                  <div className="adults-titles">
-                    Explore Your Social Media Presence
-                  </div>
-
-                  <div className="explore-info">
-                    If you want to display your actual follower count, please
-                    connect with your social media. Otherwise, manually enter
-                    your followers count
-                  </div>
-
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={instagram} alt="" />
-                          <div className="media-text">Instagram</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={fbLogo} alt="" />
-                          <div className="media-text">FaceBook</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={tikTok} alt="" />
-                          <div className="media-text">TikTok</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={linkdin} alt="" />
-                          <div className="media-text">Linkedin</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={xTwitter} alt="" />
-                          <div className="media-text">Twitter</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
-                          <div className="media-text">Threads</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
-                          <div className="media-text">Threads</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="Or-seperator">Or</div>
-
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={instagram} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setInstagramFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={fbLogo} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setfacebookFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={tikTok} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setTiktoksFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={linkdin} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setlinkedinFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={xTwitter} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setXtwitterFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setThreadsFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={youTube} alt="" />
-                          <div className="media-text">
-                            <input
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setYoutubesFollowers(e.target.value);
-                              }}
-                              placeholder="Enter Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="kids-form-title">
                     <span>ID Verification</span>
                   </div>
@@ -1285,7 +1156,7 @@ const AdultFormThree = () => {
                     Verified Talent! Submit your government-issued ID to get a
                     blue verification sticker on your profile. Your ID will be
                     permanently deleted from our database immediately after
-                    verification, ensuring your data privacy.
+                    verification, ensuring your data privacy. Stand out and
                   </div>
 
                   <div className="kids-form-row mb-5">
@@ -1299,13 +1170,13 @@ const AdultFormThree = () => {
                             setIdType(e.target.value);
                           }}
                         >
-                          <option defaultValue value="universal_id">
-                            Universal ID
+                          <option defaultValue value="National ID Card">
+                            National ID Card
                           </option>
-                          <option defaultValue value="licence">
-                            Licence
+                          <option defaultValue value="Driving License">
+                            Driving License
                           </option>
-                          <option value="passport">PassPort</option>
+                          <option value="Passport">Passport</option>
                         </select>
                       </div>
                     </div>
@@ -1335,7 +1206,10 @@ const AdultFormThree = () => {
                       {verificationID.map((item, index) => {
                         return (
                           <>
-                            <div key={index} className="uploaded-file-wrapper">
+                            <div
+                              key={index}
+                              className="uploaded-file-wrapper mb-5"
+                            >
                               <div className="file-section">
                                 {item.type === "image" && (
                                   <div className="fileType">
@@ -1412,7 +1286,7 @@ const AdultFormThree = () => {
                     </>
                   )}
 
-                  <div className="verification-status mb-5">Not Verified</div>
+                  {/* <div className="verification-status mb-5">Not Verified</div> */}
                 </div>
               </div>
             </div>
@@ -1421,7 +1295,7 @@ const AdultFormThree = () => {
             <button
               type="button"
               onClick={(e) => {
-                navigate("/adult-signup-service-details");
+                navigate(`/adult-social-medias-details?${talentData?._id}`);
               }}
               className="step-back"
             >
