@@ -1345,7 +1345,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                     </div>
                     <div className="profession-section-cover">
                       <div className="kids-form-row row">
-                        <div className="kids-form-section col-md-6 mb-3">
+                        <div className="kids-form-section col-md-12 mb-3">
                           <label className="form-label pay-info">
                             Profession / Skills (Choose any 5)
                             <span className="mandatory">*</span>

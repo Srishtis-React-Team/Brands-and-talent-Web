@@ -756,7 +756,7 @@ const AdultFormOne = () => {
                   <div className="adults-form-title">Complete your Profile</div>{" "}
                   <div className="profession-section-cover">
                     <div className="row">
-                      <div className="kids-form-section col-md-6 mb-3">
+                      <div className="kids-form-section col-md-12 mb-3">
                         <label className="adults-titles kids-form-title mb-2">
                           Profession / Skills (Choose any 5){" "}
                           <span className="mandatory">*</span>
