@@ -44,7 +44,7 @@
   vertical-align: middle;
 }
 input[type="radio"].premium-checkbox {
-  accent-color: #af93006e;
+  accent-color: #a59021;
 
   height: 20px;
   width: 20px;
@@ -63,7 +63,7 @@ input[type="radio"].premium-checkbox {
 
 .premium-plans .icPrice {
   /* color: #106D3E;  */
-  color: #B59410;
+  color: #FFD700;
 }
 
 .free-plans .icPrice {
@@ -101,7 +101,7 @@ input[type="radio"].premium-checkbox {
 }
 
 .premium-plans {
-  border-top: 11px solid #B59410;
+  border-top: 11px solid #FFD700;
 }
 
 .plan-name {
@@ -197,7 +197,7 @@ input[type="radio"].premium-checkbox {
 }
 
 .premium-btn {
-  background: #B59410;
+  background: #FFD700;
 }
 .giftSize {
   text-align: center;
@@ -211,7 +211,7 @@ input[type="radio"].premium-checkbox {
   color: #9370db;
 }
 .premium-gift {
-  color: #B59410;
+  color: #FFD700;
 }
 
 .save-plan {

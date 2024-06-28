@@ -2732,7 +2732,7 @@ const CreateJobs = () => {
                                 {selectedOption === "paid_collaboration" && (
                                   <div className="compensation-row row ">
                                     <div className="kids-form-section col-md-3 mb-3">
-                                      <div className=" compensation-right-space">
+                                      <div className=" ">
                                         <label className="form-label">
                                           Pay Type
                                         </label>
@@ -2821,7 +2821,7 @@ const CreateJobs = () => {
                                     )}
 
                                     <div className="kids-form-section col-md-3 mb-3">
-                                      <div className="compensation-right-space">
+                                      <div className="">
                                         <label className="form-label">
                                           Currency
                                         </label>
@@ -2884,7 +2884,7 @@ const CreateJobs = () => {
                                 {selectedOption === "product_gift" && (
                                   <div className="compensation-row row">
                                     <div className="kids-form-section col-md-3 mb-3">
-                                      <div className=" compensation-right-space">
+                                      <div className="">
                                         <label className="form-label">
                                           Product/Gift Name
                                         </label>
@@ -2918,7 +2918,7 @@ const CreateJobs = () => {
                                     </div>
 
                                     <div className="kids-form-section col-md-3 mb-3">
-                                      <div className="compensation-right-space">
+                                      <div className="">
                                         <label className="form-label">
                                           Currency
                                         </label>
@@ -2981,8 +2981,8 @@ const CreateJobs = () => {
                                   "paid_collaboration_and_gift" && (
                                   <>
                                     <div className="compensation-row row">
-                                      <div className="kids-form-section col-md-2 mb-3">
-                                        <div className=" compensation-right-space">
+                                      <div className="kids-form-section col-md-3 mb-3">
+                                        <div className="">
                                           <label className="form-label">
                                             Pay Type
                                           </label>
@@ -3009,7 +3009,7 @@ const CreateJobs = () => {
                                       </div>
                                       {type === "exact_pay" && (
                                         <>
-                                          <div className="kids-form-section col-md-2 mb-3">
+                                          <div className="kids-form-section col-md-3 mb-3">
                                             <div className="">
                                               <label className="form-label">
                                                 Exact Pay
@@ -3031,7 +3031,7 @@ const CreateJobs = () => {
                                       )}
                                       {type == "pay_range" && (
                                         <>
-                                          <div className="kids-form-section col-md-2 mb-3">
+                                          <div className="kids-form-section col-md-3 mb-3">
                                             <div className="">
                                               <label className="form-label">
                                                 Minimum Pay
@@ -3049,7 +3049,7 @@ const CreateJobs = () => {
                                               </div>
                                             </div>
                                           </div>
-                                          <div className="kids-form-section col-md-2 mb-3">
+                                          <div className="kids-form-section col-md-3 mb-3">
                                             <div className="">
                                               <label className="form-label">
                                                 Maximum Pay
@@ -3069,8 +3069,8 @@ const CreateJobs = () => {
                                           </div>
                                         </>
                                       )}
-                                      <div className="kids-form-section col-md-2 mb-3">
-                                        <div className=" compensation-right-space">
+                                      <div className="kids-form-section col-md-3 mb-3">
+                                        <div className="">
                                           <label className="form-label">
                                             Currency
                                           </label>
@@ -3099,7 +3099,7 @@ const CreateJobs = () => {
                                           </select>
                                         </div>
                                       </div>
-                                      <div className="kids-form-section col-md-2 mb-3">
+                                      <div className="kids-form-section col-md-3 mb-3">
                                         <div className="">
                                           <label className="form-label">
                                             Frequency
@@ -3131,8 +3131,8 @@ const CreateJobs = () => {
                                       </div>
                                     </div>
                                     <div className="compensation-row row">
-                                      <div className="kids-form-section col-md-2 mb-3">
-                                        <div className=" compensation-right-space">
+                                      <div className="kids-form-section col-md-3 mb-3">
+                                        <div className="">
                                           <label className="form-label">
                                             Product/Gift Name
                                           </label>
@@ -3145,7 +3145,7 @@ const CreateJobs = () => {
                                           ></input>
                                         </div>
                                       </div>
-                                      <div className="kids-form-section col-md-2 mb-3">
+                                      <div className="kids-form-section col-md-3 mb-3">
                                         <div className="">
                                           <label className="form-label">
                                             Product/Gift Value
@@ -3164,8 +3164,8 @@ const CreateJobs = () => {
                                         </div>
                                       </div>
 
-                                      <div className="kids-form-section col-md-2 mb-3">
-                                        <div className=" compensation-right-space">
+                                      <div className="kids-form-section col-md-3 mb-3">
+                                        <div className=" ">
                                           <label className="form-label">
                                             Currency
                                           </label>
@@ -3194,7 +3194,7 @@ const CreateJobs = () => {
                                           </select>
                                         </div>
                                       </div>
-                                      <div className="kids-form-section col-md-2 mb-3">
+                                      <div className="kids-form-section col-md-3 mb-3">
                                         <div className="">
                                           <label className="form-label">
                                             Frequency

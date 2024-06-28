@@ -358,9 +358,13 @@ select {
   justify-content: space-around;
 }
 
-.creator-age-wrapper > input:nth-child(1) {
-  margin-right: 5px;
+.posRel {
+  position: relative;
 }
+
+/* .creator-age-wrapper > input:nth-child(1) {
+  margin-right: 5px;
+} */
 
 .creator-age-main {
   justify-content: end;
