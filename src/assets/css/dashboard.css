@@ -430,18 +430,21 @@ a {
   background-color: #fff;
   border-radius: 30px;
   padding: 5px;
-
   bottom: 10px;
   top: inherit;
-  left: 5px;
-
+  /* left: 5px; */
+  right: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
-  cursor: pointer;
+  /* cursor: pointer; */
   width: 65px;
   height: 20px;
+}
+
+.cursor {
+  cursor: pointer;
 }
 
 .rating > img {

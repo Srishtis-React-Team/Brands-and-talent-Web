@@ -643,7 +643,10 @@ const TalentProfile = () => {
                           <img className="talent-logo" src={pinkStar}></img>
                         </div>
                         <div className="contSect">
-                          <span>{talentData?.averageStarRatings}</span>
+                          <span>
+                            {talentData?.averageStarRatings} ({" "}
+                            {talentData?.totalReviews} ratings)
+                          </span>
                           {/* <span>{talentData?.averageStarRatings} (0 jobs completed)</span> */}
                         </div>
                       </div>
@@ -1008,6 +1011,19 @@ const TalentProfile = () => {
 
                       <div
                         className={
+                          services
+                            ? "active-tab individual-talent-tab"
+                            : "individual-talent-tab"
+                        }
+                        onClick={(e) => {
+                          handleForms("services");
+                        }}
+                      >
+                        Services
+                      </div>
+
+                      <div
+                        className={
                           features
                             ? "active-tab individual-talent-tab"
                             : "individual-talent-tab"
@@ -1045,20 +1061,7 @@ const TalentProfile = () => {
                         CV
                       </div>
 
-                      <div
-                        className={
-                          services
-                            ? "active-tab individual-talent-tab"
-                            : "individual-talent-tab"
-                        }
-                        onClick={(e) => {
-                          handleForms("services");
-                        }}
-                      >
-                        Services
-                      </div>
-
-                      <div
+                      {/* <div
                         className={
                           socialMedia
                             ? "active-tab individual-talent-tab"
@@ -1068,8 +1071,8 @@ const TalentProfile = () => {
                           handleForms("social-media");
                         }}
                       >
-                        Social Media Postes
-                      </div>
+                        Social Media Posts
+                      </div> */}
                     </div>
 
                     <div className="talent-all-details-wrapper">
@@ -1091,17 +1094,27 @@ const TalentProfile = () => {
                               <PhotosCarousel photosList={photosList} />
                             )}
                           </div>
+
                           <div className="portofolio-section">
-                            <div className="portofolio-title">
+                            <div className="portofolio-title mt-4">
                               Social media posts
                             </div>
                             {/* <div className="view-all">View All</div> */}
                           </div>
                           <CardCarousel />
+
                           <div className="portofolio-section">
                             <div className="portofolio-title">Reviews</div>
-                            {/* <div className="view-all">View All</div> */}
+                            <div
+                              className="view-all"
+                              onClick={(e) => {
+                                handleForms("reviews");
+                              }}
+                            >
+                              View All
+                            </div>
                           </div>
+
                           <div className="reviews-section">
                             <div className="rating-talent">
                               <div className="num">
@@ -1119,30 +1132,13 @@ const TalentProfile = () => {
                                 was required and everything was effortless.
                               </div>
                             </div>
-                            <div className="booked-btn">
+                            {/* <div className="booked-btn">
                               <div className="wrapper">
                                 <img src={check}></img>
                               </div>
                               <div className="posted-jobs">24 Jobs Booked</div>
-                            </div>
+                            </div> */}
                           </div>
-
-                          {talentData && talentData?.services?.length > 0 && (
-                            <>
-                              <div className="portofolio-section">
-                                <div className="portofolio-title">Services</div>
-                                <div
-                                  className="view-all"
-                                  onClick={(e) => {
-                                    handleForms("services");
-                                  }}
-                                >
-                                  View All
-                                </div>
-                              </div>
-                              <ServicesCarousel talentData={talentData} />
-                            </>
-                          )}
 
                           <div className="portofolio-section">
                             <div className="portofolio-title">
@@ -1204,6 +1200,23 @@ const TalentProfile = () => {
                               </div>
                             ))}
                           </div>
+
+                          {talentData && talentData?.services?.length > 0 && (
+                            <>
+                              <div className="portofolio-section">
+                                <div className="portofolio-title">Services</div>
+                                <div
+                                  className="view-all"
+                                  onClick={(e) => {
+                                    handleForms("services");
+                                  }}
+                                >
+                                  View All
+                                </div>
+                              </div>
+                              <ServicesCarousel talentData={talentData} />
+                            </>
+                          )}
 
                           {/* <div className="service-list-main">
                             {videoAudioList.map((item) => (
@@ -1280,6 +1293,7 @@ const TalentProfile = () => {
                           </div>
                         </>
                       )}
+
                       {photos && (
                         <div className="models-photos">
                           <section className="photos-gallery row padSpc">

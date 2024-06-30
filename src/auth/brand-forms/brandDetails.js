@@ -96,15 +96,13 @@ const BrandDetails = () => {
       )
         .then((resData) => {
           if (resData.data.status === true) {
-            console.log(resData.data);
+            console.log(resData.data, "brandetails");
             // setIsLoading(false);
             setMessage("Registered SuccessFully!");
             setTalentLocalStorage(resData.data.data);
-
             navigate("/brand-logo", {
-              state: { data: receivedData },
+              state: { data: resData.data.data },
             });
-
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);

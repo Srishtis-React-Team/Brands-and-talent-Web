@@ -33,6 +33,35 @@ const Header = ({ onData }) => {
   const [currentUser_type, setCurrentUserType] = useState("");
   const [talentData, setTalentData] = useState();
   const [talentId, setTalentId] = useState(null);
+
+  const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
+
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+    console.log(brandId, "brandId");
+    if (brandId) {
+      getBrand();
+    }
+  }, [brandId]);
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   console.log(searchPathOptions, "searchPathOptions");
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
@@ -192,9 +221,9 @@ const Header = ({ onData }) => {
             state: { talentData },
           });
         } else if (currentUser_type === "brand") {
-          // alert("navigate to brandprofile");
-
-          navigate(`/brand-dashboard`);
+          navigate(
+            `/brand-dashboard/${brandData?.brandName.replace(/\s+/g, "")}`
+          );
         }
       }
       if (menuItem === "edit") {

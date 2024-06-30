@@ -143,7 +143,7 @@ const BrandLogo = () => {
       };
       // setIsLoading(true);
       await ApiHelper.post(
-        `${API.editBrands}${receivedData?.brandUserId}`,
+        `${API.editBrands}${receivedData?.brand_id}`,
         formData
       )
         .then((resData) => {

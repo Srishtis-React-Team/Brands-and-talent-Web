@@ -3588,7 +3588,7 @@ const CreateJobs = () => {
                 )}
 
                 <div className="job-post-terms">
-                  By clicking Preview & Post , I agree that Brand / Client &
+                  By clicking Preview & Post , I agree that Brands / Client &
                   Talent may publish and distribute my job advertisement on its
                   site and through its distribution partners.
                 </div>

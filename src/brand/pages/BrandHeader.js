@@ -14,9 +14,9 @@ import { PopupContext } from "@mui/base/Unstable_Popup";
 import PopUp from "../../components/PopUp";
 import SearchHeaderComponent from "../../layout/SearchHeaderComponent";
 import CurrentUser from "../../CurrentUser";
-const BrandHeader = ({ toggleMenu, myState }) => {
+const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserType, avatarImage } = CurrentUser();
-
+  console.log(hideToggleButton, "hideToggleButton");
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.jpg");
   const model1 = require("../../assets/images/girl1.png");
@@ -146,7 +146,9 @@ const BrandHeader = ({ toggleMenu, myState }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "profile") {
-        navigate("/brand-dashboard");
+        navigate(
+          `/brand-dashboard/${brandData?.brandName.replace(/\s+/g, "")}`
+        );
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
@@ -186,12 +188,15 @@ const BrandHeader = ({ toggleMenu, myState }) => {
                   }}
                 />
               </div>
-              <div className="talent-menu" onClick={toggleMenu}>
-                <div className="telent-menubar">
-                  <i className="fa-solid fa-bars"></i>
-                </div>
-                {/* <div className="mydashboard font-styles">My Dashboard</div> */}
-              </div>
+              {!hideToggleButton && (
+                <>
+                  <div className="talent-menu" onClick={toggleMenu}>
+                    <div className="telent-menubar">
+                      <i className="fa-solid fa-bars"></i>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="rightPart">
