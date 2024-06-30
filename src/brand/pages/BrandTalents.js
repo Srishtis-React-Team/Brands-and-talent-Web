@@ -20,6 +20,7 @@ import languageOptions from "../../components/languages.js";
 import BrandHeader from "./BrandHeader.js";
 import BrandSideMenu from "./BrandSideMenu.js";
 import CurrentUser from "../../CurrentUser.js";
+import nationalitiesArray from "../../components/NationalitiesArray.js";
 const BrandTalents = () => {
   const {
     currentUserId,
@@ -81,7 +82,7 @@ const BrandTalents = () => {
   const [languages, setLanguages] = useState([]);
   const [maritalStatus, setMaritalStatus] = useState("");
   const [industry, setIndustry] = useState("");
-  const [nationality, setNationality] = useState("");
+  const [nationality, setNationality] = useState([]);
   const [fullName, setFullName] = useState("");
   const [featuresListSelect, selectFeaturesList] = useState([]);
   const [featuresList, setFeaturesList] = useState([]);
@@ -193,7 +194,7 @@ const BrandTalents = () => {
     setLanguages("");
     setMaritalStatus("");
     setIndustry("");
-    setNationality("");
+    setNationality([]);
     setFullName("");
     setFeature([]);
     // window.location.reload();
@@ -312,10 +313,8 @@ const BrandTalents = () => {
     } else {
       updatedValues.push({ label, value });
     }
+    console.log(updatedValues, "updatedValues");
     setFeature(updatedValues);
-    // Call your API here with the updated selectedValues array
-    // Example:
-    // callYourApi(selectedValues);
   };
 
   const getTalentList = async () => {
@@ -498,9 +497,19 @@ const BrandTalents = () => {
     setLanguages(selectedLanguages); // Update languages state with all selected languages
   };
 
-  const selectNationality = (event) => {
-    setNationality(event.target.value);
+  const selectNationality = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setNationality([]); // Clear the languages state
+      return;
+    }
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setNationality(selectedLanguages); // Update languages state with all selected languages
   };
+
   const selectMaritalStatus = (event) => {
     setMaritalStatus(event.target.value);
   };
@@ -639,10 +648,12 @@ const BrandTalents = () => {
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
   const rateTalent = (item) => {
-    setModalData(item);
-    const modalElement = document.getElementById("ratingModal");
-    const bootstrapModal = new window.bootstrap.Modal(modalElement);
-    bootstrapModal.show();
+    if (currentUserType === "brand") {
+      setModalData(item);
+      const modalElement = document.getElementById("ratingModal");
+      const bootstrapModal = new window.bootstrap.Modal(modalElement);
+      bootstrapModal.show();
+    }
   };
 
   const handleCloseModal = async (talent) => {
@@ -685,6 +696,18 @@ const BrandTalents = () => {
       });
     });
   });
+
+  const customStylesProfession = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "55px", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
+  };
 
   return (
     <>
@@ -950,21 +973,16 @@ const BrandTalents = () => {
                     <div className="keyword-wrapper">
                       <div className="filter-items">Nationality</div>
                       <div className="creators-filter-select inpWid">
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                          onChange={selectNationality}
-                          value={nationality}
-                        >
-                          <option value="" disabled selected>
-                            Select Nationality
-                          </option>
-                          {nationalityOptions.map((option, index) => (
-                            <option key={index} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
+                        <Select
+                          isMulti
+                          name="colors"
+                          options={nationalitiesArray}
+                          valueField="value"
+                          className="basic-multi-select"
+                          classNamePrefix="select"
+                          onChange={(value) => selectNationality(value)}
+                          styles={customStylesProfession}
+                        />
                       </div>
                     </div>
                     <div className="keyword-wrapper">
@@ -983,43 +1001,45 @@ const BrandTalents = () => {
                       </div>
                     </div>
 
-                    {/* {featuresListSelect && (
-                <>
-                  {featuresListSelect.map((item, index) => {
-                    return (
+                    {featuresListSelect && (
                       <>
-                        <div className="keyword-wrapper">
-                          <div className="filter-items"> {item.label}</div>
+                        {featuresListSelect.map((item, index) => {
+                          return (
+                            <>
+                              <div className="keyword-wrapper">
+                                <div className="filter-items">
+                                  {" "}
+                                  {item.label}
+                                </div>
 
-                          <div className="creators-filter-select">
-                            <select
-                              className="form-select features-select"
-                              aria-label="Default select example"
-                              onChange={(e) =>
-                                handleFeaturesChange(item.label, e.target.value)
-                              }
-                              value={features}
-                            >
-                              <option value="" disabled selected>
-                                {item.label}
-                              </option>
-                              {item.options.map((item, index) => {
-                                return (
-                                  <>
-                                    <option defaultValue value="1">
-                                      {item}
+                                <div className="creators-filter-select">
+                                  <select
+                                    style={{ width: "275px" }}
+                                    className="form-select features-select"
+                                    aria-label="Default select example"
+                                    onChange={(e) =>
+                                      handleFeaturesChange(
+                                        item.label,
+                                        e.target.value
+                                      )
+                                    }
+                                  >
+                                    <option value="" disabled selected>
+                                      {item.label}
                                     </option>
-                                  </>
-                                );
-                              })}
-                            </select>
-                          </div>
-                        </div>
+                                    {item.options.map((option, idx) => (
+                                      <option key={idx} value={option}>
+                                        {option}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })}
                       </>
-                    );
-                  })}
-                </>
-              )} */}
+                    )}
 
                     <div className="submit-buttons">
                       <div
@@ -1071,7 +1091,11 @@ const BrandTalents = () => {
 
                                     return (
                                       <div
-                                        className="rating"
+                                        className={`rating ${
+                                          currentUserType === "brand"
+                                            ? "cursor"
+                                            : ""
+                                        }`}
                                         onClick={() => rateTalent(item)}
                                       >
                                         {[...Array(totalStars)].map(

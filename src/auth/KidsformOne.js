@@ -45,6 +45,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [addressError, setAddressError] = useState(false);
   const [parentLastNameError, setparentLastNameError] = useState(false);
   const [parentEmailError, setparentEmailError] = useState(false);
+  const [completedError, setJobsCompletedError] = useState(false);
   const [talentPasswordError, settalentPasswordError] = useState(false);
   const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
     false
@@ -88,6 +89,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [age, setAge] = useState("");
+  const [completedJobs, setCompletedJobs] = useState("");
   const [selectedNationalityOptions, setSelectedNationalityOptions] = useState(
     []
   );
@@ -231,6 +233,11 @@ const KidsformOne = ({ sendDataToParent }) => {
   const selectGender = (event) => {
     setGender(event.target.value);
     setgenderError(false);
+  };
+
+  const handleJobsCompleted = (event) => {
+    setCompletedJobs(event.target.value);
+    setJobsCompletedError(false);
   };
 
   const selectLanguage = (selectedOptions) => {
@@ -1358,7 +1365,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                               options={professionList}
                               className="basic-multi-select"
                               classNamePrefix="select"
-                              placeholder="Search for Category”"
+                              placeholder="Search for Category"
                               onChange={handleProfessionChange}
                               styles={customStyles}
                               value={selectedProfessions}
@@ -1699,6 +1706,32 @@ const KidsformOne = ({ sendDataToParent }) => {
                         {dobError && (
                           <div className="invalid-fields">
                             Please Select Date Of Birth
+                          </div>
+                        )}
+                      </div>
+                      <div className="kids-form-section col-md-6 mb-3">
+                        <label className="form-label">
+                          Number Of Jobs Completed
+                          <span className="mandatory">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={completedJobs}
+                          onChange={(e) => {
+                            handleJobsCompleted(e);
+                            setJobsCompletedError(false);
+                          }}
+                          placeholder="Number of jobs completed"
+                        ></input>
+                        {parentFirstNameError && (
+                          <div className="invalid-fields">
+                            Please enter First Name
+                          </div>
+                        )}
+                        {firstNameLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters are allowed
                           </div>
                         )}
                       </div>

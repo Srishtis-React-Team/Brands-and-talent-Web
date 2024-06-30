@@ -190,7 +190,12 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
               campaigns : <span>{jobCountNumber && <>{jobCountNumber}</>}</span>
             </div>
           </div>
-          <div className="upgrade-btn">Upgrade Now</div>
+
+          {brandData?.planName !== "Premium" && (
+            <Link to="/pricing">
+              <div className="upgrade-btn">Upgrade Now</div>
+            </Link>
+          )}
         </div>
 
         <div className="sidenavWraper scroll">
@@ -208,7 +213,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
               <div className="brand-menu-text">Create Gig/Job</div>
             </Link> */}
           <Link
-            to="/brand-dashboard"
+            to={`/brand-dashboard/${brandData?.brandName.replace(/\s+/g, "")}`}
             className={
               location.pathname === "/brand-dashboard"
                 ? "sidemenu-active mt-2"

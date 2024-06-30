@@ -26,8 +26,10 @@ import Select from "react-select";
 import CurrentUser from "../CurrentUser";
 import SearchHeaderComponent from "./SearchHeaderComponent";
 
-const TalentHeader = ({ toggleMenu, myState }) => {
+const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
+  console.log(hideToggleButton, "hideToggleButton");
+
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.jpg");
   const model1 = require("../assets/images/girl1.png");
@@ -325,12 +327,15 @@ const TalentHeader = ({ toggleMenu, myState }) => {
                   }}
                 />
               </div>
-              <div className="talent-menu" onClick={toggleMenu}>
-                <div className="telent-menubar">
-                  <i className="fa-solid fa-bars"></i>
-                </div>
-                {/* <div className="mydashboard font-styles">My Dashboard</div> */}
-              </div>
+              {!hideToggleButton && (
+                <>
+                  <div className="talent-menu" onClick={toggleMenu}>
+                    <div className="telent-menubar">
+                      <i className="fa-solid fa-bars"></i>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="rightPart">

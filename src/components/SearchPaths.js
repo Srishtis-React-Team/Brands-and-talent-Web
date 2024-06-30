@@ -24,7 +24,7 @@ const searchPathOptions = [
   { routes: "/brand-help", label: "Brand Help" },
   { routes: "/applicants", label: "Applicants" },
   { routes: "/edit-talent-profile", label: "Edit Talent" },
-  { routes: "/edit-brand-profile", label: "Edit Brand / Client" },
+  { routes: "/edit-brand-profile", label: "Edit Brands / Client" },
   { routes: "/talent-notification", label: "Talent Notification" },
   { routes: "/talent-settings", label: "Talent Settings" },
   { routes: "/brand-settings", label: "Brand Settings" },

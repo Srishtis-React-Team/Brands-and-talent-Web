@@ -103,7 +103,7 @@ const TalentHome = () => {
       >
         <div className="brand-content-main">
           <div className="create-job-title">
-            Welcome To Brand / Client And Talent
+            Welcome To Brands / Client And Talent
           </div>
           <div className="home-cards mt-1 row pad8">
             <div className="col-md-4 col-lg-3 pad8">

@@ -73,16 +73,35 @@ function Routing() {
     currentUserType,
     avatarImage,
     fcmToken,
+    brandId,
   } = CurrentUser();
+  console.log(currentUserId, "currentUserId Routing");
+  console.log(brandId, "brandId Routing");
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/find-creators" element={<FindCreators />} />
+      <Route
+        path="/find-creators"
+        element={
+          currentUserId || brandId ? (
+            <FindCreators />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+      {/* <Route path="/find-creators" element={<FindCreators />} /> */}
       <Route path="/talent-profile/:name" element={<TalentProfile />} />
       {/* <Route path="/pricing" element={<Pricing />} /> */}
       <Route
         path="/pricing"
-        element={currentUserId ? <Pricing /> : <Navigate to="/login" replace />}
+        element={
+          currentUserId || brandId ? (
+            <Pricing />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
       />
       <Route path="/resources" element={<Resources />} />
       <Route path="/signup" element={<Register />} />
@@ -130,7 +149,7 @@ function Routing() {
       <Route path="/brand-logo" element={<BrandLogo />} />
       <Route path="/contactUs" element={<ContactUs />} />
       <Route path="/brand-activated" element={<BrandActivation />} />
-      <Route path="/brand-dashboard" element={<BrandHome />} />
+      <Route path="/brand-dashboard/:name" element={<BrandHome />} />
       <Route path="/list-jobs" element={<ListJobs />} />
       <Route path="/applied-jobs" element={<AppliedJobs />} />
       <Route path="/saved-jobs" element={<SavedJobs />} />

@@ -147,7 +147,17 @@ const Login = () => {
               setOpenPopUp(false);
               setIsLoading(false);
               setBrandsLocalStorage(resData.data);
-              navigate(`/brand-dashboard`);
+              console.log(resData.data, "resData.data");
+              navigate(
+                `/brand-dashboard/${resData?.data?.data?.brandName.replace(
+                  /\s+/g,
+                  ""
+                )}`
+              );
+              window.location.reload();
+              // navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+              //   state: { talentData: item },
+              // });
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
@@ -185,8 +195,10 @@ const Login = () => {
               if (resData.data.type === "adult") {
                 console.log("adult block");
                 navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+                window.location.reload();
               } else if (resData.data.type === "kids") {
                 navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+                window.location.reload();
                 // navigate(`/otp?${resData?.data?.data?.email}`);
               }
             }, 1000);

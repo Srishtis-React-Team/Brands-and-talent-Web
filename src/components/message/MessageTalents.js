@@ -587,10 +587,10 @@ const MessageTalents = () => {
   return (
     <>
       {userType && userType == "talent" && (
-        <TalentHeader toggleMenu={toggleMenu} />
+        <TalentHeader hideToggleButton={true} toggleMenu={toggleMenu} />
       )}
       {userType && userType == "brand" && (
-        <BrandHeader toggleMenu={toggleMenu} />
+        <BrandHeader hideToggleButton={true} toggleMenu={toggleMenu} />
       )}
       <div className="message-main px-2">
         <div className="container-fluid">

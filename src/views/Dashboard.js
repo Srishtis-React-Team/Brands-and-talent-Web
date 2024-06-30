@@ -670,10 +670,12 @@ const Dashboard = () => {
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
   const rateTalent = (item) => {
-    setModalData(item);
-    const modalElement = document.getElementById("ratingModal");
-    const bootstrapModal = new window.bootstrap.Modal(modalElement);
-    bootstrapModal.show();
+    if (currentUserType === "brand") {
+      setModalData(item);
+      const modalElement = document.getElementById("ratingModal");
+      const bootstrapModal = new window.bootstrap.Modal(modalElement);
+      bootstrapModal.show();
+    }
   };
 
   const handleCloseModal = async (talent) => {
@@ -874,7 +876,9 @@ const Dashboard = () => {
 
                           return (
                             <div
-                              className="rating"
+                              className={`rating ${
+                                currentUserType === "brand" ? "cursor" : ""
+                              }`}
                               onClick={() => rateTalent(item)}
                             >
                               {[...Array(totalStars)].map((_, starIndex) => (

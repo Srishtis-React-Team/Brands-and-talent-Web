@@ -11,6 +11,7 @@ import nationalityOptions from "../components/nationalities.js";
 import languageOptions from "../components/languages.js";
 import PopUp from "../components/PopUp.js";
 import CurrentUser from "../CurrentUser.js";
+import nationalitiesArray from "../components/NationalitiesArray.js";
 const FindCreators = () => {
   const {
     currentUserId,
@@ -69,10 +70,10 @@ const FindCreators = () => {
   const [message, setMessage] = useState("");
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
-  const [languages, setLanguages] = useState("");
+  const [languages, setLanguages] = useState([]);
   const [maritalStatus, setMaritalStatus] = useState("");
   const [industry, setIndustry] = useState("");
-  const [nationality, setNationality] = useState("");
+  const [nationality, setNationality] = useState([]);
   const [fullName, setFullName] = useState("");
   const [featuresListSelect, selectFeaturesList] = useState([]);
   const [featuresList, setFeaturesList] = useState([]);
@@ -102,6 +103,18 @@ const FindCreators = () => {
         }
       })
       .catch((err) => {});
+  };
+
+  const customStylesProfession = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "55px", // Reset the minHeight to avoid clipping
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "600px", // Adjust the maxHeight as per your requirement
+      zIndex: 9999, // Ensure menu appears above other elements
+    }),
   };
 
   const getUserSearchKeyword = async () => {
@@ -180,10 +193,10 @@ const FindCreators = () => {
     setTalentList([]);
     setMinAge("0");
     setMaxAge("100");
-    setLanguages("");
+    setLanguages([]);
     setMaritalStatus("");
     setIndustry("");
-    setNationality("");
+    setNationality([]);
     setFullName("");
     setFeature([]);
     // window.location.reload();
@@ -302,10 +315,8 @@ const FindCreators = () => {
     } else {
       updatedValues.push({ label, value });
     }
+    console.log(updatedValues, "updatedValues");
     setFeature(updatedValues);
-    // Call your API here with the updated selectedValues array
-    // Example:
-    // callYourApi(selectedValues);
   };
 
   const getTalentList = async () => {
@@ -483,11 +494,28 @@ const FindCreators = () => {
   const selectEthnicity = (event) => {
     setEthnicity(event.target.value);
   };
-  const selectLanguage = (event) => {
-    setLanguages(event.target.value);
+  const selectLanguage = (selectedOptions) => {
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setLanguages([]); // Clear the languages state
+      return;
+    }
+
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    setLanguages(selectedLanguages); // Update languages state with all selected languages
   };
-  const selectNationality = (event) => {
-    setNationality(event.target.value);
+  const selectNationality = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    if (!selectedOptions || selectedOptions.length === 0) {
+      // Handle case when all options are cleared
+      setNationality([]); // Clear the languages state
+      return;
+    }
+    // Extract values of all selected languages
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setNationality(selectedLanguages); // Update languages state with all selected languages
   };
   const selectMaritalStatus = (event) => {
     setMaritalStatus(event.target.value);
@@ -625,10 +653,12 @@ const FindCreators = () => {
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
   const rateTalent = (item) => {
-    setModalData(item);
-    const modalElement = document.getElementById("ratingModal");
-    const bootstrapModal = new window.bootstrap.Modal(modalElement);
-    bootstrapModal.show();
+    if (currentUserType === "brand") {
+      setModalData(item);
+      const modalElement = document.getElementById("ratingModal");
+      const bootstrapModal = new window.bootstrap.Modal(modalElement);
+      bootstrapModal.show();
+    }
   };
 
   const handleCloseModal = async (talent) => {
@@ -929,73 +959,61 @@ const FindCreators = () => {
                   <div className="keyword-wrapper">
                     <div className="filter-items">Nationality</div>
                     <div className="creators-filter-select inpWid">
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={selectNationality}
-                        value={nationality}
-                      >
-                        <option value="" disabled selected>
-                          Select Nationality
-                        </option>
-                        {nationalityOptions.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
+                      <Select
+                        isMulti
+                        name="colors"
+                        options={nationalitiesArray}
+                        valueField="value"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(value) => selectNationality(value)}
+                        styles={customStylesProfession}
+                      />
                     </div>
                   </div>
                   <div className="keyword-wrapper">
                     <div className="filter-items">Language</div>
                     <div className="creators-filter-select inpWid">
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={selectLanguage}
-                        value={languages}
-                      >
-                        <option value="" disabled selected>
-                          Select Language
-                        </option>
-                        {languageOptions.map((option, index) => (
-                          <option key={index} value={option.value}>
-                            {option.value}
-                          </option>
-                        ))}
-                      </select>
+                      <Select
+                        isMulti
+                        name="colors"
+                        options={languageOptions}
+                        valueField="value"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(value) => selectLanguage(value)}
+                        styles={customStyles}
+                      />
                     </div>
                   </div>
 
-                  {/* {featuresListSelect && (
+                  {featuresListSelect && (
                     <>
                       {featuresListSelect.map((item, index) => {
                         return (
                           <>
                             <div className="keyword-wrapper">
                               <div className="filter-items"> {item.label}</div>
-
                               <div className="creators-filter-select">
                                 <select
+                                  style={{ width: "275px" }}
                                   className="form-select features-select"
                                   aria-label="Default select example"
                                   onChange={(e) =>
-                                    handleFeaturesChange(item.label, e.target.value)
+                                    handleFeaturesChange(
+                                      item.label,
+                                      e.target.value
+                                    )
                                   }
-                                  value={features}
                                 >
                                   <option value="" disabled selected>
                                     {item.label}
                                   </option>
-                                  {item.options.map((item, index) => {
-                                    return (
-                                      <>
-                                        <option defaultValue value="1">
-                                          {item}
-                                        </option>
-                                      </>
-                                    );
-                                  })}
+                                  {item.options.map((option, idx) => (
+                                    <option key={idx} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
                                 </select>
                               </div>
                             </div>
@@ -1003,7 +1021,7 @@ const FindCreators = () => {
                         );
                       })}
                     </>
-                  )} */}
+                  )}
 
                   <div className="submit-buttons">
                     <div
@@ -1054,7 +1072,11 @@ const FindCreators = () => {
 
                                     return (
                                       <div
-                                        className="rating"
+                                        className={`rating ${
+                                          currentUserType === "brand"
+                                            ? "cursor"
+                                            : ""
+                                        }`}
                                         onClick={() => rateTalent(item)}
                                       >
                                         {[...Array(totalStars)].map(

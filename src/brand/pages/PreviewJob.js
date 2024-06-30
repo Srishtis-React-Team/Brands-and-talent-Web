@@ -586,7 +586,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
                     Interested candidates should submit their resume and a link
-                    that contains portfolio from Brand / Client and talent
+                    that contains portfolio from Brands / Client and talent
                     website to
                     <span className="how-apply-terms-link">
                       {brandData?.brandEmail}

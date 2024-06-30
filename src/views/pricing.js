@@ -252,7 +252,7 @@ const Pricing = () => {
                               <>
                                 <div className="plan-content">
                                   <div className="icPrice">
-                                    <i class="bi bi-check-circle-fill"></i>
+                                    <i className="bi bi-check-circle-fill"></i>
                                   </div>
                                   {/* <img
                                       className="listIc"

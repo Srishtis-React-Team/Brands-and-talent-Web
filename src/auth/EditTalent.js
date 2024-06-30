@@ -167,6 +167,7 @@ const EditTalent = () => {
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
   const [videoUrl, setVideoUrl] = useState("");
+  const [publicUrl, setPublicUrl] = useState("");
   const [urls, setUrls] = useState([]);
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -276,8 +277,22 @@ const EditTalent = () => {
   }
 
   const handleProfessionChange = (selectedOptions) => {
-    setSelectedProfessions(selectedOptions);
-    setProfessionError(false);
+    console.log(selectedOptions, "selectedOptions");
+    // setSelectedProfessions(selectedOptions);
+    // setProfessionError(false);
+    if (selectedOptions.length > 5) {
+      // setProfessionError(true);
+      // Optionally show a message to the user
+      setMessage("You can only select up to 5 skills");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 2000);
+      return; // Prevent the state update
+    } else {
+      setSelectedProfessions(selectedOptions);
+      setProfessionError(false);
+    }
   };
 
   const handleDetailChange = (index, field, value) => {
@@ -412,6 +427,10 @@ const EditTalent = () => {
     setgenderError(false);
   };
 
+  const publicUrlChange = (event) => {
+    setPublicUrl(event.target.value);
+  };
+
   const selectLanguage = (selectedOptions) => {
     console.log(selectedOptions, "selectedOptions selectedLanguages");
     setLanguageError(false);
@@ -480,6 +499,7 @@ const EditTalent = () => {
   };
 
   const getKidsData = async () => {
+    // alert("getKidsData");
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -554,8 +574,7 @@ const EditTalent = () => {
               }
             );
             console.log(selectedProfessionOptions, "selectedProfessionOptions");
-            setSelectedProfessionsEdit(selectedProfessionOptions);
-
+            setSelectedProfessions(resData.data.data?.profession);
             // const initialState = featuresList.reduce((acc, curr) => {
             //   const initialValueObj = resData?.data?.data?.features?.find(
             //     (item) => item.label === curr.label
@@ -628,7 +647,7 @@ const EditTalent = () => {
               }
             );
             console.log(selectedProfessionOptions, "selectedProfessionOptions");
-            setSelectedProfessionsEdit(selectedProfessionOptions);
+            setSelectedProfessions(resData.data.data?.profession);
             setFeatures(resData?.data?.data?.features);
           }
         }
@@ -717,6 +736,7 @@ const EditTalent = () => {
         childDob: dateOfBirth,
         childCity: kidsCity,
         childAboutYou: aboutYou,
+        profession: selectedProfessions,
         age: age,
       };
       await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
@@ -1472,6 +1492,14 @@ const EditTalent = () => {
     },
   };
 
+  const deleteProfession = (profession, index) => {
+    console.log(profession, "profession");
+    console.log(index, "profession index");
+    setSelectedProfessions((prevSelectedProfessions) =>
+      prevSelectedProfessions.filter((item) => item.value !== profession.value)
+    );
+  };
+
   const [alertpop, setAlertpop] = useState({
     status: false,
     item: "",
@@ -1806,6 +1834,10 @@ const EditTalent = () => {
     // Hide the options after selection
     setShowOptions(false);
   };
+
+  useEffect(() => {
+    console.log(selectedProfessions, "selectedProfessions");
+  }, [selectedProfessions]);
 
   return (
     <>
@@ -2367,10 +2399,10 @@ const EditTalent = () => {
                             options={professionList}
                             className="basic-multi-select"
                             classNamePrefix="select"
-                            placeholder="Search for Category”"
+                            placeholder="Search for Category"
                             onChange={handleProfessionChange}
                             styles={customStyles}
-                            value={selectedProfessionsEdit}
+                            value={selectedProfessions}
                           />
                           {professionError && (
                             <div className="invalid-fields">
@@ -2420,7 +2452,6 @@ const EditTalent = () => {
                             placeholder="$/hr"
                           ></input>
                         </div>
-
                         <div className="offer-wrapper">
                           <input
                             className="profession-checkbox"
@@ -2441,6 +2472,14 @@ const EditTalent = () => {
                           >
                             Open to Offers / Happy to negotiate
                           </label>
+                        </div>
+                        <div>
+                          <i
+                            onClick={(e) => {
+                              deleteProfession(profession, index);
+                            }}
+                            class="bi bi-trash"
+                          ></i>
                         </div>
                       </div>
                     ))}
@@ -2470,6 +2509,28 @@ const EditTalent = () => {
                 {categoryError && (
                   <div className="invalid-fields">Please Choose Categories</div>
                 )}
+                <div className="row">
+                  <div className="kids-form-section  col-md-6 mb-3 mt-3">
+                    <label className="form-label">Public Url</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={publicUrl}
+                      onChange={(e) => {
+                        publicUrlChange(e);
+                      }}
+                      placeholder="Edit url"
+                    ></input>
+                    {/* {preferedNameError && (
+                      <div className="invalid-fields">
+                        Please Enter Preferred First Name
+                      </div>
+                    )}
+                    {kidsPrefferedFirstNameLetterError && (
+                      <div className="invalid-fields">Only Letters Allowed</div>
+                    )} */}
+                  </div>
+                </div>
 
                 <div className="update-profile-flex">
                   <Button

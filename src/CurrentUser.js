@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { generateToken } from "./auth/firebase";
 const CurrentUser = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [brandId, setBrandID] = useState(null);
   const [talentName, setTalentName] = useState(null);
   const [brandName, setBrandName] = useState(null);
   const [currentUserImage, setCurrentUserImage] = useState("");
@@ -17,6 +18,7 @@ const CurrentUser = () => {
 
   useEffect(() => {
     setCurrentUserId(localStorage.getItem("currentUser"));
+    setBrandID(localStorage.getItem("brandId"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
     setCurrentUserType(localStorage.getItem("currentUserType"));
     setTalentName(localStorage.getItem("talentName"));
@@ -36,6 +38,7 @@ const CurrentUser = () => {
     fcmToken,
     talentName,
     brandName,
+    brandId,
   };
 };
 

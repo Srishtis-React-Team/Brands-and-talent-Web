@@ -120,9 +120,11 @@ const TalentSideMenu = ({ myState }) => {
             </div>
           </div>
 
-          <Link to="/pricing">
-            <div className="upgrade-btn">Upgrade Now</div>
-          </Link>
+          {talentData?.planName !== "Premium" && (
+            <Link to="/pricing">
+              <div className="upgrade-btn">Upgrade Now</div>
+            </Link>
+          )}
         </div>
 
         <div className="sidenavWraper scroll">

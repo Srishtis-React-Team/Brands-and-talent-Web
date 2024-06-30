@@ -299,7 +299,7 @@ const Footer = () => {
 
                 <li>
                   <Link to="/resources" onClick={handleClick}>
-                    Brand / Client & Talent Store
+                    Brands / Client & Talent Store
                   </Link>
                 </li>
               </ul>
