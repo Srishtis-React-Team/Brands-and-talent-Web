@@ -1073,6 +1073,7 @@ const BrandTalents = () => {
                             <div className="col-md-4 col-lg-3 px-1">
                               <div className="gallery-wrapper w-100">
                                 <div className="galBox">
+                                  <div className="posRel">
                                   <img
                                     className="gallery-img"
                                     src={`${API.userFilePath}${item.image?.fileData}`}
@@ -1111,7 +1112,9 @@ const BrandTalents = () => {
                                           )
                                         )}
                                       </div>
+                                    
                                     );
+                                 
                                   })()}
                                   {!item.isFavorite && (
                                     <img
@@ -1127,6 +1130,7 @@ const BrandTalents = () => {
                                       onClick={() => removeFavorite(item)}
                                     ></img>
                                   )}
+                                </div>
                                 </div>
                                 <div className="">
                                   <div
