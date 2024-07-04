@@ -97,7 +97,7 @@ const AdultFormTwo = () => {
           updateProfileStatus();
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
+            navigate(`/talent-profile/${talentData.publicUrl}`, {
               state: { talentData: talentData },
             });
           }, 1000);
@@ -120,7 +120,7 @@ const AdultFormTwo = () => {
       .then((resData) => {
         let stateObject = resData.data.data;
         navigate(
-          `/talent-profile/${resData.data.data.preferredChildFirstname}?${queryString}`,
+          `/talent-profile/${resData.data.data.publicUrl}?${queryString}`,
           {
             state: { stateObject },
           }

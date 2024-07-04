@@ -420,7 +420,7 @@ const BrandTalents = () => {
     console.log(item, "item");
     // navigate("/talent-profile", { state: { talentData: item } });
 
-    navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+    navigate(`/talent-profile/${item.publicUrl}`, {
       state: { talentData: item },
     });
   };
@@ -1074,63 +1074,61 @@ const BrandTalents = () => {
                               <div className="gallery-wrapper w-100">
                                 <div className="galBox">
                                   <div className="posRel">
-                                  <img
-                                    className="gallery-img"
-                                    src={`${API.userFilePath}${item.image?.fileData}`}
-                                  ></img>
-                                  {(() => {
-                                    const starRatings = parseInt(
-                                      item?.averageStarRatings,
-                                      10
-                                    );
-                                    const totalStars = 5;
-                                    const filledStars =
-                                      !isNaN(starRatings) && starRatings > 0
-                                        ? starRatings
-                                        : 0;
+                                    <img
+                                      className="gallery-img"
+                                      src={`${API.userFilePath}${item.image?.fileData}`}
+                                    ></img>
+                                    {(() => {
+                                      const starRatings = parseInt(
+                                        item?.averageStarRatings,
+                                        10
+                                      );
+                                      const totalStars = 5;
+                                      const filledStars =
+                                        !isNaN(starRatings) && starRatings > 0
+                                          ? starRatings
+                                          : 0;
 
-                                    return (
-                                      <div
-                                        className={`rating ${
-                                          currentUserType === "brand"
-                                            ? "cursor"
-                                            : ""
-                                        }`}
-                                        onClick={() => rateTalent(item)}
-                                      >
-                                        {[...Array(totalStars)].map(
-                                          (_, starIndex) => (
-                                            <i
-                                              key={starIndex}
-                                              className={
-                                                starIndex < filledStars
-                                                  ? "bi bi-star-fill rating-filled-star"
-                                                  : "bi bi-star rating-unfilled-star"
-                                              }
-                                              alt="Star"
-                                            ></i>
-                                          )
-                                        )}
-                                      </div>
-                                    
-                                    );
-                                 
-                                  })()}
-                                  {!item.isFavorite && (
-                                    <img
-                                      className="heart-icon"
-                                      src={heartIcon}
-                                      onClick={() => addFavorite(item)}
-                                    ></img>
-                                  )}
-                                  {item.isFavorite === true && (
-                                    <img
-                                      className="heart-icon"
-                                      src={favoruiteIcon}
-                                      onClick={() => removeFavorite(item)}
-                                    ></img>
-                                  )}
-                                </div>
+                                      return (
+                                        <div
+                                          className={`rating ${
+                                            currentUserType === "brand"
+                                              ? "cursor"
+                                              : ""
+                                          }`}
+                                          onClick={() => rateTalent(item)}
+                                        >
+                                          {[...Array(totalStars)].map(
+                                            (_, starIndex) => (
+                                              <i
+                                                key={starIndex}
+                                                className={
+                                                  starIndex < filledStars
+                                                    ? "bi bi-star-fill rating-filled-star"
+                                                    : "bi bi-star rating-unfilled-star"
+                                                }
+                                                alt="Star"
+                                              ></i>
+                                            )
+                                          )}
+                                        </div>
+                                      );
+                                    })()}
+                                    {!item.isFavorite && (
+                                      <img
+                                        className="heart-icon"
+                                        src={heartIcon}
+                                        onClick={() => addFavorite(item)}
+                                      ></img>
+                                    )}
+                                    {item.isFavorite === true && (
+                                      <img
+                                        className="heart-icon"
+                                        src={favoruiteIcon}
+                                        onClick={() => removeFavorite(item)}
+                                      ></img>
+                                    )}
+                                  </div>
                                 </div>
                                 <div className="">
                                   <div

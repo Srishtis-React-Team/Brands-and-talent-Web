@@ -390,6 +390,8 @@ const AdultFormOne = () => {
         parentAddress: address,
         childCity: kidsCity,
         age: age,
+        noOfJobsCompleted: completedJobs,
+        publicUrl: adultsPreferedFirstName,
       };
       if (userId) {
         await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
@@ -716,6 +718,13 @@ const AdultFormOne = () => {
       prevSelectedProfessions.filter((item) => item.value !== profession.value)
     );
   };
+  const [completedJobs, setCompletedJobs] = useState("");
+
+  const handleJobsCompleted = (event) => {
+    setCompletedJobs(event.target.value);
+    setJobsCompletedError(false);
+  };
+  const [completedError, setJobsCompletedError] = useState(false);
 
   return (
     <>
@@ -1226,6 +1235,27 @@ const AdultFormOne = () => {
                         <div className="invalid-fields">Please Enter Email</div>
                       )}
                     </div> */}
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">
+                        Number Of Jobs Completed
+                        <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={completedJobs}
+                        onChange={(e) => {
+                          handleJobsCompleted(e);
+                          setJobsCompletedError(false);
+                        }}
+                        placeholder="Number of jobs completed"
+                      ></input>
+                      {completedError && (
+                        <div className="invalid-fields">
+                          Please enter completed jobs
+                        </div>
+                      )}
+                    </div>
                   </div>
                   {/* <div className="adults-titles kids-form-title">
                     <span>Contact Details</span>

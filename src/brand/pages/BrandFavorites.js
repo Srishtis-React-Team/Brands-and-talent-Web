@@ -122,7 +122,7 @@ const BrandFavorites = () => {
     console.log(item, "item");
     // navigate("/talent-profile", { state: { talentData: item } });
 
-    navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+    navigate(`/talent-profile/${item.publicUrl}`, {
       state: { talentData: item },
     });
   };

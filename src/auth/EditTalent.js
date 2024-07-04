@@ -157,6 +157,7 @@ const EditTalent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [showPassword, setShowPassword] = useState(false);
+  const [publicUrlEdit, setPublicUrlEdit] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [age, setAge] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
@@ -583,6 +584,7 @@ const EditTalent = () => {
             //   return acc;
             // }, {});
             setFeatures(resData?.data?.data?.features);
+            setPublicUrl(`${resData?.data?.data?.publicUrl}`);
           } else if (resData?.data?.data?.type === "adults") {
             setTalentData(resData.data.data, "resData.data.data");
             setEditProfileImage(resData.data.data?.image?.fileData);
@@ -594,6 +596,7 @@ const EditTalent = () => {
             setAddress(resData?.data?.data?.parentAddress);
             setKidsLegalFirstName(resData?.data?.data?.childFirstName);
             setKidsLegalLastName(resData?.data?.data?.childLastName);
+            setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setDob(resData?.data?.data?.childDob);
             // handleSelectedCountry({
             //   value: resData?.data?.data?.parentCountry,
@@ -738,6 +741,7 @@ const EditTalent = () => {
         childAboutYou: aboutYou,
         profession: selectedProfessions,
         age: age,
+        publicUrl: publicUrl,
       };
       await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
         .then((resData) => {
@@ -784,6 +788,7 @@ const EditTalent = () => {
         parentAddress: address,
         childCity: kidsCity,
         age: age,
+        publicUrl: publicUrl,
       };
       await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
         .then((resData) => {
@@ -2510,17 +2515,41 @@ const EditTalent = () => {
                   <div className="invalid-fields">Please Choose Categories</div>
                 )}
                 <div className="row">
-                  <div className="kids-form-section  col-md-6 mb-3 mt-3">
+                  <div className="kids-form-section  col-md-9 mb-3 mt-3">
                     <label className="form-label">Public Url</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={publicUrl}
-                      onChange={(e) => {
-                        publicUrlChange(e);
-                      }}
-                      placeholder="Edit url"
-                    ></input>
+                    <div className="public-url-wrapper">
+                      {!publicUrlEdit && (
+                        <>
+                          <div className="public-url-text">
+                            {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent-profile/${publicUrl}`}
+                            <i
+                              onClick={(e) => {
+                                setPublicUrlEdit(true);
+                              }}
+                              class="bi bi-pencil-square"
+                            ></i>
+                          </div>
+                        </>
+                      )}
+                      {publicUrlEdit && (
+                        <div className="public-url-text">
+                          {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent-profile/`}
+                        </div>
+                      )}
+
+                      {publicUrlEdit && (
+                        <input
+                          type="text"
+                          className="form-control public-url-input"
+                          value={publicUrl}
+                          onChange={(e) => {
+                            publicUrlChange(e);
+                          }}
+                          placeholder="Edit url"
+                        ></input>
+                      )}
+                    </div>
+
                     {/* {preferedNameError && (
                       <div className="invalid-fields">
                         Please Enter Preferred First Name

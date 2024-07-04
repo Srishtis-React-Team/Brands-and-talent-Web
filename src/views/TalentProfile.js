@@ -643,10 +643,17 @@ const TalentProfile = () => {
                           <img className="talent-logo" src={pinkStar}></img>
                         </div>
                         <div className="contSect">
-                          <span>
-                            {talentData?.averageStarRatings} ({" "}
-                            {talentData?.totalReviews} ratings)
-                          </span>
+                          {talentData?.averageStarRatings && (
+                            <>
+                              <span>
+                                {talentData?.averageStarRatings}&nbsp;
+                                {talentData?.averageStarRatings > 0 && (
+                                  <>( {talentData?.totalReviews} ratings)</>
+                                )}
+                              </span>
+                            </>
+                          )}
+
                           {/* <span>{talentData?.averageStarRatings} (0 jobs completed)</span> */}
                         </div>
                       </div>
@@ -684,145 +691,145 @@ const TalentProfile = () => {
                           </>
                         )}
                     </div>
-                    {talentData?.instaFollowers ||
+                    {(talentData?.instaFollowers ||
                       talentData?.facebookFollowers ||
                       talentData?.tiktokFollowers ||
                       talentData?.linkedinFollowers ||
                       talentData?.twitterFollowers ||
                       talentData?.threadsFollowers ||
-                      (talentData?.youtubeFollowers && (
-                        <>
-                          <div className="talents-social-wrapper mt-4">
-                            <div className="row">
-                              {talentData?.instaFollowers && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img src={instaLogo}></img>
+                      talentData?.youtubeFollowers) && (
+                      <>
+                        <div className="talents-social-wrapper mt-4">
+                          <div className="row">
+                            {talentData?.instaFollowers && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img src={instaLogo}></img>
+                                </div>
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData?.instaFollowers
+                                      ? talentData?.instaFollowers
+                                      : "N/A"}
                                   </div>
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData?.instaFollowers
-                                        ? talentData.instaFollowers
-                                        : "N/A"}
-                                    </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                  <div className="followers-text">
+                                    Followers
                                   </div>
                                 </div>
-                              )}
-                              {talentData?.facebookFollowers && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img src={fbIcon}></img>
+                              </div>
+                            )}
+                            {talentData?.facebookFollowers && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img src={fbIcon}></img>
+                                </div>
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData?.facebookFollowers
+                                      ? talentData.facebookFollowers
+                                      : "N/A"}
                                   </div>
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData?.facebookFollowers
-                                        ? talentData.facebookFollowers
-                                        : "N/A"}
-                                    </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                  <div className="followers-text">
+                                    Followers
                                   </div>
                                 </div>
-                              )}
-                              {talentData?.tiktokFollowers && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img src={tiktok}></img>
+                              </div>
+                            )}
+                            {talentData?.tiktokFollowers && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img src={tiktok}></img>
+                                </div>
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData?.tiktokFollowers
+                                      ? talentData.tiktokFollowers
+                                      : "N/A"}
                                   </div>
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData?.tiktokFollowers
-                                        ? talentData.tiktokFollowers
-                                        : "N/A"}
-                                    </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                  <div className="followers-text">
+                                    Followers
                                   </div>
                                 </div>
-                              )}
+                              </div>
+                            )}
 
-                              {talentData?.linkedinFollowers && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img src={linkdin}></img>
+                            {talentData?.linkedinFollowers && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img src={linkdin}></img>
+                                </div>
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData?.linkedinFollowers
+                                      ? talentData.linkedinFollowers
+                                      : "N/A"}
                                   </div>
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData?.linkedinFollowers
-                                        ? talentData.linkedinFollowers
-                                        : "N/A"}
-                                    </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                  <div className="followers-text">
+                                    Followers
                                   </div>
                                 </div>
-                              )}
+                              </div>
+                            )}
 
-                              {talentData?.twitterFollowers && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img src={twitterLogo}></img>
+                            {talentData?.twitterFollowers && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img src={twitterLogo}></img>
+                                </div>
+
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData?.twitterFollowers
+                                      ? talentData.twitterFollowers
+                                      : "N/A"}
                                   </div>
-
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData?.twitterFollowers
-                                        ? talentData.twitterFollowers
-                                        : "N/A"}
-                                    </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                  <div className="followers-text">
+                                    Followers
                                   </div>
                                 </div>
-                              )}
-                              {talentData?.threadsFollowers && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img src={threadLogo}></img>
-                                  </div>
+                              </div>
+                            )}
+                            {talentData?.threadsFollowers && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img src={threadLogo}></img>
+                                </div>
 
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData?.threadsFollowers
-                                        ? talentData.threadsFollowers
-                                        : "N/A"}
-                                    </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData?.threadsFollowers
+                                      ? talentData.threadsFollowers
+                                      : "N/A"}
+                                  </div>
+                                  <div className="followers-text">
+                                    Followers
                                   </div>
                                 </div>
-                              )}
+                              </div>
+                            )}
 
-                              {talentData?.youtubeFollowers && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img src={youtubeLogo}></img>
+                            {talentData?.youtubeFollowers && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img src={youtubeLogo}></img>
+                                </div>
+
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData?.youtubeFollowers
+                                      ? talentData.youtubeFollowers
+                                      : "N/A"}
                                   </div>
-
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData?.youtubeFollowers
-                                        ? talentData.youtubeFollowers
-                                        : "N/A"}
-                                    </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                  <div className="followers-text">
+                                    Followers
                                   </div>
                                 </div>
-                              )}
-                            </div>
+                              </div>
+                            )}
                           </div>
-                        </>
-                      ))}
+                        </div>
+                      </>
+                    )}
 
                     <>
                       <div

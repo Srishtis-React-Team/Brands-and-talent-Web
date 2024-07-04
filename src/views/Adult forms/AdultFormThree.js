@@ -163,12 +163,9 @@ const AdultFormThree = () => {
           setTimeout(function() {
             setOpenPopUp(false);
             if (talentData?.planName == "Basic") {
-              navigate(
-                `/talent-profile/${talentData.preferredChildFirstname}`,
-                {
-                  state: { talentData: talentData },
-                }
-              );
+              navigate(`/talent-profile/${talentData.publicUrl}`, {
+                state: { talentData: talentData },
+              });
             } else {
               navigate(`/adult-signup-service-details?${queryString}`);
             }

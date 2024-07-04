@@ -131,6 +131,7 @@ const CreateJobs = () => {
     "Home & Gardening",
     "Food & Travel",
     "Diversity & Inclusion",
+    "Kids & Teens",
   ];
 
   const customStylesProfession = {
@@ -554,8 +555,9 @@ const CreateJobs = () => {
     // setEditorStateHowToApply(howToApplyDescription);
     // setHowToApplyDescription(initialHowToApply);
     let initialHowToApply = [
-      "<p>Interested candidates should submit their resume and a link that contains portfolio from brands and talent website to your gmail.com’ to ‘Email your resume along with your Brands & Talent portfolio to brandsntalent@gmail.com.for more information: Call us at +855 855 855.  View all jobs at Brands & Talent: brandsandtalent.com/company/brandsandtalent/jobs</p>\n",
+      `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands and Talent website to <a href="mailto:${brandData?.brandEmail}">${brandData?.brandEmail}</a>. Please include ${jobTitle} in the subject line.</p>\n`,
     ];
+
     const whyWorkWithUsContent = initialHowToApply[0];
     const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
     const whyWorkWithUsContentState = ContentState.createFromBlockArray(
@@ -1033,32 +1035,60 @@ const CreateJobs = () => {
   };
 
   const professionList = [
-    { value: "Model", label: "Model" },
-    { value: "Celebrity", label: "Celebrity" },
+    { value: "Actor", label: "Actor" },
+    { value: "Artist", label: "Artist" },
     { value: "Creator", label: "Creator" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Influencer", label: "Influencer" },
+    { value: "Model", label: "Model" },
+    { value: "Event Planner", label: "Event Planner" },
     { value: "Stylist", label: "Stylist" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Nail Artist", label: "Nail Artist" },
+    { value: "Tattooist", label: "Tattooist" },
+    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Swimming Instructor", label: "Swimming Instructor" },
+    { value: "Driving Instructor", label: "Driving Instructor" },
+    { value: "Meditation Teacher", label: "Meditation Teacher" },
+    { value: "Yoga Instructor", label: "Yoga Instructor" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Music Teacher", label: "Music Teacher" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Craftsperson", label: "Craftsperson" },
+    { value: "Sculptor", label: "Sculptor" },
+    { value: "Curator", label: "Curator" },
+    { value: "Singer", label: "Singer" },
+    { value: "Dancer", label: "Dancer" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Musician", label: "Musician" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "Cinematographer", label: "Cinematographer" },
     { value: "Photographer", label: "Photographer" },
     { value: "Videographer", label: "Videographer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Actor", label: "Actor" },
-    { value: "Singer", label: "Singer" },
-    { value: "Writer", label: "Writer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "RJ", label: "RJ" },
     { value: "DJ", label: "DJ" },
-    { value: "VJ", label: "VJ" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Yoga Teacher", label: "Yoga Teacher" },
-    { value: "Webapp Developer", label: "Webapp Developer" },
-    { value: "Virtual Assistant", label: "Virtual Assistant" },
-    { value: "AI Influencer", label: "AI Influencer" },
+    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
+    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
+    { value: "Writer", label: "Writer" },
+    { value: "Copywriter", label: "Copywriter" },
+    { value: "Cartoonist", label: "Cartoonist" },
+    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
+    { value: "Podcaster", label: "Podcaster" },
+    { value: "Host/MC", label: "Host/MC" },
+    { value: "Voice-over Artist", label: "Voice-over Artist" },
+    { value: "Comedian", label: "Comedian" },
+    { value: "Public Speaker", label: "Public Speaker" },
+    { value: "Life Coach", label: "Life Coach" },
+    { value: "Career Coach", label: "Career Coach" },
+    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
     { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Other", label: "Other" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
+    { value: "Interior Designer", label: "Interior Designer" },
+    { value: "Illustrator", label: "Illustrator" },
+    { value: "Animator", label: "Animator" },
+    { value: "Blockchain Developer", label: "Blockchain Developer" },
   ];
 
   const gendersOptions = [
@@ -1433,18 +1463,29 @@ const CreateJobs = () => {
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
-              navigate("/preview-job", {
-                state: {
-                  jobId: resData?.data?.data?._id,
-                },
-              });
+              if (brandData?.planName === "Basic") {
+                setMessage(
+                  "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
+                );
+                setOpenPopUp(true);
+                setTimeout(function() {
+                  setOpenPopUp(false);
+                  navigate("/list-jobs");
+                }, 5000);
+              } else {
+                navigate("/preview-job", {
+                  state: {
+                    jobId: resData?.data?.data?._id,
+                  },
+                });
+              }
             }, 2000);
           } else if (resData.data.status === false) {
             setMessage(resData.data.message);
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
-            }, 1000);
+            }, 3000);
           }
         })
         .catch((err) => {});
@@ -1704,7 +1745,7 @@ const CreateJobs = () => {
     console.log(skills, "skills");
   }, [skills]);
 
-  const top100Films = [
+  const skillsListing = [
     { title: "Actor" },
     { title: "Artist" },
     { title: "Creator" },
@@ -1760,6 +1801,7 @@ const CreateJobs = () => {
     { title: "Animator" },
     { title: "Blockchain Developer" },
   ];
+
   console.log(skillInputValue, "skillInputValue");
 
   const [lastdateApply, setLastdateApply] = useState(null);
@@ -2199,7 +2241,7 @@ const CreateJobs = () => {
                                   freeSolo
                                   id="free-solo-2-demo"
                                   disableClearable
-                                  options={top100Films.map(
+                                  options={skillsListing.map(
                                     (option) => option.title
                                   )}
                                   value={skillInputValue}
