@@ -1,5 +1,7 @@
 import React from "react";
 import { Routes, Route, useRef, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 import Dashboard from "../views/Dashboard";
 import FindCreators from "../views/FindCreators";
 import TalentProfile from "../views/TalentProfile";
@@ -67,16 +69,60 @@ import CurrentUser from "../CurrentUser";
 import AdultSocialMedias from "../views/Adult forms/AdultSocialMedias";
 
 function Routing() {
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-    fcmToken,
-    brandId,
-  } = CurrentUser();
-  console.log(currentUserId, "currentUserId Routing");
-  console.log(brandId, "brandId Routing");
+  const [brandId, setBrandID] = useState(null);
+  // const [talentName, setTalentName] = useState(null);
+  // const [brandName, setBrandName] = useState(null);
+  // const [currentUserImage, setCurrentUserImage] = useState("");
+  // const [currentUserType, setCurrentUserType] = useState("");
+
+  // useEffect(() => {
+  //   setCurrentUserId(localStorage.getItem("currentUser"));
+  //   setBrandID(localStorage.getItem("brandId"));
+  //   setCurrentUserImage(localStorage.getItem("currentUserImage"));
+  //   setCurrentUserType(localStorage.getItem("currentUserType"));
+  //   setTalentName(localStorage.getItem("talentName"));
+  //   setBrandName(localStorage.getItem("brandName"));
+  // }, []);
+
+  // const {
+  //   currentUserId,
+  //   currentUserImage,
+  //   currentUserType,
+  //   avatarImage,
+  //   fcmToken,
+  //   brandId,
+  // } = CurrentUser();
+
+  // console.log(currentUserId, "currentUserId Routing");
+  // console.log(brandId, "brandId Routing");
+  // setCurrentUserId(localStorage.getItem("currentUser"));
+
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [testState, setTestState] = useState(null);
+
+  // useEffect(() => {
+  //   // const user = JSON.parse(localStorage.getItem("currentUser"));
+  //   // console.log(user, "user Routing");
+  //   console.log(localStorage.getItem("currentUser"), "user Routing");
+  // }, []);
+
+  useEffect(() => {
+    try {
+      const userString = localStorage.getItem("currentUser");
+      if (userString) {
+        // const user = JSON.parse(userString);
+        setCurrentUserId(userString); // Assuming 'id' is a property of 'user'
+        console.log(userString, "user Routing");
+      } else {
+        console.log("No currentUser found in localStorage");
+      }
+    } catch (error) {
+      console.error("Error parsing currentUser from localStorage:", error);
+    }
+  }, []);
+
+  // console.log(currentUserId, "currentUserIdRouting");
+
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
@@ -90,9 +136,24 @@ function Routing() {
           )
         }
       />
-      {/* <Route path="/find-creators" element={<FindCreators />} /> */}
-      <Route path="/talent-profile/:name" element={<TalentProfile />} />
-      {/* <Route path="/pricing" element={<Pricing />} /> */}
+      {/* {/ <Route path="/find-creators" element={<FindCreators />} /> /} */}
+
+      <Route
+        path="/talent-profile/:name"
+        element={
+          currentUserId ? <TalentProfile /> : <Navigate to="/login" replace />
+        }
+      />
+
+      {/* <Route
+        path="/brand-dashboard/:name"
+        element={
+          currentUserId ? <BrandHome /> : <Navigate to="/login" replace />
+        }
+      /> */}
+
+      {/* {/ <Route path="/talent-profile/:name" element={<TalentProfile />} /> /}
+      {/ <Route path="/pricing" element={<Pricing />} /> /} */}
       <Route
         path="/pricing"
         element={
@@ -149,7 +210,9 @@ function Routing() {
       <Route path="/brand-logo" element={<BrandLogo />} />
       <Route path="/contactUs" element={<ContactUs />} />
       <Route path="/brand-activated" element={<BrandActivation />} />
+
       <Route path="/brand-dashboard/:name" element={<BrandHome />} />
+
       <Route path="/list-jobs" element={<ListJobs />} />
       <Route path="/applied-jobs" element={<AppliedJobs />} />
       <Route path="/saved-jobs" element={<SavedJobs />} />
