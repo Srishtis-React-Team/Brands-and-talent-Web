@@ -213,7 +213,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
               <div className="brand-menu-text">Create Gig/Job</div>
             </Link> */}
           <Link
-            to={`/brand-dashboard/${brandData?.brandName.replace(/\s+/g, "")}`}
+            to={`/brand-dashboard/${brandData?.publicUrl.replace(/\s+/g, "")}`}
             className={
               location.pathname === "/brand-dashboard"
                 ? "sidemenu-active mt-2"

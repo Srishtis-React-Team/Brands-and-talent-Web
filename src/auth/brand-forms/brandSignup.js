@@ -161,6 +161,7 @@ const BrandSignup = () => {
         confirmPassword: adultConfirmPassword,
         position: receivedData,
         fcmToken: fcmToken,
+        publicUrl: adultName,
       };
       setIsLoading(true);
       await ApiHelper.post(API.brandsRegister, formData)

@@ -8,6 +8,11 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import Axios from "axios";
 import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import { convertToRaw } from "draft-js";
 const BrandLogo = () => {
   const navigate = useNavigate();
   const uploadIcon = require("../../assets/icons/uploadIcon.png");
@@ -26,6 +31,14 @@ const BrandLogo = () => {
   const [receivedData, setReceivedData] = useState(null);
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [portofolioFileError, setPortofolioFileError] = useState(false);
+  const [profileFile, setProfileFile] = useState([]);
+  const [profileFileError, setProfileFileError] = useState(false);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [whyWorkWithUsEditorState, setWhyWorkWithUsEditorState] = useState(
+    EditorState.createEmpty()
+  );
+  const [aboutYou, setAboutYou] = useState([]);
+  const [whyWorkWithUs, setWhyWorkWithUs] = useState([]);
 
   useEffect(() => {
     console.log(portofolioFile, "portofolioFile");
@@ -39,6 +52,21 @@ const BrandLogo = () => {
       setReceivedData(location.state.data);
     }
   }, [location.state]);
+
+  const onEditorSummary = (editorState) => {
+    console.log(editorState, "editorState");
+    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
+    // setAboutYou(editorState);
+    setEditorState(editorState);
+  };
+
+  const onWhyWorkWithUsEditorSummary = (editorState) => {
+    setWhyWorkWithUs([
+      draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    ]);
+    // setAboutYou(editorState);
+    setWhyWorkWithUsEditorState(editorState);
+  };
 
   const aboutUsOptions = [
     "Streaming Audio (Pandora, Spotify, etc.)",
@@ -66,7 +94,18 @@ const BrandLogo = () => {
     // setFiles(droppedFiles);
   };
 
+  const handleProfileImageDrop = (e) => {
+    e.preventDefault();
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    console.log(droppedFiles[0], "droppedFiles");
+    uploadProfileFile(droppedFiles[0]);
+    // setFiles(droppedFiles);
+  };
+
   const handlePortofolioDragOver = (e) => {
+    e.preventDefault();
+  };
+  const handleProfileDragOver = (e) => {
     e.preventDefault();
   };
 
@@ -75,6 +114,14 @@ const BrandLogo = () => {
       let fileData = event.target.files[0];
       console.log(fileData, "fileData");
       uploadFile(fileData);
+    }
+  };
+
+  const profileUpload = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let fileData = event.target.files[0];
+      console.log(fileData, "fileData");
+      uploadProfileFile(fileData);
     }
   };
 
@@ -123,6 +170,36 @@ const BrandLogo = () => {
       .catch((err) => {});
   };
 
+  const uploadProfileFile = async (fileData) => {
+    const params = new FormData();
+    params.append("file", fileData);
+    params.append("fileName", fileData.name);
+    params.append("fileType", getFileType(fileData.type));
+    /* await ApiHelper.post(API.uploadFile, params) */
+    await Axios.post(API.uploadFile, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((resData) => {
+        setMessage(resData.data.message);
+        let fileObj = {
+          id: resData.data.data.fileId,
+          title: fileData.name,
+          fileData: resData.data.data.filename,
+          type: resData?.data?.data?.filetype,
+        };
+        setProfileFile([fileObj]);
+        console.log(portofolioFile, "portofolioFile");
+        setProfileFileError(false);
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 1000);
+      })
+      .catch((err) => {});
+  };
+
   const handleView = (imageUrl) => {
     let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
     window.open(viewImage, "_blank");
@@ -132,14 +209,24 @@ const BrandLogo = () => {
     setPortofolioFile(null);
   };
 
+  const handleProfileDelete = (index) => {
+    setProfileFile(null);
+  };
+
   const brandsSignup = async () => {
     if (portofolioFile.length === 0) {
       setPortofolioFileError(true);
+    }
+    if (profileFile.length === 0) {
+      setProfileFileError(true);
     }
     if (portofolioFile && portofolioFile.length !== 0) {
       const formData = {
         logo: portofolioFile,
         brandImage: portofolioFile,
+        profileImage: profileFile,
+        aboutBrand: aboutYou,
+        whyWorkWithUs: whyWorkWithUs,
       };
       // setIsLoading(true);
       await ApiHelper.post(
@@ -219,110 +306,278 @@ const BrandLogo = () => {
         </div>
         <div className="dialog-body" style={{ height: "75vh" }}>
           <div className="adult-signup-main">
-            <div className="step-title mb-3">Brand/Client Logo </div>
-            <div
-              className="cv-section"
-              onDrop={handlePortofolioDrop}
-              onDragOver={handlePortofolioDragOver}
-            >
-              <label className="upload-backdrop" htmlFor="portofolio">
-                <img src={uploadIcon} alt="" />
-              </label>
-              <input
-                type="file"
-                className="select-cv-input"
-                id="portofolio"
-                accept="image/*"
-                multiple
-                onChange={portofolioUpload}
-              />
-              <div className="upload-text">
-                Upload your company logo or your photo if signing up as an
-                individual client.
+            <div className="kids-form-row row">
+              <div className="kids-form-section col-md-6">
+                <label className="form-label">
+                  Brand/Client Logo <span className="astrix">*</span>{" "}
+                </label>
+                <div
+                  className="cv-section my-2"
+                  onDrop={handlePortofolioDrop}
+                  onDragOver={handlePortofolioDragOver}
+                >
+                  <label className="upload-backdrop" htmlFor="portofolio">
+                    <img src={uploadIcon} alt="" />
+                  </label>
+                  <input
+                    type="file"
+                    className="select-cv-input"
+                    id="portofolio"
+                    accept="image/*"
+                    multiple
+                    onChange={portofolioUpload}
+                  />
+                  <div className="upload-text">
+                    Upload your Brand/Client Logo
+                  </div>
+                  <div className="upload-info">Drag and drop image here</div>
+                </div>
+                {portofolioFileError && (
+                  <div className="invalid-fields">Please Upload Logo</div>
+                )}
+                {portofolioFile && portofolioFile.length > 0 && (
+                  <>
+                    {portofolioFile.map((item, index) => {
+                      return (
+                        <>
+                          <div key={index} className="uploaded-file-wrapper">
+                            <div className="file-section">
+                              {item.type === "image" && (
+                                <div className="fileType">
+                                  <img src={imageType} alt="" />
+                                </div>
+                              )}
+                              {item.type === "audio" && (
+                                <div className="fileType">
+                                  <img src={audiotype} alt="" />
+                                </div>
+                              )}
+                              {item.type === "video" && (
+                                <div className="fileType">
+                                  <img src={videoType} alt="" />
+                                </div>
+                              )}
+                              {item.type === "document" && (
+                                <div className="fileType">
+                                  <img src={docsIcon} alt="" />
+                                </div>
+                              )}
+                              <div className="fileName">{item.title}</div>
+                            </div>
+                            <div className="file-options">
+                              <div className="sucess-tick">
+                                <img src={greenTickCircle} alt="" />
+                              </div>
+                              <div className="option-menu">
+                                <div className="dropdown">
+                                  <img
+                                    onClick={() => setShowOptions(!showOptions)}
+                                    src={elipsis}
+                                    alt=""
+                                    className="dropdown-toggle elipsis-icon"
+                                    type="button"
+                                    id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  />
+                                  <ul
+                                    className="dropdown-menu"
+                                    aria-labelledby="dropdownMenuButton"
+                                  >
+                                    <li>
+                                      <a
+                                        className="dropdown-item"
+                                        onClick={() => handleView(item)}
+                                        id="view"
+                                      >
+                                        View
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a
+                                        className="dropdown-item"
+                                        onClick={() =>
+                                          handlePortofolioDelete(item)
+                                        }
+                                        id="delete"
+                                      >
+                                        Delete
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                )}
               </div>
-              <div className="upload-info">Drag and drop image here</div>
+              <div className="kids-form-section col-md-6">
+                <label className="form-label">
+                  Profile Image <span className="astrix">*</span>{" "}
+                </label>
+                <div
+                  className="cv-section my-2"
+                  onDrop={handleProfileImageDrop}
+                  onDragOver={handleProfileDragOver}
+                >
+                  <label className="upload-backdrop" htmlFor="profile">
+                    <img src={uploadIcon} alt="" />
+                  </label>
+                  <input
+                    type="file"
+                    className="select-cv-input"
+                    id="profile"
+                    accept="image/*"
+                    multiple
+                    onChange={profileUpload}
+                  />
+                  <div className="upload-text">Upload your Profile Image</div>
+                  <div className="upload-info">Drag and drop image here</div>
+                </div>
+                {profileFileError && (
+                  <div className="invalid-fields">
+                    Please Upload Profile Image
+                  </div>
+                )}
+                {profileFile && profileFile.length > 0 && (
+                  <>
+                    {profileFile.map((item, index) => {
+                      return (
+                        <>
+                          <div key={index} className="uploaded-file-wrapper">
+                            <div className="file-section">
+                              {item.type === "image" && (
+                                <div className="fileType">
+                                  <img src={imageType} alt="" />
+                                </div>
+                              )}
+                              {item.type === "audio" && (
+                                <div className="fileType">
+                                  <img src={audiotype} alt="" />
+                                </div>
+                              )}
+                              {item.type === "video" && (
+                                <div className="fileType">
+                                  <img src={videoType} alt="" />
+                                </div>
+                              )}
+                              {item.type === "document" && (
+                                <div className="fileType">
+                                  <img src={docsIcon} alt="" />
+                                </div>
+                              )}
+                              <div className="fileName">{item.title}</div>
+                            </div>
+                            <div className="file-options">
+                              <div className="sucess-tick">
+                                <img src={greenTickCircle} alt="" />
+                              </div>
+                              <div className="option-menu">
+                                <div className="dropdown">
+                                  <img
+                                    onClick={() => setShowOptions(!showOptions)}
+                                    src={elipsis}
+                                    alt=""
+                                    className="dropdown-toggle elipsis-icon"
+                                    type="button"
+                                    id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  />
+                                  <ul
+                                    className="dropdown-menu"
+                                    aria-labelledby="dropdownMenuButton"
+                                  >
+                                    <li>
+                                      <a
+                                        className="dropdown-item"
+                                        onClick={() => handleView(item)}
+                                        id="view"
+                                      >
+                                        View
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a
+                                        className="dropdown-item"
+                                        onClick={() =>
+                                          handleProfileDelete(item)
+                                        }
+                                        id="delete"
+                                      >
+                                        Delete
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                )}
+              </div>
             </div>
-            {portofolioFileError && (
-              <div className="invalid-fields">Please Upload Logo</div>
-            )}
 
-            {portofolioFile && portofolioFile.length > 0 && (
-              <>
-                {portofolioFile.map((item, index) => {
-                  return (
-                    <>
-                      <div key={index} className="uploaded-file-wrapper">
-                        <div className="file-section">
-                          {item.type === "image" && (
-                            <div className="fileType">
-                              <img src={imageType} alt="" />
-                            </div>
-                          )}
-                          {item.type === "audio" && (
-                            <div className="fileType">
-                              <img src={audiotype} alt="" />
-                            </div>
-                          )}
-                          {item.type === "video" && (
-                            <div className="fileType">
-                              <img src={videoType} alt="" />
-                            </div>
-                          )}
-                          {item.type === "document" && (
-                            <div className="fileType">
-                              <img src={docsIcon} alt="" />
-                            </div>
-                          )}
-                          <div className="fileName">{item.title}</div>
-                        </div>
-                        <div className="file-options">
-                          <div className="sucess-tick">
-                            <img src={greenTickCircle} alt="" />
-                          </div>
-                          <div className="option-menu">
-                            <div className="dropdown">
-                              <img
-                                onClick={() => setShowOptions(!showOptions)}
-                                src={elipsis}
-                                alt=""
-                                className="dropdown-toggle elipsis-icon"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              />
-                              <ul
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() => handleView(item)}
-                                    id="view"
-                                  >
-                                    View
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() => handlePortofolioDelete(item)}
-                                    id="delete"
-                                  >
-                                    Delete
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  );
-                })}
-              </>
-            )}
+            <div className="rich-editor my-4">
+              <label className="form-label">About Brand / Client </label>
+              <Editor
+                editorState={editorState}
+                editorStyle={{ overflow: "hidden" }}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onEditorSummary}
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "list",
+                    "textAlign",
+                    "history",
+                  ],
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                }}
+              />
+            </div>
+
+            <div className="rich-editor">
+              <label className="form-label">Why work with us</label>
+              <Editor
+                editorState={whyWorkWithUsEditorState}
+                editorStyle={{ overflow: "hidden" }}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onWhyWorkWithUsEditorSummary}
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "list",
+                    "textAlign",
+                    "history",
+                  ],
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className="dialog-footer">

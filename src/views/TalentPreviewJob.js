@@ -43,14 +43,31 @@ const TalentPreviewJob = () => {
   const [minPay, setMinPay] = useState("");
   const [maxPay, setMaxpay] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
+  const [brandData, setBrandData] = useState(null);
 
   const getJobsByID = async () => {
     await ApiHelper.get(`${API.getAnyJobById}${jobId ? jobId : queryString}`)
       .then((resData) => {
         console.log(resData.data.data, "getJobsByID");
         setJobData(resData.data.data);
+        getBrand(resData.data.data?.brandId);
       })
       .catch((err) => {});
+  };
+
+  const getBrand = async (brandId) => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "resData.data.data");
+            setBrandData(resData.data.data);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const toggleMenu = () => {
@@ -322,19 +339,44 @@ const TalentPreviewJob = () => {
                   </div>
                   <div className="job-feature-points">
                     <ul>
-                      <li className="job-features-li">
-                        <span className="job-feature-heading">
-                          Compensation :
-                        </span>
-                        <span className="job-feature-values">
-                          {jobData.compensation &&
-                            Object.entries(jobData.compensation).map(
-                              ([key, value]) => (
-                                <span key={key}>
-                                  <span>{value.currency}</span>
-                                  <span>{value.minPay}/day</span> +&nbsp;
-                                  <span>{value.product_name}</span>
-                                  {/* <p>
+                      {jobData.compensation && (
+                        <>
+                          <li className="job-features-li">
+                            <span className="job-feature-heading">
+                              Compensation :
+                            </span>
+                            <span className="job-feature-values">
+                              {jobData.compensation &&
+                                Object.entries(jobData.compensation).map(
+                                  ([key, value]) => (
+                                    <span key={key}>
+                                      <span>{value.currency}</span>&nbsp;
+                                      {value?.minPay && (
+                                        <>
+                                          <span>{value.minPay}/day</span>{" "}
+                                          +&nbsp;
+                                        </>
+                                      )}
+                                      {value?.exactPay && (
+                                        <>
+                                          <span>{value.exactPay}</span> + &nbsp;
+                                        </>
+                                      )}
+                                      {value.product_name && (
+                                        <>
+                                          <span>{value.product_name}</span>
+                                          &nbsp;
+                                        </>
+                                      )}
+                                      {value.product_name &&
+                                        value?.productValue && (
+                                          <>
+                                            <span>
+                                              (valued at {value?.productValue})
+                                            </span>
+                                          </>
+                                        )}
+                                      {/* <p>
                                       <strong>{key}</strong>
                                     </p>
                                     <p>Type: {value.type}</p>
@@ -343,11 +385,14 @@ const TalentPreviewJob = () => {
                                     <p>Max Pay: {value.maxPay}</p>
                                     <p>Currency: {value.currency}</p>
                                     <p>Frequency: {value.frequency}</p> */}
-                                </span>
-                              )
-                            )}
-                        </span>
-                      </li>
+                                    </span>
+                                  )
+                                )}
+                            </span>
+                          </li>
+                        </>
+                      )}
+
                       <li className="job-features-li">
                         <span className="job-feature-heading">Benefits :</span>
                         <span className="job-feature-values">
@@ -375,60 +420,66 @@ const TalentPreviewJob = () => {
                         </span>
                       </li>
                       <li className="job-features-li">
-                        <span className="job-feature-heading">
-                          Categories :
-                        </span>
+                        <span className="job-feature-heading">Category :</span>
                         <span className="job-feature-values">
-                          {/* {jobData?.skills &&
-                              jobData.skills
+                          {jobData?.category}
+                        </span>
+                      </li>
+                      {jobData?.minAge && (
+                        <li className="job-features-li">
+                          <span className="job-feature-heading">Age :</span>
+                          <span className="job-feature-values">
+                            {jobData?.minAge} -&nbsp;
+                            {jobData?.maxAge}
+                          </span>
+                        </li>
+                      )}
+                      {jobData?.gender && (
+                        <li className="job-features-li">
+                          <span className="job-feature-heading">Gender :</span>
+                          <span className="job-feature-values">
+                            {jobData?.gender}
+                          </span>
+                        </li>
+                      )}
+                      {jobData?.languages && jobData?.languages?.length > 0 && (
+                        <li className="job-features-li">
+                          <span className="job-feature-heading">
+                            Languages :
+                          </span>
+                          <span className="job-feature-values">
+                            {jobData?.languages &&
+                              jobData.languages
                                 .map((skill, index) =>
-                                  index === jobData.skills.length - 1
+                                  index === jobData.languages.length - 1
                                     ? skill
                                     : skill + ", "
                                 )
-                                .join("")} */}
-                        </span>
-                      </li>
-                      <li className="job-features-li">
-                        <span className="job-feature-heading">Age :</span>
-                        <span className="job-feature-values">
-                          {jobData?.minAge} -&nbsp;
-                          {jobData?.maxAge}
-                        </span>
-                      </li>
-                      <li className="job-features-li">
-                        <span className="job-feature-heading">Gender :</span>
-                        <span className="job-feature-values">
-                          {jobData?.gender}
-                        </span>
-                      </li>
-                      <li className="job-features-li">
-                        <span className="job-feature-heading">Languages :</span>
-                        <span className="job-feature-values">
-                          {jobData?.languages &&
-                            jobData.languages
-                              .map((skill, index) =>
-                                index === jobData.languages.length - 1
-                                  ? skill
-                                  : skill + ", "
-                              )
-                              .join("")}
-                        </span>
-                      </li>
-                      <li className="job-features-li">
-                        <span className="job-feature-heading">
-                          Nationality :
-                        </span>
-                        <span className="job-feature-values">
-                          {jobData?.nationality}
-                        </span>
-                      </li>
-                      <li className="job-features-li">
-                        <span className="job-feature-heading">Ethnicity :</span>
-                        <span className="job-feature-values">
-                          {jobData?.nationality}
-                        </span>
-                      </li>
+                                .join("")}
+                          </span>
+                        </li>
+                      )}
+                      {jobData?.nationality && (
+                        <li className="job-features-li">
+                          <span className="job-feature-heading">
+                            Nationality :
+                          </span>
+                          <span className="job-feature-values">
+                            {jobData?.nationality}
+                          </span>
+                        </li>
+                      )}
+                      {jobData?.ethnicity && (
+                        <li className="job-features-li">
+                          <span className="job-feature-heading">
+                            Ethnicity :
+                          </span>
+                          <span className="job-feature-values">
+                            {jobData?.ethnicity}
+                          </span>
+                        </li>
+                      )}
+
                       <li className="job-features-li">
                         <span className="job-feature-heading">
                           Social Media Followers Count:
@@ -478,6 +529,7 @@ const TalentPreviewJob = () => {
                               </span>
                             </li>
                           )}
+
                           {jobData?.youTubeMin && (
                             <li>
                               YouTube Followers :{" "}
@@ -506,6 +558,7 @@ const TalentPreviewJob = () => {
                   </div> */}
               </div>
             </div>
+
             <div className="job-questions-section">
               {jobData?.questions?.length > 0 &&
                 jobData?.questions?.some((question) => question) && (
@@ -636,11 +689,13 @@ const TalentPreviewJob = () => {
                 <div className="job-feature-title">How to Apply</div>
                 <div className="job-about-values">
                   Interested candidates should submit their resume and a link
-                  that contains portfolio from Brands / Client and talent
-                  website to
+                  that contains portfolio from Brands and Talent website to
                   <span className="how-apply-terms-link">
-                    {/* {brandData?.brandEmail} */}
-                    weudapepeubru-2731@yopmail.com
+                    {brandData?.brandEmail}
+                    {/* <a href="mailto:${brandData?.brandEmail}">
+                      ${brandData?.brandEmail}
+                    </a> */}
+                    {/* weudapepeubru-2731@yopmail.com */}
                   </span>
                   Please include
                   <span className="how-apply-terms-link">

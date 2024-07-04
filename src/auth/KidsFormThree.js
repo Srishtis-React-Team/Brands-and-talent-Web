@@ -514,14 +514,15 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
             setOpenPopUp(false);
             // navigate(`/talent-signup-service-details?${userId}`);
             if (talentData?.planName == "Basic") {
-              navigate(
-                `/talent-profile/${talentData.preferredChildFirstname}`,
-                {
-                  state: { talentData: talentData },
-                }
-              );
+              // navigate(
+              //   `/talent-profile/${talentData.publicUrl}`,
+              //   {
+              //     state: { talentData: talentData },
+              //   }
+              // );
+              navigate(`/login?type=talent&user_id=${userId}`);
             } else {
-              navigate(`/adult-signup-service-details?${userId}`);
+              navigate(`/talent-signup-service-details?${userId}`);
             }
           }, 1000);
         } else {

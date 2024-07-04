@@ -149,13 +149,13 @@ const Login = () => {
               setBrandsLocalStorage(resData.data);
               console.log(resData.data, "resData.data");
               navigate(
-                `/brand-dashboard/${resData?.data?.data?.brandName.replace(
+                `/brand-dashboard/${resData?.data?.data?.publicUrl.replace(
                   /\s+/g,
                   ""
                 )}`
               );
-              window.location.reload();
-              // navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+              // window.location.reload();
+              // navigate(`/talent-profile/${item.publicUrl}`, {
               //   state: { talentData: item },
               // });
             }, 1000);
@@ -195,10 +195,10 @@ const Login = () => {
               if (resData.data.type === "adult") {
                 console.log("adult block");
                 navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-                window.location.reload();
+                // window.location.reload();
               } else if (resData.data.type === "kids") {
                 navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-                window.location.reload();
+                // window.location.reload();
                 // navigate(`/otp?${resData?.data?.data?.email}`);
               }
             }, 1000);
@@ -227,6 +227,7 @@ const Login = () => {
     localStorage.setItem("emailID", data?.email);
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
+
     localStorage.setItem("currentUserType", data?.user?.userType);
     localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
     localStorage.setItem(

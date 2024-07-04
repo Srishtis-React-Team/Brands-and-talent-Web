@@ -217,12 +217,12 @@ const Header = ({ onData }) => {
           // navigate("/talent-profile", { state: { talentData: talentData } });
           // alert("navigatetotalentprofile");
 
-          navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
+          navigate(`/talent-profile/${talentData.publicUrl}`, {
             state: { talentData },
           });
         } else if (currentUser_type === "brand") {
           navigate(
-            `/brand-dashboard/${brandData?.brandName.replace(/\s+/g, "")}`
+            `/brand-dashboard/${brandData?.publicUrl.replace(/\s+/g, "")}`
           );
         }
       }

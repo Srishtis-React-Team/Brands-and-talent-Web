@@ -147,7 +147,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     return () => {
       if (menuItem === "profile") {
         navigate(
-          `/brand-dashboard/${brandData?.brandName.replace(/\s+/g, "")}`
+          `/brand-dashboard/${brandData?.publicUrl.replace(/\s+/g, "")}`
         );
       } else if (menuItem === "logout") {
         localStorage.clear();

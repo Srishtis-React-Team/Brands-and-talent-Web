@@ -262,9 +262,34 @@ const PreviewJob = ({ data, onButtonClick }) => {
                                   Object.entries(jobData.compensation).map(
                                     ([key, value]) => (
                                       <span key={key}>
-                                        <span>{value.currency}</span>
-                                        <span>{value.minPay}/day</span> +&nbsp;
-                                        <span>{value.product_name}</span>
+                                        <span>{value.currency}</span>&nbsp;
+                                        {value?.minPay && (
+                                          <>
+                                            <span>{value.minPay}/day</span>{" "}
+                                            +&nbsp;
+                                          </>
+                                        )}
+                                        {value?.exactPay && (
+                                          <>
+                                            <span>{value.exactPay}</span> +
+                                            &nbsp;
+                                          </>
+                                        )}
+                                        {value.product_name && (
+                                          <>
+                                            <span>{value.product_name}</span>
+                                            &nbsp;
+                                          </>
+                                        )}
+                                        {value.product_name &&
+                                          value?.productValue && (
+                                            <>
+                                              <span>
+                                                (valued at {value?.productValue}
+                                                )
+                                              </span>
+                                            </>
+                                          )}
                                         {/* <p>
                                       <strong>{key}</strong>
                                     </p>
@@ -586,8 +611,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
                     Interested candidates should submit their resume and a link
-                    that contains portfolio from Brands / Client and talent
-                    website to
+                    that contains portfolio from Brands and Talent website to
                     <span className="how-apply-terms-link">
                       {brandData?.brandEmail}
                     </span>

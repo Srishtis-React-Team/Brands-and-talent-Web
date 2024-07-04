@@ -151,7 +151,14 @@ const BrandHome = () => {
               </div>
               <div className="brand-home-title-flex">
                 <div className="kids-title">Talents</div>
-                <div className="view-all-text">View All</div>
+                <div
+                  className="view-all-text"
+                  onClick={() => {
+                    navigate("/find-talents");
+                  }}
+                >
+                  View All
+                </div>
               </div>
 
               <div className="photos-slider">
@@ -328,7 +335,14 @@ const BrandHome = () => {
                       );
                     })}
                   </div>
-                  <div className="contact-btn">Upgrade Now</div>
+                  <div
+                    className="contact-btn"
+                    onClick={() => {
+                      navigate("/pricing");
+                    }}
+                  >
+                    Upgrade Now
+                  </div>
                 </div>
               </div>
             </div>

@@ -652,6 +652,8 @@ const KidsformOne = ({ sendDataToParent }) => {
         childCity: kidsCity,
         childAboutYou: aboutYou,
         age: age,
+        noOfJobsCompleted: completedJobs,
+        publicUrl: kidsPreferedFirstName,
       };
       setIsLoading(true);
       console.log(userId, "userId");
@@ -1726,12 +1728,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                         ></input>
                         {parentFirstNameError && (
                           <div className="invalid-fields">
-                            Please enter First Name
-                          </div>
-                        )}
-                        {firstNameLetterError && (
-                          <div className="invalid-fields">
-                            Only Letters are allowed
+                            Please enter Completed Jobs
                           </div>
                         )}
                       </div>

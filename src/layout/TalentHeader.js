@@ -168,7 +168,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "profile") {
-        navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
+        navigate(`/talent-profile/${talentData.publicUrl}`, {
           state: { talentData },
         });
         // navigate("/talent-profile", { state: { talentData: talentData } });

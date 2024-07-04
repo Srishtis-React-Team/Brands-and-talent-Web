@@ -21,13 +21,9 @@ import Spinner from "../../components/Spinner";
 
 const Applicants = () => {
   const [brandId, setBrandId] = useState(null);
-  const [address, setAddress] = useState(`Hi [Name],
-We think you'd be a great fit for an exciting opportunity with us. We would love for you to apply for the [Job Title/Project] role.
-Please apply at ${`https://hybrid.sicsglobal.com/project/brandsandtalent/preview-job-talent?`}. Looking forward to your application! Should you need more info, please feel free to contact us at [email / phone number]
-Best,  
-[Your Name]`);
-  const [meetLink, setMeetLink] = useState("");
 
+  const [meetLink, setMeetLink] = useState("");
+  const [address, setAddress] = useState("");
   useEffect(() => {
     const storedBrandId = localStorage.getItem("brandId");
     if (storedBrandId !== null) {
@@ -54,6 +50,7 @@ Best,
     jobId: "",
     jobType: "",
     label: "",
+    candidate: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -254,6 +251,7 @@ Best,
       selectedLevel: "interviewInvitations",
       gigId: alertpop?.jobId,
     };
+
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -293,11 +291,13 @@ Best,
   };
 
   const offlineInvite = async () => {
+    console.log("offlineInvite");
     const formData = {
       talentId: alertpop?.talentId,
       selectedLevel: "interviewInvitations",
       gigId: alertpop?.jobId,
     };
+
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -359,6 +359,9 @@ Best,
       });
   };
 
+  useEffect(() => {
+    console.log(address, "textAreaValue");
+  }, [address]);
   useEffect(() => {
     console.log(candidatesList, "candidatesList");
   }, [candidatesList]);
@@ -582,7 +585,12 @@ Best,
                                                   talentId: candidate?.talentId,
                                                   label: "invite",
                                                   jobId: candidate?.gigId,
+                                                  candidate: candidate,
                                                 });
+                                                setAddress(
+                                                  `Hi ${candidate?.talentDetails?.preferredChildFirstname}, We think you'd be a great fit for an exciting opportunity with us. We would love for you to apply for the ${candidate?.gigDetails?.jobTitle} role. Please apply at https://hybrid.sicsglobal.com/project/brandsandtalent/preview-job-talent?${candidate?.gigId}. Looking forward to your application! Should you need more info, please feel free to contact us at ${candidate?.brandDetails?.brandEmail} / +888 555 555 555.
+                                                   Best, ${candidate?.brandDetails?.brandName}`
+                                                );
                                               }}
                                             >
                                               Invite To Interview
@@ -611,6 +619,7 @@ Best,
                                                   talentId: candidate?.talentId,
                                                   label: "reject",
                                                   jobId: candidate?.gigId,
+                                                  candidate: candidate,
                                                 });
                                               }}
                                             >
@@ -775,6 +784,7 @@ Best,
                   status: false,
                   talentId: null,
                   label: null,
+                  candidate: null,
                 });
               }}
             >
@@ -788,6 +798,7 @@ Best,
                 setAlertpop({
                   status: false,
                   label: null,
+                  candidate: null,
                 });
                 if (alertpop?.label === "invite" && interviewMode == "online") {
                   onlineInvite();
