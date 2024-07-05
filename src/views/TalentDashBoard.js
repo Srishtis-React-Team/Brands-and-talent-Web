@@ -17,6 +17,7 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Select from "react-select";
+import TalentPreviewJob from "./TalentPreviewJob.js";
 
 const TalentDashBoard = () => {
   const workPlaceTypesOptions = [
@@ -54,6 +55,7 @@ const TalentDashBoard = () => {
   const [topBrandsList, setTopBrandsList] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [isFilled, setIsFilled] = useState(true);
+  const [job, setJob] = useState("");
   const girl1 = require("../assets/images/girl1.png");
   const btLogo = require("../assets/images/LOGO.jpg");
   const sliderIcon = require("../assets/icons/sliders.png");
@@ -78,7 +80,7 @@ const TalentDashBoard = () => {
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [skillsList, setSkillsList] = useState([]);
-
+  const [flag, setFlag] = useState(false);
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
@@ -135,11 +137,8 @@ const TalentDashBoard = () => {
     }
   };
   const viewJob = async (jobId) => {
-    navigate("/preview-job-talent", {
-      state: {
-        jobId: jobId,
-      },
-    });
+    setJob(jobId);
+    setFlag(true);
   };
 
   useEffect(() => {
@@ -554,7 +553,7 @@ const TalentDashBoard = () => {
         </div>
         <div className="container-fluid my-2 p-0">
           <div className="row talent-dashboard-main">
-            <div className="col-md-8 col-lg-9">
+            <div className={flag ? "col-md-8 col-lg-6" : "col-md-8 col-lg-8"}>
               <div className="talent-column-one">
                 <div className="filter-text-wrapper mb-3">
                   <div className="recent-gigs-title">Most Recent Jobs</div>
@@ -821,28 +820,35 @@ const TalentDashBoard = () => {
 
                                     <div className="mb-2">
                                       <span className="job-company_dtls">
-                                        {item?.state}
-                                      </span>{" "}
-                                      ,
-                                      <span className="job-company_dtls">
-                                        {item?.city}
-                                      </span>
-                                    </div>
-                                    <div className="mb-2">
-                                      <span className="job-company_dtls">
-                                        <i class="bi bi-person-workspace"></i>
+                                        <i className="bi bi-person-workspace"></i>
                                       </span>{" "}
                                       {/* . */}
                                       <span className="job-company_dtls">
-                                        {item?.jobType}
+                                        {item?.jobType}{" "}
+                                        <i className="bi bi-dot"></i>
                                       </span>
-                                      .
                                       <span className="job-company_dtls">
-                                        {item?.employmentType}
+                                        <i className="bi bi-geo-alt-fill location-icon"></i>
+                                        {item?.state}, {item?.city}{" "}
+                                        <i className="bi bi-dot"></i>
                                       </span>
-                                      .
                                       <span className="job-company_dtls">
-                                        {Object.keys(item?.compensation)[0]}
+                                        {item?.employmentType}{" "}
+                                        <i className="bi bi-dot"></i>
+                                      </span>
+                                      <span className="job-company_dtls">
+                                        {item?.category}{" "}
+                                        <i className="bi bi-dot"></i>
+                                      </span>
+                                      <span className="job-company_dtls">
+                                        {Object.keys(item?.compensation)[0]
+                                          ?.split("_")
+                                          .map(
+                                            (word) =>
+                                              word.charAt(0).toUpperCase() +
+                                              word.slice(1)
+                                          )
+                                          .join(" ")}
                                       </span>
                                     </div>
                                     <div className="mb-2">
@@ -879,7 +885,7 @@ const TalentDashBoard = () => {
                 )}
               </div>
             </div>
-            <div className="col-md-4 col-lg-3">
+            {/* <div className="col-md-4 col-lg-3">
               <div className="rightBx">
                 <div className="contact-section-main remvSpace">
                   <div className="contact-wrapper px-3 py-4 boxsWhite mb-4 text-center">
@@ -901,7 +907,7 @@ const TalentDashBoard = () => {
                       <div className="top-brands-title py-1">
                         Top Brands / Client
                       </div>
-                      {/* <div className="view-all-brands">View All</div> */}
+                      <div className="view-all-brands">View All</div>
                     </div>
                     {topBrandsList.length && (
                       <div className="top-brands-main p-3">
@@ -937,6 +943,69 @@ const TalentDashBoard = () => {
                   </div>
                 </div>
               </div>
+            </div> */}
+
+            <div className={flag ? "col-md-4 col-lg-6" : "col-md-4 col-lg-4"}>
+              {flag ? (
+                <TalentPreviewJob job={job} />
+              ) : (
+                <div className="rightBx">
+                  <div className="contact-section-main remvSpace">
+                    <div className="contact-wrapper px-3 py-4 boxsWhite mb-4 text-center">
+                      <div className="contact-logo">
+                        <img src={headsetLogo} alt="" />
+                      </div>
+                      <p className="contact-q">Seeking Assistance?</p>
+                      <div className="contact-description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Corrupti, voluptatum labore aspernatur at temporibus
+                      </div>
+                      <div className="contact-btn" onClick={() => contactUs()}>
+                        Contact Now
+                      </div>
+                    </div>
+
+                    <div className="boxsWhite mb-4">
+                      <div className="top-brands-section px-3 pt-3">
+                        <div className="top-brands-title py-1">
+                          Top Brands / Client
+                        </div>
+                      </div>
+                      {topBrandsList.length && (
+                        <div className="top-brands-main p-3">
+                          <div className="row rowSpc">
+                            {topBrandsList.map((item, index) => {
+                              return (
+                                <>
+                                  <div className="top-brands-wrapper col-md-4">
+                                    <div className="top-brand-img-wrapper">
+                                      {item?.brandImage?.length > 0 ? (
+                                        <img
+                                          className="top-brand-img"
+                                          src={
+                                            API.userFilePath +
+                                            item?.brandImage[0].fileData
+                                          }
+                                          alt=""
+                                        />
+                                      ) : (
+                                        <div>No Image Available</div>
+                                      )}
+                                    </div>
+                                    <div className="top-brands-name">
+                                      {item.brandName}
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

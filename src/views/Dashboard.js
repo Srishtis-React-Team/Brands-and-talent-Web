@@ -651,9 +651,9 @@ const Dashboard = () => {
 
   const openTalent = (item) => {
     console.log(item, "item");
-    // navigate("/talent-profile", { state: { talentData: item } });
+    // navigate("/talent", { state: { talentData: item } });
 
-    navigate(`/talent-profile/${item.publicUrl}`, {
+    navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
   };
@@ -966,26 +966,33 @@ const Dashboard = () => {
           <div className="container">
             <div className="title">Our Community</div>
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="community-card-wrapper card-background">
-                  <div className="count">{talentCount}</div>
-                  <div className="cards-text">Talents in community</div>
+                  {/* {talentCount} */}
+                  <div className="count">500+</div>
+                  <div className="cards-text">Talent in Our Community</div>
                 </div>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="community-card-wrapper  card-background">
-                  <div className="count">0</div>
-                  <div className="cards-text">
-                    Brands / Client Professionals
-                  </div>
+                  <div className="count">50</div>
+                  <div className="cards-text">Brand Collaborators </div>
                 </div>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="community-card-wrapper  card-background">
-                  <div className="count">{brandUserCount}</div>
-                  <div className="cards-text">Brands / Client</div>
+                  {/* {brandUserCount} */}
+                  <div className="count">50</div>
+                  <div className="cards-text">Happy Clients</div>
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="community-card-wrapper  card-background">
+                  {/* {brandUserCount} */}
+                  <div className="count">200+</div>
+                  <div className="cards-text">Projects Completed</div>
                 </div>
               </div>
             </div>
@@ -1282,9 +1289,9 @@ const Dashboard = () => {
               </div>
               <div className="modal-body">
                 <div className="mb-3">
-                  <div class="rating-box">
+                  <div className="rating-box">
                     <h3> Rate {modalData?.preferredChildFirstname}</h3>
-                    <div class="stars">
+                    <div className="stars">
                       {[...Array(5)].map((star, index) => {
                         return (
                           <i

@@ -146,9 +146,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "profile") {
-        navigate(
-          `/brand-dashboard/${brandData?.publicUrl.replace(/\s+/g, "")}`
-        );
+        navigate(`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`);
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);

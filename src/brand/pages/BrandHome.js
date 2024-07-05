@@ -217,17 +217,17 @@ const BrandHome = () => {
                           </div>
                           <div className="mb-2">
                             <span className="job-company-name">
-                              <i class="bi bi-person-workspace"></i>
+                              <i className="bi bi-person-workspace"></i>
                             </span>{" "}
-                            <i class="bi bi-dot"></i>
+                            <i className="bi bi-dot"></i>
                             <span className="job-company-name">
                               {jobsList?.jobType}
                             </span>
-                            <i class="bi bi-dot"></i>
+                            <i className="bi bi-dot"></i>
                             <span className="job-company-name">
                               {jobsList?.employmentType}
                             </span>
-                            <i class="bi bi-dot"></i>
+                            <i className="bi bi-dot"></i>
                             <span className="job-company-name">
                               {jobsList && jobsList.compensation
                                 ? Object.keys(jobsList.compensation)[0]

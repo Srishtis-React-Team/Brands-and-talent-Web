@@ -13,7 +13,7 @@ import { StyledEngineProvider } from "@mui/material";
 // "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent/",
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/project/brandsandtalent/">
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
       <StyledEngineProvider injectFirst>
         <App />

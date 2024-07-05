@@ -10,7 +10,11 @@ import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
 import CurrentUser from "../CurrentUser.js";
 
-const TalentPreviewJob = () => {
+const TalentPreviewJob = (props) => {
+  const { job } = props;
+  const job_id = job;
+  console.log(job_id, "job_id");
+
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
@@ -30,8 +34,10 @@ const TalentPreviewJob = () => {
   }, [currentUserId]);
 
   const location = useLocation();
+
   const { jobId } = location.state || {};
   console.log(jobId, "jobId");
+
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -46,7 +52,7 @@ const TalentPreviewJob = () => {
   const [brandData, setBrandData] = useState(null);
 
   const getJobsByID = async () => {
-    await ApiHelper.get(`${API.getAnyJobById}${jobId ? jobId : queryString}`)
+    await ApiHelper.get(`${API.getAnyJobById}${job_id ? job_id : queryString}`)
       .then((resData) => {
         console.log(resData.data.data, "getJobsByID");
         setJobData(resData.data.data);
@@ -117,7 +123,8 @@ const TalentPreviewJob = () => {
 
   useEffect(() => {
     getJobsByID();
-  }, []);
+  }, [job_id]);
+
   useEffect(() => {
     console.log(jobData, "jobData");
     console.log(jobData?.questions, "jobData questions");
@@ -182,18 +189,18 @@ const TalentPreviewJob = () => {
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
-      <div
+      {/* <div
         id="sidebarBrand"
         className={`brand-sidebar ${
           showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
         }`}
       >
         <TalentSideMenu />
-      </div>
+      </div> */}
 
       <main
         id="mainBrand"
-        className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
+        // className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main boxBg px-4">
           <div className="back-create">

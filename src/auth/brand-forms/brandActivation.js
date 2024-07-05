@@ -37,12 +37,9 @@ const BrandActivation = () => {
 
   const brandsSignup = async () => {
     console.log(receivedData, "receivedData");
-    navigate(
-      `/brand-dashboard/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
-      {
-        state: { data: receivedData },
-      }
-    );
+    navigate(`/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+      state: { data: receivedData },
+    });
   };
 
   return (

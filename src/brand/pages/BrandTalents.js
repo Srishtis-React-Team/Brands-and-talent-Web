@@ -418,9 +418,9 @@ const BrandTalents = () => {
   };
   const openTalent = (item) => {
     console.log(item, "item");
-    // navigate("/talent-profile", { state: { talentData: item } });
+    // navigate("/talent", { state: { talentData: item } });
 
-    navigate(`/talent-profile/${item.publicUrl}`, {
+    navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
   };
@@ -1201,9 +1201,9 @@ const BrandTalents = () => {
             </div>
             <div className="modal-body">
               <div className="mb-3">
-                <div class="rating-box">
+                <div className="rating-box">
                   <h3> Rate {modalData?.preferredChildFirstname}</h3>
-                  <div class="stars">
+                  <div className="stars">
                     {[...Array(5)].map((star, index) => {
                       return (
                         <i

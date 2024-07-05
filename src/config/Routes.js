@@ -170,20 +170,20 @@ function Routing() {
         {/* <Route path="/find-creators" element={<FindCreators />} /> */}
 
         <Route
-          path="/talent-profile/:name"
+          path="/talent/:name"
           element={
             currentUserId ? <TalentProfile /> : <Navigate to="/login" replace />
           }
         />
 
         {/* <Route
-          path="/brand-dashboard/:name"
+          path="/brand/:name"
           element={brandID ? <BrandHome /> : <Navigate to="/login" replace />}
         /> */}
 
-        <Route path="/brand-dashboard/:name" element={<BrandHome />} />
+        <Route path="/brand/:name" element={<BrandHome />} />
 
-        {/* <Route path="/talent-profile/:name" element={<TalentProfile />} /> */}
+        {/* <Route path="/talent/:name" element={<TalentProfile />} /> */}
         {/* <Route path="/pricing" element={<Pricing />} /> */}
         <Route
           path="/pricing"

@@ -163,7 +163,7 @@ const AdultFormThree = () => {
           setTimeout(function() {
             setOpenPopUp(false);
             if (talentData?.planName == "Basic") {
-              navigate(`/talent-profile/${talentData.publicUrl}`, {
+              navigate(`/talent/${talentData.publicUrl}`, {
                 state: { talentData: talentData },
               });
             } else {

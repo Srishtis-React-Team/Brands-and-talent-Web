@@ -392,7 +392,7 @@ const BrandDetails = () => {
         </div>
         <div className="dialog-body spaceTops">
           <div className="adult-signup-main">
-            <div className="step-title mb-3">Brand Details</div>
+            <div className="step-title mb-3">Brand / CLient Details</div>
 
             <div className="kids-form-row row">
               <div className="kids-form-section col-md-6">
@@ -404,7 +404,7 @@ const BrandDetails = () => {
                     <input
                       type="text"
                       className="form-control adult-signup-inputs"
-                      placeholder="Brand / Client Name"
+                      placeholder="Enter your company name or your name if you’re an individual client"
                       onChange={(e) => {
                         handleBrandName(e);
                         setbrandNameError(false);

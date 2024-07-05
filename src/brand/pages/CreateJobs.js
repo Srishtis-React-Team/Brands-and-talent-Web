@@ -2468,7 +2468,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-instagram followers-social-icons"></i>
+                                <i className="bi bi-instagram followers-social-icons"></i>
                                 Instagram Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper">
@@ -2497,7 +2497,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-tiktok followers-social-icons"></i>
+                                <i className="bi bi-tiktok followers-social-icons"></i>
                                 TikTok Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper">
@@ -2526,7 +2526,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-linkedin followers-social-icons"></i>
+                                <i className="bi bi-linkedin followers-social-icons"></i>
                                 LinkedIn Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper">
@@ -2555,7 +2555,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-facebook followers-social-icons"></i>
+                                <i className="bi bi-facebook followers-social-icons"></i>
                                 Facebook Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper">
@@ -2584,7 +2584,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-twitter-x followers-social-icons"></i>
+                                <i className="bi bi-twitter-x followers-social-icons"></i>
                                 Twitter(X) Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper">
@@ -2613,7 +2613,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-twitter-x followers-social-icons"></i>
+                                <i className="bi bi-twitter-x followers-social-icons"></i>
                                 YouTube
                               </label>
                               <div className="creators-filter-select creator-age-wrapper">
@@ -3630,9 +3630,9 @@ const CreateJobs = () => {
                 )}
 
                 <div className="job-post-terms">
-                  By clicking Preview & Post , I agree that Brands / Client &
-                  Talent may publish and distribute my job advertisement on its
-                  site and through its distribution partners.
+                  By clicking Preview & Post , I agree that Brands and Talent
+                  may publish and distribute my job advertisement on its site
+                  and through its distribution partners.
                 </div>
 
                 <div className="create-job-buttons mt-4 mb-2">

@@ -2483,7 +2483,7 @@ const EditTalent = () => {
                             onClick={(e) => {
                               deleteProfession(profession, index);
                             }}
-                            class="bi bi-trash"
+                            className="bi bi-trash"
                           ></i>
                         </div>
                       </div>
@@ -2521,19 +2521,19 @@ const EditTalent = () => {
                       {!publicUrlEdit && (
                         <>
                           <div className="public-url-text">
-                            {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent-profile/${publicUrl}`}
+                            {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent/${publicUrl}`}
                             <i
                               onClick={(e) => {
                                 setPublicUrlEdit(true);
                               }}
-                              class="bi bi-pencil-square"
+                              className="bi bi-pencil-square"
                             ></i>
                           </div>
                         </>
                       )}
                       {publicUrlEdit && (
                         <div className="public-url-text">
-                          {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent-profile/`}
+                          {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent/`}
                         </div>
                       )}
 
@@ -2986,7 +2986,7 @@ const EditTalent = () => {
                               <h5>{eachService.serviceName}</h5>
                               <div>
                                 <i
-                                  class="bi bi-trash"
+                                  className="bi bi-trash"
                                   onClick={(e) => {
                                     setAlertpop({
                                       status: true,

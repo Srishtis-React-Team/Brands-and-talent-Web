@@ -206,9 +206,10 @@ const Footer = () => {
                 <img className="btLogo" src={btLogo}></img>
               </div>
               <div className="company-info">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                placerat dapibus sapien, pellentesque elementum dolor finibus
-                sed.
+                connecting brands and talent™ <br /> Welcome to Brands & Talent
+                (BT), the ultimate platform for creators, influencers, and
+                talent to shine. Connect directly with brands and clients,
+                amplify your voice, and showcase your work globally.
               </div>
               <div className="social-medias">
                 <img src={twitterBlack}></img>

@@ -213,9 +213,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
               <div className="brand-menu-text">Create Gig/Job</div>
             </Link> */}
           <Link
-            to={`/brand-dashboard/${brandData?.publicUrl.replace(/\s+/g, "")}`}
+            to={`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`}
             className={
-              location.pathname === "/brand-dashboard"
+              location.pathname === "/brand"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -232,8 +232,8 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             }
           >
             {/* <i className="bi bi-person-plus icons"></i>
-            <i class="fa-solid fa-user-tie"></i> */}
-            {/* <i class="bi bi-person-add icons"></i> */}
+            <i className="fa-solid fa-user-tie"></i> */}
+            {/* <i className="bi bi-person-add icons"></i> */}
             <img src={postJob} className="iconMenu normal" alt="icon" />
             <img src={postJobHv} className="iconMenu hover" alt="icon" />
 
@@ -248,9 +248,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            {/* <i class="bi bi-person-gear icons"></i> */}
+            {/* <i className="bi bi-person-gear icons"></i> */}
 
-            <i class="bi bi-send icons"></i>
+            <i className="bi bi-send icons"></i>
             <div className="brand-menu-text">Invite To Apply</div>
           </Link>
 
@@ -274,7 +274,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i class="bi bi-people icons"></i>
+            <i className="bi bi-people icons"></i>
             <div className="brand-menu-text">Applicants</div>
           </Link>
 
@@ -286,7 +286,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i class="bi bi-person-bounding-box icons"></i>
+            <i className="bi bi-person-bounding-box icons"></i>
             <div className="brand-menu-text">Find Talent</div>
           </Link> */}
 

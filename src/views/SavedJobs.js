@@ -183,23 +183,25 @@ const SavedJobs = () => {
                               </div>
                               <div className="mb-2">
                                 <span className="job-company-name">
-                                  <i class="bi bi-person-workspace"></i>
+                                  <i className="bi bi-person-workspace"></i>
                                 </span>{" "}
-                                .
                                 <span className="job-company-name">
-                                  {job?.gigDetails?.jobType}
+                                  {job?.gigDetails?.jobType}{" "}
+                                  <i className="bi bi-dot"></i>
                                 </span>
-                                .
                                 <span className="job-company-name">
-                                  {job?.gigDetails?.employmentType}
+                                  {job?.gigDetails?.employmentType}{" "}
+                                  <i className="bi bi-dot"></i>
                                 </span>
-                                .
                                 <span className="job-company-name">
-                                  {
-                                    Object.keys(
-                                      job?.gigDetails?.compensation
-                                    )[0]
-                                  }
+                                  {Object.keys(job?.gigDetails?.compensation)[0]
+                                    ?.split("_")
+                                    .map(
+                                      (word) =>
+                                        word.charAt(0).toUpperCase() +
+                                        word.slice(1)
+                                    )
+                                    .join(" ")}
                                 </span>
                               </div>
                               <div className="mb-2">

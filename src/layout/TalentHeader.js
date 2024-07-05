@@ -25,6 +25,7 @@ import TextField from "@mui/material/TextField";
 import Select from "react-select";
 import CurrentUser from "../CurrentUser";
 import SearchHeaderComponent from "./SearchHeaderComponent";
+import { useLocation } from "react-router-dom";
 
 const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
@@ -47,8 +48,10 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const [age, setAge] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const currentPathname = window.location.pathname;
-  const isTalentProfilePage = currentPathname.includes("/talent-profile");
+  // const currentPathname = window.location.pathname;
+  const location = useLocation();
+  const currentPathname = location.pathname;
+  const isTalentProfilePage = /^\/talent\/.+/.test(currentPathname);
   console.log(isTalentProfilePage, "isTalentProfilePage");
 
   const customStyles = {
@@ -168,10 +171,10 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "profile") {
-        navigate(`/talent-profile/${talentData.publicUrl}`, {
+        navigate(`/talent/${talentData.publicUrl}`, {
           state: { talentData },
         });
-        // navigate("/talent-profile", { state: { talentData: talentData } });
+        // navigate("/talent", { state: { talentData: talentData } });
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);

@@ -515,7 +515,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
             // navigate(`/talent-signup-service-details?${userId}`);
             if (talentData?.planName == "Basic") {
               // navigate(
-              //   `/talent-profile/${talentData.publicUrl}`,
+              //   `/talent/${talentData.publicUrl}`,
               //   {
               //     state: { talentData: talentData },
               //   }
