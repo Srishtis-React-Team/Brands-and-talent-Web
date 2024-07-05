@@ -182,8 +182,8 @@
 .css-13cymwt-control {
   outline: 0;
   font-size: 14px;
-  height: 50px !important;
-  min-height: 50px !important;
+  height: 45px !important;
+  min-height: 45px !important;
 }
 
 .creator-age-main input.form-control.range-inputs {
@@ -194,7 +194,10 @@
   font-weight: 500;
   border: 1px solid #ced4da !important;
   outline: 0 !important;
+
+  width: 48.5%;
 }
+.keyword-wrapper.creator-age-main .creator-age-wrapper{ justify-content: space-between; }
 
 .select__control.css-1oeearl-control {
   height: auto !important;
