@@ -730,8 +730,7 @@ const Dashboard = () => {
               <div className="col-lg-12">
                 <div className="brand-section flex-column banner-title-section">
                   <p className="brand-title">
-                    <span>C</span>onnecting <span>B</span>rands and
-                    <span>T</span>
+                    <span>C</span>onnecting <span>B</span>rands and <span>T</span>
                     alent
                   </p>
                   <p className="brand-description">

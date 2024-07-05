@@ -1012,9 +1012,8 @@ const BrandTalents = () => {
                                   {item.label}
                                 </div>
 
-                                <div className="creators-filter-select">
+                                <div className="creators-filter-select inpWid">
                                   <select
-                                    style={{ width: "275px" }}
                                     className="form-select features-select"
                                     aria-label="Default select example"
                                     onChange={(e) =>
@@ -1070,7 +1069,7 @@ const BrandTalents = () => {
                       <div className="gallery-main p-0 row">
                         {talentList?.map((item) => {
                           return (
-                            <div className="col-md-4 col-lg-3 px-1">
+                            <div className="col-sm-6 col-md-4 col-lg-3 px-1">
                               <div className="gallery-wrapper w-100">
                                 <div className="galBox">
                                   <div className="posRel">
