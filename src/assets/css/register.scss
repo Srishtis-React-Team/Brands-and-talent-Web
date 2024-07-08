@@ -327,7 +327,7 @@
 }
 
 .adult-signup-main {
-  width: 40%;
+  width: 700px;
   max-width: 100%;
   border: 1px solid #aaa;
   border-radius: 20px;
@@ -421,27 +421,20 @@
   }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
-  .adult-signup-main {
-    // background-color: aqua;
-    width: 50%;
-  }
+  
   .gmail-info {
     width: 50%;
   }
 }
 @media (min-width: 481px) and (max-width: 768px) {
-  .adult-signup-main {
-    // background-color: aqua;
-    width: 70%;
-  }
+ 
   .gmail-info {
     width: 60%;
   }
 }
 @media (min-width: 320px) and (max-width: 480px) {
   .adult-signup-main {
-    // background-color: aqua;
-    width: 95%;
+  
     padding: 10px 20px;
   }
   .gmail-info {
