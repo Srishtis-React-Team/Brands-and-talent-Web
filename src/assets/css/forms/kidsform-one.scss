@@ -1,7 +1,7 @@
 .kidsform-one {
   .select__control {
     font-size: 15px;
-    min-height: 50px;
+    min-height: 45px;
   }
   .kids-wrapper {
     margin: 30px 0px;
@@ -1292,6 +1292,12 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+
+.kids-form-section .MuiFormControl-root.MuiTextField-root.form-control{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 
 .public-url-wrapper {
   display: flex;

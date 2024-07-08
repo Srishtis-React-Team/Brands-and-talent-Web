@@ -293,7 +293,7 @@ const BrandLogo = () => {
             }}
           ></button>
         </div>
-        <div className="dialog-body" style={{ height: "75vh" }}>
+        <div className="dialog-body mb-5">
           <div className="adult-signup-main">
             <div className="kids-form-row row">
               <div className="kids-form-section col-md-12">

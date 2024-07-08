@@ -1190,7 +1190,7 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
-                          <div className="service-list-main">
+                          <div className="service-list-main videoWraper">
                             {urlsList.map((url, index) => (
                               <div key={index} className="media-item">
                                 {isYouTubeUrl(url) ? (
@@ -1332,7 +1332,7 @@ const TalentProfile = () => {
 
                       {photos && (
                         <div className="models-photos">
-                          <section className="photos-gallery row padSpc">
+                          <section className="photos-gallery row padSpc w-100">
                             {photosList &&
                               photosList.map((image, index) => {
                                 console.log(image, "image");
@@ -1360,7 +1360,7 @@ const TalentProfile = () => {
                         </div>
                       )}
                       {videos && (
-                        <div className="models-photos">
+                        <div className="models-photos videoWraper">
                           {/* {videoAudioList.map((item, index) => {
                           return (
                             <div className="model-picture-wrapper" key={index}>
@@ -1399,7 +1399,7 @@ const TalentProfile = () => {
                             </div>
                           ))} */}
 
-                          <div className="service-list-main">
+                          <div className="service-list-main w-100">
                             {urlsList.map((url, index) => (
                               <div key={index} className="media-item">
                                 {isYouTubeUrl(url) ? (
@@ -1558,7 +1558,7 @@ const TalentProfile = () => {
                                   {/* <div className="review-content">
                                     {item.comment}
                                   </div> */}
-                                  <div className="reviewer-section">
+                                  <div className="reviewer-section pb-0">
                                     <div className="reviewers-rating">
                                       {[...Array(Number(item.starRatings))].map(
                                         (_, starIndex) => (

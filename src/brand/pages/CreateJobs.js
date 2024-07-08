@@ -1959,7 +1959,7 @@ const CreateJobs = () => {
                     <div className="kids-main">
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-4">
+                          <div className="mb-0">
                             <label className="form-label">
                               Gig/Job Title
                               <span className="mandatory">*</span>
@@ -1982,7 +1982,7 @@ const CreateJobs = () => {
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-4">
+                          <div className="mb-0">
                             <label className="form-label">
                               Category
                               <span className="mandatory">*</span>
@@ -2034,7 +2034,7 @@ const CreateJobs = () => {
                               </div>
                             )}
                           </div> */}
-                          <div className="mb-3">
+                          <div className="mb-0">
                             <label className="form-label">
                               Country<span className="mandatory">*</span>
                             </label>
@@ -2070,7 +2070,7 @@ const CreateJobs = () => {
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-3">
+                          <div className="mb-0">
                             <label className="form-label">State</label>
                             <Select
                               placeholder="Select state..."
@@ -2092,7 +2092,7 @@ const CreateJobs = () => {
                       </div>
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-3">
+                          <div className="mb-0">
                             <label className="form-label">City</label>
                             <Select
                               placeholder="Select City..."
@@ -2107,7 +2107,7 @@ const CreateJobs = () => {
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-4">
+                          <div className="mb-0">
                             <label className="form-label">Street Address</label>
                             <input
                               type="text"
@@ -2215,7 +2215,7 @@ const CreateJobs = () => {
 
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          <label className="form-label">
+                          <label className="form-label  mb-2">
                             Application Deadline
                             <span className="mandatory">*</span>
                           </label>
@@ -2237,12 +2237,12 @@ const CreateJobs = () => {
                           </LocalizationProvider>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                          <label className="form-label">
+                          <label className="form-label mb-2">
                             Profession/Skills (optional)
                             <span className="mandatory">*</span>
                           </label>
 
-                          <div className="mb-3">
+                          <div className="mb-0">
                             <div className="form-group add-skill-wrapper">
                               {/* has-search <span className="fa fa-search form-control-feedback"></span> */}
 
@@ -2312,10 +2312,10 @@ const CreateJobs = () => {
                         <div className="kids-form-section col-md-6 mb-3">
                           <div className="">
                             <label className="form-label">Age Range</label>
-                            <div className="creators-filter-select creator-age-wrapper">
+                            <div className="creators-filter-select creator-age-wrapper splitterDiv">
                               <input
                                 type="text"
-                                style={{ height: "50px" }}
+                            
                                 className="form-control"
                                 placeholder="Minimum Age"
                                 value={minAge}
@@ -2326,7 +2326,6 @@ const CreateJobs = () => {
 
                               <input
                                 type="text"
-                                style={{ height: "50px" }}
                                 className="form-control"
                                 placeholder="Maximum Age"
                                 value={maxAge}
@@ -2481,7 +2480,7 @@ const CreateJobs = () => {
                                 <i className="bi bi-instagram followers-social-icons"></i>
                                 Instagram Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
                                   type="text"
                                   className="form-control"
@@ -2510,7 +2509,7 @@ const CreateJobs = () => {
                                 <i className="bi bi-tiktok followers-social-icons"></i>
                                 TikTok Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
                                   type="text"
                                   className="form-control"
@@ -2539,7 +2538,7 @@ const CreateJobs = () => {
                                 <i className="bi bi-linkedin followers-social-icons"></i>
                                 LinkedIn Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
                                   type="text"
                                   className="form-control"
@@ -2568,7 +2567,7 @@ const CreateJobs = () => {
                                 <i className="bi bi-facebook followers-social-icons"></i>
                                 Facebook Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
                                   type="text"
                                   className="form-control"
@@ -2597,7 +2596,7 @@ const CreateJobs = () => {
                                 <i className="bi bi-twitter-x followers-social-icons"></i>
                                 Twitter(X) Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
                                   type="text"
                                   className="form-control"
@@ -2626,7 +2625,7 @@ const CreateJobs = () => {
                                 <i className="bi bi-twitter-x followers-social-icons"></i>
                                 YouTube
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
                                   type="text"
                                   className="form-control"

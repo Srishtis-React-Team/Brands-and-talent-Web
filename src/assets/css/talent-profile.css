@@ -63,8 +63,13 @@
   width: 13px;
 }
 
+.videoWraper .media-item {
+  margin: 0 5px 10px;
+}
+.videoWraper .media-item iframe{ width: 100%; }
+
 .model-review-wrapper {
-  max-height: 250px;
+  min-height: 250px;
   border-radius: 10px;
   background: #fff;
   box-shadow: 1px 8px 24px 0px rgba(0, 0, 0, 0.1);
@@ -74,11 +79,12 @@
 }
 .review-title {
   color: #000;
-  font-size: 18px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
   padding: 15px 0px;
+  line-height: 21px;
+
 }
 .review-date {
   text-align: end;

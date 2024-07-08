@@ -139,6 +139,18 @@ body {
 .form-select {
   height: 45px !important;
 }
+.kids-form-section .MuiInputBase-input, .add-skill-wrapper .MuiInputBase-input {
+  height: 45px;
+  padding: 0 15px;
+  font-size: 15px;
+}
+.add-skill-wrapper .MuiInputBase-fullWidth{ padding: 0; height: 45px; }
+
+.add-skill-wrapper .MuiFormLabel-root{ 
+  line-height: 12px;
+  font-size: 15px;
+  min-height: 20px; 
+}
 
 .css-13cymwt-control {
   height: 45px !important;
@@ -1841,6 +1853,32 @@ input[type="radio"] {
   position: relative;
   z-index: 1;
 }
+
+.splitterDiv{ justify-content: space-between; }
+
+.splitterDiv .form-control{ width: 48%; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* MEDIA-QUERY START */
 
