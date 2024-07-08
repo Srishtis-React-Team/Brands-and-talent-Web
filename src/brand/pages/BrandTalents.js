@@ -56,6 +56,8 @@ const BrandTalents = () => {
   const darkStar = require("../../assets/icons/darkStar.png");
   const brightStar = require("../../assets/icons/brightStar.png");
   const jobIcon = require("../../assets/icons/jobIcon.png");
+  const pinkStar = require("../../assets/icons/pink-star.png");
+
   const [filterOpen, setFilterOpen] = useState(false);
   const [isClearable, setIsClearable] = useState(true);
   const [isSearchable, setIsSearchable] = useState(true);
@@ -791,12 +793,12 @@ const BrandTalents = () => {
                       )}
                     </div>
                     <div className="keyword-wrapper">
-                      <div className="filter-items">Full Name</div>
+                      <div className="filter-items">Name</div>
                       <div className="creators-filter-select inpWid">
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Full Name"
+                          placeholder="Name"
                           onChange={(e) => {
                             setFullName(e.target.value);
                           }}
@@ -1138,7 +1140,47 @@ const BrandTalents = () => {
                                     <div className="find-creator-name">
                                       {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                     </div>
-                                    <div className="find-creator-address ">
+                                    <div className="talent-details-wrapper">
+                                      <div className="logo-fill">
+                                        <img
+                                          className="talent-logo"
+                                          src={pinkStar}
+                                        ></img>
+                                      </div>
+                                      <div className="contSect">
+                                        {item?.averageStarRatings && (
+                                          <>
+                                            <span>
+                                              {item?.averageStarRatings}
+                                              &nbsp;
+                                              {item?.averageStarRatings > 0 && (
+                                                <>
+                                                  ( {item?.totalReviews}{" "}
+                                                  ratings)
+                                                </>
+                                              )}
+                                            </span>
+                                          </>
+                                        )}
+                                      </div>
+                                    </div>
+                                    {item?.noOfJobsCompleted && (
+                                      <>
+                                        <div className="talent-details-wrapper">
+                                          <div className="logo-fill-briefcase">
+                                            <i className="bi bi-briefcase-fill model-job-icons"></i>
+                                          </div>
+                                          <div className="contSect">
+                                            <span>
+                                              {item?.noOfJobsCompleted} Jobs
+                                              Completed
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </>
+                                    )}
+
+                                    {/* <div className="find-creator-address ">
                                       {item.profession?.map(
                                         (profession, index) => (
                                           <React.Fragment key={index}>
@@ -1148,21 +1190,24 @@ const BrandTalents = () => {
                                           </React.Fragment>
                                         )
                                       )}
+                                    </div> */}
+
+                                    <div>
+                                      <span className="job-company_dtls">
+                                        {item?.profession[0].value}
+                                      </span>
                                     </div>
-                                    <div className="user-details">
-                                      <div className="location-wrapper">
-                                        <img src={locationIcon} alt="" />
-                                        <div className="find-creator-location-name ">
-                                          {item?.parentCountry}
-                                        </div>
-                                      </div>
-                                      <div className="location-wrapper">
-                                        <img src={jobIcon} alt="" />
-                                        <div className="find-creator-location-name">
-                                          25 Jobs Booked
-                                        </div>
-                                      </div>
+
+                                    <div>
+                                      <span className="job-company_dtls">
+                                        {item?.relevantCategories[0]}
+                                      </span>
                                     </div>
+
+                                    <span className="job-company_dtls">
+                                      <i className="bi bi-geo-alt-fill location-icon"></i>
+                                      {item?.parentCountry}, {item?.parentState}{" "}
+                                    </span>
                                   </div>
                                 </div>
                               </div>

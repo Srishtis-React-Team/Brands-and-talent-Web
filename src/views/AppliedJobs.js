@@ -182,27 +182,26 @@ const AppliedJobs = () => {
                                 </span>
                               </div>
                               <div className="mb-2">
-                                <span className="job-company-name">
-                                  {job?.state}
-                                </span>{" "}
-                                ,
-                                <span className="job-company-name">
-                                  {job?.city}
-                                </span>
-                              </div>
-                              <div className="mb-2">
-                                <span className="job-company-name">
+                                <span className="job-company_dtls">
                                   <i className="bi bi-person-workspace"></i>
                                 </span>{" "}
-                                .
-                                <span className="job-company-name">
+                                {/* . */}
+                                <span className="job-company_dtls">
                                   {job?.jobType} <i className="bi bi-dot"></i>
                                 </span>
-                                <span className="job-company-name">
+                                <span className="job-company_dtls">
+                                  <i className="bi bi-geo-alt-fill location-icon"></i>
+                                  {job?.state}, {job?.city}{" "}
+                                  <i className="bi bi-dot"></i>
+                                </span>
+                                <span className="job-company_dtls">
                                   {job?.employmentType}{" "}
                                   <i className="bi bi-dot"></i>
                                 </span>
-                                <span className="job-company-name">
+                                <span className="job-company_dtls">
+                                  {job?.category} <i className="bi bi-dot"></i>
+                                </span>
+                                <span className="job-company_dtls">
                                   {Object.keys(job?.compensation)[0]
                                     ?.split("_")
                                     .map(

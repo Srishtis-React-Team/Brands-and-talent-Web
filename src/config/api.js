@@ -56,6 +56,7 @@ export const API = {
   brandsLogin: BASEURL + "brands/brandsLogin",
   deleteNotification: BASEURL + "brands/deleteNotification",
   updatePasswordInSettings: BASEURL + "brands/updatePasswordInSettings",
+  checkPublicUrlName: BASEURL + "brands/checkPublicUrlName",
 
   //pricing
   getPricingList: BASEURL + "pricing/pricingList",
@@ -149,4 +150,5 @@ export const API = {
 
   //
   activateBrandUser: BASEURL + "brands/activateBrandUser",
+  fetchContentByType: BASEURL + "content/fetchContentByType",
 };

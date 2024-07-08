@@ -1095,7 +1095,7 @@ const Header = ({ onData }) => {
                   }}
                   className={talent ? "selected-register" : "choose-register"}
                 >
-                  I'm a Talent
+                  I am a Talent
                 </div>
                 <div
                   onClick={(e) => {
@@ -1103,12 +1103,11 @@ const Header = ({ onData }) => {
                   }}
                   className={brand ? "selected-register" : "choose-register"}
                 >
-                  I'm a Brand/Client
+                  I am a Brand/Client
                 </div>
               </div>
               <div className="question-model">
-                {talent &&
-                  "Are you the star of the show or the one seeking brilliance?"}
+                {talent && "I am a talent/creator/influencer"}
                 {brand && "I am Looking for talent"}
               </div>
               <div className="register-modal">

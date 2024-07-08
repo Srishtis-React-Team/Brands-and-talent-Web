@@ -170,6 +170,8 @@ const EditTalent = () => {
   const [videoUrl, setVideoUrl] = useState("");
   const [publicUrl, setPublicUrl] = useState("");
   const [urls, setUrls] = useState([]);
+  const [initialUrl, setInitialUrl] = useState("");
+
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -428,10 +430,6 @@ const EditTalent = () => {
     setgenderError(false);
   };
 
-  const publicUrlChange = (event) => {
-    setPublicUrl(event.target.value);
-  };
-
   const selectLanguage = (selectedOptions) => {
     console.log(selectedOptions, "selectedOptions selectedLanguages");
     setLanguageError(false);
@@ -585,6 +583,7 @@ const EditTalent = () => {
             // }, {});
             setFeatures(resData?.data?.data?.features);
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
+            setInitialUrl(`${resData?.data?.data?.publicUrl}`);
           } else if (resData?.data?.data?.type === "adults") {
             setTalentData(resData.data.data, "resData.data.data");
             setEditProfileImage(resData.data.data?.image?.fileData);
@@ -597,6 +596,7 @@ const EditTalent = () => {
             setKidsLegalFirstName(resData?.data?.data?.childFirstName);
             setKidsLegalLastName(resData?.data?.data?.childLastName);
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
+            setInitialUrl(`${resData?.data?.data?.publicUrl}`);
             setDob(resData?.data?.data?.childDob);
             // handleSelectedCountry({
             //   value: resData?.data?.data?.parentCountry,
@@ -1840,6 +1840,92 @@ const EditTalent = () => {
     setShowOptions(false);
   };
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const publicUrlChange = async (event) => {
+    console.log(initialUrl, "initialUrl");
+    console.log(initialUrl, "initialUrl");
+    const inputValue = event.target.value.replace(/ /g, "-");
+    console.log(inputValue, "inputValue");
+    const formData = {
+      name: inputValue,
+      type: "talent",
+      category: talentData?.type,
+    };
+    await ApiHelper.post(`${API.checkPublicUrlName}`, formData)
+      .then((resData) => {
+        console.log(resData, "resDatapublicUrlChange");
+        if (resData?.data?.status === true || publicUrl) {
+          setPublicUrl(inputValue);
+          setErrorMessage("");
+        }
+        if (resData?.data?.status === false && inputValue != initialUrl) {
+          setErrorMessage(
+            "Talent name already exists. Please enter a new name."
+          );
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const updatePublicUrl = async () => {
+    if (talentData?.type === "kids") {
+      const formData = {
+        publicUrl: publicUrl,
+      };
+      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("PublicUrl Updated SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              setMyState(true);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          setIsLoading(false);
+        });
+    }
+    if (talentData?.type === "adults") {
+      let formData = {
+        publicUrl: publicUrl,
+      };
+      await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("PublicUrl Updated SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          } else if (resData.data.status === false) {
+            setIsLoading(false);
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          setIsLoading(false);
+        });
+    }
+  };
+
   useEffect(() => {
     console.log(selectedProfessions, "selectedProfessions");
   }, [selectedProfessions]);
@@ -2547,6 +2633,18 @@ const EditTalent = () => {
                           }}
                           placeholder="Edit url"
                         ></input>
+                      )}
+
+                      {publicUrlEdit && (
+                        <Button
+                          onClick={() => updatePublicUrl()}
+                          className="pub-url-btn"
+                          variant="text"
+                          style={{ textTransform: "capitalize" }}
+                          disabled={errorMessage}
+                        >
+                          save
+                        </Button>
                       )}
                     </div>
 

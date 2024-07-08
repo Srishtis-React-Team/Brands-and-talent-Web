@@ -165,7 +165,7 @@ const BrandHome = () => {
                 <Talentscarousel talentList={talentList} />
               </div>
               <div className="brand-home-title-flex">
-                <div className="kids-title">Most Recent Campaigns</div>
+                <div className="kids-title pb-2">Most Recent Campaigns</div>
                 <div className="view-all-text" onClick={listJob}>
                   View All
                 </div>
@@ -206,7 +206,7 @@ const BrandHome = () => {
                               {jobsList?.hiringCompany}
                             </span>
                           </div>
-                          <div className="mb-2">
+                          {/* <div className="mb-2">
                             <span className="job-company-name">
                               {jobsList?.state}
                             </span>{" "}
@@ -228,6 +228,40 @@ const BrandHome = () => {
                               {jobsList?.employmentType}
                             </span>
                             <i className="bi bi-dot"></i>
+                            <span className="job-company-name">
+                              {jobsList && jobsList.compensation
+                                ? Object.keys(jobsList.compensation)[0]
+                                    .split("_")
+                                    .map(
+                                      (word) =>
+                                        word.charAt(0).toUpperCase() +
+                                        word.slice(1)
+                                    )
+                                    .join(" ")
+                                : ""}
+                            </span>
+                          </div> */}
+                          <div className="mb-2">
+                            <span className="job-company-name">
+                              <i className="bi bi-person-workspace"></i>
+                            </span>{" "}
+                            <i className="bi bi-dot"></i>
+                            <span className="job-company-name">
+                              {jobsList?.jobType}
+                            </span>
+                            <i className="bi bi-dot"></i>
+                            <span className="job-company_dtls">
+                              <i className="bi bi-geo-alt-fill location-icon"></i>
+                              {jobsList?.state}, {jobsList?.city}
+                            </span>
+                            <i className="bi bi-dot"></i>
+                            <span className="job-company-name">
+                              {jobsList?.employmentType}
+                            </span>
+                            <i className="bi bi-dot"></i>
+                            <span className="job-company_dtls">
+                              {jobsList?.category} <i className="bi bi-dot"></i>
+                            </span>
                             <span className="job-company-name">
                               {jobsList && jobsList.compensation
                                 ? Object.keys(jobsList.compensation)[0]

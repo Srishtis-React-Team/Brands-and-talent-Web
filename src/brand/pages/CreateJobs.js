@@ -697,7 +697,9 @@ const CreateJobs = () => {
   );
   const [type, setType] = useState("");
   const [currency, setCurrency] = useState("");
+  const [productCurrency, setProductCurrency] = useState("");
   const [frequency, setfrequency] = useState("");
+  const [productFrequency, setProductFrequency] = useState("");
   const [productName, setProductName] = useState("");
   const [valueUSD, setValueUSD] = useState("");
   const [exactPay, setExactPay] = useState("");
@@ -714,6 +716,12 @@ const CreateJobs = () => {
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
+  };
+  const handleProductCurrencyChange = (event) => {
+    setProductCurrency(event.target.value);
+  };
+  const handleProductFrequencyChange = (event) => {
+    setProductFrequency(event.target.value);
   };
   const handleProductValueChange = (event) => {
     setProductValue(event.target.value);
@@ -778,6 +786,8 @@ const CreateJobs = () => {
             maxPay: maxPay,
             currency: currency,
             frequency: frequency,
+            productCurrency: productCurrency,
+            productFrequency: productCurrency,
             productValue: productValue,
             exactPay: exactPay,
           },
@@ -3214,8 +3224,10 @@ const CreateJobs = () => {
                                           <select
                                             className="form-select"
                                             aria-label="Default select example"
-                                            value={currency}
-                                            onChange={handleCurrencyChange}
+                                            value={productCurrency}
+                                            onChange={
+                                              handleProductCurrencyChange
+                                            }
                                             style={{
                                               fontSize: "14px",
                                             }}
@@ -3244,8 +3256,10 @@ const CreateJobs = () => {
                                           <select
                                             className="form-select"
                                             aria-label="Default select example"
-                                            value={frequency}
-                                            onChange={handleFrequencyChange}
+                                            value={productFrequency}
+                                            onChange={
+                                              handleProductFrequencyChange
+                                            }
                                             style={{
                                               fontSize: "14px",
                                             }}

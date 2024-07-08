@@ -167,7 +167,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
               </div>
 
               <div className="company-location">
-                <span>Location :&nbsp; </span>
+                <span className="font-600">Location :&nbsp; </span>
                 {/* {jobData?.paymentType?.label} */}
                 <span>
                   <span className="">
@@ -177,18 +177,16 @@ const PreviewJob = ({ data, onButtonClick }) => {
               </div>
 
               <div className="company-location">
-                <span>
-                  Application Deadline :&nbsp;
-                  {new Date(jobData?.lastDateForApply).toLocaleDateString(
-                    "en-GB",
-                    {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    }
-                  )}
-                </span>
+                <span className="font-600">Application Deadline :&nbsp;</span>
+                {new Date(jobData?.lastDateForApply).toLocaleDateString(
+                  "en-GB",
+                  {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                )}
               </div>
 
               {/* <div className="company-location">
@@ -219,11 +217,65 @@ const PreviewJob = ({ data, onButtonClick }) => {
               </div> */}
 
               <div className="company-location">
-                <span>Job Type :&nbsp; </span>
+                <span className="font-600">Job Type :&nbsp; </span>
                 {/* {jobData?.paymentType?.label} */}
                 <span>
                   <span className="">{jobData?.jobType}</span>
                 </span>
+              </div>
+
+              <div className="company-location">
+                <span className="font-600">Category :&nbsp; </span>
+                <span className="job-feature-values">{jobData?.category}</span>
+              </div>
+
+              <div className="company-location">
+                <span className="font-600">Compensation :&nbsp; </span>
+                {/* {jobData?.paymentType?.label} */}
+                {jobData.compensation && (
+                  <>
+                    <span className="job-feature-values">
+                      {jobData.compensation &&
+                        Object.entries(jobData.compensation).map(
+                          ([key, value]) => (
+                            <span key={key}>
+                              <span>{value.currency}</span>&nbsp;
+                              {value?.minPay && (
+                                <>
+                                  <span>{value.minPay}/day</span> &nbsp;
+                                </>
+                              )}
+                              {value?.exactPay && (
+                                <>
+                                  <span>{value.exactPay}</span> &nbsp;
+                                </>
+                              )}
+                              {value.product_name && (
+                                <>
+                                  + <span>{value.product_name}</span>
+                                  &nbsp;
+                                </>
+                              )}
+                              {value.product_name && value?.productValue && (
+                                <>
+                                  <span>(valued at {value?.productValue})</span>
+                                </>
+                              )}
+                              {/* <p>
+                                      <strong>{key}</strong>
+                                    </p>
+                                    <p>Type: {value.type}</p>
+                                    <p>Product Name: {value.product_name}</p>
+                                    <p>Min Pay: {value.minPay}</p>
+                                    <p>Max Pay: {value.maxPay}</p>
+                                    <p>Currency: {value.currency}</p>
+                                    <p>Frequency: {value.frequency}</p> */}
+                            </span>
+                          )
+                        )}
+                    </span>
+                  </>
+                )}
               </div>
 
               {/* <div className="company-location">
@@ -251,62 +303,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
                     </div>
                     <div className="job-feature-points">
                       <ul>
-                        {jobData.compensation && (
-                          <>
-                            <li className="job-features-li">
-                              <span className="job-feature-heading">
-                                Compensation :
-                              </span>
-                              <span className="job-feature-values">
-                                {jobData.compensation &&
-                                  Object.entries(jobData.compensation).map(
-                                    ([key, value]) => (
-                                      <span key={key}>
-                                        <span>{value.currency}</span>&nbsp;
-                                        {value?.minPay && (
-                                          <>
-                                            <span>{value.minPay}/day</span>{" "}
-                                            +&nbsp;
-                                          </>
-                                        )}
-                                        {value?.exactPay && (
-                                          <>
-                                            <span>{value.exactPay}</span> +
-                                            &nbsp;
-                                          </>
-                                        )}
-                                        {value.product_name && (
-                                          <>
-                                            <span>{value.product_name}</span>
-                                            &nbsp;
-                                          </>
-                                        )}
-                                        {value.product_name &&
-                                          value?.productValue && (
-                                            <>
-                                              <span>
-                                                (valued at {value?.productValue}
-                                                )
-                                              </span>
-                                            </>
-                                          )}
-                                        {/* <p>
-                                      <strong>{key}</strong>
-                                    </p>
-                                    <p>Type: {value.type}</p>
-                                    <p>Product Name: {value.product_name}</p>
-                                    <p>Min Pay: {value.minPay}</p>
-                                    <p>Max Pay: {value.maxPay}</p>
-                                    <p>Currency: {value.currency}</p>
-                                    <p>Frequency: {value.frequency}</p> */}
-                                      </span>
-                                    )
-                                  )}
-                              </span>
-                            </li>
-                          </>
-                        )}
-
                         <li className="job-features-li">
                           <span className="job-feature-heading">
                             Benefits :
@@ -335,14 +331,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                                 .join("")}
                           </span>
                         </li>
-                        <li className="job-features-li">
-                          <span className="job-feature-heading">
-                            Category :
-                          </span>
-                          <span className="job-feature-values">
-                            {jobData?.category}
-                          </span>
-                        </li>
+
                         {jobData?.minAge && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">Age :</span>

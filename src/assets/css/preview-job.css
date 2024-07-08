@@ -108,6 +108,10 @@
   padding-left: 8px;
 }
 
+.font-600 {
+  font-weight: 600;
+}
+
 .job-features-benefits {
   padding: 20px 0px;
   width: 100%;

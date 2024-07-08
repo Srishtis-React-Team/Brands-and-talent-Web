@@ -146,7 +146,7 @@ const Dashboard = () => {
         address: "Copenhagen, Denmark",
         isFavorite: false,
         location: "Australia",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         rating: 4,
       },
       {
@@ -155,7 +155,7 @@ const Dashboard = () => {
         name: "william",
         address: "Copenhagen, Denmark",
         location: "America",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         isFavorite: false,
         rating: 3,
       },
@@ -165,7 +165,7 @@ const Dashboard = () => {
         name: "Michael",
         address: "Pitsburg, Canada",
         location: "Canada",
-        booked: "6 Jobs Booked",
+        booked: "6 Projects Booked",
         isFavorite: false,
         rating: 5,
       },
@@ -176,7 +176,7 @@ const Dashboard = () => {
         address: "North Carolina, USA",
         isFavorite: false,
         location: "Russia",
-        booked: "150 Jobs Booked",
+        booked: "150 Projects Booked",
         rating: 1,
       },
       {
@@ -186,7 +186,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -196,7 +196,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -206,7 +206,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -216,7 +216,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -226,7 +226,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -236,7 +236,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -246,7 +246,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -256,7 +256,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
     ]);
@@ -268,7 +268,7 @@ const Dashboard = () => {
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
         location: "Australia",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         rating: 4,
       },
       {
@@ -277,7 +277,7 @@ const Dashboard = () => {
         name: "william",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "America",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         isFavorite: false,
         rating: 3,
       },
@@ -287,7 +287,7 @@ const Dashboard = () => {
         name: "Michael",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "Canada",
-        booked: "6 Jobs Booked",
+        booked: "6 Projects Booked",
         isFavorite: false,
         rating: 5,
       },
@@ -298,7 +298,7 @@ const Dashboard = () => {
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
         location: "Russia",
-        booked: "150 Jobs Booked",
+        booked: "150 Projects Booked",
         rating: 1,
       },
     ]);
@@ -309,7 +309,7 @@ const Dashboard = () => {
         name: "Alexander",
         address: "Copenhagen, Denmark",
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         isFavorite: false,
         rating: 4,
       },
@@ -320,7 +320,7 @@ const Dashboard = () => {
         address: "Copenhagen, Denmark",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 3,
       },
       {
@@ -330,7 +330,7 @@ const Dashboard = () => {
         address: "Pitsburg, Canada",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 5,
       },
       {
@@ -340,7 +340,7 @@ const Dashboard = () => {
         address: "North Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -350,7 +350,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       // {
@@ -360,7 +360,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
       // {
@@ -370,7 +370,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
       // {
@@ -380,7 +380,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
       // {
@@ -390,7 +390,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
       // {
@@ -400,7 +400,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
     ]);
@@ -730,7 +730,8 @@ const Dashboard = () => {
               <div className="col-lg-12">
                 <div className="brand-section flex-column banner-title-section">
                   <p className="brand-title">
-                    <span>C</span>onnecting <span>B</span>rands and <span>T</span>
+                    <span>C</span>onnecting <span>B</span>rands and{" "}
+                    <span>T</span>
                     alent
                   </p>
                   <p className="brand-description">
@@ -941,7 +942,7 @@ const Dashboard = () => {
                             <div className="location-wrapper">
                               <img src={jobIcon} alt="" />
                               <div className="location-name">
-                                25 Jobs Booked
+                                25 Projects Booked
                               </div>
                             </div>
                           </div>
@@ -960,14 +961,15 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+        {/* {talentCount} */}
+        {/* {brandUserCount} */}
 
-        <div className="communityWraper wraper secSpac">
+        {/* <div className="communityWraper wraper secSpac">
           <div className="container">
             <div className="title">Our Community</div>
             <div className="row">
               <div className="col-md-3">
                 <div className="community-card-wrapper card-background">
-                  {/* {talentCount} */}
                   <div className="count">500+</div>
                   <div className="cards-text">Talent in Our Community</div>
                 </div>
@@ -982,21 +984,19 @@ const Dashboard = () => {
 
               <div className="col-md-3">
                 <div className="community-card-wrapper  card-background">
-                  {/* {brandUserCount} */}
                   <div className="count">50</div>
                   <div className="cards-text">Happy Clients</div>
                 </div>
               </div>
               <div className="col-md-3">
                 <div className="community-card-wrapper  card-background">
-                  {/* {brandUserCount} */}
                   <div className="count">200+</div>
                   <div className="cards-text">Projects Completed</div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="productsWraper wraper secSpac">
           <div className="container">

@@ -216,7 +216,7 @@ const BrandFavorites = () => {
                                   <div className="location-wrapper">
                                     <img src={jobIcon} alt="" />
                                     <div className="find-creator-location-name">
-                                      25 Jobs Booked
+                                      25 Projects Booked
                                     </div>
                                   </div>
                                 </div>

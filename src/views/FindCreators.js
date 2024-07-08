@@ -39,6 +39,8 @@ const FindCreators = () => {
   const girl12 = require("../assets/images/girl12.png");
   const girl13 = require("../assets/images/girl13.png");
   const girl14 = require("../assets/images/girl14.png");
+  const pinkStar = require("../assets/icons/pink-star.png");
+
   const girl15 = require("../assets/images/girl15.png");
   const girl16 = require("../assets/images/girl16.png");
   const starIcon = require("../assets/icons/star.png");
@@ -783,12 +785,12 @@ const FindCreators = () => {
                     )}
                   </div>
                   <div className="keyword-wrapper">
-                    <div className="filter-items">Full Name</div>
+                    <div className="filter-items">Name</div>
                     <div className="creators-filter-select inpWid">
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Full Name"
+                        placeholder="Name"
                         onChange={(e) => {
                           setFullName(e.target.value);
                         }}
@@ -1118,7 +1120,47 @@ const FindCreators = () => {
                                     <div className="find-creator-name">
                                       {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                     </div>
-                                    <div className="find-creator-address ">
+                                    <div className="talent-details-wrapper">
+                                      <div className="logo-fill">
+                                        <img
+                                          className="talent-logo"
+                                          src={pinkStar}
+                                        ></img>
+                                      </div>
+                                      <div className="contSect">
+                                        {item?.averageStarRatings && (
+                                          <>
+                                            <span>
+                                              {item?.averageStarRatings}
+                                              &nbsp;
+                                              {item?.averageStarRatings > 0 && (
+                                                <>
+                                                  ( {item?.totalReviews}{" "}
+                                                  ratings)
+                                                </>
+                                              )}
+                                            </span>
+                                          </>
+                                        )}
+                                      </div>
+                                    </div>
+                                    {item?.noOfJobsCompleted && (
+                                      <>
+                                        <div className="talent-details-wrapper">
+                                          <div className="logo-fill-briefcase">
+                                            <i className="bi bi-briefcase-fill model-job-icons"></i>
+                                          </div>
+                                          <div className="contSect">
+                                            <span>
+                                              {item?.noOfJobsCompleted} Jobs
+                                              Completed
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </>
+                                    )}
+
+                                    {/* <div className="find-creator-address ">
                                       {item.profession?.map(
                                         (profession, index) => (
                                           <React.Fragment key={index}>
@@ -1128,21 +1170,36 @@ const FindCreators = () => {
                                           </React.Fragment>
                                         )
                                       )}
+                                    </div> */}
+
+                                    <div>
+                                      <span className="job-company_dtls">
+                                        {item?.profession[0].value}
+                                      </span>
                                     </div>
-                                    <div className="user-details">
-                                      <div className="location-wrapper">
-                                        <img src={locationIcon} alt="" />
-                                        <div className="find-creator-location-name ">
-                                          {item?.parentCountry}
-                                        </div>
-                                      </div>
-                                      <div className="location-wrapper">
-                                        <img src={jobIcon} alt="" />
-                                        <div className="find-creator-location-name">
-                                          25 Jobs Booked
-                                        </div>
-                                      </div>
+
+                                    <div>
+                                      <span className="job-company_dtls">
+                                        {item?.relevantCategories[0]}
+                                      </span>
                                     </div>
+
+                                    <span className="job-company_dtls">
+                                      <i className="bi bi-geo-alt-fill location-icon"></i>
+                                      {item?.parentCountry}, {item?.parentState}{" "}
+                                    </span>
+
+                                    {/* <div className="find-creator-address ">
+                                      {item.profession?.map(
+                                        (profession, index) => (
+                                          <React.Fragment key={index}>
+                                            {profession.value}
+                                            {index !==
+                                              item.profession.length - 1 && ","}
+                                          </React.Fragment>
+                                        )
+                                      )}
+                                    </div> */}
                                   </div>
                                 </div>
                               </div>

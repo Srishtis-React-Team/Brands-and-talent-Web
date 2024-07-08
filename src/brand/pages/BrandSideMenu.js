@@ -5,10 +5,14 @@ import { NavLink } from "react-router-dom";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
+import CurrentUser from "../../CurrentUser";
+
 const postJob = require("../../assets/icons/postJob.png");
 const postJobHv = require("../../assets/icons/postJob-h.png");
 
 const BrandSideMenu = ({ onChildClick, myState }) => {
+  const { currentUserType, avatarImage } = CurrentUser();
+
   // useEffect(() => {
   //   const handleBeforeUnload = (e) => {
   //     const confirmationMessage =
@@ -170,6 +174,10 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
         <div className="talent-profile">
           <div className="talent-data-wrapper">
             <div className="profImg">
+              {!brandData?.brandImage[0] && (
+                <img className="profile-img" src={avatarImage} alt="" />
+              )}
+
               <img
                 className="profile-img"
                 src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
@@ -215,7 +223,8 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           <Link
             to={`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`}
             className={
-              location.pathname === "/brand"
+              location.pathname ===
+              `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }

@@ -161,7 +161,7 @@ const BrandSignup = () => {
         confirmPassword: adultConfirmPassword,
         position: receivedData,
         fcmToken: fcmToken,
-        publicUrl: adultName,
+        publicUrl: adultName.replace(/ /g, "-"),
       };
       setIsLoading(true);
       await ApiHelper.post(API.brandsRegister, formData)

@@ -173,27 +173,29 @@ const SavedJobs = () => {
                                 </span>
                               </div>
                               <div className="mb-2">
-                                <span className="job-company-name">
-                                  {job?.gigDetails?.state}
-                                </span>{" "}
-                                ,
-                                <span className="job-company-name">
-                                  {job?.gigDetails?.city}
-                                </span>
-                              </div>
-                              <div className="mb-2">
-                                <span className="job-company-name">
+                                <span className="job-company_dtls">
                                   <i className="bi bi-person-workspace"></i>
                                 </span>{" "}
-                                <span className="job-company-name">
+                                {/* . */}
+                                <span className="job-company_dtls">
                                   {job?.gigDetails?.jobType}{" "}
                                   <i className="bi bi-dot"></i>
                                 </span>
-                                <span className="job-company-name">
+                                <span className="job-company_dtls">
+                                  <i className="bi bi-geo-alt-fill location-icon"></i>
+                                  {job?.gigDetails?.state},{" "}
+                                  {job?.gigDetails?.city}{" "}
+                                  <i className="bi bi-dot"></i>
+                                </span>
+                                <span className="job-company_dtls">
                                   {job?.gigDetails?.employmentType}{" "}
                                   <i className="bi bi-dot"></i>
                                 </span>
-                                <span className="job-company-name">
+                                <span className="job-company_dtls">
+                                  {job?.gigDetails?.category}{" "}
+                                  <i className="bi bi-dot"></i>
+                                </span>
+                                <span className="job-company_dtls">
                                   {Object.keys(job?.gigDetails?.compensation)[0]
                                     ?.split("_")
                                     .map(

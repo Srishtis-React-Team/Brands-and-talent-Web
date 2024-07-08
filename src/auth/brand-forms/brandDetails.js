@@ -179,7 +179,7 @@ const BrandDetails = () => {
         brandZipCode: zipCode,
         howHearAboutAs: hearAboutUs,
         address: address,
-        publicUrl: brandName,
+        publicUrl: brandName.replace(/ /g, "-"),
         yourFullName: yourName,
         brandType: brandType,
         brandCountry: country,

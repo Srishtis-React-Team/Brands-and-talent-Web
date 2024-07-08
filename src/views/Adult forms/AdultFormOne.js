@@ -391,7 +391,7 @@ const AdultFormOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: adultsPreferedFirstName,
+        publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
       };
       if (userId) {
         await ApiHelper.post(`${API.updateAdults}${userId}`, formData)

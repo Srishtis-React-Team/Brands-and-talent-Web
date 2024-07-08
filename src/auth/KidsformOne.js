@@ -653,7 +653,7 @@ const KidsformOne = ({ sendDataToParent }) => {
         childAboutYou: aboutYou,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: kidsPreferedFirstName,
+        publicUrl: kidsPreferedFirstName.replace(/ /g, "-"),
       };
       setIsLoading(true);
       console.log(userId, "userId");

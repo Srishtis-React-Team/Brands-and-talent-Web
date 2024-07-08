@@ -18,7 +18,7 @@ const Guidelines = () => {
           </div>
         </div>
       </section>
-      <div className="bt-container">
+      <div className="bt-container container">
         <p className="bt-updated-date">Updated: 12 May 2024</p>
         <p className="bt-intro">
           Welcome to Brands & Talent (BT)! Our platform is a vibrant community

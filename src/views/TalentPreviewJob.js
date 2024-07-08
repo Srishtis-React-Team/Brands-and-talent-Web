@@ -77,6 +77,7 @@ const TalentPreviewJob = (props) => {
   };
 
   const toggleMenu = () => {
+    console.log("toggleMenucalledTalentPreview");
     setShowSidebar(!showSidebar);
   };
 
@@ -321,6 +322,61 @@ const TalentPreviewJob = (props) => {
                 <span className="">{jobData?.jobType}</span>
               </span>
             </div>
+            <div className="company-location">
+              <span className="job-feature-heading">Category :&nbsp; </span>
+              <span className="job-feature-values">{jobData?.category}</span>
+            </div>
+
+            <div className="company-location">
+              <span className="job-feature-heading">Compensation :&nbsp; </span>
+              <span>
+                {jobData.compensation && (
+                  <>
+                    <span className="job-feature-values">
+                      {jobData.compensation &&
+                        Object.entries(jobData.compensation).map(
+                          ([key, value]) => (
+                            <span key={key}>
+                              <span>{value.currency}</span>&nbsp;
+                              {value?.minPay && (
+                                <>
+                                  <span>{value.minPay}/day</span> +&nbsp;
+                                </>
+                              )}
+                              {value?.exactPay && (
+                                <>
+                                  <span>{value.exactPay}</span> + &nbsp;
+                                </>
+                              )}
+                              {value.product_name && (
+                                <>
+                                  <span>{value.product_name}</span>
+                                  &nbsp;
+                                </>
+                              )}
+                              {value.product_name && value?.productValue && (
+                                <>
+                                  <span>(valued at {value?.productValue})</span>
+                                </>
+                              )}
+                              {/* <p>
+                                      <strong>{key}</strong>
+                                    </p>
+                                    <p>Type: {value.type}</p>
+                                    <p>Product Name: {value.product_name}</p>
+                                    <p>Min Pay: {value.minPay}</p>
+                                    <p>Max Pay: {value.maxPay}</p>
+                                    <p>Currency: {value.currency}</p>
+                                    <p>Frequency: {value.frequency}</p> */}
+                            </span>
+                          )
+                        )}
+                    </span>
+                  </>
+                )}
+              </span>
+            </div>
+
             {/* 
             <div className="company-location">
               <span>Application Type :&nbsp; </span>
@@ -346,60 +402,6 @@ const TalentPreviewJob = (props) => {
                   </div>
                   <div className="job-feature-points">
                     <ul>
-                      {jobData.compensation && (
-                        <>
-                          <li className="job-features-li">
-                            <span className="job-feature-heading">
-                              Compensation :
-                            </span>
-                            <span className="job-feature-values">
-                              {jobData.compensation &&
-                                Object.entries(jobData.compensation).map(
-                                  ([key, value]) => (
-                                    <span key={key}>
-                                      <span>{value.currency}</span>&nbsp;
-                                      {value?.minPay && (
-                                        <>
-                                          <span>{value.minPay}/day</span>{" "}
-                                          +&nbsp;
-                                        </>
-                                      )}
-                                      {value?.exactPay && (
-                                        <>
-                                          <span>{value.exactPay}</span> + &nbsp;
-                                        </>
-                                      )}
-                                      {value.product_name && (
-                                        <>
-                                          <span>{value.product_name}</span>
-                                          &nbsp;
-                                        </>
-                                      )}
-                                      {value.product_name &&
-                                        value?.productValue && (
-                                          <>
-                                            <span>
-                                              (valued at {value?.productValue})
-                                            </span>
-                                          </>
-                                        )}
-                                      {/* <p>
-                                      <strong>{key}</strong>
-                                    </p>
-                                    <p>Type: {value.type}</p>
-                                    <p>Product Name: {value.product_name}</p>
-                                    <p>Min Pay: {value.minPay}</p>
-                                    <p>Max Pay: {value.maxPay}</p>
-                                    <p>Currency: {value.currency}</p>
-                                    <p>Frequency: {value.frequency}</p> */}
-                                    </span>
-                                  )
-                                )}
-                            </span>
-                          </li>
-                        </>
-                      )}
-
                       <li className="job-features-li">
                         <span className="job-feature-heading">Benefits :</span>
                         <span className="job-feature-values">
@@ -426,12 +428,7 @@ const TalentPreviewJob = (props) => {
                               .join("")}
                         </span>
                       </li>
-                      <li className="job-features-li">
-                        <span className="job-feature-heading">Category :</span>
-                        <span className="job-feature-values">
-                          {jobData?.category}
-                        </span>
-                      </li>
+
                       {jobData?.minAge && (
                         <li className="job-features-li">
                           <span className="job-feature-heading">Age :</span>

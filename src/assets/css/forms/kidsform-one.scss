@@ -1020,6 +1020,13 @@
   font-weight: 500;
   text-align: right;
 }
+.pub-url-btn:hover {
+  background-color: #c2114b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right;
+}
 
 .update-password-main {
   padding: 30px;
@@ -1150,6 +1157,24 @@
   padding-left: 8px;
   padding-right: 8px;
   cursor: pointer;
+}
+
+.errorMessage {
+  font-family: sans-serif;
+  color: red;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 8px 0px;
+  margin: 0;
+}
+
+.pub-url-btn {
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: #c2114b;
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: sans-serif;
 }
 
 .image-upload-label {

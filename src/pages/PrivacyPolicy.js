@@ -2,9 +2,31 @@ import { useNavigate } from "react-router";
 import Header from "../layout/header";
 import Footer from "../layout/Footer";
 import "../assets/css/privacypolicy.css";
-
+import React, { useState, useEffect, useRef } from "react";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../config/api";
 const PrivacyPolicy = () => {
   const navigate = useNavigate();
+  const [privacyPolicyList, setPrivacyPolicyList] = useState([]);
+
+  useEffect(() => {
+    fetchContentByType();
+  }, []);
+
+  const fetchContentByType = async () => {
+    const formData = {
+      contentType: "privacy and policy",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        console.log(resData?.data?.data?.content, "resDataterms");
+        if (resData) {
+          setPrivacyPolicyList(resData?.data?.data?.content);
+        }
+      })
+      .catch((err) => {});
+  };
+
   return (
     <>
       <Header />{" "}
@@ -19,7 +41,7 @@ const PrivacyPolicy = () => {
           </div>
         </div>
       </section>
-      <div className="policy-container">
+      <div className="policy-container container">
         <p className="policy-updated-date">Updated: 12 May 2024</p>
         <p className="policy-intro">
           Welcome to Brands & Talent (BT)! This Privacy Policy describes how

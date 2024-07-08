@@ -132,6 +132,7 @@ const EditBrands = () => {
   const [userNameError, setUserNameError] = useState(false);
   const [publicUrlEdit, setPublicUrlEdit] = useState(false);
   const [publicUrl, setPublicUrl] = useState("");
+  const [initialUrl, setInitialUrl] = useState("");
   const [country, setCountry] = useState("");
   const [countryList, setCountryList] = useState([]);
   const [parentCountryError, setParentCountryError] = useState(false);
@@ -248,8 +249,30 @@ const EditBrands = () => {
     }
   }, [brandId]);
 
-  const publicUrlChange = (event) => {
-    setPublicUrl(event.target.value);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const publicUrlChange = async (event) => {
+    console.log(initialUrl, "initialUrl");
+    console.log(initialUrl, "initialUrl");
+    const inputValue = event.target.value.replace(/ /g, "-");
+    console.log(inputValue, "inputValue");
+    const formData = { name: inputValue, type: "brand" };
+    await ApiHelper.post(`${API.checkPublicUrlName}`, formData)
+      .then((resData) => {
+        console.log(resData, "resDatapublicUrlChange");
+        if (resData?.data?.status === true || publicUrl) {
+          setPublicUrl(inputValue);
+          setErrorMessage("");
+        }
+        if (resData?.data?.status === false && inputValue != initialUrl) {
+          setErrorMessage(
+            "Brand name already exists. Please enter a new name."
+          );
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getBrand = async () => {
@@ -273,6 +296,7 @@ const EditBrands = () => {
             setPersonalProfileImageObject(resData.data.data?.profileImage);
             setWebsiteLink(resData?.data?.data?.websiteLink);
             setPublicUrl(resData?.data?.data?.publicUrl);
+            setInitialUrl(resData?.data?.data?.publicUrl);
             setWebsiteLink(resData?.data?.data?.brandWebsite);
             setLinkedinUrl(resData?.data?.data?.linkedinUrl);
             setTwitterUrl(resData?.data?.data?.twitterUrl);
@@ -498,6 +522,30 @@ const EditBrands = () => {
       .catch((err) => {});
   };
 
+  const updatePublicUrl = async () => {
+    const formData = {
+      publicUrl: publicUrl,
+    };
+    await ApiHelper.post(`${API.editBrands}${brandId}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("PublicUrl Updated SuccessFully!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            setMyState(true);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {});
+  };
+
   const handleBrandNameChange = (e) => {
     const value = e.target.value;
     // Regular expression to allow only letters
@@ -648,17 +696,29 @@ const EditBrands = () => {
                   <div className="kids-form-section col-md-6">
                     <div className="profile-image-edit-section edit-basicdetails-section-main p-0 mt-2 mx-0">
                       <div>
-                        <label className="form-label">Brand Logo</label>
+                        <label className="form-label">
+                          Brand / Client logo
+                        </label>
                         <div className="image-upload-label">
                           ( Upload your company logo or your photo If signing up
                           as an individual client )
                         </div>
                       </div>
-                      <img
-                        className="profile-image-edit"
-                        src={`${API.userFilePath}${editProfileImage}`}
-                        alt=""
-                      />
+                      {!editProfileImage && (
+                        <img
+                          className="profile-image-edit"
+                          src={avatarImage}
+                          alt=""
+                        />
+                      )}
+                      {editProfileImage && (
+                        <img
+                          className="profile-image-edit"
+                          src={`${API.userFilePath}${editProfileImage}`}
+                          alt=""
+                        />
+                      )}
+
                       <div className="image-edit-icon" onClick={File}>
                         <input
                           type="file"
@@ -1093,7 +1153,6 @@ const EditBrands = () => {
                           {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent/`}
                         </div>
                       )}
-
                       {publicUrlEdit && (
                         <input
                           type="text"
@@ -1105,7 +1164,24 @@ const EditBrands = () => {
                           placeholder="Edit url"
                         ></input>
                       )}
+
+                      {publicUrlEdit && (
+                        <Button
+                          onClick={() => updatePublicUrl()}
+                          className="pub-url-btn"
+                          variant="text"
+                          style={{ textTransform: "capitalize" }}
+                          disabled={errorMessage}
+                        >
+                          save
+                        </Button>
+                      )}
                     </div>
+                    {errorMessage && (
+                      <>
+                        <p className="errorMessage">{errorMessage}</p>
+                      </>
+                    )}
 
                     {/* {preferedNameError && (
                       <div className="invalid-fields">

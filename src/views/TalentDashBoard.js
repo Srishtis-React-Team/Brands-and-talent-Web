@@ -160,6 +160,7 @@ const TalentDashBoard = () => {
   };
 
   const toggleMenu = () => {
+    console.log("toggleMenucalled");
     setShowSidebar(!showSidebar);
   };
   const [talentId, setTalentId] = useState(null);

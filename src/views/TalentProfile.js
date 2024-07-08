@@ -1172,7 +1172,7 @@ const TalentProfile = () => {
                               <div className="wrapper">
                                 <img src={check}></img>
                               </div>
-                              <div className="posted-jobs">24 Jobs Booked</div>
+                              <div className="posted-jobs">24 Projects Booked</div>
                             </div> */}
                           </div>
 
