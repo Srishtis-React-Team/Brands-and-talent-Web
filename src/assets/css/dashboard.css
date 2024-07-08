@@ -1825,7 +1825,7 @@ input[type="radio"] {
   position: relative;
   z-index: 0;
   background-image: url("../images/banner1.jpg");
-  /* background-position: center center !important; */
+  background-position: center center !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
 
@@ -2059,7 +2059,7 @@ input[type="radio"] {
     padding: 0 !important;
   }
   .mobile-nav-functions .login-text {
-    margin-right: 0 !important;
+    margin-right:15px !important;
   }
 }
 
