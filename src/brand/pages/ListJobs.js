@@ -297,33 +297,29 @@ const ListJobs = () => {
                                       {job?.hiringCompany}
                                     </span>
                                   </div>
-                                  <div className="mb-2">
-                                    {job?.state && (
-                                      <span className="job-company-name">
-                                        {job?.state}
-                                      </span>
-                                    )}
-                                    {job?.state && <>,</>}
 
-                                    {job?.city && (
-                                      <span className="job-company-name">
-                                        {job?.city}
-                                      </span>
-                                    )}
-                                  </div>
                                   <div className="mb-2">
                                     <span className="job-company-name">
-                                      <i class="bi bi-person-workspace"></i>
+                                      <i className="bi bi-person-workspace"></i>
                                     </span>{" "}
-                                    <i class="bi bi-dot"></i>
+                                    <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
                                       {job?.jobType}
                                     </span>
-                                    <i class="bi bi-dot"></i>
+                                    <i className="bi bi-dot"></i>
+                                    <span className="job-company_dtls">
+                                      <i className="bi bi-geo-alt-fill location-icon"></i>
+                                      {job?.state}, {job?.city}
+                                    </span>
+                                    <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
                                       {job?.employmentType}
                                     </span>
-                                    <i class="bi bi-dot"></i>
+                                    <i className="bi bi-dot"></i>
+                                    <span className="job-company_dtls">
+                                      {job?.category}{" "}
+                                      <i className="bi bi-dot"></i>
+                                    </span>
                                     <span className="job-company-name">
                                       {job && job.compensation
                                         ? Object.keys(job.compensation)[0]

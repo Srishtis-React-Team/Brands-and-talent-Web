@@ -10,7 +10,11 @@ import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
 import CurrentUser from "../CurrentUser.js";
 
-const TalentPreviewJob = () => {
+const TalentPreviewJob = (props) => {
+  const { job } = props;
+  const job_id = job;
+  console.log(job_id, "job_id");
+
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
@@ -30,8 +34,10 @@ const TalentPreviewJob = () => {
   }, [currentUserId]);
 
   const location = useLocation();
+
   const { jobId } = location.state || {};
   console.log(jobId, "jobId");
+
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -46,7 +52,7 @@ const TalentPreviewJob = () => {
   const [brandData, setBrandData] = useState(null);
 
   const getJobsByID = async () => {
-    await ApiHelper.get(`${API.getAnyJobById}${jobId ? jobId : queryString}`)
+    await ApiHelper.get(`${API.getAnyJobById}${job_id ? job_id : queryString}`)
       .then((resData) => {
         console.log(resData.data.data, "getJobsByID");
         setJobData(resData.data.data);
@@ -71,6 +77,7 @@ const TalentPreviewJob = () => {
   };
 
   const toggleMenu = () => {
+    console.log("toggleMenucalledTalentPreview");
     setShowSidebar(!showSidebar);
   };
 
@@ -117,7 +124,8 @@ const TalentPreviewJob = () => {
 
   useEffect(() => {
     getJobsByID();
-  }, []);
+  }, [job_id]);
+
   useEffect(() => {
     console.log(jobData, "jobData");
     console.log(jobData?.questions, "jobData questions");
@@ -182,18 +190,18 @@ const TalentPreviewJob = () => {
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
-      <div
+      {/* <div
         id="sidebarBrand"
         className={`brand-sidebar ${
           showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
         }`}
       >
         <TalentSideMenu />
-      </div>
+      </div> */}
 
       <main
         id="mainBrand"
-        className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
+        // className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main boxBg px-4">
           <div className="back-create">
@@ -314,6 +322,61 @@ const TalentPreviewJob = () => {
                 <span className="">{jobData?.jobType}</span>
               </span>
             </div>
+            <div className="company-location">
+              <span className="job-feature-heading">Category :&nbsp; </span>
+              <span className="job-feature-values">{jobData?.category}</span>
+            </div>
+
+            <div className="company-location">
+              <span className="job-feature-heading">Compensation :&nbsp; </span>
+              <span>
+                {jobData.compensation && (
+                  <>
+                    <span className="job-feature-values">
+                      {jobData.compensation &&
+                        Object.entries(jobData.compensation).map(
+                          ([key, value]) => (
+                            <span key={key}>
+                              <span>{value.currency}</span>&nbsp;
+                              {value?.minPay && (
+                                <>
+                                  <span>{value.minPay}/day</span> +&nbsp;
+                                </>
+                              )}
+                              {value?.exactPay && (
+                                <>
+                                  <span>{value.exactPay}</span> + &nbsp;
+                                </>
+                              )}
+                              {value.product_name && (
+                                <>
+                                  <span>{value.product_name}</span>
+                                  &nbsp;
+                                </>
+                              )}
+                              {value.product_name && value?.productValue && (
+                                <>
+                                  <span>(valued at {value?.productValue})</span>
+                                </>
+                              )}
+                              {/* <p>
+                                      <strong>{key}</strong>
+                                    </p>
+                                    <p>Type: {value.type}</p>
+                                    <p>Product Name: {value.product_name}</p>
+                                    <p>Min Pay: {value.minPay}</p>
+                                    <p>Max Pay: {value.maxPay}</p>
+                                    <p>Currency: {value.currency}</p>
+                                    <p>Frequency: {value.frequency}</p> */}
+                            </span>
+                          )
+                        )}
+                    </span>
+                  </>
+                )}
+              </span>
+            </div>
+
             {/* 
             <div className="company-location">
               <span>Application Type :&nbsp; </span>
@@ -339,60 +402,6 @@ const TalentPreviewJob = () => {
                   </div>
                   <div className="job-feature-points">
                     <ul>
-                      {jobData.compensation && (
-                        <>
-                          <li className="job-features-li">
-                            <span className="job-feature-heading">
-                              Compensation :
-                            </span>
-                            <span className="job-feature-values">
-                              {jobData.compensation &&
-                                Object.entries(jobData.compensation).map(
-                                  ([key, value]) => (
-                                    <span key={key}>
-                                      <span>{value.currency}</span>&nbsp;
-                                      {value?.minPay && (
-                                        <>
-                                          <span>{value.minPay}/day</span>{" "}
-                                          +&nbsp;
-                                        </>
-                                      )}
-                                      {value?.exactPay && (
-                                        <>
-                                          <span>{value.exactPay}</span> + &nbsp;
-                                        </>
-                                      )}
-                                      {value.product_name && (
-                                        <>
-                                          <span>{value.product_name}</span>
-                                          &nbsp;
-                                        </>
-                                      )}
-                                      {value.product_name &&
-                                        value?.productValue && (
-                                          <>
-                                            <span>
-                                              (valued at {value?.productValue})
-                                            </span>
-                                          </>
-                                        )}
-                                      {/* <p>
-                                      <strong>{key}</strong>
-                                    </p>
-                                    <p>Type: {value.type}</p>
-                                    <p>Product Name: {value.product_name}</p>
-                                    <p>Min Pay: {value.minPay}</p>
-                                    <p>Max Pay: {value.maxPay}</p>
-                                    <p>Currency: {value.currency}</p>
-                                    <p>Frequency: {value.frequency}</p> */}
-                                    </span>
-                                  )
-                                )}
-                            </span>
-                          </li>
-                        </>
-                      )}
-
                       <li className="job-features-li">
                         <span className="job-feature-heading">Benefits :</span>
                         <span className="job-feature-values">
@@ -419,12 +428,7 @@ const TalentPreviewJob = () => {
                               .join("")}
                         </span>
                       </li>
-                      <li className="job-features-li">
-                        <span className="job-feature-heading">Category :</span>
-                        <span className="job-feature-values">
-                          {jobData?.category}
-                        </span>
-                      </li>
+
                       {jobData?.minAge && (
                         <li className="job-features-li">
                           <span className="job-feature-heading">Age :</span>

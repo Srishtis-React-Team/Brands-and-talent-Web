@@ -45,12 +45,13 @@
 .talent-verified {
   display: flex;
   align-items: center;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: sans-serif;
 }
 
 .blue-shield-wrapper {
-  margin-right: 5px;
+  margin-right: 10px;
   border: 1px solid #1669e6;
   padding: 3px;
   border-radius: 50%;
@@ -487,6 +488,9 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
+}
+.logo-fill-briefcase {
   margin-right: 10px;
 }
 .talent-details-wrapper .contSect {

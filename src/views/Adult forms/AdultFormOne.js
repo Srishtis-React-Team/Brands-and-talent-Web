@@ -391,7 +391,7 @@ const AdultFormOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: adultsPreferedFirstName,
+        publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
       };
       if (userId) {
         await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
@@ -858,7 +858,7 @@ const AdultFormOne = () => {
                                 onClick={(e) => {
                                   deleteProfession(profession, index);
                                 }}
-                                class="bi bi-trash"
+                                className="bi bi-trash"
                               ></i>
                             </div>
                           </div>
@@ -1237,7 +1237,7 @@ const AdultFormOne = () => {
                     </div> */}
                     <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">
-                        Number Of Jobs Completed
+                        Projects Completed
                         <span className="mandatory">*</span>
                       </label>
                       <input
@@ -1248,7 +1248,7 @@ const AdultFormOne = () => {
                           handleJobsCompleted(e);
                           setJobsCompletedError(false);
                         }}
-                        placeholder="Number of jobs completed"
+                        placeholder="Enter number of jobs/client projects  you’ve completed till now"
                       ></input>
                       {completedError && (
                         <div className="invalid-fields">

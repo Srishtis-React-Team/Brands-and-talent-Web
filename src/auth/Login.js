@@ -149,13 +149,10 @@ const Login = () => {
               setBrandsLocalStorage(resData.data);
               console.log(resData.data, "resData.data");
               navigate(
-                `/brand-dashboard/${resData?.data?.data?.publicUrl.replace(
-                  /\s+/g,
-                  ""
-                )}`
+                `/brand/${resData?.data?.data?.publicUrl.replace(/\s+/g, "")}`
               );
               // window.location.reload();
-              // navigate(`/talent-profile/${item.publicUrl}`, {
+              // navigate(`/talent/${item.publicUrl}`, {
               //   state: { talentData: item },
               // });
             }, 1000);

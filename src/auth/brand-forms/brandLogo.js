@@ -12,6 +12,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
+import RichTextEditor from "../../views/RichTextEditor";
 import { convertToRaw } from "draft-js";
 const BrandLogo = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const BrandLogo = () => {
   );
   const [aboutYou, setAboutYou] = useState([]);
   const [whyWorkWithUs, setWhyWorkWithUs] = useState([]);
+  const [editors, setEditors] = useState(["", ""]); // Initial state with two empty editors
 
   useEffect(() => {
     console.log(portofolioFile, "portofolioFile");
@@ -53,19 +55,11 @@ const BrandLogo = () => {
     }
   }, [location.state]);
 
-  const onEditorSummary = (editorState) => {
-    console.log(editorState, "editorState");
-    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
-    // setAboutYou(editorState);
-    setEditorState(editorState);
+  const handleEditorChange = (value, index) => {
+    setAboutYou(value);
   };
-
-  const onWhyWorkWithUsEditorSummary = (editorState) => {
-    setWhyWorkWithUs([
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    ]);
-    // setAboutYou(editorState);
-    setWhyWorkWithUsEditorState(editorState);
+  const handleWhyWorkEditorChange = (value, index) => {
+    setWhyWorkWithUs(value);
   };
 
   const aboutUsOptions = [
@@ -220,50 +214,45 @@ const BrandLogo = () => {
     if (profileFile.length === 0) {
       setProfileFileError(true);
     }
-    if (portofolioFile && portofolioFile.length !== 0) {
-      const formData = {
-        logo: portofolioFile,
-        brandImage: portofolioFile,
-        profileImage: profileFile,
-        aboutBrand: aboutYou,
-        whyWorkWithUs: whyWorkWithUs,
-      };
-      // setIsLoading(true);
-      await ApiHelper.post(
-        `${API.editBrands}${receivedData?.brand_id}`,
-        formData
-      )
-        .then((resData) => {
-          if (resData.data.status === true) {
-            console.log(resData.data.data, "brandsSignup");
-            setBrandsLocalStorage(resData.data.data);
-            // setIsLoading(false);
-            setMessage("Registered SuccessFully!");
-            navigate("/brand-activated", {
-              state: { data: receivedData },
-            });
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
-          } else if (resData.data.status === false) {
-            // setIsLoading(false);
-            setMessage("Error Occured Try Again!");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
+    const formData = {
+      logo: portofolioFile,
+      brandImage: portofolioFile,
+      profileImage: profileFile,
+      aboutBrand: aboutYou,
+      whyWorkWithUs: whyWorkWithUs,
+    };
+    // setIsLoading(true);
+    await ApiHelper.post(`${API.editBrands}${receivedData?.brand_id}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          console.log(resData.data.data, "brandsSignup");
+          setBrandsLocalStorage(resData.data.data);
+          // setIsLoading(false);
+          setMessage("Registered SuccessFully!");
+          navigate("/brand-activated", {
+            state: { data: receivedData },
+          });
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          // setIsLoading(false);
           setMessage("Error Occured Try Again!");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
           }, 1000);
-        });
-    }
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setMessage("Error Occured Try Again!");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 1000);
+      });
   };
 
   const setBrandsLocalStorage = (data) => {
@@ -307,10 +296,8 @@ const BrandLogo = () => {
         <div className="dialog-body mb-5">
           <div className="adult-signup-main">
             <div className="kids-form-row row">
-              <div className="kids-form-section col-md-6">
-                <label className="form-label">
-                  Brand/Client Logo <span className="astrix">*</span>{" "}
-                </label>
+              <div className="kids-form-section col-md-12">
+                <label className="form-label">Brand/Client Logo</label>
                 <div
                   className="cv-section my-2"
                   onDrop={handlePortofolioDrop}
@@ -328,7 +315,8 @@ const BrandLogo = () => {
                     onChange={portofolioUpload}
                   />
                   <div className="upload-text">
-                    Upload your Brand/Client Logo
+                    Upload your company logo or your photo <br /> If signing up
+                    as an individual client
                   </div>
                   <div className="upload-info">Drag and drop image here</div>
                 </div>
@@ -415,7 +403,7 @@ const BrandLogo = () => {
                   </>
                 )}
               </div>
-              <div className="kids-form-section col-md-6">
+              {/* <div className="kids-form-section col-md-6">
                 <label className="form-label">
                   Profile Image <span className="astrix">*</span>{" "}
                 </label>
@@ -522,60 +510,25 @@ const BrandLogo = () => {
                     })}
                   </>
                 )}
-              </div>
+              </div> */}
             </div>
 
             <div className="rich-editor my-4">
               <label className="form-label">About Brand / Client </label>
-              <Editor
-                editorState={editorState}
-                editorStyle={{ overflow: "hidden" }}
-                toolbarClassName="toolbarClassName"
-                wrapperClassName="wrapperClassName"
-                editorClassName="editorClassName"
-                onEditorStateChange={onEditorSummary}
-                toolbar={{
-                  options: [
-                    "inline",
-                    "blockType",
-                    "fontSize",
-                    "list",
-                    "textAlign",
-                    "history",
-                  ],
-                  inline: { inDropdown: true },
-                  list: { inDropdown: true },
-                  textAlign: { inDropdown: true },
-                  link: { inDropdown: true },
-                  history: { inDropdown: true },
-                }}
+
+              <RichTextEditor
+                value={aboutYou}
+                onChange={(aboutYou) => handleEditorChange(aboutYou)}
               />
             </div>
 
             <div className="rich-editor">
               <label className="form-label">Why work with us</label>
-              <Editor
-                editorState={whyWorkWithUsEditorState}
-                editorStyle={{ overflow: "hidden" }}
-                toolbarClassName="toolbarClassName"
-                wrapperClassName="wrapperClassName"
-                editorClassName="editorClassName"
-                onEditorStateChange={onWhyWorkWithUsEditorSummary}
-                toolbar={{
-                  options: [
-                    "inline",
-                    "blockType",
-                    "fontSize",
-                    "list",
-                    "textAlign",
-                    "history",
-                  ],
-                  inline: { inDropdown: true },
-                  list: { inDropdown: true },
-                  textAlign: { inDropdown: true },
-                  link: { inDropdown: true },
-                  history: { inDropdown: true },
-                }}
+              <RichTextEditor
+                value={whyWorkWithUs}
+                onChange={(whyWorkWithUs) =>
+                  handleWhyWorkEditorChange(whyWorkWithUs)
+                }
               />
             </div>
           </div>

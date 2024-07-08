@@ -596,7 +596,7 @@ const TalentProfile = () => {
                           }`}
                         >
                           <span>
-                            <i class="bi bi-star-fill"></i>
+                            <i className="bi bi-star-fill"></i>
                           </span>
                           {talentData?.planName}
                         </div>
@@ -616,14 +616,14 @@ const TalentProfile = () => {
                             }`}
                           >
                             <span>
-                              <i class="bi bi-star-fill"></i>
+                              <i className="bi bi-star-fill"></i>
                             </span>
                             {talentData?.planName}
                           </div>
                         </>
                       )} */}
 
-                      {talentData?.planName != "Basic" && (
+                      {/* {talentData?.planName != "Basic" && (
                         <>
                           <div className="talent-verified">
                             <span className="blue-shield-wrapper">
@@ -636,8 +636,20 @@ const TalentProfile = () => {
                           </div>
                         </>
                       )}
+                    </div> */}
+                      <></>
                     </div>
+
                     <div className="talent-details">
+                      <div className="talent-details-wrapper">
+                        <div className="talent-verified">
+                          <span className="blue-shield-wrapper">
+                            <img className="blue-shield" src={blueShield}></img>
+                          </span>
+                          Verified
+                        </div>
+                      </div>
+
                       <div className="talent-details-wrapper">
                         <div className="logo-fill">
                           <img className="talent-logo" src={pinkStar}></img>
@@ -657,17 +669,22 @@ const TalentProfile = () => {
                           {/* <span>{talentData?.averageStarRatings} (0 jobs completed)</span> */}
                         </div>
                       </div>
-                      <div className="talent-details-wrapper">
-                        <div className="logo-fill">
-                          <img className="talent-logo" src={mapFill}></img>
-                        </div>
-                        <div className="contSect">
-                          <span>
-                            {talentData?.childCity},{talentData?.parentState},{" "}
-                            {talentData?.parentCountry}
-                          </span>
-                        </div>
-                      </div>
+
+                      {talentData?.noOfJobsCompleted && (
+                        <>
+                          <div className="talent-details-wrapper">
+                            <div className="logo-fill-briefcase">
+                              <i className="bi bi-briefcase-fill model-job-icons"></i>
+                            </div>
+                            <div className="contSect">
+                              <span>
+                                {talentData?.noOfJobsCompleted} Jobs Completed
+                              </span>
+                            </div>
+                          </div>
+                        </>
+                      )}
+
                       {talentData.profession &&
                         talentData.profession.length > 0 && (
                           <>
@@ -690,6 +707,18 @@ const TalentProfile = () => {
                             </div>
                           </>
                         )}
+
+                      <div className="talent-details-wrapper">
+                        <div className="logo-fill">
+                          <img className="talent-logo" src={mapFill}></img>
+                        </div>
+                        <div className="contSect">
+                          <span>
+                            {talentData?.childCity},{talentData?.parentState},{" "}
+                            {talentData?.parentCountry}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                     {(talentData?.instaFollowers ||
                       talentData?.facebookFollowers ||
@@ -840,7 +869,7 @@ const TalentProfile = () => {
                         <div>Invite to apply</div>
                       </div>
                       <div className="invite-btn" onClick={() => messageNow()}>
-                        <i class="bi bi-chat chat-icon-profile"></i>
+                        <i className="bi bi-chat chat-icon-profile"></i>
                         <div className="message-now-text">Message Now</div>
                       </div>
                     </>
@@ -1143,7 +1172,7 @@ const TalentProfile = () => {
                               <div className="wrapper">
                                 <img src={check}></img>
                               </div>
-                              <div className="posted-jobs">24 Jobs Booked</div>
+                              <div className="posted-jobs">24 Projects Booked</div>
                             </div> */}
                           </div>
 

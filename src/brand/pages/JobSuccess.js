@@ -36,7 +36,7 @@ const JobSuccess = () => {
   }, [openPopUp]);
 
   const brandsSignup = async () => {
-    navigate("/brand-dashboard", {
+    navigate("/brand", {
       state: { data: receivedData },
     });
   };

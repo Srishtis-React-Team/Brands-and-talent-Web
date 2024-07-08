@@ -11,8 +11,10 @@ import PopUp from "../PopUp";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { create } from "@mui/material/styles/createTransitions";
+import CurrentUser from "../../CurrentUser";
 
 const MessageTalents = () => {
+  const { currentUserType } = CurrentUser();
   const location = useLocation();
   const avatar = require("../../assets/images/avatar.webp");
   const navigate = useNavigate();
@@ -75,6 +77,12 @@ const MessageTalents = () => {
   };
 
   const handleBackClick = () => {
+    // if (currentUserType == "brand") {
+    //   navigate(`/brand`);
+    // }
+    // if (currentUserType == "talent") {
+    //   navigate("/talent-dashboard");
+    // }
     if (location.state && location.state.from) {
       navigate(`/${location.state.from}`);
     } else {
@@ -593,7 +601,7 @@ const MessageTalents = () => {
         <BrandHeader hideToggleButton={true} toggleMenu={toggleMenu} />
       )}
       <div className="message-main px-2">
-        <div className="container-fluid">
+        <div className="container-fluid message-section-container">
           <div className="messages-section m-0">
             <div className="message-header">
               <div className="message-header-main row">
@@ -659,9 +667,9 @@ const MessageTalents = () => {
                       </div>
                     </div>
                     <div>
-                      <div className="message-more">More</div>
+                      {/* <div className="message-more">More</div> */}
                       <div className="go-dashboard" onClick={handleBackClick}>
-                        Go to Dashboard
+                        Back
                       </div>
                     </div>
                   </div>

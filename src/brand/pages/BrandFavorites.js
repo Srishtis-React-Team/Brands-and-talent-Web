@@ -120,9 +120,9 @@ const BrandFavorites = () => {
 
   const openTalent = (item) => {
     console.log(item, "item");
-    // navigate("/talent-profile", { state: { talentData: item } });
+    // navigate("/talent", { state: { talentData: item } });
 
-    navigate(`/talent-profile/${item.publicUrl}`, {
+    navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
   };
@@ -216,7 +216,7 @@ const BrandFavorites = () => {
                                   <div className="location-wrapper">
                                     <img src={jobIcon} alt="" />
                                     <div className="find-creator-location-name">
-                                      25 Jobs Booked
+                                      25 Projects Booked
                                     </div>
                                   </div>
                                 </div>

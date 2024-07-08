@@ -214,16 +214,14 @@ const Header = ({ onData }) => {
       if (menuItem === "dashboard") {
         // alert("createHandleMenuClick");
         if (currentUser_type === "talent") {
-          // navigate("/talent-profile", { state: { talentData: talentData } });
+          // navigate("/talent", { state: { talentData: talentData } });
           // alert("navigatetotalentprofile");
 
-          navigate(`/talent-profile/${talentData.publicUrl}`, {
+          navigate(`/talent/${talentData.publicUrl}`, {
             state: { talentData },
           });
         } else if (currentUser_type === "brand") {
-          navigate(
-            `/brand-dashboard/${brandData?.publicUrl.replace(/\s+/g, "")}`
-          );
+          navigate(`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`);
         }
       }
       if (menuItem === "edit") {
@@ -289,7 +287,7 @@ const Header = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/talent-profile") {
+    } else if (route === "/talent") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
         setMessage("You Must Be Logged In");
@@ -341,7 +339,7 @@ const Header = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/brand-dashboard") {
+    } else if (route === "/brand") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
         setMessage("You Must Be Logged In");
@@ -949,9 +947,9 @@ const Header = ({ onData }) => {
                       variant="h6"
                       component="h2"
                     >
-                      <form class="d-flex" role="search">
+                      <form className="d-flex" role="search">
                         <input
-                          class="form-control me-2"
+                          className="form-control me-2"
                           type="search"
                           placeholder="Search"
                           aria-label="Search"
@@ -1097,7 +1095,7 @@ const Header = ({ onData }) => {
                   }}
                   className={talent ? "selected-register" : "choose-register"}
                 >
-                  I'm a Talent
+                  I am a Talent
                 </div>
                 <div
                   onClick={(e) => {
@@ -1105,12 +1103,11 @@ const Header = ({ onData }) => {
                   }}
                   className={brand ? "selected-register" : "choose-register"}
                 >
-                  I'm a Brand/Client
+                  I am a Brand/Client
                 </div>
               </div>
               <div className="question-model">
-                {talent &&
-                  "Are you the star of the show or the one seeking brilliance?"}
+                {talent && "I am a talent/creator/influencer"}
                 {brand && "I am Looking for talent"}
               </div>
               <div className="register-modal">

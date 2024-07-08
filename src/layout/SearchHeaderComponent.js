@@ -166,7 +166,7 @@ const SearchHeaderComponent = ({ onData }) => {
     return () => {
       if (menuItem === "dashboard") {
         if (currentUser_type === "talent") {
-          navigate("/talent-profile", { state: { talentData: talentData } });
+          navigate("/talent", { state: { talentData: talentData } });
         } else if (currentUser_type === "brand") {
           navigate(`brand-dashboard`);
         }
@@ -232,7 +232,7 @@ const SearchHeaderComponent = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/talent-profile") {
+    } else if (route === "/talent") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
         setMessage("You Must Be Logged In");
@@ -284,7 +284,7 @@ const SearchHeaderComponent = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/brand-dashboard") {
+    } else if (route === "/brand") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
         setMessage("You Must Be Logged In");
@@ -534,9 +534,9 @@ const SearchHeaderComponent = ({ onData }) => {
         >
           <Box sx={searchModalStyle}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              <form class="d-flex" role="search">
+              <form className="d-flex" role="search">
                 <input
-                  class="form-control me-2"
+                  className="form-control me-2"
                   type="search"
                   placeholder="Search"
                   aria-label="Search"

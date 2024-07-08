@@ -653,7 +653,7 @@ const KidsformOne = ({ sendDataToParent }) => {
         childAboutYou: aboutYou,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: kidsPreferedFirstName,
+        publicUrl: kidsPreferedFirstName.replace(/ /g, "-"),
       };
       setIsLoading(true);
       console.log(userId, "userId");
@@ -1030,9 +1030,9 @@ const KidsformOne = ({ sendDataToParent }) => {
                     Form
                   </div>
                   <div className="kids-description">
-                    Unleash your kid's inner star! ✨ Brands / Client & Talent
-                    is your gateway to exciting opportunities for young creators
-                    ( 4-17 )!  Imagine their talent shining on the big stage,
+                    Unleash your kid's inner star! ✨ Brands and Talent is your
+                    gateway to exciting opportunities for young creators ( 4-17
+                    )!  Imagine their talent shining on the big stage,
                     collaborating with renowned Brands / Client on fun gigs and
                     influencer projects.  This registration form is your first
                     step to making their dreams a reality. Register now and
@@ -1445,7 +1445,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                                 onClick={(e) => {
                                   deleteProfession(profession, index);
                                 }}
-                                class="bi bi-trash"
+                                className="bi bi-trash"
                               ></i>
                             </div>
                           </div>
@@ -1713,7 +1713,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
-                          Number Of Jobs Completed
+                          Projects Completed
                           <span className="mandatory">*</span>
                         </label>
                         <input
@@ -1724,7 +1724,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             handleJobsCompleted(e);
                             setJobsCompletedError(false);
                           }}
-                          placeholder="Number of jobs completed"
+                          placeholder="Enter number of jobs/client projects  you’ve completed till now"
                         ></input>
                         {parentFirstNameError && (
                           <div className="invalid-fields">

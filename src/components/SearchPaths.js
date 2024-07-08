@@ -1,6 +1,6 @@
 const searchPathOptions = [
   { routes: "/find-creators", label: "Find Creators" },
-  { routes: "/talent-profile", label: "Talent Profile" },
+  { routes: "/talent", label: "Talent Profile" },
   { routes: "/pricing", label: "Pricing" },
   { routes: "/resources", label: "Resources" },
   { routes: "/talent-signup", label: "Talent Sign Up" },
@@ -14,7 +14,7 @@ const searchPathOptions = [
   { routes: "/job-list", label: "Overall Jobs" },
   //   { routes: "/login", label: "Forgot Password" },
   { routes: "/talent-dashboard", label: "Talent Dashboard" },
-  { routes: "/brand-dashboard", label: "Brand Home" },
+  { routes: "/brand", label: "Brand Home" },
   { routes: "/list-jobs", label: "List Jobs" },
   { routes: "/applied-jobs", label: "Applied Jobs" },
   { routes: "/saved-jobs", label: "Saved Jobs" },

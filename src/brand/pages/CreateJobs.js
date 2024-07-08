@@ -697,7 +697,9 @@ const CreateJobs = () => {
   );
   const [type, setType] = useState("");
   const [currency, setCurrency] = useState("");
+  const [productCurrency, setProductCurrency] = useState("");
   const [frequency, setfrequency] = useState("");
+  const [productFrequency, setProductFrequency] = useState("");
   const [productName, setProductName] = useState("");
   const [valueUSD, setValueUSD] = useState("");
   const [exactPay, setExactPay] = useState("");
@@ -714,6 +716,12 @@ const CreateJobs = () => {
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
+  };
+  const handleProductCurrencyChange = (event) => {
+    setProductCurrency(event.target.value);
+  };
+  const handleProductFrequencyChange = (event) => {
+    setProductFrequency(event.target.value);
   };
   const handleProductValueChange = (event) => {
     setProductValue(event.target.value);
@@ -778,6 +786,8 @@ const CreateJobs = () => {
             maxPay: maxPay,
             currency: currency,
             frequency: frequency,
+            productCurrency: productCurrency,
+            productFrequency: productCurrency,
             productValue: productValue,
             exactPay: exactPay,
           },
@@ -2467,7 +2477,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-instagram followers-social-icons"></i>
+                                <i className="bi bi-instagram followers-social-icons"></i>
                                 Instagram Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
@@ -2496,7 +2506,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-tiktok followers-social-icons"></i>
+                                <i className="bi bi-tiktok followers-social-icons"></i>
                                 TikTok Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
@@ -2525,7 +2535,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-linkedin followers-social-icons"></i>
+                                <i className="bi bi-linkedin followers-social-icons"></i>
                                 LinkedIn Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
@@ -2554,7 +2564,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-facebook followers-social-icons"></i>
+                                <i className="bi bi-facebook followers-social-icons"></i>
                                 Facebook Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
@@ -2583,7 +2593,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-twitter-x followers-social-icons"></i>
+                                <i className="bi bi-twitter-x followers-social-icons"></i>
                                 Twitter(X) Followers
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
@@ -2612,7 +2622,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-twitter-x followers-social-icons"></i>
+                                <i className="bi bi-twitter-x followers-social-icons"></i>
                                 YouTube
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
@@ -3213,8 +3223,10 @@ const CreateJobs = () => {
                                           <select
                                             className="form-select"
                                             aria-label="Default select example"
-                                            value={currency}
-                                            onChange={handleCurrencyChange}
+                                            value={productCurrency}
+                                            onChange={
+                                              handleProductCurrencyChange
+                                            }
                                             style={{
                                               fontSize: "14px",
                                             }}
@@ -3243,8 +3255,10 @@ const CreateJobs = () => {
                                           <select
                                             className="form-select"
                                             aria-label="Default select example"
-                                            value={frequency}
-                                            onChange={handleFrequencyChange}
+                                            value={productFrequency}
+                                            onChange={
+                                              handleProductFrequencyChange
+                                            }
                                             style={{
                                               fontSize: "14px",
                                             }}
@@ -3629,9 +3643,9 @@ const CreateJobs = () => {
                 )}
 
                 <div className="job-post-terms">
-                  By clicking Preview & Post , I agree that Brands / Client &
-                  Talent may publish and distribute my job advertisement on its
-                  site and through its distribution partners.
+                  By clicking Preview & Post , I agree that Brands and Talent
+                  may publish and distribute my job advertisement on its site
+                  and through its distribution partners.
                 </div>
 
                 <div className="create-job-buttons mt-4 mb-2">

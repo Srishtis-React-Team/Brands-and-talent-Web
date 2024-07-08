@@ -32,6 +32,7 @@ import { ta } from "date-fns/locale";
 import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
 import CurrentUser from "../../CurrentUser";
+import RichTextEditor from "../../views/RichTextEditor";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,6 +60,20 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
+
+const brandTypeList = [
+  "Company ( 1-5 Employess )",
+  "Company ( 6-10 Employess )",
+  "Company ( 11-20 Employess )",
+  "Company ( 21-50 Employess )",
+  "Company ( 51-100 Employess )",
+  "Company ( 101-250 Employess )",
+  "Company ( 251-500 Employess )",
+  "Company ( 501-3500 Employess )",
+  "Company ( 3500+ Employess )",
+  "Recruiting firms",
+  "Staffing Agency",
+];
 
 const EditBrands = () => {
   const {
@@ -117,6 +132,7 @@ const EditBrands = () => {
   const [userNameError, setUserNameError] = useState(false);
   const [publicUrlEdit, setPublicUrlEdit] = useState(false);
   const [publicUrl, setPublicUrl] = useState("");
+  const [initialUrl, setInitialUrl] = useState("");
   const [country, setCountry] = useState("");
   const [countryList, setCountryList] = useState([]);
   const [parentCountryError, setParentCountryError] = useState(false);
@@ -126,6 +142,13 @@ const EditBrands = () => {
   const [cityError, setCityError] = useState(false);
   const [kidsCity, setKidsCity] = useState("");
   const [state, setState] = useState("");
+  const [aboutBrand, setAboutBrand] = useState("");
+
+  const [brandType, setBrandType] = useState("");
+
+  const selectBrandType = (event) => {
+    setBrandType(event.target.value);
+  };
 
   useEffect(() => {
     getCountries();
@@ -226,8 +249,30 @@ const EditBrands = () => {
     }
   }, [brandId]);
 
-  const publicUrlChange = (event) => {
-    setPublicUrl(event.target.value);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const publicUrlChange = async (event) => {
+    console.log(initialUrl, "initialUrl");
+    console.log(initialUrl, "initialUrl");
+    const inputValue = event.target.value.replace(/ /g, "-");
+    console.log(inputValue, "inputValue");
+    const formData = { name: inputValue, type: "brand" };
+    await ApiHelper.post(`${API.checkPublicUrlName}`, formData)
+      .then((resData) => {
+        console.log(resData, "resDatapublicUrlChange");
+        if (resData?.data?.status === true || publicUrl) {
+          setPublicUrl(inputValue);
+          setErrorMessage("");
+        }
+        if (resData?.data?.status === false && inputValue != initialUrl) {
+          setErrorMessage(
+            "Brand name already exists. Please enter a new name."
+          );
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getBrand = async () => {
@@ -249,8 +294,9 @@ const EditBrands = () => {
             );
             setEditProfileImageObject(resData.data.data?.brandImage);
             setPersonalProfileImageObject(resData.data.data?.profileImage);
-            setWebsiteLink(resData.data.data?.websiteLink);
-            setPublicUrl(`${resData?.data?.data?.publicUrl}`);
+            setWebsiteLink(resData?.data?.data?.websiteLink);
+            setPublicUrl(resData?.data?.data?.publicUrl);
+            setInitialUrl(resData?.data?.data?.publicUrl);
             setWebsiteLink(resData?.data?.data?.brandWebsite);
             setLinkedinUrl(resData?.data?.data?.linkedinUrl);
             setTwitterUrl(resData?.data?.data?.twitterUrl);
@@ -258,6 +304,9 @@ const EditBrands = () => {
             setCountry(resData?.data?.data?.brandCountry);
             setState(resData?.data?.data?.brandState);
             setKidsCity(resData?.data?.data?.brandCity);
+            setBrandType(resData?.data?.data?.brandType);
+            setAboutBrand(...resData?.data?.data?.aboutBrand);
+            setWhyWorkWithUs(...resData?.data?.data?.whyWorkWithUs);
           }
         }
       })
@@ -269,6 +318,10 @@ const EditBrands = () => {
   useEffect(() => {
     console.log(brandData, "brandDataEditBrands");
   }, [brandData]);
+
+  useEffect(() => {
+    console.log(aboutBrand, "aboutBrand");
+  }, [aboutBrand]);
 
   const [valueTabs, setValueTabs] = React.useState(0);
 
@@ -427,21 +480,56 @@ const EditBrands = () => {
 
   const basicDetailsUpdate = async () => {
     const formData = {
+      brandImage: editProfileImageObject,
+      userName: userName,
       brandName: brandName,
       brandPhone: brandPhone,
       brandZipCode: brandZipCode,
-      address: address,
-      position: position,
-      profileImage: personalProfileImageObject,
-      websiteLink: websiteLink,
-      brandImage: editProfileImageObject,
-      userName: userName,
+      howHearAboutAs: hearAboutUs,
       publicUrl: publicUrl,
+      yourFullName: userName,
+      brandType: brandType,
+      brandCountry: country,
+      brandState: state,
+      brandCity: kidsCity,
+      brandWebsite: websiteLink,
+      linkedinUrl: linkedinUrl,
+      facebookUrl: facebookUrl,
+      twitterUrl: twitterUrl,
+      position: position,
+      logo: editProfileImageObject,
+      profileImage: personalProfileImageObject,
+      aboutBrand: aboutBrand,
+      whyWorkWithUs: whyWorkWithUs,
     };
     await ApiHelper.post(`${API.editBrands}${brandId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage("Updated SuccessFully!");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            setMyState(true);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const updatePublicUrl = async () => {
+    const formData = {
+      publicUrl: publicUrl,
+    };
+    await ApiHelper.post(`${API.editBrands}${brandId}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setMessage("PublicUrl Updated SuccessFully!");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);
@@ -559,6 +647,13 @@ const EditBrands = () => {
     console.log(editProfileImage, "editProfileImage");
   }, [editProfileImage]);
 
+  const handleEditorChange = (editorState) => {
+    setAboutBrand(editorState);
+  };
+  const handleWhyWorkEditorChange = (editorState) => {
+    setWhyWorkWithUs(editorState);
+  };
+
   return (
     <>
       <BrandHeader toggleMenu={toggleMenu} myState={myState} />
@@ -601,13 +696,29 @@ const EditBrands = () => {
                   <div className="kids-form-section col-md-6">
                     <div className="profile-image-edit-section edit-basicdetails-section-main p-0 mt-2 mx-0">
                       <div>
-                        <label className="form-label">Brand Logo</label>
+                        <label className="form-label">
+                          Brand / Client logo
+                        </label>
+                        <div className="image-upload-label">
+                          ( Upload your company logo or your photo If signing up
+                          as an individual client )
+                        </div>
                       </div>
-                      <img
-                        className="profile-image-edit"
-                        src={`${API.userFilePath}${editProfileImage}`}
-                        alt=""
-                      />
+                      {!editProfileImage && (
+                        <img
+                          className="profile-image-edit"
+                          src={avatarImage}
+                          alt=""
+                        />
+                      )}
+                      {editProfileImage && (
+                        <img
+                          className="profile-image-edit"
+                          src={`${API.userFilePath}${editProfileImage}`}
+                          alt=""
+                        />
+                      )}
+
                       <div className="image-edit-icon" onClick={File}>
                         <input
                           type="file"
@@ -619,6 +730,7 @@ const EditBrands = () => {
                         />
                         <i className="bi bi-pencil-fill profile-edit-icon"></i>
                       </div>
+
                       {/* <div className="btn-img-edit-wrapper">
                         <Button
                           onClick={() => updateProfileImage()}
@@ -631,10 +743,13 @@ const EditBrands = () => {
                       </div> */}
                     </div>
                   </div>
-                  <div className="kids-form-section col-md-6">
+                  {/* <div className="kids-form-section col-md-6">
                     <div className="profile-image-edit-section edit-basicdetails-section-main p-0 mt-2 mx-0">
                       <div>
                         <label className="form-label">Profile Image</label>
+                        <div className="image-upload-label">
+                          (Upload Your Profile Image)
+                        </div>
                       </div>
                       {!personalProfileImage && (
                         <img
@@ -664,7 +779,7 @@ const EditBrands = () => {
                       </div>
                       <div className="btn-img-edit-wrapper"></div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="kids-form-row row mt-3">
@@ -679,7 +794,7 @@ const EditBrands = () => {
                         setBrandNameError(false);
                       }}
                       onKeyDown={handleKeyPress}
-                      placeholder="Enter Brand Name"
+                      placeholder="Enter your company name or your name if you’re an individual client"
                     ></input>
                     {brandNameError && (
                       <div className="invalid-fields">
@@ -889,6 +1004,29 @@ const EditBrands = () => {
                       </select>
                     </div>
                   </div> */}
+
+                  <div className="kids-form-section col-md-6">
+                    <div className="mb-3">
+                      <label className="form-label">Brand / Client Type</label>
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={selectBrandType}
+                        style={{ fontSize: "14px" }}
+                        value={brandType}
+                      >
+                        <option value="" disabled selected>
+                          Brand / Client Type
+                        </option>
+                        {brandTypeList.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
                   <div className="kids-form-section col-md-6">
                     <div className="mb-3">
                       <label className="form-label">Linkedin Url</label>
@@ -905,6 +1043,9 @@ const EditBrands = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+
+                <div className="kids-form-row row">
                   <div className="kids-form-section col-md-6">
                     <div className="mb-3">
                       <label className="form-label">Facebook Url</label>
@@ -921,9 +1062,6 @@ const EditBrands = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="kids-form-row row">
                   <div className="kids-form-section col-md-6">
                     <div className="mb-3">
                       <label className="form-label">Twitter Url</label>
@@ -948,7 +1086,7 @@ const EditBrands = () => {
                       <label className="form-label">
                         About Brand / Client{" "}
                       </label>
-                      <Editor
+                      {/* <Editor
                         editorState={editorState}
                         editorStyle={{ overflow: "hidden" }}
                         toolbarClassName="toolbarClassName"
@@ -970,34 +1108,24 @@ const EditBrands = () => {
                           link: { inDropdown: true },
                           history: { inDropdown: true },
                         }}
+                      /> */}
+
+                      <RichTextEditor
+                        value={aboutBrand}
+                        onChange={(aboutBrand) =>
+                          handleEditorChange(aboutBrand)
+                        }
                       />
                     </div>
                   </div>
                   <div className="kids-form-section col-md-6">
                     <div className="rich-editor">
                       <label className="form-label">Why work with us</label>
-                      <Editor
-                        editorState={whyWorkWithUsEditorState}
-                        editorStyle={{ overflow: "hidden" }}
-                        toolbarClassName="toolbarClassName"
-                        wrapperClassName="wrapperClassName"
-                        editorClassName="editorClassName"
-                        onEditorStateChange={onWhyWorkWithUsEditorSummary}
-                        toolbar={{
-                          options: [
-                            "inline",
-                            "blockType",
-                            "fontSize",
-                            "list",
-                            "textAlign",
-                            "history",
-                          ],
-                          inline: { inDropdown: true },
-                          list: { inDropdown: true },
-                          textAlign: { inDropdown: true },
-                          link: { inDropdown: true },
-                          history: { inDropdown: true },
-                        }}
+                      <RichTextEditor
+                        value={whyWorkWithUs}
+                        onChange={(whyWorkWithUs) =>
+                          handleWhyWorkEditorChange(whyWorkWithUs)
+                        }
                       />
                     </div>
                   </div>
@@ -1010,22 +1138,21 @@ const EditBrands = () => {
                       {!publicUrlEdit && (
                         <>
                           <div className="public-url-text">
-                            {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent-profile/${publicUrl}`}
+                            {`https://hybrid.sicsglobal.com/project/brandsandtalent/brand/${publicUrl}`}
                             <i
                               onClick={(e) => {
                                 setPublicUrlEdit(true);
                               }}
-                              class="bi bi-pencil-square"
+                              className="bi bi-pencil-square"
                             ></i>
                           </div>
                         </>
                       )}
                       {publicUrlEdit && (
                         <div className="public-url-text">
-                          {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent-profile/`}
+                          {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent/`}
                         </div>
                       )}
-
                       {publicUrlEdit && (
                         <input
                           type="text"
@@ -1037,7 +1164,24 @@ const EditBrands = () => {
                           placeholder="Edit url"
                         ></input>
                       )}
+
+                      {publicUrlEdit && (
+                        <Button
+                          onClick={() => updatePublicUrl()}
+                          className="pub-url-btn"
+                          variant="text"
+                          style={{ textTransform: "capitalize" }}
+                          disabled={errorMessage}
+                        >
+                          save
+                        </Button>
+                      )}
                     </div>
+                    {errorMessage && (
+                      <>
+                        <p className="errorMessage">{errorMessage}</p>
+                      </>
+                    )}
 
                     {/* {preferedNameError && (
                       <div className="invalid-fields">

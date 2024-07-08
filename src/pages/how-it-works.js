@@ -8,6 +8,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../config/api";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -89,7 +91,7 @@ const HowItWorks = () => {
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
         location: "Australia",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         rating: 4,
       },
       {
@@ -98,7 +100,7 @@ const HowItWorks = () => {
         name: "william",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "America",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         isFavorite: false,
         rating: 3,
       },
@@ -108,7 +110,7 @@ const HowItWorks = () => {
         name: "Michael",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "Canada",
-        booked: "6 Jobs Booked",
+        booked: "6 Projects Booked",
         isFavorite: false,
         rating: 5,
       },
@@ -119,11 +121,48 @@ const HowItWorks = () => {
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
         location: "Russia",
-        booked: "150 Jobs Booked",
+        booked: "150 Projects Booked",
         rating: 1,
       },
     ]);
   }, []);
+
+  const [content, setContent] = useState([]);
+  const [faqList, setFaqList] = useState([]);
+
+  useEffect(() => {
+    fetchContentByType();
+    getFaq();
+  }, []);
+
+  const fetchContentByType = async () => {
+    const formData = {
+      contentType: "How It works",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        console.log(resData?.data?.data?.items, "resDataterms");
+        if (resData) {
+          setContent(resData?.data?.data?.items);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const getFaq = async () => {
+    const formData = {
+      contentType: "faq",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        console.log(resData?.data?.data?.items, "resDataterms");
+        if (resData) {
+          setFaqList(resData?.data?.data?.items);
+        }
+      })
+      .catch((err) => {});
+  };
+
   return (
     <>
       <Header />
@@ -165,7 +204,72 @@ const HowItWorks = () => {
 
               <h2 className="maintitles text-center"> Brands/Clients</h2>
 
-              <div className="resource-wrapper align-items-center row">
+              {content.map((resource, index) => (
+                <div
+                  key={resource.uniqueId}
+                  className="resource-wrapper align-items-center row"
+                >
+                  {index % 2 === 0 ? (
+                    <>
+                      <div className="resource-image-wrapper imgL col-md-6">
+                        {resource.image ? (
+                          <img
+                            className="resource-image imgWid"
+                            src={resource.image}
+                            alt="Resource"
+                          />
+                        ) : (
+                          <div className="placeholder">No Image Available</div>
+                        )}
+                      </div>
+                      <div className="resource-content-wrapper col-md-6 padSpace">
+                        <div
+                          className="resource-name"
+                          dangerouslySetInnerHTML={{ __html: resource.title }}
+                        />
+                        <div className="resource-description space">
+                          {resource.description.map((desc, descIndex) => (
+                            <div
+                              key={descIndex}
+                              dangerouslySetInnerHTML={{ __html: desc }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="resource-content-wrapper col-md-6 padSpace">
+                        <div
+                          className="resource-name"
+                          dangerouslySetInnerHTML={{ __html: resource.title }}
+                        />
+                        <div className="resource-description space">
+                          {resource.description.map((desc, descIndex) => (
+                            <div
+                              key={descIndex}
+                              dangerouslySetInnerHTML={{ __html: desc }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <div className="resource-image-wrapper imgL col-md-6">
+                        {resource.image ? (
+                          <img
+                            className="resource-image imgWid"
+                            src={resource.image}
+                            alt="Resource"
+                          />
+                        ) : (
+                          <div className="placeholder">No Image Available</div>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+
+              {/* <div className="resource-wrapper align-items-center row">
                 <div className="resource-image-wrapper imgL col-md-6">
                   <img
                     className="resource-image imgWid"
@@ -383,7 +487,7 @@ const HowItWorks = () => {
                     src={resorcesBanner12}
                   ></img>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -394,12 +498,6 @@ const HowItWorks = () => {
           Frequently Asked Questions (FAQs)
         </h2>
         <div className="container">
-          {/* <div className="tabs faq">
-            <div className="active-tab tabLink">For Brands/Clients</div>
-            <div className="tabLink">For Talent</div>
-            <div className="tabLink">Best Practices</div>
-          </div> */}
-
           <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs
