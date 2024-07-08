@@ -7,6 +7,8 @@ import "../assets/css/blogs.css";
 const IndustryNews = () => {
   const navigate = useNavigate();
 
+  const bl_image = require("../assets/images/blogs/blog1.png");
+
   const navigateTO = async (event) => {
     console.log(event, "event");
     if (event == "industry-news") {
@@ -39,12 +41,36 @@ const IndustryNews = () => {
           </div>
         </div>
       </section>
-      <section>
+
+      <section className="mb-4">
         <div className="container">
           <div className="blogs-main row">
             <div className="blog-contents col-sm-9 col-md-9">
-              Industry News & Insights
+             
+              <div className="blog-card">
+                <div className="blogs-wrapper">
+                  <div className="blogimg-bx">
+                      <img
+                          className="blogs-image"
+                          src={bl_image}
+                          alt="img"
+                        />
+                  </div>
+                  <div className="blogs-content-wrapper">
+                    <div className="blogs-subhead">
+                      Pellentesque ac eleifend
+                    </div>
+                    <div className="blogs-heading">Donec vulputate quam ac tincidunt.Fusce vitae lacus lacus. Pellentesque</div>
+                    <div className="blogs-description">
+                      Vivamus aliquam ligula vel mi vulputate hendrerit. Vestibulum ullamcorper mi nisl, sit amet ullamcorper justo pellentesque eget. Donec condimentum, nisi quis venenatis viverra, massa ante pellentesque est, non fermentum lorem quam et mauris. Etiam vel eros erat. Phasellus eu massa nunc. Cras diam eros, gravida vitae cursus vel, sagittis eget diam. Phasellus feugiat faucibus enim sit amet mattis.
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
             </div>
+
             <div className="blogs-tabs col-sm-4 col-md-3">
               <div className="blogs-tabs-wrapper">
                 <div
