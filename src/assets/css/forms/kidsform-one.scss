@@ -1261,6 +1261,12 @@
   overflow-y: scroll;
 }
 
+.kids-form-section .MuiFormControl-root.MuiTextField-root.form-control{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+
 .public-url-wrapper {
   display: flex;
   align-items: center;

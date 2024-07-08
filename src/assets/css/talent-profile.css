@@ -78,11 +78,12 @@
 }
 .review-title {
   color: #000;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   padding: 15px 0px;
-  line-height: 24px;
+  line-height: 21px;
+
 }
 .review-date {
   text-align: end;

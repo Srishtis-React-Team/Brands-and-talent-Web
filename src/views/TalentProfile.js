@@ -1529,7 +1529,7 @@ const TalentProfile = () => {
                                   {/* <div className="review-content">
                                     {item.comment}
                                   </div> */}
-                                  <div className="reviewer-section">
+                                  <div className="reviewer-section pb-0">
                                     <div className="reviewers-rating">
                                       {[...Array(Number(item.starRatings))].map(
                                         (_, starIndex) => (
