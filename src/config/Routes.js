@@ -67,7 +67,11 @@ import TermsConditions from "../pages/TermsConditions";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import CurrentUser from "../CurrentUser";
 import AdultSocialMedias from "../views/Adult forms/AdultSocialMedias";
-
+import IndustryNews from "../pages/IndustryNews";
+import CaseStudies from "../pages/CaseStudies";
+import TalentDiaries from "../pages/TalentDiaries";
+import TalentTips from "../pages/TalentTips";
+import BrandTips from "../pages/BrandTips";
 function Routing() {
   // const [currentUserId, setCurrentUserId] = useState(null);
   // const [brandId, setBrandID] = useState(null);
@@ -283,7 +287,11 @@ function Routing() {
         <Route path="/talent-help" element={<TalentHelp />} />
         <Route path="/brand-notification" element={<BrandNotification />} />
         <Route path="/get-booked" element={<GetBooked />} />
-        <Route path="/contact-us" element={<ContactSupport />} />
+        <Route path="/industry-news" element={<IndustryNews />} />
+        <Route path="/case-studies" element={<CaseStudies />} />
+        <Route path="/talent-diaries" element={<TalentDiaries />} />
+        <Route path="/talent-tips" element={<TalentTips />} />
+        <Route path="/brand-tips" element={<BrandTips />} />
       </Routes>
       {openPopUp && <PopUp message={message} />}
     </>

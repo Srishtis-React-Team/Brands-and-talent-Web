@@ -57,6 +57,25 @@ const Blogs = () => {
     ]);
   }, []);
 
+  const navigateTO = async (event) => {
+    console.log(event, "event");
+    if (event == "industry-news") {
+      navigate("/industry-news");
+    }
+    if (event == "case-studies") {
+      navigate("/case-studies");
+    }
+    if (event == "talent-diary") {
+      navigate("/talent-diaries");
+    }
+    if (event == "talent-tips") {
+      navigate("/talent-tips");
+    }
+    if (event == "brand-tips") {
+      navigate("/brand-tips");
+    }
+  };
+
   return (
     <>
       <Header />{" "}
@@ -106,11 +125,36 @@ const Blogs = () => {
             </div>
             <div className="blogs-tabs col-sm-4 col-md-3">
               <div className="blogs-tabs-wrapper">
-                <div className="blogs-tab-text">Industry News & Insights</div>
-                <div className="blogs-tab-text">Case Studies</div>
-                <div className="blogs-tab-text">Talent Diaries</div>
-                <div className="blogs-tab-text"> Talent Tips & Tricks</div>
-                <div className="blogs-tab-text"> Brand Tips & Tricks</div>
+                <div
+                  className="blogs-tab-text"
+                  onClick={() => navigateTO("industry-news")}
+                >
+                  Industry News & Insights
+                </div>
+                <div
+                  className="blogs-tab-text"
+                  onClick={() => navigateTO("case-studies")}
+                >
+                  Case Studies
+                </div>
+                <div
+                  className="blogs-tab-text"
+                  onClick={() => navigateTO("talent-diary")}
+                >
+                  Talent Diaries
+                </div>
+                <div
+                  className="blogs-tab-text"
+                  onClick={() => navigateTO("talent-tips")}
+                >
+                   Talent Tips & Tricks
+                </div>
+                <div
+                  className="blogs-tab-text"
+                  onClick={() => navigateTO("brand-tips")}
+                >
+                   Brand Tips & Tricks
+                </div>
               </div>
             </div>
           </div>
