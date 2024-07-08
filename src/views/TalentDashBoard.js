@@ -70,6 +70,7 @@ const TalentDashBoard = () => {
       zIndex: 9999, // Ensure menu appears above other elements
     }),
   };
+  console.log(job, "jobNewTalentPreview");
   const jobImage = require("../assets/icons/jobImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);

@@ -374,12 +374,16 @@ const GetBooked = () => {
       })
       .catch((err) => {
         console.log(err);
-        setMessage("Error Occured Try Again");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-          getRecentGigs();
-        }, 1000);
+        if (!currentUserId) {
+          setMessage("You must be logged in");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getRecentGigs();
+            navigate("/login");
+          }, 3000);
+        }
+        // setMessage("Error Occured Try Again");
       });
 
     setOpen(false);
@@ -501,35 +505,31 @@ const GetBooked = () => {
 
                         <div className="kids-form-row mt-3 row">
                           <div className="kids-form-section col-md-6 mb-3">
-                            
-                              <label className="form-label">Location</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Location"
-                                ref={jobLocationRef}
-                              ></input>
-                           
+                            <label className="form-label">Location</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Location"
+                              ref={jobLocationRef}
+                            ></input>
                           </div>
                           <div className="kids-form-section kids-form-section">
-                          
-                              <label className="form-label">Age</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "14px" }}
-                                id="ageSelectID"
-                              >
-                                <option value="" disabled selected>
-                                  Select Age
+                            <label className="form-label">Age</label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              style={{ fontSize: "14px" }}
+                              id="ageSelectID"
+                            >
+                              <option value="" disabled selected>
+                                Select Age
+                              </option>
+                              {ageList.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
                                 </option>
-                                {ageList.map((option, index) => (
-                                  <option key={index} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
-                           
+                              ))}
+                            </select>
                           </div>
                         </div>
                         {/* <div className="kids-form-section">
@@ -549,39 +549,31 @@ const GetBooked = () => {
                           </div> */}
                         <div className="kids-form-row mt-3 row">
                           <div className="kids-form-section col-md-6 mb-3">
-                            
-                              <label className="form-label">Job Name</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Enter Name"
-                                ref={jobNameRef}
-                              ></input>
-
-
-
-                              
-                           
+                            <label className="form-label">Job Name</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Name"
+                              ref={jobNameRef}
+                            ></input>
                           </div>
                           <div className="kids-form-section col-md-6 mb-3">
-                          
-                              <label className="form-label">Job Type</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "14px" }}
-                                id="jobtypeID"
-                              >
-                                <option value="" disabled selected>
-                                  Select Job Type
+                            <label className="form-label">Job Type</label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              style={{ fontSize: "14px" }}
+                              id="jobtypeID"
+                            >
+                              <option value="" disabled selected>
+                                Select Job Type
+                              </option>
+                              {jobTypeOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
                                 </option>
-                                {jobTypeOptions.map((option, index) => (
-                                  <option key={index} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
-                           
+                              ))}
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -696,91 +688,56 @@ const GetBooked = () => {
                             </div>
                           </div>
                           <div className="recent-settwo pt-0">
-                            <div className="recent-gigs-count-wrapper">
-                              <div className="recent-gigs-logo">
-                                <i className="bi bi-person-check-fill"></i>
-                              </div>
-                              <div className="recent-gig-count-details">
-                                <div className="recent-gig-name">Followers</div>
-                                <div className="recent-gigs-count">2500</div>
-                              </div>
+                            <div className="mb-2">
+                              <span className="job-company_dtls">
+                                <i className="bi bi-person-workspace"></i>
+                              </span>{" "}
+                              {/* . */}
+                              <span className="job-company_dtls">
+                                {item?.jobType} <i className="bi bi-dot"></i>
+                              </span>
+                              <span className="job-company_dtls">
+                                <i className="bi bi-geo-alt-fill location-icon"></i>
+                                {item?.state}, {item?.city}{" "}
+                                <i className="bi bi-dot"></i>
+                              </span>
+                              <span className="job-company_dtls">
+                                {item?.employmentType}{" "}
+                                <i className="bi bi-dot"></i>
+                              </span>
+                              <span className="job-company_dtls">
+                                {item?.category} <i className="bi bi-dot"></i>
+                              </span>
+                              <span className="job-company_dtls">
+                                {Object.keys(item?.compensation)[0]
+                                  ?.split("_")
+                                  .map(
+                                    (word) =>
+                                      word.charAt(0).toUpperCase() +
+                                      word.slice(1)
+                                  )
+                                  .join(" ")}
+                              </span>
                             </div>
-
-                            <div className="recent-gigs-count-wrapper">
-                              {/* <div className="recent-gigs-logo">
-                                    <i className="bi bi-person-arms-up"></i>
-                                  </div> */}
-                              {/* <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Age</div>
-                                    <div className="recent-gigs-count">
-                                      {item.age}
-                                    </div>
-                                    <div className="recent-gig-details">
-                                      <div className="recent-gig-company">
-                                        {item.hiringCompany}
-                                      </div>
-                                      <div className="recent-gig-name">
-                                        {item.jobTitle}
-                                      </div>
-                                      <div className="recent-gig-description">
-                                        {item.description}
-                                      </div>
-                                    </div>
-                                  </div> */}
-
-                              <div className="recent-settwo">
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-person-check-fill"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">
-                                      Followers
-                                    </div>
-                                    <div className="recent-gigs-count">
-                                      2500
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-person-arms-up"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Age</div>
-                                    <div className="recent-gigs-count">
-                                      {item.age}
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-gender-ambiguous"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">
-                                      Gender
-                                    </div>
-                                    <div className="recent-gigs-count">
-                                      {item.gender}
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-geo-alt-fill"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">
-                                      Location
-                                    </div>
-                                    <div className="recent-gigs-count">
-                                      {item.jobLocation}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          </div>
+                          <div className="mb-2">
+                            <span
+                              style={{ fontWeight: "bold" }}
+                              className="job-company_dtls"
+                            >
+                              Application Deadline :{" "}
+                            </span>{" "}
+                            <span>
+                              {" "}
+                              {new Date(
+                                item.lastDateForApply
+                              ).toLocaleDateString("en-GB", {
+                                weekday: "long",
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              })}
+                            </span>
                           </div>
                         </div>
                       </>

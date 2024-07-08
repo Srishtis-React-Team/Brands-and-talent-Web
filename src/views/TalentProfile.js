@@ -714,7 +714,8 @@ const TalentProfile = () => {
                         </div>
                         <div className="contSect">
                           <span>
-                            {talentData?.childCity},{talentData?.parentState},{" "}
+                            {talentData?.childCity}, &nbsp;
+                            {talentData?.parentState}, &nbsp;
                             {talentData?.parentCountry}
                           </span>
                         </div>
