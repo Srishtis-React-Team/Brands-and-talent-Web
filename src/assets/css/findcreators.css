@@ -56,7 +56,7 @@
 }
 .filter-section {
   padding: 60px 0px;
-  display: flex;
+  /* display: flex; */
   background-color: #f8f8f8;
   justify-content: center;
 }
@@ -187,17 +187,18 @@
 }
 
 .creator-age-main input.form-control.range-inputs {
-  font-size: 12px;
-  height: 35px !important;
+  height: 45px !important;
   min-height: 35px !important;
   padding: 5px 0 5px 5px;
-  font-weight: 500;
   border: 1px solid #ced4da !important;
   outline: 0 !important;
-
   width: 48.5%;
+  font-family: sans-serif;
+  font-size: 14px;
 }
-.keyword-wrapper.creator-age-main .creator-age-wrapper{ justify-content: space-between; }
+.keyword-wrapper.creator-age-main .creator-age-wrapper {
+  justify-content: space-between;
+}
 
 .select__control.css-1oeearl-control {
   height: auto !important;
@@ -282,13 +283,13 @@
 .range-inputs {
   cursor: unset;
 }
-.range-inputs:focus {
+/* .range-inputs:focus {
   color: #212529;
   background-color: #e9ecef;
   border: none !important;
   outline: 0;
   box-shadow: 0 0 0 0.25rem #e9ecef;
-}
+} */
 .modalSpc {
   width: auto;
   padding: 0;
@@ -297,6 +298,10 @@
 .models-images .gallery-main .gallery-wrapper.w-100 {
   width: 100%;
   margin: 10px 0;
+}
+
+.find-creator-gallery-main {
+  display: block !important;
 }
 .find-talent-image {
   width: 100%;
@@ -508,16 +513,24 @@ select {
   .header-menu > div:nth-child(2) {
     padding-left: 8px;
   }
-  .popular-header{ height: auto; }
-  .header-menu > div:nth-child(1){ padding-right: 8px; }
-  .popular-header .header-title{ margin: 15px 0 10px; }
-  .popular-header .header-menu{ margin: 0 0 10px; }
+  .popular-header {
+    height: auto;
+  }
+  .header-menu > div:nth-child(1) {
+    padding-right: 8px;
+  }
+  .popular-header .header-title {
+    margin: 15px 0 10px;
+  }
+  .popular-header .header-menu {
+    margin: 0 0 10px;
+  }
   .popular-header .container {
     display: flex;
     align-items: center;
     justify-content: left;
     flex-direction: column;
-}
+  }
 
   .favTalent .col-md-4.col-lg-3.px-1 {
     width: 50%;
@@ -705,9 +718,6 @@ select {
   .favTalent .col-md-4.col-lg-3.px-1 {
     width: 100%;
   }
-
-
-
 }
 
 .job-company_dtls {

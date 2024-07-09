@@ -12,6 +12,8 @@ import languageOptions from "../components/languages.js";
 import PopUp from "../components/PopUp.js";
 import CurrentUser from "../CurrentUser.js";
 import nationalitiesArray from "../components/NationalitiesArray.js";
+import categoriesArray from "../components/categoriesArray.js";
+import SocialMediasList from "../components/SocialMediasList.js";
 const FindCreators = () => {
   const {
     currentUserId,
@@ -75,6 +77,8 @@ const FindCreators = () => {
   const [languages, setLanguages] = useState([]);
   const [maritalStatus, setMaritalStatus] = useState("");
   const [industry, setIndustry] = useState("");
+  const [minFollowers, setMinFollowers] = useState("");
+  const [maxFollowers, setMaxFollowers] = useState("");
   const [nationality, setNationality] = useState([]);
   const [fullName, setFullName] = useState("");
   const [featuresListSelect, selectFeaturesList] = useState([]);
@@ -86,6 +90,8 @@ const FindCreators = () => {
   const [cityError, setCityError] = useState(false);
   const [keywordsList, setkeywordsList] = useState([]);
   const [currentUserData, steCurrentUserData] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [socialMedias, setSocialMedias] = useState([]);
   const [brandId, setBrandId] = useState(null);
 
   const searchInputChange = async (e) => {
@@ -340,32 +346,60 @@ const FindCreators = () => {
   };
 
   const professionList = [
-    { value: "Model", label: "Model" },
-    { value: "Celebrity", label: "Celebrity" },
+    { value: "Actor", label: "Actor" },
+    { value: "Artist", label: "Artist" },
     { value: "Creator", label: "Creator" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Influencer", label: "Influencer" },
+    { value: "Model", label: "Model" },
+    { value: "Event Planner", label: "Event Planner" },
     { value: "Stylist", label: "Stylist" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Nail Artist", label: "Nail Artist" },
+    { value: "Tattooist", label: "Tattooist" },
+    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Swimming Instructor", label: "Swimming Instructor" },
+    { value: "Driving Instructor", label: "Driving Instructor" },
+    { value: "Meditation Teacher", label: "Meditation Teacher" },
+    { value: "Yoga Instructor", label: "Yoga Instructor" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Music Teacher", label: "Music Teacher" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Craftsperson", label: "Craftsperson" },
+    { value: "Sculptor", label: "Sculptor" },
+    { value: "Curator", label: "Curator" },
+    { value: "Singer", label: "Singer" },
+    { value: "Dancer", label: "Dancer" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Musician", label: "Musician" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "Cinematographer", label: "Cinematographer" },
     { value: "Photographer", label: "Photographer" },
     { value: "Videographer", label: "Videographer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Actor", label: "Actor" },
-    { value: "Singer", label: "Singer" },
-    { value: "Writer", label: "Writer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "RJ", label: "RJ" },
     { value: "DJ", label: "DJ" },
-    { value: "VJ", label: "VJ" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Yoga Teacher", label: "Yoga Teacher" },
-    { value: "Webapp Developer", label: "Webapp Developer" },
-    { value: "Virtual Assistant", label: "Virtual Assistant" },
-    { value: "AI Influencer", label: "AI Influencer" },
+    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
+    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
+    { value: "Writer", label: "Writer" },
+    { value: "Copywriter", label: "Copywriter" },
+    { value: "Cartoonist", label: "Cartoonist" },
+    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
+    { value: "Podcaster", label: "Podcaster" },
+    { value: "Host/MC", label: "Host/MC" },
+    { value: "Voice-over Artist", label: "Voice-over Artist" },
+    { value: "Comedian", label: "Comedian" },
+    { value: "Public Speaker", label: "Public Speaker" },
+    { value: "Life Coach", label: "Life Coach" },
+    { value: "Career Coach", label: "Career Coach" },
+    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
     { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Other", label: "Other" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
+    { value: "Interior Designer", label: "Interior Designer" },
+    { value: "Illustrator", label: "Illustrator" },
+    { value: "Animator", label: "Animator" },
+    { value: "Blockchain Developer", label: "Blockchain Developer" },
   ];
 
   const getCountries = async () => {
@@ -496,6 +530,29 @@ const FindCreators = () => {
   const selectEthnicity = (event) => {
     setEthnicity(event.target.value);
   };
+
+  const selectCategory = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    if (!selectedOptions || selectedOptions.length === 0) {
+      setCategories([]);
+      return;
+    }
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setCategories(selectedLanguages);
+  };
+
+  const selectSocialMedias = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    if (!selectedOptions || selectedOptions.length === 0) {
+      setSocialMedias([]);
+      return;
+    }
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setSocialMedias(selectedLanguages);
+  };
+
   const selectLanguage = (selectedOptions) => {
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
@@ -554,6 +611,13 @@ const FindCreators = () => {
     setMaxAge(event.target.value); // Update the state with the new value
   };
 
+  const onMinFollowersChange = (event) => {
+    setMinFollowers(event.target.value); // Update the state with the new value
+  };
+  const onMaxFollowersChange = (event) => {
+    setMaxFollowers(event.target.value); // Update the state with the new value
+  };
+
   const search = async () => {
     const formData = {
       profession: profession,
@@ -574,6 +638,7 @@ const FindCreators = () => {
       selectedTerms: selectedKeyword,
       features: features,
       childEthnicity: ethnicity,
+      categories: categories,
     };
     console.log(formData, "formData talentFilterData");
     setIsLoading(true);
@@ -710,7 +775,7 @@ const FindCreators = () => {
       <section>
         <div className="popular-header" style={{ marginTop: "64px" }}>
           <div className="container">
-            <div className="header-title">Popular Talents</div>
+            <div className="header-title">Find Talents</div>
             {/* <div className="header-menu">
               <div>Home</div>
               <div>Talents</div>
@@ -721,7 +786,7 @@ const FindCreators = () => {
       <section className="creatorPage-Wraper">
         <div className="container">
           <div className="filter-section py-2 mt-3">
-            <div className="brand-filter-section row">
+            <div className="brand-filter-section row px-4">
               <div className="col-md-4 col-lg-4">
                 <div className="filter-wrapper">
                   <div className="filter-btn-wrapper">
@@ -811,28 +876,23 @@ const FindCreators = () => {
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={(value) => setProfession(value)}
-                        styles={customStyles}
+                        styles={customStylesProfession}
                       />
                     </div>
                   </div>
                   <div className="keyword-wrapper">
                     <div className="filter-items">Category</div>
                     <div className="creators-filter-select inpWid">
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={selectIndustry}
-                        value={industry}
-                      >
-                        <option value="" disabled selected>
-                          Select Category
-                        </option>
-                        {industryList.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
+                      <Select
+                        isMulti
+                        name="colors"
+                        options={categoriesArray}
+                        valueField="value"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(value) => selectCategory(value)}
+                        styles={customStylesProfession}
+                      />
                     </div>
                   </div>
                   <div className="keyword-wrapper">
@@ -887,10 +947,46 @@ const FindCreators = () => {
                       />
                     </div>
                   </div>
+
+                  <div className="keyword-wrapper">
+                    <div className="filter-items">Platform</div>
+                    <div className="creators-filter-select inpWid">
+                      <Select
+                        isMulti
+                        name="colors"
+                        options={SocialMediasList}
+                        valueField="value"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(value) => selectSocialMedias(value)}
+                        styles={customStylesProfession}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="keyword-wrapper creator-age-main ">
+                    <div className="filter-items">Followers</div>
+                    <div className="creators-filter-select creator-age-wrapper inpWid">
+                      <input
+                        type="text"
+                        className="form-control range-inputs"
+                        placeholder="Min Followers"
+                        value={minFollowers}
+                        onChange={onMinFollowersChange}
+                      ></input>
+                      <input
+                        type="text"
+                        className="form-control range-inputs"
+                        placeholder="Max Followers"
+                        value={maxFollowers}
+                        onChange={onMaxFollowersChange}
+                      ></input>
+                    </div>
+                  </div>
+
                   <div className="keyword-wrapper">
                     <div className="filter-items">Gender</div>
                     <div className="creators-filter-select inpWid">
-                      <label className="form-label">Gender</label>
                       <select
                         className="form-select"
                         aria-label="Default select example"
@@ -998,7 +1094,7 @@ const FindCreators = () => {
                               <div className="filter-items"> {item.label}</div>
                               <div className="creators-filter-select">
                                 <select
-                                  style={{ width: "275px" }}
+                                  style={{ width: "260px" }}
                                   className="form-select features-select"
                                   aria-label="Default select example"
                                   onChange={(e) =>
@@ -1050,11 +1146,11 @@ const FindCreators = () => {
               <div className="col-md-8 col-lg-8">
                 <div className="models-images">
                   <div className="gallery-section">
-                    <div className="gallery-main p-0 m-0">
+                    <div className="gallery-main find-creator-gallery-main p-0 m-0">
                       <div className="row favTalent px-2 mb-3">
                         {talentList?.map((item) => {
                           return (
-                            <div className="col-sm-6 col-md-4 col-lg-3 px-1">
+                            <div className="col-sm-6 col-md-4 col-lg-3 px-1 mr-3">
                               <div className="gallery-wrapper modalSpc">
                                 <div className="imgBox">
                                   <img
@@ -1172,17 +1268,35 @@ const FindCreators = () => {
                                       )}
                                     </div> */}
 
-                                    <div>
-                                      <span className="job-company_dtls">
-                                        {item?.profession[0].value}
-                                      </span>
-                                    </div>
+                                    {item?.profession && (
+                                      <>
+                                        <div className="talent-details-wrapper">
+                                          <div className="logo-fill-briefcase">
+                                            <i class="bi bi-person-workspace"></i>
+                                          </div>
+                                          <div className="contSect">
+                                            <span>
+                                              {item?.profession[0]?.value}
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </>
+                                    )}
 
-                                    <div>
-                                      <span className="job-company_dtls">
-                                        {item?.relevantCategories[0]}
-                                      </span>
-                                    </div>
+                                    {item?.relevantCategories && (
+                                      <>
+                                        <div className="talent-details-wrapper">
+                                          <div className="logo-fill-briefcase">
+                                            <i class="bi bi-bookmarks-fill"></i>
+                                          </div>
+                                          <div className="contSect">
+                                            <span>
+                                              {item?.relevantCategories[0]}
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </>
+                                    )}
 
                                     <span className="job-company_dtls">
                                       <i className="bi bi-geo-alt-fill location-icon"></i>

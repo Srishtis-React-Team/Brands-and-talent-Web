@@ -392,7 +392,7 @@ const BrandDetails = () => {
         </div>
         <div className="dialog-body spaceTops">
           <div className="adult-signup-main">
-            <div className="step-title mb-3">Brand / CLient Details</div>
+            <div className="step-title mb-3">Brand / Client Details</div>
 
             <div className="kids-form-row row">
               <div className="kids-form-section col-md-6">

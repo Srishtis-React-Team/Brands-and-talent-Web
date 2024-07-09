@@ -123,6 +123,12 @@ const ServicesCarousel = ({ talentData }) => {
               </>
             );
           })}
+
+        {servicesList.length === 0 && (
+          <>
+            <div>No Services Available</div>
+          </>
+        )}
       </div>
       {openPopUp && <PopUp message={message} />}
     </>

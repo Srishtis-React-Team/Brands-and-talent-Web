@@ -705,7 +705,7 @@ const AdultFormThree = () => {
 
                   <div className="adults-titles kids-form-title">
                     <span>
-                      Portofolio<span className="astrix">*</span>
+                      Portfolio<span className="astrix">*</span>
                     </span>
                   </div>
                   <div

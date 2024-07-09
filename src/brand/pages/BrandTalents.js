@@ -21,6 +21,8 @@ import BrandHeader from "./BrandHeader.js";
 import BrandSideMenu from "./BrandSideMenu.js";
 import CurrentUser from "../../CurrentUser.js";
 import nationalitiesArray from "../../components/NationalitiesArray.js";
+import categoriesArray from "../../components/categoriesArray.js";
+import SocialMediasList from "../../components/SocialMediasList.js";
 const BrandTalents = () => {
   const {
     currentUserId,
@@ -97,6 +99,10 @@ const BrandTalents = () => {
   const [currentUserData, steCurrentUserData] = useState([]);
   const [showSidebar, setShowSidebar] = useState(true);
   const [brandId, setBrandId] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [socialMedias, setSocialMedias] = useState([]);
+  const [minFollowers, setMinFollowers] = useState("");
+  const [maxFollowers, setMaxFollowers] = useState("");
 
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -305,6 +311,13 @@ const BrandTalents = () => {
         }
       })
       .catch((err) => {});
+  };
+
+  const onMinFollowersChange = (event) => {
+    setMinFollowers(event.target.value); // Update the state with the new value
+  };
+  const onMaxFollowersChange = (event) => {
+    setMaxFollowers(event.target.value); // Update the state with the new value
   };
 
   const handleFeaturesChange = (label, value) => {
@@ -711,6 +724,28 @@ const BrandTalents = () => {
     }),
   };
 
+  const selectCategory = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    if (!selectedOptions || selectedOptions.length === 0) {
+      setCategories([]);
+      return;
+    }
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setCategories(selectedLanguages);
+  };
+
+  const selectSocialMedias = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    if (!selectedOptions || selectedOptions.length === 0) {
+      setSocialMedias([]);
+      return;
+    }
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setSocialMedias(selectedLanguages);
+  };
+
   return (
     <>
       <>
@@ -728,459 +763,498 @@ const BrandTalents = () => {
           className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
         >
           <div className="brand-content-main">
-            <section>
-              <div className="brand-filter-section row">
-                <div className="col-md-5 col-lg-4 leftSides pr-0">
-                  <div className="filter-wrapper">
-                    <div className="filter-btn-wrapper">
-                      <div
-                        onClick={() => {
-                          setFilterOpen(!filterOpen);
-                        }}
-                        className="filter-btn"
-                      >
-                        Filters
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper pt-4">
-                      <div className="filter-items">Keyword</div>
-                      <div className="filter-input-wrapper inpWid">
-                        <input
-                          className="keyword-input"
-                          placeholder="Search Keyword"
-                          value={searchKeyword}
-                          onChange={searchInputChange}
-                        ></input>
-                        <div onClick={postKeyword}>
-                          <i className="search-icon bi bi-search"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="search-words-section">
-                      <div></div>
-                      {keywordsList && keywordsList.length > 0 && (
-                        <>
-                          <div className="search-history">
-                            {keywordsList &&
-                              keywordsList.length > 0 &&
-                              keywordsList.map((item, index) => {
-                                return (
-                                  <>
-                                    <div className="searched-word-wrapper">
-                                      <div
-                                        key={index}
-                                        className="selected-word-style"
-                                        onClick={(e) => {
-                                          setSelectedKeywords(item);
-                                          setSearchKeyword(item);
-                                        }}
-                                      >
-                                        {item}
-                                      </div>
-                                      <div
-                                        onClick={(e) => {
-                                          deleteKeyword(item);
-                                        }}
-                                      >
-                                        <i className="bi bi-x cancel-icon"></i>
-                                      </div>
-                                    </div>
-                                  </>
-                                );
-                              })}
+            <section className="creatorPage-Wraper">
+              <div className="container">
+                <div className="filter-section py-2 mt-3">
+                  <div className="brand-filter-section row px-4">
+                    <div className="col-md-4 col-lg-4">
+                      <div className="filter-wrapper">
+                        <div className="filter-btn-wrapper">
+                          <div
+                            onClick={() => {
+                              setFilterOpen(!filterOpen);
+                            }}
+                            className="filter-btn"
+                          >
+                            Filters
                           </div>
-                        </>
-                      )}
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">Name</div>
-                      <div className="creators-filter-select inpWid">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Name"
-                          onChange={(e) => {
-                            setFullName(e.target.value);
-                          }}
-                          value={fullName}
-                        ></input>
-                      </div>
-                    </div>
-
-                    <div className="profession-creator-wrapper">
-                      <div className="filter-items">Profession</div>
-                      <div className="profession-wrapper talents-profession inpWid">
-                        <Select
-                          defaultValue={[professionList[2], professionList[3]]}
-                          isMulti
-                          name="colors"
-                          options={professionList}
-                          valueField="value"
-                          className="basic-multi-select"
-                          classNamePrefix="select"
-                          onChange={(value) => setProfession(value)}
-                          styles={customStyles}
-                        />
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">Category</div>
-                      <div className="creators-filter-select inpWid">
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                          onChange={selectIndustry}
-                          value={industry}
-                        >
-                          <option value="" disabled selected>
-                            Select Category
-                          </option>
-                          {industryList.map((option, index) => (
-                            <option key={index} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">Country</div>
-                      <div className="creators-filter-select inpWid">
-                        <Select
-                          placeholder="Select country..."
-                          options={countryList.map((country, index) => ({
-                            value: country,
-                            label: country,
-                            key: index,
-                          }))}
-                          value={
-                            country ? { value: country, label: country } : null
-                          }
-                          onChange={handleSelectedCountry}
-                          isSearchable={true}
-                        />
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">State</div>
-                      <div className="creators-filter-select inpWid">
-                        <Select
-                          placeholder="Select state..."
-                          options={stateList.map((state) => ({
-                            value: state.stateId, // or whatever unique identifier you want to use
-                            label: state.name,
-                          }))}
-                          value={state ? { value: state, label: state } : null}
-                          onChange={handleSelectedState}
-                          isSearchable={true}
-                          noOptionsMessage={customNoOptionsMessageState}
-                        />
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">City</div>
-                      <div className="creators-filter-select inpWid">
-                        <Select
-                          placeholder="Select City..."
-                          options={cityList.map((city) => ({
-                            value: city.cityId, // or whatever unique identifier you want to use
-                            label: city.name,
-                          }))}
-                          value={
-                            kidsCity
-                              ? { value: kidsCity, label: kidsCity }
-                              : null
-                          }
-                          onChange={handleSelectedCity}
-                          isSearchable={true}
-                          noOptionsMessage={customNoOptionsMessageCity}
-                        />
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">Gender</div>
-                      <div className="creators-filter-select inpWid">
-                        {/* <label className="form-label">Gender</label> */}
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                          onChange={selectGender}
-                          value={gender}
-                        >
-                          <option value="" disabled selected>
-                            Select Gender
-                          </option>
-                          {gendersOptions.map((option, index) => (
-                            <option key={index} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">Age</div>
-                      <div className="creators-filter-select creators-filter-select-range inpWid">
-                        <RangeSlider
-                          min={1}
-                          max={100}
-                          onChange={onRangeChange}
-                        />
-                        {/* <p>
-                    Change in slider:
-                    {min},{max}
-                  </p> */}
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper creator-age-main">
-                      <div className="creators-filter-select creator-age-wrapper inpWid">
-                        <input
-                          type="text"
-                          className="form-control range-inputs"
-                          placeholder="Min"
-                          value={`Min Age: ${min}`}
-                          onChange={onMinChange}
-                          readOnly
-                        ></input>
-                        <input
-                          type="text"
-                          className="form-control range-inputs"
-                          placeholder="Max"
-                          value={`Max Age: ${max}`}
-                          onChange={onMaxChange}
-                          readOnly
-                        ></input>
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">Ethnicity</div>
-                      <div className="creators-filter-select inpWid">
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                          onChange={selectEthnicity}
-                          value={ethnicity}
-                        >
-                          <option value="" disabled selected>
-                            Select Ethnicity
-                          </option>
-                          {ethnicityOptions.map((option, index) => (
-                            <option key={index} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">Nationality</div>
-                      <div className="creators-filter-select inpWid">
-                        <Select
-                          isMulti
-                          name="colors"
-                          options={nationalitiesArray}
-                          valueField="value"
-                          className="basic-multi-select"
-                          classNamePrefix="select"
-                          onChange={(value) => selectNationality(value)}
-                          styles={customStylesProfession}
-                        />
-                      </div>
-                    </div>
-                    <div className="keyword-wrapper">
-                      <div className="filter-items">Language</div>
-                      <div className="creators-filter-select inpWid">
-                        <Select
-                          isMulti
-                          name="colors"
-                          options={languageOptions}
-                          valueField="value"
-                          className="basic-multi-select"
-                          classNamePrefix="select"
-                          onChange={(value) => selectLanguage(value)}
-                          styles={customStyles}
-                        />
-                      </div>
-                    </div>
-
-                    {featuresListSelect && (
-                      <>
-                        {featuresListSelect.map((item, index) => {
-                          return (
+                        </div>
+                        <div className="keyword-wrapper pt-4">
+                          <div className="filter-items">Keyword</div>
+                          <div className="filter-input-wrapper inpWid">
+                            <input
+                              className="keyword-input"
+                              placeholder="Search Keyword"
+                              value={searchKeyword}
+                              onChange={searchInputChange}
+                            ></input>
+                            <div onClick={postKeyword}>
+                              <i className="search-icon bi bi-search"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="search-words-section">
+                          <div></div>
+                          {keywordsList && keywordsList.length > 0 && (
                             <>
-                              <div className="keyword-wrapper">
-                                <div className="filter-items">
-                                  {" "}
-                                  {item.label}
-                                </div>
-
-                                <div className="creators-filter-select inpWid">
-                                  <select
-                                    className="form-select features-select"
-                                    aria-label="Default select example"
-                                    onChange={(e) =>
-                                      handleFeaturesChange(
-                                        item.label,
-                                        e.target.value
-                                      )
-                                    }
-                                  >
-                                    <option value="" disabled selected>
-                                      {item.label}
-                                    </option>
-                                    {item.options.map((option, idx) => (
-                                      <option key={idx} value={option}>
-                                        {option}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-                            </>
-                          );
-                        })}
-                      </>
-                    )}
-
-                    <div className="submit-buttons">
-                      <div
-                        className="reset-btn"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          reset();
-                        }}
-                      >
-                        Reset
-                      </div>
-                      <div
-                        className="search-btn"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          search();
-                        }}
-                      >
-                        Search
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-md-7 col-lg-8 rightSides">
-                  <div className="models-images">
-                    <div className="gallery-section">
-                      <div className="gallery-main p-0 row">
-                        {talentList?.map((item) => {
-                          return (
-                            <div className="col-sm-6 col-md-4 col-lg-3 px-1">
-                              <div className="gallery-wrapper w-100">
-                                <div className="galBox">
-                                  <div className="posRel">
-                                    <img
-                                      className="gallery-img"
-                                      src={`${API.userFilePath}${item.image?.fileData}`}
-                                    ></img>
-                                    {(() => {
-                                      const starRatings = parseInt(
-                                        item?.averageStarRatings,
-                                        10
-                                      );
-                                      const totalStars = 5;
-                                      const filledStars =
-                                        !isNaN(starRatings) && starRatings > 0
-                                          ? starRatings
-                                          : 0;
-
-                                      return (
-                                        <div
-                                          className={`rating ${
-                                            currentUserType === "brand"
-                                              ? "cursor"
-                                              : ""
-                                          }`}
-                                          onClick={() => rateTalent(item)}
-                                        >
-                                          {[...Array(totalStars)].map(
-                                            (_, starIndex) => (
-                                              <i
-                                                key={starIndex}
-                                                className={
-                                                  starIndex < filledStars
-                                                    ? "bi bi-star-fill rating-filled-star"
-                                                    : "bi bi-star rating-unfilled-star"
-                                                }
-                                                alt="Star"
-                                              ></i>
-                                            )
-                                          )}
-                                        </div>
-                                      );
-                                    })()}
-                                    {!item.isFavorite && (
-                                      <img
-                                        className="heart-icon"
-                                        src={heartIcon}
-                                        onClick={() => addFavorite(item)}
-                                      ></img>
-                                    )}
-                                    {item.isFavorite === true && (
-                                      <img
-                                        className="heart-icon"
-                                        src={favoruiteIcon}
-                                        onClick={() => removeFavorite(item)}
-                                      ></img>
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="">
-                                  <div
-                                    style={{ cursor: "pointer" }}
-                                    className="content"
-                                    onClick={() => openTalent(item)}
-                                  >
-                                    <div className="find-creator-name">
-                                      {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
-                                    </div>
-                                    <div className="talent-details-wrapper">
-                                      <div className="logo-fill">
-                                        <img
-                                          className="talent-logo"
-                                          src={pinkStar}
-                                        ></img>
-                                      </div>
-                                      <div className="contSect">
-                                        {item?.averageStarRatings && (
-                                          <>
-                                            <span>
-                                              {item?.averageStarRatings}
-                                              &nbsp;
-                                              {item?.averageStarRatings > 0 && (
-                                                <>
-                                                  ( {item?.totalReviews}{" "}
-                                                  ratings)
-                                                </>
-                                              )}
-                                            </span>
-                                          </>
-                                        )}
-                                      </div>
-                                    </div>
-                                    {item?.noOfJobsCompleted && (
+                              <div className="search-history">
+                                {keywordsList &&
+                                  keywordsList.length > 0 &&
+                                  keywordsList.map((item, index) => {
+                                    return (
                                       <>
-                                        <div className="talent-details-wrapper">
-                                          <div className="logo-fill-briefcase">
-                                            <i className="bi bi-briefcase-fill model-job-icons"></i>
+                                        <div className="searched-word-wrapper">
+                                          <div
+                                            key={index}
+                                            className="selected-word-style"
+                                            onClick={(e) => {
+                                              setSelectedKeywords(item);
+                                              setSearchKeyword(item);
+                                            }}
+                                          >
+                                            {item}
                                           </div>
-                                          <div className="contSect">
-                                            <span>
-                                              {item?.noOfJobsCompleted} Jobs
-                                              Completed
-                                            </span>
+                                          <div
+                                            onClick={(e) => {
+                                              deleteKeyword(item);
+                                            }}
+                                          >
+                                            <i className="bi bi-x cancel-icon"></i>
                                           </div>
                                         </div>
                                       </>
-                                    )}
+                                    );
+                                  })}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">Name</div>
+                          <div className="creators-filter-select inpWid">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Name"
+                              onChange={(e) => {
+                                setFullName(e.target.value);
+                              }}
+                              value={fullName}
+                            ></input>
+                          </div>
+                        </div>
 
-                                    {/* <div className="find-creator-address ">
+                        <div className="profession-creator-wrapper">
+                          <div className="filter-items">Profession</div>
+                          <div className="profession-wrapper talents-profession inpWid">
+                            <Select
+                              defaultValue={[
+                                professionList[2],
+                                professionList[3],
+                              ]}
+                              isMulti
+                              name="colors"
+                              options={professionList}
+                              valueField="value"
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={(value) => setProfession(value)}
+                              styles={customStylesProfession}
+                            />
+                          </div>
+                        </div>
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">Category</div>
+                          <div className="creators-filter-select inpWid">
+                            <Select
+                              isMulti
+                              name="colors"
+                              options={categoriesArray}
+                              valueField="value"
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={(value) => selectCategory(value)}
+                              styles={customStylesProfession}
+                            />
+                          </div>
+                        </div>
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">Country</div>
+                          <div className="creators-filter-select inpWid">
+                            <Select
+                              placeholder="Select country..."
+                              options={countryList.map((country, index) => ({
+                                value: country,
+                                label: country,
+                                key: index,
+                              }))}
+                              value={
+                                country
+                                  ? { value: country, label: country }
+                                  : null
+                              }
+                              onChange={handleSelectedCountry}
+                              isSearchable={true}
+                            />
+                          </div>
+                        </div>
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">State</div>
+                          <div className="creators-filter-select inpWid">
+                            <Select
+                              placeholder="Select state..."
+                              options={stateList.map((state) => ({
+                                value: state.stateId, // or whatever unique identifier you want to use
+                                label: state.name,
+                              }))}
+                              value={
+                                state ? { value: state, label: state } : null
+                              }
+                              onChange={handleSelectedState}
+                              isSearchable={true}
+                              noOptionsMessage={customNoOptionsMessageState}
+                            />
+                          </div>
+                        </div>
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">City</div>
+                          <div className="creators-filter-select inpWid">
+                            <Select
+                              placeholder="Select City..."
+                              options={cityList.map((city) => ({
+                                value: city.cityId, // or whatever unique identifier you want to use
+                                label: city.name,
+                              }))}
+                              value={
+                                kidsCity
+                                  ? { value: kidsCity, label: kidsCity }
+                                  : null
+                              }
+                              onChange={handleSelectedCity}
+                              isSearchable={true}
+                              noOptionsMessage={customNoOptionsMessageCity}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">Platform</div>
+                          <div className="creators-filter-select inpWid">
+                            <Select
+                              isMulti
+                              name="colors"
+                              options={SocialMediasList}
+                              valueField="value"
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={(value) => selectSocialMedias(value)}
+                              styles={customStylesProfession}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="keyword-wrapper creator-age-main ">
+                          <div className="filter-items">Followers</div>
+                          <div className="creators-filter-select creator-age-wrapper inpWid">
+                            <input
+                              type="text"
+                              className="form-control range-inputs"
+                              placeholder="Min Followers"
+                              value={minFollowers}
+                              onChange={onMinFollowersChange}
+                            ></input>
+                            <input
+                              type="text"
+                              className="form-control range-inputs"
+                              placeholder="Max Followers"
+                              value={maxFollowers}
+                              onChange={onMaxFollowersChange}
+                            ></input>
+                          </div>
+                        </div>
+
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">Gender</div>
+                          <div className="creators-filter-select inpWid">
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              onChange={selectGender}
+                              value={gender}
+                            >
+                              <option value="" disabled selected>
+                                Select Gender
+                              </option>
+                              {gendersOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">Age</div>
+                          <div className="creators-filter-select creators-filter-select-range inpWid">
+                            <RangeSlider
+                              min={1}
+                              max={100}
+                              onChange={onRangeChange}
+                            />
+                            {/* <p>
+                        Change in slider:
+                        {min},{max}
+                      </p> */}
+                          </div>
+                        </div>
+                        <div className="keyword-wrapper creator-age-main ">
+                          <div className="creators-filter-select creator-age-wrapper inpWid">
+                            <input
+                              type="text"
+                              className="form-control range-inputs"
+                              placeholder="Min"
+                              value={`Min Age: ${min}`}
+                              onChange={onMinChange}
+                              readOnly
+                            ></input>
+                            <input
+                              type="text"
+                              className="form-control range-inputs"
+                              placeholder="Max"
+                              value={`Max Age: ${max}`}
+                              onChange={onMaxChange}
+                              readOnly
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">Ethnicity</div>
+                          <div className="creators-filter-select inpWid">
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              onChange={selectEthnicity}
+                              value={ethnicity}
+                            >
+                              <option value="" disabled selected>
+                                Select Ethnicity
+                              </option>
+                              {ethnicityOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">Nationality</div>
+                          <div className="creators-filter-select inpWid">
+                            <Select
+                              isMulti
+                              name="colors"
+                              options={nationalitiesArray}
+                              valueField="value"
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={(value) => selectNationality(value)}
+                              styles={customStylesProfession}
+                            />
+                          </div>
+                        </div>
+                        <div className="keyword-wrapper">
+                          <div className="filter-items">Language</div>
+                          <div className="creators-filter-select inpWid">
+                            <Select
+                              isMulti
+                              name="colors"
+                              options={languageOptions}
+                              valueField="value"
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={(value) => selectLanguage(value)}
+                              styles={customStyles}
+                            />
+                          </div>
+                        </div>
+
+                        {featuresListSelect && (
+                          <>
+                            {featuresListSelect.map((item, index) => {
+                              return (
+                                <>
+                                  <div className="keyword-wrapper">
+                                    <div className="filter-items">
+                                      {" "}
+                                      {item.label}
+                                    </div>
+                                    <div className="creators-filter-select">
+                                      <select
+                                        style={{ width: "260px" }}
+                                        className="form-select features-select"
+                                        aria-label="Default select example"
+                                        onChange={(e) =>
+                                          handleFeaturesChange(
+                                            item.label,
+                                            e.target.value
+                                          )
+                                        }
+                                      >
+                                        <option value="" disabled selected>
+                                          {item.label}
+                                        </option>
+                                        {item.options.map((option, idx) => (
+                                          <option key={idx} value={option}>
+                                            {option}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })}
+                          </>
+                        )}
+
+                        <div className="submit-buttons">
+                          <div
+                            className="reset-btn"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              reset();
+                            }}
+                          >
+                            Reset
+                          </div>
+                          <div
+                            className="search-btn"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              search();
+                            }}
+                          >
+                            Search
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-8 col-lg-8">
+                      <div className="models-images">
+                        <div className="gallery-section">
+                          <div className="gallery-main find-creator-gallery-main p-0 m-0">
+                            <div className="row favTalent px-2 mb-3">
+                              {talentList?.map((item) => {
+                                return (
+                                  <div className="col-sm-6 col-md-4 col-lg-3 px-1 mr-3">
+                                    <div className="gallery-wrapper modalSpc">
+                                      <div className="imgBox">
+                                        <img
+                                          className="gallery-img"
+                                          src={`${API.userFilePath}${item.image?.fileData}`}
+                                        ></img>
+                                        {(() => {
+                                          const starRatings = parseInt(
+                                            item?.averageStarRatings,
+                                            10
+                                          );
+                                          const totalStars = 5;
+                                          const filledStars =
+                                            !isNaN(starRatings) &&
+                                            starRatings > 0
+                                              ? starRatings
+                                              : 0;
+
+                                          return (
+                                            <div
+                                              className={`rating ${
+                                                currentUserType === "brand"
+                                                  ? "cursor"
+                                                  : ""
+                                              }`}
+                                              onClick={() => rateTalent(item)}
+                                            >
+                                              {[...Array(totalStars)].map(
+                                                (_, starIndex) => (
+                                                  <i
+                                                    key={starIndex}
+                                                    className={
+                                                      starIndex < filledStars
+                                                        ? "bi bi-star-fill rating-filled-star"
+                                                        : "bi bi-star rating-unfilled-star"
+                                                    }
+                                                    alt="Star"
+                                                  ></i>
+                                                )
+                                              )}
+                                            </div>
+                                          );
+                                        })()}
+                                        {!item.isFavorite && (
+                                          <img
+                                            className="heart-icon"
+                                            src={heartIcon}
+                                            onClick={() => addFavorite(item)}
+                                          ></img>
+                                        )}
+                                        {item.isFavorite === true && (
+                                          <img
+                                            className="heart-icon"
+                                            src={favoruiteIcon}
+                                            onClick={() => removeFavorite(item)}
+                                          ></img>
+                                        )}
+                                      </div>
+                                      <div
+                                        className="galCont"
+                                        onClick={() => openTalent(item)}
+                                      >
+                                        <div className="content">
+                                          <div className="find-creator-name">
+                                            {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
+                                          </div>
+                                          <div className="talent-details-wrapper">
+                                            <div className="logo-fill">
+                                              <img
+                                                className="talent-logo"
+                                                src={pinkStar}
+                                              ></img>
+                                            </div>
+                                            <div className="contSect">
+                                              {item?.averageStarRatings && (
+                                                <>
+                                                  <span>
+                                                    {item?.averageStarRatings}
+                                                    &nbsp;
+                                                    {item?.averageStarRatings >
+                                                      0 && (
+                                                      <>
+                                                        ( {item?.totalReviews}{" "}
+                                                        ratings)
+                                                      </>
+                                                    )}
+                                                  </span>
+                                                </>
+                                              )}
+                                            </div>
+                                          </div>
+                                          {item?.noOfJobsCompleted && (
+                                            <>
+                                              <div className="talent-details-wrapper">
+                                                <div className="logo-fill-briefcase">
+                                                  <i className="bi bi-briefcase-fill model-job-icons"></i>
+                                                </div>
+                                                <div className="contSect">
+                                                  <span>
+                                                    {item?.noOfJobsCompleted}{" "}
+                                                    Jobs Completed
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </>
+                                          )}
+
+                                          {/* <div className="find-creator-address ">
                                       {item.profession?.map(
                                         (profession, index) => (
                                           <React.Fragment key={index}>
@@ -1192,28 +1266,65 @@ const BrandTalents = () => {
                                       )}
                                     </div> */}
 
-                                    <div>
-                                      <span className="job-company_dtls">
-                                        {item?.profession[0].value}
-                                      </span>
-                                    </div>
+                                          {item?.profession && (
+                                            <>
+                                              <div className="talent-details-wrapper">
+                                                <div className="logo-fill-briefcase">
+                                                  <i class="bi bi-person-workspace"></i>
+                                                </div>
+                                                <div className="contSect">
+                                                  <span>
+                                                    {item?.profession[0]?.value}
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </>
+                                          )}
 
-                                    <div>
-                                      <span className="job-company_dtls">
-                                        {item?.relevantCategories[0]}
-                                      </span>
-                                    </div>
+                                          {item?.relevantCategories && (
+                                            <>
+                                              <div className="talent-details-wrapper">
+                                                <div className="logo-fill-briefcase">
+                                                  <i class="bi bi-bookmarks-fill"></i>
+                                                </div>
+                                                <div className="contSect">
+                                                  <span>
+                                                    {
+                                                      item
+                                                        ?.relevantCategories[0]
+                                                    }
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </>
+                                          )}
 
-                                    <span className="job-company_dtls">
-                                      <i className="bi bi-geo-alt-fill location-icon"></i>
-                                      {item?.parentCountry}, {item?.parentState}{" "}
-                                    </span>
+                                          <span className="job-company_dtls">
+                                            <i className="bi bi-geo-alt-fill location-icon"></i>
+                                            {item?.parentCountry},{" "}
+                                            {item?.parentState}{" "}
+                                          </span>
+
+                                          {/* <div className="find-creator-address ">
+                                      {item.profession?.map(
+                                        (profession, index) => (
+                                          <React.Fragment key={index}>
+                                            {profession.value}
+                                            {index !==
+                                              item.profession.length - 1 && ","}
+                                          </React.Fragment>
+                                        )
+                                      )}
+                                    </div> */}
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                              </div>
+                                );
+                              })}
                             </div>
-                          );
-                        })}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -1369,7 +1369,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                               classNamePrefix="select"
                               placeholder="Search for Category"
                               onChange={handleProfessionChange}
-                              styles={customStyles}
+                              styles={customStylesProfession}
                               value={selectedProfessions}
                             />
                             {professionError && (

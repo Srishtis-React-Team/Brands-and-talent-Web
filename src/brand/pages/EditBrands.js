@@ -1207,7 +1207,7 @@ const EditBrands = () => {
               </div>
             </CustomTabPanel>
 
-            <div className="edit-profile-navigations editOnly p-0">
+            {/* <div className="edit-profile-navigations editOnly p-0">
               {valueTabs >= 1 && (
                 <div
                   className="edit-profile-navigation-btn"
@@ -1230,7 +1230,7 @@ const EditBrands = () => {
                   <i className="bi bi-arrow-right-circle-fill"></i>
                 </div>
               )}
-            </div>
+            </div> */}
           </Box>
         </div>
       </main>

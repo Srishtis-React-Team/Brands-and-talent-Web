@@ -43,7 +43,7 @@ const TalentDiaries = () => {
         <div className="container">
           <div className="blogs-main row">
             <div className="blog-contents col-sm-9 col-md-9">
-              Talent Diaries
+              Talent Stories
             </div>
             <div className="blogs-tabs col-sm-4 col-md-3">
               <div className="blogs-tabs-wrapper">
@@ -63,7 +63,7 @@ const TalentDiaries = () => {
                   className="blogs-tab-text"
                   onClick={() => navigateTO("talent-diary")}
                 >
-                  Talent Diaries
+                  Talent Stories
                 </div>
                 <div
                   className="blogs-tab-text"

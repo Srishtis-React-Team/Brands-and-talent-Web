@@ -120,8 +120,9 @@ const Login = () => {
   };
 
   const handleForgotPassword = (userType) => {
-    navigate(`/forgot-password?${userType}`);
+    navigate(`/forgot-password`);
   };
+
   const brandSignup = () => {
     navigate(`/brand-firstGig`);
   };
