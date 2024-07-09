@@ -269,7 +269,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                               </li>
                               <li>
                                 <a href="" className="dropdown-item">
-                                  Talent Diaries
+                                  Talent Stories
                                 </a>
                               </li>
                               <li>

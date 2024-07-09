@@ -8,7 +8,8 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import CurrentUser from "../CurrentUser";
 import Header from "./header";
-const Footer = () => {
+const Footer = (props) => {
+  console.log(props.props, "propsfopter");
   const {
     currentUserId,
     currentUserImage,
@@ -147,56 +148,64 @@ const Footer = () => {
       {/* <Header sendMessageToParent={handleMessageFromHeader} /> */}
       <div className="container">
         <div className="main-footer-wrapper mb-4">
-          <section className="main-footer-form">
-            <div className="get-discover title mt-0">
-              Subscribe to Newsletter
-            </div>
-            <div className="form-fields row">
-              <div className="col-md-4 form-group">
-                <input
-                  className="input-style form-control"
-                  placeholder="Full name"
-                  value={firstName}
-                  onChange={(e) => {
-                    setFirstName(e.target.value);
-                    setFirstNameError(false);
-                  }}
-                ></input>
-                {firstNameError && (
-                  <div className="invalid-fields" style={{ color: "#ffffff" }}>
-                    * Please enter First Name
-                  </div>
-                )}
+          {props.props != "blog" && (
+            <section className="main-footer-form">
+              <div className="get-discover title mt-0">
+                Subscribe to Newsletter
               </div>
-              <div className="col-md-4 form-group">
-                <input
-                  className="input-style form-control"
-                  placeholder="Email Address"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    setEmailError(false);
-                  }}
-                ></input>
-                {emailError && (
-                  <div className="invalid-fields" style={{ color: "#ffffff" }}>
-                    * Please enter Email Address
+              <div className="form-fields row">
+                <div className="col-md-4 form-group">
+                  <input
+                    className="input-style form-control"
+                    placeholder="Full name"
+                    value={firstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                      setFirstNameError(false);
+                    }}
+                  ></input>
+                  {firstNameError && (
+                    <div
+                      className="invalid-fields"
+                      style={{ color: "#ffffff" }}
+                    >
+                      * Please enter First Name
+                    </div>
+                  )}
+                </div>
+                <div className="col-md-4 form-group">
+                  <input
+                    className="input-style form-control"
+                    placeholder="Email Address"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setEmailError(false);
+                    }}
+                  ></input>
+                  {emailError && (
+                    <div
+                      className="invalid-fields"
+                      style={{ color: "#ffffff" }}
+                    >
+                      * Please enter Email Address
+                    </div>
+                  )}
+                </div>
+                <div className="col-md-4 form-group">
+                  <div
+                    className="subscribe-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      subscribe();
+                    }}
+                  >
+                    Subscribe Now
                   </div>
-                )}
-              </div>
-              <div className="col-md-4 form-group">
-                <div
-                  className="subscribe-btn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    subscribe();
-                  }}
-                >
-                  Subscribe Now
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
         </div>
 
         <section className="footerCommon pt-5">
@@ -300,7 +309,7 @@ const Footer = () => {
 
                 <li>
                   <Link to="/resources" onClick={handleClick}>
-                    Brands / Client & Talent Store
+                    BT Store
                   </Link>
                 </li>
               </ul>

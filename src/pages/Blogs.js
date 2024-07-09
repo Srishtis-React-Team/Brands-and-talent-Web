@@ -102,17 +102,29 @@ const Blogs = () => {
                         <div className="blogs-wrapper">
                           <div className="blogimg-bx">
                             <img
+                              onClick={() => navigateTO("industry-news")}
                               className="blogs-image"
                               src={item?.image}
                               alt=""
                             />
                           </div>
                           <div className="blogs-content-wrapper">
-                            <div className="blogs-subhead">
+                            <div
+                              className="blogs-subhead"
+                              onClick={() => navigateTO("industry-news")}
+                            >
                               {item?.subheading}
                             </div>
-                            <div className="blogs-heading">{item?.heading}</div>
-                            <div className="blogs-description">
+                            <div
+                              className="blogs-heading"
+                              onClick={() => navigateTO("industry-news")}
+                            >
+                              {item?.heading}
+                            </div>
+                            <div
+                              className="blogs-description"
+                              onClick={() => navigateTO("industry-news")}
+                            >
                               {item?.description}
                             </div>
                           </div>
@@ -125,12 +137,7 @@ const Blogs = () => {
             </div>
             <div className="blogs-tabs col-sm-4 col-md-3">
               <div className="blogs-tabs-wrapper">
-                <div
-                  className="blogs-tab-text"
-                  onClick={() => navigateTO("industry-news")}
-                >
-                  Industry News & Insights
-                </div>
+                <div className="blogs-tab-text">Industry News & Insights</div>
                 <div
                   className="blogs-tab-text"
                   onClick={() => navigateTO("case-studies")}
@@ -141,7 +148,7 @@ const Blogs = () => {
                   className="blogs-tab-text"
                   onClick={() => navigateTO("talent-diary")}
                 >
-                  Talent Diaries
+                  Talent Stories
                 </div>
                 <div
                   className="blogs-tab-text"

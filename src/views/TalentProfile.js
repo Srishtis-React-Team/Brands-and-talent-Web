@@ -666,7 +666,7 @@ const TalentProfile = () => {
                             </>
                           )}
 
-                          {/* <span>{talentData?.averageStarRatings} (0 jobs completed)</span> */}
+                          {/* <span>{talentData?.averageStarRatings} (0 Projects completed)</span> */}
                         </div>
                       </div>
 
@@ -678,7 +678,8 @@ const TalentProfile = () => {
                             </div>
                             <div className="contSect">
                               <span>
-                                {talentData?.noOfJobsCompleted} Jobs Completed
+                                {talentData?.noOfJobsCompleted} Projects
+                                Completed
                               </span>
                             </div>
                           </div>
@@ -1130,6 +1131,11 @@ const TalentProfile = () => {
                             {photosList && photosList.length > 0 && (
                               <PhotosCarousel photosList={photosList} />
                             )}
+                            {photosList.length === 0 && (
+                              <>
+                                <div>No Photos Available</div>
+                              </>
+                            )}
                           </div>
 
                           <div className="portofolio-section">
@@ -1357,6 +1363,11 @@ const TalentProfile = () => {
                                   </>
                                 );
                               })}
+                            {photosList.length === 0 && (
+                              <>
+                                <div>No Photos Available</div>
+                              </>
+                            )}
                           </section>
                         </div>
                       )}
@@ -1445,6 +1456,12 @@ const TalentProfile = () => {
                                 )}
                               </div>
                             ))}
+
+                            {urlsList.length === 0 && (
+                              <>
+                                <div>No Video/Audio Available</div>
+                              </>
+                            )}
                           </div>
                         </div>
                       )}
@@ -1500,6 +1517,11 @@ const TalentProfile = () => {
                                 </tr>
                               </tbody>
                             </table>
+                            {featuresList.length === 0 && (
+                              <>
+                                <div>No Features Available</div>
+                              </>
+                            )}
                           </div>
                         </>
                       )}
@@ -1533,6 +1555,11 @@ const TalentProfile = () => {
                               </>
                             );
                           })}
+                          {cvList.length === 0 && (
+                            <>
+                              <div>No CV Available</div>
+                            </>
+                          )}
                         </div>
                       )}
                       {reviews && reviewsList?.length > 0 && (
@@ -1587,6 +1614,11 @@ const TalentProfile = () => {
                             );
                           })}
                         </div>
+                      )}
+                      {reviewsList.length === 0 && (
+                        <>
+                          <div>No Reviews Available</div>
+                        </>
                       )}
                     </div>
                   </div>

@@ -61,7 +61,7 @@ const TalentTips = () => {
                   className="blogs-tab-text"
                   onClick={() => navigateTO("talent-diary")}
                 >
-                  Talent Diaries
+                  Talent Stories
                 </div>
                 <div
                   className="blogs-tab-text"
