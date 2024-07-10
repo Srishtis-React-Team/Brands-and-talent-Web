@@ -171,6 +171,9 @@ const ResetPassword = () => {
       <Header />
       <div className="login-main">
         <div className="login-container">
+          <div className="reset-logo">
+              <img className="btLogo" src={btLogo} alt="" />
+            </div>
           <div className="otp-title">
             <span className="bold-otp">New Password</span>
           </div>
@@ -201,6 +204,7 @@ const ResetPassword = () => {
             </div>
           </div>
           <div className="mb-1 login-input-containers ">
+            
             <label className="form-label">Confirm Password</label>
             <div className="form-group has-search adult-confirm-password-wrapper">
               <span className="fa fa-lock form-control-feedback"></span>
@@ -234,9 +238,7 @@ const ResetPassword = () => {
             {isLoading ? "Loading..." : "Submit"}
           </div>
         </div>
-        <div className="reset-logo">
-          <img className="btLogo" src={btLogo} alt="" />
-        </div>
+       
       </div>
       {openPopUp && <PopUp message={message} />}
     </>
