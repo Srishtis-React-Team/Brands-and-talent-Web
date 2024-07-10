@@ -86,6 +86,15 @@
   line-height: 21px;
 
 }
+.talent-details-wrapper.nweAlign .contSect, .job-company_dtls.nweAlign{
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+}
+.nweAlign i {
+  font-size: 14px;
+}
+
 .review-date {
   text-align: end;
   color: #c2114b;
@@ -479,8 +488,8 @@
 }
 
 .logo-fill {
-  width: 23px;
-  height: 23px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   border-radius: 50%;
   border: 1px solid #c2114b;

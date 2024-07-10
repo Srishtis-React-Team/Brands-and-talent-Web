@@ -38,24 +38,14 @@
   text-decoration: underline;
 }
 
-.login-logo {
+.login-logo, .forgot-logo, .reset-logo  {
   position: absolute;
   background-color: #fff;
-  top: -31px;
+  top: -20px;
   padding: 0px 20px;
 }
-.forgot-logo {
-  position: absolute;
-  background-color: #fff;
-  top: 290px;
-  padding: 0px 20px;
-}
-.reset-logo {
-  position: absolute;
-  background-color: #fff;
-  top: 315px;
-  padding: 0px 20px;
-}
+
+
 .success-pass-logo {
   position: absolute;
   background-color: #fff;
@@ -242,24 +232,9 @@
 // 1025px — 1200px: Desktops, large screens
 // 1201px and more —  Extra large screens, TV
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .login-container {
-    // background-color: aqua;
-    width: 50%;
-  }
-}
-@media (min-width: 481px) and (max-width: 768px) {
-  .login-container {
-    // background-color: aqua;
-    width: 70%;
-  }
-}
-@media (min-width: 320px) and (max-width: 480px) {
-  .login-container {
-    // background-color: aqua;
-    width: 90%;
-  }
-}
+
+
+
 
 .haAclf {
   display: inline-block;
