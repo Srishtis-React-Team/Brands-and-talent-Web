@@ -20,6 +20,7 @@ const BrandHome = () => {
   const [talentList, setTalentList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
 
   const headsetLogo = require("../../assets/icons/headset.png");
   const getTalentList = async () => {
@@ -27,6 +28,26 @@ const BrandHome = () => {
       .then((resData) => {
         if (resData) {
           setTalentList(resData.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (brandId) {
+      getBrand();
+    }
+  }, [brandId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
         }
       })
       .catch((err) => {
@@ -108,6 +129,55 @@ const BrandHome = () => {
   const contactUs = () => {
     navigate("/contact-us");
   };
+
+  useEffect(() => {
+    getBrandsPricingList();
+  }, []);
+
+  const [basicList, setBasicList] = useState([]);
+  const [proList, setProList] = useState([]);
+  const [premiumList, setPremiumList] = useState([]);
+  const [filteresPricingList, setFilteresPricingList] = useState([]);
+
+  const [pricingList, setPricingList] = useState(null);
+
+  const getBrandsPricingList = async () => {
+    const basic_list = [];
+    const pro_list = [];
+    const premium_list = [];
+
+    await ApiHelper.get(API.brandsPricingList)
+      .then((resData) => {
+        if (resData) {
+          console.log(resData, "resData");
+          resData?.data?.data?.forEach((item) => {
+            if (brandData?.planName == "Basic" && item?.planname === "Basic") {
+              setFilteresPricingList(item.data);
+            } else if (
+              brandData?.planName == "Pro" &&
+              item.planname === "Pro"
+            ) {
+              setFilteresPricingList(item.data);
+            } else if (
+              brandData?.planName == "Premium" &&
+              item.planname === "Premium"
+            ) {
+              console.log(item.data, "itemPremium");
+              setFilteresPricingList(item.data);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(pricingList, "pricingList");
+    console.log(basicList, "pricingList");
+    console.log(filteresPricingList, "filteresPricingList");
+  }, []);
 
   return (
     <>
@@ -353,21 +423,30 @@ const BrandHome = () => {
                 <div className="my-plan-contents">
                   <p className="my-plan">My Plan</p>
                   <div className="my-plan-features scroll">
-                    {planBenefits?.map((item, index) => {
-                      return (
-                        <>
-                          <div className="myplan-wrapper" key={item}>
-                            <div>
-                              <i
-                                style={{ color: "#c2114b", fontSize: "18px" }}
-                                className="bi bi-check-square-fill"
-                              ></i>
-                            </div>
-                            <div className="myplan-features-text">{item}</div>
-                          </div>
-                        </>
-                      );
-                    })}
+                    {filteresPricingList && filteresPricingList.length > 0 && (
+                      <>
+                        {filteresPricingList?.map((item, index) => {
+                          return (
+                            <>
+                              <div className="myplan-wrapper" key={index}>
+                                <div>
+                                  <i
+                                    style={{
+                                      color: "#c2114b",
+                                      fontSize: "18px",
+                                    }}
+                                    className="bi bi-check-square-fill"
+                                  ></i>
+                                </div>
+                                <div className="myplan-features-text">
+                                  {item}
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })}
+                      </>
+                    )}
                   </div>
                   <div
                     className="contact-btn"

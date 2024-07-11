@@ -564,22 +564,22 @@ const TalentPreviewJob = (props) => {
             </div>
 
             <div className="job-questions-section">
-              {jobData?.questions?.length > 0 &&
-                jobData?.questions?.some((question) => question) && (
-                  <>
-                    <div className="job-feature-title">Screening Questions</div>
-                    <div>
-                      <ul>
-                        {jobData?.questions &&
-                          jobData?.questions.map((question, index) => (
-                            <li className="job-benefits-values" key={index}>
-                              {question}
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                  </>
-                )}
+              {jobData?.questions?.length > 0 && (
+                <>
+                  <div className="job-feature-title">Screening Questions</div>
+                  <div>
+                    <ul>
+                      {jobData.questions.map((question, index) =>
+                        question ? (
+                          <li className="job-benefits-values" key={index}>
+                            {question}
+                          </li>
+                        ) : null
+                      )}
+                    </ul>
+                  </div>
+                </>
+              )}
             </div>
             <div className="job-about-section">
               <div className="job-feature-title">Job Description</div>

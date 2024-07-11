@@ -104,7 +104,7 @@ const TalentSideMenu = ({ myState }) => {
             </div>
             <div className="talent-details">
               <div className="talent-name">
-                {talentData?.preferredChildFirstname}
+                {talentData?.preferredChildFirstname}&nbsp;
                 {talentData?.preferredChildLastName}
               </div>
               <div className="talent-category">Talent</div>

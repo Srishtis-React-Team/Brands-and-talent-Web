@@ -183,9 +183,9 @@ const BrandsOtp = () => {
             If you didn’t receive a code?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
           </div>
-          <div className="otp-back" onClick={() => navigate(`/brand-signup`)}>
+          {/* <div className="otp-back" onClick={() => navigate(`/brand-signup`)}>
             Back
-          </div>
+          </div> */}
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

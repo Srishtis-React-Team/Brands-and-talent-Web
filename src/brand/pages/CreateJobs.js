@@ -70,6 +70,8 @@ const CreateJobs = () => {
   const [jobTitle, setjobTitle] = useState("");
   const [message, setMessage] = useState("");
   const [allJobsList, setAllJobsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [selectedJobID, setSelectedJobID] = useState(null);
   const [editJobData, setEditJobData] = useState(null);
   const [brandId, setBrandId] = useState(null);
@@ -842,16 +844,38 @@ const CreateJobs = () => {
     setSelectedBenefits(["Dental Insurance"]);
   }, []);
 
+  // const handleBenefits = (e) => {
+  //   const { value } = e.target;
+  //   const isSelected = selectedBenefits.includes(value);
+
+  //   if (isSelected) {
+  //     setSelectedBenefits(
+  //       selectedBenefits.filter((benefit) => benefit !== value)
+  //     );
+  //   } else {
+  //     setSelectedBenefits([...selectedBenefits, value]);
+  //   }
+  // };
+
   const handleBenefits = (e) => {
     const { value } = e.target;
-    const isSelected = selectedBenefits.includes(value);
 
-    if (isSelected) {
-      setSelectedBenefits(
-        selectedBenefits.filter((benefit) => benefit !== value)
-      );
+    if (value === "None of these above") {
+      setSelectedBenefits(["None of these above"]);
     } else {
-      setSelectedBenefits([...selectedBenefits, value]);
+      // Toggle selection for other options
+      if (selectedBenefits.includes("None of these above")) {
+        setSelectedBenefits([value]);
+      } else {
+        const isSelected = selectedBenefits.includes(value);
+        if (isSelected) {
+          setSelectedBenefits(
+            selectedBenefits.filter((benefit) => benefit !== value)
+          );
+        } else {
+          setSelectedBenefits([...selectedBenefits, value]);
+        }
+      }
     }
   };
 
@@ -1372,6 +1396,8 @@ const CreateJobs = () => {
     }
   };
   const createGigs = async () => {
+    setIsLoading(true);
+
     console.log(
       jobTitle,
       zipCode,
@@ -1467,21 +1493,21 @@ const CreateJobs = () => {
       await ApiHelper.post(API.draftJob, formData)
         .then((resData) => {
           console.log(resData, "draftedData");
-          console.log(resData.data.data._id, "draftedData");
           if (resData.data.status === true) {
+            setIsLoading(false);
             setMessage("Job Created SuccessFully!");
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
               if (brandData?.planName === "Basic") {
                 setMessage(
-                  "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
+                  "Your job will be approved by admin within 2 days. Upgrade to Pro for instant approval"
                 );
                 setOpenPopUp(true);
                 setTimeout(function() {
                   setOpenPopUp(false);
                   navigate("/list-jobs");
-                }, 5000);
+                }, 3000);
               } else {
                 navigate("/preview-job", {
                   state: {
@@ -1491,10 +1517,14 @@ const CreateJobs = () => {
               }
             }, 2000);
           } else if (resData.data.status === false) {
+            setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
+              if (resData?.data?.statusInfo == "limit-reached") {
+                navigate("/pricing");
+              }
             }, 3000);
           }
         })
@@ -2005,7 +2035,7 @@ const CreateJobs = () => {
                             </select>
                             {categoryError && (
                               <div className="invalid-fields">
-                                Please Select Category
+                                Please select Category
                               </div>
                             )}
                           </div>
@@ -2064,7 +2094,7 @@ const CreateJobs = () => {
 
                             {parentCountryError && (
                               <div className="invalid-fields">
-                                Please Select Country
+                                Please select Country
                               </div>
                             )}
                           </div>
@@ -2084,7 +2114,7 @@ const CreateJobs = () => {
                             />
                             {stateError && (
                               <div className="invalid-fields">
-                                Please Select State
+                                Please select State
                               </div>
                             )}
                           </div>
@@ -2143,13 +2173,13 @@ const CreateJobs = () => {
                             </option>
                             <option value="remote">Remote</option>
                             <option value="Work From Anywhere">
-                              Work From AnyWhere
+                              Work From Anywhere
                             </option>
                             <option value="hybrid">Hybrid</option>
                           </select>
                           {jobTypeError && (
                             <div className="invalid-fields">
-                              Please Select Job Type
+                              Please select Job Type
                             </div>
                           )}
                         </div>
@@ -2177,7 +2207,7 @@ const CreateJobs = () => {
                             </select>
                             {employmentError && (
                               <div className="invalid-fields">
-                                Please Select Employment Type
+                                Please select Employment Type
                               </div>
                             )}
                           </div>
@@ -2315,7 +2345,6 @@ const CreateJobs = () => {
                             <div className="creators-filter-select creator-age-wrapper splitterDiv">
                               <input
                                 type="text"
-                            
                                 className="form-control"
                                 placeholder="Minimum Age"
                                 value={minAge}
@@ -2355,7 +2384,7 @@ const CreateJobs = () => {
                             </select>
                             {ageRangeError && (
                               <div className="invalid-fields">
-                                Please Select Age
+                                Please select Age
                               </div>
                             )} */}
                           </div>
@@ -2461,7 +2490,7 @@ const CreateJobs = () => {
                             </select> */}
                             {languageError && (
                               <div className="invalid-fields">
-                                Please Select Language
+                                Please select Language
                               </div>
                             )}
                           </div>
@@ -3680,7 +3709,7 @@ const CreateJobs = () => {
                           createGigs();
                         }}
                       >
-                        Preview & Post
+                        {isLoading ? "Loading..." : " Preview & Post"}
                       </div>
                     </>
                   )}
@@ -3690,11 +3719,11 @@ const CreateJobs = () => {
 
             {selectedTab === "duplicate-job" && (
               <>
-                <div className="dialog-body mt-0">
+                <div className="mt-0">
                   <div className="kidsform-one w-100  p-2">
                     <div className="kids-main">
                       <div
-                        style={{ minHeight: "500px" }}
+                        style={{ minHeight: "200px" }}
                         className="kids-form-row"
                       >
                         <div className="w-100">
@@ -3732,6 +3761,7 @@ const CreateJobs = () => {
                           className="createjob-btn"
                           onClick={(e) => {
                             e.preventDefault();
+
                             duplicateJob();
                           }}
                         >

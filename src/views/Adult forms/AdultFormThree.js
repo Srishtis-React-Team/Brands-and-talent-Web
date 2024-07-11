@@ -12,6 +12,7 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import PopUp from "../../components/PopUp";
 import "../../assets/css/talent-dashboard.scss";
 import CurrentUser from "../../CurrentUser";
+import RichTextEditor from "../RichTextEditor";
 
 const AdultFormThree = () => {
   const {
@@ -188,7 +189,7 @@ const AdultFormThree = () => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
     console.log(droppedFiles[0], "droppedFiles");
-    uploadFile(droppedFiles[0]);
+    uploadProfile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
 
@@ -204,9 +205,33 @@ const AdultFormThree = () => {
   const handlePortofolioDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadFile(droppedFiles[0]);
-    // setFiles(droppedFiles);
+
+    // Filter only image files
+    const imageFiles = droppedFiles.filter((file) =>
+      file.type.startsWith("image/")
+    );
+
+    // Check if there are non-image files
+    const nonImageFiles = droppedFiles.filter(
+      (file) => !file.type.startsWith("image/")
+    );
+
+    if (nonImageFiles.length > 0) {
+      // Show error message and popup for non-image files
+      setMessage("You can only upload images");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 1000);
+
+      // Do not proceed with uploading non-image files
+      return;
+    }
+
+    // Iterate through each image file and upload
+    imageFiles.forEach((file) => {
+      uploadFile(file);
+    });
   };
 
   const handlePortofolioDragOver = (e) => {
@@ -226,9 +251,33 @@ const AdultFormThree = () => {
   const handleResumeDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadResume(droppedFiles[0]);
-    // setFiles(droppedFiles);
+
+    // Filter only document files
+    const documentFiles = droppedFiles.filter((file) =>
+      isDocumentFile(file.type)
+    );
+
+    // Check if there are non-document files
+    const nonDocumentFiles = droppedFiles.filter(
+      (file) => !isDocumentFile(file.type)
+    );
+
+    if (nonDocumentFiles.length > 0) {
+      // Show error message or handle non-document files here
+      setMessage("You can only upload PDF, Word documents, etc.");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 1000);
+
+      // Do not proceed with uploading non-document files
+      return;
+    }
+
+    // Iterate through each document file and upload
+    documentFiles.forEach((file) => {
+      uploadResume(file);
+    });
   };
 
   const handleResumeDragOver = (e) => {
@@ -236,12 +285,41 @@ const AdultFormThree = () => {
   };
 
   const portofolioUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
-      uploadFile(fileData);
+    if (event.target.files && event.target.files.length > 0) {
+      const filesArray = Array.from(event.target.files); // Convert FileList to Array
+
+      // Filter only image files
+      const imageFiles = filesArray.filter((file) =>
+        file.type.startsWith("image/")
+      );
+
+      // Check if there are non-image files
+      const nonImageFiles = filesArray.filter(
+        (file) => !file.type.startsWith("image/")
+      );
+
+      if (nonImageFiles.length > 0) {
+        // Show error message and popup for non-image files
+        setMessage("You can only upload images");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+
+        // Do not proceed with uploading non-image files
+        return;
+      }
+
+      // Iterate through each image file and upload
+      imageFiles.forEach((file) => {
+        console.log(file, "fileData"); // Logging each file object
+
+        // Call uploadFile function for each image file
+        uploadFile(file);
+      });
     }
   };
+
   const videoAudioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
@@ -249,16 +327,76 @@ const AdultFormThree = () => {
     }
   };
   const resumeUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData resume");
-      uploadResume(fileData);
+    if (event.target.files && event.target.files.length > 0) {
+      const filesArray = Array.from(event.target.files); // Convert FileList to Array
+
+      // Filter only document files
+      const documentFiles = filesArray.filter((file) =>
+        isDocumentFile(file.type)
+      );
+
+      // Check if there are non-document files
+      const nonDocumentFiles = filesArray.filter(
+        (file) => !isDocumentFile(file.type)
+      );
+
+      if (nonDocumentFiles.length > 0) {
+        // Show error message or handle non-document files here
+        setMessage("You can only upload PDF, Word documents, etc.");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+
+        // Do not proceed with uploading non-document files
+        return;
+      }
+
+      // Iterate through each document file and upload
+      documentFiles.forEach((file) => {
+        uploadResume(file);
+      });
     }
   };
+
+  // Helper function to check if a file type is a document (PDF, Word, etc.)
+  const isDocumentFile = (fileType) => {
+    // Add more document types as needed
+    return (
+      fileType === "application/pdf" ||
+      fileType === "application/msword" ||
+      fileType ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      // Add more document MIME types as required
+    );
+  };
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/bmp",
+    "image/webp", // images
+    "application/pdf", // PDF
+    "application/msword", // DOC
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // DOCX
+    "application/vnd.ms-excel", // XLS
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // XLSX
+    "application/vnd.ms-powerpoint", // PPT
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation", // PPTX
+  ];
 
   const verificationUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
+      if (!allowedTypes.includes(fileData.type)) {
+        setMessage("Only images and documents are allowed.");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+        return;
+      }
       uploadVerificationID(fileData);
     }
   };
@@ -288,9 +426,21 @@ const AdultFormThree = () => {
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
-      uploadProfile(fileData);
+      const file = event.target.files[0];
+
+      // Check if the file is an image
+      if (!file.type.startsWith("image/")) {
+        // Show error message for non-image files
+        setMessage("You can only upload images");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 1000);
+        return; // Stop further execution
+      }
+
+      console.log(file, "fileData");
+      uploadProfile(file);
     }
   };
 
@@ -486,6 +636,10 @@ const AdultFormThree = () => {
     });
   };
 
+  const handleVerificationDelete = () => {
+    setVerificationID(null);
+  };
+
   const handleVideoDelete = (index) => {
     setVideoAudioFile((prevImages) => {
       // Create a copy of the previous state
@@ -552,6 +706,11 @@ const AdultFormThree = () => {
     setUrls(newUrls);
   };
 
+  const handleEditorStateChange = (editorState) => {
+    console.log(editorState, "editorStateRichText");
+    setAboutYou(editorState);
+  };
+
   return (
     <>
       <>
@@ -609,9 +768,9 @@ const AdultFormThree = () => {
                       accept="image/*"
                       onChange={profileUpload}
                     />
-                    <div className="upload-text">Upload Your Profile Photo</div>
+                    <div className="upload-text">Upload your profile photo</div>
                     <div className="upload-info">
-                      Drag and drop your Profile Photo here.
+                      Drag and drop your profile photo here.
                     </div>
                   </div>
 
@@ -679,7 +838,7 @@ const AdultFormThree = () => {
                   </div>
                   <div className="rich-editor mb-5">
                     <label className="form-label">About You</label>
-                    <Editor
+                    {/* <Editor
                       editorStyle={{ overflow: "hidden" }}
                       toolbarClassName="toolbarClassName"
                       wrapperClassName="wrapperClassName"
@@ -700,6 +859,12 @@ const AdultFormThree = () => {
                         link: { inDropdown: true },
                         history: { inDropdown: true },
                       }}
+                    /> */}
+                    <RichTextEditor
+                      value={editorState}
+                      onChange={(editorState) =>
+                        handleEditorStateChange(editorState)
+                      }
                     />
                   </div>
 
@@ -1193,93 +1358,70 @@ const AdultFormThree = () => {
                       type="file"
                       className="select-cv-input"
                       id="id-upload"
-                      accept="*/*"
+                      accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
                       onChange={verificationUpload}
                     />
                   </div>
 
                   {verificationID && (
                     <>
-                      {verificationID.map((item, index) => {
-                        return (
-                          <>
-                            <div
-                              key={index}
-                              className="uploaded-file-wrapper mb-5"
-                            >
-                              <div className="file-section">
-                                {item.type === "image" && (
-                                  <div className="fileType">
-                                    <img src={imageType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "audio" && (
-                                  <div className="fileType">
-                                    <img src={audiotype} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "video" && (
-                                  <div className="fileType">
-                                    <img src={videoType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "document" && (
-                                  <div className="fileType">
-                                    <img src={docsIcon} alt="" />
-                                  </div>
-                                )}
-                                <div className="fileName">{item.title}</div>
-                              </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="dropdownMenuButton"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="dropdownMenuButton"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleView(item)}
-                                          id="view"
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() =>
-                                            handlePortofolioDelete(item)
-                                          }
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
+                      <div
+                        className="uploaded-file-wrapper"
+                        style={{ marginBottom: "80px" }}
+                      >
+                        <div className="file-section">
+                          {verificationID.type === "image" && (
+                            <div className="fileType">
+                              <img src={imageType} alt="" />
                             </div>
-                          </>
-                        );
-                      })}
+                          )}
+                          <div className="fileName">{verificationID.title}</div>
+                        </div>
+                        <div className="file-options">
+                          <div className="sucess-tick">
+                            <img src={greenTickCircle} alt="" />
+                          </div>
+                          <div className="option-menu">
+                            <div className="dropdown">
+                              <img
+                                onClick={() => setShowOptions(!showOptions)}
+                                src={elipsis}
+                                alt=""
+                                className="dropdown-toggle elipsis-icon"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              />
+                              <ul
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton"
+                              >
+                                <li>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() => handleView(verificationID)}
+                                    id="view"
+                                  >
+                                    View
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() =>
+                                      handleVerificationDelete(verificationID)
+                                    }
+                                    id="delete"
+                                  >
+                                    Delete
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </>
                   )}
 

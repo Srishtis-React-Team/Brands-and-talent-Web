@@ -182,12 +182,12 @@ const KidsOTP = () => {
             If you didn’t receive a code?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
           </div>
-          <div
+          {/* <div
             className="otp-back"
             onClick={() => navigate(`/talent-signup-basic-details`)}
           >
             Back
-          </div>
+          </div> */}
           <div
             className="otp-logo"
             style={{
