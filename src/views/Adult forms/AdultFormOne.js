@@ -354,20 +354,53 @@ const AdultFormOne = () => {
     if (age === "") {
       setAgeError(true);
     }
+    if (completedJobs === "") {
+      setJobsCompletedError(true);
+    }
+
+    let formData = {
+      adultLegalFirstName: adultsLegalFirstName,
+      adultLegalLastName: adultsLegalLastName,
+      preferredChildFirstname: adultsPreferedFirstName,
+      preferredChildLastName: adultsPreferedLastName,
+      profession: selectedProfessions,
+      relevantCategories: selectedCategories,
+      childGender: gender,
+      maritalStatus: maritalStatus,
+      childNationality: nationality,
+      childEthnicity: ethnicity,
+      languages: languages,
+      childDob: dateOfBirth,
+      childPhone: adultsPhone,
+      contactEmail: "",
+      childLocation: address,
+      parentCountry: country,
+      parentState: state,
+      parentAddress: address,
+      childCity: kidsCity,
+      age: age,
+      noOfJobsCompleted: completedJobs,
+      publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
+    };
+    Object.entries(formData).forEach(([key, value]) =>
+      console.log(value, `<${key}> AdultFormData`)
+    );
+
     if (
       adultsLegalFirstName !== "" &&
       adultsLegalLastName !== "" &&
       adultsPreferedFirstName !== "" &&
       adultsPreferedLastName !== "" &&
-      selectedProfessions !== "" &&
-      selectedCategories !== "" &&
+      selectedProfessions.length !== 0 &&
+      (selectedCategories.length < 3 || selectedCategories.length <= 6) &&
       gender !== "" &&
-      languages !== "" &&
+      languages.length !== 0 &&
       dateOfBirth !== "" &&
       adultsPhone !== "" &&
       country !== "" &&
       address !== "" &&
-      age !== ""
+      age !== "" &&
+      completedJobs !== ""
     ) {
       let formData = {
         adultLegalFirstName: adultsLegalFirstName,
@@ -384,7 +417,7 @@ const AdultFormOne = () => {
         childDob: dateOfBirth,
         childPhone: adultsPhone,
         contactEmail: "",
-        childLocation: adultsLocation,
+        childLocation: address,
         parentCountry: country,
         parentState: state,
         parentAddress: address,
@@ -393,6 +426,9 @@ const AdultFormOne = () => {
         noOfJobsCompleted: completedJobs,
         publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
       };
+      Object.values(formData).forEach((value) =>
+        console.log(value, "formDataAdultSignup")
+      );
       if (userId) {
         await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
           .then((resData) => {
@@ -501,11 +537,15 @@ const AdultFormOne = () => {
       setSelectedProfessionsError(false);
     }
   };
+  const [professionError, setProfessionError] = useState(false);
 
   const handleDetailChange = (index, field, value) => {
     const updatedSelectedProfessions = [...selectedProfessions];
     updatedSelectedProfessions[index][field] = value;
+    console.log(value, "value");
+    console.log(selectedProfessions, "selectedProfessions");
     setSelectedProfessions(updatedSelectedProfessions);
+    setProfessionError(false);
   };
 
   const categoryList = [
@@ -527,7 +567,6 @@ const AdultFormOne = () => {
   ];
 
   const chooseCategory = (category) => {
-    setSelectedCategoriesError(false);
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -535,6 +574,7 @@ const AdultFormOne = () => {
     } else {
       if (selectedCategories.length < 6) {
         setSelectedCategories([...selectedCategories, category]);
+        setSelectedCategoriesError(false);
       } else {
         // setCategoryError(true);
         setMessage("you can only select 6 categories");
@@ -543,6 +583,11 @@ const AdultFormOne = () => {
           setOpenPopUp(false);
         }, 2000);
       }
+    }
+    if (selectedCategories.length < 3) {
+      setSelectedCategoriesError(true);
+    } else {
+      setSelectedCategoriesError(false);
     }
   };
 
@@ -726,6 +771,23 @@ const AdultFormOne = () => {
   };
   const [completedError, setJobsCompletedError] = useState(false);
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.target.type === "number") {
+        const charCode = event.which ? event.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          event.preventDefault();
+        }
+      }
+    };
+
+    window.addEventListener("keypress", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keypress", handleKeyPress);
+    };
+  }, []);
+
   return (
     <>
       <>
@@ -787,7 +849,7 @@ const AdultFormOne = () => {
 
                           {selectedProfessionsError && (
                             <div className="invalid-fields">
-                              Please Choose Profession
+                              Please choose Profession
                             </div>
                           )}
                         </div>
@@ -803,13 +865,20 @@ const AdultFormOne = () => {
                                 type="number"
                                 className="form-control profession-input-adult"
                                 value={profession.perDaySalary || ""}
-                                onChange={(e) =>
-                                  handleDetailChange(
-                                    index,
-                                    "perDaySalary",
-                                    e.target.value
-                                  )
-                                }
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perDaySalary",
+                                      value
+                                    );
+                                  }
+                                }}
                                 placeholder="$/day"
                               ></input>
                             </div>
@@ -821,14 +890,21 @@ const AdultFormOne = () => {
                                 type="number"
                                 className="form-control profession-input-adult"
                                 value={profession.perHourSalary || ""}
-                                onChange={(e) =>
-                                  handleDetailChange(
-                                    index,
-                                    "perHourSalary",
-                                    e.target.value
-                                  )
-                                }
-                                placeholder="$/day"
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perHourSalary",
+                                      value
+                                    );
+                                  }
+                                }}
+                                placeholder="$/hr"
                               ></input>
                             </div>
 
@@ -889,11 +965,13 @@ const AdultFormOne = () => {
                       </div>
                     ))}
                   </div>
-                  {selectedCategoriesError && (
-                    <div className="invalid-fields">
-                      Please Choose categories
-                    </div>
-                  )}
+                  {(selectedCategories?.length < 3 ||
+                    selectedCategories?.length > 6) &&
+                    selectedCategoriesError && (
+                      <div className="invalid-fields">
+                        Please select 3 to 6 categories relevant to your profile
+                      </div>
+                    )}
                   <div className="adults-titles kids-form-title mt-3">
                     <span>Personal Details</span>
                   </div>
@@ -1014,7 +1092,7 @@ const AdultFormOne = () => {
                       />
                       {countryError && (
                         <div className="invalid-fields">
-                          Please Select Country
+                          Please select Country
                         </div>
                       )}
                     </div>
@@ -1066,7 +1144,7 @@ const AdultFormOne = () => {
                       />
                       {adultsPhoneError && (
                         <div className="invalid-fields">
-                          Please Enter Phone Number
+                          Please enter Phone Number
                         </div>
                       )}
                     </div>
@@ -1091,7 +1169,7 @@ const AdultFormOne = () => {
                       </select>
                       {genderError && (
                         <div className="invalid-fields">
-                          Please Select Gender
+                          Please select Gender
                         </div>
                       )}
                     </div>
@@ -1148,7 +1226,7 @@ const AdultFormOne = () => {
                   </div>
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6">
-                      <label className="form-label">Date Of Birth</label>
+                      <label className="form-label">Date of Birth</label>
                       <span className="mandatory">*</span>
                       <div className="mb-3">
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -1164,7 +1242,7 @@ const AdultFormOne = () => {
                         </LocalizationProvider>
                         {dateOfBirthError && (
                           <div className="invalid-fields">
-                            Please Select Date Of Birth
+                            Please select Date Of Birth
                           </div>
                         )}
                       </div>
@@ -1184,7 +1262,7 @@ const AdultFormOne = () => {
                       />
                       {languagesError && (
                         <div className="invalid-fields">
-                          Please Select Language
+                          Please select Language
                         </div>
                       )}
                     </div>
@@ -1210,7 +1288,7 @@ const AdultFormOne = () => {
                       ></textarea>
                       {addressError && (
                         <div className="invalid-fields">
-                          Please Select Address
+                          Please select Address
                         </div>
                       )}
                     </div>
@@ -1232,7 +1310,7 @@ const AdultFormOne = () => {
                         </div>
                       )}
                       {kidsEmailError && (
-                        <div className="invalid-fields">Please Enter Email</div>
+                        <div className="invalid-fields">Please enter Email</div>
                       )}
                     </div> */}
                     <div className="kids-form-section col-md-6 mb-3">

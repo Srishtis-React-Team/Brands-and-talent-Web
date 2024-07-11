@@ -47,15 +47,16 @@ const KidsFormTwo = () => {
     console.log(index);
     setSelectedIndex(index);
     if (!selectedPlan) {
-      setMessage("Please Choose Annual Or Monthly");
+      setMessage("Please choose Annual Or Monthly");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
       }, 1000);
     } else if (selectedPlan) {
       const formData = {
-        parentEmail: userEmail,
-        subscriptionPlan: selectedPlan,
+        subscriptionPlan: "annual",
+        planName: "Premium",
+        user_id: "668cc6fb9545f3d7afde294e",
       };
       console.log(formData, "formData subscription");
       await ApiHelper.post(`${API.subscriptionPlan}${userId}`, formData)

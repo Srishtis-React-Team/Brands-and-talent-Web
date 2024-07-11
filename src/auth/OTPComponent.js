@@ -186,9 +186,9 @@ const OTPComponent = () => {
             If you didn’t receive a code?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
           </div>
-          <div className="otp-back" onClick={() => navigate(`/adult-signup`)}>
+          {/* <div className="otp-back" onClick={() => navigate(`/adult-signup`)}>
             Back
-          </div>
+          </div> */}
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

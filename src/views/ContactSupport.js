@@ -162,7 +162,7 @@ const ContactSupport = () => {
                   }}
                 ></input>
                 {nameError && (
-                  <div className="invalid-fields">Please Enter Your Name</div>
+                  <div className="invalid-fields">Please enter Your Name</div>
                 )}
               </div>
             </div>
@@ -224,7 +224,7 @@ const ContactSupport = () => {
                 }}
               ></textarea>
               {enquiryError && (
-                <div className="invalid-fields">Please Enter Enquiry</div>
+                <div className="invalid-fields">Please enter Enquiry</div>
               )}
             </div>
             <div className="add-portfoli-section">

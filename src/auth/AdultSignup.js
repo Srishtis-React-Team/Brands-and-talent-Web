@@ -368,9 +368,7 @@ const AdultSignup = () => {
                     setNameError(false);
                   }}
                 ></input>
-                {nameError && (
-                  <div className="invalid-fields">Please enter Name</div>
-                )}
+                {nameError && <div className="invalid-fields"> Name</div>}
               </div>
             </div>
 

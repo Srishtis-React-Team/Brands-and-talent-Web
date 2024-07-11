@@ -1737,8 +1737,19 @@ const EditTalent = () => {
         videosAndAudios: [...talentData?.videoAudioUrls, videoUrl],
         videoAudioUrls: [...talentData?.videoAudioUrls, videoUrl],
       };
+      console.log(formData, "formDatahandleAddUrl");
       setIsLoading(true);
-      await ApiHelper.post(`${API.editKids}${talentId}`, formData)
+
+      let apiUrl;
+
+      if (talentData?.type === "kids") {
+        apiUrl = `${API.editKids}`;
+      }
+      if (talentData?.type === "adults") {
+        apiUrl = `${API.updateAdults}`;
+      }
+
+      await ApiHelper.post(`${apiUrl}${talentId}`, formData)
         .then((resData) => {
           console.log(resData, "resData");
           console.log(resData.data, "resData.data");
@@ -2153,7 +2164,7 @@ const EditTalent = () => {
                     ></input>
                     {preferedNameError && (
                       <div className="invalid-fields">
-                        Please Enter Preferred First Name
+                        Please enter Preferred First Name
                       </div>
                     )}
                     {kidsPrefferedFirstNameLetterError && (
@@ -2201,7 +2212,7 @@ const EditTalent = () => {
                     </select>
                     {ethnicityError && (
                       <div className="invalid-fields">
-                        Please Select Ethnicity
+                        Please select Ethnicity
                       </div>
                     )}
                   </div>
@@ -2227,7 +2238,7 @@ const EditTalent = () => {
                     </select>
                     {nationalityError && (
                       <div className="invalid-fields">
-                        Please Select Nationality
+                        Please select Nationality
                       </div>
                     )}
                   </div>
@@ -2263,7 +2274,7 @@ const EditTalent = () => {
 
                     {dobError && (
                       <div className="invalid-fields">
-                        Please Select Date Of Birth
+                        Please select Date Of Birth
                       </div>
                     )}
                   </div>
@@ -2284,7 +2295,7 @@ const EditTalent = () => {
                     />
                     {languageError && (
                       <div className="invalid-fields">
-                        Please Select Language
+                        Please select Language
                       </div>
                     )}
                   </div>
@@ -2311,7 +2322,7 @@ const EditTalent = () => {
                       ))}
                     </select>
                     {genderError && (
-                      <div className="invalid-fields">Please Select Gender</div>
+                      <div className="invalid-fields">Please select Gender</div>
                     )}
                   </div>
                   {talentData?.type != "kids" && (
@@ -2410,7 +2421,7 @@ const EditTalent = () => {
                     />
                     {parentCountryError && (
                       <div className="invalid-fields">
-                        Please Select Country
+                        Please select Country
                       </div>
                     )}
                   </div>
@@ -2430,7 +2441,7 @@ const EditTalent = () => {
                       isSearchable={true}
                     />
                     {stateError && (
-                      <div className="invalid-fields">Please Select State</div>
+                      <div className="invalid-fields">Please select State</div>
                     )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
@@ -2467,7 +2478,7 @@ const EditTalent = () => {
                       }}
                     ></textarea>
                     {addressError && (
-                      <div className="invalid-fields">Please Enter Address</div>
+                      <div className="invalid-fields">Please enter Address</div>
                     )}
                   </div>
                 </div>
@@ -2497,7 +2508,7 @@ const EditTalent = () => {
                           />
                           {professionError && (
                             <div className="invalid-fields">
-                              Please Choose Profession
+                              Please choose Profession
                             </div>
                           )}
                         </div>
@@ -2598,7 +2609,7 @@ const EditTalent = () => {
                   ))}
                 </div>
                 {categoryError && (
-                  <div className="invalid-fields">Please Choose Categories</div>
+                  <div className="invalid-fields">Please choose Categories</div>
                 )}
                 <div className="row">
                   <div className="kids-form-section  col-md-9 mb-3 mt-3">
@@ -2650,7 +2661,7 @@ const EditTalent = () => {
 
                     {/* {preferedNameError && (
                       <div className="invalid-fields">
-                        Please Enter Preferred First Name
+                        Please enter Preferred First Name
                       </div>
                     )}
                     {kidsPrefferedFirstNameLetterError && (
@@ -2682,7 +2693,7 @@ const EditTalent = () => {
                         Add Your work samples here
                       </div>
 
-                      <div className="no-data">Please Add Files</div>
+                      {/* <div className="no-data">Please Add Files</div> */}
                     </>
                   )}
                   <div className="row">
@@ -2782,7 +2793,7 @@ const EditTalent = () => {
                           <div className="update-portfolio-label">
                             Add Your work samples here
                           </div>
-                          <div className="no-data">Please Add Files</div>
+                          {/* <div className="no-data">Please Add Files</div> */}
                         </>
                       )}
                       {talentData &&
@@ -2968,10 +2979,8 @@ const EditTalent = () => {
                 <div className="row">
                   {talentData?.cv?.length === 0 && (
                     <>
-                      <div className="update-portfolio-label">
-                        Add Your work samples here
-                      </div>
-                      <div className="no-data">Please Add Files</div>
+                      <div className="no-data">Add Your work samples here</div>
+                      {/* <div className="no-data">Please Add Files</div> */}
                     </>
                   )}
                   {talentData &&

@@ -851,7 +851,7 @@ const EditBrands = () => {
                     />
                     {parentCountryError && (
                       <div className="invalid-fields">
-                        Please Select Country
+                        Please select Country
                       </div>
                     )}
                   </div>
@@ -958,7 +958,7 @@ const EditBrands = () => {
                     </select>
                     {positionError && (
                       <div className="invalid-fields">
-                        Please Select position
+                        Please select position
                       </div>
                     )}
                   </div>

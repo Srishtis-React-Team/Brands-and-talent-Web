@@ -84,7 +84,7 @@ const Pricing = () => {
       <section className="topSpace">
         <div className="popular-header">
           <div className="container">
-            <div className="header-title">Popular Talents</div>
+            <div className="header-title">Pricing</div>
             {/* <div className="header-menu">
               <div>Home</div>
               <div>Talent</div>

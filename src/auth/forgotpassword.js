@@ -257,7 +257,7 @@ const ForgotPassword = () => {
                 }}
               ></input>
               {talentEmailError && (
-                <div className="invalid-fields">Please Enter Email</div>
+                <div className="invalid-fields">Please enter Email</div>
               )}
             </div>
           </div>

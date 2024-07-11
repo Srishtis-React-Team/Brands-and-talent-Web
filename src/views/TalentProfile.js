@@ -975,7 +975,9 @@ const TalentProfile = () => {
                             <div key={index}>
                               <div className="talent-profession-name">
                                 {item?.value}{" "}
-                                <span>(Rates Are Negotiable)</span>
+                                {item?.openToOffers === true && (
+                                  <span>(Rates are negotiable)</span>
+                                )}
                               </div>
                               <div className="talent-profession-value">
                                 $ {item?.perHourSalary} per hour{" "}
