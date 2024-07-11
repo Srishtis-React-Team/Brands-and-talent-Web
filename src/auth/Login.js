@@ -266,6 +266,9 @@ const Login = () => {
       <Header onData={data} />
       <div className="login-main">
         <div className="login-container">
+          <div className="login-logo">
+            <img className="btLogo" src={btLogo} alt="" />
+          </div>
           <div className="choose-who">
             <div
               className={`iam-brand ${
@@ -422,9 +425,7 @@ const Login = () => {
             </div>
           </div> */}
 
-          <div className="login-logo">
-            <img className="btLogo" src={btLogo} alt="" />
-          </div>
+        
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

@@ -1349,7 +1349,8 @@ input[type="radio"] {
 }
 
 .adults-select-btn {
-  width: 25%;
+  /* width: 25%; */
+  padding: 0 15px;
   height: 50px;
   border-radius: 25px;
   border: 1px solid #fff;
@@ -2140,7 +2141,7 @@ input[type="radio"] {
   }
 
   .adults-select-btn {
-    width: 45%;
+    /* width: 45%; */
     height: 40px;
     border-radius: 25px;
     border: 1px solid #fff;

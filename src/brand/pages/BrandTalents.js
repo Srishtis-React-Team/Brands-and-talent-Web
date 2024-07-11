@@ -1146,8 +1146,8 @@ const BrandTalents = () => {
                             <div className="row favTalent px-2 mb-3">
                               {talentList?.map((item) => {
                                 return (
-                                  <div className="col-sm-6 col-md-4 col-lg-3 px-1 mr-3">
-                                    <div className="gallery-wrapper modalSpc">
+                                  <div className="col-sm-6 col-md-4 col-lg-3 px-1">
+                                    <div className="gallery-wrapper modalSpc  mb-2">
                                       <div className="imgBox">
                                         <img
                                           className="gallery-img"
@@ -1240,7 +1240,7 @@ const BrandTalents = () => {
                                           </div>
                                           {item?.noOfJobsCompleted && (
                                             <>
-                                              <div className="talent-details-wrapper">
+                                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                                 <div className="logo-fill-briefcase">
                                                   <i className="bi bi-briefcase-fill model-job-icons"></i>
                                                 </div>
@@ -1268,7 +1268,7 @@ const BrandTalents = () => {
 
                                           {item?.profession && (
                                             <>
-                                              <div className="talent-details-wrapper">
+                                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                                 <div className="logo-fill-briefcase">
                                                   <i class="bi bi-person-workspace"></i>
                                                 </div>
@@ -1283,7 +1283,7 @@ const BrandTalents = () => {
 
                                           {item?.relevantCategories && (
                                             <>
-                                              <div className="talent-details-wrapper">
+                                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                                 <div className="logo-fill-briefcase">
                                                   <i class="bi bi-bookmarks-fill"></i>
                                                 </div>
@@ -1299,7 +1299,7 @@ const BrandTalents = () => {
                                             </>
                                           )}
 
-                                          <span className="job-company_dtls">
+                                          <span className="job-company_dtls nweAlign pt-1 pb-0">
                                             <i className="bi bi-geo-alt-fill location-icon"></i>
                                             {item?.parentCountry},{" "}
                                             {item?.parentState}{" "}
