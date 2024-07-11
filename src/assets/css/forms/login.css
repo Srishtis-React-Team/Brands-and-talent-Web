@@ -38,24 +38,10 @@
   text-decoration: underline;
 }
 
-.login-logo {
+.login-logo, .forgot-logo, .reset-logo  {
   position: absolute;
   background-color: #fff;
-  top: -31px;
-  padding: 0px 20px;
-}
-
-.forgot-logo {
-  position: absolute;
-  background-color: #fff;
-  top: 315px;
-  padding: 0px 20px;
-}
-
-.reset-logo {
-  position: absolute;
-  background-color: #fff;
-  top: 315px;
+  top: -20px;
   padding: 0px 20px;
 }
 

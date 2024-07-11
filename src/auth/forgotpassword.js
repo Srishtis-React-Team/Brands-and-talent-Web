@@ -238,6 +238,9 @@ const ForgotPassword = () => {
 
       <div className="login-main">
         <div className="login-container">
+          <div className="forgot-logo">
+            <img className="btLogo" src={btLogo} alt="" />
+          </div>
           <div className="otp-title">Forgot Password</div>
           <div className="forgot-info">
             Please enter your email , we will send verification code to your
@@ -271,9 +274,7 @@ const ForgotPassword = () => {
             If you didn’t receive a code? <span>Resend</span>
           </div>
         </div>
-        <div className="forgot-logo">
-          <img className="btLogo" src={btLogo} alt="" />
-        </div>
+        
       </div>
       {openPopUp && <PopUp message={message} />}
     </>
