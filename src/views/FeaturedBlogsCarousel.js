@@ -171,49 +171,56 @@ const FeaturedBlogsCarousel = () => {
             </Carousel.Item>
           ))}
         </Carousel> */}
-
-        <div className="slider-container">
-          <div
-            className="slider"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {featuredBlogsLsit && featuredBlogsLsit.length > 0 && (
-              <>
-                {featuredBlogsLsit?.map((blog, index) => (
-                  <div
-                    className={`slide ${
-                      index === currentSlide ? "active" : ""
-                    }`}
-                    key={index}
-                    onClick={createHandleMenuClick(blog)}
-                  >
-                    <div className="slide-content">
-                      <div className="slide-image">
-                        <img
-                          src={`${API.userFilePath}${blog.image}`}
-                          alt={`Slide ${index + 1}`}
-                        />
-                      </div>
-                      <div className="slide-text">
-                        <div className="blogs-subhead">{blog.title}</div>
-                        <div className="blogs-heading">{blog.heading}</div>
-                        <div className="blogs-description">
-                          {blog.description}
+      <div className="blogSliderRel">
+          <div className="slider-container">
+            <div
+              className="slider"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            >
+              {featuredBlogsLsit && featuredBlogsLsit.length > 0 && (
+                <>
+                  {featuredBlogsLsit?.map((blog, index) => (
+                    <div
+                      className={`slide ${
+                        index === currentSlide ? "active" : ""
+                      }`}
+                      key={index}
+                      onClick={createHandleMenuClick(blog)}
+                    >
+                      <div className="slide-content row">
+                        <div className="col-md-5">
+                          <div className="slide-image">
+                            <img
+                              src={`${API.userFilePath}${blog.image}`}
+                              alt={`Slide ${index + 1}`}
+                            />
+                          </div>
                         </div>
+                        <div className="col-md-7">
+                          <div className="slide-text">
+                            <div className="blogs-subhead">{blog.title}</div>
+                            <div className="blogs-heading">{blog.heading}</div>
+                            <div className="blogs-description">
+                              {blog.description}
+                            </div>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
-                  </div>
-                ))}
-              </>
-            )}
+                  ))}
+                </>
+              )}
+            </div>
+          
           </div>
           <button className="blog-prev" onClick={() => changeSlide(-1)}>
-            <div>❮</div>
-          </button>
-          <button className="next" onClick={() => changeSlide(1)}>
-            <div>❯</div>
-          </button>
-        </div>
+              <div>❮</div>
+            </button>
+            <button className="next" onClick={() => changeSlide(1)}>
+              <div>❯</div>
+            </button>
+            </div>
       </div>
     </>
   );
