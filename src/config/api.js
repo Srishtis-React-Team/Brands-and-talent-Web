@@ -12,7 +12,8 @@ export const API = {
   getAllCitiesList: BASEURL + "admin/getAllCitiesList",
   getAllStatesList: BASEURL + "admin/getAllStatesList",
   chatbot: BASEURL + "admin/chatbot",
-  chatbot: BASEURL + "admin/chatbot",
+  giftMail: BASEURL + "admin/giftMail",
+
   //Registration
   brandsRegister: BASEURL + "brands/brandsRegister",
   kidsSignUp: BASEURL + "users/kidsSignUp ",
@@ -151,4 +152,8 @@ export const API = {
   //
   activateBrandUser: BASEURL + "brands/activateBrandUser",
   fetchContentByType: BASEURL + "content/fetchContentByType",
+
+  //blogs
+  getFeaturedArticles: BASEURL + "blog/getFeaturedArticles",
+  fetchBlogByType: BASEURL + "blog/fetchBlogByType",
 };

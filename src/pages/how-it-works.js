@@ -165,7 +165,6 @@ const HowItWorks = () => {
         if (resData) {
           setFaqList(resData?.data?.data?.items);
           console.log(resData?.data?.data?.items, "getFaq");
-
           resData?.data?.data?.items.forEach((item) => {
             if (item.userType === "Brands") {
               brands.push(item);

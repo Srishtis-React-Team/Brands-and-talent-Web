@@ -214,23 +214,36 @@ const BrandTalents = () => {
     inputValue ? "No States Available" : "Choose City First";
 
   const ethnicityOptions = [
-    "South Asian",
-    "Indian/Pakistani",
-    "South East Asian",
     "Khmer",
+    "Thai",
+    "Asian",
     "Vietnamese",
     "Indonesian",
-    "Thai",
-    "Middle-East",
-    "Black",
-    "African",
-    "Latino/Hispanic",
+    "Filipino",
+    "Chinese",
+    "South-East Asian",
+    "South-Asian",
+    "Central Asian",
+    "Indian",
+    "Pakistani",
+    "Nepali",
     "Russian",
     "Ukrainian",
-    "Nordic",
-    "Scandinavian",
+    "Japanese",
+    "Korean",
+    "Latino/Hispanic",
     "European",
-    "Italian",
+    "Scandinavian",
+    "Turk",
+    "Native American",
+    "Native Hawaiian/Pacific Islander",
+    "White",
+    "Black",
+    "African",
+    "Middle-Eastern",
+    "Arab",
+    "Persian",
+    "Other",
   ];
 
   const industryList = [
@@ -628,8 +641,6 @@ const BrandTalents = () => {
     getCountries();
     getTalentList();
     getFeatures();
-    setProfession([professionList[2], professionList[3]]);
-
     selectFeaturesList([
       {
         label: "HairColour",
@@ -848,10 +859,6 @@ const BrandTalents = () => {
                           <div className="filter-items">Profession</div>
                           <div className="profession-wrapper talents-profession inpWid">
                             <Select
-                              defaultValue={[
-                                professionList[2],
-                                professionList[3],
-                              ]}
                               isMulti
                               name="colors"
                               options={professionList}
@@ -863,7 +870,7 @@ const BrandTalents = () => {
                             />
                           </div>
                         </div>
-                        <div className="keyword-wrapper">
+                        {/* <div className="keyword-wrapper">
                           <div className="filter-items">Category</div>
                           <div className="creators-filter-select inpWid">
                             <Select
@@ -877,7 +884,7 @@ const BrandTalents = () => {
                               styles={customStylesProfession}
                             />
                           </div>
-                        </div>
+                        </div> */}
                         <div className="keyword-wrapper">
                           <div className="filter-items">Country</div>
                           <div className="creators-filter-select inpWid">
@@ -938,10 +945,11 @@ const BrandTalents = () => {
                         </div>
 
                         <div className="keyword-wrapper">
-                          <div className="filter-items">Platform</div>
+                          <div className="filter-items">Social Media</div>
                           <div className="creators-filter-select inpWid">
                             <Select
                               isMulti
+                              placeholder="Filter by social media platform"
                               name="colors"
                               options={SocialMediasList}
                               valueField="value"
@@ -1073,7 +1081,7 @@ const BrandTalents = () => {
                               className="basic-multi-select"
                               classNamePrefix="select"
                               onChange={(value) => selectLanguage(value)}
-                              styles={customStyles}
+                              styles={customStylesProfession}
                             />
                           </div>
                         </div>
@@ -1270,7 +1278,7 @@ const BrandTalents = () => {
                                             <>
                                               <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                                 <div className="logo-fill-briefcase">
-                                                  <i class="bi bi-person-workspace"></i>
+                                                  <i className="bi bi-person-workspace model-job-icons"></i>
                                                 </div>
                                                 <div className="contSect">
                                                   <span>
@@ -1285,7 +1293,7 @@ const BrandTalents = () => {
                                             <>
                                               <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                                 <div className="logo-fill-briefcase">
-                                                  <i class="bi bi-bookmarks-fill"></i>
+                                                  <i className="bi bi-bookmarks-fill model-job-icons"></i>
                                                 </div>
                                                 <div className="contSect">
                                                   <span>
@@ -1299,10 +1307,11 @@ const BrandTalents = () => {
                                             </>
                                           )}
 
-                                          <span className="job-company_dtls nweAlign pt-1 pb-0">
-                                            <i className="bi bi-geo-alt-fill location-icon"></i>
-                                            {item?.parentCountry},{" "}
-                                            {item?.parentState}{" "}
+                                          <span className="job-company_dtls nweAlign pt-1 pb-0 d-flex">
+                                            <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
+                                            {item?.childCity},{" "}
+                                            {item?.parentState},{" "}
+                                            {item?.parentCountry}{" "}
                                           </span>
 
                                           {/* <div className="find-creator-address ">

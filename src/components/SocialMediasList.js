@@ -1,11 +1,11 @@
 const SocialMediasList = [
-  { value: "instagram", label: "instagram" },
-  { value: "facebook", label: "facebook" },
-  { value: "xtwitter", label: "xtwitter" },
-  { value: "linkedin", label: "linkedin" },
-  { value: "threads", label: "threads" },
-  { value: "tiktoks", label: "tiktoks" },
-  { value: "youtubes", label: "youtubes" },
+  { value: "Instagram", label: "Instagram" },
+  { value: "Facebook", label: "Facebook" },
+  { value: "XTwitter", label: "XTwitter" },
+  { value: "LinkedIn", label: "LinkedIn" },
+  { value: "Threads", label: "Threads" },
+  { value: "TikToks", label: "TikToks" },
+  { value: "YouTubes", label: "YouTubes" },
 ];
 
 export default SocialMediasList;

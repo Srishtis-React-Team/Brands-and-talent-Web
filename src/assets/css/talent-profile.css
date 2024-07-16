@@ -66,7 +66,9 @@
 .videoWraper .media-item {
   margin: 0 5px 10px;
 }
-.videoWraper .media-item iframe{ width: 100%; }
+.videoWraper .media-item iframe {
+  width: 100%;
+}
 
 .model-review-wrapper {
   min-height: 250px;
@@ -84,9 +86,9 @@
   font-weight: 400;
   padding: 15px 0px;
   line-height: 21px;
-
 }
-.talent-details-wrapper.nweAlign .contSect, .job-company_dtls.nweAlign{
+.talent-details-wrapper.nweAlign .contSect,
+.job-company_dtls.nweAlign {
   font-size: 13px;
   line-height: 16px;
   font-weight: 500;
@@ -474,7 +476,7 @@
 
 .talent-details-wrapper {
   display: flex;
-  align-items: normal;
+  align-items: center;
   padding: 10px 0px 5px;
 }
 

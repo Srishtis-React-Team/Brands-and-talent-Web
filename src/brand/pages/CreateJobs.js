@@ -827,6 +827,11 @@ const CreateJobs = () => {
     }, 100);
   };
 
+  const handleDeleteQuestion = (index) => {
+    const newQuestions = questions.filter((_, i) => i !== index);
+    setQuestions(newQuestions);
+  };
+
   const benefitsList = [
     { id: "dental", name: "Dental Insurance" },
     { id: "life", name: "Life Insurance" },
@@ -1397,7 +1402,6 @@ const CreateJobs = () => {
   };
   const createGigs = async () => {
     setIsLoading(true);
-
     console.log(
       jobTitle,
       zipCode,
@@ -2693,19 +2697,30 @@ const CreateJobs = () => {
                           {showQuestions && (
                             <div className="kids-form-section col-md-6 mb-3">
                               {questions.map((question, index) => (
-                                <div className="mb-0" key={index}>
-                                  <label className="form-label ">{`Question ${index +
+                                <div className=" mb-2" key={index}>
+                                  <label className="form-label mb-2">{`Question ${index +
                                     1}:`}</label>
-                                  <input
-                                    type="text"
-                                    className="form-control "
-                                    placeholder={`Enter Question ${index + 1}`}
-                                    value={question}
-                                    id={`question${index + 1}`}
-                                    onChange={(event) =>
-                                      handleQuestionChange(index, event)
-                                    }
-                                  />
+                                  <div className="question-input-wrapper">
+                                    <input
+                                      type="text"
+                                      className="form-control "
+                                      placeholder={`Enter Question ${index +
+                                        1}`}
+                                      value={question}
+                                      id={`question${index + 1}`}
+                                      onChange={(event) =>
+                                        handleQuestionChange(index, event)
+                                      }
+                                    />
+                                    <div className="trash pl-2">
+                                      <i
+                                        onClick={() =>
+                                          handleDeleteQuestion(index)
+                                        }
+                                        className="bi bi-trash ml-2"
+                                      ></i>
+                                    </div>
+                                  </div>
                                 </div>
                               ))}
                               <div

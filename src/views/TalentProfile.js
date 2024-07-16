@@ -1617,7 +1617,7 @@ const TalentProfile = () => {
                           })}
                         </div>
                       )}
-                      {reviewsList.length === 0 && (
+                      {reviews && !reviewsList.length && (
                         <>
                           <div>No Reviews Available</div>
                         </>

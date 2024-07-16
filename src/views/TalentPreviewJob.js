@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import Bootstrap JavaScript
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
@@ -26,12 +25,12 @@ const TalentPreviewJob = (props) => {
     avatarImage,
   } = CurrentUser();
 
-  useEffect(() => {
-    console.log(currentUserId, "currentUserId");
-    if (!currentUserId) {
-      navigate("/login");
-    }
-  }, [currentUserId]);
+  // useEffect(() => {
+  //   console.log(currentUserId, "currentUserIdpreview");
+  //   if (!currentUserId) {
+  //     navigate("/login");
+  //   }
+  // }, [currentUserId]);
 
   const location = useLocation();
 

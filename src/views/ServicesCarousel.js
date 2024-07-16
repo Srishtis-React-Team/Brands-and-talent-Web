@@ -124,7 +124,7 @@ const ServicesCarousel = ({ talentData }) => {
             );
           })}
 
-        {servicesList.length === 0 && (
+        {!servicesList.length && (
           <>
             <div>No Services Available</div>
           </>

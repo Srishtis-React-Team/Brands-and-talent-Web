@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Header from "../layout/header";
 import Footer from "../layout/Footer";
 import "../assets/css/blogs.css";
+import { useLocation } from "react-router-dom";
+import { API } from "../config/api";
 
 const IndustryNews = () => {
   const navigate = useNavigate();
@@ -13,12 +15,12 @@ const IndustryNews = () => {
   const navigateTO = async (event) => {
     console.log(event, "event");
     if (event == "industry-news") {
-      navigate("/industry-news");
+      navigate("/view-blog");
     }
     if (event == "case-studies") {
       navigate("/case-studies");
     }
-    if (event == "talent-diary") {
+    if (event == "talent-stories") {
       navigate("/talent-diaries");
     }
     if (event == "talent-tips") {
@@ -28,11 +30,25 @@ const IndustryNews = () => {
       navigate("/brand-tips");
     }
   };
+
+  const location = useLocation();
+  const selectedBlogData = location.state && location.state.blogData;
+
+  console.log(selectedBlogData, "selectedBlogData");
+
+  const handleBackClick = () => {
+    if (location.state && location.state.from) {
+      navigate(`/${location.state.from}`);
+    } else {
+      navigate(-1); // Equivalent to history.goBack() in v5
+    }
+  };
+
   return (
     <>
       <Header />{" "}
-      <section style={{ marginTop: "64px" }}>
-        <div className="popular-header">
+      <section>
+        {/* <div className="popular-header">
           <div className="container">
             <div className="header-title">Industry News & Insights</div>
             <div className="header-menu">
@@ -40,43 +56,40 @@ const IndustryNews = () => {
               <div>Industry News & Insights</div>
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
-      <section className="mb-5 wraper">
+      <section className="mb-5 wraper" style={{ marginTop: "64px" }}>
         <div className="blog-DetailBg wraper">
           <div className="blog-card container d-flex justify-content-center">
             <div className="blogs-wrapper widF col-sm-9">
               <div className="row">
                 <div className="blogs-content-wrapper col-md-8 col-lg-7">
-                  <div className="blogs-subhead">Pellentesque ac eleifend</div>
+                  <div className="blogs-back-btn" onClick={handleBackClick}>
+                    <i className="bi bi-arrow-left-circle blogs-back-icon"></i>
+                    <div className="blogs-back-text">Back</div>
+                  </div>
+                  <div className="blogs-subhead">{selectedBlogData?.title}</div>
                   <div className="blogs-heading">
-                    Donec vulputate quam ac tincidunt, Fusce vitae lacus lacus
-                    pellentesque
+                    {selectedBlogData?.heading}
                   </div>
                   <div className="blogs-description">
-                    Vivamus aliquam ligula vel mi vulputate hendrerit.
-                    Vestibulum ullamcorper mi nisl, sit amet ullamcorper justo
-                    pellentesque eget. Donec condimentum, nisi quis venenatis
-                    viverra, massa ante pellentesque est, non fermentum lorem
-                    quam et mauris. Etiam vel eros erat. Phasellus eu massa
-                    nunc. Cras diam eros, gravida vitae cursus vel, sagittis
-                    eget diam. Phasellus feugiat faucibus enim sit amet mattis.
+                    {selectedBlogData?.description}
                   </div>
 
                   <div className="shareWrap">
                     <label>Share Now</label>
                     <ul className="shareDiv">
                       <li>
-                        <i class="bi bi-facebook"></i>
+                        <i className="bi bi-facebook"></i>
                       </li>
                       <li>
-                        <i class="bi bi-twitter-x"></i>
+                        <i className="bi bi-twitter-x"></i>
                       </li>
                       <li>
-                        <i class="bi bi-linkedin"></i>
+                        <i className="bi bi-linkedin"></i>
                       </li>
                       <li>
-                        <i class="bi bi-whatsapp"></i>
+                        <i className="bi bi-whatsapp"></i>
                       </li>
                     </ul>
                   </div>
@@ -84,7 +97,7 @@ const IndustryNews = () => {
                 <div className="blogimg-bx col-md-4 col-lg-5">
                   <img
                     className="blogs-image img-fluid"
-                    src={bl_image}
+                    src={`${API.userFilePath}${selectedBlogData.image}`}
                     alt="img"
                   />
                 </div>
@@ -97,16 +110,10 @@ const IndustryNews = () => {
           <div className="container">
             <div className="blogs-main row">
               <div className="blog-contents widF col-sm-7">
-                <div className="blogs-description">
-                  Vivamus aliquam ligula vel mi vulputate hendrerit. Vestibulum
-                  ullamcorper mi nisl, sit amet ullamcorper justo pellentesque
-                  eget. Donec condimentum, nisi quis venenatis viverra, massa
-                  ante pellentesque est, non fermentum lorem quam et mauris.
-                  Etiam vel eros erat. Phasellus eu massa nunc. Cras diam eros,
-                  gravida vitae cursus vel, sagittis eget diam. Phasellus
-                  feugiat faucibus enim sit amet mattis.
+                <div className=".blogs-description-main">
+                  {selectedBlogData?.description}
                 </div>
-                <div className="blogs-description">
+                {/* <div className="blogs-description">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
                   tempor nibh sed nisi tempus maximus. Donec semper vel ipsum at
                   feugiat. Sed nec nisl non ipsum consectetur aliquet id eu ex.
@@ -177,7 +184,7 @@ const IndustryNews = () => {
                   Suspendisse et eleifend turpis, sed blandit quam. Suspendisse
                   potenti. Vivamus varius iaculis sem, nec dictum nunc laoreet
                   imperdiet.
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

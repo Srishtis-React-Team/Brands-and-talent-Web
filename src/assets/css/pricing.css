@@ -25,13 +25,34 @@
   display: flex;
   align-items: center;
 }
-
+.gift-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.close-gift {
+  padding-right: 20px;
+  cursor: pointer;
+}
+.close-gift:hover {
+  padding-right: 20px;
+  cursor: pointer;
+  color: #c2114b;
+}
 .select-pricing-title {
   color: #000;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
   padding-right: 25px;
+}
+.gift-dialog-title {
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  padding: 15px 0px;
+  font-family: sans-serif;
 }
 .plans-section {
   padding: 0;
@@ -63,7 +84,7 @@ input[type="radio"].premium-checkbox {
 
 .premium-plans .icPrice {
   /* color: #106D3E;  */
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .free-plans .icPrice {
@@ -101,7 +122,7 @@ input[type="radio"].premium-checkbox {
 }
 
 .premium-plans {
-  border-top: 11px solid #FFD700;
+  border-top: 11px solid #ffd700;
 }
 
 .plan-name {
@@ -197,7 +218,7 @@ input[type="radio"].premium-checkbox {
 }
 
 .premium-btn {
-  background: #FFD700;
+  background: #ffd700;
 }
 .giftSize {
   text-align: center;
@@ -211,7 +232,7 @@ input[type="radio"].premium-checkbox {
   color: #9370db;
 }
 .premium-gift {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .save-plan {
@@ -492,6 +513,17 @@ input[type="radio"].premium-checkbox {
   display: flex;
   justify-content: space-between;
 }
+
+.gift-payment-btn {
+  background-color: #c2114b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 0px;
+  text-align: right;
+  padding: 7px 15px;
+}
+
 /*  End Toggle Switch  */
 
 /* 320px — 480px: Mobile devices */

@@ -546,6 +546,14 @@ const Dashboard = () => {
     setGenderList(["Male", "Female"]);
   }, []);
 
+  const createHandleMenuClick = (blogData) => {
+    return () => {
+      navigate(`/view-blog`, {
+        state: { blogData },
+      });
+    };
+  };
+
   const handleSelectChange = (event) => {
     setGenders(event.target.value);
     const selectedName = event.target.options[event.target.selectedIndex].text;
@@ -670,6 +678,7 @@ const Dashboard = () => {
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
   const rateTalent = (item) => {
+    // alert("rateTalent");
     if (currentUserType === "brand") {
       setModalData(item);
       const modalElement = document.getElementById("ratingModal");
@@ -718,6 +727,25 @@ const Dashboard = () => {
       });
     });
   });
+
+  useEffect(() => {
+    getFeaturedArticles();
+  }, []);
+
+  const [featuredBlogsLsit, setFeaturedBlogsLsit] = useState(0);
+
+  const getFeaturedArticles = async () => {
+    await ApiHelper.get(API.getFeaturedArticles)
+      .then((resData) => {
+        if (resData) {
+          console.log(resData?.data?.data, "resData getFeaturedArticles");
+          setFeaturedBlogsLsit(resData?.data?.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -1045,29 +1073,41 @@ const Dashboard = () => {
         </div>
 
         <div className="caseWraper wraper secSpac">
-          <div className="title">Case studies</div>
+          <div className="title">Blog</div>
           <div className="container">
             <div className="gallery-section">
               <div className="case-study-main row">
-                {caseList?.map((item) => {
-                  return (
-                    <div className="col-sm-6 col-md-4 col-lg-3">
-                      <div className="case-wrapper">
-                        <div className="caseBox">
-                          <img className="case-img" src={item.photo}></img>
-                        </div>
-                        <div className="case-gallery-content">
-                          <div className="caseCont">
-                            <div className="case-study-name">{item.name}</div>
-                            <div className="case-study-address">
-                              {item.address}
+                {featuredBlogsLsit && featuredBlogsLsit.length > 0 && (
+                  <>
+                    {featuredBlogsLsit?.map((item) => {
+                      return (
+                        <div className="col-sm-6 col-md-4 col-lg-3">
+                          <div
+                            className="case-wrapper"
+                            onClick={createHandleMenuClick(item)}
+                          >
+                            <div className="caseBox">
+                              <img
+                                className="case-img"
+                                src={`${API.userFilePath}${item.image}`}
+                              ></img>
+                            </div>
+                            <div className="case-gallery-content">
+                              <div className="caseCont">
+                                <div className="case-study-name">
+                                  {item.title}
+                                </div>
+                                <div className="case-study-address">
+                                  {item.heading}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -1217,13 +1257,13 @@ const Dashboard = () => {
                 <span className="visually-hidden">Previous</span>
               </button>
               <button
-                className="carousel-control-next"
+                className="carousel-control-next carousel-next-control"
                 type="button"
                 data-bs-target="#carouselExampleControls"
                 data-bs-slide="next"
               >
                 <span
-                  className="carousel-control-next-icon carousel-icons"
+                  className="carousel-control-next-icon  carousel-icons"
                   aria-hidden="true"
                 ></span>
                 <span className="visually-hidden">Next</span>

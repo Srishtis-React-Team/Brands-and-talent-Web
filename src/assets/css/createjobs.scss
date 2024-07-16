@@ -14,15 +14,24 @@
   display: flex;
   cursor: pointer;
   align-items: center;
+  padding: 10px 0px;
 }
 
+.question-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.trash {
+  padding-left: 10px;
+}
 .add-more-questions-text {
   color: #c2114b;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  padding-left: 15px;
+  padding-left: 8px;
 }
 
 .compensation-radios {
