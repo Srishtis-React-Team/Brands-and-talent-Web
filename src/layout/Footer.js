@@ -143,6 +143,10 @@ const Footer = (props) => {
   //   setMessageFromHeader(message);
   // };
 
+  const handleClickBlogs = (step) => {
+    navigate("/blogs", { state: { step: step } });
+  };
+
   return (
     <>
       {/* <Header sendMessageToParent={handleMessageFromHeader} /> */}
@@ -322,21 +326,11 @@ const Footer = (props) => {
                 </Link>
               </h6>
               <ul className="footerLinks">
-                <li>
-                  <Link onClick={handleClick} to="/blogs">
-                    Industry news and insights
-                  </Link>
+                <li onClick={() => handleClickBlogs(0)}>
+                  Industry news and insights
                 </li>
-                <li>
-                  <Link onClick={handleClick} to="/blogs">
-                    Case studies
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/blogs" onClick={handleClick}>
-                    Talent stories
-                  </Link>
-                </li>
+                <li onClick={() => handleClickBlogs(1)}>Case studies</li>
+                <li onClick={() => handleClickBlogs(2)}>Talent stories</li>
               </ul>
             </div>
             <div className="footer-wrapper col-md-4 col-lg-2">

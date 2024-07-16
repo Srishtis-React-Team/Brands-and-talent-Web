@@ -72,6 +72,7 @@ import CaseStudies from "../pages/CaseStudies";
 import TalentDiaries from "../pages/TalentDiaries";
 import TalentTips from "../pages/TalentTips";
 import BrandTips from "../pages/BrandTips";
+import CommingSoon from "../views/CommingSoon";
 function Routing() {
   // const [currentUserId, setCurrentUserId] = useState(null);
   // const [brandId, setBrandID] = useState(null);
@@ -287,11 +288,12 @@ function Routing() {
         <Route path="/talent-help" element={<TalentHelp />} />
         <Route path="/brand-notification" element={<BrandNotification />} />
         <Route path="/get-booked" element={<GetBooked />} />
-        <Route path="/industry-news" element={<IndustryNews />} />
+        <Route path="/view-blog" element={<IndustryNews />} />
         <Route path="/case-studies" element={<CaseStudies />} />
         <Route path="/talent-diaries" element={<TalentDiaries />} />
         <Route path="/talent-tips" element={<TalentTips />} />
         <Route path="/brand-tips" element={<BrandTips />} />
+        <Route path="/comming-soon" element={<CommingSoon />} />
       </Routes>
       {openPopUp && <PopUp message={message} />}
     </>

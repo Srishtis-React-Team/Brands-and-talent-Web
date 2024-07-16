@@ -6,12 +6,12 @@ import BrandHeader from "../../brand/pages/BrandHeader";
 import { io } from "socket.io-client";
 import TalentHeader from "../../layout/TalentHeader";
 import Axios from "axios";
-import { Dropdown } from "react-bootstrap";
 import PopUp from "../PopUp";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { create } from "@mui/material/styles/createTransitions";
 import CurrentUser from "../../CurrentUser";
+import { Dropdown } from "@mui/base";
 
 const MessageTalents = () => {
   const { currentUserType } = CurrentUser();

@@ -10,7 +10,7 @@ const TalentTips = () => {
   const navigateTO = async (event) => {
     console.log(event, "event");
     if (event == "industry-news") {
-      navigate("/industry-news");
+      navigate("/view-blog");
     }
     if (event == "case-studies") {
       navigate("/case-studies");

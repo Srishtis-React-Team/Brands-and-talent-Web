@@ -13,8 +13,11 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 import CurrentUser from "../../src/CurrentUser";
 import RichTextEditor from "../views/RichTextEditor";
+import CreatableSelect from "react-select/creatable";
 
 const KidsFormThree = ({ onDataFromChild, ...props }) => {
+  const [customOptions, setCustomOptions] = useState({});
+
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
   const [updateDisabled, setUpdateDisabled] = useState(false);
@@ -636,6 +639,40 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     setFeature(updatedValues);
   };
 
+  const creatableOptions = [
+    "Hip Size",
+    "Waist",
+    "Chest",
+    "Dress Size",
+    "Height",
+    "Shoe Size",
+    "Bra Size",
+  ];
+
+  const cmPlaceholderOptions = ["Height", "Chest", "Waist", "Hip Size"];
+
+  const getPlaceholder = (label) => {
+    if (cmPlaceholderOptions.includes(label)) {
+      return "Type in cm";
+    }
+    return label;
+  };
+
+  const handleCreateOption = (label, inputValue) => {
+    setCustomOptions((prevState) => ({
+      ...prevState,
+      [label]: (prevState[label] || []).concat(inputValue),
+    }));
+    handleFeaturesChange(label, inputValue);
+  };
+
+  const getOptions = (label, options) => {
+    return options.concat(customOptions[label] || []).map((option) => ({
+      value: option,
+      label: option,
+    }));
+  };
+
   const editKids = async () => {
     // navigate(`/talent-signup-files-success`);
     const formData = {
@@ -657,6 +694,23 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       videoAudioUrls: urls,
     };
     setIsLoading(true);
+    // Log all the properties of formData
+    console.log("kidsFiles Image:", formData.image);
+    console.log("kidsFiles CV:", formData.cv);
+    console.log("kidsFiles Portfolio:", formData.portfolio);
+    console.log("kidsFiles Videos and Audios:", formData.videosAndAudios);
+    console.log("kidsFiles Instagram Followers:", formData.instaFollowers);
+    console.log("kidsFiles TikTok Followers:", formData.tiktokFollowers);
+    console.log("kidsFiles Twitter Followers:", formData.twitterFollowers);
+    console.log("kidsFiles YouTube Followers:", formData.youtubeFollowers);
+    console.log("kidsFiles Facebook Followers:", formData.facebookFollowers);
+    console.log("kidsFiles LinkedIn Followers:", formData.linkedinFollowers);
+    console.log("kidsFiles Threads Followers:", formData.threadsFollowers);
+    console.log("kidsFiles ID Type:", formData.idType);
+    console.log("kidsFiles Verification ID:", formData.verificationId);
+    console.log("kidsFiles Features:", formData.features);
+    console.log("kidsFiles Child About You:", formData.childAboutYou);
+    console.log("kidsFiles Video and Audio URLs:", formData.videoAudioUrls);
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
         console.log(resData, "resData");
@@ -850,7 +904,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     /> */}
 
                     <RichTextEditor
-                      value={editorState}
+                      value={aboutYou}
                       onChange={(editorState) =>
                         handleEditorStateChange(editorState)
                       }
@@ -1258,13 +1312,29 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   <div className="features-section">
                     {featuresList && (
                       <>
-                        {featuresList.map((item, index) => {
-                          return (
-                            <>
-                              <div className="mb-3 mr-3 features-input-wrapper">
-                                <label className="form-label">
-                                  {item.label}
-                                </label>
+                        {featuresList &&
+                          featuresList.map((item, index) => (
+                            <div
+                              key={index}
+                              className="mb-3 mr-3 features-input-wrapper"
+                            >
+                              <label className="form-label">{item.label}</label>
+                              {creatableOptions.includes(item.label) ? (
+                                <CreatableSelect
+                                  isClearable
+                                  options={item.options.map((option) => ({
+                                    value: option,
+                                    label: option,
+                                  }))}
+                                  onChange={(selectedOption) =>
+                                    handleFeaturesChange(
+                                      item.label,
+                                      selectedOption ? selectedOption.value : ""
+                                    )
+                                  }
+                                  placeholder={getPlaceholder(item.label)}
+                                />
+                              ) : (
                                 <select
                                   className="form-select features-select"
                                   aria-label="Default select example"
@@ -1274,8 +1344,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                       e.target.value
                                     )
                                   }
+                                  defaultValue=""
                                 >
-                                  <option value="" disabled selected>
+                                  <option value="" disabled>
                                     {item.label}
                                   </option>
                                   {item.options.map((option, idx) => (
@@ -1284,10 +1355,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                     </option>
                                   ))}
                                 </select>
-                              </div>
-                            </>
-                          );
-                        })}
+                              )}
+                            </div>
+                          ))}
                       </>
                     )}
                   </div>

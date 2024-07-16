@@ -96,36 +96,36 @@ const KidsformOne = ({ sendDataToParent }) => {
   );
 
   const ethnicityOptions = [
-    "African",
-    "Arab",
-    "Asian",
-    "Black",
-    "Central Asian",
-    "Chinese",
-    "European",
-    "Filipino",
-    "Indian",
-    "Indonesian",
-    "Japanese",
     "Khmer",
+    "Thai",
+    "Asian",
+    "Vietnamese",
+    "Indonesian",
+    "Filipino",
+    "Chinese",
+    "South-East Asian",
+    "South-Asian",
+    "Central Asian",
+    "Indian",
+    "Pakistani",
+    "Nepali",
+    "Russian",
+    "Ukrainian",
+    "Japanese",
     "Korean",
     "Latino/Hispanic",
-    "Middle-Eastern",
+    "European",
+    "Scandinavian",
+    "Turk",
     "Native American",
     "Native Hawaiian/Pacific Islander",
-    "Nepali",
-    "Other",
-    "Pakistani",
-    "Persian",
-    "Russian",
-    "Scandinavian",
-    "South-Asian",
-    "South-East Asian",
-    "Thai",
-    "Turk",
-    "Ukrainian",
-    "Vietnamese",
     "White",
+    "Black",
+    "African",
+    "Middle-Eastern",
+    "Arab",
+    "Persian",
+    "Other",
   ];
 
   const gendersOptions = [
@@ -167,13 +167,13 @@ const KidsformOne = ({ sendDataToParent }) => {
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "55px",
-      zIndex: 9999, // Ensure the control is above other elements
+      minHeight: "45px",
+      zIndex: 1, // Ensure the control is above other elements
     }),
     menu: (provided, state) => ({
       ...provided,
       maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure the menu appears above other elements
+      zIndex: 1, // Ensure the menu appears above other elements
     }),
     menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensure menu portal appears above other elements
   };
@@ -614,26 +614,26 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (completedJobs === "") {
       setJobsCompletedError(true);
     }
-    console.log(parentFirstName, "parentFirstName");
-    console.log(parentEmail, "parentEmail");
-    console.log(talentPassword, "talentPassword");
-    console.log(talentConfirmPassword, "talentConfirmPassword");
-    console.log(kidsLegalFirstName, "kidsLegalFirstName");
-    console.log(gender, "gender");
-    console.log(parentMobile, "parentMobile");
-    console.log(country, "country");
-    console.log(kidsCity, "kidsCity");
-    console.log(address, "address");
-    console.log(selectedProfessions, "selectedProfessions");
-    console.log(selectedProfessions, "selectedProfessions");
-    console.log(selectedCategories, "selectedCategories");
-    console.log(selectedCategories, "selectedCategories");
-    console.log(kidsPreferedFirstName, "kidsPreferedFirstName");
-    console.log(nationality, "nationality");
-    console.log(ethnicity, "ethnicity");
-    console.log(languages, "languages");
-    console.log(maritalStatus, "maritalStatus");
-    console.log(dateOfBirth, "dateOfBirth");
+    console.log(parentFirstName, "parentFirstName kidsPayload");
+    console.log(parentEmail, "parentEmail kidsPayload");
+    console.log(talentPassword, "talentPassword kidsPayload");
+    console.log(talentConfirmPassword, "talentConfirmPassword kidsPayload");
+    console.log(kidsLegalFirstName, "kidsLegalFirstName kidsPayload");
+    console.log(gender, "gender kidsPayload");
+    console.log(parentMobile, "parentMobile kidsPayload");
+    console.log(country, "country kidsPayload");
+    console.log(kidsCity, "kidsCity kidsPayload");
+    console.log(address, "address kidsPayload");
+    console.log(selectedProfessions, "selectedProfessions kidsPayload");
+    console.log(selectedProfessions, "selectedProfessions kidsPayload");
+    console.log(selectedCategories, "selectedCategories kidsPayload");
+    console.log(selectedCategories, "selectedCategories kidsPayload");
+    console.log(kidsPreferedFirstName, "kidsPreferedFirstName kidsPayload");
+    console.log(nationality, "nationality kidsPayload");
+    console.log(ethnicity, "ethnicity kidsPayload");
+    console.log(languages, "languages kidsPayload");
+    console.log(maritalStatus, "maritalStatus kidsPayload");
+    console.log(dateOfBirth, "dateOfBirth kidsPayload");
     if (
       parentFirstName !== "" &&
       parentEmail !== "" &&
@@ -645,7 +645,7 @@ const KidsformOne = ({ sendDataToParent }) => {
       country !== "" &&
       address !== "" &&
       selectedProfessions.length !== 0 &&
-      (selectedCategories.length < 3 || selectedCategories.length > 6) &&
+      selectedCategories.length !== 0 &&
       kidsPreferedFirstName !== "" &&
       nationality !== "" &&
       ethnicity !== "" &&
@@ -1186,6 +1186,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                           value={country?.value}
                           onChange={handleSelectedCountry}
                           isSearchable={true}
+                          styles={customStylesProfession}
                         />
                         {parentCountryError && (
                           <div className="invalid-fields">
@@ -1206,6 +1207,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                           value={state?.label}
                           onChange={handleSelectedState}
                           isSearchable={true}
+                          styles={customStylesProfession}
                         />
                         {stateError && (
                           <div className="invalid-fields">
@@ -1224,6 +1226,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                           value={kidsCity?.label}
                           onChange={handleSelectedCity}
                           isSearchable={true}
+                          styles={customStylesProfession}
                         />
                       </div>
                     </div>
@@ -1488,20 +1491,13 @@ const KidsformOne = ({ sendDataToParent }) => {
                                 id={profession.label}
                                 type="checkbox"
                                 checked={profession.openToOffers || false}
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  // Check if the value is a valid number and is non-negative
-                                  if (
-                                    /^\d*\.?\d*$/.test(value) &&
-                                    (value >= 0 || value === "")
-                                  ) {
-                                    handleDetailChange(
-                                      index,
-                                      "perDaySalary",
-                                      value
-                                    );
-                                  }
-                                }}
+                                onChange={(e) =>
+                                  handleDetailChange(
+                                    index,
+                                    "openToOffers",
+                                    e.target.checked
+                                  )
+                                }
                               />
                               <label
                                 className="form-label offer-label"

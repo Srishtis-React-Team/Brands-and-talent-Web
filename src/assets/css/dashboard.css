@@ -139,17 +139,21 @@ body {
 .form-select {
   height: 45px !important;
 }
-.kids-form-section .MuiInputBase-input, .add-skill-wrapper .MuiInputBase-input {
+.kids-form-section .MuiInputBase-input,
+.add-skill-wrapper .MuiInputBase-input {
   height: 45px;
   padding: 0 15px;
   font-size: 15px;
 }
-.add-skill-wrapper .MuiInputBase-fullWidth{ padding: 0; height: 45px; }
+.add-skill-wrapper .MuiInputBase-fullWidth {
+  padding: 0;
+  height: 45px;
+}
 
-.add-skill-wrapper .MuiFormLabel-root{ 
+.add-skill-wrapper .MuiFormLabel-root {
   line-height: 12px;
   font-size: 15px;
-  min-height: 20px; 
+  min-height: 20px;
 }
 
 .css-13cymwt-control {
@@ -1251,6 +1255,7 @@ input[type="radio"] {
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  cursor: pointer;
 }
 .case-study-address {
   color: #000;
@@ -1258,6 +1263,7 @@ input[type="radio"] {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  cursor: pointer;
 }
 
 .social-medias > img {
@@ -1446,7 +1452,7 @@ input[type="radio"] {
   transition: 0.5s;
 }
 
-.storyCar .carousel-control-next,
+.storyCar .carousel-next-control,
 .storyCar .carousel-control-prev {
   width: auto;
   height: auto;
@@ -1457,12 +1463,18 @@ input[type="radio"] {
   left: -35px;
 }
 
-.storyCar .carousel-control-next {
+.storyCar .carousel-next-control {
   right: -35px;
 }
 
-.carousel-control-next,
+.carousel-next-control,
 .carousel-control-prev .carousel-img {
+  width: 219px;
+  height: 293px;
+  border-radius: 16px;
+  border: 1px solid white;
+}
+.carousel-img {
   width: 219px;
   height: 293px;
   border-radius: 16px;
@@ -1855,31 +1867,13 @@ input[type="radio"] {
   z-index: 1;
 }
 
-.splitterDiv{ justify-content: space-between; }
+.splitterDiv {
+  justify-content: space-between;
+}
 
-.splitterDiv .form-control{ width: 48%; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.splitterDiv .form-control {
+  width: 48%;
+}
 
 /* MEDIA-QUERY START */
 
@@ -2060,7 +2054,7 @@ input[type="radio"] {
     padding: 0 !important;
   }
   .mobile-nav-functions .login-text {
-    margin-right:15px !important;
+    margin-right: 15px !important;
   }
 }
 

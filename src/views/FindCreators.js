@@ -14,6 +14,8 @@ import CurrentUser from "../CurrentUser.js";
 import nationalitiesArray from "../components/NationalitiesArray.js";
 import categoriesArray from "../components/categoriesArray.js";
 import SocialMediasList from "../components/SocialMediasList.js";
+import CreatableSelect from "react-select/creatable";
+
 const FindCreators = () => {
   const {
     currentUserId,
@@ -116,12 +118,16 @@ const FindCreators = () => {
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "55px", // Reset the minHeight to avoid clipping
+      minHeight: "55px",
+      fontSize: "14px",
+      fontFamily: "sans-serif", // Reset the minHeight to avoid clipping
     }),
     menu: (provided, state) => ({
       ...provided,
       maxHeight: "600px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
+      zIndex: 9999,
+      fontSize: "14px",
+      fontFamily: "sans-serif", // Ensure menu appears above other elements
     }),
   };
 
@@ -216,23 +222,36 @@ const FindCreators = () => {
     inputValue ? "No States Available" : "Choose City First";
 
   const ethnicityOptions = [
-    "South Asian",
-    "Indian/Pakistani",
-    "South East Asian",
     "Khmer",
+    "Thai",
+    "Asian",
     "Vietnamese",
     "Indonesian",
-    "Thai",
-    "Middle-East",
-    "Black",
-    "African",
-    "Latino/Hispanic",
+    "Filipino",
+    "Chinese",
+    "South-East Asian",
+    "South-Asian",
+    "Central Asian",
+    "Indian",
+    "Pakistani",
+    "Nepali",
     "Russian",
     "Ukrainian",
-    "Nordic",
-    "Scandinavian",
+    "Japanese",
+    "Korean",
+    "Latino/Hispanic",
     "European",
-    "Italian",
+    "Scandinavian",
+    "Turk",
+    "Native American",
+    "Native Hawaiian/Pacific Islander",
+    "White",
+    "Black",
+    "African",
+    "Middle-Eastern",
+    "Arab",
+    "Persian",
+    "Other",
   ];
 
   const industryList = [
@@ -687,23 +706,39 @@ const FindCreators = () => {
     getCountries();
     getTalentList();
     getFeatures();
-    setProfession([professionList[2], professionList[3]]);
 
     selectFeaturesList([
       {
+        label: "Build",
+        type: "select",
+        options: [
+          "Build",
+          "Slim",
+          "Average",
+          "Athletic",
+          "Curvy",
+          "Plus Size",
+          "Other",
+        ],
+      },
+      {
         label: "HairColour",
         type: "select",
-        options: ["red", "black", "brown"],
+        options: [
+          "Black",
+          "Brown",
+          "Blonde",
+          "Red",
+          "Grey",
+          "White",
+          "Auburn",
+          "Other",
+        ],
       },
       {
         label: "Height",
         type: "select",
         options: ["168.2 cm", "176.6 cm"],
-      },
-      {
-        label: "BodyType",
-        type: "select",
-        options: ["small", "fat"],
       },
     ]);
   }, []);
@@ -868,7 +903,6 @@ const FindCreators = () => {
                     <div className="filter-items">Profession</div>
                     <div className="profession-wrapper talents-profession inpWid">
                       <Select
-                        defaultValue={[professionList[2], professionList[3]]}
                         isMulti
                         name="colors"
                         options={professionList}
@@ -880,7 +914,7 @@ const FindCreators = () => {
                       />
                     </div>
                   </div>
-                  <div className="keyword-wrapper">
+                  {/* <div className="keyword-wrapper">
                     <div className="filter-items">Category</div>
                     <div className="creators-filter-select inpWid">
                       <Select
@@ -894,7 +928,7 @@ const FindCreators = () => {
                         styles={customStylesProfession}
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="keyword-wrapper">
                     <div className="filter-items">Country</div>
                     <div className="creators-filter-select inpWid">
@@ -949,9 +983,10 @@ const FindCreators = () => {
                   </div>
 
                   <div className="keyword-wrapper">
-                    <div className="filter-items">Platform</div>
+                    <div className="filter-items">Social Media</div>
                     <div className="creators-filter-select inpWid">
                       <Select
+                        placeholder="Filter by social media platform"
                         isMulti
                         name="colors"
                         options={SocialMediasList}
@@ -970,14 +1005,14 @@ const FindCreators = () => {
                       <input
                         type="text"
                         className="form-control range-inputs"
-                        placeholder="Min Followers"
+                        placeholder="Min"
                         value={minFollowers}
                         onChange={onMinFollowersChange}
                       ></input>
                       <input
                         type="text"
                         className="form-control range-inputs"
-                        placeholder="Max Followers"
+                        placeholder="Max"
                         value={maxFollowers}
                         onChange={onMaxFollowersChange}
                       ></input>
@@ -993,7 +1028,12 @@ const FindCreators = () => {
                         onChange={selectGender}
                         value={gender}
                       >
-                        <option value="" disabled selected>
+                        <option
+                          className="select-placeholders"
+                          value=""
+                          disabled
+                          selected
+                        >
                           Select Gender
                         </option>
                         {gendersOptions.map((option, index) => (
@@ -1080,7 +1120,7 @@ const FindCreators = () => {
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={(value) => selectLanguage(value)}
-                        styles={customStyles}
+                        styles={customStylesProfession}
                       />
                     </div>
                   </div>
@@ -1272,7 +1312,7 @@ const FindCreators = () => {
                                       <>
                                         <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                           <div className="logo-fill-briefcase">
-                                            <i class="bi bi-person-workspace"></i>
+                                            <i className="bi bi-person-workspace model-job-icons"></i>
                                           </div>
                                           <div className="contSect">
                                             <span>
@@ -1283,11 +1323,11 @@ const FindCreators = () => {
                                       </>
                                     )}
 
-                                    {item?.relevantCategories && (
+                                    {/* {item?.relevantCategories && (
                                       <>
                                         <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                           <div className="logo-fill-briefcase">
-                                            <i class="bi bi-bookmarks-fill"></i>
+                                            <i className="bi bi-bookmarks-fill model-job-icons"></i>
                                           </div>
                                           <div className="contSect">
                                             <span>
@@ -1296,11 +1336,14 @@ const FindCreators = () => {
                                           </div>
                                         </div>
                                       </>
-                                    )}
+                                    )} */}
 
-                                    <span className="job-company_dtls nweAlign pt-1 ">
-                                      <i className="bi bi-geo-alt-fill location-icon"></i>
-                                      {item?.parentCountry}, {item?.parentState}{" "}
+                                    <span className="job-company_dtls nweAlign pt-1 d-flex">
+                                      <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
+                                      <span>
+                                        {item?.childCity},{item?.parentState},{" "}
+                                        {item?.parentCountry}{" "}
+                                      </span>
                                     </span>
 
                                     {/* <div className="find-creator-address ">
