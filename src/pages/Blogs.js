@@ -135,18 +135,20 @@ const Blogs = () => {
           </div>
         </div>
       </section>
+
       <section>
-        <div className="container">
-          <div className=" row py-3">
-            <div className="col-sm-12 col-md-12 col-lg-12 featured-articles-main">
-              <div className="featured-articles-title">Featured Articles</div>
-              <div className="featured-articles-slider">
-                <FeaturedBlogsCarousel />
+        <div className="blog_sliderBg">
+          <div className="container">
+            <div className=" row py-3">
+              <div className="col-sm-12 col-md-12 col-lg-12 featured-articles-main blogSlider">
+                <div className="featured-articles-title">Featured Articles</div>
+                <div className="featured-articles-slider">
+                  <FeaturedBlogsCarousel />
+                </div>
               </div>
             </div>
           </div>
         </div>
-
         {/* <div className="blogs-tabs col-sm-4 col-md-3">
           <div className="blogs-tabs-wrapper">
             <div className="blogs-tab-text">Industry News & Insights</div>

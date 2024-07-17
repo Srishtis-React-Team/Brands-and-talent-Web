@@ -54,6 +54,7 @@
   padding: 25px;
   border-radius: 16px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  
 }
 
 .blogs-heading {
@@ -77,10 +78,8 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-height: calc(
-    1.2em * 5
-  ); /* Adjust this value to match line-height * number of lines */
-  line-height: 1.2em; /* Adjust line-height as needed */
+  max-height: calc(1.2em * 5);
+  line-height: 23px; 
 }
 
 .blogs-description-main {
