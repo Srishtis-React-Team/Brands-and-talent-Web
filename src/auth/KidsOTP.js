@@ -104,7 +104,6 @@ const KidsOTP = () => {
       parentEmail: queryString,
     };
     setIsLoading(true);
-
     await ApiHelper.post(API.otpResend, formData)
       .then((resData) => {
         if (resData.data.status === true) {
