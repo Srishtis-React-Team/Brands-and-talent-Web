@@ -106,11 +106,11 @@ const OTPComponent = () => {
 
   const resendOtp = async (newOTP) => {
     const formData = {
-      parentEmail: queryString,
+      adultEmail: queryString,
     };
     setIsLoading(true);
 
-    await ApiHelper.post(API.otpResend, formData)
+    await ApiHelper.post(API.otpResendAdult, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage(resData.data.message);

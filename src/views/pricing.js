@@ -28,7 +28,13 @@ const Pricing = () => {
   };
 
   const [pricingList, setPricingList] = useState([]);
+  const [comment, setComment] = useState();
   const [plan1_Selected, selectPlan1] = useState(false);
+  const [senderNameError, setSenderNameError] = useState(false);
+  const [giftRecieverNameError, setGiftRecieverNameError] = useState(false);
+  const [senderEmailError, setSenderEmailError] = useState(false);
+  const [giftRecieverEmailError, setGiftRecieverEmailError] = useState(false);
+  const [commentError, setCommentError] = useState(false);
   const [plan2_Selected, selectPlan2] = useState(true);
   const [plan3_Selected, selectPlan3] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -40,7 +46,6 @@ const Pricing = () => {
   const [giftRecieverName, setGiftRecieverName] = useState("");
   const [senderEmail, setSenderEmail] = useState("");
   const [recieverEmail, setRecieverEmail] = useState("");
-  const [senderEmailError, setSenderEmailError] = useState(false);
   const [recieverEmailError, setRecieverEmailError] = useState(false);
   const [senderNameLetterError, setSenderNameLetterError] = useState(false);
   const [recieverNameLetterError, setRecieverNameLetterError] = useState(false);
@@ -52,6 +57,9 @@ const Pricing = () => {
   useEffect(() => {
     getBrandsPricingList();
   }, []);
+  useEffect(() => {
+    console.log(comment, "comment");
+  }, [comment]);
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
       .then((resData) => {
@@ -169,6 +177,7 @@ const Pricing = () => {
 
   const handleRecieverEmailChange = (e) => {
     setRecieverEmailError(false);
+    setGiftRecieverEmailError(false);
     const email = e.target.value;
     setRecieverEmail(e.target.value);
     setIsValidRecieverEmail(emailRegex.test(email));
@@ -177,12 +186,36 @@ const Pricing = () => {
   const modalRef = useRef(null);
 
   const sendGiftSubscription = async () => {
+    if (senderName == "") {
+      setSenderNameError(true);
+    }
+    if (senderEmail == "") {
+      setSenderEmailError(true);
+    }
+    if (giftRecieverName == "") {
+      setGiftRecieverNameError(true);
+    }
+    if (recieverEmail == "") {
+      setGiftRecieverEmailError(true);
+    }
+    if (comment == "" || comment == undefined || !comment) {
+      setCommentError(true);
+    }
     setIsLoading(true);
+    if (
+      senderName &&
+      senderEmail &&
+      giftRecieverName &&
+      recieverEmail &&
+      comment
+    ) {
+    }
     const formData = {
       fullName: senderName,
       giftSenderEmail: senderEmail,
       giftReceiversName: giftRecieverName,
       giftReceiversEmail: recieverEmail,
+      comment: comment,
     };
     console.log(formData, "formData giftSubscription");
     setIsLoading(true);
@@ -441,20 +474,30 @@ const Pricing = () => {
             <div className="search-filter-section">
               <div className="kids-form-row row ">
                 <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">Full name</label>
+                  <label className="form-label">
+                    Your full name <span className="mandatory">*</span>
+                  </label>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Full name"
+                    placeholder="Your full name"
                     onChange={(e) => {
                       handleSenderNameChange(e);
+                      setSenderNameError(false);
                     }}
                     onKeyDown={handleSenderNameKeyPress}
                     value={senderName}
                   ></input>
+                  {senderNameError && (
+                    <div className="invalid-fields">
+                      Please enter Your full name
+                    </div>
+                  )}
                 </div>
                 <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">Email</label>
+                  <label className="form-label">
+                    Email <span className="mandatory">*</span>
+                  </label>
                   <input
                     type="email"
                     className={`form-control ${
@@ -474,20 +517,31 @@ const Pricing = () => {
                   )}
                 </div>
                 <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">Gift receiver’s name</label>
+                  <label className="form-label">
+                    Gift receiver’s full name{" "}
+                    <span className="mandatory">*</span>
+                  </label>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Gift receiver’s name"
+                    placeholder="Gift receiver’s full name"
                     onChange={(e) => {
                       handleRecieverNameChange(e);
+                      setGiftRecieverNameError(false);
                     }}
                     onKeyDown={handleRecieverNameKeyPress}
                     value={giftRecieverName}
                   ></input>
+                  {giftRecieverNameError && (
+                    <div className="invalid-fields">
+                      Please enter Gift receiver’s full name
+                    </div>
+                  )}
                 </div>
                 <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">Gift receiver’s email</label>
+                  <label className="form-label">
+                    Gift receiver’s email <span className="mandatory">*</span>
+                  </label>
                   <input
                     type="email"
                     className={`form-control ${
@@ -502,8 +556,33 @@ const Pricing = () => {
                       Please enter a valid E-mail address.
                     </div>
                   )}
-                  {recieverEmailError && (
-                    <div className="invalid-fields">Please enter E-mail</div>
+                  {giftRecieverEmailError && (
+                    <div className="invalid-fields">
+                      Please enter Gift receiver’s email
+                    </div>
+                  )}
+                </div>
+
+                <div className="kids-form-section col-md-12 mb-3">
+                  <label
+                    htmlFor="exampleFormControlTextarea1"
+                    className="form-label"
+                  >
+                    Comment<span className="mandatory">*</span>
+                  </label>
+                  <textarea
+                    style={{ width: "100%" }}
+                    className="form-control address-textarea"
+                    id="exampleFormControlTextarea1"
+                    value={comment}
+                    rows="3"
+                    onChange={(e) => {
+                      setComment(e.target.value);
+                      setCommentError(false);
+                    }}
+                  ></textarea>
+                  {commentError && (
+                    <div className="invalid-fields">Please enter Comment</div>
                   )}
                 </div>
               </div>
@@ -516,7 +595,7 @@ const Pricing = () => {
               className="btn gift-payment-btn"
               onClick={sendGiftSubscription}
             >
-              {isLoading ? "Loading..." : "Payment"}
+              {isLoading ? "Loading..." : "Next"}
             </button>
           </DialogActions>
         </Dialog>

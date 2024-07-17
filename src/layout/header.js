@@ -880,7 +880,7 @@ const Header = ({ onData }) => {
                         data-bs-toggle="dropdown"
                       >
                         <NavLink to="/blogs" onClick={() => handleClick("")}>
-                          Blogs
+                          Blog
                         </NavLink>
                       </a>
                       <ul className="dropdown-menu blogs-menu">
