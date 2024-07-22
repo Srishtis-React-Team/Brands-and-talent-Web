@@ -50,10 +50,10 @@ const IndustryNews = () => {
       <section>
         {/* <div className="popular-header">
           <div className="container">
-            <div className="header-title">Industry News & Insights</div>
+            <div className="header-title">Industry Insights</div>
             <div className="header-menu">
               <div>Blog</div>
-              <div>Industry News & Insights</div>
+              <div>Industry Insights</div>
             </div>
           </div>
         </div> */}
@@ -68,35 +68,33 @@ const IndustryNews = () => {
                     <i className="bi bi-arrow-left-circle blogs-back-icon"></i>
                     <div className="blogs-back-text">Back</div>
                   </div>
-                  <div className="blogs-subhead">{selectedBlogData?.title}</div>
-                  <div className="blogs-heading">
+                  <div className="blogs-subhead py-2">
+                    {selectedBlogData?.title}
+                  </div>
+                  <div className="blogs-heading py-2">
                     {selectedBlogData?.heading}
                   </div>
-                  <div className="blogs-description">
+                  <div className="blogs-description ">
                     {selectedBlogData?.description}
                   </div>
-
-                  <div className="shareWrap">
-                    <label>Share Now</label>
-                    <ul className="shareDiv">
-                      <li>
-                        <i className="bi bi-facebook"></i>
-                      </li>
-                      <li>
-                        <i className="bi bi-twitter-x"></i>
-                      </li>
-                      <li>
-                        <i className="bi bi-linkedin"></i>
-                      </li>
-                      <li>
-                        <i className="bi bi-whatsapp"></i>
-                      </li>
-                    </ul>
+                  <div className="blogs-description pt-3">
+                    {selectedBlogData?.blogBy}
+                  </div>
+                  <div className="blogs-description pt-2">
+                    {new Date(selectedBlogData?.createdAt).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )}
                   </div>
                 </div>
                 <div className="blogimg-bx col-md-4 col-lg-5">
+                  {/* img-fluid */}
                   <img
-                    className="blogs-image img-fluid"
+                    className="blogs-image blog-banner-image "
                     src={`${API.userFilePath}${selectedBlogData.image}`}
                     alt="img"
                   />
@@ -186,6 +184,23 @@ const IndustryNews = () => {
                   imperdiet.
                 </div> */}
               </div>
+            </div>
+            <div className="shareWrap">
+              <label>Share Now</label>
+              <ul className="shareDiv">
+                <li>
+                  <i className="bi bi-facebook"></i>
+                </li>
+                <li>
+                  <i className="bi bi-twitter-x"></i>
+                </li>
+                <li>
+                  <i className="bi bi-linkedin"></i>
+                </li>
+                <li>
+                  <i className="bi bi-whatsapp"></i>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

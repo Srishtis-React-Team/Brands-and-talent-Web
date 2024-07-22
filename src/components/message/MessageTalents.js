@@ -832,22 +832,12 @@ const MessageTalents = () => {
                                     </div>
                                   )}
                                 </div>
-                                {item.senderId === currentUserId && (
+                                {/* {item.senderId === currentUserId && (
                                   <div>
                                     <Dropdown className="reportDrop">
                                       <Dropdown.Toggle className="dropColorHead message-elips-dropdown">
-                                        {/* <img
-                                        className="message-elipsis-options"
-                                        src={elipsis}
-                                        alt=""
-                                      /> */}
                                       </Dropdown.Toggle>
                                       <Dropdown.Menu>
-                                        {/* <Dropdown.Item
-                                          onClick={() => handleView(item?.chatFile)}
-                                        >
-                                          Edit
-                                        </Dropdown.Item> */}
                                         <Dropdown.Item
                                           onClick={() => handleDelete(item)}
                                         >
@@ -856,7 +846,7 @@ const MessageTalents = () => {
                                       </Dropdown.Menu>
                                     </Dropdown>
                                   </div>
-                                )}
+                                )} */}
                               </div>
                             </div>
                           </>

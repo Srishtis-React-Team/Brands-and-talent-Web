@@ -232,72 +232,162 @@ const HowItWorks = () => {
                 </div>
               </div>
 
-              <h2 className="maintitles text-center"> Brands/Clients</h2>
-
-              {content.map((resource, index) => (
-                <div
-                  key={resource.uniqueId}
-                  className="resource-wrapper align-items-center row"
-                >
-                  {index % 2 === 0 ? (
-                    <>
-                      <div className="resource-image-wrapper imgL col-md-6">
-                        {resource.image ? (
-                          <img
-                            className="resource-image imgWid"
-                            src={resource.image}
-                            alt="Resource"
-                          />
+              <div>
+                <h2 className="maintitles text-center">Brands/Clients</h2>
+                {content
+                  .filter((resource) => resource.userType === "Brands")
+                  .map((resource, index) => (
+                    <div
+                      key={resource.uniqueId}
+                      className="resource-wrapper align-items-center row"
+                    >
+                      {index % 2 === 0 ? (
+                        <>
+                          <div className="resource-image-wrapper imgL col-md-6">
+                            {resource.image ? (
+                              <img
+                                className="resource-image imgWid"
+                                src={resource.image}
+                                alt="Resource"
+                              />
+                            ) : (
+                              <div className="placeholder">
+                                No Image Available
+                              </div>
+                            )}
+                          </div>
+                          <div className="resource-content-wrapper col-md-6 padSpace">
+                            <div
+                              className="resource-name"
+                              dangerouslySetInnerHTML={{
+                                __html: resource.title,
+                              }}
+                            />
+                            <div className="resource-description space">
+                              {resource.description.map((desc, descIndex) => (
+                                <div
+                                  key={descIndex}
+                                  dangerouslySetInnerHTML={{ __html: desc }}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="resource-content-wrapper col-md-6 padSpace">
+                            <div
+                              className="resource-name"
+                              dangerouslySetInnerHTML={{
+                                __html: resource.title,
+                              }}
+                            />
+                            <div className="resource-description space">
+                              {resource.description.map((desc, descIndex) => (
+                                <div
+                                  key={descIndex}
+                                  dangerouslySetInnerHTML={{ __html: desc }}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <div className="resource-image-wrapper imgL col-md-6">
+                            {resource.image ? (
+                              <img
+                                className="resource-image imgWid"
+                                src={resource.image}
+                                alt="Resource"
+                              />
+                            ) : (
+                              <div className="placeholder">
+                                No Image Available
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ))}
+              </div>
+              <div id="talent">
+                <div>
+                  <h2 className="maintitles text-center">For Talent</h2>
+                  {content
+                    .filter((resource) => resource.userType === "Talent")
+                    .map((resource, index) => (
+                      <div
+                        key={resource.uniqueId}
+                        className="resource-wrapper align-items-center row"
+                      >
+                        {index % 2 === 0 ? (
+                          <>
+                            <div className="resource-image-wrapper imgL col-md-6">
+                              {resource.image ? (
+                                <img
+                                  className="resource-image imgWid"
+                                  src={resource.image}
+                                  alt="Resource"
+                                />
+                              ) : (
+                                <div className="placeholder">
+                                  No Image Available
+                                </div>
+                              )}
+                            </div>
+                            <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
+                              <div className="resource-description space">
+                                {resource.description.map((desc, descIndex) => (
+                                  <div
+                                    key={descIndex}
+                                    dangerouslySetInnerHTML={{ __html: desc }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </>
                         ) : (
-                          <div className="placeholder">No Image Available</div>
+                          <>
+                            <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
+                              <div className="resource-description space">
+                                {resource.description.map((desc, descIndex) => (
+                                  <div
+                                    key={descIndex}
+                                    dangerouslySetInnerHTML={{ __html: desc }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                            <div className="resource-image-wrapper imgL col-md-6">
+                              {resource.image ? (
+                                <img
+                                  className="resource-image imgWid"
+                                  src={resource.image}
+                                  alt="Resource"
+                                />
+                              ) : (
+                                <div className="placeholder">
+                                  No Image Available
+                                </div>
+                              )}
+                            </div>
+                          </>
                         )}
                       </div>
-                      <div className="resource-content-wrapper col-md-6 padSpace">
-                        <div
-                          className="resource-name"
-                          dangerouslySetInnerHTML={{ __html: resource.title }}
-                        />
-                        <div className="resource-description space">
-                          {resource.description.map((desc, descIndex) => (
-                            <div
-                              key={descIndex}
-                              dangerouslySetInnerHTML={{ __html: desc }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="resource-content-wrapper col-md-6 padSpace">
-                        <div
-                          className="resource-name"
-                          dangerouslySetInnerHTML={{ __html: resource.title }}
-                        />
-                        <div className="resource-description space">
-                          {resource.description.map((desc, descIndex) => (
-                            <div
-                              key={descIndex}
-                              dangerouslySetInnerHTML={{ __html: desc }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      <div className="resource-image-wrapper imgL col-md-6">
-                        {resource.image ? (
-                          <img
-                            className="resource-image imgWid"
-                            src={resource.image}
-                            alt="Resource"
-                          />
-                        ) : (
-                          <div className="placeholder">No Image Available</div>
-                        )}
-                      </div>
-                    </>
-                  )}
+                    ))}
                 </div>
-              ))}
+              </div>
 
               {/* <div className="resource-wrapper align-items-center row">
                 <div className="resource-image-wrapper imgL col-md-6">
@@ -523,7 +613,7 @@ const HowItWorks = () => {
         </div>
       </section>
 
-      <section className="howIts mt-5">
+      <section className="howIts mt-5" id="faq">
         <h2 className="maintitles text-center">
           Frequently Asked Questions (FAQs)
         </h2>

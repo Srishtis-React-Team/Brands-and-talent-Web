@@ -29,7 +29,7 @@ const CommingSoon = () => {
   const image5 = require("../assets/images/blogs/blog5.png");
 
   useEffect(() => {
-    fetchBlogByType("Industry News & Insights");
+    fetchBlogByType("Industry Insights");
   }, []);
 
   const [blogsLsit, setBlogsLsit] = useState([]);

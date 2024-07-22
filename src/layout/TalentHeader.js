@@ -77,6 +77,10 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     }
   }, [talentId]);
 
+  const handleClickBlogs = (step) => {
+    navigate("/blogs", { state: { step: step } });
+  };
+
   useEffect(() => {
     // Function to toggle dropdown when clicking the bell icon
     const handleBellIconClick = (event) => {
@@ -403,34 +407,33 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                             dropdown-toggle
                             data-bs-toggle="dropdown"
                           >
-                            <NavLink to="/blogs">Blogs</NavLink>
+                            <NavLink onClick={() => handleClickBlogs(0)}>
+                              Blog
+                            </NavLink>
                           </a>
                           <ul className="dropdown-menu blogs-menu">
-                            <li>
-                              <a href="" className="dropdown-item">
-                                <NavLink to="/blogs">
-                                  Industry News & Insights
-                                </NavLink>
+                            <li onClick={() => handleClickBlogs(1)}>
+                              <a className="dropdown-item">
+                                News & Announcements
                               </a>
                             </li>
-                            <li>
-                              <a href="" className="dropdown-item">
-                                 Case Studies
+                            <li onClick={() => handleClickBlogs(2)}>
+                              <a className="dropdown-item">Industry Insights</a>
+                            </li>
+                            <li onClick={() => handleClickBlogs(3)}>
+                              <a className="dropdown-item">Interviews</a>
+                            </li>
+                            <li onClick={() => handleClickBlogs(4)}>
+                              <a className="dropdown-item">Case Studies</a>
+                            </li>
+                            <li onClick={() => handleClickBlogs(5)}>
+                              <a className="dropdown-item">
+                                Talent Tips & Tricks
                               </a>
                             </li>
-                            <li>
-                              <a href="" className="dropdown-item">
-                                Talent Stories
-                              </a>
-                            </li>
-                            <li>
-                              <a href="" className="dropdown-item">
-                                 Talent Tips & Tricks
-                              </a>
-                            </li>
-                            <li>
-                              <a href="" className="dropdown-item">
-                                 Brand Tips & Tricks
+                            <li onClick={() => handleClickBlogs(6)}>
+                              <a className="dropdown-item">
+                                Brand Tips & Tricks
                               </a>
                             </li>
                           </ul>

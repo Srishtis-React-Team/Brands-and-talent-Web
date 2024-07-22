@@ -404,6 +404,7 @@ select {
   line-height: normal;
   padding: 6px 0px;
   text-transform: capitalize;
+  cursor: pointer;
 }
 .models-images .heart-icon {
   width: 17px !important;

@@ -176,8 +176,8 @@ const ListJobs = () => {
   const postJob = async () => {
     await ApiHelper.post(`${API.postJobByDraft}${alertpop?.jobId}`)
       .then((resData) => {
-        console.log(resData, "draftedData");
-        console.log(resData.data.data._id, "draftedData");
+        console.log(resData.data.status, "draftedData");
+
         if (resData.data.status === true) {
           if (brandData?.planName == "Basic") {
             setMessage(
@@ -196,7 +196,11 @@ const ListJobs = () => {
               setAllJobsList(resData.data.data, "resData.data.data");
             }, 2000);
           }
-        } else if (resData.data.status === false) {
+        }
+
+        if (resData.data.status == false) {
+          console.log(resData.data.status, "checkStatus");
+          console.log("status draftedData");
           setMessage(resData.data.message);
           setOpenPopUp(true);
           setTimeout(function() {

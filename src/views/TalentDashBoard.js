@@ -994,8 +994,8 @@ const TalentDashBoard = () => {
                                         <i className="bi bi-dot"></i>
                                       </span>
                                       <span className="job-company_dtls">
-                                        <i className="bi bi-geo-alt-fill location-icon"></i>
-                                        {item?.state}, {item?.city}{" "}
+                                        <i className="bi bi-geo-alt-fill"></i>
+                                        {item?.city}, {item?.state}{" "}
                                         <i className="bi bi-dot"></i>
                                       </span>
                                       <span className="job-company_dtls">
@@ -1189,9 +1189,13 @@ const TalentDashBoard = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <p id="exampleModalLabel" className="modal-job-title">
-                {modalData?.jobTitle}
-              </p>
+              {modalData?.jobTitle && (
+                <>
+                  <p id="exampleModalLabel" className="modal-job-title">
+                    {modalData?.jobTitle}
+                  </p>
+                </>
+              )}
 
               <button
                 type="button"
@@ -1200,53 +1204,121 @@ const TalentDashBoard = () => {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
-              <div className="modal-job-flex">
-                <i className="bi bi-building model-job-icons"></i>
-                <div className="model-job-name">{modalData?.hiringCompany}</div>
-              </div>
 
-              <div className="modal-job-flex">
-                <i className="bi bi-briefcase-fill model-job-icons"></i>
-                <div className="model-job-name">
-                  <span className="modal-job-workplace">
-                    {modalData?.employmentType}{" "}
-                  </span>{" "}
-                  {modalData?.jobType}
+            <div className="modal-body">
+              {modalData?.hiringCompany && (
+                <div className="modal-job-flex">
+                  <i className="bi bi-building model-job-icons"></i>
+                  <div className="model-job-name">
+                    {modalData?.hiringCompany}
+                  </div>
                 </div>
-              </div>
-              <div className="modal-job-flex">
-                <i className="bi bi-list-check model-job-icons"></i>
-                <div className="model-job-name">
-                  {modalData?.skills.map((skill, index) => (
-                    <span key={index}>
-                      {skill}
-                      {index !== modalData?.skills.length - 1 && ", "}
+              )}
+              {(modalData?.employmentType || modalData?.jobType) && (
+                <div className="modal-job-flex">
+                  <i className="bi bi-briefcase-fill model-job-icons"></i>
+                  <div className="model-job-name">
+                    {modalData?.employmentType && (
+                      <span className="modal-job-workplace">
+                        {modalData?.employmentType}{" "}
+                      </span>
+                    )}
+                    {modalData?.jobType}
+                  </div>
+                </div>
+              )}
+              {(modalData?.city || modalData?.state) && (
+                <div className="modal-job-flex">
+                  <i className="bi bi-geo-alt-fill model-job-icons"></i>
+                  <div className="model-job-name">
+                    {modalData?.city && <span>{modalData?.city}</span>}
+                    {modalData?.city && modalData?.state && ", "}
+                    {modalData?.state}
+                  </div>
+                </div>
+              )}
+              {modalData?.category && (
+                <div className="modal-job-flex">
+                  <i className="bi bi-bookmarks-fill model-job-icons"></i>
+                  <div className="model-job-name">{modalData?.category}</div>
+                </div>
+              )}
+              {modalData?.compensation &&
+                Object.keys(modalData?.compensation).length > 0 && (
+                  <div className="modal-job-flex">
+                    <i className="bi bi-cash-coin model-job-icons"></i>
+                    <div className="model-job-name">
+                      {Object.keys(modalData?.compensation)[0]
+                        ?.split("_")
+                        .map(
+                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                        )
+                        .join(" ")}
+                    </div>
+                  </div>
+                )}
+              {modalData?.skills && modalData?.skills.length > 0 && (
+                <div className="modal-job-flex">
+                  <i className="bi bi-list-check model-job-icons"></i>
+                  <div className="model-job-name">
+                    {modalData?.skills.map((skill, index) => (
+                      <span key={index}>
+                        {skill}
+                        {index !== modalData?.skills.length - 1 && ", "}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {modalData?.gender && Array.isArray(modalData?.gender) && (
+                <div className="modal-job-flex">
+                  <i className="bi bi-gender-ambiguous model-job-icons"></i>
+                  <div className="model-job-name">
+                    {modalData.gender.join(", ")}
+                  </div>
+                </div>
+              )}
+
+              {modalData?.lastDateForApply && (
+                <div className="modal-job-flex">
+                  <i className="bi bi-alarm-fill model-job-icons"></i>
+                  <div className="model-job-name">
+                    <span
+                      style={{ fontWeight: "bold" }}
+                      className="job-company_dtls"
+                    >
+                      Application Deadline:{" "}
                     </span>
-                  ))}
+                    <span>
+                      {new Date(modalData.lastDateForApply).toLocaleDateString(
+                        "en-GB",
+                        {
+                          weekday: "long",
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }
+                      )}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="modal-job-flex">
-                <i className="bi bi-gender-ambiguous model-job-icons"></i>
-                <div className="model-job-name">{modalData?.gender}</div>
-              </div>
-              <div className="modal-job-flex">
-                <i className="bi  bi-cash-coin model-job-icons"></i>
-                <div className="model-job-name">
-                  {modalData?.paymentType?.amount} {modalData?.jobCurrency}
-                </div>
-              </div>
-              <div className="model-about-title">About the job</div>
-              <div className="model-job-about-values">
-                {modalData?.jobDescription &&
-                  modalData?.jobDescription?.map((htmlContent, index) => (
-                    <div
-                      key={index}
-                      dangerouslySetInnerHTML={{ __html: htmlContent }}
-                    />
-                  ))}
-              </div>
+              )}
+              {modalData?.jobDescription &&
+                modalData?.jobDescription.length > 0 && (
+                  <>
+                    <div className="model-about-title">About the job</div>
+                    <div className="model-job-about-values">
+                      {modalData?.jobDescription.map((htmlContent, index) => (
+                        <div
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: htmlContent }}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
             </div>
+
             <div className="modal-footer">
               <button
                 onClick={handleCloseModal}

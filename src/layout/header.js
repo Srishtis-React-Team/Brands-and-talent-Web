@@ -576,6 +576,7 @@ const Header = ({ onData }) => {
   ).map((label) => searchPathOptions.find((option) => option.label === label));
 
   const handleClickBlogs = (step) => {
+    console.log(step, "handleClickBlogsSTEP");
     navigate("/blogs", { state: { step: step } });
   };
 
@@ -699,37 +700,28 @@ const Header = ({ onData }) => {
                   dropdown-toggle
                   data-bs-toggle="dropdown"
                 >
-                  <NavLink to="/blogs" onClick={() => handleClick("")}>
+                  <NavLink to="/blogs" onClick={() => handleClickBlogs(0)}>
                     Blog
                   </NavLink>
                 </a>
-                <ul className="dropdown-menu mobile-blogs-menu">
-                  <li>
-                    <a href="" className="dropdown-item">
-                      <NavLink to="/blogs" onClick={() => handleClick("")}>
-                        Industry News & Insights
-                      </NavLink>
-                    </a>
+                <ul className="dropdown-menu blogs-menu">
+                  <li onClick={() => handleClickBlogs(1)}>
+                    <a className="dropdown-item">News & Announcements</a>
                   </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Case Studies
-                    </a>
+                  <li onClick={() => handleClickBlogs(2)}>
+                    <a className="dropdown-item">Industry Insights</a>
                   </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                      Talent Stories
-                    </a>
+                  <li onClick={() => handleClickBlogs(3)}>
+                    <a className="dropdown-item">Interviews</a>
                   </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Talent Tips & Tricks
-                    </a>
+                  <li onClick={() => handleClickBlogs(4)}>
+                    <a className="dropdown-item"> Case Studies</a>
                   </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Brand Tips & Tricks
-                    </a>
+                  <li onClick={() => handleClickBlogs(5)}>
+                    <a className="dropdown-item"> Talent Tips & Tricks</a>
+                  </li>
+                  <li onClick={() => handleClickBlogs(6)}>
+                    <a className="dropdown-item"> Brand Tips & Tricks</a>
                   </li>
                 </ul>
               </li>
@@ -879,36 +871,31 @@ const Header = ({ onData }) => {
                         dropdown-toggle
                         data-bs-toggle="dropdown"
                       >
-                        <NavLink to="/blogs" onClick={() => handleClick("")}>
+                        <NavLink
+                          to="/blogs"
+                          onClick={() => handleClickBlogs(0)}
+                        >
                           Blog
                         </NavLink>
                       </a>
                       <ul className="dropdown-menu blogs-menu">
-                        <li onClick={() => handleClickBlogs(0)}>
-                          <a className="dropdown-item">All</a>
-                        </li>
                         <li onClick={() => handleClickBlogs(1)}>
                           <a className="dropdown-item">News & Announcements</a>
                         </li>
                         <li onClick={() => handleClickBlogs(2)}>
-                          <a className="dropdown-item">
-                            Industry News & Insights
-                          </a>
+                          <a className="dropdown-item">Industry Insights</a>
                         </li>
                         <li onClick={() => handleClickBlogs(3)}>
                           <a className="dropdown-item">Interviews</a>
                         </li>
                         <li onClick={() => handleClickBlogs(4)}>
-                          <a className="dropdown-item"> Case Studies</a>
+                          <a className="dropdown-item">Case Studies</a>
                         </li>
                         <li onClick={() => handleClickBlogs(5)}>
-                          <a className="dropdown-item">Talent Stories</a>
+                          <a className="dropdown-item">Talent Tips & Tricks</a>
                         </li>
                         <li onClick={() => handleClickBlogs(6)}>
-                          <a className="dropdown-item"> Talent Tips & Tricks</a>
-                        </li>
-                        <li onClick={() => handleClickBlogs(7)}>
-                          <a className="dropdown-item"> Brand Tips & Tricks</a>
+                          <a className="dropdown-item">Brand Tips & Tricks</a>
                         </li>
                       </ul>
                     </li>

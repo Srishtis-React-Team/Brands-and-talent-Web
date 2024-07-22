@@ -643,11 +643,6 @@ const BrandTalents = () => {
     getFeatures();
     selectFeaturesList([
       {
-        label: "HairColour",
-        type: "select",
-        options: ["red", "black", "brown"],
-      },
-      {
         label: "Height",
         type: "select",
         options: ["168.2 cm", "176.6 cm"],
@@ -1234,6 +1229,8 @@ const BrandTalents = () => {
                                                   <span>
                                                     {item?.averageStarRatings}
                                                     &nbsp;
+                                                    {item?.averageStarRatings ==
+                                                      0 && <>ratings</>}
                                                     {item?.averageStarRatings >
                                                       0 && (
                                                       <>
@@ -1289,7 +1286,7 @@ const BrandTalents = () => {
                                             </>
                                           )}
 
-                                          {item?.relevantCategories && (
+                                          {/* {item?.relevantCategories && (
                                             <>
                                               <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                                 <div className="logo-fill-briefcase">
@@ -1305,9 +1302,9 @@ const BrandTalents = () => {
                                                 </div>
                                               </div>
                                             </>
-                                          )}
+                                          )} */}
 
-                                          <span className="job-company_dtls nweAlign pt-1 pb-0 d-flex">
+                                          <span className="job-company_dtls nweAlign pt-2 pb-0 d-flex">
                                             <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
                                             {item?.childCity},{" "}
                                             {item?.parentState},{" "}

@@ -41,6 +41,8 @@ const Dashboard = () => {
   const calvinIcon = require("../assets/icons/6539ea694436eb9715c9cba3_image 10.png");
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
+  const pinkStar = require("../assets/icons/pink-star.png");
+
   const heartIcon = require("../assets/icons/heart.png");
   const chatIcon = require("../assets/icons/chat-icon.png");
   const favoruiteIcon = require("../assets/icons/favorite.png");
@@ -91,6 +93,8 @@ const Dashboard = () => {
   const [talentList, setTalentList] = useState([]);
   const [caseList, setCaseList] = useState([]);
   const [talentsList, setTalentsList] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(8);
+
   const [photoGraphersList, setphotoGraphersList] = useState([]);
   const [messageFromHeader, setMessageFromHeader] = useState("");
   const [hideAll, setHideAll] = useState(false);
@@ -134,6 +138,10 @@ const Dashboard = () => {
         }
       })
       .catch((err) => {});
+  };
+
+  const handleReadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 4);
   };
 
   useEffect(() => {
@@ -739,12 +747,16 @@ const Dashboard = () => {
       .then((resData) => {
         if (resData) {
           console.log(resData?.data?.data, "resData getFeaturedArticles");
-          setFeaturedBlogsLsit(resData?.data?.data);
+          setFeaturedBlogsLsit(resData?.data?.data.slice(0, 4));
         }
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const blogReadMore = async () => {
+    navigate("/blogs", { state: { step: 4 } });
   };
 
   return (
@@ -882,7 +894,7 @@ const Dashboard = () => {
           <div className="container">
             <div className="gallery-section wraper">
               <div className="gallery-main showContent">
-                {talentsList?.map((item) => {
+                {talentsList?.slice(0, visibleCount)?.map((item) => {
                   return (
                     <div className="gallery-wrapper">
                       <div className="gallery-top">
@@ -950,7 +962,61 @@ const Dashboard = () => {
                               ? `${item?.preferredChildFirstname}`
                               : "Elizabeth"}
                           </div>
-                          <div className="address">
+                          <div className="talent-details-wrapper">
+                            <div className="logo-fill">
+                              <img className="talent-logo" src={pinkStar}></img>
+                            </div>
+                            <div className="contSect">
+                              {item?.averageStarRatings && (
+                                <>
+                                  <span>
+                                    {item?.averageStarRatings}
+                                    &nbsp;
+                                    {item?.averageStarRatings == 0 && (
+                                      <>ratings</>
+                                    )}
+                                    {item?.averageStarRatings > 0 && (
+                                      <>( {item?.totalReviews} ratings)</>
+                                    )}
+                                  </span>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                          {item?.noOfJobsCompleted && (
+                            <>
+                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                <div className="logo-fill-briefcase">
+                                  <i className="bi bi-briefcase-fill model-job-icons"></i>
+                                </div>
+                                <div className="contSect">
+                                  <span>
+                                    {item?.noOfJobsCompleted} Jobs Completed
+                                  </span>
+                                </div>
+                              </div>
+                            </>
+                          )}
+                          {item?.profession && (
+                            <>
+                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                <div className="logo-fill-briefcase">
+                                  <i className="bi bi-person-workspace model-job-icons"></i>
+                                </div>
+                                <div className="contSect">
+                                  <span>{item?.profession[0]?.value}</span>
+                                </div>
+                              </div>
+                            </>
+                          )}
+                          <span className="job-company_dtls nweAlign pt-2 d-flex">
+                            <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
+                            <span>
+                              {item?.childCity},{item?.parentState},{" "}
+                              {item?.parentCountry}{" "}
+                            </span>
+                          </span>
+                          {/* <div className="address">
                             {item.profession?.map((profession, index) => (
                               <React.Fragment key={index}>
                                 {profession.value}
@@ -973,7 +1039,7 @@ const Dashboard = () => {
                                 25 Projects Booked
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -982,11 +1048,13 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="find-more wraper">
-              <NavLink onClick={() => handleClick("find-talent")}>
-                <div className="moreBtn">Find More</div>
-              </NavLink>
-            </div>
+            {visibleCount < talentList.length && (
+              <div className="find-more wraper">
+                <div onClick={() => handleReadMore()} className="moreBtn">
+                  Find More
+                </div>
+              </div>
+            )}
           </div>
         </div>
         {/* {talentCount} */}
@@ -1081,7 +1149,7 @@ const Dashboard = () => {
                   <>
                     {featuredBlogsLsit?.map((item) => {
                       return (
-                        <div className="col-sm-6 col-md-4 col-lg-3">
+                        <div className="col-sm-6 col-md-4 col-lg-3 my-3">
                           <div
                             className="case-wrapper"
                             onClick={createHandleMenuClick(item)}
@@ -1112,13 +1180,9 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="container">
-            {!currentUserId && (
-              <NavLink onClick={() => handleClick("find-talent")}>
-                <div className="find-more wraper">
-                  <div className="moreBtn">Find More</div>
-                </div>
-              </NavLink>
-            )}
+            <div onClick={() => blogReadMore()} className="find-more wraper">
+              <div className="moreBtn">Read More</div>
+            </div>
           </div>
         </div>
 

@@ -721,20 +721,7 @@ const FindCreators = () => {
           "Other",
         ],
       },
-      {
-        label: "HairColour",
-        type: "select",
-        options: [
-          "Black",
-          "Brown",
-          "Blonde",
-          "Red",
-          "Grey",
-          "White",
-          "Auburn",
-          "Other",
-        ],
-      },
+
       {
         label: "Height",
         type: "select",
@@ -1269,6 +1256,8 @@ const FindCreators = () => {
                                             <span>
                                               {item?.averageStarRatings}
                                               &nbsp;
+                                              {item?.averageStarRatings ==
+                                                0 && <>ratings</>}
                                               {item?.averageStarRatings > 0 && (
                                                 <>
                                                   ( {item?.totalReviews}{" "}
@@ -1338,7 +1327,7 @@ const FindCreators = () => {
                                       </>
                                     )} */}
 
-                                    <span className="job-company_dtls nweAlign pt-1 d-flex">
+                                    <span className="job-company_dtls nweAlign pt-2 d-flex">
                                       <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
                                       <span>
                                         {item?.childCity},{item?.parentState},{" "}

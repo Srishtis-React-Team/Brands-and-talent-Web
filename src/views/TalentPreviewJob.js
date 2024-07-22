@@ -355,7 +355,9 @@ const TalentPreviewJob = (props) => {
                               )}
                               {value.product_name && value?.productValue && (
                                 <>
-                                  <span>(valued at {value?.productValue})</span>
+                                  <span>
+                                    ( valued at {value?.productValue} )
+                                  </span>
                                 </>
                               )}
                               {/* <p>
@@ -441,7 +443,14 @@ const TalentPreviewJob = (props) => {
                         <li className="job-features-li">
                           <span className="job-feature-heading">Gender :</span>
                           <span className="job-feature-values">
-                            {jobData?.gender}
+                            {jobData?.gender &&
+                              jobData.gender
+                                .map((gender, index) =>
+                                  index === jobData.gender.length - 1
+                                    ? gender
+                                    : gender + ", "
+                                )
+                                .join("")}
                           </span>
                         </li>
                       )}
@@ -468,7 +477,14 @@ const TalentPreviewJob = (props) => {
                             Nationality :
                           </span>
                           <span className="job-feature-values">
-                            {jobData?.nationality}
+                            {jobData?.nationality &&
+                              jobData.nationality
+                                .map((nationality, index) =>
+                                  index === jobData.nationality.length - 1
+                                    ? nationality
+                                    : nationality + ", "
+                                )
+                                .join("")}
                           </span>
                         </li>
                       )}

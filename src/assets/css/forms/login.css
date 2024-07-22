@@ -21,7 +21,7 @@
   text-align: center;
   padding-bottom: 20px;
   color: #000;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -38,7 +38,9 @@
   text-decoration: underline;
 }
 
-.login-logo, .forgot-logo, .reset-logo  {
+.login-logo,
+.forgot-logo,
+.reset-logo {
   position: absolute;
   background-color: #fff;
   top: -20px;
@@ -248,4 +250,4 @@
 .haAclf {
   display: inline-block;
   width: 94% !important;
-}/*# sourceMappingURL=login.css.map */
+} /*# sourceMappingURL=login.css.map */

@@ -157,59 +157,28 @@ const CreateJobs = () => {
 
   const updateJobFormDatas = (editData) => {
     // alert("updateJobFormDatas");
-    console.log(editData, "editDataupdateJobFormDatas");
     if (editData) {
+      console.log(editData, "editDataupdateJobFormDatas");
+      console.log(editData?.category, "editData?.category");
+      setCategory(editData?.category);
+      setEmploymentType(editData?.employmentType);
+      setLastdateApply(editData?.lastDateForApply);
+      setSkills(editData?.skills);
+      setMinAge(editData?.minAge);
+      setMaxAge(editData?.maxAge);
       setjobTitle(editData?.jobTitle);
       setAgeRange(editData?.age);
       setzipCode(editData?.jobLocation);
       setstreetAddress(editData?.streetAddress);
       setjobType(editData?.jobType);
       setGender(editData?.gender);
-      // setNationality(editData?.nationality);
-      const selectedOptions = editData?.languages.map((language) => {
-        return languageOptions.find((option) => option.label === language);
-      });
-      setSelectedLanguageOptions(selectedOptions);
-
-      const nationalityOptions = editData?.nationality.map((language) => {
-        return nationalityOptions.find((option) => option.label === language);
-      });
-      setSelectedNationalityOptions(nationalityOptions);
-
-      const genderUpdatedOptions = editData?.gender.map((gender) => {
-        return genderUpdatedOptions.find((option) => option.label === gender);
-      });
-      setSelectedGenderOptions(genderUpdatedOptions);
-
-      const dynamicKey = Object.keys(editData.compensation)[0];
-      const minPayValue = editData.compensation[dynamicKey].minPay;
-      setMinPay(minPayValue);
-
-      const maxPaydynamicKey = Object.keys(editData.compensation)[0];
-      const maxPayValue = editData.compensation[maxPaydynamicKey].maxPay;
-      setMaxPay(maxPayValue);
-
-      const currencydynamicKey = Object.keys(editData.compensation)[0];
-      const currencyValue = editData.compensation[currencydynamicKey].currency;
-      setCurrency(currencyValue);
-
-      const frequencydynamicKey = Object.keys(editData.compensation)[0];
-      const frequencyValue =
-        editData.compensation[frequencydynamicKey].frequency;
-      setfrequency(frequencyValue);
-
       setWhyWorkWithUs(editData?.whyWorkWithUs);
       setSelectedApplyOption(editData?.selectedApplyOption);
       setHiringCompany(editData?.hiringCompany);
-      setSkills(editData?.skills);
-      setMinAge(editData?.minAge);
-      setMaxAge(editData?.maxAge);
       setSelectedBenefits(editData?.benefits);
       setSelectedApplyOption(editData?.howLikeToApply);
       setPortofolioFile(editData?.workSamples);
       setJobCurrency(editData?.jobCurrency);
-      setLastdateApply(editData?.lastDateForApply);
-      setCategory(editData?.category);
       setInstaMin(editData?.instaMin);
       setInstaMax(editData?.instaMax);
       setTiktokMin(editData?.tikTokMin);
@@ -226,11 +195,44 @@ const CreateJobs = () => {
       setState(editData.state);
       getStates(editData.country);
       setKidsCity(editData.city);
+
+      const genderUpdatedOptions = editData?.gender.map((gender) => {
+        return gendersOptions.find((option) => option.label === gender);
+      });
+      console.log(genderUpdatedOptions, "genderUpdatedOptions");
+      setSelectedGenderOptions(genderUpdatedOptions);
+
+      const selectedOptions = editData?.languages.map((language) => {
+        return languageOptions.find((option) => option.label === language);
+      });
+      console.log(selectedOptions, "selectedOptions");
+
+      setSelectedLanguageOptions(selectedOptions);
+
+      const nationalityOptions = editData?.nationality.map((language) => {
+        return nationalitiesArray.find((option) => option.label === language);
+      });
+      setSelectedNationalityOptions(nationalityOptions);
+
+      const dynamicKey = Object.keys(editData.compensation)[0];
+      const minPayValue = editData.compensation[dynamicKey].minPay;
+      setMinPay(minPayValue);
+      const maxPaydynamicKey = Object.keys(editData.compensation)[0];
+      const maxPayValue = editData.compensation[maxPaydynamicKey].maxPay;
+      setMaxPay(maxPayValue);
+
+      const currencydynamicKey = Object.keys(editData.compensation)[0];
+      const currencyValue = editData.compensation[currencydynamicKey].currency;
+      setCurrency(currencyValue);
+
+      const frequencydynamicKey = Object.keys(editData.compensation)[0];
+      const frequencyValue =
+        editData.compensation[frequencydynamicKey].frequency;
+
       getCities({
         countryName: editData.country,
         stateName: editData.state,
       });
-      setEmploymentType(editData?.employmentType);
       if (editData?.questions && editData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editData?.questions);
@@ -250,14 +252,20 @@ const CreateJobs = () => {
         setValueUSD(
           editData?.compensation?.paid_collaboration_and_gift?.amount_value
         );
+        setExactPay(editData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editData?.compensation?.paid_collaboration?.frequency);
       } else if (editData?.compensation.hasOwnProperty("paid_collaboration")) {
         setCompensationChange("paid_collaboration");
         setType(editData?.compensation?.paid_collaboration?.type);
         setCurrency(editData?.compensation?.paid_collaboration?.currency);
+        setExactPay(editData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editData?.compensation?.paid_collaboration?.frequency);
       } else if (editData?.compensation.hasOwnProperty("product_gift")) {
         setCompensationChange("product_gift");
         setProductName(editData?.compensation?.product_gift?.product_name);
         setValueUSD(editData?.compensation?.product_gift?.amount_value);
+        setExactPay(editData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editData?.compensation?.paid_collaboration?.frequency);
       }
       if (editData?.paymentType?.label === "range") {
         setSelectedPaymentOption("range");
@@ -316,6 +324,7 @@ const CreateJobs = () => {
       );
       setEditorStateHowToApply(howToApplyDescription);
       setHowToApplyDescription(editData?.howToApplyDescription);
+      setfrequency(frequencyValue);
     }
   };
 
@@ -366,13 +375,13 @@ const CreateJobs = () => {
     console.log(editJobData, "editJobData duplicateJob");
     if (editJobData) {
       setSelectedTab("create-job");
+      setEmploymentType(editJobData?.employmentType);
       setjobTitle(editJobData?.jobTitle);
       setAgeRange(editJobData?.age);
       setzipCode(editJobData?.jobLocation);
       setstreetAddress(editJobData?.streetAddress);
       setjobType(editJobData?.jobType);
       setGender(editJobData?.gender);
-      // setNationality(editJobData?.nationality);
       setLastdateApply(editJobData?.lastDateForApply);
       setWhyWorkWithUs(editJobData?.whyWorkWithUs);
       setSelectedApplyOption(editJobData?.selectedApplyOption);
@@ -405,7 +414,6 @@ const CreateJobs = () => {
         countryName: editJobData?.country,
         stateName: editJobData?.state,
       });
-      setEmploymentType(editJobData?.employmentType);
       const selectedOptions = editJobData?.languages.map((language) => {
         return languageOptions.find((option) => option.label === language);
       });
@@ -631,7 +639,6 @@ const CreateJobs = () => {
   const [languageError, setLanguageError] = useState(false);
   const [addressError, setAddressError] = useState(false);
   const [parentLastNameError, setparentLastNameError] = useState(false);
-  const [zipCodeError, setzipCodeError] = useState(false);
   const [talentPasswordError, settalentPasswordError] = useState(false);
   const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
     false
@@ -923,7 +930,6 @@ const CreateJobs = () => {
   };
   // Function to handle email input change
   const handleEmailChange = (e) => {
-    setzipCodeError(false);
     const email = e.target.value;
     setzipCode(e.target.value);
     // Validate email using regex
@@ -1010,6 +1016,7 @@ const CreateJobs = () => {
   };
 
   const selectCategory = (event) => {
+    console.log(event.target.value, "selectCategory");
     setCategory(event.target.value);
     setCategoryError(false);
   };
@@ -1250,9 +1257,6 @@ const CreateJobs = () => {
     if (jobTitle === "") {
       setjobTitleError(true);
     }
-    if (zipCode === "") {
-      setzipCodeError(true);
-    }
 
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
@@ -1294,7 +1298,6 @@ const CreateJobs = () => {
 
     if (
       jobTitle !== "" &&
-      zipCode !== "" &&
       jobType !== "" &&
       skills !== "" &&
       country !== "" &&
@@ -1404,7 +1407,6 @@ const CreateJobs = () => {
     setIsLoading(true);
     console.log(
       jobTitle,
-      zipCode,
       jobType,
       skills,
       country,
@@ -1417,9 +1419,7 @@ const CreateJobs = () => {
     if (jobTitle === "") {
       setjobTitleError(true);
     }
-    if (zipCode === "") {
-      setzipCodeError(true);
-    }
+
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
     }
@@ -1442,7 +1442,6 @@ const CreateJobs = () => {
     }
     if (
       jobTitle !== "" &&
-      zipCode !== "" &&
       jobType !== "" &&
       skills !== "" &&
       country !== "" &&
@@ -1869,9 +1868,6 @@ const CreateJobs = () => {
     console.log(lastdateApply, "lastdateApply");
   }, [lastdateApply]);
   useEffect(() => {
-    console.log(categoryError, "categoryError");
-  }, [categoryError]);
-  useEffect(() => {
     console.log(category, "category");
   }, [category]);
 
@@ -2253,7 +2249,6 @@ const CreateJobs = () => {
                             Application Deadline
                             <span className="mandatory">*</span>
                           </label>
-
                           <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                               value={
@@ -2348,23 +2343,39 @@ const CreateJobs = () => {
                             <label className="form-label">Age Range</label>
                             <div className="creators-filter-select creator-age-wrapper splitterDiv">
                               <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Minimum Age"
+                                type="number"
+                                className="form-control "
                                 value={minAge}
                                 onChange={(e) => {
-                                  onMinChange(e);
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    onMinChange(e);
+                                  }
                                 }}
+                                placeholder="Minimum Age"
+                                min="0"
                               ></input>
 
                               <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Maximum Age"
+                                type="number"
+                                className="form-control "
                                 value={maxAge}
                                 onChange={(e) => {
-                                  onMaxChange(e);
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    onMaxChange(e);
+                                  }
                                 }}
+                                placeholder="Maximum Age"
+                                min="0"
                               ></input>
                             </div>
                             {/* <label className="form-label">
@@ -2515,23 +2526,39 @@ const CreateJobs = () => {
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={instaMin}
                                   onChange={(e) => {
-                                    onInstaMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onInstaMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={instaMax}
                                   onChange={(e) => {
-                                    onInstaMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onInstaMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2544,23 +2571,39 @@ const CreateJobs = () => {
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={tikTokMin}
                                   onChange={(e) => {
-                                    onTiktokMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onTiktokMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={tikTokMax}
                                   onChange={(e) => {
-                                    onTiktokMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onTiktokMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2573,23 +2616,39 @@ const CreateJobs = () => {
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={linkedInMin}
                                   onChange={(e) => {
-                                    onLinkedInMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onLinkedInMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={linkedInMax}
                                   onChange={(e) => {
-                                    onLinkedInMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onLinkedInMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2602,23 +2661,39 @@ const CreateJobs = () => {
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={fbMin}
                                   onChange={(e) => {
-                                    onFbMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onFbMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={fbMax}
                                   onChange={(e) => {
-                                    onFbMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onFbMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2631,23 +2706,39 @@ const CreateJobs = () => {
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={twitterMin}
                                   onChange={(e) => {
-                                    onTwitterMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onTwitterMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={twitterMax}
                                   onChange={(e) => {
-                                    onTwitterMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onTwitterMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2660,23 +2751,39 @@ const CreateJobs = () => {
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={youTubeMin}
                                   onChange={(e) => {
-                                    onYouTubeMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onYouTubeMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={youTubeMax}
                                   onChange={(e) => {
-                                    onYouTubeMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onYouTubeMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>

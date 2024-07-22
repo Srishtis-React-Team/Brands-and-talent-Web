@@ -54,7 +54,7 @@ const Blogs = () => {
   const image5 = require("../assets/images/blogs/blog5.png");
 
   useEffect(() => {
-    fetchBlogByType("Industry News & Insights");
+    fetchBlogByType("All");
   }, []);
 
   const [blogsLsit, setBlogsLsit] = useState([]);
@@ -76,20 +76,9 @@ const Blogs = () => {
   };
 
   const createHandleMenuClick = (blogData) => {
-    return () => {
-      navigate(`/view-blog`, {
-        state: { blogData },
-      });
-    };
-
-    // if (menuItem == "find-talent") {
-    //   setMessage("You need to sign Up as Brand to find talents");
-    //   setOpenPopUp(true);
-    //   setTimeout(function() {
-    //     setOpenPopUp(false);
-    //     navigate("/brand-firstGig");
-    //   }, 3000);
-    // }
+    navigate(`/view-blog`, {
+      state: { blogData },
+    });
   };
   const [blogStep, setBlogStep] = useState(0);
 
@@ -99,15 +88,30 @@ const Blogs = () => {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
-    if (recievedStep) {
+    if (recievedStep || recievedStep === 0) {
       setBlogStep(recievedStep);
     }
   }, [recievedStep]);
 
   useEffect(() => {
-    if (blogStep) {
+    if (blogStep || blogStep === 0) {
       console.log(blogStep, "blogStep");
       setValueTabs(blogStep);
+      if (blogStep === 0) {
+        fetchBlogByType("All");
+      } else if (blogStep === 1) {
+        fetchBlogByType("News & Announcements");
+      } else if (blogStep === 2) {
+        fetchBlogByType("Industry Insights");
+      } else if (blogStep === 3) {
+        fetchBlogByType("Interviews");
+      } else if (blogStep === 4) {
+        fetchBlogByType("Case Studies");
+      } else if (blogStep === 5) {
+        fetchBlogByType("Talent Tips & Tricks");
+      } else if (blogStep === 6) {
+        fetchBlogByType("Brand Tips & Tricks");
+      }
     }
   }, [blogStep]);
 
@@ -135,7 +139,6 @@ const Blogs = () => {
           </div>
         </div>
       </section>
-
       <section>
         <div className="blog_sliderBg">
           <div className="container">
@@ -149,39 +152,13 @@ const Blogs = () => {
             </div>
           </div>
         </div>
-        {/* <div className="blogs-tabs col-sm-4 col-md-3">
-          <div className="blogs-tabs-wrapper">
-            <div className="blogs-tab-text">Industry News & Insights</div>
-            <div
-              className="blogs-tab-text"
-              onClick={() => fetchBlogByType("case-studies")}
-            >
-              Case Studies
-            </div>
-            <div
-              className="blogs-tab-text"
-              onClick={() => fetchBlogByType("talent-stories")}
-            >
-              Talent Stories
-            </div>
-            <div
-              className="blogs-tab-text"
-              onClick={() => fetchBlogByType("talent-tips")}
-            >
-               Talent Tips & Tricks
-            </div>
-            <div
-              className="blogs-tab-text"
-              onClick={() => fetchBlogByType("brand-tips")}
-            >
-               Brand Tips & Tricks
-            </div>
-          </div>
-        </div> */}
 
-        <div className="container">
+        <div className="container-fluid">
           <Box sx={{ width: "100%" }}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Box
+              sx={{ borderBottom: 1, borderColor: "divider" }}
+              className="px-4"
+            >
               <Tabs
                 value={valueTabs}
                 onChange={handleChange}
@@ -199,371 +176,304 @@ const Blogs = () => {
                   label="News & Announcements"
                   {...a11yProps(1)}
                   style={{ textTransform: "capitalize" }}
-                  onClick={() => fetchBlogByType("news & announcements")}
+                  onClick={() => fetchBlogByType("News & Announcements")}
                 />
                 <Tab
-                  label="Industry News & Insights"
+                  label="Industry Insights"
                   {...a11yProps(2)}
                   style={{ textTransform: "capitalize" }}
-                  onClick={() => fetchBlogByType("Industry News & Insights")}
+                  onClick={() => fetchBlogByType("Industry Insights")}
                 />
                 <Tab
                   label="Interviews"
                   {...a11yProps(3)}
                   style={{ textTransform: "capitalize" }}
-                  onClick={() => fetchBlogByType("interview")}
+                  onClick={() => fetchBlogByType("Interviews")}
                 />
                 <Tab
                   label="Case Studies"
                   {...a11yProps(4)}
-                  onClick={() => fetchBlogByType("case-studies")}
+                  onClick={() => fetchBlogByType("Case Studies")}
                   style={{ textTransform: "capitalize" }}
-                />
-                <Tab
-                  label="Talent Stories"
-                  {...a11yProps(5)}
-                  style={{ textTransform: "capitalize" }}
-                  onClick={() => fetchBlogByType("talent-stories")}
                 />
                 <Tab
                   label="Talent Tips & Tricks"
-                  {...a11yProps(6)}
-                  onClick={() => fetchBlogByType("talent-tips")}
+                  {...a11yProps(5)}
+                  onClick={() => fetchBlogByType("Talent Tips & Tricks")}
                   style={{ textTransform: "capitalize" }}
                 />
                 <Tab
                   label="Brand Tips & Tricks"
-                  {...a11yProps(7)}
-                  onClick={() => fetchBlogByType("brand-tips")}
+                  {...a11yProps(6)}
+                  onClick={() => fetchBlogByType("Brand Tips & Tricks")}
                   style={{ textTransform: "capitalize" }}
                 />
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
-              <div className="">
-                <div className=" row">
-                  <div className="blog-contents col-sm-9 col-md-9">
-                    {blogsLsit && blogsLsit.length > 0 && (
-                      <div className="blog-card">
-                        {blogsLsit?.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className="blogs-wrapper"
-                                onClick={createHandleMenuClick(item)}
-                              >
-                                <div className="blogimg-bx">
-                                  <img
-                                    className="blogs-image"
-                                    src={`${API.userFilePath}${item.image}`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="blogs-content-wrapper">
-                                  <div className="blogs-subhead">
-                                    {item?.title}
-                                  </div>
-                                  <div className="blogs-heading">
-                                    {item?.heading}
-                                  </div>
-                                  <div className="blogs-description">
-                                    {item?.description}
-                                  </div>
-                                </div>
+              <div className="container-fluid">
+                <div className="row">
+                  {blogsLsit &&
+                    blogsLsit.length > 0 &&
+                    blogsLsit.map((item, index) => (
+                      <div
+                        className="blog-contents col-sm-12 col-md-6"
+                        key={index}
+                      >
+                        <div className="blog-card">
+                          <div
+                            className="blogs-wrapper"
+                            onClick={() => createHandleMenuClick(item)}
+                          >
+                            <div className="blogimg-bx">
+                              <img
+                                className="blogs-image"
+                                src={`${API.userFilePath}${item.image}`}
+                                alt=""
+                              />
+                            </div>
+                            <div className="blogs-content-wrapper">
+                              <div className="blogs-subhead">{item?.title}</div>
+                              <div className="blogs-heading">
+                                {item?.heading}
                               </div>
-                            </>
-                          );
-                        })}
+                              <div className="blogs-description">
+                                {item?.description}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
+                    ))}
                 </div>
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
-              <div className="container">
-                <div className=" row">
-                  <div className="blog-contents col-sm-9 col-md-9">
-                    {blogsLsit && blogsLsit.length > 0 && (
-                      <div className="blog-card">
-                        {blogsLsit?.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className="blogs-wrapper"
-                                onClick={createHandleMenuClick(item)}
-                              >
-                                <div className="blogimg-bx">
-                                  <img
-                                    className="blogs-image"
-                                    src={`${API.userFilePath}${item.image}`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="blogs-content-wrapper">
-                                  <div className="blogs-subhead">
-                                    {item?.title}
-                                  </div>
-                                  <div className="blogs-heading">
-                                    {item?.heading}
-                                  </div>
-                                  <div className="blogs-description">
-                                    {item?.description}
-                                  </div>
-                                </div>
+              <div className="container-fluid">
+                <div className="row">
+                  {blogsLsit &&
+                    blogsLsit.length > 0 &&
+                    blogsLsit.map((item, index) => (
+                      <div
+                        className="blog-contents col-sm-12 col-md-6"
+                        key={index}
+                      >
+                        <div className="blog-card">
+                          <div
+                            className="blogs-wrapper"
+                            onClick={() => createHandleMenuClick(item)}
+                          >
+                            <div className="blogimg-bx">
+                              <img
+                                className="blogs-image"
+                                src={`${API.userFilePath}${item.image}`}
+                                alt=""
+                              />
+                            </div>
+                            <div className="blogs-content-wrapper">
+                              <div className="blogs-subhead">{item?.title}</div>
+                              <div className="blogs-heading">
+                                {item?.heading}
                               </div>
-                            </>
-                          );
-                        })}
+                              <div className="blogs-description">
+                                {item?.description}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
+                    ))}
                 </div>
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
-              <div className="container">
-                <div className=" row">
-                  <div className="blog-contents col-sm-9 col-md-9">
-                    {blogsLsit && blogsLsit.length > 0 && (
-                      <div className="blog-card">
-                        {blogsLsit?.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className="blogs-wrapper"
-                                onClick={createHandleMenuClick(item)}
-                              >
-                                <div className="blogimg-bx">
-                                  <img
-                                    className="blogs-image"
-                                    src={`${API.userFilePath}${item.image}`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="blogs-content-wrapper">
-                                  <div className="blogs-subhead">
-                                    {item?.title}
-                                  </div>
-                                  <div className="blogs-heading">
-                                    {item?.heading}
-                                  </div>
-                                  <div className="blogs-description">
-                                    {item?.description}
-                                  </div>
-                                </div>
+              <div className="container-fluid">
+                <div className="row">
+                  {blogsLsit &&
+                    blogsLsit.length > 0 &&
+                    blogsLsit.map((item, index) => (
+                      <div
+                        className="blog-contents col-sm-12 col-md-6"
+                        key={index}
+                      >
+                        <div className="blog-card">
+                          <div
+                            className="blogs-wrapper"
+                            onClick={() => createHandleMenuClick(item)}
+                          >
+                            <div className="blogimg-bx">
+                              <img
+                                className="blogs-image"
+                                src={`${API.userFilePath}${item.image}`}
+                                alt=""
+                              />
+                            </div>
+                            <div className="blogs-content-wrapper">
+                              <div className="blogs-subhead">{item?.title}</div>
+                              <div className="blogs-heading">
+                                {item?.heading}
                               </div>
-                            </>
-                          );
-                        })}
+                              <div className="blogs-description">
+                                {item?.description}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
+                    ))}
                 </div>
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={3}>
-              <div className="container">
-                <div className=" row">
-                  <div className="blog-contents col-sm-9 col-md-9">
-                    {blogsLsit && blogsLsit.length > 0 && (
-                      <div className="blog-card">
-                        {blogsLsit?.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className="blogs-wrapper"
-                                onClick={createHandleMenuClick(item)}
-                              >
-                                <div className="blogimg-bx">
-                                  <img
-                                    className="blogs-image"
-                                    src={`${API.userFilePath}${item.image}`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="blogs-content-wrapper">
-                                  <div className="blogs-subhead">
-                                    {item?.title}
-                                  </div>
-                                  <div className="blogs-heading">
-                                    {item?.heading}
-                                  </div>
-                                  <div className="blogs-description">
-                                    {item?.description}
-                                  </div>
-                                </div>
+              <div className="container-fluid">
+                <div className="row">
+                  {blogsLsit &&
+                    blogsLsit.length > 0 &&
+                    blogsLsit.map((item, index) => (
+                      <div
+                        className="blog-contents col-sm-12 col-md-6"
+                        key={index}
+                      >
+                        <div className="blog-card">
+                          <div
+                            className="blogs-wrapper"
+                            onClick={() => createHandleMenuClick(item)}
+                          >
+                            <div className="blogimg-bx">
+                              <img
+                                className="blogs-image"
+                                src={`${API.userFilePath}${item.image}`}
+                                alt=""
+                              />
+                            </div>
+                            <div className="blogs-content-wrapper">
+                              <div className="blogs-subhead">{item?.title}</div>
+                              <div className="blogs-heading">
+                                {item?.heading}
                               </div>
-                            </>
-                          );
-                        })}
+                              <div className="blogs-description">
+                                {item?.description}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
+                    ))}
                 </div>
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={4}>
-              <div className="container">
-                <div className=" row">
-                  <div className="blog-contents col-sm-9 col-md-9">
-                    {blogsLsit && blogsLsit.length > 0 && (
-                      <div className="blog-card">
-                        {blogsLsit?.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className="blogs-wrapper"
-                                onClick={createHandleMenuClick(item)}
-                              >
-                                <div className="blogimg-bx">
-                                  <img
-                                    className="blogs-image"
-                                    src={`${API.userFilePath}${item.image}`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="blogs-content-wrapper">
-                                  <div className="blogs-subhead">
-                                    {item?.title}
-                                  </div>
-                                  <div className="blogs-heading">
-                                    {item?.heading}
-                                  </div>
-                                  <div className="blogs-description">
-                                    {item?.description}
-                                  </div>
-                                </div>
+              <div className="container-fluid">
+                <div className="row">
+                  {blogsLsit &&
+                    blogsLsit.length > 0 &&
+                    blogsLsit.map((item, index) => (
+                      <div
+                        className="blog-contents col-sm-12 col-md-6"
+                        key={index}
+                      >
+                        <div className="blog-card">
+                          <div
+                            className="blogs-wrapper"
+                            onClick={() => createHandleMenuClick(item)}
+                          >
+                            <div className="blogimg-bx">
+                              <img
+                                className="blogs-image"
+                                src={`${API.userFilePath}${item.image}`}
+                                alt=""
+                              />
+                            </div>
+                            <div className="blogs-content-wrapper">
+                              <div className="blogs-subhead">{item?.title}</div>
+                              <div className="blogs-heading">
+                                {item?.heading}
                               </div>
-                            </>
-                          );
-                        })}
+                              <div className="blogs-description">
+                                {item?.description}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
+                    ))}
                 </div>
               </div>
             </CustomTabPanel>
+
             <CustomTabPanel value={valueTabs} index={5}>
-              <div className="container">
-                <div className=" row">
-                  <div className="blog-contents col-sm-9 col-md-9">
-                    {blogsLsit && blogsLsit.length > 0 && (
-                      <div className="blog-card">
-                        {blogsLsit?.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className="blogs-wrapper"
-                                onClick={createHandleMenuClick(item)}
-                              >
-                                <div className="blogimg-bx">
-                                  <img
-                                    className="blogs-image"
-                                    src={`${API.userFilePath}${item.image}`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="blogs-content-wrapper">
-                                  <div className="blogs-subhead">
-                                    {item?.title}
-                                  </div>
-                                  <div className="blogs-heading">
-                                    {item?.heading}
-                                  </div>
-                                  <div className="blogs-description">
-                                    {item?.description}
-                                  </div>
-                                </div>
+              <div className="container-fluid">
+                <div className="row">
+                  {blogsLsit &&
+                    blogsLsit.length > 0 &&
+                    blogsLsit.map((item, index) => (
+                      <div
+                        className="blog-contents col-sm-12 col-md-6"
+                        key={index}
+                      >
+                        <div className="blog-card">
+                          <div
+                            className="blogs-wrapper"
+                            onClick={() => createHandleMenuClick(item)}
+                          >
+                            <div className="blogimg-bx">
+                              <img
+                                className="blogs-image"
+                                src={`${API.userFilePath}${item.image}`}
+                                alt=""
+                              />
+                            </div>
+                            <div className="blogs-content-wrapper">
+                              <div className="blogs-subhead">{item?.title}</div>
+                              <div className="blogs-heading">
+                                {item?.heading}
                               </div>
-                            </>
-                          );
-                        })}
+                              <div className="blogs-description">
+                                {item?.description}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
+                    ))}
                 </div>
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={6}>
-              <div className="container">
-                <div className=" row">
-                  <div className="blog-contents col-sm-9 col-md-9">
-                    {blogsLsit && blogsLsit.length > 0 && (
-                      <div className="blog-card">
-                        {blogsLsit?.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className="blogs-wrapper"
-                                onClick={createHandleMenuClick(item)}
-                              >
-                                <div className="blogimg-bx">
-                                  <img
-                                    className="blogs-image"
-                                    src={`${API.userFilePath}${item.image}`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="blogs-content-wrapper">
-                                  <div className="blogs-subhead">
-                                    {item?.title}
-                                  </div>
-                                  <div className="blogs-heading">
-                                    {item?.heading}
-                                  </div>
-                                  <div className="blogs-description">
-                                    {item?.description}
-                                  </div>
-                                </div>
+              <div className="container-fluid">
+                <div className="row">
+                  {blogsLsit &&
+                    blogsLsit.length > 0 &&
+                    blogsLsit.map((item, index) => (
+                      <div
+                        className="blog-contents col-sm-12 col-md-6"
+                        key={index}
+                      >
+                        <div className="blog-card">
+                          <div
+                            className="blogs-wrapper"
+                            onClick={() => createHandleMenuClick(item)}
+                          >
+                            <div className="blogimg-bx">
+                              <img
+                                className="blogs-image"
+                                src={`${API.userFilePath}${item.image}`}
+                                alt=""
+                              />
+                            </div>
+                            <div className="blogs-content-wrapper">
+                              <div className="blogs-subhead">{item?.title}</div>
+                              <div className="blogs-heading">
+                                {item?.heading}
                               </div>
-                            </>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={7}>
-              <div className="container">
-                <div className=" row">
-                  <div className="blog-contents col-sm-9 col-md-9">
-                    {blogsLsit && blogsLsit.length > 0 && (
-                      <div className="blog-card">
-                        {blogsLsit?.map((item, index) => {
-                          return (
-                            <>
-                              <div
-                                className="blogs-wrapper"
-                                onClick={createHandleMenuClick(item)}
-                              >
-                                <div className="blogimg-bx">
-                                  <img
-                                    className="blogs-image"
-                                    src={`${API.userFilePath}${item.image}`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="blogs-content-wrapper">
-                                  <div className="blogs-subhead">
-                                    {item?.title}
-                                  </div>
-                                  <div className="blogs-heading">
-                                    {item?.heading}
-                                  </div>
-                                  <div className="blogs-description">
-                                    {item?.description}
-                                  </div>
-                                </div>
+                              <div className="blogs-description">
+                                {item?.description}
                               </div>
-                            </>
-                          );
-                        })}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
+                    ))}
                 </div>
               </div>
             </CustomTabPanel>

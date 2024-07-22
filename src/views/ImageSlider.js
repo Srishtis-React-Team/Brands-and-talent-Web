@@ -44,8 +44,8 @@ const ImageSlider = ({ images, open, initialIndex, handleClose }) => {
           transform: "translate(-50%, -50%)",
           bgcolor: "background.paper",
           boxShadow: 24,
-          height: "500px",
-          widows: "500px",
+          height: "100%",
+          widows: "100%",
           paddingTop: "50px",
           paddingBottom: "50px",
           paddingRight: "50px",
@@ -61,7 +61,7 @@ const ImageSlider = ({ images, open, initialIndex, handleClose }) => {
         <img
           src={`${API.userFilePath}${images[currentIndex]}`}
           alt=""
-          style={{ width: "400px", height: "400px" }}
+          style={{ width: "100%", height: "100%" }}
         />
         <IconButton
           sx={{ position: "absolute", top: "50%", left: 8 }}
