@@ -788,6 +788,10 @@ const AdultFormOne = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(maritalStatus, "maritalStatus");
+  }, [maritalStatus]);
+
   return (
     <>
       <>

@@ -168,12 +168,12 @@ const KidsformOne = ({ sendDataToParent }) => {
     control: (provided, state) => ({
       ...provided,
       minHeight: "45px",
-      zIndex: 1, // Ensure the control is above other elements
+      // zIndex: 1, // Ensure the control is above other elements
     }),
     menu: (provided, state) => ({
       ...provided,
       maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 1, // Ensure the menu appears above other elements
+      // zIndex: 1, // Ensure the menu appears above other elements
     }),
     menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensure menu portal appears above other elements
   };
@@ -253,6 +253,7 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const handleJobsCompleted = (event) => {
     setCompletedJobs(event.target.value);
+    console.log(event.target.value, "handleJobsCompleted");
     setJobsCompletedError(false);
   };
 
@@ -1796,13 +1797,21 @@ const KidsformOne = ({ sendDataToParent }) => {
                           <span className="mandatory">*</span>
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           className="form-control"
                           value={completedJobs}
                           onChange={(e) => {
-                            handleJobsCompleted(e);
-                            setJobsCompletedError(false);
+                            const value = e.target.value;
+                            // Check if the value is a valid number and is non-negative
+                            if (
+                              /^\d*\.?\d*$/.test(value) &&
+                              (value >= 0 || value === "")
+                            ) {
+                              handleJobsCompleted(e);
+                              setJobsCompletedError(false);
+                            }
                           }}
+                          min="0"
                           placeholder="Enter number of jobs/client projects  you’ve completed till now"
                         ></input>
                         {completedError && (

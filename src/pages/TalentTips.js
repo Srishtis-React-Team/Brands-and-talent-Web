@@ -49,7 +49,7 @@ const TalentTips = () => {
                   className="blogs-tab-text"
                   onClick={() => navigateTO("industry-news")}
                 >
-                  Industry News & Insights
+                  Industry Insights
                 </div>
                 <div
                   className="blogs-tab-text"

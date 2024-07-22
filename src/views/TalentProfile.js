@@ -1135,7 +1135,7 @@ const TalentProfile = () => {
                             )}
                             {photosList.length === 0 && (
                               <>
-                                <div>No Photos Available</div>
+                                <div>Data not added</div>
                               </>
                             )}
                           </div>
@@ -1367,7 +1367,7 @@ const TalentProfile = () => {
                               })}
                             {photosList.length === 0 && (
                               <>
-                                <div>No Photos Available</div>
+                                <div>Data not added</div>
                               </>
                             )}
                           </section>
@@ -1414,56 +1414,64 @@ const TalentProfile = () => {
                           ))} */}
 
                           <div className="service-list-main w-100">
-                            {urlsList.map((url, index) => (
-                              <div key={index} className="media-item">
-                                {isYouTubeUrl(url) ? (
-                                  <iframe
-                                    src={getYouTubeEmbedUrl(url)}
-                                    title={`youtube-video-${index}`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    className="video-frame"
-                                  ></iframe>
-                                ) : isVimeoUrl(url) ? (
-                                  <iframe
-                                    src={getVimeoEmbedUrl(url)}
-                                    title={`vimeo-video-${index}`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    className="video-frame"
-                                  ></iframe>
-                                ) : isVideoUrl(url) ? (
-                                  <video
-                                    controls
-                                    src={url}
-                                    className="video-frame"
-                                  >
-                                    Your browser does not support the video tag.
-                                  </video>
-                                ) : isAudioUrl(url) ? (
-                                  <audio
-                                    controls
-                                    src={url}
-                                    className="audio-player"
-                                  >
-                                    Your browser does not support the audio
-                                    element.
-                                  </audio>
-                                ) : (
-                                  <div className="unsupported-media">
-                                    Unsupported media type
+                            <div className="row">
+                              {urlsList.map((url, index) => (
+                                <div key={index} className="col-md-6 mb-4">
+                                  <div className="media-item">
+                                    {isYouTubeUrl(url) ? (
+                                      <iframe
+                                        src={getYouTubeEmbedUrl(url)}
+                                        title={`youtube-video-${index}`}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        className="video-frame w-100"
+                                        style={{ height: "300px" }}
+                                      ></iframe>
+                                    ) : isVimeoUrl(url) ? (
+                                      <iframe
+                                        src={getVimeoEmbedUrl(url)}
+                                        title={`vimeo-video-${index}`}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        className="video-frame w-100"
+                                        style={{ height: "300px" }}
+                                      ></iframe>
+                                    ) : isVideoUrl(url) ? (
+                                      <video
+                                        controls
+                                        src={url}
+                                        className="video-frame w-100"
+                                        style={{ height: "300px" }}
+                                      >
+                                        Your browser does not support the video
+                                        tag.
+                                      </video>
+                                    ) : isAudioUrl(url) ? (
+                                      <audio
+                                        controls
+                                        src={url}
+                                        className="audio-player w-100"
+                                      >
+                                        Your browser does not support the audio
+                                        element.
+                                      </audio>
+                                    ) : (
+                                      <div className="unsupported-media">
+                                        Unsupported media type
+                                      </div>
+                                    )}
                                   </div>
-                                )}
-                              </div>
-                            ))}
+                                </div>
+                              ))}
 
-                            {urlsList.length === 0 && (
-                              <>
-                                <div>No Video/Audio Available</div>
-                              </>
-                            )}
+                              {urlsList.length === 0 && (
+                                <div className="col-12">
+                                  <div>Data not added</div>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
                       )}
@@ -1521,7 +1529,7 @@ const TalentProfile = () => {
                             </table>
                             {featuresList.length === 0 && (
                               <>
-                                <div>No Features Available</div>
+                                <div>Data not added</div>
                               </>
                             )}
                           </div>
@@ -1559,7 +1567,7 @@ const TalentProfile = () => {
                           })}
                           {cvList.length === 0 && (
                             <>
-                              <div>No CV Available</div>
+                              <div>Data not added</div>
                             </>
                           )}
                         </div>
@@ -1619,7 +1627,7 @@ const TalentProfile = () => {
                       )}
                       {reviews && !reviewsList.length && (
                         <>
-                          <div>No Reviews Available</div>
+                          <div>Data not added</div>
                         </>
                       )}
                     </div>

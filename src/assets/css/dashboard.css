@@ -1806,7 +1806,7 @@ input[type="radio"] {
   right: 0 !important;
   left: inherit !important;
   transform: translate(0px, 22px) !important;
-  top: 0 !important;
+  top: -3px !important;
 }
 .headerDashboard ul.blogs-menu,
 .header ul.blogs-menu {
@@ -2874,27 +2874,6 @@ head .profile-image-header {
   width: 100%;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 430px) {
   .gallery-wrapper {
     width: 47%;
@@ -2926,7 +2905,7 @@ head .profile-image-header {
 
   .nav-link {
     color: #000;
-    font-size: 16px;
+    font-size: 14px;
     padding: 0;
   }
   .nav-link:hover {

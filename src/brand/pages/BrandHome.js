@@ -236,9 +236,13 @@ const BrandHome = () => {
               </div>
               <div className="brand-home-title-flex">
                 <div className="kids-title pb-2">Most Recent Campaigns</div>
-                <div className="view-all-text" onClick={listJob}>
-                  View All
-                </div>
+                {jobsList && (
+                  <>
+                    <div className="view-all-text" onClick={listJob}>
+                      View All
+                    </div>
+                  </>
+                )}
               </div>
               {!jobsList && (
                 <>
@@ -315,7 +319,6 @@ const BrandHome = () => {
                             <span className="job-company-name">
                               <i className="bi bi-person-workspace"></i>
                             </span>{" "}
-                            <i className="bi bi-dot"></i>
                             <span className="job-company-name">
                               {jobsList?.jobType}
                             </span>
@@ -448,14 +451,20 @@ const BrandHome = () => {
                       </>
                     )}
                   </div>
-                  <div
-                    className="contact-btn"
-                    onClick={() => {
-                      navigate("/pricing");
-                    }}
-                  >
-                    Upgrade Now
-                  </div>
+                  {brandData?.planName !== "Premium" && (
+                    <div
+                      className="contact-btn"
+                      onClick={() => {
+                        navigate("/pricing");
+                      }}
+                    >
+                      {brandData?.planName === "Basic"
+                        ? "Upgrade to Pro/Premium"
+                        : brandData?.planName === "Pro"
+                        ? "Upgrade to Premium"
+                        : ""}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -114,12 +114,17 @@ const AdultFormThree = () => {
   useEffect(() => {
     console.log(updateDisabled, "updateDisabled");
   }, [updateDisabled]);
+  useEffect(() => {
+    console.log(featuresList, "featuresList");
+  }, [featuresList]);
 
   const getFeatures = async () => {
     await ApiHelper.get(API.getFeatures)
       .then((resData) => {
         if (resData) {
+          console.log(resData.data.data[0]["features"], "resData");
           setFeaturesList(resData.data.data[0].features);
+          console.log(resData.data.data[0].features, "setFeaturesList");
         }
       })
       .catch((err) => {});
@@ -602,12 +607,13 @@ const AdultFormThree = () => {
       },
     })
       .then((resData) => {
+        console.log(resData, "resDatasetVerificationID");
         setMessage(resData.data.message);
         let fileObj = {
           id: resData.data.data.fileId,
           title: fileData.name,
           fileData: resData.data.data.filename,
-          type: getFileType(fileData.type),
+          type: resData.data.data.filetype,
         };
         setVerificationID((prevFiles) => [...prevFiles, fileObj]);
         setOpenPopUp(true);
@@ -671,10 +677,8 @@ const AdultFormThree = () => {
       Pro: 5,
       Premium: Infinity, // Unlimited URLs
     };
-
     const userPlan = talentData?.planName;
     const maxUrls = planLimits[userPlan] || 0;
-
     if (urls.length >= maxUrls) {
       setMessage(
         `You can only add up to ${maxUrls} URLs as a ${userPlan} member.`
@@ -710,6 +714,10 @@ const AdultFormThree = () => {
     console.log(editorState, "editorStateRichText");
     setAboutYou(editorState);
   };
+
+  useEffect(() => {
+    console.log(verificationID, "verificationID");
+  }, [verificationID]);
 
   return (
     <>
@@ -861,7 +869,7 @@ const AdultFormThree = () => {
                       }}
                     /> */}
                     <RichTextEditor
-                      value={editorState}
+                      value={aboutYou}
                       onChange={(editorState) =>
                         handleEditorStateChange(editorState)
                       }
@@ -1292,9 +1300,9 @@ const AdultFormThree = () => {
                                       }
                                     >
                                       <option value="" disabled selected>
-                                        {item.label}
+                                        {item?.label}
                                       </option>
-                                      {item.options.map((option, idx) => (
+                                      {item?.options?.map((option, idx) => (
                                         <option key={idx} value={option}>
                                           {option}
                                         </option>
@@ -1318,7 +1326,7 @@ const AdultFormThree = () => {
                     Verified Talent! Submit your government-issued ID to get a
                     blue verification sticker on your profile. Your ID will be
                     permanently deleted from our database immediately after
-                    verification, ensuring your data privacy. Stand out and
+                    verification, ensuring your data privacy.
                   </div>
 
                   <div className="kids-form-row mb-5">
@@ -1370,12 +1378,19 @@ const AdultFormThree = () => {
                         style={{ marginBottom: "80px" }}
                       >
                         <div className="file-section">
-                          {verificationID.type === "image" && (
+                          {verificationID[0].type === "image" && (
                             <div className="fileType">
                               <img src={imageType} alt="" />
                             </div>
                           )}
-                          <div className="fileName">{verificationID.title}</div>
+                          {verificationID[0].type === "document" && (
+                            <div className="fileType">
+                              <img src={docsIcon} alt="" />
+                            </div>
+                          )}
+                          <div className="fileName">
+                            {verificationID[0].title}
+                          </div>
                         </div>
                         <div className="file-options">
                           <div className="sucess-tick">

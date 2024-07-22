@@ -70,6 +70,7 @@ const Footer = (props) => {
       clear();
       await ApiHelper.post(API.subscriptionStatus, formData)
         .then((resData) => {
+          console.log(resData, "resData");
           if (resData.data.status === true) {
             setMessage("Subscribed SuccessFully! Check Your Email Inbox");
             setOpenPopUp(true);
@@ -77,11 +78,11 @@ const Footer = (props) => {
               setOpenPopUp(false);
             }, 1000);
           } else if (resData.data.status === false) {
-            setMessage(resData.data.message);
+            setMessage(resData.data.msg);
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
-            }, 1000);
+            }, 2000);
           }
         })
         .catch((err) => {
@@ -311,11 +312,11 @@ const Footer = (props) => {
                   </>
                 )}
 
-                <li>
+                {/* <li>
                   <Link to="/resources" onClick={handleClick}>
                     BT Store
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
 
@@ -327,10 +328,14 @@ const Footer = (props) => {
               </h6>
               <ul className="footerLinks">
                 <li onClick={() => handleClickBlogs(0)}>
-                  Industry news and insights
+                  <a href=""> Industry news and insights</a>
                 </li>
-                <li onClick={() => handleClickBlogs(1)}>Case studies</li>
-                <li onClick={() => handleClickBlogs(2)}>Talent stories</li>
+                <li onClick={() => handleClickBlogs(1)}>
+                  <a href=""> Case studies</a>
+                </li>
+                <li onClick={() => handleClickBlogs(2)}>
+                  <a href="">Interviews</a>
+                </li>
               </ul>
             </div>
             <div className="footer-wrapper col-md-4 col-lg-2">

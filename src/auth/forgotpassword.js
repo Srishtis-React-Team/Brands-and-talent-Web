@@ -67,6 +67,13 @@ const ForgotPassword = () => {
             userType = "Kids";
           }
         }
+        if (resData.data.status === false) {
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+          }, 2000);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -243,8 +250,9 @@ const ForgotPassword = () => {
           </div>
           <div className="otp-title">Forgot Password</div>
           <div className="forgot-info">
-            Please enter your email , we will send verification code to your
-            email.
+            Please provide the email address that you used while registering
+            with Brands & Talent. <br /> We will send you an Email containing
+            your password information
           </div>
           <div className="mb-3 login-input-containers">
             <label className="form-label">Email</label>
@@ -274,7 +282,6 @@ const ForgotPassword = () => {
             If you didn’t receive a code? <span>Resend</span>
           </div>
         </div>
-        
       </div>
       {openPopUp && <PopUp message={message} />}
     </>

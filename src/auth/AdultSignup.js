@@ -183,7 +183,7 @@ const AdultSignup = () => {
       }, 1000);
     }
     if (!passwordMatch) {
-      setMessage("Please Update All Required Fields");
+      setMessage("Password did not match");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);

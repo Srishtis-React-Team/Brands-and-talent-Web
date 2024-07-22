@@ -98,7 +98,7 @@ const ServicesCarousel = ({ talentData }) => {
                     </div>
                     <div className="service-list-content col-md-8">
                       <div className="starting-amount">
-                        {item?.serviceAmount} USD
+                        USD {item?.serviceAmount}
                       </div>
                       <div className="service-title">{item?.serviceName}</div>
                       <div
@@ -108,7 +108,6 @@ const ServicesCarousel = ({ talentData }) => {
                       <div className="text-btm">
                         <div className="service-duration">
                           <div>{item?.serviceDuration}</div>
-                          <div>3 Concepts, 2 Revisions</div>
                         </div>
                         <div
                           onClick={() => messageNow()}

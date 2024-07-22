@@ -258,7 +258,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
                               )}
                               {value.product_name && value?.productValue && (
                                 <>
-                                  <span>(valued at {value?.productValue})</span>
+                                  <span>
+                                    ( valued at {value?.productValue} )
+                                  </span>
                                 </>
                               )}
                               {/* <p>
@@ -347,7 +349,14 @@ const PreviewJob = ({ data, onButtonClick }) => {
                               Gender :
                             </span>
                             <span className="job-feature-values">
-                              {jobData?.gender}
+                              {jobData?.gender &&
+                                jobData.gender
+                                  .map((gender, index) =>
+                                    index === jobData.gender.length - 1
+                                      ? gender
+                                      : gender + ", "
+                                  )
+                                  .join("")}
                             </span>
                           </li>
                         )}
@@ -374,7 +383,14 @@ const PreviewJob = ({ data, onButtonClick }) => {
                               Nationality :
                             </span>
                             <span className="job-feature-values">
-                              {jobData?.nationality}
+                              {jobData?.nationality &&
+                                jobData.nationality
+                                  .map((nationality, index) =>
+                                    index === jobData.nationality.length - 1
+                                      ? nationality
+                                      : nationality + ", "
+                                  )
+                                  .join("")}
                             </span>
                           </li>
                         )}
