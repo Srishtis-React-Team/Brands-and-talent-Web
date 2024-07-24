@@ -564,8 +564,14 @@ const CreateJobs = () => {
     // );
     // setEditorStateHowToApply(howToApplyDescription);
     // setHowToApplyDescription(initialHowToApply);
+
+    // let initialHowToApply = [
+    //   `<p>Interested candidates should submit their resume and a link that contains portfolio
+    //    from Brands and Talent website to <a href="mailto:${brandData?.brandEmail}">${brandData?.brandEmail}</a>.
+    //    Please include ${jobTitle} in the subject line.</p>\n`,
+    // ];
     let initialHowToApply = [
-      `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands and Talent website to <a href="mailto:${brandData?.brandEmail}">${brandData?.brandEmail}</a>. Please include ${jobTitle} in the subject line.</p>\n`,
+      `<p>Interested candidates should submit their resume and a link of their brandsandtalent.com profile/portfolio to ${brandData?.brandEmail}. Please include${jobTitle} in the subject line</p>\n`,
     ];
 
     const whyWorkWithUsContent = initialHowToApply[0];
@@ -1082,65 +1088,70 @@ const CreateJobs = () => {
 
   const professionList = [
     { value: "Actor", label: "Actor" },
-    { value: "Artist", label: "Artist" },
-    { value: "Creator", label: "Creator" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Influencer", label: "Influencer" },
-    { value: "Model", label: "Model" },
-    { value: "Event Planner", label: "Event Planner" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Nail Artist", label: "Nail Artist" },
-    { value: "Tattooist", label: "Tattooist" },
-    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Swimming Instructor", label: "Swimming Instructor" },
-    { value: "Driving Instructor", label: "Driving Instructor" },
-    { value: "Meditation Teacher", label: "Meditation Teacher" },
-    { value: "Yoga Instructor", label: "Yoga Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Music Teacher", label: "Music Teacher" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Craftsperson", label: "Craftsperson" },
-    { value: "Sculptor", label: "Sculptor" },
-    { value: "Curator", label: "Curator" },
-    { value: "Singer", label: "Singer" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Musician", label: "Musician" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "Cinematographer", label: "Cinematographer" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "DJ", label: "DJ" },
-    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
-    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
-    { value: "Writer", label: "Writer" },
-    { value: "Copywriter", label: "Copywriter" },
-    { value: "Cartoonist", label: "Cartoonist" },
-    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
-    { value: "Podcaster", label: "Podcaster" },
-    { value: "Host/MC", label: "Host/MC" },
-    { value: "Voice-over Artist", label: "Voice-over Artist" },
-    { value: "Comedian", label: "Comedian" },
-    { value: "Public Speaker", label: "Public Speaker" },
-    { value: "Life Coach", label: "Life Coach" },
-    { value: "Career Coach", label: "Career Coach" },
-    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
-    { value: "Interior Designer", label: "Interior Designer" },
-    { value: "Illustrator", label: "Illustrator" },
     { value: "Animator", label: "Animator" },
+    { value: "Architect ", label: "Architect " },
+    { value: "Artist", label: "Artist" },
+    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
     { value: "Blockchain Developer", label: "Blockchain Developer" },
+    { value: "Career Coach", label: "Career Coach" },
+    { value: "Cartoonist", label: "Cartoonist" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Cinematographer", label: "Cinematographer" },
+    { value: "Comedian", label: "Comedian" },
+    { value: "Copywriter", label: "Copywriter" },
+    { value: "Craftsperson", label: "Craftsperson" },
+    { value: "Creator", label: "Creator" },
+    { value: "Curator", label: "Curator" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Dancer", label: "Dancer" },
+    { value: "Designer ", label: "Designer " },
+    { value: "Dietitian ", label: "Dietitian " },
+    { value: "DJ", label: "DJ" },
+    { value: "Driving Instructor", label: "Driving Instructor" },
+    { value: "Event Planner", label: "Event Planner" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Host/MC", label: "Host/MC" },
+    { value: "Illustrator", label: "Illustrator" },
+    { value: "Influencer", label: "Influencer" },
+    { value: "Interior Designer", label: "Interior Designer" },
+    { value: "Life Coach", label: "Life Coach" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Meditation Teacher", label: "Meditation Teacher" },
+    { value: "Model", label: "Model" },
+    { value: "Music Teacher", label: "Music Teacher" },
+    { value: "Musician", label: "Musician" },
+    { value: "Nail Artist", label: "Nail Artist" },
+    { value: "Nutritionist ", label: "Nutritionist " },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Photographer", label: "Photographer" },
+    { value: "Podcaster", label: "Podcaster" },
+    { value: "Public Speaker", label: "Public Speaker" },
+    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
+    { value: "Singer", label: "Singer" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Sculptor", label: "Sculptor" },
+    { value: "Stylist", label: "Stylist" },
+    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
+    { value: "Swimming Instructor", label: "Swimming Instructor" },
+    { value: "Tattooist", label: "Tattooist" },
+    { value: "Videographer", label: "Videographer" },
+    { value: "Voice-over Artist", label: "Voice-over Artist" },
+    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
+    { value: "Wedding Planner", label: "Wedding Planner" },
+    { value: "Writer", label: "Writer" },
+    { value: "Yoga Instructor", label: "Yoga Instructor" },
+    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
   ];
 
   const gendersOptions = [
     { value: "Man", label: "Man" },
     { value: "Woman", label: "Woman" },
-    { value: "Non binary", label: "Non binary" },
+    { value: "Non-binary", label: "Non-binary" },
     { value: "Transgender Woman", label: "Transgender Woman" },
     { value: "Transgender Man", label: "Transgender Man" },
     { value: "Agender", label: "Agender" },
@@ -1790,59 +1801,63 @@ const CreateJobs = () => {
 
   const skillsListing = [
     { title: "Actor" },
-    { title: "Artist" },
-    { title: "Creator" },
-    { title: "Celebrity" },
-    { title: "Influencer" },
-    { title: "Model" },
-    { title: "Event Planner" },
-    { title: "Stylist" },
-    { title: "Hair & Makeup Artist" },
-    { title: "Nail Artist" },
-    { title: "Tattooist" },
-    { title: "Chef/Culinary Artist" },
-    { title: "Personal Trainer" },
-    { title: "Swimming Instructor" },
-    { title: "Driving Instructor" },
-    { title: "Meditation Teacher" },
-    { title: "Yoga Instructor" },
-    { title: "Dance Teacher" },
-    { title: "Music Teacher" },
-    { title: "Sports Instructor" },
-    { title: "Martial Arts Instructor" },
-    { title: "Craftsperson" },
-    { title: "Sculptor" },
-    { title: "Curator" },
-    { title: "Singer" },
-    { title: "Dancer" },
-    { title: "Choreographer" },
-    { title: "Musician" },
-    { title: "Filmmaker" },
-    { title: "Cinematographer" },
-    { title: "Photographer" },
-    { title: "Videographer" },
-    { title: "DJ" },
-    { title: "Video Jockey (VJ)" },
-    { title: "Radio Jockey (RJ)" },
-    { title: "Writer" },
-    { title: "Copywriter" },
-    { title: "Cartoonist" },
-    { title: "Blogger/Vlogger" },
-    { title: "Podcaster" },
-    { title: "Host/MC" },
-    { title: "Voice-over Artist" },
-    { title: "Comedian" },
-    { title: "Public Speaker" },
-    { title: "Life Coach" },
-    { title: "Career Coach" },
-    { title: "Sustainability Consultant" },
-    { title: "Fashion Designer" },
-    { title: "Graphic Designer" },
-    { title: "Web Designer/Developer" },
-    { title: "Interior Designer" },
-    { title: "Illustrator" },
     { title: "Animator" },
-    { title: "Blockchain Developer" },
+    { title: "Architect " },
+    { title: "Artist" },
+    { title: "Blogger/Vlogger" },
+    { title: "Career Coach" },
+    { title: "Cartoonist" },
+    { title: "Celebrity" },
+    { title: "Chef/Culinary Artist" },
+    { title: "Choreographer" },
+    { title: "Cinematographer" },
+    { title: "Comedian" },
+    { title: "Copywriter" },
+    { title: "Craftsperson" },
+    { title: "Creator" },
+    { title: "Curator" },
+    { title: "Dance Teacher" },
+    { title: "Dancer" },
+    { title: "Designer " },
+    { title: "Dietitian " },
+    { title: "DJ" },
+    { title: "Driving Instructor" },
+    { title: "Event Planner" },
+    { title: "Fashion Designer" },
+    { title: "Filmmaker" },
+    { title: "Graphic Designer" },
+    { title: "Hair & Makeup Artist" },
+    { title: "Host/MC" },
+    { title: "Illustrator" },
+    { title: "Influencer" },
+    { title: "Interior Designer" },
+    { title: "Life Coach" },
+    { title: "Martial Arts Instructor" },
+    { title: "Meditation Teacher" },
+    { title: "Model" },
+    { title: "Music Teacher" },
+    { title: "Musician" },
+    { title: "Nail Artist" },
+    { title: "Nutritionist " },
+    { title: "Personal Trainer" },
+    { title: "Photographer" },
+    { title: "Podcaster" },
+    { title: "Public Speaker" },
+    { title: "Radio Jockey (RJ)" },
+    { title: "Sculptor" },
+    { title: "Singer" },
+    { title: "Sports Instructor" },
+    { title: "Stylist" },
+    { title: "Sustainability Consultant" },
+    { title: "Swimming Instructor" },
+    { title: "Tattooist" },
+    { title: "Voice-over Artist" },
+    { title: "Web Designer/Developer" },
+    { title: "Wedding Planner" },
+    { title: "Writer" },
+    { title: "Yoga Instructor" },
+    { title: "Video Jockey (VJ)" },
+    { title: "Videographer" },
   ];
 
   console.log(skillInputValue, "skillInputValue");
@@ -2168,14 +2183,14 @@ const CreateJobs = () => {
                             <option value="" disabled selected>
                               Select Job Type
                             </option>
-                            <option value="onsite" defaultValue>
-                              On Site
+                            <option value="On site" defaultValue>
+                              On site
                             </option>
-                            <option value="remote">Remote</option>
-                            <option value="Work From Anywhere">
-                              Work From Anywhere
+                            <option value="Remote">Remote</option>
+                            <option value="Work from anywhere">
+                              Work from anywhere
                             </option>
-                            <option value="hybrid">Hybrid</option>
+                            <option value="Hybrid">Hybrid</option>
                           </select>
                           {jobTypeError && (
                             <div className="invalid-fields">
@@ -2267,7 +2282,7 @@ const CreateJobs = () => {
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
                           <label className="form-label mb-2">
-                            Profession/Skills (optional)
+                            Profession/Skills
                             <span className="mandatory">*</span>
                           </label>
 
@@ -2746,8 +2761,8 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i className="bi bi-twitter-x followers-social-icons"></i>
-                                YouTube
+                                <i class="bi bi-youtube followers-social-icons"></i>
+                                Youtube
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
@@ -2927,7 +2942,7 @@ const CreateJobs = () => {
                                     }
                                     onChange={compensationChange}
                                   />
-                                  Paid Collaboration + Gift
+                                  Paid Collaboration + Product/Gift
                                 </label>
                               </div>
                               <div className="mt-3">
@@ -3601,7 +3616,7 @@ const CreateJobs = () => {
 
                 <div className="kids-form-section col-md-12 mb-3">
                   <label className="form-label">
-                    How you would like to receive Application{" "}
+                    How Would You Like to Receive Applications?
                   </label>
                   <div className="application-condition-wrapper">
                     <div className="application-condition-radios">

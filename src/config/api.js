@@ -13,6 +13,7 @@ export const API = {
   getAllStatesList: BASEURL + "admin/getAllStatesList",
   chatbot: BASEURL + "admin/chatbot",
   giftMail: BASEURL + "admin/giftMail",
+  payment: BASEURL + "admin/payment",
 
   //Registration
   brandsRegister: BASEURL + "brands/brandsRegister",

@@ -30,6 +30,8 @@ const Footer = (props) => {
   const [email, setEmail] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -57,38 +59,39 @@ const Footer = (props) => {
   // };
 
   const subscribe = async () => {
-    if (firstName === "") {
-      setFirstNameError(true);
-    }
-    if (email === "") {
-      setEmailError(true);
-    }
-    if (firstName !== "" && email !== "") {
-      const formData = {
-        email: email,
-      };
-      clear();
-      await ApiHelper.post(API.subscriptionStatus, formData)
-        .then((resData) => {
-          console.log(resData, "resData");
-          if (resData.data.status === true) {
-            setMessage("Subscribed SuccessFully! Check Your Email Inbox");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
-          } else if (resData.data.status === false) {
-            setMessage(resData.data.msg);
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 2000);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // if (firstName === "") {
+    //   setFirstNameError(true);
+    // }
+    // if (email === "") {
+    //   setEmailError(true);
+    // }
+    // if (firstName !== "" && email !== "") {
+    //   const formData = {
+    //     email: email,
+    //   };
+    //   clear();
+    //   await ApiHelper.post(API.subscriptionStatus, formData)
+    //     .then((resData) => {
+    //       console.log(resData, "resData");
+    //       if (resData.data.status === true) {
+    //         setMessage("Subscribed successfully! Kindly check your inbox");
+    //         setOpenPopUp(true);
+    //         setTimeout(function() {
+    //           setOpenPopUp(false);
+    //         }, 1000);
+    //       } else if (resData.data.status === false) {
+    //         setMessage(resData.data.msg);
+    //         setOpenPopUp(true);
+    //         setTimeout(function() {
+    //           setOpenPopUp(false);
+    //         }, 2000);
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
+    window.location.href = "https://brandsandtalent.substack.com/about";
   };
 
   const handleClick = () => {
@@ -148,6 +151,14 @@ const Footer = (props) => {
     navigate("/blogs", { state: { step: step } });
   };
 
+  const handleEmailChange = (e) => {
+    setEmailError(false);
+    const email = e.target.value;
+    setEmail(e.target.value);
+    // Validate email using regex
+    setIsValidEmail(emailRegex.test(email));
+  };
+
   return (
     <>
       {/* <Header sendMessageToParent={handleMessageFromHeader} /> */}
@@ -158,11 +169,11 @@ const Footer = (props) => {
               <div className="get-discover title mt-0">
                 Subscribe to Newsletter
               </div>
-              <div className="form-fields row">
-                <div className="col-md-4 form-group">
+              <div className="form-fields row justify-content-center">
+                {/* <div className="col-md-4 form-group">
                   <input
                     className="input-style form-control"
-                    placeholder="Full name"
+                    placeholder="Full Name"
                     value={firstName}
                     onChange={(e) => {
                       setFirstName(e.target.value);
@@ -174,29 +185,37 @@ const Footer = (props) => {
                       className="invalid-fields"
                       style={{ color: "#ffffff" }}
                     >
-                      * Please enter First Name
+                      Please enter Full Name
                     </div>
                   )}
                 </div>
                 <div className="col-md-4 form-group">
                   <input
-                    className="input-style form-control"
-                    placeholder="Email Address"
+                    type="email"
+                    className={`input-style  form-control ${
+                      !isValidEmail ? "is-invalid" : "form-control"
+                    }`}
+                    onChange={handleEmailChange}
+                    placeholder="Enter E-mail"
                     value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      setEmailError(false);
-                    }}
-                  ></input>
+                  />
+                  {!isValidEmail && (
+                    <div
+                      className="invalid-feedback"
+                      style={{ color: "#ffffff" }}
+                    >
+                      Please enter E-mail
+                    </div>
+                  )}
                   {emailError && (
                     <div
                       className="invalid-fields"
                       style={{ color: "#ffffff" }}
                     >
-                      * Please enter Email Address
+                      Please enter E-mail
                     </div>
                   )}
-                </div>
+                </div> */}
                 <div className="col-md-4 form-group">
                   <div
                     className="subscribe-btn"
@@ -328,10 +347,10 @@ const Footer = (props) => {
               </h6>
               <ul className="footerLinks">
                 <li onClick={() => handleClickBlogs(0)}>
-                  <a href=""> Industry news and insights</a>
+                  <a href=""> Industry Insights</a>
                 </li>
                 <li onClick={() => handleClickBlogs(1)}>
-                  <a href=""> Case studies</a>
+                  <a href=""> Case Studies</a>
                 </li>
                 <li onClick={() => handleClickBlogs(2)}>
                   <a href="">Interviews</a>
@@ -353,7 +372,7 @@ const Footer = (props) => {
                 </li>
                 <li>
                   <Link onClick={handleClick} to="/community-guidelines">
-                    Community guidelines
+                    Community Guidelines
                   </Link>
                 </li>
                 <li>

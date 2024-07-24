@@ -630,26 +630,46 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const handleFeaturesChange = (label, value) => {
     const updatedValues = [...features];
     const index = updatedValues.findIndex((item) => item.label === label);
-    if (index !== -1) {
-      updatedValues[index] = { label, value };
-    } else {
-      updatedValues.push({ label, value });
+    let finalValue = value;
+
+    if (
+      creatableInputOptions.includes(label) ||
+      creatableOptions.includes(label)
+    ) {
+      if (/^\d+$/.test(value)) {
+        finalValue = `${value} cm`;
+      } else {
+        return; // Exit if the value is not a number
+      }
     }
+
+    if (index !== -1) {
+      updatedValues[index] = { label, value: finalValue };
+    } else {
+      updatedValues.push({ label, value: finalValue });
+    }
+
     console.log(updatedValues, "updatedValues");
     setFeature(updatedValues);
   };
 
-  const creatableOptions = [
+  const creatableOptions = ["Dress Size", "Shoe Size"];
+
+  const creatableInputOptions = [
     "Hip Size",
     "Waist",
     "Chest",
-    "Dress Size",
     "Height",
-    "Shoe Size",
     "Bra Size",
   ];
 
-  const cmPlaceholderOptions = ["Height", "Chest", "Waist", "Hip Size"];
+  const cmPlaceholderOptions = [
+    "Height",
+    "Chest",
+    "Waist",
+    "Hip Size",
+    "Bra Size",
+  ];
 
   const getPlaceholder = (label) => {
     if (cmPlaceholderOptions.includes(label)) {
@@ -749,6 +769,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   useEffect(() => {
     console.log(videoUrl, "videoUrl");
     console.log(urls, "urls");
+    console.log(featuresList, "featuresList");
   }, []);
 
   return (
@@ -1312,52 +1333,70 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   <div className="features-section">
                     {featuresList && (
                       <>
-                        {featuresList &&
-                          featuresList.map((item, index) => (
-                            <div
-                              key={index}
-                              className="mb-3 mr-3 features-input-wrapper"
-                            >
-                              <label className="form-label">{item.label}</label>
-                              {creatableOptions.includes(item.label) ? (
-                                <CreatableSelect
-                                  isClearable
-                                  options={item.options.map((option) => ({
-                                    value: option,
-                                    label: option,
-                                  }))}
-                                  onChange={(selectedOption) =>
-                                    handleFeaturesChange(
-                                      item.label,
-                                      selectedOption ? selectedOption.value : ""
-                                    )
-                                  }
-                                  placeholder={getPlaceholder(item.label)}
-                                />
-                              ) : (
-                                <select
-                                  className="form-select features-select"
-                                  aria-label="Default select example"
-                                  onChange={(e) =>
+                        {featuresList.map((item, index) => (
+                          <div
+                            key={index}
+                            className="mb-3 mr-3 features-input-wrapper"
+                          >
+                            <label className="form-label">{item.label}</label>
+                            {creatableOptions.includes(item.label) ? (
+                              <CreatableSelect
+                                isClearable
+                                options={item.options.map((option) => ({
+                                  value: option,
+                                  label: option,
+                                }))}
+                                onChange={(selectedOption) =>
+                                  handleFeaturesChange(
+                                    item.label,
+                                    selectedOption ? selectedOption.value : ""
+                                  )
+                                }
+                                placeholder={getPlaceholder(item.label)}
+                              />
+                            ) : creatableInputOptions.includes(item.label) ? (
+                              <input
+                                type="text"
+                                className="form-control features-select"
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
                                     handleFeaturesChange(
                                       item.label,
                                       e.target.value
-                                    )
+                                    );
                                   }
-                                  defaultValue=""
-                                >
-                                  <option value="" disabled>
-                                    {item.label}
+                                }}
+                                placeholder={getPlaceholder(item.label)}
+                              />
+                            ) : (
+                              <select
+                                className="form-select features-select"
+                                aria-label="Default select example"
+                                onChange={(e) =>
+                                  handleFeaturesChange(
+                                    item.label,
+                                    e.target.value
+                                  )
+                                }
+                                defaultValue=""
+                              >
+                                <option value="" disabled>
+                                  {item.label}
+                                </option>
+                                {item.options.map((option, idx) => (
+                                  <option key={idx} value={option}>
+                                    {option}
                                   </option>
-                                  {item.options.map((option, idx) => (
-                                    <option key={idx} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              )}
-                            </div>
-                          ))}
+                                ))}
+                              </select>
+                            )}
+                          </div>
+                        ))}
                       </>
                     )}
                   </div>

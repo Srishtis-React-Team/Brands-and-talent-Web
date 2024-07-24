@@ -639,6 +639,36 @@ a:hover {
   cursor: pointer;
 }
 
+.kids-signup-terms {
+  color: #000;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 8px 0px;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 23px;
+}
+
+.kids-signup-terms-linetwo {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 0px 0px;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 20px;
+}
+
+.kids-signup-terms-linetwo > span {
+  color: #c2114b;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .splitter {
   display: flex;
   max-width: 770px;
@@ -2987,7 +3017,7 @@ head .profile-image-header {
   }
 
   .kids-select-btn {
-    width: 25%;
+    width: 150px;
     height: 50px;
     border-radius: 25px;
     border: 1px solid #fff;
@@ -3546,4 +3576,19 @@ head .profile-image-header {
 
 .ql-editor {
   height: 150px !important;
+}
+
+.cofee-link:hover {
+  color: #c2114b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.coffee-icon {
+  padding-right: 6px;
+  color: rgb(255, 136, 0);
+}
+.coffee-icon:hover {
+  color: #c2114b;
 }

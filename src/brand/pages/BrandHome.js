@@ -336,7 +336,22 @@ const BrandHome = () => {
                               {jobsList?.category} <i className="bi bi-dot"></i>
                             </span>
                             <span className="job-company-name">
-                              {jobsList && jobsList.compensation
+                              {jobsList && jobsList.compensation && (
+                                <>
+                                  {Object.keys(jobsList.compensation)[0] ===
+                                  "paid_collaboration_and_gift"
+                                    ? "Paid Collaboration + Product/Gift"
+                                    : Object.keys(jobsList.compensation)[0] ===
+                                      "product_gift"
+                                    ? "Product/Gift"
+                                    : Object.keys(jobsList.compensation)[0] ===
+                                      "paid_collaboration"
+                                    ? "Paid Collaboration"
+                                    : ""}
+                                </>
+                              )}
+
+                              {/* {jobsList && jobsList.compensation
                                 ? Object.keys(jobsList.compensation)[0]
                                     .split("_")
                                     .map(
@@ -345,7 +360,7 @@ const BrandHome = () => {
                                         word.slice(1)
                                     )
                                     .join(" ")
-                                : ""}
+                                : ""} */}
                             </span>
                           </div>
                           <div className="mb-2">

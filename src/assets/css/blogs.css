@@ -151,12 +151,25 @@ ul.shareDiv li:hover {
 }
 
 .howworks-title {
-  color: #c2114b;
+  color: #000;
   font-size: 22px;
   font-style: normal;
   font-weight: 600;
   font-family: sans-serif;
   line-height: 40px;
+}
+
+.video-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.responsive-video {
+  width: 100%;
+  max-width: 600px; /* Adjust the max-width as needed */
+  height: auto;
+  border-radius: 16px;
 }
 
 .howitworks-labels {

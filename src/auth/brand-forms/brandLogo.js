@@ -315,9 +315,10 @@ const BrandLogo = () => {
                     onChange={portofolioUpload}
                   />
                   <div className="upload-text">
-                    Upload your company logo or your photo <br /> If signing up
+                    Upload your company logo or your photo <br /> if signing up
                     as an individual client
                   </div>
+                  <div className="upload-info">Or</div>
                   <div className="upload-info">Drag and drop image here</div>
                 </div>
                 {portofolioFileError && (

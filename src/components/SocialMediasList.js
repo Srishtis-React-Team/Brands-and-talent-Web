@@ -4,8 +4,8 @@ const SocialMediasList = [
   { value: "XTwitter", label: "XTwitter" },
   { value: "LinkedIn", label: "LinkedIn" },
   { value: "Threads", label: "Threads" },
-  { value: "TikToks", label: "TikToks" },
-  { value: "YouTubes", label: "YouTubes" },
+  { value: "Tiktok", label: "Tiktok" },
+  { value: "Youtube", label: "Youtube" },
 ];
 
 export default SocialMediasList;

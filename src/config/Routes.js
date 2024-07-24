@@ -73,6 +73,7 @@ import TalentDiaries from "../pages/TalentDiaries";
 import TalentTips from "../pages/TalentTips";
 import BrandTips from "../pages/BrandTips";
 import CommingSoon from "../views/CommingSoon";
+import QrCode from "../views/QrCode";
 function Routing() {
   // const [currentUserId, setCurrentUserId] = useState(null);
   // const [brandId, setBrandID] = useState(null);
@@ -294,6 +295,7 @@ function Routing() {
         <Route path="/talent-tips" element={<TalentTips />} />
         <Route path="/brand-tips" element={<BrandTips />} />
         <Route path="/comming-soon" element={<CommingSoon />} />
+        <Route path="/qrcode-payment" element={<QrCode />} />
       </Routes>
       {openPopUp && <PopUp message={message} />}
     </>

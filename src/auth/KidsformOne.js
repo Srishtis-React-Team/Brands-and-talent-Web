@@ -131,7 +131,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   const gendersOptions = [
     "Man",
     "Woman",
-    "Non binary",
+    "Non-binary",
     "Transgender Woman",
     "Transgender Man",
     "Agender",
@@ -337,59 +337,64 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const professionList = [
     { value: "Actor", label: "Actor" },
-    { value: "Artist", label: "Artist" },
-    { value: "Creator", label: "Creator" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Influencer", label: "Influencer" },
-    { value: "Model", label: "Model" },
-    { value: "Event Planner", label: "Event Planner" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Nail Artist", label: "Nail Artist" },
-    { value: "Tattooist", label: "Tattooist" },
-    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Swimming Instructor", label: "Swimming Instructor" },
-    { value: "Driving Instructor", label: "Driving Instructor" },
-    { value: "Meditation Teacher", label: "Meditation Teacher" },
-    { value: "Yoga Instructor", label: "Yoga Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Music Teacher", label: "Music Teacher" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Craftsperson", label: "Craftsperson" },
-    { value: "Sculptor", label: "Sculptor" },
-    { value: "Curator", label: "Curator" },
-    { value: "Singer", label: "Singer" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Musician", label: "Musician" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "Cinematographer", label: "Cinematographer" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "DJ", label: "DJ" },
-    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
-    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
-    { value: "Writer", label: "Writer" },
-    { value: "Copywriter", label: "Copywriter" },
-    { value: "Cartoonist", label: "Cartoonist" },
-    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
-    { value: "Podcaster", label: "Podcaster" },
-    { value: "Host/MC", label: "Host/MC" },
-    { value: "Voice-over Artist", label: "Voice-over Artist" },
-    { value: "Comedian", label: "Comedian" },
-    { value: "Public Speaker", label: "Public Speaker" },
-    { value: "Life Coach", label: "Life Coach" },
-    { value: "Career Coach", label: "Career Coach" },
-    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
-    { value: "Interior Designer", label: "Interior Designer" },
-    { value: "Illustrator", label: "Illustrator" },
     { value: "Animator", label: "Animator" },
+    { value: "Architect ", label: "Architect " },
+    { value: "Artist", label: "Artist" },
+    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
     { value: "Blockchain Developer", label: "Blockchain Developer" },
+    { value: "Career Coach", label: "Career Coach" },
+    { value: "Cartoonist", label: "Cartoonist" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Cinematographer", label: "Cinematographer" },
+    { value: "Comedian", label: "Comedian" },
+    { value: "Copywriter", label: "Copywriter" },
+    { value: "Craftsperson", label: "Craftsperson" },
+    { value: "Creator", label: "Creator" },
+    { value: "Curator", label: "Curator" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Dancer", label: "Dancer" },
+    { value: "Designer ", label: "Designer " },
+    { value: "Dietitian ", label: "Dietitian " },
+    { value: "DJ", label: "DJ" },
+    { value: "Driving Instructor", label: "Driving Instructor" },
+    { value: "Event Planner", label: "Event Planner" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Host/MC", label: "Host/MC" },
+    { value: "Illustrator", label: "Illustrator" },
+    { value: "Influencer", label: "Influencer" },
+    { value: "Interior Designer", label: "Interior Designer" },
+    { value: "Life Coach", label: "Life Coach" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Meditation Teacher", label: "Meditation Teacher" },
+    { value: "Model", label: "Model" },
+    { value: "Music Teacher", label: "Music Teacher" },
+    { value: "Musician", label: "Musician" },
+    { value: "Nail Artist", label: "Nail Artist" },
+    { value: "Nutritionist ", label: "Nutritionist " },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Photographer", label: "Photographer" },
+    { value: "Podcaster", label: "Podcaster" },
+    { value: "Public Speaker", label: "Public Speaker" },
+    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
+    { value: "Singer", label: "Singer" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Sculptor", label: "Sculptor" },
+    { value: "Stylist", label: "Stylist" },
+    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
+    { value: "Swimming Instructor", label: "Swimming Instructor" },
+    { value: "Tattooist", label: "Tattooist" },
+    { value: "Videographer", label: "Videographer" },
+    { value: "Voice-over Artist", label: "Voice-over Artist" },
+    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
+    { value: "Wedding Planner", label: "Wedding Planner" },
+    { value: "Writer", label: "Writer" },
+    { value: "Yoga Instructor", label: "Yoga Instructor" },
+    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
   ];
 
   const categoryList = [
@@ -781,6 +786,17 @@ const KidsformOne = ({ sendDataToParent }) => {
     } else {
       setParentFirstName(value);
       setFirstNameLetterError(false);
+    }
+  };
+  const handleCondition = (e) => {
+    if (e == "terms") {
+      navigate("/terms-conditions");
+    }
+    if (e == "privacy") {
+      navigate("/privacy-policy");
+    }
+    if (e == "community") {
+      navigate("/community-guidelines");
     }
   };
 
@@ -1504,7 +1520,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                                 className="form-label offer-label"
                                 htmlFor={profession.label}
                               >
-                                Open to Offers / Happy to negotiate
+                                Negotiable
                               </label>
                             </div>
                             <div>
@@ -1756,7 +1772,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                         )}
                       </div>
                     </div>
-                    <div className="kids-form-row row mb-3">
+                    <div className="kids-form-row row mb-1">
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
                           Date of Birth <span className="mandatory">*</span>
@@ -1821,11 +1837,29 @@ const KidsformOne = ({ sendDataToParent }) => {
                         )}
                       </div>
                     </div>
+
+                    <div className="kids-signup-terms">
+                      By registering you confirm that you accept the 
+                    </div>
+                    <div className="kids-signup-terms-linetwo mb-5">
+                      <span onClick={() => handleCondition("terms")}>
+                        Terms & Conditions
+                      </span>{" "}
+                      ,&nbsp;
+                      <span onClick={() => handleCondition("privacy")}>
+                        Privacy Policy
+                      </span>
+                       and 
+                      <span onClick={() => handleCondition("community")}>
+                        Community Guidelines
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
           <div className="dialog-footer">
             <button
               type="button"
