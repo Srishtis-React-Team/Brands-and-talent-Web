@@ -250,6 +250,13 @@ const Header = ({ onData }) => {
     }
   };
 
+  const handleCoffeeLink = () => {
+    window.open(
+      "https://buymeacoffee.com/brandsandtalent/membership",
+      "_blank"
+    );
+  };
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -580,6 +587,15 @@ const Header = ({ onData }) => {
     navigate("/blogs", { state: { step: step } });
   };
 
+  useEffect(() => {
+    console.log(
+      talentData,
+      "TalentHeader DataHeader ",
+      brandData,
+      "BrandHeader DataHeader"
+    );
+  }, [talentData, brandData]);
+
   return (
     <>
       <div className="mobile-navbar">
@@ -737,6 +753,15 @@ const Header = ({ onData }) => {
                 </a>
               </li>
             </ul>
+          </div>
+
+          <div
+            className="navTxt cofee-link"
+            style={{ cursor: "pointer" }}
+            onClick={handleCoffeeLink}
+          >
+            <i class="bi bi-cup-hot-fill coffee-icon"></i>
+            Support BT
           </div>
         </div>
         <div className="header-search-wrapper">
@@ -915,6 +940,15 @@ const Header = ({ onData }) => {
                   </ul>
                 </li>
               </div>
+
+              <div
+                className="navTxt cofee-link"
+                style={{ cursor: "pointer" }}
+                onClick={handleCoffeeLink}
+              >
+                <i class="bi bi-cup-hot-fill coffee-icon"></i>
+                Support BT
+              </div>
             </div>
             <div className="header-functions">
               <div className="searchBtn">
@@ -1004,11 +1038,24 @@ const Header = ({ onData }) => {
                 <Dropdown>
                   <MenuButton className="profile-image-header">
                     <div className="talent-profile-icon">
-                      <img
-                        className="talent-profile-icon-img"
-                        src={`${API.userFilePath}${currentUser_image}`}
-                        alt=""
-                      />
+                      {talentData?.image && (
+                        <>
+                          <img
+                            className="talent-profile-icon-img"
+                            src={`${API.userFilePath}${talentData?.image?.fileData}`}
+                            alt=""
+                          />
+                        </>
+                      )}
+                      {brandData?.brandImage[0] && (
+                        <>
+                          <img
+                            className="talent-profile-icon-img"
+                            src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
+                            alt=""
+                          />
+                        </>
+                      )}
                     </div>
                   </MenuButton>
                   <Menu slots={{ listbox: AnimatedListbox }}>

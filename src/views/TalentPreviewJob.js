@@ -641,10 +641,13 @@ const TalentPreviewJob = (props) => {
               <div className="service-files-main">
                 <div>
                   {jobData?.workSamples?.length > 0 &&
-                    jobData?.workSamples?.map((item) => {
+                    jobData?.workSamples?.map((item, index) => {
                       return (
                         <>
-                          <div className="update-portfolio-cards">
+                          <div
+                            className="update-portfolio-cards"
+                            key={item?.id || index}
+                          >
                             <div className="update-portfolio-icon">
                               <div className="file-section">
                                 {item.type === "image" && (

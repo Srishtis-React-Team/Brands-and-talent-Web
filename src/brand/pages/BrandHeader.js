@@ -174,6 +174,13 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     }
   }, [myState]);
 
+  const handleCoffeeLink = () => {
+    window.open(
+      "https://buymeacoffee.com/brandsandtalent/membership",
+      "_blank"
+    );
+  };
+
   return (
     <>
       <div className="headerDashboard dashHeader">
@@ -256,7 +263,10 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                               dropdown-toggle
                               data-bs-toggle="dropdown"
                             >
-                              <NavLink onClick={() => handleClickBlogs(0)}>
+                              <NavLink
+                                to="/blogs"
+                                onClick={() => handleClickBlogs(0)}
+                              >
                                 Blog
                               </NavLink>
                             </a>
@@ -301,6 +311,14 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                           </li>
                         </ul>
                       </li>
+                    </div>
+                    <div
+                      className="navTxt cofee-link"
+                      style={{ cursor: "pointer" }}
+                      onClick={handleCoffeeLink}
+                    >
+                      <i class="bi bi-cup-hot-fill coffee-icon"></i>
+                      Support BT
                     </div>
                   </nav>
                   <React.Fragment>

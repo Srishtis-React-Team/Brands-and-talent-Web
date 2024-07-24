@@ -220,6 +220,14 @@ const HowItWorks = () => {
                 and empowering experience. Here's how it works:
               </h1>
 
+              <div>
+                {/* style={{
+          width: '600px',
+          height: '400px',
+          borderRadius: '15px',
+        }} */}
+              </div>
+
               <div className="howitworks-labels">
                 <div className="howitworks-labels-text">
                   <a href="#brand">Brands/Clients</a>
@@ -234,6 +242,19 @@ const HowItWorks = () => {
 
               <div>
                 <h2 className="maintitles text-center">Brands/Clients</h2>
+
+                <div className="video-container">
+                  <video
+                    src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/36131e65-e942-4b1d-afe2-98900fb35046.mp4"
+                    autoPlay
+                    loop
+                    controls
+                    className="responsive-video"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+
                 {content
                   .filter((resource) => resource.userType === "Brands")
                   .map((resource, index) => (
@@ -309,9 +330,21 @@ const HowItWorks = () => {
                     </div>
                   ))}
               </div>
-              <div id="talent">
-                <div>
+              <div>
+                <div id="talent">
                   <h2 className="maintitles text-center">For Talent</h2>
+
+                  <div className="video-container">
+                    <video
+                      src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/e953bb11-d401-436e-ba58-66bf1d87fff5.mp4"
+                      loop
+                      controls
+                      className="responsive-video"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+
                   {content
                     .filter((resource) => resource.userType === "Talent")
                     .map((resource, index) => (

@@ -461,7 +461,7 @@ const EditBrands = () => {
     await ApiHelper.post(`${API.editBrands}${brandId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Profile Image Update Successfully");
+          setMessage("Profile image updated successfully");
           setOpenPopUp(true);
           setTimeout(function() {
             setMyState(true);
@@ -700,7 +700,7 @@ const EditBrands = () => {
                           Brand / Client logo
                         </label>
                         <div className="image-upload-label">
-                          ( Upload your company logo or your photo If signing up
+                          ( Upload your company logo or your photo if signing up
                           as an individual client )
                         </div>
                       </div>

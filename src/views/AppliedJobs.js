@@ -201,14 +201,25 @@ const AppliedJobs = () => {
                                   {job?.category} <i className="bi bi-dot"></i>
                                 </span>
                                 <span className="job-company_dtls">
-                                  {Object.keys(job?.compensation)[0]
+                                  {Object.keys(job?.compensation)[0] ===
+                                  "paid_collaboration_and_gift"
+                                    ? "Paid Collaboration + Product/Gift"
+                                    : Object.keys(job?.compensation)[0] ===
+                                      "product_gift"
+                                    ? "Product/Gift"
+                                    : Object.keys(job?.compensation)[0] ===
+                                      "paid_collaboration"
+                                    ? "Paid Collaboration"
+                                    : ""}
+
+                                  {/* {Object.keys(job?.compensation)[0]
                                     ?.split("_")
                                     .map(
                                       (word) =>
                                         word.charAt(0).toUpperCase() +
                                         word.slice(1)
                                     )
-                                    .join(" ")}
+                                    .join(" ")} */}
                                 </span>
                               </div>
                               <div className="mb-2">

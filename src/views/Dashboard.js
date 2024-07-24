@@ -93,7 +93,7 @@ const Dashboard = () => {
   const [talentList, setTalentList] = useState([]);
   const [caseList, setCaseList] = useState([]);
   const [talentsList, setTalentsList] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const [photoGraphersList, setphotoGraphersList] = useState([]);
   const [messageFromHeader, setMessageFromHeader] = useState("");

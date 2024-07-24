@@ -590,7 +590,7 @@ const AdultSocialMedias = () => {
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={fbLogo} alt="" />
-                          <div className="media-text">FaceBook</div>
+                          <div className="media-text">Facebook</div>
                         </div>
                         <div className="connect-btn">connect</div>
                       </div>
@@ -610,7 +610,7 @@ const AdultSocialMedias = () => {
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={linkdin} alt="" />
-                          <div className="media-text">Linkedin</div>
+                          <div className="media-text">LinkedIn</div>
                         </div>
                         <div className="connect-btn">connect</div>
                       </div>
@@ -641,7 +641,7 @@ const AdultSocialMedias = () => {
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img className="thread-fill" src={youTube} alt="" />
-                          <div className="media-text">You Tube</div>
+                          <div className="media-text">Youtube</div>
                         </div>
                         <div className="connect-btn">connect</div>
                       </div>

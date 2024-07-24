@@ -1133,16 +1133,26 @@ const TalentProfile = () => {
                             {photosList && photosList.length > 0 && (
                               <PhotosCarousel photosList={photosList} />
                             )}
-                            {photosList.length === 0 && (
-                              <>
-                                <div>Data not added</div>
-                              </>
-                            )}
+                            {photosList.length === 0 &&
+                              talentData?.profileApprove === true && (
+                                <>
+                                  <div>Data not added</div>
+                                </>
+                              )}
+                            {photosList.length === 0 &&
+                              talentData?.profileApprove === false && (
+                                <>
+                                  <div>
+                                    Data will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                           </div>
 
                           <div className="portofolio-section">
                             <div className="portofolio-title mt-4">
-                              Social media posts
+                              Social Media Posts
                             </div>
                             {/* <div className="view-all">View All</div> */}
                           </div>
@@ -1199,51 +1209,76 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
-                          <div className="service-list-main videoWraper">
-                            {urlsList.map((url, index) => (
-                              <div key={index} className="media-item">
-                                {isYouTubeUrl(url) ? (
-                                  <iframe
-                                    src={getYouTubeEmbedUrl(url)}
-                                    title={`youtube-video-${index}`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    className="video-frame"
-                                  ></iframe>
-                                ) : isVimeoUrl(url) ? (
-                                  <iframe
-                                    src={getVimeoEmbedUrl(url)}
-                                    title={`vimeo-video-${index}`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    className="video-frame"
-                                  ></iframe>
-                                ) : isVideoUrl(url) ? (
-                                  <video
-                                    controls
-                                    src={url}
-                                    className="video-frame"
-                                  >
-                                    Your browser does not support the video tag.
-                                  </video>
-                                ) : isAudioUrl(url) ? (
-                                  <audio
-                                    controls
-                                    src={url}
-                                    className="audio-player"
-                                  >
-                                    Your browser does not support the audio
-                                    element.
-                                  </audio>
-                                ) : (
-                                  <div className="unsupported-media">
-                                    Unsupported media type
+                          <div className="service-list-main w-100">
+                            <div className="row">
+                              {urlsList.map((url, index) => (
+                                <div key={index} className="col-md-6 mb-4">
+                                  <div className="media-item">
+                                    {isYouTubeUrl(url) ? (
+                                      <iframe
+                                        src={getYouTubeEmbedUrl(url)}
+                                        title={`youtube-video-${index}`}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        className="video-frame w-100"
+                                        style={{ height: "300px" }}
+                                      ></iframe>
+                                    ) : isVimeoUrl(url) ? (
+                                      <iframe
+                                        src={getVimeoEmbedUrl(url)}
+                                        title={`vimeo-video-${index}`}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        className="video-frame w-100"
+                                        style={{ height: "300px" }}
+                                      ></iframe>
+                                    ) : isVideoUrl(url) ? (
+                                      <video
+                                        controls
+                                        src={url}
+                                        className="video-frame w-100"
+                                        style={{ height: "300px" }}
+                                      >
+                                        Your browser does not support the video
+                                        tag.
+                                      </video>
+                                    ) : isAudioUrl(url) ? (
+                                      <audio
+                                        controls
+                                        src={url}
+                                        className="audio-player w-100"
+                                      >
+                                        Your browser does not support the audio
+                                        element.
+                                      </audio>
+                                    ) : (
+                                      <div className="unsupported-media">
+                                        Unsupported media type
+                                      </div>
+                                    )}
                                   </div>
+                                </div>
+                              ))}
+
+                              {urlsList.length === 0 &&
+                                talentData?.profileApprove === true && (
+                                  <>
+                                    <div>Data not added</div>
+                                  </>
                                 )}
-                              </div>
-                            ))}
+
+                              {urlsList.length === 0 &&
+                                talentData?.profileApprove === false && (
+                                  <>
+                                    <div>
+                                      Data will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
+                            </div>
                           </div>
 
                           {talentData && talentData?.services?.length > 0 && (
@@ -1260,6 +1295,22 @@ const TalentProfile = () => {
                                 </div>
                               </div>
                               <ServicesCarousel talentData={talentData} />
+                              {!talentData?.services?.length &&
+                                talentData?.profileApprove === true && (
+                                  <>
+                                    <div>Data not added</div>
+                                  </>
+                                )}
+
+                              {!talentData?.services?.length &&
+                                talentData?.profileApprove === false && (
+                                  <>
+                                    <div>
+                                      Data will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
                             </>
                           )}
 
@@ -1335,19 +1386,38 @@ const TalentProfile = () => {
                                 </>
                               );
                             })}
+
+                            {cvList.length === 0 &&
+                              talentData?.profileApprove === true && (
+                                <>
+                                  <div>Data not added</div>
+                                </>
+                              )}
+
+                            {cvList.length === 0 &&
+                              talentData?.profileApprove === false && (
+                                <>
+                                  <div>
+                                    Data will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                           </div>
                         </>
                       )}
 
                       {photos && (
                         <div className="models-photos">
-                          <section className="photos-gallery row padSpc w-100">
+                          {/* row padSpc */}
+                          <section className="photos-gallery  w-100">
                             {photosList &&
                               photosList.map((image, index) => {
                                 console.log(image, "image");
                                 return (
                                   <>
-                                    <div className="col-lg-3 col-md-4 padSpc">
+                                    {/* col-lg-3 col-md-4 padSpc */}
+                                    <div className="">
                                       <div
                                         className="photos-gallery-image"
                                         key={index}
@@ -1365,54 +1435,29 @@ const TalentProfile = () => {
                                   </>
                                 );
                               })}
-                            {photosList.length === 0 && (
-                              <>
-                                <div>Data not added</div>
-                              </>
-                            )}
+
+                            {photosList.length === 0 &&
+                              talentData?.profileApprove === true && (
+                                <>
+                                  <div>Data not added</div>
+                                </>
+                              )}
+
+                            {photosList.length === 0 &&
+                              talentData?.profileApprove === false && (
+                                <>
+                                  <div>
+                                    Data will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                           </section>
                         </div>
                       )}
+
                       {videos && (
                         <div className="models-photos videoWraper">
-                          {/* {videoAudioList.map((item, index) => {
-                          return (
-                            <div className="model-picture-wrapper" key={index}>
-                              <img
-                                className="model-picture"
-                                src={`${API.userFilePath}${item}`}
-                              ></img>
-                            </div>
-                          );
-                        })} */}
-
-                          {/* {videoAudioList.map((item) => (
-                            <div
-                              className="item model-picture-wrapper"
-                              key={item.id}
-                            >
-                              {item.type === "video" && (
-                                <video className="video-style" controls>
-                                  <source
-                                    src={`${API.userFilePath}${item.fileData}`}
-                                    type="video/mp4"
-                                  />
-                                  Your browser does not support the video tag.
-                                </video>
-                              )}
-                              {item.type === "audio" && (
-                                <audio controls>
-                                  <source
-                                    src={`${API.userFilePath}${item.fileData}`}
-                                    type="audio/mp3"
-                                  />
-                                  Your browser does not support the audio tag.
-                                </audio>
-                              )}
-                              <p>{item.title}</p>
-                            </div>
-                          ))} */}
-
                           <div className="service-list-main w-100">
                             <div className="row">
                               {urlsList.map((url, index) => (
@@ -1466,11 +1511,22 @@ const TalentProfile = () => {
                                 </div>
                               ))}
 
-                              {urlsList.length === 0 && (
-                                <div className="col-12">
-                                  <div>Data not added</div>
-                                </div>
-                              )}
+                              {urlsList.length === 0 &&
+                                talentData?.profileApprove === true && (
+                                  <>
+                                    <div>Data not added</div>
+                                  </>
+                                )}
+
+                              {urlsList.length === 0 &&
+                                talentData?.profileApprove === false && (
+                                  <>
+                                    <div>
+                                      Data will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
                             </div>
                           </div>
                         </div>
@@ -1487,54 +1543,74 @@ const TalentProfile = () => {
                       )}
                       {features && (
                         <>
-                          <div className="table-container">
-                            <table>
-                              <tbody>
-                                <tr>
-                                  <td className="left-column">
-                                    <table>
-                                      <tbody>
-                                        {featuresList
-                                          ?.slice(
-                                            0,
-                                            Math.ceil(featuresList?.length / 2)
-                                          )
-                                          .map((feature, index) => (
-                                            <tr key={feature.label}>
-                                              <td>{feature.label}</td>
-                                              <td>{feature.value}</td>
-                                            </tr>
-                                          ))}
-                                      </tbody>
-                                    </table>
-                                  </td>
-                                  <td className="right-column">
-                                    <table>
-                                      <tbody>
-                                        {featuresList
-                                          ?.slice(
-                                            Math.ceil(featuresList?.length / 2)
-                                          )
-                                          .map((feature, index) => (
-                                            <tr key={feature.label}>
-                                              <td>{feature.label}</td>
-                                              <td>{feature.value}</td>
-                                            </tr>
-                                          ))}
-                                      </tbody>
-                                    </table>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            {featuresList.length === 0 && (
+                          {featuresList.length > 0 && (
+                            <>
+                              <div className="table-container">
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <td className="left-column">
+                                        <table>
+                                          <tbody>
+                                            {featuresList
+                                              ?.slice(
+                                                0,
+                                                Math.ceil(
+                                                  featuresList?.length / 2
+                                                )
+                                              )
+                                              .map((feature, index) => (
+                                                <tr key={feature.label}>
+                                                  <td>{feature.label}</td>
+                                                  <td>{feature.value}</td>
+                                                </tr>
+                                              ))}
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                      <td className="right-column">
+                                        <table>
+                                          <tbody>
+                                            {featuresList
+                                              ?.slice(
+                                                Math.ceil(
+                                                  featuresList?.length / 2
+                                                )
+                                              )
+                                              .map((feature, index) => (
+                                                <tr key={feature.label}>
+                                                  <td>{feature.label}</td>
+                                                  <td>{feature.value}</td>
+                                                </tr>
+                                              ))}
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </>
+                          )}
+
+                          {featuresList.length === 0 &&
+                            talentData?.profileApprove === true && (
                               <>
                                 <div>Data not added</div>
                               </>
                             )}
-                          </div>
+
+                          {featuresList.length === 0 &&
+                            talentData?.profileApprove === false && (
+                              <>
+                                <div>
+                                  Data will be visible only after admin approval
+                                </div>
+                              </>
+                            )}
                         </>
                       )}
+
                       {CV && (
                         <div>
                           {cvList.map((pdf) => {
@@ -1565,69 +1641,96 @@ const TalentProfile = () => {
                               </>
                             );
                           })}
-                          {cvList.length === 0 && (
-                            <>
-                              <div>Data not added</div>
-                            </>
-                          )}
+
+                          {cvList.length === 0 &&
+                            talentData?.profileApprove === true && (
+                              <>
+                                <div>Data not added</div>
+                              </>
+                            )}
+
+                          {cvList.length === 0 &&
+                            talentData?.profileApprove === false && (
+                              <>
+                                <div>
+                                  Data will be visible only after admin approval
+                                </div>
+                              </>
+                            )}
                         </div>
                       )}
-                      {reviews && reviewsList?.length > 0 && (
-                        <div className="model-reviews row">
-                          {reviewsList?.map((item, index) => {
-                            return (
-                              <div className="col-md-6">
-                                <div
-                                  className="model-review-wrapper col-md-6"
-                                  key={index}
-                                >
-                                  <div className="review-date">
-                                    {new Date(
-                                      item.reviewDate
-                                    ).toLocaleDateString("en-GB", {
-                                      day: "2-digit",
-                                      month: "long",
-                                      year: "numeric",
-                                    })}
-                                  </div>
-                                  <div className="review-title">
-                                    {item.comment}
-                                  </div>
-                                  {/* <div className="review-content">
+
+                      {reviews && (
+                        <>
+                          {reviewsList?.length > 0 && (
+                            <div className="model-reviews row">
+                              {reviewsList?.map((item, index) => {
+                                return (
+                                  <div className="col-md-6">
+                                    <div
+                                      className="model-review-wrapper col-md-6"
+                                      key={index}
+                                    >
+                                      <div className="review-date">
+                                        {new Date(
+                                          item.reviewDate
+                                        ).toLocaleDateString("en-GB", {
+                                          day: "2-digit",
+                                          month: "long",
+                                          year: "numeric",
+                                        })}
+                                      </div>
+                                      <div className="review-title">
+                                        {item.comment}
+                                      </div>
+                                      {/* <div className="review-content">
                                     {item.comment}
                                   </div> */}
-                                  <div className="reviewer-section pb-0">
-                                    <div className="reviewers-rating">
-                                      {[...Array(Number(item.starRatings))].map(
-                                        (_, starIndex) => (
-                                          <img
-                                            key={starIndex}
-                                            src={pinkStar}
-                                            alt="Star"
-                                          />
-                                        )
-                                      )}
-                                    </div>
-                                    <div className="reviewer-details">
-                                      <div className="initial center">
-                                        {" "}
-                                        {item.reviewerName &&
-                                          item.reviewerName.charAt(0)}
-                                      </div>
-                                      <div className="reviewer-name">
-                                        {item.reviewerName}
+                                      <div className="reviewer-section pb-0">
+                                        <div className="reviewers-rating">
+                                          {[
+                                            ...Array(Number(item.starRatings)),
+                                          ].map((_, starIndex) => (
+                                            <img
+                                              key={starIndex}
+                                              src={pinkStar}
+                                              alt="Star"
+                                            />
+                                          ))}
+                                        </div>
+                                        <div className="reviewer-details">
+                                          <div className="initial center">
+                                            {" "}
+                                            {item.reviewerName &&
+                                              item.reviewerName.charAt(0)}
+                                          </div>
+                                          <div className="reviewer-name">
+                                            {item.reviewerName}
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
+                                );
+                              })}
+                            </div>
+                          )}
+
+                          {reviewsList.length === 0 &&
+                            talentData?.profileApprove === true && (
+                              <>
+                                <div>Data not added</div>
+                              </>
+                            )}
+
+                          {reviewsList.length === 0 &&
+                            talentData?.profileApprove === false && (
+                              <>
+                                <div>
+                                  Data will be visible only after admin approval
                                 </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                      {reviews && !reviewsList.length && (
-                        <>
-                          <div>Data not added</div>
+                              </>
+                            )}
                         </>
                       )}
                     </div>
@@ -1638,11 +1741,11 @@ const TalentProfile = () => {
           </div>
 
           <div className="find-more">
-            <div className="btn moreBtn">Find More</div>
+            {/* <div className="btn moreBtn">Find More</div> */}
           </div>
         </div>
       </section>
-      <Footer />
+      {/* <Footer /> */}
       {isLoading && <Spinner />}
       {openPopUp && <PopUp message={message} />}
       <Modal
@@ -1673,7 +1776,13 @@ const TalentProfile = () => {
           <img
             src={`${API.userFilePath}${photosList[currentIndex]}`}
             alt=""
-            style={{ width: "400px", height: "400px" }}
+            style={{
+              width: "auto !important",
+              height: "auto !important",
+              maxWidth: "100%",
+              maxHeight: "100%",
+            }}
+            className="big-slider-image"
           />
           <IconButton
             sx={{ position: "absolute", top: "50%", left: 8, color: "#ffffff" }}

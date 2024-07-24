@@ -396,9 +396,9 @@ const Login = () => {
           {selectedItem === "brand" && (
             <>
               <div className="new-account-wrapper">
-                <span className="need-account">Need an account ?</span>
+                <span className="need-account">No account?</span>
                 <div onClick={() => brandSignup()} className="signup-login">
-                  Sign Up as Brand/Client
+                  Sign up as a Brand/Client
                 </div>
               </div>
             </>
@@ -406,9 +406,9 @@ const Login = () => {
           {selectedItem === "talent" && (
             <>
               <div className="new-account-wrapper">
-                <span className="need-account">Need an account ?</span>
+                <span className="need-account">No account?</span>
                 <div onClick={() => talentSignup()} className="signup-login">
-                  Sign Up as Talent
+                  Sign up as a Talent
                 </div>
               </div>
             </>
@@ -424,8 +424,6 @@ const Login = () => {
               <div className="media-text">Google</div>
             </div>
           </div> */}
-
-        
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

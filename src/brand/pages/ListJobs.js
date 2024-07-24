@@ -356,6 +356,24 @@ const ListJobs = () => {
                                       <i className="bi bi-dot"></i>
                                     </span>
                                     <span className="job-company-name">
+                                      {job && job.compensation && (
+                                        <>
+                                          {Object.keys(job.compensation)[0] ===
+                                          "paid_collaboration_and_gift"
+                                            ? "Paid Collaboration + Product/Gift"
+                                            : Object.keys(
+                                                job.compensation
+                                              )[0] === "product_gift"
+                                            ? "Product/Gift"
+                                            : Object.keys(
+                                                job.compensation
+                                              )[0] === "paid_collaboration"
+                                            ? "Paid Collaboration"
+                                            : ""}
+                                        </>
+                                      )}
+
+                                      {/* 
                                       {job && job.compensation
                                         ? Object.keys(job.compensation)[0]
                                             .split("_")
@@ -365,7 +383,7 @@ const ListJobs = () => {
                                                 word.slice(1)
                                             )
                                             .join(" ")
-                                        : ""}
+                                        : ""} */}
                                     </span>
                                   </div>
                                   <div className="mb-2">

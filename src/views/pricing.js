@@ -15,9 +15,11 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
+import { useNavigate } from "react-router-dom";
 
 const Pricing = () => {
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -88,10 +90,28 @@ const Pricing = () => {
       });
   };
 
-  const choosePlan = (event) => {
+  const choosePlan = async (event) => {
     // setPricing(event.target.value);
-    window.location.href =
-      "https://buymeacoffee.com/brandsandtalent/membership";
+    setIsLoading(true);
+    await ApiHelper.post(API.payment)
+      .then((resData) => {
+        setIsLoading(false);
+
+        console.log("getpayment", resData);
+        // alert("sfsf");
+        let stateObj = resData?.data?.data;
+        // navigate("/qrcode-payment", { state: stateObj });
+        // navigate("https://checkout-sandbox.payway.com.kh/api");
+        window.location.href = "https://checkout-sandbox.payway.com.kh/api";
+      })
+      .catch((err) => {
+        setIsLoading(false);
+
+        console.log(err);
+      });
+
+    // window.location.href =
+    //   "https://buymeacoffee.com/brandsandtalent/membership";
   };
 
   function handleForms(e) {

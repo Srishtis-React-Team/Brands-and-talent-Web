@@ -18,19 +18,25 @@
 }
 .brand-home-main .photos-slider .item {
   height: auto;
-  min-height: 250px;
+  min-height: 316px;
   width: 100%;
 }
 .photos-slider .item {
-  height: 230px;
+  height: 316px;
   overflow: hidden;
   position: relative;
 }
 .photos-slider .item .talents-profile-slider-image {
-  min-height: 230px;
-  width: 100%;
-  object-fit: cover;
+  /* min-height: 230px; */
+  /* width: 100%; */
+  /* object-fit: cover; */
   cursor: pointer;
+  width: 316px !important;
+  height: 316px !important;
+}
+
+.owl-item {
+  width: 316px !important;
 }
 
 .carousel-talent-name {

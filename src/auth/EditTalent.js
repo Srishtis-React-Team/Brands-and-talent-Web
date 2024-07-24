@@ -31,6 +31,9 @@ import Modal from "react-modal";
 import { ta } from "date-fns/locale";
 import { v4 as uuidv4 } from "uuid";
 import RichTextEditor from "../views/RichTextEditor";
+import CreatableSelect from "react-select/creatable";
+import { IconButton } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,6 +64,16 @@ function a11yProps(index) {
 const EditTalent = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const [anchorE2, setAnchorE2] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const dropDownClose = () => {
+    setAnchorEl(null);
+  };
+
   const open = Boolean(anchorEl);
   const handleFileClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -74,6 +87,31 @@ const EditTalent = () => {
   ];
 
   console.log(EditorState.createEmpty(testEditor), "testEditor");
+
+  const creatableOptions = ["Dress Size", "Shoe Size"];
+
+  const creatableInputOptions = [
+    "Hip Size",
+    "Waist",
+    "Chest",
+    "Height",
+    "Bra Size",
+  ];
+
+  const cmPlaceholderOptions = [
+    "Height",
+    "Chest",
+    "Waist",
+    "Hip Size",
+    "Bra Size",
+  ];
+
+  const getPlaceholder = (label) => {
+    if (cmPlaceholderOptions.includes(label)) {
+      return "Type in cm";
+    }
+    return label;
+  };
 
   const imageType = require("../assets/icons/imageType.png");
   const videoType = require("../assets/icons/videoType.png");
@@ -193,61 +231,76 @@ const EditTalent = () => {
     getFeatures();
   }, []);
 
+  const maritalStatusOptions = [
+    "Single",
+    "Married",
+    "Divorced",
+    "Widowed",
+    "In a Relationship",
+    "Engaged",
+    "Prefer Not to Say",
+  ];
+
   const professionList = [
     { value: "Actor", label: "Actor" },
-    { value: "Artist", label: "Artist" },
-    { value: "Creator", label: "Creator" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Influencer", label: "Influencer" },
-    { value: "Model", label: "Model" },
-    { value: "Event Planner", label: "Event Planner" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Nail Artist", label: "Nail Artist" },
-    { value: "Tattooist", label: "Tattooist" },
-    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Swimming Instructor", label: "Swimming Instructor" },
-    { value: "Driving Instructor", label: "Driving Instructor" },
-    { value: "Meditation Teacher", label: "Meditation Teacher" },
-    { value: "Yoga Instructor", label: "Yoga Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Music Teacher", label: "Music Teacher" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Craftsperson", label: "Craftsperson" },
-    { value: "Sculptor", label: "Sculptor" },
-    { value: "Curator", label: "Curator" },
-    { value: "Singer", label: "Singer" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Musician", label: "Musician" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "Cinematographer", label: "Cinematographer" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "DJ", label: "DJ" },
-    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
-    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
-    { value: "Writer", label: "Writer" },
-    { value: "Copywriter", label: "Copywriter" },
-    { value: "Cartoonist", label: "Cartoonist" },
-    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
-    { value: "Podcaster", label: "Podcaster" },
-    { value: "Host/MC", label: "Host/MC" },
-    { value: "Voice-over Artist", label: "Voice-over Artist" },
-    { value: "Comedian", label: "Comedian" },
-    { value: "Public Speaker", label: "Public Speaker" },
-    { value: "Life Coach", label: "Life Coach" },
-    { value: "Career Coach", label: "Career Coach" },
-    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
-    { value: "Interior Designer", label: "Interior Designer" },
-    { value: "Illustrator", label: "Illustrator" },
     { value: "Animator", label: "Animator" },
+    { value: "Architect ", label: "Architect " },
+    { value: "Artist", label: "Artist" },
+    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
     { value: "Blockchain Developer", label: "Blockchain Developer" },
+    { value: "Career Coach", label: "Career Coach" },
+    { value: "Cartoonist", label: "Cartoonist" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Cinematographer", label: "Cinematographer" },
+    { value: "Comedian", label: "Comedian" },
+    { value: "Copywriter", label: "Copywriter" },
+    { value: "Craftsperson", label: "Craftsperson" },
+    { value: "Creator", label: "Creator" },
+    { value: "Curator", label: "Curator" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Dancer", label: "Dancer" },
+    { value: "Designer ", label: "Designer " },
+    { value: "Dietitian ", label: "Dietitian " },
+    { value: "DJ", label: "DJ" },
+    { value: "Driving Instructor", label: "Driving Instructor" },
+    { value: "Event Planner", label: "Event Planner" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Host/MC", label: "Host/MC" },
+    { value: "Illustrator", label: "Illustrator" },
+    { value: "Influencer", label: "Influencer" },
+    { value: "Interior Designer", label: "Interior Designer" },
+    { value: "Life Coach", label: "Life Coach" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Meditation Teacher", label: "Meditation Teacher" },
+    { value: "Model", label: "Model" },
+    { value: "Music Teacher", label: "Music Teacher" },
+    { value: "Musician", label: "Musician" },
+    { value: "Nail Artist", label: "Nail Artist" },
+    { value: "Nutritionist ", label: "Nutritionist " },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Photographer", label: "Photographer" },
+    { value: "Podcaster", label: "Podcaster" },
+    { value: "Public Speaker", label: "Public Speaker" },
+    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
+    { value: "Singer", label: "Singer" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Sculptor", label: "Sculptor" },
+    { value: "Stylist", label: "Stylist" },
+    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
+    { value: "Swimming Instructor", label: "Swimming Instructor" },
+    { value: "Tattooist", label: "Tattooist" },
+    { value: "Videographer", label: "Videographer" },
+    { value: "Voice-over Artist", label: "Voice-over Artist" },
+    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
+    { value: "Wedding Planner", label: "Wedding Planner" },
+    { value: "Writer", label: "Writer" },
+    { value: "Yoga Instructor", label: "Yoga Instructor" },
+    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
   ];
 
   const categoryList = [
@@ -341,7 +394,7 @@ const EditTalent = () => {
   const gendersOptions = [
     "Man",
     "Woman",
-    "Non binary",
+    "Non-binary",
     "Transgender Woman",
     "Transgender Man",
     "Agender",
@@ -659,14 +712,27 @@ const EditTalent = () => {
   };
 
   const handleFeaturesChange = (label, value) => {
-    console.log(label, value, "label, value");
     const updatedValues = [...features];
     const index = updatedValues.findIndex((item) => item.label === label);
-    if (index !== -1) {
-      updatedValues[index] = { label, value };
-    } else {
-      updatedValues.push({ label, value });
+    let finalValue = value;
+
+    if (
+      creatableInputOptions.includes(label) ||
+      creatableOptions.includes(label)
+    ) {
+      if (/^\d+$/.test(value)) {
+        finalValue = `${value} cm`;
+      } else {
+        return; // Exit if the value is not a number
+      }
     }
+
+    if (index !== -1) {
+      updatedValues[index] = { label, value: finalValue };
+    } else {
+      updatedValues.push({ label, value: finalValue });
+    }
+
     console.log(updatedValues, "updatedValues");
     setFeatures(updatedValues);
   };
@@ -1397,8 +1463,9 @@ const EditTalent = () => {
       await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
+            console.log(resData.data, "resData.dataupdateProfileImage");
             setIsLoading(false);
-            setMessage("Profile Image Update Successfully");
+            setMessage("Profile image updated successfully");
             setOpenPopUp(true);
             setTimeout(function() {
               setMyState(true);
@@ -1421,7 +1488,7 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Profile Image Update Successfully");
+            setMessage("Profile image updated successfully");
             setOpenPopUp(true);
             setTimeout(function() {
               setMyState(true);
@@ -2047,53 +2114,58 @@ const EditTalent = () => {
                 <div className="kids-form-title kids-form-title">
                   <span>Personal Details</span>
                 </div>
-                <div className="row">
-                  <div className="kids-form-section col-md-6 mb-3">
-                    <label className="form-label">
-                      Legal First Name
-                      <span className="mandatory">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={parentFirstName}
-                      onChange={(e) => {
-                        handleFirstNameChange(e);
-                        setparentFirstNameError(false);
-                      }}
-                      onKeyDown={handleKeyPress}
-                      placeholder="Enter Legal First Name"
-                    ></input>
-                    {parentFirstNameError && (
-                      <div className="invalid-fields">
-                        Please enter First Name
+
+                {talentData?.type === "adults" && (
+                  <>
+                    <div className="row">
+                      <div className="kids-form-section col-md-6 mb-3">
+                        <label className="form-label">
+                          Legal First Name
+                          <span className="mandatory">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={parentFirstName}
+                          onChange={(e) => {
+                            handleFirstNameChange(e);
+                            setparentFirstNameError(false);
+                          }}
+                          onKeyDown={handleKeyPress}
+                          placeholder="Enter Legal First Name"
+                        ></input>
+                        {parentFirstNameError && (
+                          <div className="invalid-fields">
+                            Please enter First Name
+                          </div>
+                        )}
+                        {firstNameLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters are allowed
+                          </div>
+                        )}
                       </div>
-                    )}
-                    {firstNameLetterError && (
-                      <div className="invalid-fields">
-                        Only Letters are allowed
+                      <div className="kids-form-section col-md-6 mb-3">
+                        <label className="form-label">Legal Last Name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={parentLastName}
+                          onChange={(e) => {
+                            handleLastNameChange(e);
+                          }}
+                          onKeyDown={handleLastNameKeyPress}
+                          placeholder="Enter Legal Last Name"
+                        ></input>
+                        {lastNameLetterError && (
+                          <div className="invalid-fields">
+                            Only Letters are allowed
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                  <div className="kids-form-section col-md-6 mb-3">
-                    <label className="form-label">Legal Last name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={parentLastName}
-                      onChange={(e) => {
-                        handleLastNameChange(e);
-                      }}
-                      onKeyDown={handleLastNameKeyPress}
-                      placeholder="Enter Legal Last name"
-                    ></input>
-                    {lastNameLetterError && (
-                      <div className="invalid-fields">
-                        Only Letters are allowed
-                      </div>
-                    )}
-                  </div>
-                </div>
+                    </div>
+                  </>
+                )}
 
                 {talentData?.type === "kids" && (
                   <div className="row">
@@ -2125,7 +2197,7 @@ const EditTalent = () => {
                       )}
                     </div>
                     <div className="kids-form-section col-md-6 mb-3">
-                      <label className="form-label">Legal Last name</label>
+                      <label className="form-label">Legal Last Name</label>
                       <input
                         type="text"
                         className="form-control"
@@ -2134,7 +2206,7 @@ const EditTalent = () => {
                           KidsLegalLastNameChange(e);
                         }}
                         onKeyDown={handleKidsLegalLastNameKeyPress}
-                        placeholder="Enter Legal Last name"
+                        placeholder="Enter Legal Last Name"
                       ></input>
                       {kidsLegalLastNameLetterError && (
                         <div className="invalid-fields">
@@ -2172,7 +2244,7 @@ const EditTalent = () => {
                     )}
                   </div>
                   <div className="kids-form-section col-md-6 mb-3">
-                    <label className="form-label">Preferred Last name</label>
+                    <label className="form-label">Preferred Last Name</label>
                     <input
                       type="text"
                       className="form-control"
@@ -2181,7 +2253,7 @@ const EditTalent = () => {
                         kidsPreferedLastNameChange(e);
                       }}
                       onKeyDown={handleKidsPrefferedLasttNameKeyPress}
-                      placeholder="Enter Preferred  Last name"
+                      placeholder="Enter Preferred  Last Name"
                     ></input>
                     {kidsPrefferedLastNameLetterError && (
                       <div className="invalid-fields">Only Letters Allowed</div>
@@ -2337,10 +2409,11 @@ const EditTalent = () => {
                         <option value="" disabled selected>
                           Select Marital Status
                         </option>
-                        <option defaultValue value="married">
-                          Married
-                        </option>
-                        <option value="unmarried">UnMarried</option>
+                        {maritalStatusOptions.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   )}
@@ -2572,7 +2645,7 @@ const EditTalent = () => {
                             className="form-label offer-label"
                             htmlFor={profession.label}
                           >
-                            Open to Offers / Happy to negotiate
+                            Negotiable
                           </label>
                         </div>
                         <div>
@@ -2587,7 +2660,7 @@ const EditTalent = () => {
                     ))}
                   </div>
                 </div>
-                <div className="kids-form-title-sub">
+                <div className="kids-form-title">
                   Select 3 to 6 categories relevant to your profile
                   <span className="mandatory">*</span>
                 </div>
@@ -2715,41 +2788,42 @@ const EditTalent = () => {
                                       {item.title}
                                     </div>
                                     <div className="update-portfolio-action">
-                                      <i
-                                        className="bi bi-three-dots-vertical"
-                                        type="button"
-                                        id="dropdownMenuButton1"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                      ></i>
-                                      <ul
-                                        className="dropdown-menu"
-                                        aria-labelledby="dropdownMenuButton1"
+                                      <IconButton
+                                        aria-label="more"
+                                        aria-controls="dropdown-menu"
+                                        aria-haspopup="true"
+                                        onClick={handleClick}
                                       >
-                                        <li>
-                                          <a
-                                            className="dropdown-item"
-                                            onClick={() => viewUpdateFile(item)}
-                                          >
-                                            View
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a
-                                            className="dropdown-item"
-                                            onClick={(e) => {
-                                              setAlertpop({
-                                                status: true,
-                                                item: item,
-                                                label: "delete",
-                                                eachService: null,
-                                              });
-                                            }}
-                                          >
-                                            Delete
-                                          </a>
-                                        </li>
-                                      </ul>
+                                        <MoreVertIcon />
+                                      </IconButton>
+                                      <Menu
+                                        id="dropdown-menu"
+                                        anchorEl={anchorEl}
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                      >
+                                        <MenuItem
+                                          onClick={() => {
+                                            handleClose();
+                                            viewUpdateFile(item);
+                                          }}
+                                        >
+                                          View
+                                        </MenuItem>
+                                        <MenuItem
+                                          onClick={() => {
+                                            dropDownClose();
+                                            setAlertpop({
+                                              status: true,
+                                              item: item,
+                                              label: "delete",
+                                              eachService: null,
+                                            });
+                                          }}
+                                        >
+                                          Delete
+                                        </MenuItem>
+                                      </Menu>
                                     </div>
                                   </div>
                                 </div>
@@ -2822,36 +2896,37 @@ const EditTalent = () => {
                                     </div>
 
                                     <div className="update-portfolio-action">
-                                      <i
-                                        className="bi bi-three-dots-vertical"
-                                        type="button"
-                                        id="dropdownMenuButton1"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                      ></i>
-                                      <ul
-                                        className="dropdown-menu"
-                                        aria-labelledby="dropdownMenuButton1"
+                                      <IconButton
+                                        aria-label="more"
+                                        aria-controls="dropdown-menu"
+                                        aria-haspopup="true"
+                                        onClick={handleClick}
                                       >
-                                        <li>
-                                          <a
-                                            className="dropdown-item"
-                                            onClick={() => viewVideoFile(item)}
-                                          >
-                                            View
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a
-                                            className="dropdown-item"
-                                            onClick={() =>
-                                              deleteVideoUrls(item, index)
-                                            }
-                                          >
-                                            Delete
-                                          </a>
-                                        </li>
-                                      </ul>
+                                        <MoreVertIcon />
+                                      </IconButton>
+                                      <Menu
+                                        id="dropdown-menu"
+                                        anchorEl={anchorEl}
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                      >
+                                        <MenuItem
+                                          onClick={() => {
+                                            handleClose();
+                                            viewVideoFile(item);
+                                          }}
+                                        >
+                                          View
+                                        </MenuItem>
+                                        <MenuItem
+                                          onClick={() => {
+                                            dropDownClose();
+                                            deleteVideoUrls(item, index);
+                                          }}
+                                        >
+                                          Delete
+                                        </MenuItem>
+                                      </Menu>
                                     </div>
                                   </div>
                                 </div>
@@ -3010,42 +3085,45 @@ const EditTalent = () => {
                                   <div className="update-portfolio-fileName">
                                     {item.title}
                                   </div>
+
                                   <div className="update-portfolio-action">
-                                    <i
-                                      className="bi bi-three-dots-vertical"
-                                      type="button"
-                                      id="dropdownMenuButton1"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    ></i>
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="dropdownMenuButton1"
+                                    <IconButton
+                                      aria-label="more"
+                                      aria-controls="dropdown-menu"
+                                      aria-haspopup="true"
+                                      onClick={handleClick}
                                     >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => viewUpdateFile(item)}
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={(e) => {
-                                            setAlertpop({
-                                              status: true,
-                                              item: item,
-                                              label: "delete",
-                                              eachService: null,
-                                            });
-                                          }}
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
+                                      <MoreVertIcon />
+                                    </IconButton>
+                                    <Menu
+                                      id="dropdown-menu"
+                                      anchorEl={anchorEl}
+                                      open={Boolean(anchorEl)}
+                                      onClose={handleClose}
+                                    >
+                                      <MenuItem
+                                        onClick={() => {
+                                          handleClose();
+                                          viewUpdateFile(item);
+                                        }}
+                                      >
+                                        View
+                                      </MenuItem>
+                                      <MenuItem
+                                        onClick={(e) => {
+                                          dropDownClose();
+
+                                          setAlertpop({
+                                            status: true,
+                                            item: item,
+                                            label: "delete",
+                                            eachService: null,
+                                          });
+                                        }}
+                                      >
+                                        Delete
+                                      </MenuItem>
+                                    </Menu>
                                   </div>
                                 </div>
                               </div>
@@ -3385,34 +3463,74 @@ const EditTalent = () => {
 
                   <div className="features-section">
                     <div className="row">
-                      {featuresList.map((item, index) => {
-                        return (
-                          <>
-                            <div className="mb-3 mr-3 features-input-wrapper">
+                      {featuresList && (
+                        <>
+                          {featuresList.map((item, index) => (
+                            <div
+                              key={index}
+                              className="col-md-2 mb-3 mr-3 features-input-wrapper"
+                            >
                               <label className="form-label">{item.label}</label>
-                              <select
-                                className="form-select features-select"
-                                aria-label="Default select example"
-                                onChange={(e) =>
-                                  handleFeaturesChange(
-                                    item.label,
-                                    e.target.value
-                                  )
-                                }
-                              >
-                                <option value="" disabled selected>
-                                  {item.label}
-                                </option>
-                                {item.options.map((option, idx) => (
-                                  <option key={idx} value={option}>
-                                    {option}
+                              {creatableOptions.includes(item.label) ? (
+                                <CreatableSelect
+                                  isClearable
+                                  options={item.options.map((option) => ({
+                                    value: option,
+                                    label: option,
+                                  }))}
+                                  onChange={(selectedOption) =>
+                                    handleFeaturesChange(
+                                      item.label,
+                                      selectedOption ? selectedOption.value : ""
+                                    )
+                                  }
+                                  placeholder={getPlaceholder(item.label)}
+                                />
+                              ) : creatableInputOptions.includes(item.label) ? (
+                                <input
+                                  type="text"
+                                  className="form-control features-select"
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleFeaturesChange(
+                                        item.label,
+                                        e.target.value
+                                      );
+                                    }
+                                  }}
+                                  placeholder={getPlaceholder(item.label)}
+                                />
+                              ) : (
+                                <select
+                                  className="form-select features-select"
+                                  aria-label="Default select example"
+                                  onChange={(e) =>
+                                    handleFeaturesChange(
+                                      item.label,
+                                      e.target.value
+                                    )
+                                  }
+                                  defaultValue=""
+                                >
+                                  <option value="" disabled>
+                                    {item.label}
                                   </option>
-                                ))}
-                              </select>
+                                  {item.options.map((option, idx) => (
+                                    <option key={idx} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
                             </div>
-                          </>
-                        );
-                      })}
+                          ))}
+                        </>
+                      )}
                     </div>
                   </div>
                   <div className="add-service-btn-flex">

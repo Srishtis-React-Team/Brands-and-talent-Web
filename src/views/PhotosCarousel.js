@@ -8,10 +8,38 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import ImageSlider from "./ImageSlider";
 import { Modal, Box, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+import CurrentUser from "../CurrentUser";
 
 const PhotosCarousel = ({ photosList }) => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    fcmToken,
+  } = CurrentUser();
+
   const [isSliderOpen, setSliderOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [talentData, setTalentData] = useState([]);
+
+  useEffect(() => {
+    getTalentById(currentUserId);
+  }, []);
+
+  const getTalentById = async (talent_id) => {
+    await ApiHelper.post(`${API.getTalentById}${talent_id}`)
+      .then((resData) => {
+        if (resData) {
+          console.log(resData, "resData talentDataProfile");
+          setTalentData(resData.data.data);
+          console.log(resData.data.data, "resData.data");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleImageClick = (index) => {
     setSliderOpen(true);
@@ -31,6 +59,9 @@ const PhotosCarousel = ({ photosList }) => {
   useEffect(() => {
     setCurrentIndex(currentImageIndex);
   }, [currentImageIndex]);
+  useEffect(() => {
+    console.log(talentData, "talentDataPhotosCarousel");
+  }, [talentData]);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % photosList.length);
@@ -58,7 +89,7 @@ const PhotosCarousel = ({ photosList }) => {
             },
             // Breakpoint from 768 up
             768: {
-              items: 4,
+              items: 2,
             },
           }}
         >
@@ -82,6 +113,16 @@ const PhotosCarousel = ({ photosList }) => {
                 </>
               );
             })}
+          {photosList.length === 0 && talentData?.profileApprove === true && (
+            <>
+              <div>Data not added</div>
+            </>
+          )}
+          {photosList.length === 0 && talentData?.profileApprove === false && (
+            <>
+              <div>Waiting For Admin Approval</div>
+            </>
+          )}
         </OwlCarousel>
       </Box>
 
@@ -113,7 +154,13 @@ const PhotosCarousel = ({ photosList }) => {
           <img
             src={`${API.userFilePath}${photosList[currentIndex]}`}
             alt=""
-            style={{ width: "400px", height: "400px" }}
+            style={{
+              width: "auto !important",
+              height: "auto !important",
+              maxWidth: "100%",
+              maxHeight: "100%",
+            }}
+            className="big-slider-image"
           />
           <IconButton
             sx={{ position: "absolute", top: "50%", left: 8, color: "#ffffff" }}

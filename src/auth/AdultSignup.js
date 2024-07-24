@@ -157,7 +157,6 @@ const AdultSignup = () => {
           setIsLoading(false);
           if (resData.data.status === true) {
             console.log(resData.data, "adultSignUp");
-
             setMessage("Registered Successfully");
             setOpenPopUp(true);
             setTimeout(function() {
@@ -165,6 +164,11 @@ const AdultSignup = () => {
               navigate(`/otp-verification?${resData?.data?.data}`);
             }, 2000);
           } else if (resData.data.status === false) {
+            setMessage(resData?.data?.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 3000);
           }
         })
         .catch((err) => {

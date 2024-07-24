@@ -248,15 +248,65 @@ const Register = () => {
   };
 
   const professionList = [
-    {
-      value: "photographer",
-      label: "Photographer",
-      color: "#00B8D9",
-      isFixed: true,
-    },
-    { value: "beauticians", label: "Beauticians", color: "#5243AA" },
-    { value: "artists", label: "Artists", color: "#FF5630", isFixed: true },
-    { value: "video Grapher", label: "Video Grapher", color: "#FF8B00" },
+    { value: "Actor", label: "Actor" },
+    { value: "Animator", label: "Animator" },
+    { value: "Architect ", label: "Architect " },
+    { value: "Artist", label: "Artist" },
+    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
+    { value: "Blockchain Developer", label: "Blockchain Developer" },
+    { value: "Career Coach", label: "Career Coach" },
+    { value: "Cartoonist", label: "Cartoonist" },
+    { value: "Celebrity", label: "Celebrity" },
+    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Cinematographer", label: "Cinematographer" },
+    { value: "Comedian", label: "Comedian" },
+    { value: "Copywriter", label: "Copywriter" },
+    { value: "Craftsperson", label: "Craftsperson" },
+    { value: "Creator", label: "Creator" },
+    { value: "Curator", label: "Curator" },
+    { value: "Dance Teacher", label: "Dance Teacher" },
+    { value: "Dancer", label: "Dancer" },
+    { value: "Designer ", label: "Designer " },
+    { value: "Dietitian ", label: "Dietitian " },
+    { value: "DJ", label: "DJ" },
+    { value: "Driving Instructor", label: "Driving Instructor" },
+    { value: "Event Planner", label: "Event Planner" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Filmmaker", label: "Filmmaker" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
+    { value: "Host/MC", label: "Host/MC" },
+    { value: "Illustrator", label: "Illustrator" },
+    { value: "Influencer", label: "Influencer" },
+    { value: "Interior Designer", label: "Interior Designer" },
+    { value: "Life Coach", label: "Life Coach" },
+    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
+    { value: "Meditation Teacher", label: "Meditation Teacher" },
+    { value: "Model", label: "Model" },
+    { value: "Music Teacher", label: "Music Teacher" },
+    { value: "Musician", label: "Musician" },
+    { value: "Nail Artist", label: "Nail Artist" },
+    { value: "Nutritionist ", label: "Nutritionist " },
+    { value: "Personal Trainer", label: "Personal Trainer" },
+    { value: "Photographer", label: "Photographer" },
+    { value: "Podcaster", label: "Podcaster" },
+    { value: "Public Speaker", label: "Public Speaker" },
+    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
+    { value: "Singer", label: "Singer" },
+    { value: "Sports Instructor", label: "Sports Instructor" },
+    { value: "Sculptor", label: "Sculptor" },
+    { value: "Stylist", label: "Stylist" },
+    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
+    { value: "Swimming Instructor", label: "Swimming Instructor" },
+    { value: "Tattooist", label: "Tattooist" },
+    { value: "Videographer", label: "Videographer" },
+    { value: "Voice-over Artist", label: "Voice-over Artist" },
+    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
+    { value: "Wedding Planner", label: "Wedding Planner" },
+    { value: "Writer", label: "Writer" },
+    { value: "Yoga Instructor", label: "Yoga Instructor" },
+    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
   ];
 
   const onImageChange = (event) => {
@@ -1590,7 +1640,6 @@ const Register = () => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       )}

@@ -144,6 +144,13 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     console.log(notificationList, "notificationList");
   }, [notificationList]);
 
+  const handleCoffeeLink = () => {
+    window.open(
+      "https://buymeacoffee.com/brandsandtalent/membership",
+      "_blank"
+    );
+  };
+
   const getTalentById = async () => {
     await ApiHelper.post(
       `${API.getTalentById}${localStorage.getItem("userId")}`
@@ -407,7 +414,10 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                             dropdown-toggle
                             data-bs-toggle="dropdown"
                           >
-                            <NavLink onClick={() => handleClickBlogs(0)}>
+                            <NavLink
+                              to="/blogs"
+                              onClick={() => handleClickBlogs(0)}
+                            >
                               Blog
                             </NavLink>
                           </a>
@@ -450,6 +460,15 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                         </li>
                       </ul>
                     </li>
+                  </div>
+
+                  <div
+                    className="navTxt cofee-link"
+                    style={{ cursor: "pointer" }}
+                    onClick={handleCoffeeLink}
+                  >
+                    <i class="bi bi-cup-hot-fill coffee-icon"></i>
+                    Support BT
                   </div>
 
                   <React.Fragment>
@@ -758,7 +777,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                         style={{ cursor: "pointer" }}
                         onClick={createHandleMenuClick("dashboard")}
                       >
-                        DashBoard
+                        Dashboard
                       </MenuItem>
                     )}
                     <MenuItem

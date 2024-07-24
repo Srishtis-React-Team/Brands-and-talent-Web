@@ -331,3 +331,18 @@ p {
 
   font-size: 16px;
 }
+.dropdown-item {
+  color: #000;
+  font-size: 12px;
+  line-height: normal;
+  cursor: pointer;
+  text-decoration: none;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.dropdown-item:hover {
+  background-color: #ff8fb4;
+}
