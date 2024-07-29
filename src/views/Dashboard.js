@@ -60,6 +60,9 @@ const Dashboard = () => {
   const girl8 = require("../assets/images/girl8.png");
   const girl9 = require("../assets/images/girl9.png");
   const girl10 = require("../assets/images/girl10.png");
+  const newbanner_1 = require("../assets/images/newbanner_1.png");
+  const newbanner_2 = require("../assets/images/newbanner_2.png");
+  const newbanner_3 = require("../assets/images/newbanner_3.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -464,7 +467,7 @@ const Dashboard = () => {
     // window.scrollTo(0, 0);
     if (data == "find-talent") {
       if (!currentUserId) {
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -478,7 +481,7 @@ const Dashboard = () => {
 
   const addFavorite = async (data) => {
     if (!currentUserId) {
-      setMessage("You Must Be Logged In");
+      setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
@@ -492,7 +495,7 @@ const Dashboard = () => {
       await ApiHelper.post(`${API.setUserFavorite}${data._id}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
-            setMessage("Added The Talent To Your Favorites ");
+            setMessage("Talent added to your favourite list");
             setOpenPopUp(true);
             getTalentList();
             setTimeout(function() {
@@ -512,7 +515,7 @@ const Dashboard = () => {
 
   const removeFavorite = async (item) => {
     if (!currentUserId) {
-      setMessage("You Must Be Logged In");
+      setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
@@ -783,10 +786,13 @@ const Dashboard = () => {
                 <div className="brand-options">
                   <div className="section-title">Get Booked</div>
                   <div className="section-description brand-secription">
-                    Get discovered by top Brands / Client, set your own rates,
-                    and keep 100% of your earnings. Chat directly with Brands /
-                    Client you love and build lasting relationships. We put
-                    creators first. Sign up today and start earning!
+                    Get discovered by top brands, set your own rates, and keep
+                    100% of your earnings. Chat directly with brands you love
+                    and build lasting relationships. We put creators first. Sign
+                    up today! Get discovered by top brands, set your own rates,
+                    and keep 100% of your earnings. Chat directly with brands
+                    you love and build lasting relationships. We put creators
+                    first. Sign up today!
                   </div>
                   <div
                     className="Join-now-wrapper"
@@ -1105,8 +1111,10 @@ const Dashboard = () => {
                   </div>
                   <div className="card-title">Talent Marketplace</div>
                   <div className="cards-description">
-                    A platform where talents can create a profile, showcase
-                    their work, and connect with...
+                    Brands & Talent (BT) is a creator-booking platform where you
+                    can find verified talent for your projects and campaigns. If
+                    you are a creator, simply create your profile, get verified,
+                    and get booked by brands and clients globally.
                   </div>
                 </div>
               </div>
@@ -1118,8 +1126,9 @@ const Dashboard = () => {
                   </div>
                   <div className="card-title">Hire Talent</div>
                   <div className="cards-description">
-                    The platform will help Brands / Client find, attract, and
-                    hire the best talent as per their ...
+                    Easily find, attract, and hire the best talent tailored to
+                    your needs. Connect with skilled professionals ready to
+                    elevate your brand.
                   </div>
                 </div>
               </div>
@@ -1131,8 +1140,10 @@ const Dashboard = () => {
                   </div>
                   <div className="card-title">Find Jobs</div>
                   <div className="cards-description">
-                    Talent can  build and manage their personal Brands / Client
-                    and will have a unique url ...
+                    Build, manage, and share your profile with a unique URL to
+                    potential clients. You can also use the URL in your resume.
+                    Discover job opportunities and connect with potential
+                    clients effortlessly.
                   </div>
                 </div>
               </div>

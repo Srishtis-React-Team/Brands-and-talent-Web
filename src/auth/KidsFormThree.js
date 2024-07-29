@@ -14,10 +14,11 @@ import { useNavigate } from "react-router";
 import CurrentUser from "../../src/CurrentUser";
 import RichTextEditor from "../views/RichTextEditor";
 import CreatableSelect from "react-select/creatable";
+import useFieldDatas from "../config/useFieldDatas";
 
 const KidsFormThree = ({ onDataFromChild, ...props }) => {
+  const { featuresList } = useFieldDatas();
   const [customOptions, setCustomOptions] = useState({});
-
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
   const [updateDisabled, setUpdateDisabled] = useState(false);
@@ -61,7 +62,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   }, [talentData]);
 
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const uploadIcon = require("../assets/icons/uploadIcon.png");
   const imageType = require("../assets/icons/imageType.png");
   const videoType = require("../assets/icons/videoType.png");
@@ -83,8 +84,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [aboutYou, setAboutYou] = useState([]);
-
-  const [featuresList, setFeaturesList] = useState([]);
   const [features, setFeature] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [instagramFollowers, setInstagramFollowers] = useState("");
@@ -105,10 +104,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const kidsImage = require("../assets/images/kidsImage.png");
 
   useEffect(() => {
-    getFeatures();
-  }, []);
-  useEffect(() => {
-    getFeatures();
     console.log(profileFile, "profileFile");
     console.log(portofolioFile, "portofolioFile");
     console.log(portofolioFile.length, "portofolioFile.length");
@@ -617,16 +612,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     });
   };
 
-  const getFeatures = async () => {
-    await ApiHelper.get(API.getFeatures)
-      .then((resData) => {
-        if (resData) {
-          setFeaturesList(resData.data.data[0].features);
-        }
-      })
-      .catch((err) => {});
-  };
-
   const handleFeaturesChange = (label, value) => {
     const updatedValues = [...features];
     const index = updatedValues.findIndex((item) => item.label === label);
@@ -674,6 +659,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const getPlaceholder = (label) => {
     if (cmPlaceholderOptions.includes(label)) {
       return "Type in cm";
+    }
+    if (label === "Shoe Size") {
+      return "US or EU size only";
     }
     return label;
   };

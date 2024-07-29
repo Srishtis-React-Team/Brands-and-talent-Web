@@ -30,7 +30,7 @@ const DuplicateJobs = ({ sendDataToParent }) => {
   const audiotype = require("../../assets/icons/audiotype.png");
   const idCard = require("../../assets/icons/id-card.png");
   const elipsis = require("../../assets/icons/elipsis.png");
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const kidsImage = require("../../assets/images/kidsImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);

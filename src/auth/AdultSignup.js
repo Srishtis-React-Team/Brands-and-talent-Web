@@ -19,7 +19,7 @@ const AdultSignup = () => {
     generateToken();
   }, []);
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const fbLogo = require("../assets/icons/fbLogo.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
   const kidsImage = require("../assets/images/kidsImage.png");

@@ -344,7 +344,9 @@ const ListJobs = () => {
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company_dtls">
                                       <i className="bi bi-geo-alt-fill location-icon"></i>
-                                      {job?.state}, {job?.city}
+                                      {job?.state}
+                                      {job?.state && <>,</>}
+                                      {job?.country}
                                     </span>
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
@@ -565,7 +567,7 @@ const ListJobs = () => {
               </div>
               {alertpop?.label == "edit" && (
                 <>
-                  <h5>Are you sure you want to Edit this Job ? </h5>
+                  <h5>Do you want to edit this job?</h5>
                 </>
               )}
               {alertpop?.label == "delete" && (
@@ -575,7 +577,7 @@ const ListJobs = () => {
               )}
               {alertpop?.label == "post-job" && (
                 <>
-                  <h5>Are you sure you want to Post this Job ? </h5>
+                  <h5>Would you really like to post this job?</h5>
                 </>
               )}
             </div>

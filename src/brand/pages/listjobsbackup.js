@@ -799,7 +799,7 @@ const ListJobs = () => {
               </div>
               {alertpop?.label == "edit" && (
                 <>
-                  <h5>Are you sure you want to Edit this Job ? </h5>
+                  <h5>Do you want to edit this job?</h5>
                 </>
               )}
               {alertpop?.label == "delete" && (
@@ -809,7 +809,7 @@ const ListJobs = () => {
               )}
               {alertpop?.label == "post-job" && (
                 <>
-                  <h5>Are you sure you want to Post this Job ? </h5>
+                  <h5>Would you really like to post this job? </h5>
                 </>
               )}
             </div>

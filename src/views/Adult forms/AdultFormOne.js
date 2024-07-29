@@ -16,6 +16,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import nationalitiesArray from "../../components/NationalitiesArray";
 import CurrentUser from "../../CurrentUser";
+import useFieldDatas from "../../config/useFieldDatas";
+import { Tooltip } from "react-tooltip";
 
 const AdultFormOne = () => {
   const {
@@ -25,6 +27,7 @@ const AdultFormOne = () => {
     avatarImage,
     fcmToken,
   } = CurrentUser();
+  const { categoryList, professionList } = useFieldDatas();
 
   const [talentData, setTalentData] = useState();
 
@@ -75,7 +78,7 @@ const AdultFormOne = () => {
       zIndex: 9999, // Ensure menu appears above other elements
     }),
   };
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const adultsBanner = require("../../assets/images/adultsBanner.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -472,68 +475,6 @@ const AdultFormOne = () => {
     }
   };
 
-  const professionList = [
-    { value: "Actor", label: "Actor" },
-    { value: "Animator", label: "Animator" },
-    { value: "Architect ", label: "Architect " },
-    { value: "Artist", label: "Artist" },
-    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
-    { value: "Blockchain Developer", label: "Blockchain Developer" },
-    { value: "Career Coach", label: "Career Coach" },
-    { value: "Cartoonist", label: "Cartoonist" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Cinematographer", label: "Cinematographer" },
-    { value: "Comedian", label: "Comedian" },
-    { value: "Copywriter", label: "Copywriter" },
-    { value: "Craftsperson", label: "Craftsperson" },
-    { value: "Creator", label: "Creator" },
-    { value: "Curator", label: "Curator" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Designer ", label: "Designer " },
-    { value: "Dietitian ", label: "Dietitian " },
-    { value: "DJ", label: "DJ" },
-    { value: "Driving Instructor", label: "Driving Instructor" },
-    { value: "Event Planner", label: "Event Planner" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Host/MC", label: "Host/MC" },
-    { value: "Illustrator", label: "Illustrator" },
-    { value: "Influencer", label: "Influencer" },
-    { value: "Interior Designer", label: "Interior Designer" },
-    { value: "Life Coach", label: "Life Coach" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Meditation Teacher", label: "Meditation Teacher" },
-    { value: "Model", label: "Model" },
-    { value: "Music Teacher", label: "Music Teacher" },
-    { value: "Musician", label: "Musician" },
-    { value: "Nail Artist", label: "Nail Artist" },
-    { value: "Nutritionist ", label: "Nutritionist " },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Podcaster", label: "Podcaster" },
-    { value: "Public Speaker", label: "Public Speaker" },
-    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
-    { value: "Singer", label: "Singer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Sculptor", label: "Sculptor" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
-    { value: "Swimming Instructor", label: "Swimming Instructor" },
-    { value: "Tattooist", label: "Tattooist" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "Voice-over Artist", label: "Voice-over Artist" },
-    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
-    { value: "Wedding Planner", label: "Wedding Planner" },
-    { value: "Writer", label: "Writer" },
-    { value: "Yoga Instructor", label: "Yoga Instructor" },
-    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
-  ];
-
   const handleProfessionChange = (selectedOptions) => {
     // setSelectedProfessions(selectedOptions);
     // setProfessionError(false);
@@ -562,24 +503,6 @@ const AdultFormOne = () => {
     setSelectedProfessions(updatedSelectedProfessions);
     setProfessionError(false);
   };
-
-  const categoryList = [
-    "Fashion & Beauty",
-    "Media & Entertainment",
-    "Sports, Fitness, & Wellness",
-    "Creative Arts & Design",
-    "Celebrity",
-    "Writing, Marketing, & Content Creation",
-    "Performing Arts",
-    "Education & Coaching",
-    "Business & Technology",
-    "Luxury & Lifestyle",
-    "Eco-friendly & Sustainability",
-    "Home & Gardening",
-    "Food & Travel",
-    "Diversity & Inclusion",
-    "Kids & Teens",
-  ];
 
   const chooseCategory = (category) => {
     if (selectedCategories.includes(category)) {
@@ -860,7 +783,7 @@ const AdultFormOne = () => {
                             options={professionList}
                             className="basic-multi-select"
                             classNamePrefix="select"
-                            placeholder="Search for Category”"
+                            placeholder="Search for Profession / Skills"
                             onChange={handleProfessionChange}
                             styles={customStyles}
                             value={selectedProfessions}
@@ -968,19 +891,25 @@ const AdultFormOne = () => {
                     </span>
                   </div>
                   <div className="category-list">
-                    {categoryList.map((category, index) => (
+                    {categoryList?.map((category, index) => (
                       <div
                         className={
-                          selectedCategories.includes(category)
+                          selectedCategories.includes(category?.value)
                             ? "selected-category"
                             : "category-name"
                         }
                         onClick={(e) => {
-                          chooseCategory(category);
+                          chooseCategory(category?.value);
                         }}
                         key={index}
+                        data-tooltip-id={`tooltip-${index}`}
                       >
-                        {category}
+                        {category?.value}
+                        <Tooltip
+                          id={`tooltip-${index}`}
+                          place="top"
+                          content={category?.description}
+                        />
                       </div>
                     ))}
                   </div>

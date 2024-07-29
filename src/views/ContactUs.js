@@ -122,17 +122,20 @@ const ContactUs = () => {
 
   return (
     <>
-      <main style={{ margin: "30px" }} id="mainBrand" className="">
+      <main
+        style={{ margin: "30px auto", width: "50%" }}
+        id="mainBrand"
+        className=""
+      >
         <div className="brand-content-main boxBg edit_talentprofile">
           <div className="create-job-title">How Can we help?</div>
           <p>
-            If you need assistance about specific enquiry please feel free to
-            get in touch with us using the form below. we will try to get you
-            with in 1-2 bussiness days.{" "}
+            Have a question? Fill out the form below, and we'll get back to you
+            within 1-2 business days
           </p>
 
-          <div className="update-password-main w-100 row">
-            <div className="kids-form-section col-md-6 mb-3">
+          <div className="update-password-main w-100">
+            <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">
                 Name <span className="mandatory">*</span>
               </label>
@@ -152,7 +155,7 @@ const ContactUs = () => {
                 )}
               </div>
             </div>
-            <div className="kids-form-section col-md-6 mb-3">
+            <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">
                 E-mail <span className="mandatory">*</span>
               </label>
@@ -174,7 +177,7 @@ const ContactUs = () => {
                 <div className="invalid-fields">Please enter Email</div>
               )}
             </div>
-            <div className="kids-form-section col-md-6 mb-3">
+            <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">
                 Mobile No <span className="optional">(Optional)</span>
               </label>
@@ -192,7 +195,7 @@ const ContactUs = () => {
                 <div className="invalid-fields">Only Numbers Allowed</div>
               )}
             </div>
-            <div className="kids-form-section col-md-6 mb-3">
+            <div className="kids-form-section col-md-12 mb-3">
               <label
                 htmlFor="exampleFormControlTextarea1"
                 className="form-label"

@@ -140,9 +140,8 @@ const ContactSupport = () => {
         <div className="brand-content-main boxBg edit_talentprofile">
           <div className="create-job-title">How Can we help?</div>
           <p>
-            If you need assistance about specific enquiry please feel free to
-            get in touch with us using the form below. we will try to get you
-            with in 1-2 bussiness days.{" "}
+            Have a question? Fill out the form below, and we'll get back to you
+            within 1-2 business days
           </p>
 
           <div className="update-password-main w-100 row">

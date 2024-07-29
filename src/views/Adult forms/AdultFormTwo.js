@@ -50,7 +50,7 @@ const AdultFormTwo = () => {
     console.log(talentData, "talentData");
   }, [talentData]);
 
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const adultsBanner = require("../../assets/images/adultsBanner.png");

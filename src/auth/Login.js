@@ -35,7 +35,7 @@ const Login = () => {
     console.log(token, "token");
   }, []);
 
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
   const importIcon = require("../assets/icons/instagram.png");
   const userIcon = require("../assets/icons/user.png");
@@ -142,7 +142,7 @@ const Login = () => {
           if (resData.data.status === true) {
             console.log("called");
             setIsLoading(false);
-            setMessage("Logged In SuccessFully!");
+            setMessage("Logged in successfully!");
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
@@ -184,7 +184,7 @@ const Login = () => {
           if (resData.data.status === true) {
             console.log("called");
             setIsLoading(false);
-            setMessage("Logged In SuccessFully!");
+            setMessage("Logged in successfully!");
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);

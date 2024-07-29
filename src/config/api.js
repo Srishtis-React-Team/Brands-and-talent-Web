@@ -14,6 +14,7 @@ export const API = {
   chatbot: BASEURL + "admin/chatbot",
   giftMail: BASEURL + "admin/giftMail",
   payment: BASEURL + "admin/payment",
+  getFieldDatas: BASEURL + "features/getFieldDatas",
 
   //Registration
   brandsRegister: BASEURL + "brands/brandsRegister",

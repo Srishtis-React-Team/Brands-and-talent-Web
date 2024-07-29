@@ -60,6 +60,7 @@ const BrandNotification = () => {
   };
 
   const viewNotification = async (item) => {
+    console.log(item, "item viewNotification");
     const formData = {
       notificationId: item?._id,
     };
@@ -70,11 +71,14 @@ const BrandNotification = () => {
         }
       })
       .catch((err) => {});
-    navigate("/preview-job", {
-      state: {
-        from: "brand-notification",
-        jobId: item?.gigId,
-      },
+    // navigate("/preview-job", {
+    //   state: {
+    //     from: "brand-notification",
+    //     jobId: item?.gigId,
+    //   },
+    // });
+    navigate(`/talent/${item?.talentDetails?.publicUrl}`, {
+      state: { talentData: item?.talentDetails },
     });
   };
 
@@ -183,6 +187,9 @@ const BrandNotification = () => {
                     );
                   })}
                 </>
+              )}
+              {notificationList && notificationList.length === 0 && (
+                <>No Notifications Available</>
               )}
             </div>
           </div>

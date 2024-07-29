@@ -111,7 +111,7 @@ const Pricing = () => {
       });
 
     // window.location.href =
-    //   "https://buymeacoffee.com/brandsandtalent/membership";
+    //   "https://buymeacoffee.com/brandsandtalent";
   };
 
   function handleForms(e) {

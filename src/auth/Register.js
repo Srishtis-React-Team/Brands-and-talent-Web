@@ -15,7 +15,7 @@ import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
 const Register = () => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const userIcon = require("../assets/icons/user.png");
   const cameraIcon = require("../assets/icons/cameraIcon.png");
   const fbLogo = require("../assets/icons/fbLogo.png");

@@ -976,7 +976,7 @@ const TalentProfile = () => {
                               <div className="talent-profession-name">
                                 {item?.value}{" "}
                                 {item?.openToOffers === true && (
-                                  <span>(Rates are negotiable)</span>
+                                  <span>(Negotiable)</span>
                                 )}
                               </div>
                               <div className="talent-profession-value">

@@ -80,7 +80,7 @@ const BrandFavorites = () => {
     await ApiHelper.post(`${API.setUserFavorite}${loggidInID}`, formData, true)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Added The Talent To Your Favorites ");
+          setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
           getFavorites();
           setTimeout(function() {
@@ -223,7 +223,7 @@ const BrandFavorites = () => {
           <div className="brand-content-main">
             <section>
               <div className="brand-filter-section create-job-title">
-                Favorite Talents
+                Favourite Talents
               </div>
               <div className="models-images" style={{ width: "100%" }}>
                 <div className="gallery-section">

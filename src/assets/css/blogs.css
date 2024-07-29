@@ -167,7 +167,7 @@ ul.shareDiv li:hover {
 
 .responsive-video {
   width: 100%;
-  max-width: 600px; /* Adjust the max-width as needed */
+  max-width: 1000px; /* Adjust the max-width as needed */
   height: auto;
   border-radius: 16px;
 }
@@ -212,6 +212,13 @@ ul.shareDiv li:hover {
 .blog-DetailBg .blogs-wrapper {
   margin: 5px 0 15px;
   padding: 0;
+}
+
+.resource-image-padding {
+  background-color: rgb(110 221 175);
+  padding: 30px 10px;
+  border-radius: 25px;
+  text-align: center;
 }
 
 @media only screen and (max-width: 768px) {

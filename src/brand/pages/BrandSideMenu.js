@@ -308,7 +308,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             }
           >
             <i className="bi bi-heart icons"></i>
-            <div className="brand-menu-text">Favourite Talent</div>
+            <div className="brand-menu-text">Favourite Talents</div>
           </Link>
 
           <Link

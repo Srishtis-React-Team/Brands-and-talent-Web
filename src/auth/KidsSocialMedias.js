@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 
 const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
 
   const fbLogo = require("../assets/icons/social-media-icons/fbLogo.png");
   const instagram = require("../assets/icons/social-media-icons/instagram.png");

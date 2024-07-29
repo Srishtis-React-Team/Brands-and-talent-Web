@@ -529,7 +529,7 @@ const EditBrands = () => {
     await ApiHelper.post(`${API.editBrands}${brandId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("PublicUrl Updated SuccessFully!");
+          setMessage("Url updated successfully!");
           setOpenPopUp(true);
           setTimeout(function() {
             setOpenPopUp(false);

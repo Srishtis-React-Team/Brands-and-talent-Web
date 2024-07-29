@@ -241,11 +241,11 @@ const HowItWorks = () => {
               </div>
 
               <div>
-                <h2 className="maintitles text-center">Brands/Clients</h2>
+                <h2 className="maintitles text-center">For Brands/Client </h2>
 
                 <div className="video-container">
                   <video
-                    src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/36131e65-e942-4b1d-afe2-98900fb35046.mp4"
+                    src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/9a0040f1-6bd1-4a31-9dfc-5e8a76f4fb2b.mp4"
                     autoPlay
                     loop
                     controls
@@ -265,17 +265,19 @@ const HowItWorks = () => {
                       {index % 2 === 0 ? (
                         <>
                           <div className="resource-image-wrapper imgL col-md-6">
-                            {resource.image ? (
-                              <img
-                                className="resource-image imgWid"
-                                src={resource.image}
-                                alt="Resource"
-                              />
-                            ) : (
-                              <div className="placeholder">
-                                No Image Available
-                              </div>
-                            )}
+                            <div className="resource-image-padding">
+                              {resource.image ? (
+                                <img
+                                  className="resource-image imgWid"
+                                  src={resource.image}
+                                  alt="Resource"
+                                />
+                              ) : (
+                                <div className="placeholder">
+                                  No Image Available
+                                </div>
+                              )}
+                            </div>
                           </div>
                           <div className="resource-content-wrapper col-md-6 padSpace">
                             <div
@@ -313,17 +315,19 @@ const HowItWorks = () => {
                             </div>
                           </div>
                           <div className="resource-image-wrapper imgL col-md-6">
-                            {resource.image ? (
-                              <img
-                                className="resource-image imgWid"
-                                src={resource.image}
-                                alt="Resource"
-                              />
-                            ) : (
-                              <div className="placeholder">
-                                No Image Available
-                              </div>
-                            )}
+                            <div className="resource-image-padding">
+                              {resource.image ? (
+                                <img
+                                  className="resource-image imgWid"
+                                  src={resource.image}
+                                  alt="Resource"
+                                />
+                              ) : (
+                                <div className="placeholder">
+                                  No Image Available
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </>
                       )}
@@ -336,7 +340,7 @@ const HowItWorks = () => {
 
                   <div className="video-container">
                     <video
-                      src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/e953bb11-d401-436e-ba58-66bf1d87fff5.mp4"
+                      src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/370b2c13-5f1c-47e4-9ef2-2b8e76e392c4.mp4"
                       loop
                       controls
                       className="responsive-video"
@@ -355,17 +359,19 @@ const HowItWorks = () => {
                         {index % 2 === 0 ? (
                           <>
                             <div className="resource-image-wrapper imgL col-md-6">
-                              {resource.image ? (
-                                <img
-                                  className="resource-image imgWid"
-                                  src={resource.image}
-                                  alt="Resource"
-                                />
-                              ) : (
-                                <div className="placeholder">
-                                  No Image Available
-                                </div>
-                              )}
+                              <div className="resource-image-padding">
+                                {resource.image ? (
+                                  <img
+                                    className="resource-image imgWid"
+                                    src={resource.image}
+                                    alt="Resource"
+                                  />
+                                ) : (
+                                  <div className="placeholder">
+                                    No Image Available
+                                  </div>
+                                )}
+                              </div>
                             </div>
                             <div className="resource-content-wrapper col-md-6 padSpace">
                               <div
@@ -403,17 +409,20 @@ const HowItWorks = () => {
                               </div>
                             </div>
                             <div className="resource-image-wrapper imgL col-md-6">
-                              {resource.image ? (
-                                <img
-                                  className="resource-image imgWid"
-                                  src={resource.image}
-                                  alt="Resource"
-                                />
-                              ) : (
-                                <div className="placeholder">
-                                  No Image Available
-                                </div>
-                              )}
+                              <div className="resource-image-padding">
+                                {" "}
+                                {resource.image ? (
+                                  <img
+                                    className="resource-image imgWid"
+                                    src={resource.image}
+                                    alt="Resource"
+                                  />
+                                ) : (
+                                  <div className="placeholder">
+                                    No Image Available
+                                  </div>
+                                )}{" "}
+                              </div>
                             </div>
                           </>
                         )}

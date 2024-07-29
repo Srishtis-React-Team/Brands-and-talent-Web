@@ -12,7 +12,7 @@ import { generateToken } from "../firebase";
 
 const BrandFirstGig = () => {
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
@@ -30,8 +30,8 @@ const BrandFirstGig = () => {
     "4 to 10 jobs",
     "11 to 20 jobs",
     "21 to 50 jobs",
-    "50 to 100 jobs",
-    "100 to 250 jobs",
+    "51 to 100 jobs",
+    "101 to 250 jobs",
     "250+ jobs",
   ];
 
@@ -89,7 +89,7 @@ const BrandFirstGig = () => {
                 value={position}
               >
                 <option value="" disabled selected>
-                  How Many Positions are you looking to staff?
+                  How many positions are you looking to staff?
                 </option>
                 {positionOptions.map((option, index) => (
                   <option key={index} value={option}>

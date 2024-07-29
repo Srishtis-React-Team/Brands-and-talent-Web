@@ -13,7 +13,7 @@ import Select from "react-select";
 
 const BrandDetails = () => {
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
@@ -165,6 +165,9 @@ const BrandDetails = () => {
     }
     if (address === "") {
       setAddressError(true);
+    }
+    if (yourName === "") {
+      setYourNameError(true);
     }
     if (
       brandName !== "" &&
@@ -414,7 +417,7 @@ const BrandDetails = () => {
                     ></input>
                     {brandNameError && (
                       <div className="invalid-fields">
-                        Please enter Brand Name
+                        Please enter Brand / Client name
                       </div>
                     )}
                     {brandNameLetterError && (
@@ -585,7 +588,7 @@ const BrandDetails = () => {
                     ></input>
                     {zipCodeError && (
                       <div className="invalid-fields">
-                        Please enter Phone Number
+                        Please enter Zip Code
                       </div>
                     )}
                     {zipCodeValidation && (

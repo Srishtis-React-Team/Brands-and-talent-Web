@@ -34,6 +34,8 @@ import RichTextEditor from "../views/RichTextEditor";
 import CreatableSelect from "react-select/creatable";
 import { IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Tooltip } from "react-tooltip";
+import useFieldDatas from "../config/useFieldDatas";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,6 +64,8 @@ function a11yProps(index) {
 }
 
 const EditTalent = () => {
+  const { categoryList, professionList, featuresList } = useFieldDatas();
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [anchorE2, setAnchorE2] = useState(null);
@@ -110,6 +114,9 @@ const EditTalent = () => {
     if (cmPlaceholderOptions.includes(label)) {
       return "Type in cm";
     }
+    if (label === "Shoe Size") {
+      return "US or EU size only";
+    }
     return label;
   };
 
@@ -130,7 +137,7 @@ const EditTalent = () => {
   const userId = urlParams.get("userId");
   const userEmail = urlParams.get("userEmail");
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const kidsImage = require("../assets/images/kidsImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -202,7 +209,6 @@ const EditTalent = () => {
   const [allJobsList, setAllJobsList] = useState([]);
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [selectedProfessionsEdit, setSelectedProfessionsEdit] = useState([]);
-  const [featuresList, setFeaturesList] = useState([]);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
   const [videoUrl, setVideoUrl] = useState("");
@@ -227,10 +233,6 @@ const EditTalent = () => {
     }),
   };
 
-  useEffect(() => {
-    getFeatures();
-  }, []);
-
   const maritalStatusOptions = [
     "Single",
     "Married",
@@ -239,86 +241,6 @@ const EditTalent = () => {
     "In a Relationship",
     "Engaged",
     "Prefer Not to Say",
-  ];
-
-  const professionList = [
-    { value: "Actor", label: "Actor" },
-    { value: "Animator", label: "Animator" },
-    { value: "Architect ", label: "Architect " },
-    { value: "Artist", label: "Artist" },
-    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
-    { value: "Blockchain Developer", label: "Blockchain Developer" },
-    { value: "Career Coach", label: "Career Coach" },
-    { value: "Cartoonist", label: "Cartoonist" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Cinematographer", label: "Cinematographer" },
-    { value: "Comedian", label: "Comedian" },
-    { value: "Copywriter", label: "Copywriter" },
-    { value: "Craftsperson", label: "Craftsperson" },
-    { value: "Creator", label: "Creator" },
-    { value: "Curator", label: "Curator" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Designer ", label: "Designer " },
-    { value: "Dietitian ", label: "Dietitian " },
-    { value: "DJ", label: "DJ" },
-    { value: "Driving Instructor", label: "Driving Instructor" },
-    { value: "Event Planner", label: "Event Planner" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Host/MC", label: "Host/MC" },
-    { value: "Illustrator", label: "Illustrator" },
-    { value: "Influencer", label: "Influencer" },
-    { value: "Interior Designer", label: "Interior Designer" },
-    { value: "Life Coach", label: "Life Coach" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Meditation Teacher", label: "Meditation Teacher" },
-    { value: "Model", label: "Model" },
-    { value: "Music Teacher", label: "Music Teacher" },
-    { value: "Musician", label: "Musician" },
-    { value: "Nail Artist", label: "Nail Artist" },
-    { value: "Nutritionist ", label: "Nutritionist " },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Podcaster", label: "Podcaster" },
-    { value: "Public Speaker", label: "Public Speaker" },
-    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
-    { value: "Singer", label: "Singer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Sculptor", label: "Sculptor" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
-    { value: "Swimming Instructor", label: "Swimming Instructor" },
-    { value: "Tattooist", label: "Tattooist" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "Voice-over Artist", label: "Voice-over Artist" },
-    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
-    { value: "Wedding Planner", label: "Wedding Planner" },
-    { value: "Writer", label: "Writer" },
-    { value: "Yoga Instructor", label: "Yoga Instructor" },
-    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
-  ];
-
-  const categoryList = [
-    "Fashion & Beauty",
-    "Media & Entertainment",
-    "Sports, Fitness, & Wellness",
-    "Creative Arts & Design",
-    "Celebrity",
-    "Writing, Marketing, & Content Creation",
-    "Performing Arts",
-    "Education & Coaching",
-    "Business & Technology",
-    "Luxury & Lifestyle",
-    "Eco-friendly & Sustainability",
-    "Home & Gardening",
-    "Food & Travel",
-    "Diversity & Inclusion",
-    "Kids & Teens",
   ];
 
   function chooseCategory(category) {
@@ -539,16 +461,6 @@ const EditTalent = () => {
 
   const [services, setServices] = useState();
   const [updatedServices, setUpdatedServices] = useState();
-
-  const getFeatures = async () => {
-    await ApiHelper.get(API.getFeatures)
-      .then((resData) => {
-        if (resData) {
-          setFeaturesList(resData.data.data[0].features);
-        }
-      })
-      .catch((err) => {});
-  };
 
   const getKidsData = async () => {
     // alert("getKidsData");
@@ -1957,7 +1869,7 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("PublicUrl Updated SuccessFully!");
+            setMessage("Url updated successfully!");
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
@@ -1984,7 +1896,7 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("PublicUrl Updated SuccessFully!");
+            setMessage("Url updated successfully!");
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
@@ -2574,7 +2486,7 @@ const EditTalent = () => {
                             options={professionList}
                             className="basic-multi-select"
                             classNamePrefix="select"
-                            placeholder="Search for Category"
+                            placeholder="Search for Profession / Skills"
                             onChange={handleProfessionChange}
                             styles={customStyles}
                             value={selectedProfessions}
@@ -2665,19 +2577,25 @@ const EditTalent = () => {
                   <span className="mandatory">*</span>
                 </div>
                 <div className="category-list">
-                  {categoryList.map((category, index) => (
+                  {categoryList?.map((category, index) => (
                     <div
                       className={
-                        selectedCategories.includes(category)
+                        selectedCategories.includes(category?.value)
                           ? "selected-category"
                           : "category-name"
                       }
                       onClick={(e) => {
-                        chooseCategory(category);
+                        chooseCategory(category?.value);
                       }}
                       key={index}
+                      data-tooltip-id={`tooltip-${index}`}
                     >
-                      {category}
+                      {category?.value}
+                      <Tooltip
+                        id={`tooltip-${index}`}
+                        place="top"
+                        content={category?.description}
+                      />
                     </div>
                   ))}
                 </div>

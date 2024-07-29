@@ -423,7 +423,7 @@ const Applicants = () => {
                   handleForms("sortlisted-candidates");
                 }}
               >
-                ShortListed
+                Shortlisted
               </div>
               <div
                 className={

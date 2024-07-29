@@ -10,7 +10,7 @@ import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
 const JobSuccess = () => {
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const successJob = require("../../assets/images/job-success.png");
   const greenTick = require("../../assets/icons/greenTick.png");
   const [openPopUp, setOpenPopUp] = useState(false);

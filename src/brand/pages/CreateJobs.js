@@ -28,8 +28,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { format, parseISO } from "date-fns";
 import { FlashOnTwoTone } from "@mui/icons-material";
+import useFieldDatas from "../../config/useFieldDatas";
 
 const CreateJobs = () => {
+  const { categoryList, professionList } = useFieldDatas();
+  console.log(professionList, "professionList");
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -61,7 +64,7 @@ const CreateJobs = () => {
   const audiotype = require("../../assets/icons/audiotype.png");
   const idCard = require("../../assets/icons/id-card.png");
   const elipsis = require("../../assets/icons/elipsis.png");
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const kidsImage = require("../../assets/images/kidsImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -72,34 +75,36 @@ const CreateJobs = () => {
   const [allJobsList, setAllJobsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [selectedJobID, setSelectedJobID] = useState(null);
-  const [editJobData, setEditJobData] = useState(null);
-  const [brandId, setBrandId] = useState(null);
-  const [brandImage, setBrandImage] = useState(null);
-  const [jobCountNumber, setJobCountNumber] = useState(null);
-  const [brandData, setBrandData] = useState(null);
-  const [minPay, setMinPay] = useState(null);
-  const [maxPay, setMaxPay] = useState(null);
-  const [instaMin, setInstaMin] = useState(null);
-  const [instaMax, setInstaMax] = useState(null);
-  const [tikTokMin, setTiktokMin] = useState(null);
-  const [tikTokMax, setTiktokMax] = useState(null);
-  const [linkedInMin, setLinkedInMin] = useState(null);
-  const [linkedInMax, setLinkedInMax] = useState(null);
-  const [fbMin, setFbMin] = useState(null);
-  const [fbMax, setFbMax] = useState(null);
-  const [twitterMin, setTwitterMin] = useState(null);
-  const [twitterMax, setTwitterMax] = useState(null);
-  const [youTubeMin, setYouTubeMin] = useState(null);
-  const [youTubeMax, setYouTubeMax] = useState(null);
-  const [employmentType, setEmploymentType] = useState(null);
-  const [employmentError, setEmploymentError] = useState(null);
+  const [selectedJobID, setSelectedJobID] = useState("");
+  const [editJobData, setEditJobData] = useState("");
+  const [brandId, setBrandId] = useState("");
+  const [brandImage, setBrandImage] = useState("");
+  const [jobCountNumber, setJobCountNumber] = useState("");
+  const [brandData, setBrandData] = useState("");
+  const [minPay, setMinPay] = useState("");
+  const [maxPay, setMaxPay] = useState("");
+  const [instaMin, setInstaMin] = useState("");
+  const [instaMax, setInstaMax] = useState("");
+  const [tikTokMin, setTiktokMin] = useState("");
+  const [tikTokMax, setTiktokMax] = useState("");
+  const [linkedInMin, setLinkedInMin] = useState("");
+  const [linkedInMax, setLinkedInMax] = useState("");
+  const [fbMin, setFbMin] = useState("");
+  const [fbMax, setFbMax] = useState("");
+  const [twitterMin, setTwitterMin] = useState("");
+  const [twitterMax, setTwitterMax] = useState("");
+  const [youTubeMin, setYouTubeMin] = useState("");
+  const [youTubeMax, setYouTubeMax] = useState("");
+  const [employmentType, setEmploymentType] = useState("");
+  const [employmentError, setEmploymentError] = useState(false);
   const companyList = [];
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [selectedGenderOptions, setSelectedGenderOptions] = useState([]);
   const [selectedNationalityOptions, setSelectedNationalityOptions] = useState(
     []
   );
+
+  const [isDuplicateJob, setIsDuplicateJob] = useState(false);
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
@@ -117,24 +122,6 @@ const CreateJobs = () => {
         console.log(err);
       });
   };
-
-  const categoryList = [
-    "Fashion & Beauty",
-    "Media & Entertainment",
-    "Sports, Fitness, & Wellness",
-    "Creative Arts & Design",
-    "Celebrity",
-    "Writing, Marketing, & Content Creation",
-    "Performing Arts",
-    "Education & Coaching",
-    "Business & Technology",
-    "Luxury & Lifestyle",
-    "Eco-friendly & Sustainability",
-    "Home & Gardening",
-    "Food & Travel",
-    "Diversity & Inclusion",
-    "Kids & Teens",
-  ];
 
   const customStylesProfession = {
     control: (provided, state) => ({
@@ -312,18 +299,6 @@ const CreateJobs = () => {
       setEditorStateClientDescription(hiringCompanyDescription);
       setClientDescription(editData?.hiringCompanyDescription);
 
-      const howToApplyDescriptionContent = editData?.howToApplyDescription[0];
-      const howToApplyDescriptionContentBlocks = convertFromHTML(
-        howToApplyDescriptionContent
-      );
-      const howToApplyDescriptionContentState = ContentState.createFromBlockArray(
-        howToApplyDescriptionContentBlocks
-      );
-      const howToApplyDescription = EditorState.createWithContent(
-        howToApplyDescriptionContentState
-      );
-      setEditorStateHowToApply(howToApplyDescription);
-      setHowToApplyDescription(editData?.howToApplyDescription);
       setfrequency(frequencyValue);
     }
   };
@@ -333,6 +308,7 @@ const CreateJobs = () => {
     console.log(e, "selectedJobID");
     setSelectedJobID(e?.value);
     getJobsByID(e?.value, e?.type);
+    setIsDuplicateJob(true);
   };
 
   const getJobsByID = async (jobId, type) => {
@@ -375,25 +351,27 @@ const CreateJobs = () => {
     console.log(editJobData, "editJobData duplicateJob");
     if (editJobData) {
       setSelectedTab("create-job");
+      console.log(editJobData, "editJobDataupdateJobFormDatas");
+      console.log(editJobData?.category, "editJobData?.category");
+      setCategory(editJobData?.category);
       setEmploymentType(editJobData?.employmentType);
+      setLastdateApply(editJobData?.lastDateForApply);
+      setSkills(editJobData?.skills);
+      setMinAge(editJobData?.minAge);
+      setMaxAge(editJobData?.maxAge);
       setjobTitle(editJobData?.jobTitle);
       setAgeRange(editJobData?.age);
       setzipCode(editJobData?.jobLocation);
       setstreetAddress(editJobData?.streetAddress);
       setjobType(editJobData?.jobType);
       setGender(editJobData?.gender);
-      setLastdateApply(editJobData?.lastDateForApply);
       setWhyWorkWithUs(editJobData?.whyWorkWithUs);
       setSelectedApplyOption(editJobData?.selectedApplyOption);
       setHiringCompany(editJobData?.hiringCompany);
-      setSkills(editJobData?.skills);
       setSelectedBenefits(editJobData?.benefits);
       setSelectedApplyOption(editJobData?.howLikeToApply);
       setPortofolioFile(editJobData?.workSamples);
-      setCategory(editJobData?.category);
-      setMinAge(editJobData?.minAge);
-      setMaxAge(editJobData?.maxAge);
-      setJobCurrency(jobCurrency);
+      setJobCurrency(editJobData?.jobCurrency);
       setInstaMin(editJobData?.instaMin);
       setInstaMax(editJobData?.instaMax);
       setTiktokMin(editJobData?.tikTokMin);
@@ -404,31 +382,51 @@ const CreateJobs = () => {
       setFbMax(editJobData?.fbMax);
       setTwitterMin(editJobData?.twitterMin);
       setTwitterMax(editJobData?.twitterMax);
-      setYouTubeMin(editData?.youTubeMin);
-      setYouTubeMax(editData?.youTubeMax);
-      setCountry(editJobData?.country);
-      setState(editJobData?.state);
-      getStates(editJobData?.country);
-      setKidsCity(editJobData?.city);
-      getCities({
-        countryName: editJobData?.country,
-        stateName: editJobData?.state,
+      setYouTubeMin(editJobData?.youTubeMin);
+      setYouTubeMax(editJobData?.youTubeMax);
+      setCountry(editJobData.country);
+      setState(editJobData.state);
+      getStates(editJobData.country);
+      setKidsCity(editJobData.city);
+
+      const genderUpdatedOptions = editJobData?.gender.map((gender) => {
+        return gendersOptions.find((option) => option.label === gender);
       });
+      console.log(genderUpdatedOptions, "genderUpdatedOptions");
+      setSelectedGenderOptions(genderUpdatedOptions);
+
       const selectedOptions = editJobData?.languages.map((language) => {
         return languageOptions.find((option) => option.label === language);
       });
+      console.log(selectedOptions, "selectedOptions");
+
       setSelectedLanguageOptions(selectedOptions);
 
-      const nationalityOptions = editData?.nationality.map((language) => {
-        return nationalityOptions.find((option) => option.label === language);
+      const nationalityOptions = editJobData?.nationality.map((language) => {
+        return nationalitiesArray.find((option) => option.label === language);
       });
       setSelectedNationalityOptions(nationalityOptions);
 
-      const genderUpdatedOptions = editData?.gender.map((gender) => {
-        return genderUpdatedOptions.find((option) => option.label === gender);
-      });
-      setSelectedGenderOptions(genderUpdatedOptions);
+      const dynamicKey = Object.keys(editJobData.compensation)[0];
+      const minPayValue = editJobData.compensation[dynamicKey].minPay;
+      setMinPay(minPayValue);
+      const maxPaydynamicKey = Object.keys(editJobData.compensation)[0];
+      const maxPayValue = editJobData.compensation[maxPaydynamicKey].maxPay;
+      setMaxPay(maxPayValue);
 
+      const currencydynamicKey = Object.keys(editJobData.compensation)[0];
+      const currencyValue =
+        editJobData.compensation[currencydynamicKey].currency;
+      setCurrency(currencyValue);
+
+      const frequencydynamicKey = Object.keys(editJobData.compensation)[0];
+      const frequencyValue =
+        editJobData.compensation[frequencydynamicKey].frequency;
+
+      getCities({
+        countryName: editJobData.country,
+        stateName: editJobData.state,
+      });
       if (editJobData?.questions && editJobData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editJobData?.questions);
@@ -448,16 +446,22 @@ const CreateJobs = () => {
         setValueUSD(
           editJobData?.compensation?.paid_collaboration_and_gift?.amount_value
         );
+        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
       } else if (
         editJobData?.compensation.hasOwnProperty("paid_collaboration")
       ) {
         setCompensationChange("paid_collaboration");
         setType(editJobData?.compensation?.paid_collaboration?.type);
         setCurrency(editJobData?.compensation?.paid_collaboration?.currency);
+        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
       } else if (editJobData?.compensation.hasOwnProperty("product_gift")) {
         setCompensationChange("product_gift");
         setProductName(editJobData?.compensation?.product_gift?.product_name);
         setValueUSD(editJobData?.compensation?.product_gift?.amount_value);
+        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
       }
       if (editJobData?.paymentType?.label === "range") {
         setSelectedPaymentOption("range");
@@ -467,87 +471,44 @@ const CreateJobs = () => {
         setSelectedPaymentOption("fixed");
         setAmount(editJobData?.paymentType?.amount);
       }
-      if (
-        editJobData?.jobDescription &&
-        editJobData?.jobDescription.length > 0
-      ) {
-        const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
-        const jobDescriptionContentBlocks = convertFromHTML(
-          jobDescriptionhtmlContent
-        );
-        const jobDescriptionContentState = ContentState.createFromBlockArray(
-          jobDescriptionContentBlocks
-        );
-        const updateJobDescription = EditorState.createWithContent(
-          jobDescriptionContentState
-        );
-        setEditorStateJobDescription(updateJobDescription);
-        setJobDescription(editJobData?.jobDescription);
-      }
+      const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
+      const jobDescriptionContentBlocks = convertFromHTML(
+        jobDescriptionhtmlContent
+      );
+      const jobDescriptionContentState = ContentState.createFromBlockArray(
+        jobDescriptionContentBlocks
+      );
+      const updateJobDescription = EditorState.createWithContent(
+        jobDescriptionContentState
+      );
+      setEditorStateJobDescription(updateJobDescription);
+      setJobDescription(editJobData?.jobDescription);
+      const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
+      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+        whyWorkWithUsContentBlocks
+      );
+      const updatewhyWorkWithUs = EditorState.createWithContent(
+        whyWorkWithUsContentState
+      );
+      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
 
-      if (
-        editJobData?.additionalRequirements &&
-        editJobData?.additionalRequirements.length > 0
-      ) {
-        const jobRequirementshtmlContent =
-          editJobData?.additionalRequirements[0];
-        const jobRequirementsContentBlocks = convertFromHTML(
-          jobRequirementshtmlContent
-        );
-        const jobRequirementsContentState = ContentState.createFromBlockArray(
-          jobRequirementsContentBlocks
-        );
-        const updatejobRequirements = EditorState.createWithContent(
-          jobRequirementsContentState
-        );
-        setEditorStateJobRequirements(updatejobRequirements);
-        setJobRequirements(editJobData?.additionalRequirements);
-      }
-      if (editJobData?.whyWorkWithUs && editJobData?.whyWorkWithUs.length > 0) {
-        const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
-        const whyWorkWithUsContentBlocks = convertFromHTML(
-          whyWorkWithUsContent
-        );
-        const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-          whyWorkWithUsContentBlocks
-        );
-        const updatewhyWorkWithUs = EditorState.createWithContent(
-          whyWorkWithUsContentState
-        );
-        setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
-        setWhyWorkWithUs(editJobData?.whyWorkWithUs);
-      }
-      if (
-        editJobData?.hiringCompanyDescription &&
-        editJobData?.hiringCompanyDescription.length > 0
-      ) {
-        const hiringCompanyDescriptionContent =
-          editJobData?.hiringCompanyDescription[0];
-        const hiringCompanyDescriptionContentBlocks = convertFromHTML(
-          hiringCompanyDescriptionContent
-        );
-        const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
-          hiringCompanyDescriptionContentBlocks
-        );
-        const hiringCompanyDescription = EditorState.createWithContent(
-          hiringCompanyDescriptionContentState
-        );
-        setEditorStateClientDescription(hiringCompanyDescription);
-        setClientDescription(editJobData?.hiringCompanyDescription);
+      const hiringCompanyDescriptionContent =
+        editJobData?.hiringCompanyDescription[0];
+      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+        hiringCompanyDescriptionContent
+      );
+      const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
+        hiringCompanyDescriptionContentBlocks
+      );
+      const hiringCompanyDescription = EditorState.createWithContent(
+        hiringCompanyDescriptionContentState
+      );
+      setEditorStateClientDescription(hiringCompanyDescription);
+      setClientDescription(editJobData?.hiringCompanyDescription);
 
-        const howToApplyDescriptionContent = editData?.howToApplyDescription[0];
-        const howToApplyDescriptionContentBlocks = convertFromHTML(
-          howToApplyDescriptionContent
-        );
-        const howToApplyDescriptionContentState = ContentState.createFromBlockArray(
-          howToApplyDescriptionContentBlocks
-        );
-        const howToApplyDescription = EditorState.createWithContent(
-          howToApplyDescriptionContentState
-        );
-        setEditorStateHowToApply(howToApplyDescription);
-        setHowToApplyDescription(editData?.howToApplyDescription);
-      }
+      setfrequency(frequencyValue);
     }
   };
 
@@ -1086,68 +1047,6 @@ const CreateJobs = () => {
     setProfessionError(false);
   };
 
-  const professionList = [
-    { value: "Actor", label: "Actor" },
-    { value: "Animator", label: "Animator" },
-    { value: "Architect ", label: "Architect " },
-    { value: "Artist", label: "Artist" },
-    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
-    { value: "Blockchain Developer", label: "Blockchain Developer" },
-    { value: "Career Coach", label: "Career Coach" },
-    { value: "Cartoonist", label: "Cartoonist" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Cinematographer", label: "Cinematographer" },
-    { value: "Comedian", label: "Comedian" },
-    { value: "Copywriter", label: "Copywriter" },
-    { value: "Craftsperson", label: "Craftsperson" },
-    { value: "Creator", label: "Creator" },
-    { value: "Curator", label: "Curator" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Designer ", label: "Designer " },
-    { value: "Dietitian ", label: "Dietitian " },
-    { value: "DJ", label: "DJ" },
-    { value: "Driving Instructor", label: "Driving Instructor" },
-    { value: "Event Planner", label: "Event Planner" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Host/MC", label: "Host/MC" },
-    { value: "Illustrator", label: "Illustrator" },
-    { value: "Influencer", label: "Influencer" },
-    { value: "Interior Designer", label: "Interior Designer" },
-    { value: "Life Coach", label: "Life Coach" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Meditation Teacher", label: "Meditation Teacher" },
-    { value: "Model", label: "Model" },
-    { value: "Music Teacher", label: "Music Teacher" },
-    { value: "Musician", label: "Musician" },
-    { value: "Nail Artist", label: "Nail Artist" },
-    { value: "Nutritionist ", label: "Nutritionist " },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Podcaster", label: "Podcaster" },
-    { value: "Public Speaker", label: "Public Speaker" },
-    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
-    { value: "Singer", label: "Singer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Sculptor", label: "Sculptor" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
-    { value: "Swimming Instructor", label: "Swimming Instructor" },
-    { value: "Tattooist", label: "Tattooist" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "Voice-over Artist", label: "Voice-over Artist" },
-    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
-    { value: "Wedding Planner", label: "Wedding Planner" },
-    { value: "Writer", label: "Writer" },
-    { value: "Yoga Instructor", label: "Yoga Instructor" },
-    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
-  ];
-
   const gendersOptions = [
     { value: "Man", label: "Man" },
     { value: "Woman", label: "Woman" },
@@ -1407,7 +1306,7 @@ const CreateJobs = () => {
           .catch((err) => {});
       }
     } else {
-      setMessage("Please Fill All Required Fields");
+      setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
@@ -1544,10 +1443,11 @@ const CreateJobs = () => {
         })
         .catch((err) => {});
     } else {
-      setMessage("Please Fill All Required Fields");
+      setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
+        setIsLoading(false);
       }, 2000);
     }
   };
@@ -1760,7 +1660,9 @@ const CreateJobs = () => {
 
   useEffect(() => {
     console.log(showQuestions, "showQuestions");
-  }, [showQuestions]);
+    console.log(employmentError, "employmentError");
+    console.log(isDuplicateJob, "isDuplicateJob");
+  }, [showQuestions, employmentError, isDuplicateJob]);
 
   const handleButtonClick = (data) => {
     setShowSidebar(!showSidebar);
@@ -1940,11 +1842,12 @@ const CreateJobs = () => {
               {editData?.value && "Edit Gig/Job"}
               {!editData?.value && editJobData == null && "Post a Job"}
               {editJobData != null &&
-                !editData?.value &&
+                isDuplicateJob === true &&
                 "Duplicate Existing Job"}
             </div>
             <div className="mandatory-label">
-              <span style={{ color: "red" }}>*</span> marked field are mandatory
+              <span style={{ color: "red" }}>*</span> marked fields are
+              mandatory
             </div>
             <div className="create-job-toggle">
               <div className="radio-toggles">
@@ -1957,21 +1860,22 @@ const CreateJobs = () => {
                   className="job-toggle-inputs"
                   checked={selectedTab == "create-job"}
                 ></input>
-                {editData?.value && (
+                {editData?.value && editJobData && isDuplicateJob === false && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
                       Edit Job
                     </label>
                   </>
                 )}
-                {!editData?.value && editJobData == null && (
+                {!editJobData && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
                       Create New Job
                     </label>
                   </>
                 )}
-                {editJobData != null && !editData?.value && (
+
+                {editJobData && isDuplicateJob === true && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
                       Duplicate Job
@@ -2043,8 +1947,12 @@ const CreateJobs = () => {
                                 Select Category
                               </option>
                               {categoryList.map((option, index) => (
-                                <option key={index} value={option}>
-                                  {option}
+                                <option
+                                  key={index}
+                                  value={option?.value}
+                                  title={option?.description}
+                                >
+                                  {option?.value}
                                 </option>
                               ))}
                             </select>
@@ -2295,8 +2203,8 @@ const CreateJobs = () => {
                                   freeSolo
                                   id="free-solo-2-demo"
                                   disableClearable
-                                  options={skillsListing.map(
-                                    (option) => option.title
+                                  options={professionList.map(
+                                    (option) => option.value
                                   )}
                                   value={skillInputValue}
                                   onChange={(event, newValue) => {
@@ -2349,7 +2257,7 @@ const CreateJobs = () => {
 
                       <div className="rich-editor mb-2">
                         <label className="form-label additional-requirements-title">
-                          Additional Requirement (Optional)
+                          Additional Requirement (optional)
                         </label>
                       </div>
                       <div className="kids-form-row row">
@@ -3820,7 +3728,7 @@ const CreateJobs = () => {
                       e.preventDefault();
                       createGigs();
                     }}
-                    className="save-draft-button"
+                    className="createjob-btn"
                   >
                     Save Draft
                   </div>
