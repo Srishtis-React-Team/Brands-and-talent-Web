@@ -19,7 +19,7 @@ const Footer = (props) => {
   } = CurrentUser();
   const navigate = useNavigate();
   const fieldsBackground = require("../assets/images/fields-background.png");
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const socialIcons = require("../assets/icons/Social.png");
   const fbBlack = require("../assets/icons/social-media-icons/fb-black.png");
   const twitterBlack = require("../assets/icons/social-media-icons/twitter-black.png");
@@ -167,7 +167,7 @@ const Footer = (props) => {
           {props.props != "blog" && (
             <section className="main-footer-form">
               <div className="get-discover title mt-0">
-                Subscribe to Newsletter
+                Subscribe To Our Newsletter
               </div>
               <div className="form-fields row justify-content-center">
                 {/* <div className="col-md-4 form-group">
@@ -277,6 +277,11 @@ const Footer = (props) => {
                 <li>
                   <Link to="/" onClick={handleClick}>
                     Become an Affiliate
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={handleClick}>
+                    Investors
                   </Link>
                 </li>
                 <li>

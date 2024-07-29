@@ -14,6 +14,7 @@ import "../../assets/css/talent-dashboard.scss";
 import CurrentUser from "../../CurrentUser";
 import RichTextEditor from "../RichTextEditor";
 import CreatableSelect from "react-select/creatable";
+import useFieldDatas from "../../config/useFieldDatas";
 
 const AdultFormThree = () => {
   const {
@@ -23,6 +24,7 @@ const AdultFormThree = () => {
     avatarImage,
     fcmToken,
   } = CurrentUser();
+  const { featuresList } = useFieldDatas();
 
   const [talentData, setTalentData] = useState();
 
@@ -52,7 +54,7 @@ const AdultFormThree = () => {
   }, [talentData]);
 
   const [profileFile, setProfileFile] = useState(null);
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -72,7 +74,6 @@ const AdultFormThree = () => {
   const youTube = require("../../assets/icons/social-media-icons/youTube.png");
   const linkdin = require("../../assets/icons/social-media-icons/linkdin.png");
   const docsIcon = require("../../assets/icons/docsIcon.png");
-  const [featuresList, setFeaturesList] = useState([]);
   const [features, setFeature] = useState([]);
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -98,9 +99,7 @@ const AdultFormThree = () => {
   const [updateDisabled, setUpdateDisabled] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
   const [urls, setUrls] = useState([]);
-  useEffect(() => {
-    getFeatures();
-  }, []);
+
   useEffect(() => {
     console.log(profileFile, "profileFile");
     console.log(portofolioFile, "portofolioFile");
@@ -141,19 +140,10 @@ const AdultFormThree = () => {
     if (cmPlaceholderOptions.includes(label)) {
       return "Type in cm";
     }
+    if (label === "Shoe Size") {
+      return "US or EU size only";
+    }
     return label;
-  };
-
-  const getFeatures = async () => {
-    await ApiHelper.get(API.getFeatures)
-      .then((resData) => {
-        if (resData) {
-          console.log(resData.data.data[0]["features"], "resData");
-          setFeaturesList(resData.data.data[0].features);
-          console.log(resData.data.data[0].features, "setFeaturesList");
-        }
-      })
-      .catch((err) => {});
   };
 
   const onEditorSummary = (editorState) => {

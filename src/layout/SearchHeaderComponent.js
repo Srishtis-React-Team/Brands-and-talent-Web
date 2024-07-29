@@ -17,7 +17,7 @@ import searchPathOptions from "../components/SearchPaths";
 
 const SearchHeaderComponent = ({ onData }) => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
   const [menuOpen, setMenuOpen] = useState(false);
   const [signupCategory, setSignupCategory] = useState("talent");
@@ -50,7 +50,7 @@ const SearchHeaderComponent = ({ onData }) => {
   const logout = () => {
     localStorage.clear();
     setcurrentUserId(null);
-    setMessage("Logged Out SuccessFully");
+    setMessage("Logged out successfully");
     setOpenPopUp(true);
     setTimeout(function() {
       setOpenPopUp(false);
@@ -122,7 +122,7 @@ const SearchHeaderComponent = ({ onData }) => {
     window.scrollTo(0, 0); // Scroll to top on link click
     if (data == "post-job") {
       if (!currentUserId) {
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -135,7 +135,7 @@ const SearchHeaderComponent = ({ onData }) => {
 
     if (data == "find-talent") {
       if (!currentUserId) {
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -223,7 +223,7 @@ const SearchHeaderComponent = ({ onData }) => {
     if (route === "/find-creators") {
       if (!currentUserId || currentUser_type != "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -235,7 +235,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/talent") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -259,7 +259,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/post-job") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -275,7 +275,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -287,7 +287,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/brand") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -299,7 +299,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/list-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -311,7 +311,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/applied-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -323,7 +323,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/saved-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -335,7 +335,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/create-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -347,7 +347,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/find-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -359,7 +359,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/favorite-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -371,7 +371,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/brand-help") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -383,7 +383,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/applicants") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -395,7 +395,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/edit-talent-profile") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -407,7 +407,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/edit-brand-profile") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -419,7 +419,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/talent-notification") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -431,7 +431,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/talent-settings") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -443,7 +443,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/brand-settings") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -455,7 +455,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/talent-home") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -467,7 +467,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/talent-help") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -479,7 +479,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/brand-notification") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -491,7 +491,7 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/get-booked") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);

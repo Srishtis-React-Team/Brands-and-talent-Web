@@ -11,6 +11,7 @@ import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { styled } from "@mui/system";
 import Button from "@mui/material/Button";
 // import { styled } from "@mui/material/styles";
+
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -19,35 +20,10 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Select from "react-select";
 import TalentPreviewJob from "./TalentPreviewJob.js";
+import useFieldDatas from "../config/useFieldDatas.js";
 
 const TalentDashBoard = () => {
-  const workPlaceTypesOptions = [
-    "Man",
-    "Woman",
-    "Non-binary",
-    "TransworkPlaceType Woman",
-    "TransworkPlaceType Man",
-    "AworkPlaceType",
-    "Other",
-    "Prefer not to say",
-  ];
-
-  const categoryList = [
-    "Fashion & Beauty",
-    "Media & Entertainment",
-    "Sports, Fitness, & Wellness",
-    "Creative Arts & Design",
-    "Celebrity",
-    "Writing, Marketing, & Content Creation",
-    "Performing Arts",
-    "Education & Coaching",
-    "Business & Technology",
-    "Luxury & Lifestyle",
-    "Eco-friendly & Sustainability",
-    "Home & Gardening",
-    "Food & Travel",
-    "Diversity & Inclusion",
-  ];
+  const { categoryList, professionList } = useFieldDatas();
 
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,7 +34,7 @@ const TalentDashBoard = () => {
   const [isFilled, setIsFilled] = useState(true);
   const [job, setJob] = useState("");
   const girl1 = require("../assets/images/girl1.png");
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const sliderIcon = require("../assets/icons/sliders.png");
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -297,7 +273,7 @@ const TalentDashBoard = () => {
     };
     await ApiHelper.post(API.applyjobs, formData)
       .then((resData) => {
-        setMessage("Job Applied SuccessFully!");
+        setMessage("Job applied successfully");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -583,7 +559,7 @@ const TalentDashBoard = () => {
   };
 
   const contactUs = () => {
-    navigate("/contact-us");
+    navigate("/contactUs");
   };
 
   return (
@@ -737,8 +713,8 @@ const TalentDashBoard = () => {
                                   Select Category
                                 </option>
                                 {categoryList.map((option, index) => (
-                                  <option key={index} value={option}>
-                                    {option}
+                                  <option key={index} value={option?.value}>
+                                    {option?.value}
                                   </option>
                                 ))}
                               </select>
@@ -748,9 +724,7 @@ const TalentDashBoard = () => {
 
                         <div className="kids-form-row row">
                           <div className="kids-form-section col-md-6 mb-3">
-                            <label className="form-label">
-                              Country<span className="mandatory">*</span>
-                            </label>
+                            <label className="form-label">Country</label>
                             <Select
                               placeholder="Search country..."
                               options={countryList.map((country, index) => ({

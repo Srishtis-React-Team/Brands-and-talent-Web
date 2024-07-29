@@ -655,7 +655,7 @@ const MessageTalents = () => {
                         )}
                         {selectedUser?.preferredChildFirstname && (
                           <div className="message-user-name">
-                            {`${selectedUser?.preferredChildFirstname}${selectedUser?.preferredChildLastName}`}
+                            {`${selectedUser?.preferredChildFirstname} ${selectedUser?.preferredChildLastName}`}
                           </div>
                         )}
                         {selectedUser?.preferredChildFirstname && (
@@ -683,8 +683,10 @@ const MessageTalents = () => {
                     <div className="message-list-wrapper">
                       {userList.length === 0 && (
                         <div className="no-data">
-                          <p>When an Brand/Client or Talent contact you</p>
-                          <p>You will see them Here</p>
+                          <p>
+                            You will be able to see a brand / client or talent
+                            contact you here
+                          </p>
                         </div>
                       )}
                       {userList.length > 0 &&
@@ -731,7 +733,7 @@ const MessageTalents = () => {
                                   )}
                                   {item?.preferredChildFirstname && (
                                     <div className="message-user-name">
-                                      {`${item?.preferredChildFirstname}${item?.preferredChildLastName}`}
+                                      {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                     </div>
                                   )}
                                   <span

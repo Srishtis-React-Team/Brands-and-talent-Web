@@ -23,6 +23,7 @@ import CurrentUser from "../../CurrentUser.js";
 import nationalitiesArray from "../../components/NationalitiesArray.js";
 import categoriesArray from "../../components/categoriesArray.js";
 import SocialMediasList from "../../components/SocialMediasList.js";
+import useFieldDatas from "../../config/useFieldDatas.js";
 const BrandTalents = () => {
   const {
     currentUserId,
@@ -32,6 +33,8 @@ const BrandTalents = () => {
     talentName,
     brandName,
   } = CurrentUser();
+  const { categoryList, professionList } = useFieldDatas();
+
   const navigate = useNavigate();
   const searchIcon = require("../../assets/icons/search.png");
   const heartIcon = require("../../assets/icons/heart.png");
@@ -363,68 +366,6 @@ const BrandTalents = () => {
     clear();
   };
 
-  const professionList = [
-    { value: "Actor", label: "Actor" },
-    { value: "Animator", label: "Animator" },
-    { value: "Architect ", label: "Architect " },
-    { value: "Artist", label: "Artist" },
-    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
-    { value: "Blockchain Developer", label: "Blockchain Developer" },
-    { value: "Career Coach", label: "Career Coach" },
-    { value: "Cartoonist", label: "Cartoonist" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Cinematographer", label: "Cinematographer" },
-    { value: "Comedian", label: "Comedian" },
-    { value: "Copywriter", label: "Copywriter" },
-    { value: "Craftsperson", label: "Craftsperson" },
-    { value: "Creator", label: "Creator" },
-    { value: "Curator", label: "Curator" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Designer ", label: "Designer " },
-    { value: "Dietitian ", label: "Dietitian " },
-    { value: "DJ", label: "DJ" },
-    { value: "Driving Instructor", label: "Driving Instructor" },
-    { value: "Event Planner", label: "Event Planner" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Host/MC", label: "Host/MC" },
-    { value: "Illustrator", label: "Illustrator" },
-    { value: "Influencer", label: "Influencer" },
-    { value: "Interior Designer", label: "Interior Designer" },
-    { value: "Life Coach", label: "Life Coach" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Meditation Teacher", label: "Meditation Teacher" },
-    { value: "Model", label: "Model" },
-    { value: "Music Teacher", label: "Music Teacher" },
-    { value: "Musician", label: "Musician" },
-    { value: "Nail Artist", label: "Nail Artist" },
-    { value: "Nutritionist ", label: "Nutritionist " },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Podcaster", label: "Podcaster" },
-    { value: "Public Speaker", label: "Public Speaker" },
-    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
-    { value: "Singer", label: "Singer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Sculptor", label: "Sculptor" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
-    { value: "Swimming Instructor", label: "Swimming Instructor" },
-    { value: "Tattooist", label: "Tattooist" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "Voice-over Artist", label: "Voice-over Artist" },
-    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
-    { value: "Wedding Planner", label: "Wedding Planner" },
-    { value: "Writer", label: "Writer" },
-    { value: "Yoga Instructor", label: "Yoga Instructor" },
-    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
-  ];
-
   const genderList = [
     {
       value: "option 1",
@@ -459,7 +400,7 @@ const BrandTalents = () => {
     await ApiHelper.post(`${API.setUserFavorite}${loggedID}`, formData, true)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Added The Talent To Your Favorites ");
+          setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
           getTalentList();
           setTimeout(function() {
@@ -478,6 +419,7 @@ const BrandTalents = () => {
       });
   };
   const openTalent = (item) => {
+    // alert("sd");
     console.log(item, "item");
     // navigate("/talent", { state: { talentData: item } });
 
@@ -893,7 +835,7 @@ const BrandTalents = () => {
                               valueField="value"
                               className="basic-multi-select"
                               classNamePrefix="select"
-                              onChange={(value) => setProfession(value)}
+                              onChange={(value) => setProfession(value?.value)}
                               styles={customStylesProfession}
                             />
                           </div>
@@ -1186,6 +1128,7 @@ const BrandTalents = () => {
                                     <div className="gallery-wrapper modalSpc  mb-2">
                                       <div className="imgBox">
                                         <img
+                                          onClick={() => openTalent(item)}
                                           className="gallery-img"
                                           src={`${API.userFilePath}${item.image?.fileData}`}
                                         ></img>
@@ -1200,7 +1143,6 @@ const BrandTalents = () => {
                                             starRatings > 0
                                               ? starRatings
                                               : 0;
-
                                           return (
                                             <div
                                               className={`rating ${

@@ -10,7 +10,7 @@ import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
 const BrandActivation = () => {
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const trialIcon = require("../../assets/icons/trial-icon.png");
   const greenTick = require("../../assets/icons/greenTick.png");
   const [openPopUp, setOpenPopUp] = useState(false);

@@ -18,8 +18,10 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserType, avatarImage } = CurrentUser();
   console.log(hideToggleButton, "hideToggleButton");
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const model1 = require("../../assets/images/girl1.png");
+  const cofeeIcon = require("../../assets/icons/cofeeIcon.png");
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [brandId, setBrandId] = useState(null);
   const [notificationList, setNotifications] = useState([]);
@@ -150,7 +152,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
-        setMessage("Logged Out SuccessFully");
+        setMessage("Logged out successfully");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -175,10 +177,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   }, [myState]);
 
   const handleCoffeeLink = () => {
-    window.open(
-      "https://buymeacoffee.com/brandsandtalent/membership",
-      "_blank"
-    );
+    window.open("https://buymeacoffee.com/brandsandtalent", "_blank");
   };
 
   return (
@@ -317,8 +316,8 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                       style={{ cursor: "pointer" }}
                       onClick={handleCoffeeLink}
                     >
-                      <i class="bi bi-cup-hot-fill coffee-icon"></i>
                       Support BT
+                      <img src={cofeeIcon} alt="" className="cofeeIcon-img" />
                     </div>
                   </nav>
                   <React.Fragment>

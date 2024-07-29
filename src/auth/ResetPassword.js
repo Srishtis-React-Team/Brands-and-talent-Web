@@ -8,7 +8,7 @@ import Header from "../layout/header";
 import { useParams } from "react-router-dom";
 
 const ResetPassword = () => {
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");

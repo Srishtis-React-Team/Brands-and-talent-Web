@@ -6,7 +6,7 @@ import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
 const ForgotPassword = () => {
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
   const importIcon = require("../assets/icons/instagram.png");
   const userIcon = require("../assets/icons/user.png");
@@ -279,7 +279,7 @@ const ForgotPassword = () => {
             {isLoading ? "Loading..." : "Continue"}
           </div>
           <div className="resend-forgot" onClick={() => forgotPassword()}>
-            If you didn’t receive a code? <span>Resend</span>
+            Didn’t received the OTP? <span>Resend</span>
           </div>
         </div>
       </div>

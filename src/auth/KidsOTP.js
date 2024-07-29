@@ -8,7 +8,7 @@ import Header from "../layout/header";
 const KidsOTP = () => {
   const navigate = useNavigate();
 
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -157,7 +157,7 @@ const KidsOTP = () => {
       >
         <div className="otp-container">
           <div className="otp-title">OTP Verification</div>
-          <div className="otp-enter">Please enter the code we just send to</div>
+          <div className="otp-enter">Please enter the OTP we just sent to</div>
           <div className="otp-mail">{queryString}</div>
           <div className="otp-boxes">
             <form action="" className="mt-4 otp-form">
@@ -178,7 +178,7 @@ const KidsOTP = () => {
             Verify Now
           </div>
           <div className="otp-info" onClick={otpResend}>
-            If you didn’t receive a code?{" "}
+            Didn’t received the OTP?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
           </div>
           {/* <div

@@ -17,7 +17,7 @@ import { convertToRaw } from "draft-js";
 const BrandLogo = () => {
   const navigate = useNavigate();
   const uploadIcon = require("../../assets/icons/uploadIcon.png");
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const imageType = require("../../assets/icons/imageType.png");
   const videoType = require("../../assets/icons/videoType.png");
   const audiotype = require("../../assets/icons/audiotype.png");
@@ -297,7 +297,7 @@ const BrandLogo = () => {
           <div className="adult-signup-main">
             <div className="kids-form-row row">
               <div className="kids-form-section col-md-12">
-                <label className="form-label">Brand/Client Logo</label>
+                <label className="form-label">Brand / Client Logo</label>
                 <div
                   className="cv-section my-2"
                   onDrop={handlePortofolioDrop}

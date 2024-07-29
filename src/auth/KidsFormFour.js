@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 
 const KidsFormFour = ({ onDataFromChild, ...props }) => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -59,7 +59,7 @@ const KidsFormFour = ({ onDataFromChild, ...props }) => {
           <div className="container">
             <div className="gmail-wrapper">
               <div className="gmail-tick">
-                <img src={bigTick}  className="kids-image-sticky" alt="" />
+                <img src={bigTick} className="kids-image-sticky" alt="" />
               </div>
               <div className="done">Done!</div>
               <div className="gmail-info">
