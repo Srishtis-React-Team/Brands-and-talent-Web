@@ -191,6 +191,7 @@ const HowItWorks = () => {
     console.log(brandsFaq, "brands faq");
     console.log(talentsFaq, "talents faq");
     console.log(bestPracticesFaq, "bestPractices faq");
+    console.log(content, "content");
   }, []);
 
   return (
@@ -242,115 +243,105 @@ const HowItWorks = () => {
 
               <div>
                 <h2 className="maintitles text-center">For Brands/Client </h2>
-
                 <div className="video-container">
                   <video
                     src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/9a0040f1-6bd1-4a31-9dfc-5e8a76f4fb2b.mp4"
                     autoPlay
                     loop
                     controls
-                    className="responsive-video"
+                    className="responsive-video mb-3"
                   >
                     Your browser does not support the video tag.
                   </video>
                 </div>
-
-                {content
-                  .filter((resource) => resource.userType === "Brands")
-                  .map((resource, index) => (
-                    <div
-                      key={resource.uniqueId}
-                      className="resource-wrapper align-items-center row"
-                    >
-                      {index % 2 === 0 ? (
-                        <>
-                          <div className="resource-image-wrapper imgL col-md-6">
-                            <div className="resource-image-padding">
-                              {resource.image ? (
-                                <img
-                                  className="resource-image imgWid"
-                                  src={resource.image}
-                                  alt="Resource"
-                                />
-                              ) : (
-                                <div className="placeholder">
-                                  No Image Available
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          <div className="resource-content-wrapper col-md-6 padSpace">
-                            <div
-                              className="resource-name"
-                              dangerouslySetInnerHTML={{
-                                __html: resource.title,
-                              }}
-                            />
-                            <div className="resource-description space">
-                              {resource.description.map((desc, descIndex) => (
-                                <div
-                                  key={descIndex}
-                                  dangerouslySetInnerHTML={{ __html: desc }}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="resource-content-wrapper col-md-6 padSpace">
-                            <div
-                              className="resource-name"
-                              dangerouslySetInnerHTML={{
-                                __html: resource.title,
-                              }}
-                            />
-                            <div className="resource-description space">
-                              {resource.description.map((desc, descIndex) => (
-                                <div
-                                  key={descIndex}
-                                  dangerouslySetInnerHTML={{ __html: desc }}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                          <div className="resource-image-wrapper imgL col-md-6">
-                            <div className="resource-image-padding">
-                              {resource.image ? (
-                                <img
-                                  className="resource-image imgWid"
-                                  src={resource.image}
-                                  alt="Resource"
-                                />
-                              ) : (
-                                <div className="placeholder">
-                                  No Image Available
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  ))}
-              </div>
-              <div>
-                <div id="talent">
-                  <h2 className="maintitles text-center">For Talent</h2>
-
-                  <div className="video-container">
-                    <video
-                      src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/370b2c13-5f1c-47e4-9ef2-2b8e76e392c4.mp4"
-                      loop
-                      controls
-                      className="responsive-video"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-
+                <div className="how-it-works-mobile-only">
                   {content
-                    .filter((resource) => resource.userType === "Talent")
+                    .filter((resource) => resource.userType === "Brands")
+                    .map((resource, index) => (
+                      <div
+                        key={resource.uniqueId}
+                        className=" align-items-center row"
+                      >
+                        {index % 2 === 0 ? (
+                          <>
+                            <div className="resource-image-wrapper imgL col-md-6">
+                              <div className="resource-image-padding">
+                                {resource.image ? (
+                                  <img
+                                    className="resource-image imgWid"
+                                    src={resource.image}
+                                    alt="Resource"
+                                  />
+                                ) : (
+                                  <div className="placeholder">
+                                    No Image Available
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
+                              <div className="resource-description space">
+                                {resource.description.map((desc, descIndex) => (
+                                  <div
+                                    key={descIndex}
+                                    dangerouslySetInnerHTML={{
+                                      __html: desc,
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="resource-image-wrapper imgL col-md-6">
+                              <div className="resource-image-padding">
+                                {resource.image ? (
+                                  <img
+                                    className="resource-image imgWid"
+                                    src={resource.image}
+                                    alt="Resource"
+                                  />
+                                ) : (
+                                  <div className="placeholder">
+                                    No Image Available
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
+                              <div className="resource-description space">
+                                {resource.description.map((desc, descIndex) => (
+                                  <div
+                                    key={descIndex}
+                                    dangerouslySetInnerHTML={{
+                                      __html: desc,
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    ))}
+                </div>
+
+                <div className="how-it-works-desktop-only">
+                  {content
+                    .filter((resource) => resource.userType === "Brands")
                     .map((resource, index) => (
                       <div
                         key={resource.uniqueId}
@@ -410,7 +401,6 @@ const HowItWorks = () => {
                             </div>
                             <div className="resource-image-wrapper imgL col-md-6">
                               <div className="resource-image-padding">
-                                {" "}
                                 {resource.image ? (
                                   <img
                                     className="resource-image imgWid"
@@ -421,13 +411,208 @@ const HowItWorks = () => {
                                   <div className="placeholder">
                                     No Image Available
                                   </div>
-                                )}{" "}
+                                )}
                               </div>
                             </div>
                           </>
                         )}
                       </div>
                     ))}
+                </div>
+              </div>
+              <div>
+                <div id="talent">
+                  <h2 className="maintitles text-center">For Talent</h2>
+
+                  <div className="video-container">
+                    <video
+                      src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/370b2c13-5f1c-47e4-9ef2-2b8e76e392c4.mp4"
+                      loop
+                      controls
+                      className="responsive-video mb-3"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+
+                  <div className="how-it-works-mobile-only">
+                    {content
+                      .filter((resource) => resource.userType === "Talent")
+                      .map((resource, index) => (
+                        <div
+                          key={resource.uniqueId}
+                          className=" align-items-center row"
+                        >
+                          {index % 2 === 0 ? (
+                            <>
+                              <div className="resource-image-wrapper imgL col-md-6">
+                                <div className="resource-image-padding">
+                                  {resource.image ? (
+                                    <img
+                                      className="resource-image imgWid"
+                                      src={resource.image}
+                                      alt="Resource"
+                                    />
+                                  ) : (
+                                    <div className="placeholder">
+                                      No Image Available
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="resource-content-wrapper col-md-6 padSpace">
+                                <div
+                                  className="resource-name"
+                                  dangerouslySetInnerHTML={{
+                                    __html: resource.title,
+                                  }}
+                                />
+                                <div className="resource-description space">
+                                  {resource.description.map(
+                                    (desc, descIndex) => (
+                                      <div
+                                        key={descIndex}
+                                        dangerouslySetInnerHTML={{
+                                          __html: desc,
+                                        }}
+                                      />
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="resource-image-wrapper imgL col-md-6">
+                                <div className="resource-image-padding">
+                                  {" "}
+                                  {resource.image ? (
+                                    <img
+                                      className="resource-image imgWid"
+                                      src={resource.image}
+                                      alt="Resource"
+                                    />
+                                  ) : (
+                                    <div className="placeholder">
+                                      No Image Available
+                                    </div>
+                                  )}{" "}
+                                </div>
+                              </div>
+                              <div className="resource-content-wrapper col-md-6 padSpace">
+                                <div
+                                  className="resource-name"
+                                  dangerouslySetInnerHTML={{
+                                    __html: resource.title,
+                                  }}
+                                />
+                                <div className="resource-description space">
+                                  {resource.description.map(
+                                    (desc, descIndex) => (
+                                      <div
+                                        key={descIndex}
+                                        dangerouslySetInnerHTML={{
+                                          __html: desc,
+                                        }}
+                                      />
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      ))}
+                  </div>
+                  <div className="how-it-works-desktop-only">
+                    {content
+                      .filter((resource) => resource.userType === "Talent")
+                      .map((resource, index) => (
+                        <div
+                          key={resource.uniqueId}
+                          className="resource-wrapper align-items-center row"
+                        >
+                          {index % 2 === 0 ? (
+                            <>
+                              <div className="resource-image-wrapper imgL col-md-6">
+                                <div className="resource-image-padding">
+                                  {resource.image ? (
+                                    <img
+                                      className="resource-image imgWid"
+                                      src={resource.image}
+                                      alt="Resource"
+                                    />
+                                  ) : (
+                                    <div className="placeholder">
+                                      No Image Available
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="resource-content-wrapper col-md-6 padSpace">
+                                <div
+                                  className="resource-name"
+                                  dangerouslySetInnerHTML={{
+                                    __html: resource.title,
+                                  }}
+                                />
+                                <div className="resource-description space">
+                                  {resource.description.map(
+                                    (desc, descIndex) => (
+                                      <div
+                                        key={descIndex}
+                                        dangerouslySetInnerHTML={{
+                                          __html: desc,
+                                        }}
+                                      />
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="resource-content-wrapper col-md-6 padSpace">
+                                <div
+                                  className="resource-name"
+                                  dangerouslySetInnerHTML={{
+                                    __html: resource.title,
+                                  }}
+                                />
+                                <div className="resource-description space">
+                                  {resource.description.map(
+                                    (desc, descIndex) => (
+                                      <div
+                                        key={descIndex}
+                                        dangerouslySetInnerHTML={{
+                                          __html: desc,
+                                        }}
+                                      />
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                              <div className="resource-image-wrapper imgL col-md-6">
+                                <div className="resource-image-padding">
+                                  {" "}
+                                  {resource.image ? (
+                                    <img
+                                      className="resource-image imgWid"
+                                      src={resource.image}
+                                      alt="Resource"
+                                    />
+                                  ) : (
+                                    <div className="placeholder">
+                                      No Image Available
+                                    </div>
+                                  )}{" "}
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      ))}
+                  </div>
                 </div>
               </div>
 

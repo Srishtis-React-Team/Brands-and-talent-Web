@@ -1189,32 +1189,25 @@ const FindCreators = () => {
                                     <div className="find-creator-name">
                                       {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                     </div>
-                                    <div className="talent-details-wrapper">
-                                      <div className="logo-fill">
-                                        <img
-                                          className="talent-logo"
-                                          src={pinkStar}
-                                        ></img>
-                                      </div>
-                                      <div className="contSect">
-                                        {item?.averageStarRatings && (
-                                          <>
-                                            <span>
-                                              {item?.averageStarRatings}
-                                              &nbsp;
-                                              {item?.averageStarRatings ==
-                                                0 && <>ratings</>}
-                                              {item?.averageStarRatings > 0 && (
-                                                <>
-                                                  ( {item?.totalReviews}{" "}
-                                                  ratings)
-                                                </>
-                                              )}
-                                            </span>
-                                          </>
-                                        )}
-                                      </div>
-                                    </div>
+                                    {item?.averageStarRatings &&
+                                      item?.averageStarRatings > 0 && (
+                                        <>
+                                          <div className="talent-details-wrapper">
+                                            <div className="logo-fill">
+                                              <img
+                                                className="talent-logo"
+                                                src={pinkStar}
+                                              ></img>
+                                            </div>
+                                            <div className="contSect">
+                                              <span>
+                                                ( {item?.totalReviews} ratings)
+                                              </span>
+                                            </div>
+                                          </div>
+                                        </>
+                                      )}
+
                                     {item?.noOfJobsCompleted && (
                                       <>
                                         <div className="talent-details-wrapper nweAlign pt-1 pb-0">

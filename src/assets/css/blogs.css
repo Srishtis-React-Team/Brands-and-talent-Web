@@ -180,17 +180,27 @@ ul.shareDiv li:hover {
 .howitworks-labels-text {
   cursor: pointer;
   padding: 0px 10px;
-  border-right: 1px solid grey;
   color: #000000;
-  font-size: 34px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 600;
   font-family: sans-serif;
 }
+
+/* Apply border-right to the first and second divs */
+.howitworks-labels-text:nth-child(1),
+.howitworks-labels-text:nth-child(2) {
+  border-right: 1px solid grey;
+}
+
+/* Remove the border-right from the last div */
+.howitworks-labels-text:last-child {
+  border-right: none;
+}
+
 .howitworks-labels-text:hover {
   color: #c2114b;
 }
-
 .blog-card {
   /* align-items: center;
   height: 400px; */
@@ -268,6 +278,14 @@ ul.shareDiv li:hover {
   .blog-DetailBg .blogs-content-wrapper {
     padding: 0 15px;
     margin: 0px 0 25px;
+  }
+  .howworks-title {
+    color: #000;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    font-family: sans-serif;
+    line-height: 30px;
   }
 }
 

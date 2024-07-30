@@ -166,7 +166,8 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   };
 
   const handleClickBlogs = (step) => {
-    navigate("/blogs", { state: { step: step } });
+    // navigate("/blogs", { state: { step: step } });
+    window.open("https://brandsandtalent.substack.com/", "_blank");
   };
 
   useEffect(() => {
@@ -261,15 +262,11 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                               className="dropdown-item dropdown-toggle"
                               dropdown-toggle
                               data-bs-toggle="dropdown"
+                              onClick={() => handleClickBlogs(0)}
                             >
-                              <NavLink
-                                to="/blogs"
-                                onClick={() => handleClickBlogs(0)}
-                              >
-                                Blog
-                              </NavLink>
+                              News Letter
                             </a>
-                            <ul className="dropdown-menu blogs-menu">
+                            {/* <ul className="dropdown-menu blogs-menu">
                               <li onClick={() => handleClickBlogs(1)}>
                                 <a className="dropdown-item">
                                   News & Announcements
@@ -296,7 +293,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                                   Brand Tips & Tricks
                                 </a>
                               </li>
-                            </ul>
+                            </ul> */}
                           </li>
                           <li>
                             <hr className="dropdown-divider"></hr>

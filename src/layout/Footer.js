@@ -91,7 +91,7 @@ const Footer = (props) => {
     //       console.log(err);
     //     });
     // }
-    window.location.href = "https://brandsandtalent.substack.com/about";
+    window.open("https://brandsandtalent.substack.com", "_blank");
   };
 
   const handleClick = () => {
@@ -167,7 +167,12 @@ const Footer = (props) => {
           {props.props != "blog" && (
             <section className="main-footer-form">
               <div className="get-discover title mt-0">
-                Subscribe To Our Newsletter
+                Stay Ahead with Our Newsletter
+              </div>
+              <div className="get-discover-description mt-0">
+                Your go-to source for creator jobs, industry news & insights,
+                exclusive interviews, compelling case studies, brand tips &
+                tricks, talent tips & tricks, and the latest announcements
               </div>
               <div className="form-fields row justify-content-center">
                 {/* <div className="col-md-4 form-group">

@@ -127,7 +127,7 @@ const BrandHome = () => {
   }, [showSidebar]);
 
   const contactUs = () => {
-    navigate("/contact-us");
+    navigate("/contactUs");
   };
 
   useEffect(() => {

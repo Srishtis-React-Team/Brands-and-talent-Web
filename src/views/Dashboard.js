@@ -789,10 +789,7 @@ const Dashboard = () => {
                     Get discovered by top brands, set your own rates, and keep
                     100% of your earnings. Chat directly with brands you love
                     and build lasting relationships. We put creators first. Sign
-                    up today! Get discovered by top brands, set your own rates,
-                    and keep 100% of your earnings. Chat directly with brands
-                    you love and build lasting relationships. We put creators
-                    first. Sign up today!
+                    up today!
                   </div>
                   <div
                     className="Join-now-wrapper"
@@ -968,27 +965,23 @@ const Dashboard = () => {
                               ? `${item?.preferredChildFirstname}`
                               : "Elizabeth"}
                           </div>
-                          <div className="talent-details-wrapper">
-                            <div className="logo-fill">
-                              <img className="talent-logo" src={pinkStar}></img>
-                            </div>
-                            <div className="contSect">
-                              {item?.averageStarRatings && (
-                                <>
-                                  <span>
-                                    {item?.averageStarRatings}
-                                    &nbsp;
-                                    {item?.averageStarRatings == 0 && (
-                                      <>ratings</>
-                                    )}
-                                    {item?.averageStarRatings > 0 && (
-                                      <>( {item?.totalReviews} ratings)</>
-                                    )}
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                          </div>
+                          {item?.averageStarRatings &&
+                            item?.averageStarRatings > 0 && (
+                              <>
+                                <div className="talent-details-wrapper">
+                                  <div className="logo-fill">
+                                    <img
+                                      className="talent-logo"
+                                      src={pinkStar}
+                                    ></img>
+                                  </div>
+                                  <div className="contSect">
+                                    <span>( {item?.totalReviews} ratings)</span>
+                                  </div>
+                                </div>
+                              </>
+                            )}
+
                           {item?.noOfJobsCompleted && (
                             <>
                               <div className="talent-details-wrapper nweAlign pt-1 pb-0">
