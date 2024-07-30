@@ -1593,10 +1593,22 @@ input[type="radio"] {
 }
 
 .get-discover {
-  font-size: 42px;
+  font-size: 32px;
   color: #fff;
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: sans-serif;
+}
+
+.get-discover-description {
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 300;
+  padding: 10px 0px;
+  width: 70%;
+  line-height: 25px;
+  text-align: center;
 }
 
 .footer-wrapper {
@@ -3608,4 +3620,7 @@ head .profile-image-header {
   color: rgb(255, 136, 0);
   width: 25px;
   height: 25px;
+}
+
+.rating {
 }

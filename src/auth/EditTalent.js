@@ -102,19 +102,17 @@ const EditTalent = () => {
     "Bra Size",
   ];
 
-  const cmPlaceholderOptions = [
-    "Height",
-    "Chest",
-    "Waist",
-    "Hip Size",
-    "Bra Size",
-  ];
+  const cmPlaceholderOptions = ["Height", "Chest", "Waist", "Hip Size"];
 
   const getPlaceholder = (label) => {
     if (cmPlaceholderOptions.includes(label)) {
       return "Type in cm";
     }
-    if (label === "Shoe Size") {
+    if (
+      label === "Shoe Size" ||
+      label === "Bra Size" ||
+      label === "Dress Size"
+    ) {
       return "US or EU size only";
     }
     return label;

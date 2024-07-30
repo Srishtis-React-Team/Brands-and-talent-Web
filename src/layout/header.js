@@ -153,13 +153,12 @@ const Header = ({ onData }) => {
     window.scrollTo(0, 0); // Scroll to top on link click
     if (data == "post-job") {
       if (!currentUserId) {
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
-        window.location.href = "https://brandsandtalent.substack.com/about";
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/create-jobs");
       }
@@ -167,13 +166,12 @@ const Header = ({ onData }) => {
 
     if (data == "find-talent") {
       if (!currentUserId) {
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
-        window.location.href = "https://brandsandtalent.substack.com/about";
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/find-creators");
       } else if (
@@ -285,26 +283,25 @@ const Header = ({ onData }) => {
     if (route === "/find-creators") {
       if (!currentUserId || currentUser_type != "brand") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/talent") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
@@ -323,13 +320,13 @@ const Header = ({ onData }) => {
     } else if (route === "/post-job") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
@@ -340,98 +337,98 @@ const Header = ({ onData }) => {
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/brand") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/list-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/applied-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/saved-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/create-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/find-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/favorite-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
+
         //   setMessage("You must be logged in");
         //   setOpenPopUp(true);
         //   setTimeout(function() {
@@ -444,143 +441,141 @@ const Header = ({ onData }) => {
     } else if (route === "/brand-help") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/applicants") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/edit-talent-profile") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/edit-brand-profile") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/talent-notification") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/talent-settings") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/brand-settings") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/talent-home") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/talent-help") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        window.location.href = "https://brandsandtalent.substack.com/about";
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/brand-notification") {
       if (!currentUserId || currentUser_type == "talent") {
-        window.location.href = "https://brandsandtalent.substack.com/about";
         handleClose();
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/get-booked") {
       if (!currentUserId || currentUser_type == "brand") {
-        window.location.href = "https://brandsandtalent.substack.com/about";
         handleClose();
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function() {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else {
         navigate(route);
       }
@@ -605,8 +600,9 @@ const Header = ({ onData }) => {
   ).map((label) => searchPathOptions.find((option) => option.label === label));
 
   const handleClickBlogs = (step) => {
-    console.log(step, "handleClickBlogsSTEP");
-    navigate("/blogs", { state: { step: step } });
+    // console.log(step, "handleClickBlogsSTEP");
+    // navigate("/blogs", { state: { step: step } });
+    window.open("https://brandsandtalent.substack.com/", "_blank");
   };
 
   useEffect(() => {
@@ -732,22 +728,16 @@ const Header = ({ onData }) => {
                   </NavLink>
                 </a>
               </li>
-              <li>
-                <a className="dropdown-item">
-                  <NavLink onClick={() => handleClick("")}>Newsletter</NavLink>
-                </a>
-              </li>
               <li className="">
                 <a
                   className="dropdown-item dropdown-toggle"
                   dropdown-toggle
                   data-bs-toggle="dropdown"
+                  onClick={() => handleClickBlogs(0)}
                 >
-                  <NavLink to="/blogs" onClick={() => handleClickBlogs(0)}>
-                    Blog
-                  </NavLink>
+                  News Letter
                 </a>
-                <ul className="dropdown-menu blogs-menu">
+                {/* <ul className="dropdown-menu blogs-menu">
                   <li onClick={() => handleClickBlogs(1)}>
                     <a className="dropdown-item">News & Announcements</a>
                   </li>
@@ -766,7 +756,7 @@ const Header = ({ onData }) => {
                   <li onClick={() => handleClickBlogs(6)}>
                     <a className="dropdown-item"> Brand Tips & Tricks</a>
                   </li>
-                </ul>
+                </ul> */}
               </li>
               <li>
                 <hr className="dropdown-divider"></hr>
@@ -842,10 +832,7 @@ const Header = ({ onData }) => {
               {!currentUserId && (
                 <div
                   className="navTxt"
-                  onClick={() =>
-                    (window.location.href =
-                      "https://brandsandtalent.substack.com/about")
-                  }
+                  onClick={() => handleClick("post-job")}
                   style={{ cursor: "pointer" }}
                 >
                   Get Booked
@@ -922,25 +909,18 @@ const Header = ({ onData }) => {
                         <a className="dropdown-item">About</a>
                       </NavLink>
                     </li>
-                    <li>
-                      <NavLink onClick={() => handleClick("")}>
-                        <a className="dropdown-item">Newsletter</a>
-                      </NavLink>
-                    </li>
                     <li className="dropend">
+                      {/* data-bs-toggle="dropdown" */}
+                      {/* className="dropdown-item dropdown-toggle" */}
+
                       <a
-                        className="dropdown-item dropdown-toggle"
+                        className="dropdown-item"
                         dropdown-toggle
-                        data-bs-toggle="dropdown"
+                        onClick={() => handleClickBlogs(0)}
                       >
-                        <NavLink
-                          to="/blogs"
-                          onClick={() => handleClickBlogs(0)}
-                        >
-                          Blog
-                        </NavLink>
+                        News Letter
                       </a>
-                      <ul className="dropdown-menu blogs-menu">
+                      {/* <ul className="dropdown-menu blogs-menu">
                         <li onClick={() => handleClickBlogs(1)}>
                           <a className="dropdown-item">News & Announcements</a>
                         </li>
@@ -959,7 +939,7 @@ const Header = ({ onData }) => {
                         <li onClick={() => handleClickBlogs(6)}>
                           <a className="dropdown-item">Brand Tips & Tricks</a>
                         </li>
-                      </ul>
+                      </ul> */}
                     </li>
                     <li>
                       <hr className="dropdown-divider"></hr>

@@ -1293,11 +1293,10 @@
   overflow-y: scroll;
 }
 
-.kids-form-section .MuiFormControl-root.MuiTextField-root.form-control{
+.kids-form-section .MuiFormControl-root.MuiTextField-root.form-control {
   padding-top: 0;
   padding-bottom: 0;
 }
-
 
 .public-url-wrapper {
   display: flex;
@@ -1322,4 +1321,15 @@
 .public-url-text {
   // min-width: 100%;
   width: 88%;
+}
+
+.contactus-btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.contact-us-textarea {
+  border: 1px solid#d7d7d7;
+  border-radius: 6px;
 }

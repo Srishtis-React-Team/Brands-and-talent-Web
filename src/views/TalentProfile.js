@@ -544,6 +544,22 @@ const TalentProfile = () => {
     return match ? `https://player.vimeo.com/video/${match[1]}` : null;
   };
 
+  const isInstagramUrl = (url) => url.includes("instagram.com");
+
+  // Function to extract Instagram shortcode
+  const extractInstagramShortcode = (url) => {
+    const match = url.match(/\/(p|reel)\/([^\/?]+)/);
+    return match ? match[2] : null;
+  };
+
+  // Function to get embed URL for Instagram
+  const getInstagramEmbedUrl = (url) => {
+    const shortcode = extractInstagramShortcode(url);
+    return shortcode
+      ? `https://www.instagram.com/reel/${shortcode}/embed`
+      : null;
+  };
+
   return (
     <>
       {/* <Header /> */}
@@ -641,34 +657,39 @@ const TalentProfile = () => {
                     </div>
 
                     <div className="talent-details">
-                      <div className="talent-details-wrapper">
-                        <div className="talent-verified">
-                          <span className="blue-shield-wrapper">
-                            <img className="blue-shield" src={blueShield}></img>
-                          </span>
-                          Verified
-                        </div>
-                      </div>
-
-                      <div className="talent-details-wrapper">
-                        <div className="logo-fill">
-                          <img className="talent-logo" src={pinkStar}></img>
-                        </div>
-                        <div className="contSect">
-                          {talentData?.averageStarRatings && (
-                            <>
-                              <span>
-                                {talentData?.averageStarRatings}&nbsp;
-                                {talentData?.averageStarRatings > 0 && (
-                                  <>( {talentData?.totalReviews} ratings)</>
-                                )}
+                      {talentData?.planName !== "Basic" && (
+                        <>
+                          <div className="talent-details-wrapper">
+                            <div className="talent-verified">
+                              <span className="blue-shield-wrapper">
+                                <img
+                                  className="blue-shield"
+                                  src={blueShield}
+                                ></img>
                               </span>
-                            </>
-                          )}
-
-                          {/* <span>{talentData?.averageStarRatings} (0 Projects completed)</span> */}
-                        </div>
-                      </div>
+                              Verified
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      {talentData?.averageStarRatings &&
+                        talentData?.averageStarRatings > 0 && (
+                          <>
+                            <div className="talent-details-wrapper">
+                              <div className="logo-fill">
+                                <img
+                                  className="talent-logo"
+                                  src={pinkStar}
+                                ></img>
+                              </div>
+                              <div className="contSect">
+                                <span>
+                                  ( {talentData?.totalReviews} ratings)
+                                </span>
+                              </div>
+                            </div>
+                          </>
+                        )}
 
                       {talentData?.noOfJobsCompleted && (
                         <>
@@ -1253,6 +1274,18 @@ const TalentProfile = () => {
                                         Your browser does not support the audio
                                         element.
                                       </audio>
+                                    ) : isInstagramUrl(url) ? (
+                                      <iframe
+                                        src={getInstagramEmbedUrl(url)}
+                                        width="400"
+                                        height="505"
+                                        frameBorder="0"
+                                        scrolling="no"
+                                        allowTransparency="true"
+                                        title={`instagram-video-${index}`}
+                                        className="video-frame w-100"
+                                        style={{ height: "600px" }}
+                                      ></iframe>
                                     ) : (
                                       <div className="unsupported-media">
                                         Unsupported media type
