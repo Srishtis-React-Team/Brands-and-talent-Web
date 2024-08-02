@@ -312,7 +312,8 @@ const BrandFavorites = () => {
                                         </div>
                                         <div className="contSect">
                                           <span>
-                                            ( {item?.totalReviews} ratings)
+                                            *{item?.averageStarRatings} (
+                                            {item?.totalReviews} ratings)
                                           </span>
                                         </div>
                                       </div>

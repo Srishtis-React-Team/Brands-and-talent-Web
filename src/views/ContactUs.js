@@ -152,21 +152,23 @@ const ContactUs = () => {
           <div className="update-password-main w-100">
             <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">
-                Name <span className="mandatory">*</span>
+                Full Name <span className="mandatory">*</span>
               </label>
               <div className="form-group adult-password-wrapper">
                 {" "}
                 <input
                   type="text"
                   className="form-control adult-signup-inputs"
-                  placeholder="Enter Name"
+                  placeholder="Enter Full Name"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
                 ></input>
                 {nameError && (
-                  <div className="invalid-fields">Please enter Your Name</div>
+                  <div className="invalid-fields">
+                    Please enter Your Full Name
+                  </div>
                 )}
               </div>
             </div>
@@ -193,9 +195,7 @@ const ContactUs = () => {
               )}
             </div>
             <div className="kids-form-section col-md-12 mb-3">
-              <label className="form-label">
-                Mobile No <span className="optional">(Optional)</span>
-              </label>
+              <label className="form-label">Mobile Number</label>
 
               <MuiPhoneNumber
                 defaultCountry={"kh"}
@@ -215,7 +215,7 @@ const ContactUs = () => {
                 htmlFor="exampleFormControlTextarea1"
                 className="form-label"
               >
-                Enquiry<span className="mandatory">*</span>
+                Message<span className="mandatory">*</span>
               </label>
               <textarea
                 className="contact-us-textarea w-100"
@@ -228,7 +228,7 @@ const ContactUs = () => {
                 }}
               ></textarea>
               {enquiryError && (
-                <div className="invalid-fields">Please enter Enquiry</div>
+                <div className="invalid-fields">Please enter Message</div>
               )}
             </div>
             <div className="add-portfoli-section ">

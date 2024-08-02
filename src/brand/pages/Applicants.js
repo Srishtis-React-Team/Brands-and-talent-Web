@@ -588,7 +588,7 @@ const Applicants = () => {
                                                   candidate: candidate,
                                                 });
                                                 setAddress(
-                                                  `Hi ${candidate?.talentDetails?.preferredChildFirstname}, We think you'd be a great fit for an exciting opportunity with us. We would love for you to apply for the ${candidate?.gigDetails?.jobTitle} role. Please apply at https://hybrid.sicsglobal.com/project/brandsandtalent/preview-job-talent?${candidate?.gigId}. Looking forward to your application! Should you need more info, please feel free to contact us at ${candidate?.brandDetails?.brandEmail} / +888 555 555 555.
+                                                  `Hi ${candidate?.talentDetails?.preferredChildFirstname}, We think you'd be a great fit for an exciting opportunity with us. We would love for you to apply for the ${candidate?.gigDetails?.jobTitle} role. Please apply at https://brandsandtalent.com/preview-job-talent?${candidate?.gigId}. Looking forward to your application! Should you need more info, please feel free to contact us at ${candidate?.brandDetails?.brandEmail} / +888 555 555 555.
                                                    Best, ${candidate?.brandDetails?.brandName}`
                                                 );
                                               }}

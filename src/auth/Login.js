@@ -393,7 +393,7 @@ const Login = () => {
             />
           </div> */}
 
-          {selectedItem === "brand" && (
+          {/* {selectedItem === "brand" && (
             <>
               <div className="new-account-wrapper">
                 <span className="need-account">No account?</span>
@@ -412,7 +412,7 @@ const Login = () => {
                 </div>
               </div>
             </>
-          )}
+          )} */}
           {/* <div className="stroke-wrapper login-input-containers">
             <div className="stroke-div"></div>
             <div className="or-signup">Or Login with</div>

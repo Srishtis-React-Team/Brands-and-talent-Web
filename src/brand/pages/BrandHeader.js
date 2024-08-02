@@ -264,7 +264,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                               data-bs-toggle="dropdown"
                               onClick={() => handleClickBlogs(0)}
                             >
-                              News Letter
+                              Newsletter
                             </a>
                             {/* <ul className="dropdown-menu blogs-menu">
                               <li onClick={() => handleClickBlogs(1)}>

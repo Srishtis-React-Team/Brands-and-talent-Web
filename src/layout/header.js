@@ -153,12 +153,17 @@ const Header = ({ onData }) => {
     window.scrollTo(0, 0); // Scroll to top on link click
     if (data == "post-job") {
       if (!currentUserId) {
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
+
+        // setMessage("You must be logged in");
+        // setOpenPopUp(true);
+        // setTimeout(function() {
+        //   setOpenPopUp(false);
+        //   navigate("/login");
+        // }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/create-jobs");
       }
@@ -166,12 +171,16 @@ const Header = ({ onData }) => {
 
     if (data == "find-talent") {
       if (!currentUserId) {
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
+        // setMessage("You must be logged in");
+        // setOpenPopUp(true);
+        // setTimeout(function() {
+        //   setOpenPopUp(false);
+        //   navigate("/login");
+        // }, 1000);
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/find-creators");
       } else if (
@@ -639,12 +648,20 @@ const Header = ({ onData }) => {
           {!currentUserId && (
             <div
               className="signup mobile-signup"
+              onClick={() => handleClick("post-job")}
+            >
+              Sign up for free
+            </div>
+          )}
+          {/* {!currentUserId && (
+            <div
+              className="signup mobile-signup"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
             >
               Sign up for free
             </div>
-          )}
+          )} */}
 
           <div
             onClick={() => {
@@ -735,7 +752,7 @@ const Header = ({ onData }) => {
                   data-bs-toggle="dropdown"
                   onClick={() => handleClickBlogs(0)}
                 >
-                  News Letter
+                  Newsletter
                 </a>
                 {/* <ul className="dropdown-menu blogs-menu">
                   <li onClick={() => handleClickBlogs(1)}>
@@ -918,7 +935,7 @@ const Header = ({ onData }) => {
                         dropdown-toggle
                         onClick={() => handleClickBlogs(0)}
                       >
-                        News Letter
+                        Newsletter
                       </a>
                       {/* <ul className="dropdown-menu blogs-menu">
                         <li onClick={() => handleClickBlogs(1)}>
@@ -1038,6 +1055,11 @@ const Header = ({ onData }) => {
               )}
 
               {!currentUserId && (
+                <div className="signup" onClick={() => handleClick("post-job")}>
+                  Sign up for free
+                </div>
+              )}
+              {/* {!currentUserId && (
                 <div
                   className="signup"
                   data-bs-toggle="modal"
@@ -1045,7 +1067,7 @@ const Header = ({ onData }) => {
                 >
                   Sign up for free
                 </div>
-              )}
+              )} */}
 
               {/* <div className="gridLogo">
                 <img src={gridLogo} alt="" /> 

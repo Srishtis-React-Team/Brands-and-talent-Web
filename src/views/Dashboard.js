@@ -49,6 +49,7 @@ const Dashboard = () => {
   const locationIcon = require("../assets/icons/locationIcon.png");
   const darkStar = require("../assets/icons/darkStar.png");
   const brightStar = require("../assets/icons/brightStar.png");
+  const handshake = require("../assets/icons/handshake.png");
   const jobIcon = require("../assets/icons/jobIcon.png");
   const girl1 = require("../assets/images/girl1.png");
   const girl2 = require("../assets/images/girl2.png");
@@ -705,6 +706,7 @@ const Dashboard = () => {
       reviewerName: talentName ? talentName : brandName,
       reviewerId: currentUserId,
       talentId: talent?._id,
+      isReported: false,
     };
     await ApiHelper.post(API.reviewsPosting, formData)
       .then((resData) => {
@@ -759,7 +761,15 @@ const Dashboard = () => {
   };
 
   const blogReadMore = async () => {
-    navigate("/blogs", { state: { step: 4 } });
+    // navigate("/blogs", { state: { step: 4 } });
+    window.open("https://brandsandtalent.substack.com", "_blank");
+  };
+
+  const handleAirtableClick = () => {
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
   };
 
   return (
@@ -793,11 +803,17 @@ const Dashboard = () => {
                   </div>
                   <div
                     className="Join-now-wrapper"
+                    onClick={() => handleAirtableClick()}
+                  >
+                    <div className="joinnow-text">Join Now</div>
+                  </div>
+                  {/* <div
+                    className="Join-now-wrapper"
                     data-bs-toggle="modal"
                     data-bs-target="#verify_age"
                   >
                     <div className="joinnow-text">Join Now</div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="col-lg-6">
@@ -810,6 +826,12 @@ const Dashboard = () => {
 
                   <div
                     className="Join-now-wrapper hireBtn"
+                    onClick={() => handleAirtableClick()}
+                  >
+                    <div className="joinnow-text">Hire Now</div>
+                  </div>
+                  {/* <div
+                    className="Join-now-wrapper hireBtn"
                     onClick={(e) => {
                       navigate("/signup", {
                         state: { signupCategory: "brand" },
@@ -817,7 +839,7 @@ const Dashboard = () => {
                     }}
                   >
                     <div className="joinnow-text">Hire Now</div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -976,7 +998,10 @@ const Dashboard = () => {
                                     ></img>
                                   </div>
                                   <div className="contSect">
-                                    <span>( {item?.totalReviews} ratings)</span>
+                                    <span>
+                                      *{item?.averageStarRatings} (
+                                      {item?.totalReviews} ratings)
+                                    </span>
                                   </div>
                                 </div>
                               </>
@@ -1115,7 +1140,7 @@ const Dashboard = () => {
               <div className="col-md-4">
                 <div className="card-wrapper">
                   <div className="card-picture">
-                    <img src={lockIcon}></img>
+                    <i className="fa-solid fa-handshake handshake-icon"></i>
                   </div>
                   <div className="card-title">Hire Talent</div>
                   <div className="cards-description">
@@ -1144,7 +1169,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="caseWraper wraper secSpac">
+        {/* <div className="caseWraper wraper secSpac">
           <div className="title">Blog</div>
           <div className="container">
             <div className="gallery-section">
@@ -1188,14 +1213,14 @@ const Dashboard = () => {
               <div className="moreBtn">Read More</div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* data-bs-ride="carousel" <= under id="carouselExampleControls"
             className="carousel slide" */}
 
         <div
           style={{
-            backgroundImage: `url(${sliderBackground})`,
+            backgroundImage: `url(${"https://brandsandtalent.com/static/media/slider-background.f9e862a140ea767c3108.png"})`,
           }}
           className="carousel-section storyCar secSpac wraper"
         >
@@ -1207,7 +1232,12 @@ const Dashboard = () => {
                   <div className="carousel-wrapper">
                     <div className="box-one">
                       <div className="carimg_Box">
-                        <img className="carousel-img" src={gents}></img>
+                        <img
+                          className="carousel-img"
+                          src={
+                            "https://brandsandtalent.com/static/media/gents.08fab317c10a5f2426d6.png"
+                          }
+                        ></img>
                       </div>
                       <div className="box-content">
                         <div className="quote">
@@ -1232,7 +1262,12 @@ const Dashboard = () => {
                     </div>
                     <div className="box-one box-two">
                       <div className="carimg_Box">
-                        <img className="carousel-img" src={female}></img>
+                        <img
+                          className="carousel-img"
+                          src={
+                            "https://brandsandtalent.com/static/media/female.3a451379c6815c96176f.png"
+                          }
+                        ></img>
                       </div>
                       <div className="box-content">
                         <div className="quote">
@@ -1261,7 +1296,12 @@ const Dashboard = () => {
                   <div className="carousel-wrapper">
                     <div className="box-one">
                       <div className="carimg_Box">
-                        <img className="carousel-img" src={girl}></img>
+                        <img
+                          className="carousel-img"
+                          src={
+                            "https://brandsandtalent.com/static/media/girl.8e1e0d21ee54e6b4e980.png"
+                          }
+                        ></img>
                       </div>
                       <div className="box-content">
                         <div className="quote">
@@ -1286,7 +1326,12 @@ const Dashboard = () => {
                     </div>
                     <div className="box-one box-two">
                       <div className="carimg_Box">
-                        <img className="carousel-img" src={fashion}></img>
+                        <img
+                          className="carousel-img"
+                          src={
+                            "https://brandsandtalent.com/static/media/fashion.040356690b771726e51c.png"
+                          }
+                        ></img>
                       </div>
                       <div className="box-content">
                         <div className="quote">

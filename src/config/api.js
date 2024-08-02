@@ -1,10 +1,9 @@
-const BASEURL = "https://hybrid.sicsglobal.com/brandsntalent_api/";
+const BASEURL = "https://brandsandtalent.com/api/";
 
 export const API = {
   //common
   baseUrl: BASEURL,
-  userFilePath:
-    "https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/",
+  userFilePath: "https://brandsandtalent.com/backend/uploads/",
   uploadFile: BASEURL + "admin/fileUpload",
   listCountries: BASEURL + "admin/listCountries",
   listStates: BASEURL + "admin/listLocation",
@@ -86,6 +85,7 @@ export const API = {
   reviewsPosting: BASEURL + "users/reviewsPosting",
   countUsers: BASEURL + "users/countUsers",
   deleteVideoUrls: BASEURL + "users/deleteVideoUrls",
+  reportReview: BASEURL + "users/reportReview",
 
   //keyword
   postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",

@@ -127,7 +127,7 @@ const BrandHome = () => {
   }, [showSidebar]);
 
   const contactUs = () => {
-    navigate("/contactUs");
+    navigate("/contact-us");
   };
 
   useEffect(() => {
@@ -426,8 +426,8 @@ const BrandHome = () => {
                   </div>
                   <p className="contact-q">Seeking Assistance?</p>
                   <div className="contact-description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Corrupti, voluptatum labore aspernatur at temporibus
+                    Have a question? Fill out the form below, and we'll get back
+                    to you within 1-2 business days
                   </div>
                   <div className="contact-btn" onClick={() => contactUs()}>
                     Contact Now
