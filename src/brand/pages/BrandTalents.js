@@ -1203,7 +1203,9 @@ const BrandTalents = () => {
                                                   </div>
                                                   <div className="contSect">
                                                     <span>
-                                                      ( {item?.totalReviews}{" "}
+                                                      *
+                                                      {item?.averageStarRatings}{" "}
+                                                      ({item?.totalReviews}{" "}
                                                       ratings)
                                                     </span>
                                                   </div>

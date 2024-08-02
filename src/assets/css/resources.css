@@ -29,6 +29,7 @@
 }
 .resource-image.imgWid {
   max-width: 500px;
+  max-height: 300px;
 }
 
 .resource-name {

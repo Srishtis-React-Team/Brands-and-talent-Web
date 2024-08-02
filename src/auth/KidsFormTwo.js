@@ -243,7 +243,7 @@ const KidsFormTwo = () => {
                                   </>
                                 )}
                               </div>
-                              <div
+                              {/* <div
                                 className={
                                   index == 0
                                     ? "choose-btn free-btn"
@@ -256,7 +256,7 @@ const KidsFormTwo = () => {
                                 onClick={() => choosePlan()}
                               >
                                 Choose plan
-                              </div>
+                              </div> */}
                               <div className="include">What's Included</div>
                               <div className="included-things">
                                 {item.data.map((item) => {

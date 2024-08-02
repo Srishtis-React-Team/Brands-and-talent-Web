@@ -1,6 +1,6 @@
 import { error } from "jquery";
 
-export const baseUrl = "https://hybrid.sicsglobal.com/brandsntalent_api/";
+export const baseUrl = "https://brandsandtalent.com/api";
 
 export const postRequest = async (url, body) => {
   const response = await fetch(url, {

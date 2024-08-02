@@ -414,7 +414,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                             dropdown-toggle
                             onClick={() => handleClickBlogs(0)}
                           >
-                            News Letter
+                            Newsletter
                           </a>
                           {/* <ul className="dropdown-menu blogs-menu">
                             <li onClick={() => handleClickBlogs(1)}>

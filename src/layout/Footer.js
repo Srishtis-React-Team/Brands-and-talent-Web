@@ -159,6 +159,17 @@ const Footer = (props) => {
     setIsValidEmail(emailRegex.test(email));
   };
 
+  const handleIconClick = (url) => {
+    window.open(url, "_blank");
+  };
+
+  const handleAirtableClick = (data) => {
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
+  };
+
   return (
     <>
       {/* <Header sendMessageToParent={handleMessageFromHeader} /> */}
@@ -250,10 +261,77 @@ const Footer = (props) => {
                 amplify your voice, and showcase your work globally.
               </div>
               <div className="social-medias">
-                <img src={twitterBlack}></img>
-                <img src={fbBlack}></img>
-                <img src={instaBlack}></img>
-                <img src={githubBlack}></img>
+                <div>
+                  <i
+                    className="bi bi-globe social-media-icons"
+                    onClick={() =>
+                      handleIconClick("https://brandsandtalent.com")
+                    }
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "24px",
+                      margin: "0 10px",
+                    }}
+                  ></i>
+                  <i
+                    className="bi bi-instagram social-media-icons"
+                    onClick={() =>
+                      handleIconClick("https://instagram.com/brandsandtalent")
+                    }
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "24px",
+                      margin: "0 10px",
+                    }}
+                  ></i>
+                  <i
+                    className="bi bi-telegram social-media-icons"
+                    onClick={() =>
+                      handleIconClick("https://t.me/brandsandtalent")
+                    }
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "24px",
+                      margin: "0 10px",
+                    }}
+                  ></i>
+
+                  <i
+                    className="bi bi-send-arrow-down-fill social-media-icons"
+                    onClick={() =>
+                      handleIconClick("https://t.me/brandsandtalentmgmt")
+                    }
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "24px",
+                      margin: "0 10px",
+                    }}
+                  ></i>
+                  <i
+                    className="bi bi-facebook social-media-icons"
+                    onClick={() =>
+                      handleIconClick(
+                        "https://web.facebook.com/brandsandtalent"
+                      )
+                    }
+                    style={{
+                      cursor: "pointer social-media-icons",
+                      fontSize: "24px",
+                      margin: "0 10px",
+                    }}
+                  ></i>
+                  <i
+                    className="bi bi-envelope social-media-icons"
+                    onClick={() =>
+                      handleIconClick("mailto:brandsntalent@gmail.com")
+                    }
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "24px",
+                      margin: "0 10px",
+                    }}
+                  ></i>
+                </div>
               </div>
             </div>
 
@@ -290,7 +368,7 @@ const Footer = (props) => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contactUs" onClick={handleClick}>
+                  <Link to="/contact-us" onClick={handleClick}>
                     Contact Us
                   </Link>
                 </li>
@@ -311,6 +389,12 @@ const Footer = (props) => {
                   </Link>
                 </li>
                 <li>
+                  <Link onClick={handleAirtableClick}>Hire Talent</Link>
+                </li>
+                <li>
+                  <Link onClick={handleAirtableClick}>Register as Talent</Link>
+                </li>
+                {/* <li>
                   <Link onClick={handleClick} to="/brand-firstGig">
                     Hire Talent
                   </Link>
@@ -319,25 +403,31 @@ const Footer = (props) => {
                   <Link to="/" onClick={() => openModal()}>
                     Register as Talent
                   </Link>
-                </li>
+                </li> */}
 
                 {!currentUserId && (
                   <>
                     <li>
-                      <Link to="/get-booked" onClick={handleClick}>
+                      <Link onClick={handleAirtableClick}>Get Hired</Link>
+                    </li>
+                    {/* <li>
+                      <Link to="/get-booked" onClick={handleAirtableClick}>
                         Get Hired
                       </Link>
-                    </li>
+                    </li> */}
                   </>
                 )}
 
                 {currentUserId && currentUserType == "talent" && (
                   <>
                     <li>
+                      <Link onClick={handleAirtableClick}>Get Hired</Link>
+                    </li>
+                    {/* <li>
                       <Link to="/talent-dashboard" onClick={handleClick}>
                         Get Hired
                       </Link>
-                    </li>
+                    </li> */}
                   </>
                 )}
 
@@ -356,6 +446,17 @@ const Footer = (props) => {
                 </Link>
               </h6>
               <ul className="footerLinks">
+                <li>
+                  <a href=""> Industry Insights</a>
+                </li>
+                <li>
+                  <a href=""> Case Studies</a>
+                </li>
+                <li>
+                  <a href="">Interviews</a>
+                </li>
+              </ul>
+              {/* <ul className="footerLinks">
                 <li onClick={() => handleClickBlogs(0)}>
                   <a href=""> Industry Insights</a>
                 </li>
@@ -365,7 +466,7 @@ const Footer = (props) => {
                 <li onClick={() => handleClickBlogs(2)}>
                   <a href="">Interviews</a>
                 </li>
-              </ul>
+              </ul> */}
             </div>
             <div className="footer-wrapper col-md-4 col-lg-2">
               <h6>
@@ -376,15 +477,16 @@ const Footer = (props) => {
 
               <ul className="footerLinks">
                 <li>
-                  <Link onClick={handleClick} to="/terms-conditions">
-                    Terms & Conditions
-                  </Link>
-                </li>
-                <li>
                   <Link onClick={handleClick} to="/community-guidelines">
                     Community Guidelines
                   </Link>
                 </li>
+                <li>
+                  <Link onClick={handleClick} to="/terms-conditions">
+                    Terms & Conditions
+                  </Link>
+                </li>
+
                 <li>
                   <Link to="/privacy-policy" onClick={handleClick}>
                     Privacy Policy
@@ -396,7 +498,10 @@ const Footer = (props) => {
         </section>
         <section>
           <div className="copyright-section">
-            <p>© Copyright 2024 Brands and Talent All Right Reserved.</p>
+            <p>
+              © Copyright 2024 Brands & Talent Management All rights reserved. |
+              Feedback & Reporting
+            </p>
           </div>
         </section>
       </div>

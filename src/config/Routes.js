@@ -107,6 +107,7 @@ function Routing() {
   // console.log(brandId, "brandId Routing");
 
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserType, setCurrentUserType] = useState(null);
   const [brandID, setBrandID] = useState(null);
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
@@ -117,9 +118,16 @@ function Routing() {
     try {
       console.log(location.pathname, "location.pathname");
       const userString = localStorage.getItem("currentUser");
+      const userType = localStorage.getItem("currentUserType");
       if (userString) {
         setCurrentUserId(userString);
         console.log(userString, "user Routing");
+      } else {
+        console.log("No currentUser found in localStorage");
+      }
+      if (userType) {
+        setCurrentUserType(userType);
+        console.log(userType, "userType Routing");
       } else {
         console.log("No currentUser found in localStorage");
       }
@@ -191,7 +199,7 @@ function Routing() {
 
         {/* <Route path="/talent/:name" element={<TalentProfile />} /> */}
         {/* <Route path="/pricing" element={<Pricing />} /> */}
-        <Route
+        {/* <Route
           path="/pricing"
           element={
             currentUserId || brandID ? (
@@ -200,7 +208,8 @@ function Routing() {
               <Navigate to="/login" replace />
             )
           }
-        />
+        /> */}
+        <Route path="/pricing" element={<Pricing />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/otp" element={<OTPComponent />} />
@@ -208,7 +217,7 @@ function Routing() {
         <Route path="/community-guidelines" element={<Guidelines />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/blogs" element={<Blogs />} />
+        {/* <Route path="/blogs" element={<Dashboard />} /> */}
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/login" element={<Login />}></Route>
@@ -266,7 +275,7 @@ function Routing() {
         <Route path="/brand-firstGig" element={<BrandFirstGig />} />
         <Route path="/brand-details" element={<BrandDetails />} />
         <Route path="/brand-logo" element={<BrandLogo />} />
-        <Route path="/contactUs" element={<ContactUs />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/brand-activated" element={<BrandActivation />} />
         <Route path="/list-jobs" element={<ListJobs />} />
         <Route path="/applied-jobs" element={<AppliedJobs />} />

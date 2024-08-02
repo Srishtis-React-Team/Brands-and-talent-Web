@@ -2607,7 +2607,7 @@ const EditTalent = () => {
                       {!publicUrlEdit && (
                         <>
                           <div className="public-url-text">
-                            {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent/${publicUrl}`}
+                            {`https://brandsandtalent.com/backend/uploads/${publicUrl}`}
                             <i
                               onClick={(e) => {
                                 setPublicUrlEdit(true);
@@ -2619,7 +2619,7 @@ const EditTalent = () => {
                       )}
                       {publicUrlEdit && (
                         <div className="public-url-text">
-                          {`https://hybrid.sicsglobal.com/project/brandsandtalent/talent/`}
+                          {`https://brandsandtalent.com/talent/`}
                         </div>
                       )}
 

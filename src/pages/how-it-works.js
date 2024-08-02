@@ -231,7 +231,7 @@ const HowItWorks = () => {
 
               <div className="howitworks-labels">
                 <div className="howitworks-labels-text">
-                  <a href="#brand">Brands/Clients</a>
+                  <a href="#brand">Brands / Clients</a>
                 </div>
                 <div className="howitworks-labels-text">
                   <a href="#talent">Talent</a>
@@ -242,7 +242,9 @@ const HowItWorks = () => {
               </div>
 
               <div>
-                <h2 className="maintitles text-center">For Brands/Client </h2>
+                <h2 className="maintitles text-center">
+                  For Brands / Clients{" "}
+                </h2>
                 <div className="video-container">
                   <video
                     src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/9a0040f1-6bd1-4a31-9dfc-5e8a76f4fb2b.mp4"
@@ -264,6 +266,12 @@ const HowItWorks = () => {
                       >
                         {index % 2 === 0 ? (
                           <>
+                            <div
+                              className="resource-name mb-3"
+                              dangerouslySetInnerHTML={{
+                                __html: resource.title,
+                              }}
+                            />
                             <div className="resource-image-wrapper imgL col-md-6">
                               <div className="resource-image-padding">
                                 {resource.image ? (
@@ -280,12 +288,6 @@ const HowItWorks = () => {
                               </div>
                             </div>
                             <div className="resource-content-wrapper col-md-6 padSpace">
-                              <div
-                                className="resource-name"
-                                dangerouslySetInnerHTML={{
-                                  __html: resource.title,
-                                }}
-                              />
                               <div className="resource-description space">
                                 {resource.description.map((desc, descIndex) => (
                                   <div
@@ -300,6 +302,12 @@ const HowItWorks = () => {
                           </>
                         ) : (
                           <>
+                            <div
+                              className="resource-name mb-3"
+                              dangerouslySetInnerHTML={{
+                                __html: resource.title,
+                              }}
+                            />
                             <div className="resource-image-wrapper imgL col-md-6">
                               <div className="resource-image-padding">
                                 {resource.image ? (
@@ -316,12 +324,6 @@ const HowItWorks = () => {
                               </div>
                             </div>
                             <div className="resource-content-wrapper col-md-6 padSpace">
-                              <div
-                                className="resource-name"
-                                dangerouslySetInnerHTML={{
-                                  __html: resource.title,
-                                }}
-                              />
                               <div className="resource-description space">
                                 {resource.description.map((desc, descIndex) => (
                                   <div
@@ -445,6 +447,12 @@ const HowItWorks = () => {
                         >
                           {index % 2 === 0 ? (
                             <>
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
                               <div className="resource-image-wrapper imgL col-md-6">
                                 <div className="resource-image-padding">
                                   {resource.image ? (
@@ -461,12 +469,6 @@ const HowItWorks = () => {
                                 </div>
                               </div>
                               <div className="resource-content-wrapper col-md-6 padSpace">
-                                <div
-                                  className="resource-name"
-                                  dangerouslySetInnerHTML={{
-                                    __html: resource.title,
-                                  }}
-                                />
                                 <div className="resource-description space">
                                   {resource.description.map(
                                     (desc, descIndex) => (
@@ -483,6 +485,12 @@ const HowItWorks = () => {
                             </>
                           ) : (
                             <>
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
                               <div className="resource-image-wrapper imgL col-md-6">
                                 <div className="resource-image-padding">
                                   {" "}
@@ -500,12 +508,6 @@ const HowItWorks = () => {
                                 </div>
                               </div>
                               <div className="resource-content-wrapper col-md-6 padSpace">
-                                <div
-                                  className="resource-name"
-                                  dangerouslySetInnerHTML={{
-                                    __html: resource.title,
-                                  }}
-                                />
                                 <div className="resource-description space">
                                   {resource.description.map(
                                     (desc, descIndex) => (

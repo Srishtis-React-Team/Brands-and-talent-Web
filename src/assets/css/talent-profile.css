@@ -104,6 +104,12 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  padding-right: 15px;
+}
+
+.flag-icon {
+  padding-right: 8px;
+  color: #c2114b;
 }
 .review-content {
   color: #000;
@@ -1301,4 +1307,10 @@
   height: auto !important;
   max-width: 100% !important;
   max-height: 100% !important;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }

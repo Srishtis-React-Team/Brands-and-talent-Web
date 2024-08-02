@@ -21,7 +21,9 @@ import Spinner from "../components/Spinner.js";
 import { useNavigate } from "react-router";
 import { Modal, Box, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 const TalentProfile = () => {
   const {
     currentUserId,
@@ -80,7 +82,7 @@ const TalentProfile = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState();
   const pdfUrl =
-    "https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/72e654db-4dd1-4663-89d8-52db0df93ca4.pdf";
+    "https://brandsandtalent.com/backend/uploads/72e654db-4dd1-4663-89d8-52db0df93ca4.pdf";
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
@@ -122,7 +124,6 @@ const TalentProfile = () => {
 
   const location = useLocation();
   const selectedTalent = location.state && location.state.talentData;
-
   console.log(selectedTalent, "selectedTalent");
 
   const url = window.location.href;
@@ -442,10 +443,6 @@ const TalentProfile = () => {
     // }
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
   const inviteToApply = async () => {
     const formData = {
       talentId: talentData?._id,
@@ -493,6 +490,39 @@ const TalentProfile = () => {
   const handleClose = () => {
     // alert("handleCloseSlider");
     setSliderOpen(false);
+  };
+  const [modalData, setModalData] = useState(null);
+
+  const reportReview = async (item) => {
+    // alert("reportReview");
+    setModalData(item);
+    const modalElement = document.getElementById("ratingModal");
+    const bootstrapModal = new window.bootstrap.Modal(modalElement);
+    bootstrapModal.show();
+  };
+
+  const handleCloseModal = async (modalData) => {
+    console.log(modalData, "modalData");
+    const formData = {
+      comment: comments,
+      reviewerName: modalData?.reviewerName,
+      talentId: talentData?._id,
+      reviewerId: modalData?.reviewerId,
+    };
+    await ApiHelper.post(API.reportReview, formData)
+      .then((resData) => {
+        setMessage("Reported SuccessFully!");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+          const modalElement = document.getElementById("ratingModal");
+          const bootstrapModal = new window.bootstrap.Modal(modalElement);
+          bootstrapModal.hide();
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -558,6 +588,26 @@ const TalentProfile = () => {
     return shortcode
       ? `https://www.instagram.com/reel/${shortcode}/embed`
       : null;
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const [anchorE2, setAnchorE2] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const dropDownClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const handleFileClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const reviewMenuClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -684,7 +734,8 @@ const TalentProfile = () => {
                               </div>
                               <div className="contSect">
                                 <span>
-                                  ( {talentData?.totalReviews} ratings)
+                                  *{talentData?.averageStarRatings} (
+                                  {talentData?.totalReviews} ratings)
                                 </span>
                               </div>
                             </div>
@@ -1704,14 +1755,42 @@ const TalentProfile = () => {
                                       className="model-review-wrapper col-md-6"
                                       key={index}
                                     >
-                                      <div className="review-date">
-                                        {new Date(
-                                          item.reviewDate
-                                        ).toLocaleDateString("en-GB", {
-                                          day: "2-digit",
-                                          month: "long",
-                                          year: "numeric",
-                                        })}
+                                      <div className="review-header">
+                                        <div className="review-date">
+                                          {new Date(
+                                            item.reviewDate
+                                          ).toLocaleDateString("en-GB", {
+                                            day: "2-digit",
+                                            month: "long",
+                                            year: "numeric",
+                                          })}
+                                        </div>
+                                        <div className="review-action">
+                                          <IconButton
+                                            aria-label="more"
+                                            aria-controls="dropdown-menu"
+                                            aria-haspopup="true"
+                                            onClick={handleClick}
+                                          >
+                                            <MoreVertIcon />
+                                          </IconButton>
+                                          <Menu
+                                            id="dropdown-menu"
+                                            anchorEl={anchorEl}
+                                            open={Boolean(anchorEl)}
+                                            onClose={reviewMenuClose}
+                                          >
+                                            <MenuItem
+                                              onClick={() => {
+                                                reviewMenuClose();
+                                                reportReview(item);
+                                              }}
+                                            >
+                                              <i class="bi bi-flag-fill flag-icon"></i>
+                                              Report
+                                            </MenuItem>
+                                          </Menu>
+                                        </div>
                                       </div>
                                       <div className="review-title">
                                         {item.comment}
@@ -1836,6 +1915,59 @@ const TalentProfile = () => {
           </IconButton>
         </Box>
       </Modal>
+
+      <div
+        className="modal fade"
+        id="ratingModal"
+        tabIndex="-1"
+        aria-labelledby="ratingModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog  modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              {/* <p id="ratingModalLabel" className="modal-job-title">
+                  Rate {modalData?.preferredChildFirstname}
+                </p> */}
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <h5 className="pb-2">Report</h5>
+              <div className="mb-3" style={{ textAlign: "left" }}>
+                <label className="form-label">Comments</label>
+                <textarea
+                  name=""
+                  id=""
+                  cols="5"
+                  rows="5"
+                  className="form-control smaller-placeholder rating-text-area"
+                  value={comments}
+                  onChange={(e) => {
+                    setComments(e.target.value);
+                  }}
+                  placeholder="Type your comments"
+                ></textarea>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                onClick={() => handleCloseModal(modalData)}
+                type="button"
+                className="btn submit-rating"
+                data-bs-dismiss="modal"
+                disabled={!comments}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
