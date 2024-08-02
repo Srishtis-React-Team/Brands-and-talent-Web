@@ -10,6 +10,12 @@
   border-radius: 16px;
   padding: 20px;
   margin: 20px 20px 20px 20px;
+  width: 90%;
+}
+
+.message-section-container {
+  display: flex;
+  justify-content: center !important;
 }
 
 .message-files {
@@ -61,7 +67,8 @@
   max-height: 56vh;
 }
 
-.conversation-section .scroll, .message-sidebar .scroll {
+.conversation-section .scroll,
+.message-sidebar .scroll {
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -370,14 +377,19 @@
     margin-top: 75px;
     padding: 10px;
   }
+  .message-section-container {
+    display: flex;
+    justify-content: center !important;
+  }
   .messages-section {
     background-color: #ffffff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 16px;
     padding: 10px;
     margin: 0;
+    width: 90%;
   }
   .message-user-wrapper {
     display: none;
   }
-}/*# sourceMappingURL=messages.css.map */
+} /*# sourceMappingURL=messages.css.map */

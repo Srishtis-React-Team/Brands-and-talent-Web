@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
+
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import Bootstrap JavaScript
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
@@ -10,6 +11,7 @@ import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { styled } from "@mui/system";
 import Button from "@mui/material/Button";
 // import { styled } from "@mui/material/styles";
+
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -17,35 +19,11 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Select from "react-select";
+import TalentPreviewJob from "./TalentPreviewJob.js";
+import useFieldDatas from "../config/useFieldDatas.js";
 
 const TalentDashBoard = () => {
-  const workPlaceTypesOptions = [
-    "Man",
-    "Woman",
-    "Non binary",
-    "TransworkPlaceType Woman",
-    "TransworkPlaceType Man",
-    "AworkPlaceType",
-    "Other",
-    "Prefer not to say",
-  ];
-
-  const categoryList = [
-    "Fashion & Beauty",
-    "Media & Entertainment",
-    "Sports, Fitness, & Wellness",
-    "Creative Arts & Design",
-    "Celebrity",
-    "Writing, Marketing, & Content Creation",
-    "Performing Arts",
-    "Education & Coaching",
-    "Business & Technology",
-    "Luxury & Lifestyle",
-    "Eco-friendly & Sustainability",
-    "Home & Gardening",
-    "Food & Travel",
-    "Diversity & Inclusion",
-  ];
+  const { categoryList, professionList } = useFieldDatas();
 
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,9 +32,92 @@ const TalentDashBoard = () => {
   const [topBrandsList, setTopBrandsList] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [isFilled, setIsFilled] = useState(true);
+  const [job, setJob] = useState("");
   const girl1 = require("../assets/images/girl1.png");
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const sliderIcon = require("../assets/icons/sliders.png");
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [kidsCity, setKidsCity] = useState("");
+
+  useEffect(() => {
+    getCountries();
+  }, []);
+
+  const getCountries = async () => {
+    await ApiHelper.get(API.listCountries)
+      .then((resData) => {
+        if (resData) {
+          setCountryList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const handleSelectedCountry = (event) => {
+    console.log(event, "event");
+    console.log(event?.value, "event?.value");
+    setCountry(event?.value);
+    // setState("");
+    // handleSelectedState("");
+    getStates(event?.value);
+    console.log(country, "country");
+  };
+  const handleSelectedState = (state) => {
+    console.log(state, "state");
+    setState(state?.label);
+    // setKidsCity("");
+    getCities({
+      countryName: country,
+      stateName: state?.label,
+    });
+  };
+
+  const handleSelectedCity = (state) => {
+    setKidsCity(state?.label);
+  };
+
+  const getStates = async (data) => {
+    const formData = {
+      countryName: data,
+    };
+    await ApiHelper.post(API.listStates, formData)
+      .then((resData) => {
+        if (resData) {
+          setStateList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const customStylesProfession = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "45px",
+      zIndex: 1, // Ensure the control is above other elements
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      zIndex: 1, // Ensure the menu appears above other elements
+    }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensure menu portal appears above other elements
+  };
+
+  const getCities = async (data) => {
+    const formData = data;
+    await ApiHelper.post(API.listCity, formData)
+      .then((resData) => {
+        if (resData) {
+          setCityList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -68,6 +129,7 @@ const TalentDashBoard = () => {
       zIndex: 9999, // Ensure menu appears above other elements
     }),
   };
+  console.log(job, "jobNewTalentPreview");
   const jobImage = require("../assets/icons/jobImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -78,8 +140,14 @@ const TalentDashBoard = () => {
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [skillsList, setSkillsList] = useState([]);
-
+  const [flag, setFlag] = useState(false);
   const url = window.location.href;
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("Current Route:", location.pathname);
+  }, [location]);
+
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
 
@@ -134,17 +202,20 @@ const TalentDashBoard = () => {
       bootstrapModal.show();
     }
   };
+
   const viewJob = async (jobId) => {
-    navigate("/preview-job-talent", {
-      state: {
-        jobId: jobId,
-      },
-    });
+    console.log(jobId, "flag");
+    setJob(jobId);
+    setFlag(true);
   };
 
   useEffect(() => {
     console.log(gigsList, "gigsList");
   }, [gigsList]);
+
+  useEffect(() => {
+    console.log(flag, "flag");
+  }, [flag]);
 
   const getTopBrands = async () => {
     await ApiHelper.post(API.getTopBrands)
@@ -161,6 +232,7 @@ const TalentDashBoard = () => {
   };
 
   const toggleMenu = () => {
+    console.log("toggleMenucalled");
     setShowSidebar(!showSidebar);
   };
   const [talentId, setTalentId] = useState(null);
@@ -201,7 +273,7 @@ const TalentDashBoard = () => {
     };
     await ApiHelper.post(API.applyjobs, formData)
       .then((resData) => {
-        setMessage("Job Applied SuccessFully!");
+        setMessage("Job applied successfully");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -217,6 +289,10 @@ const TalentDashBoard = () => {
       });
   };
 
+  useEffect(() => {
+    console.log(modalData, "modalDataCOnsole");
+  }, [modalData]);
+
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     "& .MuiDialogContent-root": {
       padding: theme.spacing(2),
@@ -227,6 +303,7 @@ const TalentDashBoard = () => {
   }));
 
   const [open, setOpen] = React.useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -249,6 +326,15 @@ const TalentDashBoard = () => {
   const [workPlaceType, setWorkPlaceType] = useState("");
   const ageList = ["4-17", "18+"];
 
+  const employmentTypeList = [
+    "Full Time",
+    "Part Time",
+    "Per Diem",
+    "Contractor",
+    "Temporary",
+    "Other",
+  ];
+
   const selectedSkillsRef = useRef([]);
 
   const selectSkills = (selectedOptions) => {
@@ -268,6 +354,7 @@ const TalentDashBoard = () => {
     let work_place_type;
     let job_name;
     let category;
+    let employment_type;
 
     // Get the select element
     var selectElement = document.getElementById("workPlaceSelect");
@@ -282,6 +369,13 @@ const TalentDashBoard = () => {
     job_type = selectJobElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
     console.log(job_type, "job_type");
+
+    // Get the select element
+    var selectEmploymentElement = document.getElementById("employmentTypeID");
+    // Get the selected value
+    employment_type = selectEmploymentElement?.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(employment_type, "employment_type");
 
     // Get the select element
     var selectAgeElement = document.getElementById("ageSelectID");
@@ -331,6 +425,10 @@ const TalentDashBoard = () => {
       skills: selectedSkillsRef?.current,
       talentId: talentId,
       category: category,
+      employmentType: employment_type,
+      country: country,
+      state: state,
+      city: kidsCity,
     };
     console.log(formData, "formData talentFilterData");
     setIsLoading(true);
@@ -367,10 +465,10 @@ const TalentDashBoard = () => {
   const jobFullNameRef = useRef(null);
 
   const jobTypeOptions = [
-    "Full-Time",
-    "Part-Time",
-    "Per Diem",
-    "Contractor",
+    "On Site",
+    "Remote",
+    "Work From Anywhere",
+    "Hybrid",
     "Temporary",
     "Other",
   ];
@@ -554,7 +652,7 @@ const TalentDashBoard = () => {
         </div>
         <div className="container-fluid my-2 p-0">
           <div className="row talent-dashboard-main">
-            <div className="col-md-8 col-lg-9">
+            <div className={flag ? "col-md-8 col-lg-6" : "col-md-8 col-lg-8"}>
               <div className="talent-column-one">
                 <div className="filter-text-wrapper mb-3">
                   <div className="recent-gigs-title">Most Recent Jobs</div>
@@ -566,40 +664,33 @@ const TalentDashBoard = () => {
                       Filter Jobs
                       <img className="filter-icon" src={sliderIcon} alt="" />
                     </div>
-                    <BootstrapDialog
-                      onClose={handleClose}
-                      aria-labelledby="customized-dialog-title"
+                    <Dialog
                       open={open}
+                      onClose={handleClose}
                       PaperProps={{
-                        sx: {
-                          marginTop: "10vh", // Adjust this value to suit your needs
-                          position: "absolute",
-                          top: 0,
-                          maxHeight: "90vh", // Optional: Limit the height of the dialog
+                        component: "form",
+                        onSubmit: (event) => {
+                          event.preventDefault();
+                          const formData = new FormData(event.currentTarget);
+                          const formJson = Object.fromEntries(
+                            formData.entries()
+                          );
+                          const email = formJson.email;
+                          console.log(email);
+                          handleClose();
                         },
                       }}
                     >
-                      <DialogTitle
-                        sx={{ m: 0, p: 2 }}
-                        id="customized-dialog-title"
-                      >
-                        Filter Jobs
-                      </DialogTitle>
-                      <IconButton
-                        aria-label="close"
-                        onClick={handleClose}
-                        sx={{
-                          position: "absolute",
-                          right: 8,
-                          top: 8,
-                          color: (theme) => theme.palette.grey[500],
-                        }}
-                      >
-                        <CloseIcon />
-                      </IconButton>
-                      <DialogContent dividers>
+                      <div className="gift-dialog-header">
+                        <DialogTitle>Filter</DialogTitle>
+                        <i
+                          className="bi bi-x-lg close-gift"
+                          onClick={handleClose}
+                        ></i>
+                      </div>
+                      <DialogContent>
                         <div className="search-filter-section">
-                          <div className="kids-form-row row mt-3">
+                          <div className="kids-form-row row">
                             <div className="kids-form-section col-md-6 mb-3">
                               <label className="form-label">Keywords</label>
                               <input
@@ -622,8 +713,8 @@ const TalentDashBoard = () => {
                                   Select Category
                                 </option>
                                 {categoryList.map((option, index) => (
-                                  <option key={index} value={option}>
-                                    {option}
+                                  <option key={index} value={option?.value}>
+                                    {option?.value}
                                   </option>
                                 ))}
                               </select>
@@ -633,13 +724,50 @@ const TalentDashBoard = () => {
 
                         <div className="kids-form-row row">
                           <div className="kids-form-section col-md-6 mb-3">
-                            <label className="form-label">Location</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Location"
-                              ref={jobLocationRef}
-                            ></input>
+                            <label className="form-label">Country</label>
+                            <Select
+                              placeholder="Search country..."
+                              options={countryList.map((country, index) => ({
+                                value: country,
+                                label: country,
+                                key: index,
+                              }))}
+                              value={country?.value}
+                              onChange={handleSelectedCountry}
+                              isSearchable={true}
+                              styles={customStylesProfession}
+                            />
+                          </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">State</label>
+                            <Select
+                              placeholder="Select state..."
+                              options={stateList.map((state) => ({
+                                value: state.stateId, // or whatever unique identifier you want to use
+                                label: state.name,
+                              }))}
+                              value={state?.label}
+                              onChange={handleSelectedState}
+                              isSearchable={true}
+                              styles={customStylesProfession}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="kids-form-row row">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">City</label>
+                            <Select
+                              placeholder="Select City..."
+                              options={cityList.map((city) => ({
+                                value: city.cityId, // or whatever unique identifier you want to use
+                                label: city.name,
+                              }))}
+                              value={kidsCity?.label}
+                              onChange={handleSelectedCity}
+                              isSearchable={true}
+                              styles={customStylesProfession}
+                            />
                           </div>
                           <div className="kids-form-section col-md-6 mb-3">
                             <label className="form-label">Age</label>
@@ -661,7 +789,7 @@ const TalentDashBoard = () => {
                           </div>
                         </div>
                         <div className="row">
-                          <div className="kids-form-section col-md-12 mb-3">
+                          <div className="kids-form-section col-md-6 mb-3">
                             <label className="form-label">Skills</label>
                             <Select
                               isMulti
@@ -673,22 +801,9 @@ const TalentDashBoard = () => {
                               styles={customStyles}
                             />
                           </div>
-                        </div>
-                        <div className="kids-form-row row mt-3">
-                          <div className="kids-form-section col-md-6 mb-3">
-                            <label className="form-label">Job Name</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Enter Name"
-                              ref={jobNameRef}
-                            ></input>
-                          </div>
                           <div className="kids-form-section col-md-6 mb-3">
                             <div className=" ">
-                              <label className="form-label">
-                                Employment Type
-                              </label>
+                              <label className="form-label">Job Type</label>
                               <select
                                 className="form-select"
                                 aria-label="Default select example"
@@ -707,16 +822,51 @@ const TalentDashBoard = () => {
                             </div>
                           </div>
                         </div>
+                        <div className="kids-form-row row ">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Job Title</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Job Title"
+                              ref={jobNameRef}
+                            ></input>
+                          </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <div className=" ">
+                              <label className="form-label">
+                                Employment Type
+                              </label>
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                                id="employmentTypeID"
+                              >
+                                <option value="" disabled selected>
+                                  Select Employment Type
+                                </option>
+                                {employmentTypeList.map((option, index) => (
+                                  <option key={index} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
                       </DialogContent>
                       <DialogActions>
-                        <Button
-                          className="search-popup-btn"
+                        {/* <Button onClick={handleClose}>Cancel</Button> */}
+                        <button
+                          type="button"
+                          className="btn gift-payment-btn"
                           onClick={applyFilter}
                         >
-                          Filter
-                        </Button>
+                          {isLoading ? "Loading..." : "Filter"}
+                        </button>
                       </DialogActions>
-                    </BootstrapDialog>
+                    </Dialog>
                   </React.Fragment>
                 </div>
 
@@ -821,35 +971,52 @@ const TalentDashBoard = () => {
 
                                     <div className="mb-2">
                                       <span className="job-company_dtls">
-                                        {item?.state}
-                                      </span>{" "}
-                                      ,
-                                      <span className="job-company_dtls">
-                                        {item?.city}
-                                      </span>
-                                    </div>
-                                    <div className="mb-2">
-                                      <span className="job-company_dtls">
-                                        <i class="bi bi-person-workspace"></i>
+                                        <i className="bi bi-person-workspace"></i>
                                       </span>{" "}
                                       {/* . */}
                                       <span className="job-company_dtls">
-                                        {item?.jobType}
+                                        {item?.jobType}{" "}
+                                        <i className="bi bi-dot"></i>
                                       </span>
-                                      .
                                       <span className="job-company_dtls">
-                                        {item?.employmentType}
+                                        <i className="bi bi-geo-alt-fill"></i>
+                                        {item?.city}, {item?.state}{" "}
+                                        <i className="bi bi-dot"></i>
                                       </span>
-                                      .
                                       <span className="job-company_dtls">
-                                        {Object.keys(item?.compensation)[0]}
+                                        {item?.employmentType}{" "}
+                                        <i className="bi bi-dot"></i>
+                                      </span>
+                                      <span className="job-company_dtls">
+                                        {item?.category}{" "}
+                                        <i className="bi bi-dot"></i>
+                                      </span>
+                                      <span className="job-company_dtls">
+                                        {Object.keys(item?.compensation)[0] ===
+                                        "paid_collaboration_and_gift"
+                                          ? "Paid Collaboration + Product/Gift"
+                                          : Object.keys(
+                                              item?.compensation
+                                            )[0] === "product_gift"
+                                          ? "Product/Gift"
+                                          : Object.keys(
+                                              item?.compensation
+                                            )[0] === "paid_collaboration"
+                                          ? "Paid Collaboration"
+                                          : ""}
+
+                                        {/* {Object.keys(item?.compensation)[0]
+                                          ?.split("_")
+                                          .map(
+                                            (word) =>
+                                              word.charAt(0).toUpperCase() +
+                                              word.slice(1)
+                                          )
+                                          .join(" ")} */}
                                       </span>
                                     </div>
                                     <div className="mb-2">
-                                      <span
-                                        style={{ fontWeight: "bold" }}
-                                        className="job-company_dtls"
-                                      >
+                                      <span className="job-company_dtls">
                                         Application Deadline :{" "}
                                       </span>{" "}
                                       <span>
@@ -878,8 +1045,244 @@ const TalentDashBoard = () => {
                   <div className="recent-gigs-main">No Jobs Available</div>
                 )}
               </div>
+
+              <div
+                className="modal fade"
+                id="exampleModal"
+                tabIndex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      {modalData?.jobTitle && (
+                        <>
+                          <p id="exampleModalLabel" className="modal-job-title">
+                            {modalData?.jobTitle}
+                          </p>
+                        </>
+                      )}
+
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+
+                    <div className="modal-body">
+                      {modalData?.hiringCompany && (
+                        <div className="modal-job-flex">
+                          <i className="bi bi-building model-job-icons"></i>
+                          <div className="model-job-name">
+                            {modalData?.hiringCompany}
+                          </div>
+                        </div>
+                      )}
+                      {(modalData?.employmentType || modalData?.jobType) && (
+                        <div className="modal-job-flex">
+                          <i className="bi bi-briefcase-fill model-job-icons"></i>
+                          <div className="model-job-name">
+                            {modalData?.employmentType && (
+                              <span className="modal-job-workplace">
+                                {modalData?.employmentType}{" "}
+                              </span>
+                            )}
+                            {modalData?.jobType}
+                          </div>
+                        </div>
+                      )}
+                      {(modalData?.city || modalData?.state) && (
+                        <div className="modal-job-flex">
+                          <i className="bi bi-geo-alt-fill model-job-icons"></i>
+                          <div className="model-job-name">
+                            {modalData?.city && <span>{modalData?.city}</span>}
+                            {modalData?.city && modalData?.state && ", "}
+                            {modalData?.state}
+                          </div>
+                        </div>
+                      )}
+                      {modalData?.category && (
+                        <div className="modal-job-flex">
+                          <i className="bi bi-bookmarks-fill model-job-icons"></i>
+                          <div className="model-job-name">
+                            {modalData?.category}
+                          </div>
+                        </div>
+                      )}
+                      {modalData?.compensation &&
+                        Object.keys(modalData?.compensation).length > 0 && (
+                          <div className="modal-job-flex">
+                            <i className="bi bi-cash-coin model-job-icons"></i>
+                            <div className="model-job-name">
+                              {Object.keys(modalData?.compensation)[0] ===
+                              "paid_collaboration_and_gift"
+                                ? "Paid Collaboration + Product/Gift"
+                                : Object.keys(modalData?.compensation)[0] ===
+                                  "product_gift"
+                                ? "Product/Gift"
+                                : Object.keys(modalData?.compensation)[0] ===
+                                  "paid_collaboration"
+                                ? "Paid Collaboration"
+                                : ""}
+
+                              {/* {Object.keys(modalData?.compensation)[0]
+                                ?.split("_")
+                                .map(
+                                  (word) =>
+                                    word.charAt(0).toUpperCase() + word.slice(1)
+                                )
+                                .join(" ")} */}
+                            </div>
+                          </div>
+                        )}
+                      {modalData?.skills && modalData?.skills.length > 0 && (
+                        <div className="modal-job-flex">
+                          <i className="bi bi-list-check model-job-icons"></i>
+                          <div className="model-job-name">
+                            {modalData?.skills.map((skill, index) => (
+                              <span key={index}>
+                                {skill}
+                                {index !== modalData?.skills.length - 1 && ", "}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {modalData?.gender && Array.isArray(modalData?.gender) && (
+                        <div className="modal-job-flex">
+                          <i className="bi bi-gender-ambiguous model-job-icons"></i>
+                          <div className="model-job-name">
+                            {modalData.gender.join(", ")}
+                          </div>
+                        </div>
+                      )}
+
+                      {modalData?.lastDateForApply && (
+                        <div className="modal-job-flex">
+                          <i className="bi bi-alarm-fill model-job-icons"></i>
+                          <div className="model-job-name">
+                            <span className="job-company_dtls">
+                              Application Deadline:{" "}
+                            </span>
+                            <span>
+                              {new Date(
+                                modalData.lastDateForApply
+                              ).toLocaleDateString("en-GB", {
+                                weekday: "long",
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              })}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                      {modalData?.jobDescription &&
+                        modalData?.jobDescription.length > 0 && (
+                          <>
+                            <div className="model-about-title">
+                              About the job
+                            </div>
+                            <div className="model-job-about-values">
+                              {modalData?.jobDescription.map(
+                                (htmlContent, index) => (
+                                  <div
+                                    key={index}
+                                    dangerouslySetInnerHTML={{
+                                      __html: htmlContent,
+                                    }}
+                                  />
+                                )
+                              )}
+                            </div>
+                          </>
+                        )}
+                    </div>
+
+                    <div className="modal-footer">
+                      <button
+                        onClick={handleCloseModal}
+                        type="button"
+                        className="btn btn-success"
+                        data-bs-dismiss="modal"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="col-md-4 col-lg-3">
+            <div className={flag ? "col-md-4 col-lg-6" : "col-md-4 col-lg-4"}>
+              {flag ? (
+                <TalentPreviewJob job={job} />
+              ) : (
+                <div className="rightBx">
+                  <div className="contact-section-main remvSpace">
+                    <div className="contact-wrapper px-3 py-4 boxsWhite mb-4 text-center">
+                      <div className="contact-logo">
+                        <img src={headsetLogo} alt="" />
+                      </div>
+                      <p className="contact-q">Seeking Assistance?</p>
+                      <div className="contact-description">
+                        Have a question? Fill out the form below, and we'll get
+                        back to you within 1-2 business days
+                      </div>
+                      <div className="contact-btn" onClick={() => contactUs()}>
+                        Contact Now
+                      </div>
+                    </div>
+
+                    <div className="boxsWhite mb-4">
+                      <div className="top-brands-section px-3 pt-3">
+                        <div className="top-brands-title py-1">
+                          Top Brands / Client
+                        </div>
+                      </div>
+                      {topBrandsList.length && (
+                        <div className="top-brands-main p-3">
+                          <div className="row rowSpc">
+                            {topBrandsList?.map((item, index) => {
+                              return (
+                                <>
+                                  <div
+                                    className="top-brands-wrapper col-md-4"
+                                    key={index}
+                                  >
+                                    <div className="top-brand-img-wrapper">
+                                      {item?.brandImage?.length > 0 ? (
+                                        <img
+                                          className="top-brand-img"
+                                          src={
+                                            API.userFilePath +
+                                            item?.brandImage[0].fileData
+                                          }
+                                          alt=""
+                                        />
+                                      ) : (
+                                        <div>No Image Available</div>
+                                      )}
+                                    </div>
+                                    <div className="top-brands-name">
+                                      {item.brandName}
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* <div className="col-md-4 col-lg-3">
               <div className="rightBx">
                 <div className="contact-section-main remvSpace">
                   <div className="contact-wrapper px-3 py-4 boxsWhite mb-4 text-center">
@@ -901,7 +1304,7 @@ const TalentDashBoard = () => {
                       <div className="top-brands-title py-1">
                         Top Brands / Client
                       </div>
-                      {/* <div className="view-all-brands">View All</div> */}
+                      <div className="view-all-brands">View All</div>
                     </div>
                     {topBrandsList.length && (
                       <div className="top-brands-main p-3">
@@ -937,94 +1340,13 @@ const TalentDashBoard = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>
 
       {/* Bootstrap Modal */}
       {/* Bootstrap Modal */}
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <p id="exampleModalLabel" className="modal-job-title">
-                {modalData?.jobTitle}
-              </p>
-
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <div className="modal-job-flex">
-                <i className="bi bi-building model-job-icons"></i>
-                <div className="model-job-name">{modalData?.hiringCompany}</div>
-              </div>
-
-              <div className="modal-job-flex">
-                <i className="bi bi-briefcase-fill model-job-icons"></i>
-                <div className="model-job-name">
-                  <span className="modal-job-workplace">
-                    {modalData?.employmentType}{" "}
-                  </span>{" "}
-                  {modalData?.jobType}
-                </div>
-              </div>
-              <div className="modal-job-flex">
-                <i className="bi bi-list-check model-job-icons"></i>
-                <div className="model-job-name">
-                  {modalData?.skills.map((skill, index) => (
-                    <span key={index}>
-                      {skill}
-                      {index !== modalData?.skills.length - 1 && ", "}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="modal-job-flex">
-                <i className="bi bi-gender-ambiguous model-job-icons"></i>
-                <div className="model-job-name">{modalData?.gender}</div>
-              </div>
-              <div className="modal-job-flex">
-                <i className="bi  bi-cash-coin model-job-icons"></i>
-                <div className="model-job-name">
-                  {modalData?.paymentType?.amount} {modalData?.jobCurrency}
-                </div>
-              </div>
-              <div className="model-about-title">About the job</div>
-              <div className="model-job-about-values">
-                {modalData?.jobDescription &&
-                  modalData?.jobDescription?.map((htmlContent, index) => (
-                    <div
-                      key={index}
-                      dangerouslySetInnerHTML={{ __html: htmlContent }}
-                    />
-                  ))}
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                onClick={handleCloseModal}
-                type="button"
-                className="btn btn-success"
-                data-bs-dismiss="modal"
-              >
-                Apply
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {openPopUp && <PopUp message={message} />}
     </>

@@ -45,12 +45,13 @@
 .talent-verified {
   display: flex;
   align-items: center;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: sans-serif;
 }
 
 .blue-shield-wrapper {
-  margin-right: 5px;
+  margin-right: 10px;
   border: 1px solid #1669e6;
   padding: 3px;
   border-radius: 50%;
@@ -62,8 +63,15 @@
   width: 13px;
 }
 
+.videoWraper .media-item {
+  margin: 0 5px 10px;
+}
+.videoWraper .media-item iframe {
+  width: 100%;
+}
+
 .model-review-wrapper {
-  max-height: 250px;
+  min-height: 250px;
   border-radius: 10px;
   background: #fff;
   box-shadow: 1px 8px 24px 0px rgba(0, 0, 0, 0.1);
@@ -73,12 +81,22 @@
 }
 .review-title {
   color: #000;
-  font-size: 18px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
   padding: 15px 0px;
+  line-height: 21px;
 }
+.talent-details-wrapper.nweAlign .contSect,
+.job-company_dtls.nweAlign {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+}
+.nweAlign i {
+  font-size: 14px;
+}
+
 .review-date {
   text-align: end;
   color: #c2114b;
@@ -86,6 +104,12 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  padding-right: 15px;
+}
+
+.flag-icon {
+  padding-right: 8px;
+  color: #c2114b;
 }
 .review-content {
   color: #000;
@@ -458,7 +482,7 @@
 
 .talent-details-wrapper {
   display: flex;
-  align-items: normal;
+  align-items: center;
   padding: 10px 0px 5px;
 }
 
@@ -472,8 +496,8 @@
 }
 
 .logo-fill {
-  width: 23px;
-  height: 23px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   border-radius: 50%;
   border: 1px solid #c2114b;
@@ -481,6 +505,9 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
+}
+.logo-fill-briefcase {
   margin-right: 10px;
 }
 .talent-details-wrapper .contSect {
@@ -593,16 +620,25 @@
   padding: 0 8px;
 }
 
+.photos-gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .photos-gallery .photos-gallery-image {
-  height: 250px;
-  overflow: hidden;
-  margin-bottom: 10px;
+  height: 316px;
+  /* overflow: hidden; */
+  margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 .photos-gallery-image img {
-  min-height: 250px;
+  /* min-height: 250px;
   width: 100%;
-  object-fit: cover;
+  object-fit: cover; */
+  width: 316px;
+  height: 316px;
+  border-radius: 8px;
 }
 
 /* Responsive-ness for different screen-sizes */
@@ -1210,4 +1246,71 @@
 
 .photo-gallery-ind-image {
   cursor: pointer;
+}
+
+.rating-box {
+  padding: 15px 50px;
+  text-align: center;
+}
+.rating-box h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.rating-box .stars {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  justify-content: center;
+}
+.stars i {
+  font-size: 35px;
+  color: #b5b8b1;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.stars i.active {
+  color: #c2114b;
+  transform: scale(1.2);
+}
+.submit-rating {
+  background-color: #c2114b;
+  color: #ffffff;
+}
+.submit-rating:hover {
+  background-color: #c2114b;
+  color: #ffffff;
+}
+.rating-text-area {
+  height: 130px !important;
+}
+.media-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.video-frame,
+.audio-player {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.unsupported-media {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+.big-slider-image {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }

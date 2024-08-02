@@ -28,8 +28,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { format, parseISO } from "date-fns";
 import { FlashOnTwoTone } from "@mui/icons-material";
+import useFieldDatas from "../../config/useFieldDatas";
 
 const CreateJobs = () => {
+  const { categoryList, professionList } = useFieldDatas();
+  console.log(professionList, "professionList");
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -61,7 +64,7 @@ const CreateJobs = () => {
   const audiotype = require("../../assets/icons/audiotype.png");
   const idCard = require("../../assets/icons/id-card.png");
   const elipsis = require("../../assets/icons/elipsis.png");
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const kidsImage = require("../../assets/images/kidsImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -70,34 +73,38 @@ const CreateJobs = () => {
   const [jobTitle, setjobTitle] = useState("");
   const [message, setMessage] = useState("");
   const [allJobsList, setAllJobsList] = useState([]);
-  const [selectedJobID, setSelectedJobID] = useState(null);
-  const [editJobData, setEditJobData] = useState(null);
-  const [brandId, setBrandId] = useState(null);
-  const [brandImage, setBrandImage] = useState(null);
-  const [jobCountNumber, setJobCountNumber] = useState(null);
-  const [brandData, setBrandData] = useState(null);
-  const [minPay, setMinPay] = useState(null);
-  const [maxPay, setMaxPay] = useState(null);
-  const [instaMin, setInstaMin] = useState(null);
-  const [instaMax, setInstaMax] = useState(null);
-  const [tikTokMin, setTiktokMin] = useState(null);
-  const [tikTokMax, setTiktokMax] = useState(null);
-  const [linkedInMin, setLinkedInMin] = useState(null);
-  const [linkedInMax, setLinkedInMax] = useState(null);
-  const [fbMin, setFbMin] = useState(null);
-  const [fbMax, setFbMax] = useState(null);
-  const [twitterMin, setTwitterMin] = useState(null);
-  const [twitterMax, setTwitterMax] = useState(null);
-  const [youTubeMin, setYouTubeMin] = useState(null);
-  const [youTubeMax, setYouTubeMax] = useState(null);
-  const [employmentType, setEmploymentType] = useState(null);
-  const [employmentError, setEmploymentError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [selectedJobID, setSelectedJobID] = useState("");
+  const [editJobData, setEditJobData] = useState("");
+  const [brandId, setBrandId] = useState("");
+  const [brandImage, setBrandImage] = useState("");
+  const [jobCountNumber, setJobCountNumber] = useState("");
+  const [brandData, setBrandData] = useState("");
+  const [minPay, setMinPay] = useState("");
+  const [maxPay, setMaxPay] = useState("");
+  const [instaMin, setInstaMin] = useState("");
+  const [instaMax, setInstaMax] = useState("");
+  const [tikTokMin, setTiktokMin] = useState("");
+  const [tikTokMax, setTiktokMax] = useState("");
+  const [linkedInMin, setLinkedInMin] = useState("");
+  const [linkedInMax, setLinkedInMax] = useState("");
+  const [fbMin, setFbMin] = useState("");
+  const [fbMax, setFbMax] = useState("");
+  const [twitterMin, setTwitterMin] = useState("");
+  const [twitterMax, setTwitterMax] = useState("");
+  const [youTubeMin, setYouTubeMin] = useState("");
+  const [youTubeMax, setYouTubeMax] = useState("");
+  const [employmentType, setEmploymentType] = useState("");
+  const [employmentError, setEmploymentError] = useState(false);
   const companyList = [];
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [selectedGenderOptions, setSelectedGenderOptions] = useState([]);
   const [selectedNationalityOptions, setSelectedNationalityOptions] = useState(
     []
   );
+
+  const [isDuplicateJob, setIsDuplicateJob] = useState(false);
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
@@ -115,23 +122,6 @@ const CreateJobs = () => {
         console.log(err);
       });
   };
-
-  const categoryList = [
-    "Fashion & Beauty",
-    "Media & Entertainment",
-    "Sports, Fitness, & Wellness",
-    "Creative Arts & Design",
-    "Celebrity",
-    "Writing, Marketing, & Content Creation",
-    "Performing Arts",
-    "Education & Coaching",
-    "Business & Technology",
-    "Luxury & Lifestyle",
-    "Eco-friendly & Sustainability",
-    "Home & Gardening",
-    "Food & Travel",
-    "Diversity & Inclusion",
-  ];
 
   const customStylesProfession = {
     control: (provided, state) => ({
@@ -154,59 +144,28 @@ const CreateJobs = () => {
 
   const updateJobFormDatas = (editData) => {
     // alert("updateJobFormDatas");
-    console.log(editData, "editDataupdateJobFormDatas");
     if (editData) {
+      console.log(editData, "editDataupdateJobFormDatas");
+      console.log(editData?.category, "editData?.category");
+      setCategory(editData?.category);
+      setEmploymentType(editData?.employmentType);
+      setLastdateApply(editData?.lastDateForApply);
+      setSkills(editData?.skills);
+      setMinAge(editData?.minAge);
+      setMaxAge(editData?.maxAge);
       setjobTitle(editData?.jobTitle);
       setAgeRange(editData?.age);
       setzipCode(editData?.jobLocation);
       setstreetAddress(editData?.streetAddress);
       setjobType(editData?.jobType);
       setGender(editData?.gender);
-      // setNationality(editData?.nationality);
-      const selectedOptions = editData?.languages.map((language) => {
-        return languageOptions.find((option) => option.label === language);
-      });
-      setSelectedLanguageOptions(selectedOptions);
-
-      const nationalityOptions = editData?.nationality.map((language) => {
-        return nationalityOptions.find((option) => option.label === language);
-      });
-      setSelectedNationalityOptions(nationalityOptions);
-
-      const genderUpdatedOptions = editData?.gender.map((gender) => {
-        return genderUpdatedOptions.find((option) => option.label === gender);
-      });
-      setSelectedGenderOptions(genderUpdatedOptions);
-
-      const dynamicKey = Object.keys(editData.compensation)[0];
-      const minPayValue = editData.compensation[dynamicKey].minPay;
-      setMinPay(minPayValue);
-
-      const maxPaydynamicKey = Object.keys(editData.compensation)[0];
-      const maxPayValue = editData.compensation[maxPaydynamicKey].maxPay;
-      setMaxPay(maxPayValue);
-
-      const currencydynamicKey = Object.keys(editData.compensation)[0];
-      const currencyValue = editData.compensation[currencydynamicKey].currency;
-      setCurrency(currencyValue);
-
-      const frequencydynamicKey = Object.keys(editData.compensation)[0];
-      const frequencyValue =
-        editData.compensation[frequencydynamicKey].frequency;
-      setfrequency(frequencyValue);
-
       setWhyWorkWithUs(editData?.whyWorkWithUs);
       setSelectedApplyOption(editData?.selectedApplyOption);
       setHiringCompany(editData?.hiringCompany);
-      setSkills(editData?.skills);
-      setMinAge(editData?.minAge);
-      setMaxAge(editData?.maxAge);
       setSelectedBenefits(editData?.benefits);
       setSelectedApplyOption(editData?.howLikeToApply);
       setPortofolioFile(editData?.workSamples);
       setJobCurrency(editData?.jobCurrency);
-      setLastdateApply(editData?.lastDateForApply);
-      setCategory(editData?.category);
       setInstaMin(editData?.instaMin);
       setInstaMax(editData?.instaMax);
       setTiktokMin(editData?.tikTokMin);
@@ -223,11 +182,44 @@ const CreateJobs = () => {
       setState(editData.state);
       getStates(editData.country);
       setKidsCity(editData.city);
+
+      const genderUpdatedOptions = editData?.gender.map((gender) => {
+        return gendersOptions.find((option) => option.label === gender);
+      });
+      console.log(genderUpdatedOptions, "genderUpdatedOptions");
+      setSelectedGenderOptions(genderUpdatedOptions);
+
+      const selectedOptions = editData?.languages.map((language) => {
+        return languageOptions.find((option) => option.label === language);
+      });
+      console.log(selectedOptions, "selectedOptions");
+
+      setSelectedLanguageOptions(selectedOptions);
+
+      const nationalityOptions = editData?.nationality.map((language) => {
+        return nationalitiesArray.find((option) => option.label === language);
+      });
+      setSelectedNationalityOptions(nationalityOptions);
+
+      const dynamicKey = Object.keys(editData.compensation)[0];
+      const minPayValue = editData.compensation[dynamicKey].minPay;
+      setMinPay(minPayValue);
+      const maxPaydynamicKey = Object.keys(editData.compensation)[0];
+      const maxPayValue = editData.compensation[maxPaydynamicKey].maxPay;
+      setMaxPay(maxPayValue);
+
+      const currencydynamicKey = Object.keys(editData.compensation)[0];
+      const currencyValue = editData.compensation[currencydynamicKey].currency;
+      setCurrency(currencyValue);
+
+      const frequencydynamicKey = Object.keys(editData.compensation)[0];
+      const frequencyValue =
+        editData.compensation[frequencydynamicKey].frequency;
+
       getCities({
         countryName: editData.country,
         stateName: editData.state,
       });
-      setEmploymentType(editData?.employmentType);
       if (editData?.questions && editData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editData?.questions);
@@ -247,14 +239,20 @@ const CreateJobs = () => {
         setValueUSD(
           editData?.compensation?.paid_collaboration_and_gift?.amount_value
         );
+        setExactPay(editData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editData?.compensation?.paid_collaboration?.frequency);
       } else if (editData?.compensation.hasOwnProperty("paid_collaboration")) {
         setCompensationChange("paid_collaboration");
         setType(editData?.compensation?.paid_collaboration?.type);
         setCurrency(editData?.compensation?.paid_collaboration?.currency);
+        setExactPay(editData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editData?.compensation?.paid_collaboration?.frequency);
       } else if (editData?.compensation.hasOwnProperty("product_gift")) {
         setCompensationChange("product_gift");
         setProductName(editData?.compensation?.product_gift?.product_name);
         setValueUSD(editData?.compensation?.product_gift?.amount_value);
+        setExactPay(editData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editData?.compensation?.paid_collaboration?.frequency);
       }
       if (editData?.paymentType?.label === "range") {
         setSelectedPaymentOption("range");
@@ -301,18 +299,7 @@ const CreateJobs = () => {
       setEditorStateClientDescription(hiringCompanyDescription);
       setClientDescription(editData?.hiringCompanyDescription);
 
-      const howToApplyDescriptionContent = editData?.howToApplyDescription[0];
-      const howToApplyDescriptionContentBlocks = convertFromHTML(
-        howToApplyDescriptionContent
-      );
-      const howToApplyDescriptionContentState = ContentState.createFromBlockArray(
-        howToApplyDescriptionContentBlocks
-      );
-      const howToApplyDescription = EditorState.createWithContent(
-        howToApplyDescriptionContentState
-      );
-      setEditorStateHowToApply(howToApplyDescription);
-      setHowToApplyDescription(editData?.howToApplyDescription);
+      setfrequency(frequencyValue);
     }
   };
 
@@ -321,6 +308,7 @@ const CreateJobs = () => {
     console.log(e, "selectedJobID");
     setSelectedJobID(e?.value);
     getJobsByID(e?.value, e?.type);
+    setIsDuplicateJob(true);
   };
 
   const getJobsByID = async (jobId, type) => {
@@ -363,25 +351,27 @@ const CreateJobs = () => {
     console.log(editJobData, "editJobData duplicateJob");
     if (editJobData) {
       setSelectedTab("create-job");
+      console.log(editJobData, "editJobDataupdateJobFormDatas");
+      console.log(editJobData?.category, "editJobData?.category");
+      setCategory(editJobData?.category);
+      setEmploymentType(editJobData?.employmentType);
+      setLastdateApply(editJobData?.lastDateForApply);
+      setSkills(editJobData?.skills);
+      setMinAge(editJobData?.minAge);
+      setMaxAge(editJobData?.maxAge);
       setjobTitle(editJobData?.jobTitle);
       setAgeRange(editJobData?.age);
       setzipCode(editJobData?.jobLocation);
       setstreetAddress(editJobData?.streetAddress);
       setjobType(editJobData?.jobType);
       setGender(editJobData?.gender);
-      // setNationality(editJobData?.nationality);
-      setLastdateApply(editJobData?.lastDateForApply);
       setWhyWorkWithUs(editJobData?.whyWorkWithUs);
       setSelectedApplyOption(editJobData?.selectedApplyOption);
       setHiringCompany(editJobData?.hiringCompany);
-      setSkills(editJobData?.skills);
       setSelectedBenefits(editJobData?.benefits);
       setSelectedApplyOption(editJobData?.howLikeToApply);
       setPortofolioFile(editJobData?.workSamples);
-      setCategory(editJobData?.category);
-      setMinAge(editJobData?.minAge);
-      setMaxAge(editJobData?.maxAge);
-      setJobCurrency(jobCurrency);
+      setJobCurrency(editJobData?.jobCurrency);
       setInstaMin(editJobData?.instaMin);
       setInstaMax(editJobData?.instaMax);
       setTiktokMin(editJobData?.tikTokMin);
@@ -392,32 +382,51 @@ const CreateJobs = () => {
       setFbMax(editJobData?.fbMax);
       setTwitterMin(editJobData?.twitterMin);
       setTwitterMax(editJobData?.twitterMax);
-      setYouTubeMin(editData?.youTubeMin);
-      setYouTubeMax(editData?.youTubeMax);
-      setCountry(editJobData?.country);
-      setState(editJobData?.state);
-      getStates(editJobData?.country);
-      setKidsCity(editJobData?.city);
-      getCities({
-        countryName: editJobData?.country,
-        stateName: editJobData?.state,
+      setYouTubeMin(editJobData?.youTubeMin);
+      setYouTubeMax(editJobData?.youTubeMax);
+      setCountry(editJobData.country);
+      setState(editJobData.state);
+      getStates(editJobData.country);
+      setKidsCity(editJobData.city);
+
+      const genderUpdatedOptions = editJobData?.gender.map((gender) => {
+        return gendersOptions.find((option) => option.label === gender);
       });
-      setEmploymentType(editJobData?.employmentType);
+      console.log(genderUpdatedOptions, "genderUpdatedOptions");
+      setSelectedGenderOptions(genderUpdatedOptions);
+
       const selectedOptions = editJobData?.languages.map((language) => {
         return languageOptions.find((option) => option.label === language);
       });
+      console.log(selectedOptions, "selectedOptions");
+
       setSelectedLanguageOptions(selectedOptions);
 
-      const nationalityOptions = editData?.nationality.map((language) => {
-        return nationalityOptions.find((option) => option.label === language);
+      const nationalityOptions = editJobData?.nationality.map((language) => {
+        return nationalitiesArray.find((option) => option.label === language);
       });
       setSelectedNationalityOptions(nationalityOptions);
 
-      const genderUpdatedOptions = editData?.gender.map((gender) => {
-        return genderUpdatedOptions.find((option) => option.label === gender);
-      });
-      setSelectedGenderOptions(genderUpdatedOptions);
+      const dynamicKey = Object.keys(editJobData.compensation)[0];
+      const minPayValue = editJobData.compensation[dynamicKey].minPay;
+      setMinPay(minPayValue);
+      const maxPaydynamicKey = Object.keys(editJobData.compensation)[0];
+      const maxPayValue = editJobData.compensation[maxPaydynamicKey].maxPay;
+      setMaxPay(maxPayValue);
 
+      const currencydynamicKey = Object.keys(editJobData.compensation)[0];
+      const currencyValue =
+        editJobData.compensation[currencydynamicKey].currency;
+      setCurrency(currencyValue);
+
+      const frequencydynamicKey = Object.keys(editJobData.compensation)[0];
+      const frequencyValue =
+        editJobData.compensation[frequencydynamicKey].frequency;
+
+      getCities({
+        countryName: editJobData.country,
+        stateName: editJobData.state,
+      });
       if (editJobData?.questions && editJobData?.questions?.length > 0) {
         setShowQuestions(true);
         setQuestions(editJobData?.questions);
@@ -437,16 +446,22 @@ const CreateJobs = () => {
         setValueUSD(
           editJobData?.compensation?.paid_collaboration_and_gift?.amount_value
         );
+        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
       } else if (
         editJobData?.compensation.hasOwnProperty("paid_collaboration")
       ) {
         setCompensationChange("paid_collaboration");
         setType(editJobData?.compensation?.paid_collaboration?.type);
         setCurrency(editJobData?.compensation?.paid_collaboration?.currency);
+        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
       } else if (editJobData?.compensation.hasOwnProperty("product_gift")) {
         setCompensationChange("product_gift");
         setProductName(editJobData?.compensation?.product_gift?.product_name);
         setValueUSD(editJobData?.compensation?.product_gift?.amount_value);
+        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
       }
       if (editJobData?.paymentType?.label === "range") {
         setSelectedPaymentOption("range");
@@ -456,87 +471,44 @@ const CreateJobs = () => {
         setSelectedPaymentOption("fixed");
         setAmount(editJobData?.paymentType?.amount);
       }
-      if (
-        editJobData?.jobDescription &&
-        editJobData?.jobDescription.length > 0
-      ) {
-        const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
-        const jobDescriptionContentBlocks = convertFromHTML(
-          jobDescriptionhtmlContent
-        );
-        const jobDescriptionContentState = ContentState.createFromBlockArray(
-          jobDescriptionContentBlocks
-        );
-        const updateJobDescription = EditorState.createWithContent(
-          jobDescriptionContentState
-        );
-        setEditorStateJobDescription(updateJobDescription);
-        setJobDescription(editJobData?.jobDescription);
-      }
+      const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
+      const jobDescriptionContentBlocks = convertFromHTML(
+        jobDescriptionhtmlContent
+      );
+      const jobDescriptionContentState = ContentState.createFromBlockArray(
+        jobDescriptionContentBlocks
+      );
+      const updateJobDescription = EditorState.createWithContent(
+        jobDescriptionContentState
+      );
+      setEditorStateJobDescription(updateJobDescription);
+      setJobDescription(editJobData?.jobDescription);
+      const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
+      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+        whyWorkWithUsContentBlocks
+      );
+      const updatewhyWorkWithUs = EditorState.createWithContent(
+        whyWorkWithUsContentState
+      );
+      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
 
-      if (
-        editJobData?.additionalRequirements &&
-        editJobData?.additionalRequirements.length > 0
-      ) {
-        const jobRequirementshtmlContent =
-          editJobData?.additionalRequirements[0];
-        const jobRequirementsContentBlocks = convertFromHTML(
-          jobRequirementshtmlContent
-        );
-        const jobRequirementsContentState = ContentState.createFromBlockArray(
-          jobRequirementsContentBlocks
-        );
-        const updatejobRequirements = EditorState.createWithContent(
-          jobRequirementsContentState
-        );
-        setEditorStateJobRequirements(updatejobRequirements);
-        setJobRequirements(editJobData?.additionalRequirements);
-      }
-      if (editJobData?.whyWorkWithUs && editJobData?.whyWorkWithUs.length > 0) {
-        const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
-        const whyWorkWithUsContentBlocks = convertFromHTML(
-          whyWorkWithUsContent
-        );
-        const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-          whyWorkWithUsContentBlocks
-        );
-        const updatewhyWorkWithUs = EditorState.createWithContent(
-          whyWorkWithUsContentState
-        );
-        setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
-        setWhyWorkWithUs(editJobData?.whyWorkWithUs);
-      }
-      if (
-        editJobData?.hiringCompanyDescription &&
-        editJobData?.hiringCompanyDescription.length > 0
-      ) {
-        const hiringCompanyDescriptionContent =
-          editJobData?.hiringCompanyDescription[0];
-        const hiringCompanyDescriptionContentBlocks = convertFromHTML(
-          hiringCompanyDescriptionContent
-        );
-        const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
-          hiringCompanyDescriptionContentBlocks
-        );
-        const hiringCompanyDescription = EditorState.createWithContent(
-          hiringCompanyDescriptionContentState
-        );
-        setEditorStateClientDescription(hiringCompanyDescription);
-        setClientDescription(editJobData?.hiringCompanyDescription);
+      const hiringCompanyDescriptionContent =
+        editJobData?.hiringCompanyDescription[0];
+      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+        hiringCompanyDescriptionContent
+      );
+      const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
+        hiringCompanyDescriptionContentBlocks
+      );
+      const hiringCompanyDescription = EditorState.createWithContent(
+        hiringCompanyDescriptionContentState
+      );
+      setEditorStateClientDescription(hiringCompanyDescription);
+      setClientDescription(editJobData?.hiringCompanyDescription);
 
-        const howToApplyDescriptionContent = editData?.howToApplyDescription[0];
-        const howToApplyDescriptionContentBlocks = convertFromHTML(
-          howToApplyDescriptionContent
-        );
-        const howToApplyDescriptionContentState = ContentState.createFromBlockArray(
-          howToApplyDescriptionContentBlocks
-        );
-        const howToApplyDescription = EditorState.createWithContent(
-          howToApplyDescriptionContentState
-        );
-        setEditorStateHowToApply(howToApplyDescription);
-        setHowToApplyDescription(editData?.howToApplyDescription);
-      }
+      setfrequency(frequencyValue);
     }
   };
 
@@ -553,9 +525,16 @@ const CreateJobs = () => {
     // );
     // setEditorStateHowToApply(howToApplyDescription);
     // setHowToApplyDescription(initialHowToApply);
+
+    // let initialHowToApply = [
+    //   `<p>Interested candidates should submit their resume and a link that contains portfolio
+    //    from Brands and Talent website to <a href="mailto:${brandData?.brandEmail}">${brandData?.brandEmail}</a>.
+    //    Please include ${jobTitle} in the subject line.</p>\n`,
+    // ];
     let initialHowToApply = [
-      "<p>Interested candidates should submit their resume and a link that contains portfolio from brands and talent website to your gmail.com’ to ‘Email your resume along with your Brands & Talent portfolio to brandsntalent@gmail.com.for more information: Call us at +855 855 855.  View all jobs at Brands & Talent: brandsandtalent.com/company/brandsandtalent/jobs</p>\n",
+      `<p>Interested candidates should submit their resume and a link of their brandsandtalent.com profile/portfolio to ${brandData?.brandEmail}. Please include${jobTitle} in the subject line</p>\n`,
     ];
+
     const whyWorkWithUsContent = initialHowToApply[0];
     const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
     const whyWorkWithUsContentState = ContentState.createFromBlockArray(
@@ -627,7 +606,6 @@ const CreateJobs = () => {
   const [languageError, setLanguageError] = useState(false);
   const [addressError, setAddressError] = useState(false);
   const [parentLastNameError, setparentLastNameError] = useState(false);
-  const [zipCodeError, setzipCodeError] = useState(false);
   const [talentPasswordError, settalentPasswordError] = useState(false);
   const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
     false
@@ -695,7 +673,9 @@ const CreateJobs = () => {
   );
   const [type, setType] = useState("");
   const [currency, setCurrency] = useState("");
+  const [productCurrency, setProductCurrency] = useState("");
   const [frequency, setfrequency] = useState("");
+  const [productFrequency, setProductFrequency] = useState("");
   const [productName, setProductName] = useState("");
   const [valueUSD, setValueUSD] = useState("");
   const [exactPay, setExactPay] = useState("");
@@ -712,6 +692,12 @@ const CreateJobs = () => {
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
+  };
+  const handleProductCurrencyChange = (event) => {
+    setProductCurrency(event.target.value);
+  };
+  const handleProductFrequencyChange = (event) => {
+    setProductFrequency(event.target.value);
   };
   const handleProductValueChange = (event) => {
     setProductValue(event.target.value);
@@ -776,6 +762,8 @@ const CreateJobs = () => {
             maxPay: maxPay,
             currency: currency,
             frequency: frequency,
+            productCurrency: productCurrency,
+            productFrequency: productCurrency,
             productValue: productValue,
             exactPay: exactPay,
           },
@@ -813,6 +801,11 @@ const CreateJobs = () => {
     }, 100);
   };
 
+  const handleDeleteQuestion = (index) => {
+    const newQuestions = questions.filter((_, i) => i !== index);
+    setQuestions(newQuestions);
+  };
+
   const benefitsList = [
     { id: "dental", name: "Dental Insurance" },
     { id: "life", name: "Life Insurance" },
@@ -830,16 +823,38 @@ const CreateJobs = () => {
     setSelectedBenefits(["Dental Insurance"]);
   }, []);
 
+  // const handleBenefits = (e) => {
+  //   const { value } = e.target;
+  //   const isSelected = selectedBenefits.includes(value);
+
+  //   if (isSelected) {
+  //     setSelectedBenefits(
+  //       selectedBenefits.filter((benefit) => benefit !== value)
+  //     );
+  //   } else {
+  //     setSelectedBenefits([...selectedBenefits, value]);
+  //   }
+  // };
+
   const handleBenefits = (e) => {
     const { value } = e.target;
-    const isSelected = selectedBenefits.includes(value);
 
-    if (isSelected) {
-      setSelectedBenefits(
-        selectedBenefits.filter((benefit) => benefit !== value)
-      );
+    if (value === "None of these above") {
+      setSelectedBenefits(["None of these above"]);
     } else {
-      setSelectedBenefits([...selectedBenefits, value]);
+      // Toggle selection for other options
+      if (selectedBenefits.includes("None of these above")) {
+        setSelectedBenefits([value]);
+      } else {
+        const isSelected = selectedBenefits.includes(value);
+        if (isSelected) {
+          setSelectedBenefits(
+            selectedBenefits.filter((benefit) => benefit !== value)
+          );
+        } else {
+          setSelectedBenefits([...selectedBenefits, value]);
+        }
+      }
     }
   };
 
@@ -882,7 +897,6 @@ const CreateJobs = () => {
   };
   // Function to handle email input change
   const handleEmailChange = (e) => {
-    setzipCodeError(false);
     const email = e.target.value;
     setzipCode(e.target.value);
     // Validate email using regex
@@ -969,6 +983,7 @@ const CreateJobs = () => {
   };
 
   const selectCategory = (event) => {
+    console.log(event.target.value, "selectCategory");
     setCategory(event.target.value);
     setCategoryError(false);
   };
@@ -1032,39 +1047,10 @@ const CreateJobs = () => {
     setProfessionError(false);
   };
 
-  const professionList = [
-    { value: "Model", label: "Model" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Creator", label: "Creator" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Actor", label: "Actor" },
-    { value: "Singer", label: "Singer" },
-    { value: "Writer", label: "Writer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "RJ", label: "RJ" },
-    { value: "DJ", label: "DJ" },
-    { value: "VJ", label: "VJ" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Yoga Teacher", label: "Yoga Teacher" },
-    { value: "Webapp Developer", label: "Webapp Developer" },
-    { value: "Virtual Assistant", label: "Virtual Assistant" },
-    { value: "AI Influencer", label: "AI Influencer" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Other", label: "Other" },
-  ];
-
   const gendersOptions = [
     { value: "Man", label: "Man" },
     { value: "Woman", label: "Woman" },
-    { value: "Non binary", label: "Non binary" },
+    { value: "Non-binary", label: "Non-binary" },
     { value: "Transgender Woman", label: "Transgender Woman" },
     { value: "Transgender Man", label: "Transgender Man" },
     { value: "Agender", label: "Agender" },
@@ -1181,9 +1167,6 @@ const CreateJobs = () => {
     if (jobTitle === "") {
       setjobTitleError(true);
     }
-    if (zipCode === "") {
-      setzipCodeError(true);
-    }
 
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
@@ -1225,7 +1208,6 @@ const CreateJobs = () => {
 
     if (
       jobTitle !== "" &&
-      zipCode !== "" &&
       jobType !== "" &&
       skills !== "" &&
       country !== "" &&
@@ -1324,7 +1306,7 @@ const CreateJobs = () => {
           .catch((err) => {});
       }
     } else {
-      setMessage("Please Fill All Required Fields");
+      setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
@@ -1332,9 +1314,9 @@ const CreateJobs = () => {
     }
   };
   const createGigs = async () => {
+    setIsLoading(true);
     console.log(
       jobTitle,
-      zipCode,
       jobType,
       skills,
       country,
@@ -1347,9 +1329,7 @@ const CreateJobs = () => {
     if (jobTitle === "") {
       setjobTitleError(true);
     }
-    if (zipCode === "") {
-      setzipCodeError(true);
-    }
+
     if (selectedProfessions.length === 0) {
       setProfessionError(true);
     }
@@ -1372,7 +1352,6 @@ const CreateJobs = () => {
     }
     if (
       jobTitle !== "" &&
-      zipCode !== "" &&
       jobType !== "" &&
       skills !== "" &&
       country !== "" &&
@@ -1427,32 +1406,48 @@ const CreateJobs = () => {
       await ApiHelper.post(API.draftJob, formData)
         .then((resData) => {
           console.log(resData, "draftedData");
-          console.log(resData.data.data._id, "draftedData");
           if (resData.data.status === true) {
+            setIsLoading(false);
             setMessage("Job Created SuccessFully!");
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
-              navigate("/preview-job", {
-                state: {
-                  jobId: resData?.data?.data?._id,
-                },
-              });
+              if (brandData?.planName === "Basic") {
+                setMessage(
+                  "Your job will be approved by admin within 2 days. Upgrade to Pro for instant approval"
+                );
+                setOpenPopUp(true);
+                setTimeout(function() {
+                  setOpenPopUp(false);
+                  navigate("/list-jobs");
+                }, 3000);
+              } else {
+                navigate("/preview-job", {
+                  state: {
+                    jobId: resData?.data?.data?._id,
+                  },
+                });
+              }
             }, 2000);
           } else if (resData.data.status === false) {
+            setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
-            }, 1000);
+              if (resData?.data?.statusInfo == "limit-reached") {
+                navigate("/pricing");
+              }
+            }, 3000);
           }
         })
         .catch((err) => {});
     } else {
-      setMessage("Please Fill All Required Fields");
+      setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
+        setIsLoading(false);
       }, 2000);
     }
   };
@@ -1665,7 +1660,9 @@ const CreateJobs = () => {
 
   useEffect(() => {
     console.log(showQuestions, "showQuestions");
-  }, [showQuestions]);
+    console.log(employmentError, "employmentError");
+    console.log(isDuplicateJob, "isDuplicateJob");
+  }, [showQuestions, employmentError, isDuplicateJob]);
 
   const handleButtonClick = (data) => {
     setShowSidebar(!showSidebar);
@@ -1704,62 +1701,67 @@ const CreateJobs = () => {
     console.log(skills, "skills");
   }, [skills]);
 
-  const top100Films = [
+  const skillsListing = [
     { title: "Actor" },
-    { title: "Artist" },
-    { title: "Creator" },
-    { title: "Celebrity" },
-    { title: "Influencer" },
-    { title: "Model" },
-    { title: "Event Planner" },
-    { title: "Stylist" },
-    { title: "Hair & Makeup Artist" },
-    { title: "Nail Artist" },
-    { title: "Tattooist" },
-    { title: "Chef/Culinary Artist" },
-    { title: "Personal Trainer" },
-    { title: "Swimming Instructor" },
-    { title: "Driving Instructor" },
-    { title: "Meditation Teacher" },
-    { title: "Yoga Instructor" },
-    { title: "Dance Teacher" },
-    { title: "Music Teacher" },
-    { title: "Sports Instructor" },
-    { title: "Martial Arts Instructor" },
-    { title: "Craftsperson" },
-    { title: "Sculptor" },
-    { title: "Curator" },
-    { title: "Singer" },
-    { title: "Dancer" },
-    { title: "Choreographer" },
-    { title: "Musician" },
-    { title: "Filmmaker" },
-    { title: "Cinematographer" },
-    { title: "Photographer" },
-    { title: "Videographer" },
-    { title: "DJ" },
-    { title: "Video Jockey (VJ)" },
-    { title: "Radio Jockey (RJ)" },
-    { title: "Writer" },
-    { title: "Copywriter" },
-    { title: "Cartoonist" },
-    { title: "Blogger/Vlogger" },
-    { title: "Podcaster" },
-    { title: "Host/MC" },
-    { title: "Voice-over Artist" },
-    { title: "Comedian" },
-    { title: "Public Speaker" },
-    { title: "Life Coach" },
-    { title: "Career Coach" },
-    { title: "Sustainability Consultant" },
-    { title: "Fashion Designer" },
-    { title: "Graphic Designer" },
-    { title: "Web Designer/Developer" },
-    { title: "Interior Designer" },
-    { title: "Illustrator" },
     { title: "Animator" },
-    { title: "Blockchain Developer" },
+    { title: "Architect " },
+    { title: "Artist" },
+    { title: "Blogger/Vlogger" },
+    { title: "Career Coach" },
+    { title: "Cartoonist" },
+    { title: "Celebrity" },
+    { title: "Chef/Culinary Artist" },
+    { title: "Choreographer" },
+    { title: "Cinematographer" },
+    { title: "Comedian" },
+    { title: "Copywriter" },
+    { title: "Craftsperson" },
+    { title: "Creator" },
+    { title: "Curator" },
+    { title: "Dance Teacher" },
+    { title: "Dancer" },
+    { title: "Designer " },
+    { title: "Dietitian " },
+    { title: "DJ" },
+    { title: "Driving Instructor" },
+    { title: "Event Planner" },
+    { title: "Fashion Designer" },
+    { title: "Filmmaker" },
+    { title: "Graphic Designer" },
+    { title: "Hair & Makeup Artist" },
+    { title: "Host/MC" },
+    { title: "Illustrator" },
+    { title: "Influencer" },
+    { title: "Interior Designer" },
+    { title: "Life Coach" },
+    { title: "Martial Arts Instructor" },
+    { title: "Meditation Teacher" },
+    { title: "Model" },
+    { title: "Music Teacher" },
+    { title: "Musician" },
+    { title: "Nail Artist" },
+    { title: "Nutritionist " },
+    { title: "Personal Trainer" },
+    { title: "Photographer" },
+    { title: "Podcaster" },
+    { title: "Public Speaker" },
+    { title: "Radio Jockey (RJ)" },
+    { title: "Sculptor" },
+    { title: "Singer" },
+    { title: "Sports Instructor" },
+    { title: "Stylist" },
+    { title: "Sustainability Consultant" },
+    { title: "Swimming Instructor" },
+    { title: "Tattooist" },
+    { title: "Voice-over Artist" },
+    { title: "Web Designer/Developer" },
+    { title: "Wedding Planner" },
+    { title: "Writer" },
+    { title: "Yoga Instructor" },
+    { title: "Video Jockey (VJ)" },
+    { title: "Videographer" },
   ];
+
   console.log(skillInputValue, "skillInputValue");
 
   const [lastdateApply, setLastdateApply] = useState(null);
@@ -1782,9 +1784,6 @@ const CreateJobs = () => {
   useEffect(() => {
     console.log(lastdateApply, "lastdateApply");
   }, [lastdateApply]);
-  useEffect(() => {
-    console.log(categoryError, "categoryError");
-  }, [categoryError]);
   useEffect(() => {
     console.log(category, "category");
   }, [category]);
@@ -1843,11 +1842,12 @@ const CreateJobs = () => {
               {editData?.value && "Edit Gig/Job"}
               {!editData?.value && editJobData == null && "Post a Job"}
               {editJobData != null &&
-                !editData?.value &&
+                isDuplicateJob === true &&
                 "Duplicate Existing Job"}
             </div>
             <div className="mandatory-label">
-              <span style={{ color: "red" }}>*</span> marked field are mandatory
+              <span style={{ color: "red" }}>*</span> marked fields are
+              mandatory
             </div>
             <div className="create-job-toggle">
               <div className="radio-toggles">
@@ -1860,21 +1860,22 @@ const CreateJobs = () => {
                   className="job-toggle-inputs"
                   checked={selectedTab == "create-job"}
                 ></input>
-                {editData?.value && (
+                {editData?.value && editJobData && isDuplicateJob === false && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
                       Edit Job
                     </label>
                   </>
                 )}
-                {!editData?.value && editJobData == null && (
+                {!editJobData && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
                       Create New Job
                     </label>
                   </>
                 )}
-                {editJobData != null && !editData?.value && (
+
+                {editJobData && isDuplicateJob === true && (
                   <>
                     <label className="create-job-toggle-label" htmlFor="newjob">
                       Duplicate Job
@@ -1907,7 +1908,7 @@ const CreateJobs = () => {
                     <div className="kids-main">
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-4">
+                          <div className="mb-0">
                             <label className="form-label">
                               Gig/Job Title
                               <span className="mandatory">*</span>
@@ -1930,7 +1931,7 @@ const CreateJobs = () => {
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-4">
+                          <div className="mb-0">
                             <label className="form-label">
                               Category
                               <span className="mandatory">*</span>
@@ -1946,14 +1947,18 @@ const CreateJobs = () => {
                                 Select Category
                               </option>
                               {categoryList.map((option, index) => (
-                                <option key={index} value={option}>
-                                  {option}
+                                <option
+                                  key={index}
+                                  value={option?.value}
+                                  title={option?.description}
+                                >
+                                  {option?.value}
                                 </option>
                               ))}
                             </select>
                             {categoryError && (
                               <div className="invalid-fields">
-                                Please Select Category
+                                Please select Category
                               </div>
                             )}
                           </div>
@@ -1982,7 +1987,7 @@ const CreateJobs = () => {
                               </div>
                             )}
                           </div> */}
-                          <div className="mb-3">
+                          <div className="mb-0">
                             <label className="form-label">
                               Country<span className="mandatory">*</span>
                             </label>
@@ -2012,13 +2017,13 @@ const CreateJobs = () => {
 
                             {parentCountryError && (
                               <div className="invalid-fields">
-                                Please Select Country
+                                Please select Country
                               </div>
                             )}
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-3">
+                          <div className="mb-0">
                             <label className="form-label">State</label>
                             <Select
                               placeholder="Select state..."
@@ -2032,7 +2037,7 @@ const CreateJobs = () => {
                             />
                             {stateError && (
                               <div className="invalid-fields">
-                                Please Select State
+                                Please select State
                               </div>
                             )}
                           </div>
@@ -2040,7 +2045,7 @@ const CreateJobs = () => {
                       </div>
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-3">
+                          <div className="mb-0">
                             <label className="form-label">City</label>
                             <Select
                               placeholder="Select City..."
@@ -2055,7 +2060,7 @@ const CreateJobs = () => {
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="mb-4">
+                          <div className="mb-0">
                             <label className="form-label">Street Address</label>
                             <input
                               type="text"
@@ -2086,18 +2091,18 @@ const CreateJobs = () => {
                             <option value="" disabled selected>
                               Select Job Type
                             </option>
-                            <option value="onsite" defaultValue>
-                              On Site
+                            <option value="On site" defaultValue>
+                              On site
                             </option>
-                            <option value="remote">Remote</option>
-                            <option value="Work From Anywhere">
-                              Work From AnyWhere
+                            <option value="Remote">Remote</option>
+                            <option value="Work from anywhere">
+                              Work from anywhere
                             </option>
-                            <option value="hybrid">Hybrid</option>
+                            <option value="Hybrid">Hybrid</option>
                           </select>
                           {jobTypeError && (
                             <div className="invalid-fields">
-                              Please Select Job Type
+                              Please select Job Type
                             </div>
                           )}
                         </div>
@@ -2125,7 +2130,7 @@ const CreateJobs = () => {
                             </select>
                             {employmentError && (
                               <div className="invalid-fields">
-                                Please Select Employment Type
+                                Please select Employment Type
                               </div>
                             )}
                           </div>
@@ -2163,11 +2168,10 @@ const CreateJobs = () => {
 
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          <label className="form-label">
+                          <label className="form-label  mb-2">
                             Application Deadline
                             <span className="mandatory">*</span>
                           </label>
-
                           <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                               value={
@@ -2185,12 +2189,12 @@ const CreateJobs = () => {
                           </LocalizationProvider>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
-                          <label className="form-label">
-                            Profession/Skills (optional)
+                          <label className="form-label mb-2">
+                            Profession/Skills
                             <span className="mandatory">*</span>
                           </label>
 
-                          <div className="mb-3">
+                          <div className="mb-0">
                             <div className="form-group add-skill-wrapper">
                               {/* has-search <span className="fa fa-search form-control-feedback"></span> */}
 
@@ -2199,8 +2203,8 @@ const CreateJobs = () => {
                                   freeSolo
                                   id="free-solo-2-demo"
                                   disableClearable
-                                  options={top100Films.map(
-                                    (option) => option.title
+                                  options={professionList.map(
+                                    (option) => option.value
                                   )}
                                   value={skillInputValue}
                                   onChange={(event, newValue) => {
@@ -2253,34 +2257,48 @@ const CreateJobs = () => {
 
                       <div className="rich-editor mb-2">
                         <label className="form-label additional-requirements-title">
-                          Additional Requirement (Optional)
+                          Additional Requirement (optional)
                         </label>
                       </div>
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
                           <div className="">
                             <label className="form-label">Age Range</label>
-                            <div className="creators-filter-select creator-age-wrapper">
+                            <div className="creators-filter-select creator-age-wrapper splitterDiv">
                               <input
-                                type="text"
-                                style={{ height: "50px" }}
-                                className="form-control"
-                                placeholder="Minimum Age"
+                                type="number"
+                                className="form-control "
                                 value={minAge}
                                 onChange={(e) => {
-                                  onMinChange(e);
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    onMinChange(e);
+                                  }
                                 }}
+                                placeholder="Minimum Age"
+                                min="0"
                               ></input>
 
                               <input
-                                type="text"
-                                style={{ height: "50px" }}
-                                className="form-control"
-                                placeholder="Maximum Age"
+                                type="number"
+                                className="form-control "
                                 value={maxAge}
                                 onChange={(e) => {
-                                  onMaxChange(e);
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    onMaxChange(e);
+                                  }
                                 }}
+                                placeholder="Maximum Age"
+                                min="0"
                               ></input>
                             </div>
                             {/* <label className="form-label">
@@ -2304,7 +2322,7 @@ const CreateJobs = () => {
                             </select>
                             {ageRangeError && (
                               <div className="invalid-fields">
-                                Please Select Age
+                                Please select Age
                               </div>
                             )} */}
                           </div>
@@ -2410,7 +2428,7 @@ const CreateJobs = () => {
                             </select> */}
                             {languageError && (
                               <div className="invalid-fields">
-                                Please Select Language
+                                Please select Language
                               </div>
                             )}
                           </div>
@@ -2426,28 +2444,44 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-instagram followers-social-icons"></i>
+                                <i className="bi bi-instagram followers-social-icons"></i>
                                 Instagram Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={instaMin}
                                   onChange={(e) => {
-                                    onInstaMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onInstaMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={instaMax}
                                   onChange={(e) => {
-                                    onInstaMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onInstaMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2455,28 +2489,44 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-tiktok followers-social-icons"></i>
+                                <i className="bi bi-tiktok followers-social-icons"></i>
                                 TikTok Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={tikTokMin}
                                   onChange={(e) => {
-                                    onTiktokMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onTiktokMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={tikTokMax}
                                   onChange={(e) => {
-                                    onTiktokMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onTiktokMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2484,28 +2534,44 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-linkedin followers-social-icons"></i>
+                                <i className="bi bi-linkedin followers-social-icons"></i>
                                 LinkedIn Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={linkedInMin}
                                   onChange={(e) => {
-                                    onLinkedInMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onLinkedInMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={linkedInMax}
                                   onChange={(e) => {
-                                    onLinkedInMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onLinkedInMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2513,28 +2579,44 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-facebook followers-social-icons"></i>
+                                <i className="bi bi-facebook followers-social-icons"></i>
                                 Facebook Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={fbMin}
                                   onChange={(e) => {
-                                    onFbMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onFbMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={fbMax}
                                   onChange={(e) => {
-                                    onFbMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onFbMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2542,28 +2624,44 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-twitter-x followers-social-icons"></i>
+                                <i className="bi bi-twitter-x followers-social-icons"></i>
                                 Twitter(X) Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={twitterMin}
                                   onChange={(e) => {
-                                    onTwitterMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onTwitterMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={twitterMax}
                                   onChange={(e) => {
-                                    onTwitterMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onTwitterMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2571,28 +2669,44 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-twitter-x followers-social-icons"></i>
-                                YouTube
+                                <i class="bi bi-youtube followers-social-icons"></i>
+                                Youtube
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper">
+                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Minimum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={youTubeMin}
                                   onChange={(e) => {
-                                    onYouTubeMinChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onYouTubeMinChange(e);
+                                    }
                                   }}
+                                  placeholder="Minimum Followers"
+                                  min="0"
                                 ></input>
 
                                 <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Maximum Followers"
+                                  type="number"
+                                  className="form-control "
                                   value={youTubeMax}
                                   onChange={(e) => {
-                                    onYouTubeMaxChange(e);
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onYouTubeMaxChange(e);
+                                    }
                                   }}
+                                  placeholder="Maximum Followers"
+                                  min="0"
                                 ></input>
                               </div>
                             </div>
@@ -2613,19 +2727,30 @@ const CreateJobs = () => {
                           {showQuestions && (
                             <div className="kids-form-section col-md-6 mb-3">
                               {questions.map((question, index) => (
-                                <div className="mb-0" key={index}>
-                                  <label className="form-label ">{`Question ${index +
+                                <div className=" mb-2" key={index}>
+                                  <label className="form-label mb-2">{`Question ${index +
                                     1}:`}</label>
-                                  <input
-                                    type="text"
-                                    className="form-control "
-                                    placeholder={`Enter Question ${index + 1}`}
-                                    value={question}
-                                    id={`question${index + 1}`}
-                                    onChange={(event) =>
-                                      handleQuestionChange(index, event)
-                                    }
-                                  />
+                                  <div className="question-input-wrapper">
+                                    <input
+                                      type="text"
+                                      className="form-control "
+                                      placeholder={`Enter Question ${index +
+                                        1}`}
+                                      value={question}
+                                      id={`question${index + 1}`}
+                                      onChange={(event) =>
+                                        handleQuestionChange(index, event)
+                                      }
+                                    />
+                                    <div className="trash pl-2">
+                                      <i
+                                        onClick={() =>
+                                          handleDeleteQuestion(index)
+                                        }
+                                        className="bi bi-trash ml-2"
+                                      ></i>
+                                    </div>
+                                  </div>
                                 </div>
                               ))}
                               <div
@@ -2725,7 +2850,7 @@ const CreateJobs = () => {
                                     }
                                     onChange={compensationChange}
                                   />
-                                  Paid Collaboration + Gift
+                                  Paid Collaboration + Product/Gift
                                 </label>
                               </div>
                               <div className="mt-3">
@@ -3172,8 +3297,10 @@ const CreateJobs = () => {
                                           <select
                                             className="form-select"
                                             aria-label="Default select example"
-                                            value={currency}
-                                            onChange={handleCurrencyChange}
+                                            value={productCurrency}
+                                            onChange={
+                                              handleProductCurrencyChange
+                                            }
                                             style={{
                                               fontSize: "14px",
                                             }}
@@ -3202,8 +3329,10 @@ const CreateJobs = () => {
                                           <select
                                             className="form-select"
                                             aria-label="Default select example"
-                                            value={frequency}
-                                            onChange={handleFrequencyChange}
+                                            value={productFrequency}
+                                            onChange={
+                                              handleProductFrequencyChange
+                                            }
                                             style={{
                                               fontSize: "14px",
                                             }}
@@ -3395,7 +3524,7 @@ const CreateJobs = () => {
 
                 <div className="kids-form-section col-md-12 mb-3">
                   <label className="form-label">
-                    How you would like to receive Application{" "}
+                    How Would You Like to Receive Applications?
                   </label>
                   <div className="application-condition-wrapper">
                     <div className="application-condition-radios">
@@ -3588,9 +3717,9 @@ const CreateJobs = () => {
                 )}
 
                 <div className="job-post-terms">
-                  By clicking Preview & Post , I agree that Brands / Client &
-                  Talent may publish and distribute my job advertisement on its
-                  site and through its distribution partners.
+                  By clicking Preview & Post , I agree that Brands and Talent
+                  may publish and distribute my job advertisement on its site
+                  and through its distribution partners.
                 </div>
 
                 <div className="create-job-buttons mt-4 mb-2">
@@ -3599,7 +3728,7 @@ const CreateJobs = () => {
                       e.preventDefault();
                       createGigs();
                     }}
-                    className="save-draft-button"
+                    className="createjob-btn"
                   >
                     Save Draft
                   </div>
@@ -3625,7 +3754,7 @@ const CreateJobs = () => {
                           createGigs();
                         }}
                       >
-                        Preview & Post
+                        {isLoading ? "Loading..." : " Preview & Post"}
                       </div>
                     </>
                   )}
@@ -3635,11 +3764,11 @@ const CreateJobs = () => {
 
             {selectedTab === "duplicate-job" && (
               <>
-                <div className="dialog-body mt-0">
+                <div className="mt-0">
                   <div className="kidsform-one w-100  p-2">
                     <div className="kids-main">
                       <div
-                        style={{ minHeight: "500px" }}
+                        style={{ minHeight: "200px" }}
                         className="kids-form-row"
                       >
                         <div className="w-100">
@@ -3677,6 +3806,7 @@ const CreateJobs = () => {
                           className="createjob-btn"
                           onClick={(e) => {
                             e.preventDefault();
+
                             duplicateJob();
                           }}
                         >

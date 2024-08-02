@@ -8,7 +8,7 @@ import Header from "../layout/header";
 import { useParams } from "react-router-dom";
 
 const ResetPassword = () => {
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -73,96 +73,104 @@ const ResetPassword = () => {
   };
 
   const resetPassword = async (enteredOTP) => {
-    if (userType == "brand") {
-      const formData = {
-        password: confirmPassword,
-        resetPasswordToken: token,
-      };
-      setIsLoading(true);
-      console.log(formData, "formData kidsLogin");
-      await ApiHelper.post(API.brandsResetPassword, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            setIsLoading(false);
-            setMessage("Password Reset Successfull!");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-              navigate(`/success-password?${paramsValue}`);
-            }, 2000);
-          } else if (resData.data.status === false) {
-            console.log("Error Occured Goback And Try Again!");
-            setIsLoading(false);
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else if (userType == "adult") {
-      const formData = {
-        password: confirmPassword,
-        resetPasswordToken: token,
-      };
-      setIsLoading(true);
-      console.log(formData, "formData kidsLogin");
-      await ApiHelper.post(API.adultResetPassword, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            setIsLoading(false);
-            setMessage("Password Reset Successfull!");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-              navigate(`/success-password?${paramsValue}`);
-            }, 2000);
-          } else if (resData.data.status === false) {
-            console.log("Error Occured Goback And Try Again!");
-            setIsLoading(false);
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    if (passwordMatch) {
+      if (userType == "brand") {
+        const formData = {
+          password: confirmPassword,
+          resetPasswordToken: token,
+        };
+        setIsLoading(true);
+        console.log(formData, "formData kidsLogin");
+        await ApiHelper.post(API.brandsResetPassword, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setIsLoading(false);
+              setMessage("Password Reset Successfull!");
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+                navigate(`/success-password?${paramsValue}`);
+              }, 2000);
+            } else if (resData.data.status === false) {
+              console.log("Error Occured Goback And Try Again!");
+              setIsLoading(false);
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else if (userType == "adult") {
+        const formData = {
+          password: confirmPassword,
+          resetPasswordToken: token,
+        };
+        setIsLoading(true);
+        console.log(formData, "formData kidsLogin");
+        await ApiHelper.post(API.adultResetPassword, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setIsLoading(false);
+              setMessage("Password Reset Successfull!");
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+                navigate(`/success-password?${paramsValue}`);
+              }, 2000);
+            } else if (resData.data.status === false) {
+              console.log("Error Occured Goback And Try Again!");
+              setIsLoading(false);
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        const formData = {
+          password: confirmPassword,
+          resetPasswordToken: paramsValue,
+        };
+        setIsLoading(true);
+        console.log(formData, "formData kidsLogin");
+        await ApiHelper.post(API.resetPassword, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setIsLoading(false);
+              setMessage("Password Reset Successfull!");
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+                navigate(`/success-password?${paramsValue}`);
+              }, 2000);
+            } else if (resData.data.status === false) {
+              console.log("Error Occured Goback And Try Again!");
+              setIsLoading(false);
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function() {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     } else {
-      const formData = {
-        password: confirmPassword,
-        resetPasswordToken: paramsValue,
-      };
-      setIsLoading(true);
-      console.log(formData, "formData kidsLogin");
-      await ApiHelper.post(API.resetPassword, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            setIsLoading(false);
-            setMessage("Password Reset Successfull!");
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-              navigate(`/success-password?${paramsValue}`);
-            }, 2000);
-          } else if (resData.data.status === false) {
-            console.log("Error Occured Goback And Try Again!");
-            setIsLoading(false);
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function() {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      setMessage("Password Does not match!");
+      setOpenPopUp(true);
+      setTimeout(function() {
+        setOpenPopUp(false);
+      }, 2000);
     }
   };
 
@@ -171,6 +179,9 @@ const ResetPassword = () => {
       <Header />
       <div className="login-main">
         <div className="login-container">
+          <div className="reset-logo">
+            <img className="btLogo" src={btLogo} alt="" />
+          </div>
           <div className="otp-title">
             <span className="bold-otp">New Password</span>
           </div>
@@ -233,9 +244,6 @@ const ResetPassword = () => {
           <div className="login-btn" onClick={resetPassword}>
             {isLoading ? "Loading..." : "Submit"}
           </div>
-        </div>
-        <div className="reset-logo">
-          <img className="btLogo" src={btLogo} alt="" />
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

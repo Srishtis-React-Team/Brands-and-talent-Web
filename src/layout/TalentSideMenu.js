@@ -104,7 +104,7 @@ const TalentSideMenu = ({ myState }) => {
             </div>
             <div className="talent-details">
               <div className="talent-name">
-                {talentData?.preferredChildFirstname}
+                {talentData?.preferredChildFirstname}&nbsp;
                 {talentData?.preferredChildLastName}
               </div>
               <div className="talent-category">Talent</div>
@@ -219,7 +219,7 @@ const TalentSideMenu = ({ myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i class="bi bi-chat-dots icons"></i>
+            <i className="bi bi-chat-dots icons"></i>
             <div className="brand-menu-text">Messages</div>
           </Link> */}
 

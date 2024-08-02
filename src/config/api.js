@@ -1,10 +1,9 @@
-const BASEURL = "https://hybrid.sicsglobal.com/brandsntalent_api/";
+const BASEURL = "https://brandsandtalent.com/api/";
 
 export const API = {
   //common
   baseUrl: BASEURL,
-  userFilePath:
-    "https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/",
+  userFilePath: "https://brandsandtalent.com/backend/uploads/",
   uploadFile: BASEURL + "admin/fileUpload",
   listCountries: BASEURL + "admin/listCountries",
   listStates: BASEURL + "admin/listLocation",
@@ -12,7 +11,9 @@ export const API = {
   getAllCitiesList: BASEURL + "admin/getAllCitiesList",
   getAllStatesList: BASEURL + "admin/getAllStatesList",
   chatbot: BASEURL + "admin/chatbot",
-  chatbot: BASEURL + "admin/chatbot",
+  giftMail: BASEURL + "admin/giftMail",
+  payment: BASEURL + "admin/payment",
+  getFieldDatas: BASEURL + "features/getFieldDatas",
 
   //Registration
   brandsRegister: BASEURL + "brands/brandsRegister",
@@ -57,6 +58,7 @@ export const API = {
   brandsLogin: BASEURL + "brands/brandsLogin",
   deleteNotification: BASEURL + "brands/deleteNotification",
   updatePasswordInSettings: BASEURL + "brands/updatePasswordInSettings",
+  checkPublicUrlName: BASEURL + "brands/checkPublicUrlName",
 
   //pricing
   getPricingList: BASEURL + "pricing/pricingList",
@@ -83,6 +85,7 @@ export const API = {
   reviewsPosting: BASEURL + "users/reviewsPosting",
   countUsers: BASEURL + "users/countUsers",
   deleteVideoUrls: BASEURL + "users/deleteVideoUrls",
+  reportReview: BASEURL + "users/reportReview",
 
   //keyword
   postUserSearchKeyword: BASEURL + "keyword/postUserSearchKeyword",
@@ -150,4 +153,9 @@ export const API = {
 
   //
   activateBrandUser: BASEURL + "brands/activateBrandUser",
+  fetchContentByType: BASEURL + "content/fetchContentByType",
+
+  //blogs
+  getFeaturedArticles: BASEURL + "blog/getFeaturedArticles",
+  fetchBlogByType: BASEURL + "blog/fetchBlogByType",
 };

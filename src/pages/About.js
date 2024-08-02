@@ -69,13 +69,23 @@ const About = () => {
                 clients seeking your unique talents.
               </div>
               <div className="col-md-6">
-                <img className="img-fluid" src={banner1}></img>
+                <img
+                  className="img-fluid"
+                  src={
+                    "https://brandsandtalent.com/static/media/abt1.5b3df7cb4e1d8d66a71f.png"
+                  }
+                ></img>
               </div>
             </div>
 
             <div className="row textAlg mt-3 mb-5">
               <div className="col-md-6 ">
-                <img className="img-fluid" src={banner2}></img>
+                <img
+                  className="img-fluid"
+                  src={
+                    "https://brandsandtalent.com/static/media/abt2.7fb0e7c0e8bee70c4360.png"
+                  }
+                ></img>
               </div>
               <div className="col-md-6 descp">
                 We understand that{" "}

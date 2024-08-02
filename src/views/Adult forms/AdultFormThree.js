@@ -12,6 +12,9 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import PopUp from "../../components/PopUp";
 import "../../assets/css/talent-dashboard.scss";
 import CurrentUser from "../../CurrentUser";
+import RichTextEditor from "../RichTextEditor";
+import CreatableSelect from "react-select/creatable";
+import useFieldDatas from "../../config/useFieldDatas";
 
 const AdultFormThree = () => {
   const {
@@ -21,6 +24,7 @@ const AdultFormThree = () => {
     avatarImage,
     fcmToken,
   } = CurrentUser();
+  const { featuresList } = useFieldDatas();
 
   const [talentData, setTalentData] = useState();
 
@@ -50,7 +54,7 @@ const AdultFormThree = () => {
   }, [talentData]);
 
   const [profileFile, setProfileFile] = useState(null);
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -70,7 +74,6 @@ const AdultFormThree = () => {
   const youTube = require("../../assets/icons/social-media-icons/youTube.png");
   const linkdin = require("../../assets/icons/social-media-icons/linkdin.png");
   const docsIcon = require("../../assets/icons/docsIcon.png");
-  const [featuresList, setFeaturesList] = useState([]);
   const [features, setFeature] = useState([]);
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -96,9 +99,7 @@ const AdultFormThree = () => {
   const [updateDisabled, setUpdateDisabled] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
   const [urls, setUrls] = useState([]);
-  useEffect(() => {
-    getFeatures();
-  }, []);
+
   useEffect(() => {
     console.log(profileFile, "profileFile");
     console.log(portofolioFile, "portofolioFile");
@@ -113,15 +114,34 @@ const AdultFormThree = () => {
   useEffect(() => {
     console.log(updateDisabled, "updateDisabled");
   }, [updateDisabled]);
+  useEffect(() => {
+    console.log(featuresList, "featuresList");
+  }, [featuresList]);
 
-  const getFeatures = async () => {
-    await ApiHelper.get(API.getFeatures)
-      .then((resData) => {
-        if (resData) {
-          setFeaturesList(resData.data.data[0].features);
-        }
-      })
-      .catch((err) => {});
+  const creatableOptions = ["Dress Size", "Shoe Size"];
+
+  const creatableInputOptions = [
+    "Hip Size",
+    "Waist",
+    "Chest",
+    "Height",
+    "Bra Size",
+  ];
+
+  const cmPlaceholderOptions = ["Height", "Chest", "Waist", "Hip Size"];
+
+  const getPlaceholder = (label) => {
+    if (cmPlaceholderOptions.includes(label)) {
+      return "Type in cm";
+    }
+    if (
+      label === "Shoe Size" ||
+      label === "Bra Size" ||
+      label === "Dress Size"
+    ) {
+      return "US or EU size only";
+    }
+    return label;
   };
 
   const onEditorSummary = (editorState) => {
@@ -132,15 +152,27 @@ const AdultFormThree = () => {
   const handleFeaturesChange = (label, value) => {
     const updatedValues = [...features];
     const index = updatedValues.findIndex((item) => item.label === label);
-    if (index !== -1) {
-      updatedValues[index] = { label, value };
-    } else {
-      updatedValues.push({ label, value });
+    let finalValue = value;
+
+    if (
+      creatableInputOptions.includes(label) ||
+      creatableOptions.includes(label)
+    ) {
+      if (/^\d+$/.test(value)) {
+        finalValue = `${value} cm`;
+      } else {
+        return; // Exit if the value is not a number
+      }
     }
+
+    if (index !== -1) {
+      updatedValues[index] = { label, value: finalValue };
+    } else {
+      updatedValues.push({ label, value: finalValue });
+    }
+
+    console.log(updatedValues, "updatedValues");
     setFeature(updatedValues);
-    // Call your API here with the updated selectedValues array
-    // Example:
-    // callYourApi(selectedValues);
   };
 
   const updateAdultSignup = async () => {
@@ -163,12 +195,9 @@ const AdultFormThree = () => {
           setTimeout(function() {
             setOpenPopUp(false);
             if (talentData?.planName == "Basic") {
-              navigate(
-                `/talent-profile/${talentData.preferredChildFirstname}`,
-                {
-                  state: { talentData: talentData },
-                }
-              );
+              navigate(`/talent/${talentData.publicUrl}`, {
+                state: { talentData: talentData },
+              });
             } else {
               navigate(`/adult-signup-service-details?${queryString}`);
             }
@@ -191,7 +220,7 @@ const AdultFormThree = () => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
     console.log(droppedFiles[0], "droppedFiles");
-    uploadFile(droppedFiles[0]);
+    uploadProfile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
 
@@ -207,9 +236,33 @@ const AdultFormThree = () => {
   const handlePortofolioDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadFile(droppedFiles[0]);
-    // setFiles(droppedFiles);
+
+    // Filter only image files
+    const imageFiles = droppedFiles.filter((file) =>
+      file.type.startsWith("image/")
+    );
+
+    // Check if there are non-image files
+    const nonImageFiles = droppedFiles.filter(
+      (file) => !file.type.startsWith("image/")
+    );
+
+    if (nonImageFiles.length > 0) {
+      // Show error message and popup for non-image files
+      setMessage("You can only upload images");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 1000);
+
+      // Do not proceed with uploading non-image files
+      return;
+    }
+
+    // Iterate through each image file and upload
+    imageFiles.forEach((file) => {
+      uploadFile(file);
+    });
   };
 
   const handlePortofolioDragOver = (e) => {
@@ -229,9 +282,33 @@ const AdultFormThree = () => {
   const handleResumeDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadResume(droppedFiles[0]);
-    // setFiles(droppedFiles);
+
+    // Filter only document files
+    const documentFiles = droppedFiles.filter((file) =>
+      isDocumentFile(file.type)
+    );
+
+    // Check if there are non-document files
+    const nonDocumentFiles = droppedFiles.filter(
+      (file) => !isDocumentFile(file.type)
+    );
+
+    if (nonDocumentFiles.length > 0) {
+      // Show error message or handle non-document files here
+      setMessage("You can only upload PDF, Word documents, etc.");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 1000);
+
+      // Do not proceed with uploading non-document files
+      return;
+    }
+
+    // Iterate through each document file and upload
+    documentFiles.forEach((file) => {
+      uploadResume(file);
+    });
   };
 
   const handleResumeDragOver = (e) => {
@@ -239,12 +316,41 @@ const AdultFormThree = () => {
   };
 
   const portofolioUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
-      uploadFile(fileData);
+    if (event.target.files && event.target.files.length > 0) {
+      const filesArray = Array.from(event.target.files); // Convert FileList to Array
+
+      // Filter only image files
+      const imageFiles = filesArray.filter((file) =>
+        file.type.startsWith("image/")
+      );
+
+      // Check if there are non-image files
+      const nonImageFiles = filesArray.filter(
+        (file) => !file.type.startsWith("image/")
+      );
+
+      if (nonImageFiles.length > 0) {
+        // Show error message and popup for non-image files
+        setMessage("You can only upload images");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+
+        // Do not proceed with uploading non-image files
+        return;
+      }
+
+      // Iterate through each image file and upload
+      imageFiles.forEach((file) => {
+        console.log(file, "fileData"); // Logging each file object
+
+        // Call uploadFile function for each image file
+        uploadFile(file);
+      });
     }
   };
+
   const videoAudioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
@@ -252,16 +358,76 @@ const AdultFormThree = () => {
     }
   };
   const resumeUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData resume");
-      uploadResume(fileData);
+    if (event.target.files && event.target.files.length > 0) {
+      const filesArray = Array.from(event.target.files); // Convert FileList to Array
+
+      // Filter only document files
+      const documentFiles = filesArray.filter((file) =>
+        isDocumentFile(file.type)
+      );
+
+      // Check if there are non-document files
+      const nonDocumentFiles = filesArray.filter(
+        (file) => !isDocumentFile(file.type)
+      );
+
+      if (nonDocumentFiles.length > 0) {
+        // Show error message or handle non-document files here
+        setMessage("You can only upload PDF, Word documents, etc.");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+
+        // Do not proceed with uploading non-document files
+        return;
+      }
+
+      // Iterate through each document file and upload
+      documentFiles.forEach((file) => {
+        uploadResume(file);
+      });
     }
   };
+
+  // Helper function to check if a file type is a document (PDF, Word, etc.)
+  const isDocumentFile = (fileType) => {
+    // Add more document types as needed
+    return (
+      fileType === "application/pdf" ||
+      fileType === "application/msword" ||
+      fileType ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      // Add more document MIME types as required
+    );
+  };
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/bmp",
+    "image/webp", // images
+    "application/pdf", // PDF
+    "application/msword", // DOC
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // DOCX
+    "application/vnd.ms-excel", // XLS
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // XLSX
+    "application/vnd.ms-powerpoint", // PPT
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation", // PPTX
+  ];
 
   const verificationUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
+      if (!allowedTypes.includes(fileData.type)) {
+        setMessage("Only images and documents are allowed.");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+        return;
+      }
       uploadVerificationID(fileData);
     }
   };
@@ -291,9 +457,21 @@ const AdultFormThree = () => {
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
-      uploadProfile(fileData);
+      const file = event.target.files[0];
+
+      // Check if the file is an image
+      if (!file.type.startsWith("image/")) {
+        // Show error message for non-image files
+        setMessage("You can only upload images");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 1000);
+        return; // Stop further execution
+      }
+
+      console.log(file, "fileData");
+      uploadProfile(file);
     }
   };
 
@@ -455,12 +633,13 @@ const AdultFormThree = () => {
       },
     })
       .then((resData) => {
+        console.log(resData, "resDatasetVerificationID");
         setMessage(resData.data.message);
         let fileObj = {
           id: resData.data.data.fileId,
           title: fileData.name,
           fileData: resData.data.data.filename,
-          type: getFileType(fileData.type),
+          type: resData.data.data.filetype,
         };
         setVerificationID((prevFiles) => [...prevFiles, fileObj]);
         setOpenPopUp(true);
@@ -487,6 +666,10 @@ const AdultFormThree = () => {
       updatedImages.splice(index, 1);
       return updatedImages;
     });
+  };
+
+  const handleVerificationDelete = () => {
+    setVerificationID(null);
   };
 
   const handleVideoDelete = (index) => {
@@ -520,10 +703,8 @@ const AdultFormThree = () => {
       Pro: 5,
       Premium: Infinity, // Unlimited URLs
     };
-
     const userPlan = talentData?.planName;
     const maxUrls = planLimits[userPlan] || 0;
-
     if (urls.length >= maxUrls) {
       setMessage(
         `You can only add up to ${maxUrls} URLs as a ${userPlan} member.`
@@ -554,6 +735,15 @@ const AdultFormThree = () => {
     const newUrls = urls.filter((url, i) => i !== index);
     setUrls(newUrls);
   };
+
+  const handleEditorStateChange = (editorState) => {
+    console.log(editorState, "editorStateRichText");
+    setAboutYou(editorState);
+  };
+
+  useEffect(() => {
+    console.log(verificationID, "verificationID");
+  }, [verificationID]);
 
   return (
     <>
@@ -612,9 +802,9 @@ const AdultFormThree = () => {
                       accept="image/*"
                       onChange={profileUpload}
                     />
-                    <div className="upload-text">Upload Your Profile Photo</div>
+                    <div className="upload-text">Upload your profile photo</div>
                     <div className="upload-info">
-                      Drag and drop your Profile Photo here.
+                      Drag and drop your profile photo here.
                     </div>
                   </div>
 
@@ -682,7 +872,7 @@ const AdultFormThree = () => {
                   </div>
                   <div className="rich-editor mb-5">
                     <label className="form-label">About You</label>
-                    <Editor
+                    {/* <Editor
                       editorStyle={{ overflow: "hidden" }}
                       toolbarClassName="toolbarClassName"
                       wrapperClassName="wrapperClassName"
@@ -703,12 +893,18 @@ const AdultFormThree = () => {
                         link: { inDropdown: true },
                         history: { inDropdown: true },
                       }}
+                    /> */}
+                    <RichTextEditor
+                      value={aboutYou}
+                      onChange={(editorState) =>
+                        handleEditorStateChange(editorState)
+                      }
                     />
                   </div>
 
                   <div className="adults-titles kids-form-title">
                     <span>
-                      Portofolio<span className="astrix">*</span>
+                      Portfolio<span className="astrix">*</span>
                     </span>
                   </div>
                   <div
@@ -1108,45 +1304,76 @@ const AdultFormThree = () => {
                   <div className="adults-titles">Features (Optional)</div>
 
                   <div className="features-section">
-                    <div className="row">
-                      {featuresList && (
-                        <>
-                          {featuresList.map((item, index) => {
-                            return (
-                              <>
-                                <div className="col-lg-3 col-md-4 col-sm-6">
-                                  <div className="mb-3 features-input-wrapper">
-                                    <label className="form-label">
-                                      {item.label}
-                                    </label>
-                                    <select
-                                      className="form-select features-select"
-                                      aria-label="Default select example"
-                                      onChange={(e) =>
-                                        handleFeaturesChange(
-                                          item.label,
-                                          e.target.value
-                                        )
-                                      }
-                                    >
-                                      <option value="" disabled selected>
-                                        {item.label}
-                                      </option>
-                                      {item.options.map((option, idx) => (
-                                        <option key={idx} value={option}>
-                                          {option}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                </div>
-                              </>
-                            );
-                          })}
-                        </>
-                      )}
-                    </div>
+                    {featuresList && (
+                      <>
+                        {featuresList.map((item, index) => (
+                          <div
+                            key={index}
+                            className="mb-3 mr-3 features-input-wrapper"
+                          >
+                            <label className="form-label">{item.label}</label>
+                            {creatableOptions.includes(item.label) ? (
+                              <CreatableSelect
+                                isClearable
+                                options={item.options.map((option) => ({
+                                  value: option,
+                                  label: option,
+                                }))}
+                                onChange={(selectedOption) =>
+                                  handleFeaturesChange(
+                                    item.label,
+                                    selectedOption ? selectedOption.value : ""
+                                  )
+                                }
+                                placeholder={getPlaceholder(item.label)}
+                              />
+                            ) : creatableInputOptions.includes(item.label) ? (
+                              <input
+                                type="text"
+                                className="form-control features-select"
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleFeaturesChange(
+                                      item.label,
+                                      e.target.value
+                                    );
+                                  }
+                                }}
+                                placeholder={getPlaceholder(item.label)}
+                              />
+                            ) : (
+                              <select
+                                className="form-select features-select"
+                                aria-label="Default select example"
+                                onChange={(e) =>
+                                  handleFeaturesChange(
+                                    item.label,
+                                    e.target.value
+                                  )
+                                }
+                                defaultValue=""
+                              >
+                                <option value="" disabled>
+                                  {item.label}
+                                </option>
+                                {item.options.map((option, idx) => (
+                                  <option key={idx} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
+                        ))}
+                      </>
+                    )}
                   </div>
+
                   <div className="kids-form-title">
                     <span>ID Verification</span>
                   </div>
@@ -1156,7 +1383,7 @@ const AdultFormThree = () => {
                     Verified Talent! Submit your government-issued ID to get a
                     blue verification sticker on your profile. Your ID will be
                     permanently deleted from our database immediately after
-                    verification, ensuring your data privacy. Stand out and
+                    verification, ensuring your data privacy.
                   </div>
 
                   <div className="kids-form-row mb-5">
@@ -1196,93 +1423,77 @@ const AdultFormThree = () => {
                       type="file"
                       className="select-cv-input"
                       id="id-upload"
-                      accept="*/*"
+                      accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
                       onChange={verificationUpload}
                     />
                   </div>
 
                   {verificationID && (
                     <>
-                      {verificationID.map((item, index) => {
-                        return (
-                          <>
-                            <div
-                              key={index}
-                              className="uploaded-file-wrapper mb-5"
-                            >
-                              <div className="file-section">
-                                {item.type === "image" && (
-                                  <div className="fileType">
-                                    <img src={imageType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "audio" && (
-                                  <div className="fileType">
-                                    <img src={audiotype} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "video" && (
-                                  <div className="fileType">
-                                    <img src={videoType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "document" && (
-                                  <div className="fileType">
-                                    <img src={docsIcon} alt="" />
-                                  </div>
-                                )}
-                                <div className="fileName">{item.title}</div>
-                              </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="dropdownMenuButton"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="dropdownMenuButton"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleView(item)}
-                                          id="view"
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() =>
-                                            handlePortofolioDelete(item)
-                                          }
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
+                      <div
+                        className="uploaded-file-wrapper"
+                        style={{ marginBottom: "80px" }}
+                      >
+                        <div className="file-section">
+                          {verificationID[0].type === "image" && (
+                            <div className="fileType">
+                              <img src={imageType} alt="" />
                             </div>
-                          </>
-                        );
-                      })}
+                          )}
+                          {verificationID[0].type === "document" && (
+                            <div className="fileType">
+                              <img src={docsIcon} alt="" />
+                            </div>
+                          )}
+                          <div className="fileName">
+                            {verificationID[0].title}
+                          </div>
+                        </div>
+                        <div className="file-options">
+                          <div className="sucess-tick">
+                            <img src={greenTickCircle} alt="" />
+                          </div>
+                          <div className="option-menu">
+                            <div className="dropdown">
+                              <img
+                                onClick={() => setShowOptions(!showOptions)}
+                                src={elipsis}
+                                alt=""
+                                className="dropdown-toggle elipsis-icon"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              />
+                              <ul
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton"
+                              >
+                                <li>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() => handleView(verificationID)}
+                                    id="view"
+                                  >
+                                    View
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() =>
+                                      handleVerificationDelete(verificationID)
+                                    }
+                                    id="delete"
+                                  >
+                                    Delete
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </>
                   )}
 

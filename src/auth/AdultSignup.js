@@ -19,7 +19,7 @@ const AdultSignup = () => {
     generateToken();
   }, []);
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const fbLogo = require("../assets/icons/fbLogo.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
   const kidsImage = require("../assets/images/kidsImage.png");
@@ -143,6 +143,7 @@ const AdultSignup = () => {
         adultEmail: adultEmail,
         talentPassword: adultPassword,
         confirmPassword: adultConfirmPassword,
+        publicUrl: adultName.replace(/ /g, "-"),
         image: {
           fileData: "a11fe9fc-f4c3-4b51-9f98-25a9247fcbd9.webp",
           id: "9f429f86-ca9c-4730-804b-06cd2d3db7c0",
@@ -156,7 +157,6 @@ const AdultSignup = () => {
           setIsLoading(false);
           if (resData.data.status === true) {
             console.log(resData.data, "adultSignUp");
-
             setMessage("Registered Successfully");
             setOpenPopUp(true);
             setTimeout(function() {
@@ -164,6 +164,11 @@ const AdultSignup = () => {
               navigate(`/otp-verification?${resData?.data?.data}`);
             }, 2000);
           } else if (resData.data.status === false) {
+            setMessage(resData?.data?.message);
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+            }, 3000);
           }
         })
         .catch((err) => {
@@ -182,7 +187,7 @@ const AdultSignup = () => {
       }, 1000);
     }
     if (!passwordMatch) {
-      setMessage("Please Update All Required Fields");
+      setMessage("Password did not match");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
@@ -367,9 +372,7 @@ const AdultSignup = () => {
                     setNameError(false);
                   }}
                 ></input>
-                {nameError && (
-                  <div className="invalid-fields">Please enter Name</div>
-                )}
+                {nameError && <div className="invalid-fields"> Name</div>}
               </div>
             </div>
 

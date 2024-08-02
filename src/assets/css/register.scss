@@ -256,7 +256,9 @@
   background: #000;
   padding: 0 20px;
 }
-.open-gmail img{ margin-right: 15px; }
+.open-gmail img {
+  margin-right: 15px;
+}
 .gmail-btn-text {
   color: #fff;
   text-align: center;
@@ -305,7 +307,9 @@
   padding-left: 2.375rem;
 }
 
-.form-group.has-search{ position: relative; }
+.form-group.has-search {
+  position: relative;
+}
 
 .has-search .form-control-feedback {
   position: absolute;
@@ -318,19 +322,19 @@
   pointer-events: none;
   color: #aaa;
 
-    height: 100%;
-    line-height: 48px;
+  height: 100%;
+  line-height: 48px;
 }
 
 .adult-signup-main {
-  width: 450px;
+  width: 700px;
   max-width: 100%;
   border: 1px solid #aaa;
   border-radius: 20px;
-  padding: 15px 25px 25px;
+  padding: 30px;
   border-radius: 20px;
 }
-.adult-signup-main .step-title{
+.adult-signup-main .step-title {
   padding: 0;
   margin: 10px 0;
 }
@@ -354,16 +358,18 @@
   color: #aaa;
   cursor: pointer;
 }
-.form-control, .form-select{
+.form-control,
+.form-select {
   outline: 0 !important;
   box-shadow: inherit !important;
 }
-.login-main .form-label{ margin: 0; }
+.login-main .form-label {
+  margin: 0;
+}
 
 .adult-signup-inputs {
   height: 50px;
-  border: 1px solid #B1A8A8;
-  
+  border: 1px solid #b1a8a8;
 }
 .signup-btn-section {
   padding: 20px 0px;
@@ -389,9 +395,7 @@
 // 1025px — 1200px: Desktops, large screens
 // 1201px and more —  Extra large screens, TV
 
-
 @media (max-width: 1400px) {
-
   .adult-signup-main .mb-3 {
     margin-bottom: 0.5rem !important;
   }
@@ -399,40 +403,38 @@
     padding: 0;
     margin: 5px 0 10px;
   }
-  .adult-signup-main .form-control, .adult-signup-main .form-select, .adult-signup-inputs {
+  .adult-signup-main .form-control,
+  .adult-signup-main .form-select,
+  .adult-signup-main .adult-signup-inputs {
     height: 40px !important;
   }
   .has-search .form-control-feedback {
     line-height: 42px;
   }
-  .login-btn{ height: 45px !important; }
-  
-  .iam-brand, .iam-talent {  font-size: 14px; }
+  .login-btn {
+    height: 45px !important;
+  }
 
-
+  .iam-brand,
+  .iam-talent {
+    font-size: 14px;
+  }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
-  .adult-signup-main {
-    // background-color: aqua;
-    width: 50%;
-  }
+  
   .gmail-info {
     width: 50%;
   }
 }
 @media (min-width: 481px) and (max-width: 768px) {
-  .adult-signup-main {
-    // background-color: aqua;
-    width: 70%;
-  }
+ 
   .gmail-info {
     width: 60%;
   }
 }
 @media (min-width: 320px) and (max-width: 480px) {
   .adult-signup-main {
-    // background-color: aqua;
-    width: 95%;
+  
     padding: 10px 20px;
   }
   .gmail-info {

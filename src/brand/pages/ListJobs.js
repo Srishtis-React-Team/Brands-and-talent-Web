@@ -20,13 +20,33 @@ import Modal from "react-modal";
 
 const ListJobs = () => {
   const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
 
   useEffect(() => {
     const storedBrandId = localStorage.getItem("brandId");
     if (storedBrandId !== null) {
       setBrandId(storedBrandId);
+      getBrand();
     }
   }, []);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(brandData, "brandDataListJobs");
+  }, [brandData]);
 
   const navigate = useNavigate();
 
@@ -156,16 +176,31 @@ const ListJobs = () => {
   const postJob = async () => {
     await ApiHelper.post(`${API.postJobByDraft}${alertpop?.jobId}`)
       .then((resData) => {
-        console.log(resData, "draftedData");
-        console.log(resData.data.data._id, "draftedData");
+        console.log(resData.data.status, "draftedData");
+
         if (resData.data.status === true) {
-          setMessage("Job Posted SuccessFully!");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            setAllJobsList(resData.data.data, "resData.data.data");
-          }, 2000);
-        } else if (resData.data.status === false) {
+          if (brandData?.planName == "Basic") {
+            setMessage(
+              "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
+            );
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              setAllJobsList(resData.data.data, "resData.data.data");
+            }, 5000);
+          } else {
+            setMessage("Job Posted SuccessFully!");
+            setOpenPopUp(true);
+            setTimeout(function() {
+              setOpenPopUp(false);
+              setAllJobsList(resData.data.data, "resData.data.data");
+            }, 2000);
+          }
+        }
+
+        if (resData.data.status == false) {
+          console.log(resData.data.status, "checkStatus");
+          console.log("status draftedData");
           setMessage(resData.data.message);
           setOpenPopUp(true);
           setTimeout(function() {
@@ -297,34 +332,50 @@ const ListJobs = () => {
                                       {job?.hiringCompany}
                                     </span>
                                   </div>
-                                  <div className="mb-2">
-                                    {job?.state && (
-                                      <span className="job-company-name">
-                                        {job?.state}
-                                      </span>
-                                    )}
-                                    {job?.state && <>,</>}
 
-                                    {job?.city && (
-                                      <span className="job-company-name">
-                                        {job?.city}
-                                      </span>
-                                    )}
-                                  </div>
                                   <div className="mb-2">
                                     <span className="job-company-name">
-                                      <i class="bi bi-person-workspace"></i>
+                                      <i className="bi bi-person-workspace"></i>
                                     </span>{" "}
-                                    <i class="bi bi-dot"></i>
+                                    <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
                                       {job?.jobType}
                                     </span>
-                                    <i class="bi bi-dot"></i>
+                                    <i className="bi bi-dot"></i>
+                                    <span className="job-company_dtls">
+                                      <i className="bi bi-geo-alt-fill location-icon"></i>
+                                      {job?.state}
+                                      {job?.state && <>,</>}
+                                      {job?.country}
+                                    </span>
+                                    <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
                                       {job?.employmentType}
                                     </span>
-                                    <i class="bi bi-dot"></i>
+                                    <i className="bi bi-dot"></i>
+                                    <span className="job-company_dtls">
+                                      {job?.category}{" "}
+                                      <i className="bi bi-dot"></i>
+                                    </span>
                                     <span className="job-company-name">
+                                      {job && job.compensation && (
+                                        <>
+                                          {Object.keys(job.compensation)[0] ===
+                                          "paid_collaboration_and_gift"
+                                            ? "Paid Collaboration + Product/Gift"
+                                            : Object.keys(
+                                                job.compensation
+                                              )[0] === "product_gift"
+                                            ? "Product/Gift"
+                                            : Object.keys(
+                                                job.compensation
+                                              )[0] === "paid_collaboration"
+                                            ? "Paid Collaboration"
+                                            : ""}
+                                        </>
+                                      )}
+
+                                      {/* 
                                       {job && job.compensation
                                         ? Object.keys(job.compensation)[0]
                                             .split("_")
@@ -334,7 +385,7 @@ const ListJobs = () => {
                                                 word.slice(1)
                                             )
                                             .join(" ")
-                                        : ""}
+                                        : ""} */}
                                     </span>
                                   </div>
                                   <div className="mb-2">
@@ -516,7 +567,7 @@ const ListJobs = () => {
               </div>
               {alertpop?.label == "edit" && (
                 <>
-                  <h5>Are you sure you want to Edit this Job ? </h5>
+                  <h5>Do you want to edit this job?</h5>
                 </>
               )}
               {alertpop?.label == "delete" && (
@@ -526,7 +577,7 @@ const ListJobs = () => {
               )}
               {alertpop?.label == "post-job" && (
                 <>
-                  <h5>Are you sure you want to Post this Job ? </h5>
+                  <h5>Would you really like to post this job?</h5>
                 </>
               )}
             </div>

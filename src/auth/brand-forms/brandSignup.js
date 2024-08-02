@@ -25,7 +25,7 @@ const BrandSignup = () => {
 
   console.log(fcmToken, "fcmToken");
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const fbLogo = require("../../assets/icons/fbLogo.png");
   const googleLogo = require("../../assets/icons/googleLogo.png");
   const kidsImage = require("../../assets/images/kidsImage.png");
@@ -161,6 +161,7 @@ const BrandSignup = () => {
         confirmPassword: adultConfirmPassword,
         position: receivedData,
         fcmToken: fcmToken,
+        publicUrl: adultName.replace(/ /g, "-"),
       };
       setIsLoading(true);
       await ApiHelper.post(API.brandsRegister, formData)

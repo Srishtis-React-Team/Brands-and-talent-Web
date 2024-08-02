@@ -15,13 +15,19 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import nationalitiesArray from "../components/NationalitiesArray";
+import zIndex from "@mui/material/styles/zIndex";
+import useFieldDatas from "../config/useFieldDatas";
+import { Tooltip } from "react-tooltip";
+
 const KidsformOne = ({ sendDataToParent }) => {
+  const { categoryList, professionList } = useFieldDatas();
+  console.log(categoryList, "categoryList kidsformone");
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
   const userId = urlParams.get("userId");
   const userEmail = urlParams.get("userEmail");
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const kidsImage = require("../assets/images/kidsImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -95,42 +101,42 @@ const KidsformOne = ({ sendDataToParent }) => {
   );
 
   const ethnicityOptions = [
-    "African",
-    "Arab",
-    "Asian",
-    "Black",
-    "Central Asian",
-    "Chinese",
-    "European",
-    "Filipino",
-    "Indian",
-    "Indonesian",
-    "Japanese",
     "Khmer",
+    "Thai",
+    "Asian",
+    "Vietnamese",
+    "Indonesian",
+    "Filipino",
+    "Chinese",
+    "South-East Asian",
+    "South-Asian",
+    "Central Asian",
+    "Indian",
+    "Pakistani",
+    "Nepali",
+    "Russian",
+    "Ukrainian",
+    "Japanese",
     "Korean",
     "Latino/Hispanic",
-    "Middle-Eastern",
+    "European",
+    "Scandinavian",
+    "Turk",
     "Native American",
     "Native Hawaiian/Pacific Islander",
-    "Nepali",
-    "Other",
-    "Pakistani",
-    "Persian",
-    "Russian",
-    "Scandinavian",
-    "South-Asian",
-    "South-East Asian",
-    "Thai",
-    "Turk",
-    "Ukrainian",
-    "Vietnamese",
     "White",
+    "Black",
+    "African",
+    "Middle-Eastern",
+    "Arab",
+    "Persian",
+    "Other",
   ];
 
   const gendersOptions = [
     "Man",
     "Woman",
-    "Non binary",
+    "Non-binary",
     "Transgender Woman",
     "Transgender Man",
     "Agender",
@@ -150,16 +156,31 @@ const KidsformOne = ({ sendDataToParent }) => {
     }),
   };
 
+  // const customStylesProfession = {
+  //   control: (provided, state) => ({
+  //     ...provided,
+  //     minHeight: "55px",
+  //     zIndex: 9999, // Reset the minHeight to avoid clipping
+  //   }),
+  //   menu: (provided, state) => ({
+  //     ...provided,
+  //     maxHeight: "500px", // Adjust the maxHeight as per your requirement
+  //     zIndex: 9999, // Ensure menu appears above other elements
+  //   }),
+  // };
+
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "55px", // Reset the minHeight to avoid clipping
+      minHeight: "45px",
+      // zIndex: 1, // Ensure the control is above other elements
     }),
     menu: (provided, state) => ({
       ...provided,
       maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
+      // zIndex: 1, // Ensure the menu appears above other elements
     }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensure menu portal appears above other elements
   };
 
   useEffect(() => {
@@ -237,6 +258,7 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const handleJobsCompleted = (event) => {
     setCompletedJobs(event.target.value);
+    console.log(event.target.value, "handleJobsCompleted");
     setJobsCompletedError(false);
   };
 
@@ -259,7 +281,6 @@ const KidsformOne = ({ sendDataToParent }) => {
       // Handle case when all options are cleared
       setNationality([]); // Clear the languages state
       setSelectedNationalityOptions([]);
-
       return;
     }
     // Extract values of all selected languages
@@ -309,6 +330,8 @@ const KidsformOne = ({ sendDataToParent }) => {
   const handleDetailChange = (index, field, value) => {
     const updatedSelectedProfessions = [...selectedProfessions];
     updatedSelectedProfessions[index][field] = value;
+    console.log(value, "value");
+    console.log(selectedProfessions, "selectedProfessions");
     setSelectedProfessions(updatedSelectedProfessions);
     setProfessionError(false);
   };
@@ -317,94 +340,8 @@ const KidsformOne = ({ sendDataToParent }) => {
     // Construct the final object containing selected professions and their details
   };
 
-  const professionList = [
-    { value: "Actor", label: "Actor" },
-    { value: "Artist", label: "Artist" },
-    { value: "Creator", label: "Creator" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Influencer", label: "Influencer" },
-    { value: "Model", label: "Model" },
-    { value: "Event Planner", label: "Event Planner" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Nail Artist", label: "Nail Artist" },
-    { value: "Tattooist", label: "Tattooist" },
-    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Swimming Instructor", label: "Swimming Instructor" },
-    { value: "Driving Instructor", label: "Driving Instructor" },
-    { value: "Meditation Teacher", label: "Meditation Teacher" },
-    { value: "Yoga Instructor", label: "Yoga Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Music Teacher", label: "Music Teacher" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Craftsperson", label: "Craftsperson" },
-    { value: "Sculptor", label: "Sculptor" },
-    { value: "Curator", label: "Curator" },
-    { value: "Singer", label: "Singer" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Musician", label: "Musician" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "Cinematographer", label: "Cinematographer" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "DJ", label: "DJ" },
-    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
-    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
-    { value: "Writer", label: "Writer" },
-    { value: "Copywriter", label: "Copywriter" },
-    { value: "Cartoonist", label: "Cartoonist" },
-    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
-    { value: "Podcaster", label: "Podcaster" },
-    { value: "Host/MC", label: "Host/MC" },
-    { value: "Voice-over Artist", label: "Voice-over Artist" },
-    { value: "Comedian", label: "Comedian" },
-    { value: "Public Speaker", label: "Public Speaker" },
-    { value: "Life Coach", label: "Life Coach" },
-    { value: "Career Coach", label: "Career Coach" },
-    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
-    { value: "Interior Designer", label: "Interior Designer" },
-    { value: "Illustrator", label: "Illustrator" },
-    { value: "Animator", label: "Animator" },
-    { value: "Blockchain Developer", label: "Blockchain Developer" },
-  ];
-
-  const categoryList = [
-    "Fashion & Beauty",
-    "Media & Entertainment",
-    "Sports, Fitness, & Wellness",
-    "Creative Arts & Design",
-    "Celebrity",
-    "Writing, Marketing, & Content Creation",
-    "Performing Arts",
-    "Education & Coaching",
-    "Business & Technology",
-    "Luxury & Lifestyle",
-    "Eco-friendly & Sustainability",
-    "Home & Gardening",
-    "Food & Travel",
-    "Diversity & Inclusion",
-    "Kids & Teens",
-  ];
-
-  // function chooseCategory(category) {
-  //   setCategoryError(false);
-  //   if (selectedCategories.includes(category)) {
-  //     setSelectedCategories(
-  //       selectedCategories.filter((item) => item !== category)
-  //     );
-  //   } else {
-  //     setSelectedCategories([...selectedCategories, category]);
-  //   }
-  // }
-
   const chooseCategory = (category) => {
-    setCategoryError(false);
+    console.log(category, "category");
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -412,6 +349,7 @@ const KidsformOne = ({ sendDataToParent }) => {
     } else {
       if (selectedCategories.length < 6) {
         setSelectedCategories([...selectedCategories, category]);
+        setCategoryError(false);
       } else {
         // setCategoryError(true);
         setMessage("you can only select 6 categories");
@@ -421,7 +359,13 @@ const KidsformOne = ({ sendDataToParent }) => {
         }, 2000);
       }
     }
+    if (selectedCategories.length < 3) {
+      setCategoryError(true);
+    } else {
+      setCategoryError(false);
+    }
   };
+
   const deleteProfession = (profession, index) => {
     console.log(profession, "profession");
     console.log(index, "profession index");
@@ -576,10 +520,10 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (kidsPreferedFirstName === "") {
       setPreferedNameError(true);
     }
-    if (nationality === "") {
+    if (nationality.length === 0) {
       setNationalityError(true);
     }
-    if (ethnicity.length === 0) {
+    if (ethnicity === "") {
       setEthnicityError(true);
     }
     if (languages.length === 0) {
@@ -588,26 +532,29 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (dateOfBirth === "") {
       setDobError(true);
     }
-    console.log(parentFirstName, "parentFirstName");
-    console.log(parentEmail, "parentEmail");
-    console.log(talentPassword, "talentPassword");
-    console.log(talentConfirmPassword, "talentConfirmPassword");
-    console.log(kidsLegalFirstName, "kidsLegalFirstName");
-    console.log(gender, "gender");
-    console.log(parentMobile, "parentMobile");
-    console.log(country, "country");
-    console.log(kidsCity, "kidsCity");
-    console.log(address, "address");
-    console.log(selectedProfessions, "selectedProfessions");
-    console.log(selectedProfessions, "selectedProfessions");
-    console.log(selectedCategories, "selectedCategories");
-    console.log(selectedCategories, "selectedCategories");
-    console.log(kidsPreferedFirstName, "kidsPreferedFirstName");
-    console.log(nationality, "nationality");
-    console.log(ethnicity, "ethnicity");
-    console.log(languages, "languages");
-    console.log(maritalStatus, "maritalStatus");
-    console.log(dateOfBirth, "dateOfBirth");
+    if (completedJobs === "") {
+      setJobsCompletedError(true);
+    }
+    console.log(parentFirstName, "parentFirstName kidsPayload");
+    console.log(parentEmail, "parentEmail kidsPayload");
+    console.log(talentPassword, "talentPassword kidsPayload");
+    console.log(talentConfirmPassword, "talentConfirmPassword kidsPayload");
+    console.log(kidsLegalFirstName, "kidsLegalFirstName kidsPayload");
+    console.log(gender, "gender kidsPayload");
+    console.log(parentMobile, "parentMobile kidsPayload");
+    console.log(country, "country kidsPayload");
+    console.log(kidsCity, "kidsCity kidsPayload");
+    console.log(address, "address kidsPayload");
+    console.log(selectedProfessions, "selectedProfessions kidsPayload");
+    console.log(selectedProfessions, "selectedProfessions kidsPayload");
+    console.log(selectedCategories, "selectedCategories kidsPayload");
+    console.log(selectedCategories, "selectedCategories kidsPayload");
+    console.log(kidsPreferedFirstName, "kidsPreferedFirstName kidsPayload");
+    console.log(nationality, "nationality kidsPayload");
+    console.log(ethnicity, "ethnicity kidsPayload");
+    console.log(languages, "languages kidsPayload");
+    console.log(maritalStatus, "maritalStatus kidsPayload");
+    console.log(dateOfBirth, "dateOfBirth kidsPayload");
     if (
       parentFirstName !== "" &&
       parentEmail !== "" &&
@@ -623,9 +570,10 @@ const KidsformOne = ({ sendDataToParent }) => {
       kidsPreferedFirstName !== "" &&
       nationality !== "" &&
       ethnicity !== "" &&
-      languages !== "" &&
+      languages.length !== 0 &&
       dateOfBirth !== "" &&
-      passwordMatch === true
+      passwordMatch === true &&
+      completedJobs !== ""
     ) {
       const formData = {
         parentFirstName: parentFirstName,
@@ -652,6 +600,8 @@ const KidsformOne = ({ sendDataToParent }) => {
         childCity: kidsCity,
         childAboutYou: aboutYou,
         age: age,
+        noOfJobsCompleted: completedJobs,
+        publicUrl: kidsPreferedFirstName.replace(/ /g, "-"),
       };
       setIsLoading(true);
       console.log(userId, "userId");
@@ -751,6 +701,17 @@ const KidsformOne = ({ sendDataToParent }) => {
     } else {
       setParentFirstName(value);
       setFirstNameLetterError(false);
+    }
+  };
+  const handleCondition = (e) => {
+    if (e == "terms") {
+      navigate("/terms-conditions");
+    }
+    if (e == "privacy") {
+      navigate("/privacy-policy");
+    }
+    if (e == "community") {
+      navigate("/community-guidelines");
     }
   };
 
@@ -989,7 +950,25 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   useEffect(() => {
     console.log(selectedProfessions, "selectedProfessions");
+    console.log(selectedCategories, "selectedCategories");
   }, [selectedProfessions]);
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.target.type === "number") {
+        const charCode = event.which ? event.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          event.preventDefault();
+        }
+      }
+    };
+
+    window.addEventListener("keypress", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keypress", handleKeyPress);
+    };
+  }, []);
 
   return (
     <>
@@ -1028,9 +1007,9 @@ const KidsformOne = ({ sendDataToParent }) => {
                     Form
                   </div>
                   <div className="kids-description">
-                    Unleash your kid's inner star! ✨ Brands / Client & Talent
-                    is your gateway to exciting opportunities for young creators
-                    ( 4-17 )!  Imagine their talent shining on the big stage,
+                    Unleash your kid's inner star! ✨ Brands and Talent is your
+                    gateway to exciting opportunities for young creators ( 4-17
+                    )!  Imagine their talent shining on the big stage,
                     collaborating with renowned Brands / Client on fun gigs and
                     influencer projects.  This registration form is your first
                     step to making their dreams a reality. Register now and
@@ -1083,7 +1062,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                         )}
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
-                        <label className="form-label">Legal Last name</label>
+                        <label className="form-label">Legal Last Name</label>
                         <input
                           type="text"
                           className="form-control"
@@ -1092,7 +1071,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             handleLastNameChange(e);
                           }}
                           onKeyDown={handleLastNameKeyPress}
-                          placeholder="Enter Legal Last name"
+                          placeholder="Enter Legal Last Name"
                         ></input>
                         {lastNameLetterError && (
                           <div className="invalid-fields">
@@ -1117,12 +1096,12 @@ const KidsformOne = ({ sendDataToParent }) => {
                         />
                         {!isValidEmail && (
                           <div className="invalid-feedback">
-                            Please enter a valid email address.
+                            Please enter a valid E-mail address.
                           </div>
                         )}
                         {parentEmailError && (
                           <div className="invalid-fields">
-                            Please enter Email
+                            Please enter E-mail
                           </div>
                         )}
                       </div>
@@ -1140,10 +1119,11 @@ const KidsformOne = ({ sendDataToParent }) => {
                           value={country?.value}
                           onChange={handleSelectedCountry}
                           isSearchable={true}
+                          styles={customStylesProfession}
                         />
                         {parentCountryError && (
                           <div className="invalid-fields">
-                            Please Select Country
+                            Please select Country
                           </div>
                         )}
                       </div>
@@ -1160,10 +1140,11 @@ const KidsformOne = ({ sendDataToParent }) => {
                           value={state?.label}
                           onChange={handleSelectedState}
                           isSearchable={true}
+                          styles={customStylesProfession}
                         />
                         {stateError && (
                           <div className="invalid-fields">
-                            Please Select State
+                            Please select State
                           </div>
                         )}
                       </div>
@@ -1178,6 +1159,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                           value={kidsCity?.label}
                           onChange={handleSelectedCity}
                           isSearchable={true}
+                          styles={customStylesProfession}
                         />
                       </div>
                     </div>
@@ -1341,7 +1323,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                         ></textarea>
                         {addressError && (
                           <div className="invalid-fields">
-                            Please Enter Address
+                            Please enter Address
                           </div>
                         )}
                       </div>
@@ -1365,14 +1347,17 @@ const KidsformOne = ({ sendDataToParent }) => {
                               options={professionList}
                               className="basic-multi-select"
                               classNamePrefix="select"
-                              placeholder="Search for Category"
+                              placeholder="Search for Profession / Skills"
                               onChange={handleProfessionChange}
-                              styles={customStyles}
+                              styles={customStylesProfession}
                               value={selectedProfessions}
+                              menuPlacement="auto"
+                              menuPortalTarget={document.body}
+                              menuShouldScrollIntoView={false}
                             />
                             {professionError && (
                               <div className="invalid-fields">
-                                Please Choose Profession
+                                Please choose Profession
                               </div>
                             )}
                           </div>
@@ -1383,38 +1368,54 @@ const KidsformOne = ({ sendDataToParent }) => {
                           <div key={index} className="dynamic-profession">
                             <div className="mb-3">
                               <label className="form-label">
-                                {profession.label} / day
+                                {profession.label}
                               </label>
                               <input
                                 type="number"
                                 className="form-control profession-input"
                                 value={profession.perDaySalary || ""}
-                                onChange={(e) =>
-                                  handleDetailChange(
-                                    index,
-                                    "perDaySalary",
-                                    e.target.value
-                                  )
-                                }
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perDaySalary",
+                                      value
+                                    );
+                                  }
+                                }}
                                 placeholder="$/day"
+                                min="0"
                               ></input>
                             </div>
                             <div className="mb-3">
                               <label className="form-label">
-                                {profession.label} / hr
+                                {profession.label}
                               </label>
                               <input
                                 type="number"
                                 className="form-control profession-input"
                                 value={profession.perHourSalary || ""}
-                                onChange={(e) =>
-                                  handleDetailChange(
-                                    index,
-                                    "perHourSalary",
-                                    e.target.value
-                                  )
-                                }
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perHourSalary",
+                                      value
+                                    );
+                                  }
+                                }}
                                 placeholder="$/hr"
+                                min="0"
                               ></input>
                             </div>
                             <div className="offer-wrapper">
@@ -1435,7 +1436,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                                 className="form-label offer-label"
                                 htmlFor={profession.label}
                               >
-                                Open to Offers / Happy to negotiate
+                                Negotiable
                               </label>
                             </div>
                             <div>
@@ -1443,7 +1444,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                                 onClick={(e) => {
                                   deleteProfession(profession, index);
                                 }}
-                                class="bi bi-trash"
+                                className="bi bi-trash"
                               ></i>
                             </div>
                           </div>
@@ -1455,27 +1456,41 @@ const KidsformOne = ({ sendDataToParent }) => {
                       <span className="mandatory">*</span>
                     </div>
                     <div className="category-list">
-                      {categoryList.map((category, index) => (
+                      {categoryList?.map((category, index) => (
                         <div
                           className={
-                            selectedCategories.includes(category)
+                            selectedCategories.includes(category?.value)
                               ? "selected-category"
                               : "category-name"
                           }
                           onClick={(e) => {
-                            chooseCategory(category);
+                            chooseCategory(category?.value);
                           }}
                           key={index}
+                          data-tooltip-id={`tooltip-${index}`}
                         >
-                          {category}
+                          {category?.value}
+                          <Tooltip
+                            id={`tooltip-${index}`}
+                            place="top"
+                            content={category?.description}
+                          />
                         </div>
                       ))}
                     </div>
-                    {categoryError && (
+                    {/* {categoryError && (
                       <div className="invalid-fields">
-                        Please Choose Categories
+                        Please choose Categories
                       </div>
-                    )}
+                    )} */}
+                    {(selectedCategories?.length < 3 ||
+                      selectedCategories?.length > 6) &&
+                      categoryError && (
+                        <div className="invalid-fields">
+                          Please select 3 to 6 categories relevant to your
+                          profile
+                        </div>
+                      )}
                     <div className="kids-form-title">
                       <span>Personal Details</span>
                     </div>
@@ -1545,7 +1560,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                         ></input>
                         {preferedNameError && (
                           <div className="invalid-fields">
-                            Please Enter Preferred First Name
+                            Please enter Preferred First Name
                           </div>
                         )}
                         {kidsPrefferedFirstNameLetterError && (
@@ -1556,7 +1571,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
-                          Preferred Last name
+                          Preferred Last Name
                         </label>
                         <input
                           type="text"
@@ -1566,7 +1581,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                             kidsPreferedLastNameChange(e);
                           }}
                           onKeyDown={handleKidsPrefferedLasttNameKeyPress}
-                          placeholder="Enter Preferred  Last name"
+                          placeholder="Enter Preferred  Last Name"
                         ></input>
                         {kidsPrefferedLastNameLetterError && (
                           <div className="invalid-fields">
@@ -1598,7 +1613,7 @@ const KidsformOne = ({ sendDataToParent }) => {
                         </select>
                         {genderError && (
                           <div className="invalid-fields">
-                            Please Select Gender
+                            Please select Gender
                           </div>
                         )}
                       </div>
@@ -1615,10 +1630,13 @@ const KidsformOne = ({ sendDataToParent }) => {
                           classNamePrefix="select"
                           onChange={(value) => selectLanguage(value)}
                           styles={customStylesProfession}
+                          menuPlacement="auto"
+                          menuPortalTarget={document.body}
+                          menuShouldScrollIntoView={false}
                         />
                         {languageError && (
                           <div className="invalid-fields">
-                            Please Select Language
+                            Please select Language
                           </div>
                         )}
                       </div>
@@ -1628,7 +1646,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                         <label className="form-label">
                           Nationality <span className="mandatory">*</span>
                         </label>
-
                         <Select
                           isMulti
                           name="colors"
@@ -1639,11 +1656,14 @@ const KidsformOne = ({ sendDataToParent }) => {
                           onChange={(value) => selectNationality(value)}
                           styles={customStylesProfession}
                           value={selectedNationalityOptions}
+                          menuPlacement="auto"
+                          menuPortalTarget={document.body}
+                          menuShouldScrollIntoView={false}
                         />
 
                         {nationalityError && (
                           <div className="invalid-fields">
-                            Please Select Nationality
+                            Please select Nationality
                           </div>
                         )}
                       </div>
@@ -1669,15 +1689,15 @@ const KidsformOne = ({ sendDataToParent }) => {
                         </select>
                         {ethnicityError && (
                           <div className="invalid-fields">
-                            Please Select Ethnicity
+                            Please select Ethnicity
                           </div>
                         )}
                       </div>
                     </div>
-                    <div className="kids-form-row row mb-3">
+                    <div className="kids-form-row row mb-1">
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
-                          Date Of Birth <span className="mandatory">*</span>
+                          Date of Birth <span className="mandatory">*</span>
                         </label>
 
                         {/* <input
@@ -1705,42 +1725,63 @@ const KidsformOne = ({ sendDataToParent }) => {
 
                         {dobError && (
                           <div className="invalid-fields">
-                            Please Select Date Of Birth
+                            Please select Date of Birth
                           </div>
                         )}
                       </div>
                       <div className="kids-form-section col-md-6 mb-3">
                         <label className="form-label">
-                          Number Of Jobs Completed
+                          Projects Completed
                           <span className="mandatory">*</span>
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           className="form-control"
                           value={completedJobs}
                           onChange={(e) => {
-                            handleJobsCompleted(e);
-                            setJobsCompletedError(false);
+                            const value = e.target.value;
+                            // Check if the value is a valid number and is non-negative
+                            if (
+                              /^\d*\.?\d*$/.test(value) &&
+                              (value >= 0 || value === "")
+                            ) {
+                              handleJobsCompleted(e);
+                              setJobsCompletedError(false);
+                            }
                           }}
-                          placeholder="Number of jobs completed"
+                          min="0"
+                          placeholder="Enter number of jobs/client projects  you’ve completed till now"
                         ></input>
-                        {parentFirstNameError && (
+                        {completedError && (
                           <div className="invalid-fields">
-                            Please enter First Name
-                          </div>
-                        )}
-                        {firstNameLetterError && (
-                          <div className="invalid-fields">
-                            Only Letters are allowed
+                            Please enter Projects Completed
                           </div>
                         )}
                       </div>
+                    </div>
+
+                    <div className="kids-signup-terms">
+                      By registering you confirm that you accept the 
+                    </div>
+                    <div className="kids-signup-terms-linetwo mb-5">
+                      <span onClick={() => handleCondition("terms")}>
+                        Terms & Conditions
+                      </span>{" "}
+                      ,&nbsp;
+                      <span onClick={() => handleCondition("privacy")}>
+                        Privacy Policy
+                      </span>
+                       and 
+                      <span onClick={() => handleCondition("community")}>
+                        Community Guidelines
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
           <div className="dialog-footer">
             <button
               type="button"
@@ -1763,7 +1804,6 @@ const KidsformOne = ({ sendDataToParent }) => {
           </div>
         </div>
       </>
-
       {openPopUp && <PopUp message={message} />}
     </>
   );

@@ -12,8 +12,13 @@ import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 import CurrentUser from "../../src/CurrentUser";
+import RichTextEditor from "../views/RichTextEditor";
+import CreatableSelect from "react-select/creatable";
+import useFieldDatas from "../config/useFieldDatas";
 
 const KidsFormThree = ({ onDataFromChild, ...props }) => {
+  const { featuresList } = useFieldDatas();
+  const [customOptions, setCustomOptions] = useState({});
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
   const [updateDisabled, setUpdateDisabled] = useState(false);
@@ -57,7 +62,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   }, [talentData]);
 
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const uploadIcon = require("../assets/icons/uploadIcon.png");
   const imageType = require("../assets/icons/imageType.png");
   const videoType = require("../assets/icons/videoType.png");
@@ -79,8 +84,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [aboutYou, setAboutYou] = useState([]);
-
-  const [featuresList, setFeaturesList] = useState([]);
   const [features, setFeature] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [instagramFollowers, setInstagramFollowers] = useState("");
@@ -101,10 +104,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const kidsImage = require("../assets/images/kidsImage.png");
 
   useEffect(() => {
-    getFeatures();
-  }, []);
-  useEffect(() => {
-    getFeatures();
     console.log(profileFile, "profileFile");
     console.log(portofolioFile, "portofolioFile");
     console.log(portofolioFile.length, "portofolioFile.length");
@@ -123,31 +122,55 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
     console.log(droppedFiles[0], "droppedFiles");
-    uploadFile(droppedFiles[0]);
+    uploadProfile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
 
-  const onEditorSummary = (editorState) => {
-    console.log(editorState, "editorState");
-    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
-    // setAboutYou(editorState);
-    setEditorState(editorState);
+  const handleEditorStateChange = (editorState) => {
+    console.log(editorState, "editorStateRichText");
+    setAboutYou(editorState);
   };
 
   const handleProfileDragOver = (e) => {
     e.preventDefault();
   };
+
   const handlePortofolioDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadFile(droppedFiles[0]);
-    // setFiles(droppedFiles);
+
+    // Filter only image files
+    const imageFiles = droppedFiles.filter((file) =>
+      file.type.startsWith("image/")
+    );
+
+    // Check if there are non-image files
+    const nonImageFiles = droppedFiles.filter(
+      (file) => !file.type.startsWith("image/")
+    );
+
+    if (nonImageFiles.length > 0) {
+      // Show error message and popup for non-image files
+      setMessage("You can only upload images");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 1000);
+
+      // Do not proceed with uploading non-image files
+      return;
+    }
+
+    // Iterate through each image file and upload
+    imageFiles.forEach((file) => {
+      uploadFile(file);
+    });
   };
 
   const handlePortofolioDragOver = (e) => {
     e.preventDefault();
   };
+
   const handleVideoDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
@@ -162,9 +185,33 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const handleResumeDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
-    uploadResume(droppedFiles[0]);
-    // setFiles(droppedFiles);
+
+    // Filter only document files
+    const documentFiles = droppedFiles.filter((file) =>
+      isDocumentFile(file.type)
+    );
+
+    // Check if there are non-document files
+    const nonDocumentFiles = droppedFiles.filter(
+      (file) => !isDocumentFile(file.type)
+    );
+
+    if (nonDocumentFiles.length > 0) {
+      // Show error message or handle non-document files here
+      setMessage("You can only upload PDF, Word documents, etc.");
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 1000);
+
+      // Do not proceed with uploading non-document files
+      return;
+    }
+
+    // Iterate through each document file and upload
+    documentFiles.forEach((file) => {
+      uploadResume(file);
+    });
   };
 
   const handleResumeDragOver = (e) => {
@@ -199,35 +246,138 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
-      uploadProfile(fileData);
+      const file = event.target.files[0];
+
+      // Check if the file is an image
+      if (!file.type.startsWith("image/")) {
+        // Show error message for non-image files
+        setMessage("You can only upload images");
+        setOpenPopUp(true);
+        setTimeout(function() {
+          setOpenPopUp(false);
+        }, 1000);
+        return; // Stop further execution
+      }
+
+      console.log(file, "fileData");
+      uploadProfile(file);
     }
   };
+
   const portofolioUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
-      uploadFile(fileData);
+    if (event.target.files && event.target.files.length > 0) {
+      const filesArray = Array.from(event.target.files); // Convert FileList to Array
+
+      // Filter only image files
+      const imageFiles = filesArray.filter((file) =>
+        file.type.startsWith("image/")
+      );
+
+      // Check if there are non-image files
+      const nonImageFiles = filesArray.filter(
+        (file) => !file.type.startsWith("image/")
+      );
+
+      if (nonImageFiles.length > 0) {
+        // Show error message and popup for non-image files
+        setMessage("You can only upload images");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+
+        // Do not proceed with uploading non-image files
+        return;
+      }
+
+      // Iterate through each image file and upload
+      imageFiles.forEach((file) => {
+        console.log(file, "fileData"); // Logging each file object
+
+        // Call uploadFile function for each image file
+        uploadFile(file);
+      });
     }
   };
+
   const videoAudioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
       uploadVideoudio(fileData);
     }
   };
+
   const resumeUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      console.log(fileData, "fileData resume");
-      uploadResume(fileData);
+    if (event.target.files && event.target.files.length > 0) {
+      const filesArray = Array.from(event.target.files); // Convert FileList to Array
+
+      // Filter only document files
+      const documentFiles = filesArray.filter((file) =>
+        isDocumentFile(file.type)
+      );
+
+      // Check if there are non-document files
+      const nonDocumentFiles = filesArray.filter(
+        (file) => !isDocumentFile(file.type)
+      );
+
+      if (nonDocumentFiles.length > 0) {
+        // Show error message or handle non-document files here
+        setMessage("You can only upload PDF, Word documents, etc.");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+
+        // Do not proceed with uploading non-document files
+        return;
+      }
+
+      // Iterate through each document file and upload
+      documentFiles.forEach((file) => {
+        uploadResume(file);
+      });
     }
   };
+
+  // Helper function to check if a file type is a document (PDF, Word, etc.)
+  const isDocumentFile = (fileType) => {
+    // Add more document types as needed
+    return (
+      fileType === "application/pdf" ||
+      fileType === "application/msword" ||
+      fileType ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      // Add more document MIME types as required
+    );
+  };
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/bmp",
+    "image/webp", // images
+    "application/pdf", // PDF
+    "application/msword", // DOC
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // DOCX
+    "application/vnd.ms-excel", // XLS
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // XLSX
+    "application/vnd.ms-powerpoint", // PPT
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation", // PPTX
+  ];
 
   const verificationUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
+      if (!allowedTypes.includes(fileData.type)) {
+        setMessage("Only images and documents are allowed.");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
+        return;
+      }
       uploadVerificationID(fileData);
     }
   };
@@ -286,7 +436,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     params.append("file", fileData);
     params.append("fileName", fileData.name);
     params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
+
     await Axios.post(API.uploadFile, params, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -392,7 +542,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           fileData: resData.data.data.filename,
           type: getFileType(fileData.type),
         };
-        setVerificationID((prevFiles) => [...prevFiles, fileObj]);
+        setVerificationID(fileObj);
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -427,6 +577,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const handleProfileDelete = () => {
     setProfileFile(null);
   };
+  const handleVerificationDelete = () => {
+    setVerificationID(null);
+  };
 
   // Function to handle deleting image
   const handlePortofolioDelete = (index) => {
@@ -459,26 +612,71 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     });
   };
 
-  const getFeatures = async () => {
-    await ApiHelper.get(API.getFeatures)
-      .then((resData) => {
-        if (resData) {
-          setFeaturesList(resData.data.data[0].features);
-        }
-      })
-      .catch((err) => {});
-  };
-
   const handleFeaturesChange = (label, value) => {
     const updatedValues = [...features];
     const index = updatedValues.findIndex((item) => item.label === label);
-    if (index !== -1) {
-      updatedValues[index] = { label, value };
-    } else {
-      updatedValues.push({ label, value });
+    let finalValue = value;
+
+    if (
+      creatableInputOptions.includes(label) ||
+      creatableOptions.includes(label)
+    ) {
+      if (/^\d+$/.test(value)) {
+        finalValue = `${value} cm`;
+      } else {
+        return; // Exit if the value is not a number
+      }
     }
+
+    if (index !== -1) {
+      updatedValues[index] = { label, value: finalValue };
+    } else {
+      updatedValues.push({ label, value: finalValue });
+    }
+
     console.log(updatedValues, "updatedValues");
     setFeature(updatedValues);
+  };
+
+  const creatableOptions = ["Dress Size", "Shoe Size"];
+
+  const creatableInputOptions = [
+    "Hip Size",
+    "Waist",
+    "Chest",
+    "Height",
+    "Bra Size",
+  ];
+
+  const cmPlaceholderOptions = ["Height", "Chest", "Waist", "Hip Size"];
+
+  const getPlaceholder = (label) => {
+    if (cmPlaceholderOptions.includes(label)) {
+      return "Type in cm";
+    }
+    if (
+      label === "Shoe Size" ||
+      label === "Bra Size" ||
+      label === "Dress Size"
+    ) {
+      return "US or EU size only";
+    }
+    return label;
+  };
+
+  const handleCreateOption = (label, inputValue) => {
+    setCustomOptions((prevState) => ({
+      ...prevState,
+      [label]: (prevState[label] || []).concat(inputValue),
+    }));
+    handleFeaturesChange(label, inputValue);
+  };
+
+  const getOptions = (label, options) => {
+    return options.concat(customOptions[label] || []).map((option) => ({
+      value: option,
+      label: option,
+    }));
   };
 
   const editKids = async () => {
@@ -502,6 +700,23 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       videoAudioUrls: urls,
     };
     setIsLoading(true);
+    // Log all the properties of formData
+    console.log("kidsFiles Image:", formData.image);
+    console.log("kidsFiles CV:", formData.cv);
+    console.log("kidsFiles Portfolio:", formData.portfolio);
+    console.log("kidsFiles Videos and Audios:", formData.videosAndAudios);
+    console.log("kidsFiles Instagram Followers:", formData.instaFollowers);
+    console.log("kidsFiles TikTok Followers:", formData.tiktokFollowers);
+    console.log("kidsFiles Twitter Followers:", formData.twitterFollowers);
+    console.log("kidsFiles YouTube Followers:", formData.youtubeFollowers);
+    console.log("kidsFiles Facebook Followers:", formData.facebookFollowers);
+    console.log("kidsFiles LinkedIn Followers:", formData.linkedinFollowers);
+    console.log("kidsFiles Threads Followers:", formData.threadsFollowers);
+    console.log("kidsFiles ID Type:", formData.idType);
+    console.log("kidsFiles Verification ID:", formData.verificationId);
+    console.log("kidsFiles Features:", formData.features);
+    console.log("kidsFiles Child About You:", formData.childAboutYou);
+    console.log("kidsFiles Video and Audio URLs:", formData.videoAudioUrls);
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
         console.log(resData, "resData");
@@ -514,14 +729,15 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
             setOpenPopUp(false);
             // navigate(`/talent-signup-service-details?${userId}`);
             if (talentData?.planName == "Basic") {
-              navigate(
-                `/talent-profile/${talentData.preferredChildFirstname}`,
-                {
-                  state: { talentData: talentData },
-                }
-              );
+              // navigate(
+              //   `/talent/${talentData.publicUrl}`,
+              //   {
+              //     state: { talentData: talentData },
+              //   }
+              // );
+              navigate(`/login?type=talent&user_id=${userId}`);
             } else {
-              navigate(`/adult-signup-service-details?${userId}`);
+              navigate(`/talent-signup-service-details?${userId}`);
             }
           }, 1000);
         } else {
@@ -539,6 +755,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   useEffect(() => {
     console.log(videoUrl, "videoUrl");
     console.log(urls, "urls");
+    console.log(featuresList, "featuresList");
   }, []);
 
   return (
@@ -574,7 +791,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
               <div className="kids-form col-md-8 col-lg-9">
                 <div className="kids-description">
-                  Upload Your Files & Connect With your social media accounts
+                  Upload your files & connect with your social media accounts
                 </div>
                 <div className="kids-main">
                   <div className="kids-form-title pb-0">
@@ -597,9 +814,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       accept="image/*"
                       onChange={profileUpload}
                     />
-                    <div className="upload-text">Upload Your Profile Photo</div>
+                    <div className="upload-text">Upload your profile photo</div>
                     <div className="upload-info">
-                      Drag and drop your Profile Photo here.
+                      Drag and drop your profile photo here.
                     </div>
                   </div>
                   {profileFile && (
@@ -666,8 +883,8 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
 
                   <div className="rich-editor">
-                    <label className="form-label">About You</label>
-                    <Editor
+                    <label className="form-label">About you</label>
+                    {/* <Editor
                       editorState={editorState}
                       editorStyle={{ overflow: "hidden" }}
                       toolbarClassName="toolbarClassName"
@@ -689,6 +906,15 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                         link: { inDropdown: true },
                         history: { inDropdown: true },
                       }}
+
+                      
+                    /> */}
+
+                    <RichTextEditor
+                      value={aboutYou}
+                      onChange={(editorState) =>
+                        handleEditorStateChange(editorState)
+                      }
                     />
                   </div>
 
@@ -713,7 +939,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       multiple
                       onChange={portofolioUpload}
                     />
-                    <div className="upload-text">Upload Your Photos</div>
+                    <div className="upload-text">Upload your photos</div>
                     <div className="upload-info">
                       Drag and drop your photos/work samples here.
                     </div>
@@ -997,6 +1223,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       id="cv-input"
                       accept="*/*"
                       onChange={resumeUpload}
+                      multiple
                     />
                     <div className="upload-text"> Upload CV</div>
                     <div className="upload-info">
@@ -1092,36 +1319,70 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   <div className="features-section">
                     {featuresList && (
                       <>
-                        {featuresList.map((item, index) => {
-                          return (
-                            <>
-                              <div className="mb-3 mr-3 features-input-wrapper">
-                                <label className="form-label">
-                                  {item.label}
-                                </label>
-                                <select
-                                  className="form-select features-select"
-                                  aria-label="Default select example"
-                                  onChange={(e) =>
+                        {featuresList.map((item, index) => (
+                          <div
+                            key={index}
+                            className="mb-3 mr-3 features-input-wrapper"
+                          >
+                            <label className="form-label">{item.label}</label>
+                            {creatableOptions.includes(item.label) ? (
+                              <CreatableSelect
+                                isClearable
+                                options={item.options.map((option) => ({
+                                  value: option,
+                                  label: option,
+                                }))}
+                                onChange={(selectedOption) =>
+                                  handleFeaturesChange(
+                                    item.label,
+                                    selectedOption ? selectedOption.value : ""
+                                  )
+                                }
+                                placeholder={getPlaceholder(item.label)}
+                              />
+                            ) : creatableInputOptions.includes(item.label) ? (
+                              <input
+                                type="text"
+                                className="form-control features-select"
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
                                     handleFeaturesChange(
                                       item.label,
                                       e.target.value
-                                    )
+                                    );
                                   }
-                                >
-                                  <option value="" disabled selected>
-                                    {item.label}
+                                }}
+                                placeholder={getPlaceholder(item.label)}
+                              />
+                            ) : (
+                              <select
+                                className="form-select features-select"
+                                aria-label="Default select example"
+                                onChange={(e) =>
+                                  handleFeaturesChange(
+                                    item.label,
+                                    e.target.value
+                                  )
+                                }
+                                defaultValue=""
+                              >
+                                <option value="" disabled>
+                                  {item.label}
+                                </option>
+                                {item.options.map((option, idx) => (
+                                  <option key={idx} value={option}>
+                                    {option}
                                   </option>
-                                  {item.options.map((option, idx) => (
-                                    <option key={idx} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </>
-                          );
-                        })}
+                                ))}
+                              </select>
+                            )}
+                          </div>
+                        ))}
                       </>
                     )}
                   </div>
@@ -1173,101 +1434,81 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       type="file"
                       className="select-cv-input"
                       id="id-upload"
-                      accept="*/*"
+                      accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
                       onChange={verificationUpload}
                     />
                   </div>
 
                   {verificationID && (
                     <>
-                      {verificationID.map((item, index) => {
-                        return (
-                          <>
-                            <div key={index} className="uploaded-file-wrapper">
-                              <div className="file-section">
-                                {item.type === "image" && (
-                                  <div className="fileType">
-                                    <img src={imageType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "audio" && (
-                                  <div className="fileType">
-                                    <img src={audiotype} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "video" && (
-                                  <div className="fileType">
-                                    <img src={videoType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "document" && (
-                                  <div className="fileType">
-                                    <img src={docsIcon} alt="" />
-                                  </div>
-                                )}
-                                <div className="fileName">{item.title}</div>
-                              </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="dropdownMenuButton"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="dropdownMenuButton"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleView(item)}
-                                          id="view"
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() =>
-                                            handlePortofolioDelete(item)
-                                          }
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
+                      <div
+                        className="uploaded-file-wrapper"
+                        style={{ marginBottom: "80px" }}
+                      >
+                        <div className="file-section">
+                          {verificationID.type === "image" && (
+                            <div className="fileType">
+                              <img src={imageType} alt="" />
                             </div>
-                          </>
-                        );
-                      })}
+                          )}
+                          <div className="fileName">{verificationID.title}</div>
+                        </div>
+                        <div className="file-options">
+                          <div className="sucess-tick">
+                            <img src={greenTickCircle} alt="" />
+                          </div>
+                          <div className="option-menu">
+                            <div className="dropdown">
+                              <img
+                                onClick={() => setShowOptions(!showOptions)}
+                                src={elipsis}
+                                alt=""
+                                className="dropdown-toggle elipsis-icon"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              />
+                              <ul
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton"
+                              >
+                                <li>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() => handleView(verificationID)}
+                                    id="view"
+                                  >
+                                    View
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    className="dropdown-item"
+                                    onClick={() =>
+                                      handleVerificationDelete(verificationID)
+                                    }
+                                    id="delete"
+                                  >
+                                    Delete
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </>
                   )}
 
-                  <div className="verification-status mb-5">Not Verified</div>
+                  {/* <div className="verification-status mb-5">Not Verified</div> */}
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div className="dialog-footer">
-          {/* <button
+          <button
             type="button"
             onClick={(e) => {
               goBack();
@@ -1275,7 +1516,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
             className="step-back"
           >
             Back
-          </button> */}
+          </button>
 
           <button
             type="button"

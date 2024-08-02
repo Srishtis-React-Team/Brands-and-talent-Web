@@ -16,6 +16,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import nationalitiesArray from "../../components/NationalitiesArray";
 import CurrentUser from "../../CurrentUser";
+import useFieldDatas from "../../config/useFieldDatas";
+import { Tooltip } from "react-tooltip";
 
 const AdultFormOne = () => {
   const {
@@ -25,6 +27,7 @@ const AdultFormOne = () => {
     avatarImage,
     fcmToken,
   } = CurrentUser();
+  const { categoryList, professionList } = useFieldDatas();
 
   const [talentData, setTalentData] = useState();
 
@@ -75,7 +78,7 @@ const AdultFormOne = () => {
       zIndex: 9999, // Ensure menu appears above other elements
     }),
   };
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const adultsBanner = require("../../assets/images/adultsBanner.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -205,42 +208,52 @@ const AdultFormOne = () => {
   };
 
   const ethnicityOptions = [
-    "African",
-    "Arab",
-    "Asian",
-    "Black",
-    "Central Asian",
-    "Chinese",
-    "European",
-    "Filipino",
-    "Indian",
-    "Indonesian",
-    "Japanese",
     "Khmer",
+    "Thai",
+    "Asian",
+    "Vietnamese",
+    "Indonesian",
+    "Filipino",
+    "Chinese",
+    "South-East Asian",
+    "South-Asian",
+    "Central Asian",
+    "Indian",
+    "Pakistani",
+    "Nepali",
+    "Russian",
+    "Ukrainian",
+    "Japanese",
     "Korean",
     "Latino/Hispanic",
-    "Middle-Eastern",
+    "European",
+    "Scandinavian",
+    "Turk",
     "Native American",
     "Native Hawaiian/Pacific Islander",
-    "Nepali",
-    "Other",
-    "Pakistani",
-    "Persian",
-    "Russian",
-    "Scandinavian",
-    "South-Asian",
-    "South-East Asian",
-    "Thai",
-    "Turk",
-    "Ukrainian",
-    "Vietnamese",
     "White",
+    "Black",
+    "African",
+    "Middle-Eastern",
+    "Arab",
+    "Persian",
+    "Other",
+  ];
+
+  const maritalStatusOptions = [
+    "Single",
+    "Married",
+    "Divorced",
+    "Widowed",
+    "In a Relationship",
+    "Engaged",
+    "Prefer Not to Say",
   ];
 
   const gendersOptions = [
     "Man",
     "Woman",
-    "Non binary",
+    "Non-binary",
     "Transgender Woman",
     "Transgender Man",
     "Agender",
@@ -354,20 +367,53 @@ const AdultFormOne = () => {
     if (age === "") {
       setAgeError(true);
     }
+    if (completedJobs === "") {
+      setJobsCompletedError(true);
+    }
+
+    let formData = {
+      adultLegalFirstName: adultsLegalFirstName,
+      adultLegalLastName: adultsLegalLastName,
+      preferredChildFirstname: adultsPreferedFirstName,
+      preferredChildLastName: adultsPreferedLastName,
+      profession: selectedProfessions,
+      relevantCategories: selectedCategories,
+      childGender: gender,
+      maritalStatus: maritalStatus,
+      childNationality: nationality,
+      childEthnicity: ethnicity,
+      languages: languages,
+      childDob: dateOfBirth,
+      childPhone: adultsPhone,
+      contactEmail: "",
+      childLocation: address,
+      parentCountry: country,
+      parentState: state,
+      parentAddress: address,
+      childCity: kidsCity,
+      age: age,
+      noOfJobsCompleted: completedJobs,
+      publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
+    };
+    Object.entries(formData).forEach(([key, value]) =>
+      console.log(value, `<${key}> AdultFormData`)
+    );
+
     if (
       adultsLegalFirstName !== "" &&
       adultsLegalLastName !== "" &&
       adultsPreferedFirstName !== "" &&
       adultsPreferedLastName !== "" &&
-      selectedProfessions !== "" &&
-      selectedCategories !== "" &&
+      selectedProfessions.length !== 0 &&
+      (selectedCategories.length < 3 || selectedCategories.length <= 6) &&
       gender !== "" &&
-      languages !== "" &&
+      languages.length !== 0 &&
       dateOfBirth !== "" &&
       adultsPhone !== "" &&
       country !== "" &&
       address !== "" &&
-      age !== ""
+      age !== "" &&
+      completedJobs !== ""
     ) {
       let formData = {
         adultLegalFirstName: adultsLegalFirstName,
@@ -384,13 +430,18 @@ const AdultFormOne = () => {
         childDob: dateOfBirth,
         childPhone: adultsPhone,
         contactEmail: "",
-        childLocation: adultsLocation,
+        childLocation: address,
         parentCountry: country,
         parentState: state,
         parentAddress: address,
         childCity: kidsCity,
         age: age,
+        noOfJobsCompleted: completedJobs,
+        publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
       };
+      Object.values(formData).forEach((value) =>
+        console.log(value, "formDataAdultSignup")
+      );
       if (userId) {
         await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
           .then((resData) => {
@@ -424,63 +475,6 @@ const AdultFormOne = () => {
     }
   };
 
-  const professionList = [
-    { value: "Actor", label: "Actor" },
-    { value: "Artist", label: "Artist" },
-    { value: "Creator", label: "Creator" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Influencer", label: "Influencer" },
-    { value: "Model", label: "Model" },
-    { value: "Event Planner", label: "Event Planner" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Nail Artist", label: "Nail Artist" },
-    { value: "Tattooist", label: "Tattooist" },
-    { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Swimming Instructor", label: "Swimming Instructor" },
-    { value: "Driving Instructor", label: "Driving Instructor" },
-    { value: "Meditation Teacher", label: "Meditation Teacher" },
-    { value: "Yoga Instructor", label: "Yoga Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Music Teacher", label: "Music Teacher" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Craftsperson", label: "Craftsperson" },
-    { value: "Sculptor", label: "Sculptor" },
-    { value: "Curator", label: "Curator" },
-    { value: "Singer", label: "Singer" },
-    { value: "Dancer", label: "Dancer" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Musician", label: "Musician" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "Cinematographer", label: "Cinematographer" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "DJ", label: "DJ" },
-    { value: "Video Jockey (VJ)", label: "Video Jockey (VJ)" },
-    { value: "Radio Jockey (RJ)", label: "Radio Jockey (RJ)" },
-    { value: "Writer", label: "Writer" },
-    { value: "Copywriter", label: "Copywriter" },
-    { value: "Cartoonist", label: "Cartoonist" },
-    { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
-    { value: "Podcaster", label: "Podcaster" },
-    { value: "Host/MC", label: "Host/MC" },
-    { value: "Voice-over Artist", label: "Voice-over Artist" },
-    { value: "Comedian", label: "Comedian" },
-    { value: "Public Speaker", label: "Public Speaker" },
-    { value: "Life Coach", label: "Life Coach" },
-    { value: "Career Coach", label: "Career Coach" },
-    { value: "Sustainability Consultant", label: "Sustainability Consultant" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Web Designer/Developer", label: "Web Designer/Developer" },
-    { value: "Interior Designer", label: "Interior Designer" },
-    { value: "Illustrator", label: "Illustrator" },
-    { value: "Animator", label: "Animator" },
-    { value: "Blockchain Developer", label: "Blockchain Developer" },
-  ];
-
   const handleProfessionChange = (selectedOptions) => {
     // setSelectedProfessions(selectedOptions);
     // setProfessionError(false);
@@ -499,33 +493,18 @@ const AdultFormOne = () => {
       setSelectedProfessionsError(false);
     }
   };
+  const [professionError, setProfessionError] = useState(false);
 
   const handleDetailChange = (index, field, value) => {
     const updatedSelectedProfessions = [...selectedProfessions];
     updatedSelectedProfessions[index][field] = value;
+    console.log(value, "value");
+    console.log(selectedProfessions, "selectedProfessions");
     setSelectedProfessions(updatedSelectedProfessions);
+    setProfessionError(false);
   };
 
-  const categoryList = [
-    "Fashion & Beauty",
-    "Media & Entertainment",
-    "Sports, Fitness, & Wellness",
-    "Creative Arts & Design",
-    "Celebrity",
-    "Writing, Marketing, & Content Creation",
-    "Performing Arts",
-    "Education & Coaching",
-    "Business & Technology",
-    "Luxury & Lifestyle",
-    "Eco-friendly & Sustainability",
-    "Home & Gardening",
-    "Food & Travel",
-    "Diversity & Inclusion",
-    "Kids & Teens",
-  ];
-
   const chooseCategory = (category) => {
-    setSelectedCategoriesError(false);
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -533,6 +512,7 @@ const AdultFormOne = () => {
     } else {
       if (selectedCategories.length < 6) {
         setSelectedCategories([...selectedCategories, category]);
+        setSelectedCategoriesError(false);
       } else {
         // setCategoryError(true);
         setMessage("you can only select 6 categories");
@@ -541,6 +521,11 @@ const AdultFormOne = () => {
           setOpenPopUp(false);
         }, 2000);
       }
+    }
+    if (selectedCategories.length < 3) {
+      setSelectedCategoriesError(true);
+    } else {
+      setSelectedCategoriesError(false);
     }
   };
 
@@ -716,6 +701,34 @@ const AdultFormOne = () => {
       prevSelectedProfessions.filter((item) => item.value !== profession.value)
     );
   };
+  const [completedJobs, setCompletedJobs] = useState("");
+
+  const handleJobsCompleted = (event) => {
+    setCompletedJobs(event.target.value);
+    setJobsCompletedError(false);
+  };
+  const [completedError, setJobsCompletedError] = useState(false);
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.target.type === "number") {
+        const charCode = event.which ? event.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          event.preventDefault();
+        }
+      }
+    };
+
+    window.addEventListener("keypress", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keypress", handleKeyPress);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log(maritalStatus, "maritalStatus");
+  }, [maritalStatus]);
 
   return (
     <>
@@ -770,7 +783,7 @@ const AdultFormOne = () => {
                             options={professionList}
                             className="basic-multi-select"
                             classNamePrefix="select"
-                            placeholder="Search for Category”"
+                            placeholder="Search for Profession / Skills"
                             onChange={handleProfessionChange}
                             styles={customStyles}
                             value={selectedProfessions}
@@ -778,7 +791,7 @@ const AdultFormOne = () => {
 
                           {selectedProfessionsError && (
                             <div className="invalid-fields">
-                              Please Choose Profession
+                              Please choose Profession
                             </div>
                           )}
                         </div>
@@ -794,13 +807,20 @@ const AdultFormOne = () => {
                                 type="number"
                                 className="form-control profession-input-adult"
                                 value={profession.perDaySalary || ""}
-                                onChange={(e) =>
-                                  handleDetailChange(
-                                    index,
-                                    "perDaySalary",
-                                    e.target.value
-                                  )
-                                }
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perDaySalary",
+                                      value
+                                    );
+                                  }
+                                }}
                                 placeholder="$/day"
                               ></input>
                             </div>
@@ -812,14 +832,21 @@ const AdultFormOne = () => {
                                 type="number"
                                 className="form-control profession-input-adult"
                                 value={profession.perHourSalary || ""}
-                                onChange={(e) =>
-                                  handleDetailChange(
-                                    index,
-                                    "perHourSalary",
-                                    e.target.value
-                                  )
-                                }
-                                placeholder="$/day"
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perHourSalary",
+                                      value
+                                    );
+                                  }
+                                }}
+                                placeholder="$/hr"
                               ></input>
                             </div>
 
@@ -841,7 +868,7 @@ const AdultFormOne = () => {
                                 className="form-label offer-label"
                                 htmlFor={profession.label}
                               >
-                                Open to Offers / Happy to negotiate
+                                Negotiable
                               </label>
                             </div>
                             <div>
@@ -849,7 +876,7 @@ const AdultFormOne = () => {
                                 onClick={(e) => {
                                   deleteProfession(profession, index);
                                 }}
-                                class="bi bi-trash"
+                                className="bi bi-trash"
                               ></i>
                             </div>
                           </div>
@@ -864,27 +891,35 @@ const AdultFormOne = () => {
                     </span>
                   </div>
                   <div className="category-list">
-                    {categoryList.map((category, index) => (
+                    {categoryList?.map((category, index) => (
                       <div
                         className={
-                          selectedCategories.includes(category)
+                          selectedCategories.includes(category?.value)
                             ? "selected-category"
                             : "category-name"
                         }
                         onClick={(e) => {
-                          chooseCategory(category);
+                          chooseCategory(category?.value);
                         }}
                         key={index}
+                        data-tooltip-id={`tooltip-${index}`}
                       >
-                        {category}
+                        {category?.value}
+                        <Tooltip
+                          id={`tooltip-${index}`}
+                          place="top"
+                          content={category?.description}
+                        />
                       </div>
                     ))}
                   </div>
-                  {selectedCategoriesError && (
-                    <div className="invalid-fields">
-                      Please Choose categories
-                    </div>
-                  )}
+                  {(selectedCategories?.length < 3 ||
+                    selectedCategories?.length > 6) &&
+                    selectedCategoriesError && (
+                      <div className="invalid-fields">
+                        Please select 3 to 6 categories relevant to your profile
+                      </div>
+                    )}
                   <div className="adults-titles kids-form-title mt-3">
                     <span>Personal Details</span>
                   </div>
@@ -1005,7 +1040,7 @@ const AdultFormOne = () => {
                       />
                       {countryError && (
                         <div className="invalid-fields">
-                          Please Select Country
+                          Please select Country
                         </div>
                       )}
                     </div>
@@ -1024,7 +1059,7 @@ const AdultFormOne = () => {
                     </div>
                   </div>
                   <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6">
+                    <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">City</label>
                       <Select
                         placeholder="Select City..."
@@ -1057,7 +1092,7 @@ const AdultFormOne = () => {
                       />
                       {adultsPhoneError && (
                         <div className="invalid-fields">
-                          Please Enter Phone Number
+                          Please enter Phone Number
                         </div>
                       )}
                     </div>
@@ -1082,11 +1117,11 @@ const AdultFormOne = () => {
                       </select>
                       {genderError && (
                         <div className="invalid-fields">
-                          Please Select Gender
+                          Please select Gender
                         </div>
                       )}
                     </div>
-                    <div className="kids-form-section col-md-6 mb-3">
+                    <div className="kids-form-section col-md-6 mb-3 ">
                       <label className="form-label">Marital Status</label>
                       <select
                         className="form-select"
@@ -1096,10 +1131,11 @@ const AdultFormOne = () => {
                         <option value="" disabled selected>
                           Select Marital Status
                         </option>
-                        <option defaultValue value="married">
-                          Married
-                        </option>
-                        <option value="unmarried">UnMarried</option>
+                        {maritalStatusOptions.map((option, index) => (
+                          <option key={index} value={option}>
+                            {option}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -1139,7 +1175,7 @@ const AdultFormOne = () => {
                   </div>
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6">
-                      <label className="form-label">Date Of Birth</label>
+                      <label className="form-label">Date of Birth</label>
                       <span className="mandatory">*</span>
                       <div className="mb-3">
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -1155,7 +1191,7 @@ const AdultFormOne = () => {
                         </LocalizationProvider>
                         {dateOfBirthError && (
                           <div className="invalid-fields">
-                            Please Select Date Of Birth
+                            Please select Date Of Birth
                           </div>
                         )}
                       </div>
@@ -1175,7 +1211,7 @@ const AdultFormOne = () => {
                       />
                       {languagesError && (
                         <div className="invalid-fields">
-                          Please Select Language
+                          Please select Language
                         </div>
                       )}
                     </div>
@@ -1201,7 +1237,7 @@ const AdultFormOne = () => {
                       ></textarea>
                       {addressError && (
                         <div className="invalid-fields">
-                          Please Select Address
+                          Please select Address
                         </div>
                       )}
                     </div>
@@ -1223,9 +1259,30 @@ const AdultFormOne = () => {
                         </div>
                       )}
                       {kidsEmailError && (
-                        <div className="invalid-fields">Please Enter Email</div>
+                        <div className="invalid-fields">Please enter Email</div>
                       )}
                     </div> */}
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">
+                        Projects Completed
+                        <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={completedJobs}
+                        onChange={(e) => {
+                          handleJobsCompleted(e);
+                          setJobsCompletedError(false);
+                        }}
+                        placeholder="Enter number of jobs/client projects  you’ve completed till now"
+                      ></input>
+                      {completedError && (
+                        <div className="invalid-fields">
+                          Please enter completed jobs
+                        </div>
+                      )}
+                    </div>
                   </div>
                   {/* <div className="adults-titles kids-form-title">
                     <span>Contact Details</span>

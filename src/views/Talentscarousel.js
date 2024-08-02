@@ -68,7 +68,7 @@ const Talentscarousel = ({ talentList }) => {
         console.log(resData, "addFavorite");
         if (resData.data.status === true) {
           console.log("addFavoriteBlock", "addFavorite");
-          setMessage("Added The Talent To Your Favorites ");
+          setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
           // getTalentList();
           setTimeout(function() {
@@ -88,9 +88,9 @@ const Talentscarousel = ({ talentList }) => {
 
   const openTalent = (item) => {
     console.log(item, "item");
-    // navigate("/talent-profile", { state: { talentData: item } });
+    // navigate("/talent", { state: { talentData: item } });
 
-    navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+    navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
   };

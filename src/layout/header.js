@@ -17,9 +17,10 @@ import searchPathOptions from "../components/SearchPaths";
 
 const Header = ({ onData }) => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const mbtLogo = require("../assets/images/bt-logo.jpg");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
+  const cofeeIcon = require("../assets/icons/cofeeIcon.png");
   const [menuOpen, setMenuOpen] = useState(false);
   const [signupCategory, setSignupCategory] = useState("talent");
   const [above_18, setAbove_18] = useState(false);
@@ -80,7 +81,7 @@ const Header = ({ onData }) => {
   const logout = () => {
     localStorage.clear();
     setcurrentUserId(null);
-    setMessage("Logged Out SuccessFully");
+    setMessage("Logged out successfully");
     setOpenPopUp(true);
     setTimeout(function() {
       setOpenPopUp(false);
@@ -152,12 +153,17 @@ const Header = ({ onData }) => {
     window.scrollTo(0, 0); // Scroll to top on link click
     if (data == "post-job") {
       if (!currentUserId) {
-        setMessage("You Must Be Logged In");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
+
+        // setMessage("You must be logged in");
+        // setOpenPopUp(true);
+        // setTimeout(function() {
+        //   setOpenPopUp(false);
+        //   navigate("/login");
+        // }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/create-jobs");
       }
@@ -165,12 +171,16 @@ const Header = ({ onData }) => {
 
     if (data == "find-talent") {
       if (!currentUserId) {
-        setMessage("You Must Be Logged In");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
+        // setMessage("You must be logged in");
+        // setOpenPopUp(true);
+        // setTimeout(function() {
+        //   setOpenPopUp(false);
+        //   navigate("/login");
+        // }, 1000);
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/find-creators");
       } else if (
@@ -214,16 +224,14 @@ const Header = ({ onData }) => {
       if (menuItem === "dashboard") {
         // alert("createHandleMenuClick");
         if (currentUser_type === "talent") {
-          // navigate("/talent-profile", { state: { talentData: talentData } });
+          // navigate("/talent", { state: { talentData: talentData } });
           // alert("navigatetotalentprofile");
 
-          navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
+          navigate(`/talent/${talentData.publicUrl}`, {
             state: { talentData },
           });
         } else if (currentUser_type === "brand") {
-          navigate(
-            `/brand-dashboard/${brandData?.brandName.replace(/\s+/g, "")}`
-          );
+          navigate(`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`);
         }
       }
       if (menuItem === "edit") {
@@ -250,6 +258,10 @@ const Header = ({ onData }) => {
     } else {
       navigate.push(`/search?query=${query}`);
     }
+  };
+
+  const handleCoffeeLink = () => {
+    window.open("https://buymeacoffee.com/brandsandtalent", "_blank");
   };
 
   const [open, setOpen] = useState(false);
@@ -280,7 +292,7 @@ const Header = ({ onData }) => {
     if (route === "/find-creators") {
       if (!currentUserId || currentUser_type != "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -289,10 +301,11 @@ const Header = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/talent-profile") {
+    } else if (route === "/talent") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -316,7 +329,8 @@ const Header = ({ onData }) => {
     } else if (route === "/post-job") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -332,7 +346,8 @@ const Header = ({ onData }) => {
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -341,10 +356,11 @@ const Header = ({ onData }) => {
       } else {
         navigate(route);
       }
-    } else if (route === "/brand-dashboard") {
+    } else if (route === "/brand") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -356,7 +372,8 @@ const Header = ({ onData }) => {
     } else if (route === "/list-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -368,7 +385,8 @@ const Header = ({ onData }) => {
     } else if (route === "/applied-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -380,7 +398,8 @@ const Header = ({ onData }) => {
     } else if (route === "/saved-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -392,7 +411,8 @@ const Header = ({ onData }) => {
     } else if (route === "/create-jobs") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -404,7 +424,8 @@ const Header = ({ onData }) => {
     } else if (route === "/find-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -416,19 +437,21 @@ const Header = ({ onData }) => {
     } else if (route === "/favorite-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
-      } else {
-        navigate(route);
+
+        //   setMessage("You must be logged in");
+        //   setOpenPopUp(true);
+        //   setTimeout(function() {
+        //     setOpenPopUp(false);
+        //     navigate("/login");
+        //   }, 1000);
+        // } else {
+        //   navigate(route);
       }
     } else if (route === "/brand-help") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -440,7 +463,8 @@ const Header = ({ onData }) => {
     } else if (route === "/applicants") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -452,7 +476,8 @@ const Header = ({ onData }) => {
     } else if (route === "/edit-talent-profile") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -464,7 +489,8 @@ const Header = ({ onData }) => {
     } else if (route === "/edit-brand-profile") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -476,7 +502,8 @@ const Header = ({ onData }) => {
     } else if (route === "/talent-notification") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -488,7 +515,8 @@ const Header = ({ onData }) => {
     } else if (route === "/talent-settings") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -500,7 +528,8 @@ const Header = ({ onData }) => {
     } else if (route === "/brand-settings") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -512,7 +541,8 @@ const Header = ({ onData }) => {
     } else if (route === "/talent-home") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -524,7 +554,8 @@ const Header = ({ onData }) => {
     } else if (route === "/talent-help") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -536,7 +567,7 @@ const Header = ({ onData }) => {
     } else if (route === "/brand-notification") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -548,7 +579,7 @@ const Header = ({ onData }) => {
     } else if (route === "/get-booked") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -577,6 +608,21 @@ const Header = ({ onData }) => {
     )
   ).map((label) => searchPathOptions.find((option) => option.label === label));
 
+  const handleClickBlogs = (step) => {
+    // console.log(step, "handleClickBlogsSTEP");
+    // navigate("/blogs", { state: { step: step } });
+    window.open("https://brandsandtalent.substack.com/", "_blank");
+  };
+
+  useEffect(() => {
+    console.log(
+      talentData,
+      "TalentHeader DataHeader ",
+      brandData,
+      "BrandHeader DataHeader"
+    );
+  }, [talentData, brandData]);
+
   return (
     <>
       <div className="mobile-navbar">
@@ -602,12 +648,20 @@ const Header = ({ onData }) => {
           {!currentUserId && (
             <div
               className="signup mobile-signup"
+              onClick={() => handleClick("post-job")}
+            >
+              Sign up for free
+            </div>
+          )}
+          {/* {!currentUserId && (
+            <div
+              className="signup mobile-signup"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
             >
               Sign up for free
             </div>
-          )}
+          )} */}
 
           <div
             onClick={() => {
@@ -696,40 +750,30 @@ const Header = ({ onData }) => {
                   className="dropdown-item dropdown-toggle"
                   dropdown-toggle
                   data-bs-toggle="dropdown"
+                  onClick={() => handleClickBlogs(0)}
                 >
-                  <NavLink to="/blogs" onClick={() => handleClick("")}>
-                    Blog
-                  </NavLink>
+                  Newsletter
                 </a>
-                <ul className="dropdown-menu mobile-blogs-menu">
-                  <li>
-                    <a href="" className="dropdown-item">
-                      <NavLink to="/blogs" onClick={() => handleClick("")}>
-                        Industry News & Insights
-                      </NavLink>
-                    </a>
+                {/* <ul className="dropdown-menu blogs-menu">
+                  <li onClick={() => handleClickBlogs(1)}>
+                    <a className="dropdown-item">News & Announcements</a>
                   </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Case Studies
-                    </a>
+                  <li onClick={() => handleClickBlogs(2)}>
+                    <a className="dropdown-item">Industry Insights</a>
                   </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                      Talent Diaries
-                    </a>
+                  <li onClick={() => handleClickBlogs(3)}>
+                    <a className="dropdown-item">Interviews</a>
                   </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Talent Tips & Tricks
-                    </a>
+                  <li onClick={() => handleClickBlogs(4)}>
+                    <a className="dropdown-item"> Case Studies</a>
                   </li>
-                  <li>
-                    <a href="" className="dropdown-item">
-                       Brand Tips & Tricks
-                    </a>
+                  <li onClick={() => handleClickBlogs(5)}>
+                    <a className="dropdown-item"> Talent Tips & Tricks</a>
                   </li>
-                </ul>
+                  <li onClick={() => handleClickBlogs(6)}>
+                    <a className="dropdown-item"> Brand Tips & Tricks</a>
+                  </li>
+                </ul> */}
               </li>
               <li>
                 <hr className="dropdown-divider"></hr>
@@ -743,6 +787,15 @@ const Header = ({ onData }) => {
                 </a>
               </li>
             </ul>
+          </div>
+
+          <div
+            className="navTxt cofee-link"
+            style={{ cursor: "pointer" }}
+            onClick={handleCoffeeLink}
+          >
+            Support BT
+            <img src={cofeeIcon} alt="" className="cofeeIcon-img" />
           </div>
         </div>
         <div className="header-search-wrapper">
@@ -794,10 +847,12 @@ const Header = ({ onData }) => {
                 ))}
 
               {!currentUserId && (
-                <div className="navTxt" style={{ cursor: "pointer" }}>
-                  <NavLink to="/get-booked" onClick={() => handleClick("")}>
-                    Get Booked
-                  </NavLink>
+                <div
+                  className="navTxt"
+                  onClick={() => handleClick("post-job")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Get Booked
                 </div>
               )}
 
@@ -872,47 +927,36 @@ const Header = ({ onData }) => {
                       </NavLink>
                     </li>
                     <li className="dropend">
+                      {/* data-bs-toggle="dropdown" */}
+                      {/* className="dropdown-item dropdown-toggle" */}
+
                       <a
-                        className="dropdown-item dropdown-toggle"
+                        className="dropdown-item"
                         dropdown-toggle
-                        data-bs-toggle="dropdown"
+                        onClick={() => handleClickBlogs(0)}
                       >
-                        <NavLink to="/blogs" onClick={() => handleClick("")}>
-                          Blogs
-                        </NavLink>
+                        Newsletter
                       </a>
-                      <ul className="dropdown-menu blogs-menu">
-                        <li>
-                          <a href="" className="dropdown-item">
-                            <NavLink
-                              to="/blogs"
-                              onClick={() => handleClick("")}
-                            >
-                              Industry News & Insights
-                            </NavLink>
-                          </a>
+                      {/* <ul className="dropdown-menu blogs-menu">
+                        <li onClick={() => handleClickBlogs(1)}>
+                          <a className="dropdown-item">News & Announcements</a>
                         </li>
-                        <li>
-                          <a href="" className="dropdown-item">
-                             Case Studies
-                          </a>
+                        <li onClick={() => handleClickBlogs(2)}>
+                          <a className="dropdown-item">Industry Insights</a>
                         </li>
-                        <li>
-                          <a href="" className="dropdown-item">
-                            Talent Diaries
-                          </a>
+                        <li onClick={() => handleClickBlogs(3)}>
+                          <a className="dropdown-item">Interviews</a>
                         </li>
-                        <li>
-                          <a href="" className="dropdown-item">
-                             Talent Tips & Tricks
-                          </a>
+                        <li onClick={() => handleClickBlogs(4)}>
+                          <a className="dropdown-item">Case Studies</a>
                         </li>
-                        <li>
-                          <a href="" className="dropdown-item">
-                             Brand Tips & Tricks
-                          </a>
+                        <li onClick={() => handleClickBlogs(5)}>
+                          <a className="dropdown-item">Talent Tips & Tricks</a>
                         </li>
-                      </ul>
+                        <li onClick={() => handleClickBlogs(6)}>
+                          <a className="dropdown-item">Brand Tips & Tricks</a>
+                        </li>
+                      </ul> */}
                     </li>
                     <li>
                       <hr className="dropdown-divider"></hr>
@@ -929,6 +973,15 @@ const Header = ({ onData }) => {
                     </li>
                   </ul>
                 </li>
+              </div>
+
+              <div
+                className="navTxt cofee-link"
+                style={{ cursor: "pointer" }}
+                onClick={handleCoffeeLink}
+              >
+                Support BT
+                <img src={cofeeIcon} alt="" className="cofeeIcon-img" />
               </div>
             </div>
             <div className="header-functions">
@@ -949,9 +1002,9 @@ const Header = ({ onData }) => {
                       variant="h6"
                       component="h2"
                     >
-                      <form class="d-flex" role="search">
+                      <form className="d-flex" role="search">
                         <input
-                          class="form-control me-2"
+                          className="form-control me-2"
                           type="search"
                           placeholder="Search"
                           aria-label="Search"
@@ -1002,6 +1055,11 @@ const Header = ({ onData }) => {
               )}
 
               {!currentUserId && (
+                <div className="signup" onClick={() => handleClick("post-job")}>
+                  Sign up for free
+                </div>
+              )}
+              {/* {!currentUserId && (
                 <div
                   className="signup"
                   data-bs-toggle="modal"
@@ -1009,7 +1067,7 @@ const Header = ({ onData }) => {
                 >
                   Sign up for free
                 </div>
-              )}
+              )} */}
 
               {/* <div className="gridLogo">
                 <img src={gridLogo} alt="" /> 
@@ -1019,11 +1077,24 @@ const Header = ({ onData }) => {
                 <Dropdown>
                   <MenuButton className="profile-image-header">
                     <div className="talent-profile-icon">
-                      <img
-                        className="talent-profile-icon-img"
-                        src={`${API.userFilePath}${currentUser_image}`}
-                        alt=""
-                      />
+                      {talentData?.image && (
+                        <>
+                          <img
+                            className="talent-profile-icon-img"
+                            src={`${API.userFilePath}${talentData?.image?.fileData}`}
+                            alt=""
+                          />
+                        </>
+                      )}
+                      {brandData?.brandImage[0] && (
+                        <>
+                          <img
+                            className="talent-profile-icon-img"
+                            src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
+                            alt=""
+                          />
+                        </>
+                      )}
                     </div>
                   </MenuButton>
                   <Menu slots={{ listbox: AnimatedListbox }}>
@@ -1097,7 +1168,7 @@ const Header = ({ onData }) => {
                   }}
                   className={talent ? "selected-register" : "choose-register"}
                 >
-                  I'm a Talent
+                  I am a Talent
                 </div>
                 <div
                   onClick={(e) => {
@@ -1105,12 +1176,11 @@ const Header = ({ onData }) => {
                   }}
                   className={brand ? "selected-register" : "choose-register"}
                 >
-                  I'm a Brand/Client
+                  I am a Brand/Client
                 </div>
               </div>
               <div className="question-model">
-                {talent &&
-                  "Are you the star of the show or the one seeking brilliance?"}
+                {talent && "I am a talent/creator/influencer"}
                 {brand && "I am Looking for talent"}
               </div>
               <div className="register-modal">

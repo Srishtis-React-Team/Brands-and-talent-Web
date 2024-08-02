@@ -21,7 +21,7 @@
   text-align: center;
   padding-bottom: 20px;
   color: #000;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -38,24 +38,12 @@
   text-decoration: underline;
 }
 
-.login-logo {
-  position: absolute;
-  background-color: #fff;
-  top: -31px;
-  padding: 0px 20px;
-}
-
-.forgot-logo {
-  position: absolute;
-  background-color: #fff;
-  top: 315px;
-  padding: 0px 20px;
-}
-
+.login-logo,
+.forgot-logo,
 .reset-logo {
   position: absolute;
   background-color: #fff;
-  top: 315px;
+  top: -20px;
   padding: 0px 20px;
 }
 
@@ -262,4 +250,4 @@
 .haAclf {
   display: inline-block;
   width: 94% !important;
-}/*# sourceMappingURL=login.css.map */
+} /*# sourceMappingURL=login.css.map */

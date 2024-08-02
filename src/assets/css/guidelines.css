@@ -8,11 +8,11 @@
 } */
 
 .bt-container {
-  margin: 20px auto;
+  /* margin: 20px auto; */
   padding: 30px 60px;
   background: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 .bt-title {
@@ -38,4 +38,10 @@
 
 .bt-paragraph {
   margin-bottom: 20px;
+}
+
+.terms-and-conditions {
+  font-size: 15px;
+  font-family: sans-serif;
+  line-height: 24px;
 }

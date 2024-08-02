@@ -12,7 +12,14 @@ import languageOptions from "../components/languages.js";
 import PopUp from "../components/PopUp.js";
 import CurrentUser from "../CurrentUser.js";
 import nationalitiesArray from "../components/NationalitiesArray.js";
+import categoriesArray from "../components/categoriesArray.js";
+import SocialMediasList from "../components/SocialMediasList.js";
+import CreatableSelect from "react-select/creatable";
+import useFieldDatas from "../config/useFieldDatas.js";
+
 const FindCreators = () => {
+  const { categoryList, professionList } = useFieldDatas();
+
   const {
     currentUserId,
     currentUserImage,
@@ -39,6 +46,8 @@ const FindCreators = () => {
   const girl12 = require("../assets/images/girl12.png");
   const girl13 = require("../assets/images/girl13.png");
   const girl14 = require("../assets/images/girl14.png");
+  const pinkStar = require("../assets/icons/pink-star.png");
+
   const girl15 = require("../assets/images/girl15.png");
   const girl16 = require("../assets/images/girl16.png");
   const starIcon = require("../assets/icons/star.png");
@@ -73,6 +82,8 @@ const FindCreators = () => {
   const [languages, setLanguages] = useState([]);
   const [maritalStatus, setMaritalStatus] = useState("");
   const [industry, setIndustry] = useState("");
+  const [minFollowers, setMinFollowers] = useState("");
+  const [maxFollowers, setMaxFollowers] = useState("");
   const [nationality, setNationality] = useState([]);
   const [fullName, setFullName] = useState("");
   const [featuresListSelect, selectFeaturesList] = useState([]);
@@ -84,6 +95,8 @@ const FindCreators = () => {
   const [cityError, setCityError] = useState(false);
   const [keywordsList, setkeywordsList] = useState([]);
   const [currentUserData, steCurrentUserData] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [socialMedias, setSocialMedias] = useState([]);
   const [brandId, setBrandId] = useState(null);
 
   const searchInputChange = async (e) => {
@@ -108,12 +121,16 @@ const FindCreators = () => {
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "55px", // Reset the minHeight to avoid clipping
+      minHeight: "55px",
+      fontSize: "14px",
+      fontFamily: "sans-serif", // Reset the minHeight to avoid clipping
     }),
     menu: (provided, state) => ({
       ...provided,
       maxHeight: "600px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
+      zIndex: 9999,
+      fontSize: "14px",
+      fontFamily: "sans-serif", // Ensure menu appears above other elements
     }),
   };
 
@@ -208,23 +225,36 @@ const FindCreators = () => {
     inputValue ? "No States Available" : "Choose City First";
 
   const ethnicityOptions = [
-    "South Asian",
-    "Indian/Pakistani",
-    "South East Asian",
     "Khmer",
+    "Thai",
+    "Asian",
     "Vietnamese",
     "Indonesian",
-    "Thai",
-    "Middle-East",
-    "Black",
-    "African",
-    "Latino/Hispanic",
+    "Filipino",
+    "Chinese",
+    "South-East Asian",
+    "South-Asian",
+    "Central Asian",
+    "Indian",
+    "Pakistani",
+    "Nepali",
     "Russian",
     "Ukrainian",
-    "Nordic",
-    "Scandinavian",
+    "Japanese",
+    "Korean",
+    "Latino/Hispanic",
     "European",
-    "Italian",
+    "Scandinavian",
+    "Turk",
+    "Native American",
+    "Native Hawaiian/Pacific Islander",
+    "White",
+    "Black",
+    "African",
+    "Middle-Eastern",
+    "Arab",
+    "Persian",
+    "Other",
   ];
 
   const industryList = [
@@ -289,7 +319,7 @@ const FindCreators = () => {
   const gendersOptions = [
     "Man",
     "Woman",
-    "Non binary",
+    "Non-binary",
     "Transgender Woman",
     "Transgender Man",
     "Agender",
@@ -337,35 +367,6 @@ const FindCreators = () => {
     clear();
   };
 
-  const professionList = [
-    { value: "Model", label: "Model" },
-    { value: "Celebrity", label: "Celebrity" },
-    { value: "Creator", label: "Creator" },
-    { value: "Stylist", label: "Stylist" },
-    { value: "Photographer", label: "Photographer" },
-    { value: "Videographer", label: "Videographer" },
-    { value: "Hair & Makeup Artist", label: "Hair & Makeup Artist" },
-    { value: "Actor", label: "Actor" },
-    { value: "Singer", label: "Singer" },
-    { value: "Writer", label: "Writer" },
-    { value: "Filmmaker", label: "Filmmaker" },
-    { value: "RJ", label: "RJ" },
-    { value: "DJ", label: "DJ" },
-    { value: "VJ", label: "VJ" },
-    { value: "Graphic Designer", label: "Graphic Designer" },
-    { value: "Personal Trainer", label: "Personal Trainer" },
-    { value: "Sports Instructor", label: "Sports Instructor" },
-    { value: "Dance Teacher", label: "Dance Teacher" },
-    { value: "Choreographer", label: "Choreographer" },
-    { value: "Martial Arts Instructor", label: "Martial Arts Instructor" },
-    { value: "Yoga Teacher", label: "Yoga Teacher" },
-    { value: "Webapp Developer", label: "Webapp Developer" },
-    { value: "Virtual Assistant", label: "Virtual Assistant" },
-    { value: "AI Influencer", label: "AI Influencer" },
-    { value: "Fashion Designer", label: "Fashion Designer" },
-    { value: "Other", label: "Other" },
-  ];
-
   const getCountries = async () => {
     await ApiHelper.get(API.listCountries)
       .then((resData) => {
@@ -399,7 +400,7 @@ const FindCreators = () => {
     await ApiHelper.post(`${API.setUserFavorite}${loggidInID}`, formData, true)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Added The Talent To Your Favorites ");
+          setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
           getTalentList();
           setTimeout(function() {
@@ -419,9 +420,9 @@ const FindCreators = () => {
   };
   const openTalent = (item) => {
     console.log(item, "item");
-    // navigate("/talent-profile", { state: { talentData: item } });
+    // navigate("/talent", { state: { talentData: item } });
 
-    navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+    navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
   };
@@ -494,6 +495,29 @@ const FindCreators = () => {
   const selectEthnicity = (event) => {
     setEthnicity(event.target.value);
   };
+
+  const selectCategory = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    if (!selectedOptions || selectedOptions.length === 0) {
+      setCategories([]);
+      return;
+    }
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setCategories(selectedLanguages);
+  };
+
+  const selectSocialMedias = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    if (!selectedOptions || selectedOptions.length === 0) {
+      setSocialMedias([]);
+      return;
+    }
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    console.log(selectedLanguages, "selectedLanguages");
+    setSocialMedias(selectedLanguages);
+  };
+
   const selectLanguage = (selectedOptions) => {
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
@@ -552,26 +576,34 @@ const FindCreators = () => {
     setMaxAge(event.target.value); // Update the state with the new value
   };
 
+  const onMinFollowersChange = (event) => {
+    setMinFollowers(event.target.value); // Update the state with the new value
+  };
+  const onMaxFollowersChange = (event) => {
+    setMaxFollowers(event.target.value); // Update the state with the new value
+  };
+
   const search = async () => {
     const formData = {
       profession: profession,
       parentCountry: country,
-      parentCountry: country,
       parentState: state,
       childCity: kidsCity,
+      platforms: socialMedias,
+      minFollowers: minFollowers,
+      maxFollowers: maxFollowers,
       childGender: gender,
-      childEthnicity: ethnicity,
-      languages: languages,
-      childNationality: nationality,
-      preferredChildFirstname: fullName,
-      preferredChildLastName: fullName,
       minAge: min,
       maxAge: max,
-      industry: industry,
+      childEthnicity: ethnicity,
+      childNationality: nationality,
+      languages: languages,
+      preferredChildFirstname: fullName,
+      preferredChildLastName: fullName,
+      industry: categories,
       searchTerm: searchKeyword,
       selectedTerms: selectedKeyword,
       features: features,
-      childEthnicity: ethnicity,
     };
     console.log(formData, "formData talentFilterData");
     setIsLoading(true);
@@ -620,23 +652,26 @@ const FindCreators = () => {
     getCountries();
     getTalentList();
     getFeatures();
-    setProfession([professionList[2], professionList[3]]);
 
     selectFeaturesList([
       {
-        label: "HairColour",
+        label: "Build",
         type: "select",
-        options: ["red", "black", "brown"],
+        options: [
+          "Build",
+          "Slim",
+          "Average",
+          "Athletic",
+          "Curvy",
+          "Plus Size",
+          "Other",
+        ],
       },
+
       {
         label: "Height",
         type: "select",
         options: ["168.2 cm", "176.6 cm"],
-      },
-      {
-        label: "BodyType",
-        type: "select",
-        options: ["small", "fat"],
       },
     ]);
   }, []);
@@ -708,7 +743,7 @@ const FindCreators = () => {
       <section>
         <div className="popular-header" style={{ marginTop: "64px" }}>
           <div className="container">
-            <div className="header-title">Popular Talents</div>
+            <div className="header-title">Find Talents</div>
             {/* <div className="header-menu">
               <div>Home</div>
               <div>Talents</div>
@@ -719,7 +754,7 @@ const FindCreators = () => {
       <section className="creatorPage-Wraper">
         <div className="container">
           <div className="filter-section py-2 mt-3">
-            <div className="brand-filter-section row">
+            <div className="brand-filter-section row px-4">
               <div className="col-md-4 col-lg-4">
                 <div className="filter-wrapper">
                   <div className="filter-btn-wrapper">
@@ -783,12 +818,12 @@ const FindCreators = () => {
                     )}
                   </div>
                   <div className="keyword-wrapper">
-                    <div className="filter-items">Full Name</div>
+                    <div className="filter-items">Name</div>
                     <div className="creators-filter-select inpWid">
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Full Name"
+                        placeholder="Name"
                         onChange={(e) => {
                           setFullName(e.target.value);
                         }}
@@ -801,38 +836,32 @@ const FindCreators = () => {
                     <div className="filter-items">Profession</div>
                     <div className="profession-wrapper talents-profession inpWid">
                       <Select
-                        defaultValue={[professionList[2], professionList[3]]}
                         isMulti
                         name="colors"
                         options={professionList}
                         valueField="value"
                         className="basic-multi-select"
                         classNamePrefix="select"
-                        onChange={(value) => setProfession(value)}
-                        styles={customStyles}
+                        onChange={(value) => setProfession(value?.value)}
+                        styles={customStylesProfession}
                       />
                     </div>
                   </div>
-                  <div className="keyword-wrapper">
+                  {/* <div className="keyword-wrapper">
                     <div className="filter-items">Category</div>
                     <div className="creators-filter-select inpWid">
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={selectIndustry}
-                        value={industry}
-                      >
-                        <option value="" disabled selected>
-                          Select Category
-                        </option>
-                        {industryList.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
-                          </option>
-                        ))}
-                      </select>
+                      <Select
+                        isMulti
+                        name="colors"
+                        options={categoriesArray}
+                        valueField="value"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(value) => selectCategory(value)}
+                        styles={customStylesProfession}
+                      />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="keyword-wrapper">
                     <div className="filter-items">Country</div>
                     <div className="creators-filter-select inpWid">
@@ -885,17 +914,59 @@ const FindCreators = () => {
                       />
                     </div>
                   </div>
+
+                  <div className="keyword-wrapper">
+                    <div className="filter-items">Social Media</div>
+                    <div className="creators-filter-select inpWid">
+                      <Select
+                        placeholder="Filter by social media platform"
+                        isMulti
+                        name="colors"
+                        options={SocialMediasList}
+                        valueField="value"
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(value) => selectSocialMedias(value)}
+                        styles={customStylesProfession}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="keyword-wrapper creator-age-main ">
+                    <div className="filter-items">Followers</div>
+                    <div className="creators-filter-select creator-age-wrapper inpWid">
+                      <input
+                        type="text"
+                        className="form-control range-inputs"
+                        placeholder="Min"
+                        value={minFollowers}
+                        onChange={onMinFollowersChange}
+                      ></input>
+                      <input
+                        type="text"
+                        className="form-control range-inputs"
+                        placeholder="Max"
+                        value={maxFollowers}
+                        onChange={onMaxFollowersChange}
+                      ></input>
+                    </div>
+                  </div>
+
                   <div className="keyword-wrapper">
                     <div className="filter-items">Gender</div>
                     <div className="creators-filter-select inpWid">
-                      <label className="form-label">Gender</label>
                       <select
                         className="form-select"
                         aria-label="Default select example"
                         onChange={selectGender}
                         value={gender}
                       >
-                        <option value="" disabled selected>
+                        <option
+                          className="select-placeholders"
+                          value=""
+                          disabled
+                          selected
+                        >
                           Select Gender
                         </option>
                         {gendersOptions.map((option, index) => (
@@ -982,7 +1053,7 @@ const FindCreators = () => {
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={(value) => selectLanguage(value)}
-                        styles={customStyles}
+                        styles={customStylesProfession}
                       />
                     </div>
                   </div>
@@ -996,7 +1067,7 @@ const FindCreators = () => {
                               <div className="filter-items"> {item.label}</div>
                               <div className="creators-filter-select">
                                 <select
-                                  style={{ width: "275px" }}
+                                  style={{ width: "260px" }}
                                   className="form-select features-select"
                                   aria-label="Default select example"
                                   onChange={(e) =>
@@ -1048,12 +1119,12 @@ const FindCreators = () => {
               <div className="col-md-8 col-lg-8">
                 <div className="models-images">
                   <div className="gallery-section">
-                    <div className="gallery-main p-0 m-0">
+                    <div className="gallery-main find-creator-gallery-main p-0 m-0">
                       <div className="row favTalent px-2 mb-3">
                         {talentList?.map((item) => {
                           return (
                             <div className="col-sm-6 col-md-4 col-lg-3 px-1">
-                              <div className="gallery-wrapper modalSpc">
+                              <div className="gallery-wrapper modalSpc mb-2">
                                 <div className="imgBox">
                                   <img
                                     className="gallery-img"
@@ -1118,7 +1189,43 @@ const FindCreators = () => {
                                     <div className="find-creator-name">
                                       {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                     </div>
-                                    <div className="find-creator-address ">
+                                    {item?.averageStarRatings &&
+                                      item?.averageStarRatings > 0 && (
+                                        <>
+                                          <div className="talent-details-wrapper">
+                                            <div className="logo-fill">
+                                              <img
+                                                className="talent-logo"
+                                                src={pinkStar}
+                                              ></img>
+                                            </div>
+                                            <div className="contSect">
+                                              <span>
+                                                *{item?.averageStarRatings} (
+                                                {item?.totalReviews} ratings)
+                                              </span>
+                                            </div>
+                                          </div>
+                                        </>
+                                      )}
+
+                                    {item?.noOfJobsCompleted && (
+                                      <>
+                                        <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                          <div className="logo-fill-briefcase">
+                                            <i className="bi bi-briefcase-fill model-job-icons"></i>
+                                          </div>
+                                          <div className="contSect">
+                                            <span>
+                                              {item?.noOfJobsCompleted} Jobs
+                                              Completed
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </>
+                                    )}
+
+                                    {/* <div className="find-creator-address ">
                                       {item.profession?.map(
                                         (profession, index) => (
                                           <React.Fragment key={index}>
@@ -1128,21 +1235,57 @@ const FindCreators = () => {
                                           </React.Fragment>
                                         )
                                       )}
-                                    </div>
-                                    <div className="user-details">
-                                      <div className="location-wrapper">
-                                        <img src={locationIcon} alt="" />
-                                        <div className="find-creator-location-name ">
-                                          {item?.parentCountry}
+                                    </div> */}
+
+                                    {item?.profession && (
+                                      <>
+                                        <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                          <div className="logo-fill-briefcase">
+                                            <i className="bi bi-person-workspace model-job-icons"></i>
+                                          </div>
+                                          <div className="contSect">
+                                            <span>
+                                              {item?.profession[0]?.value}
+                                            </span>
+                                          </div>
                                         </div>
-                                      </div>
-                                      <div className="location-wrapper">
-                                        <img src={jobIcon} alt="" />
-                                        <div className="find-creator-location-name">
-                                          25 Jobs Booked
+                                      </>
+                                    )}
+
+                                    {/* {item?.relevantCategories && (
+                                      <>
+                                        <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                          <div className="logo-fill-briefcase">
+                                            <i className="bi bi-bookmarks-fill model-job-icons"></i>
+                                          </div>
+                                          <div className="contSect">
+                                            <span>
+                                              {item?.relevantCategories[0]}
+                                            </span>
+                                          </div>
                                         </div>
-                                      </div>
-                                    </div>
+                                      </>
+                                    )} */}
+
+                                    <span className="job-company_dtls nweAlign pt-2 d-flex">
+                                      <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
+                                      <span>
+                                        {item?.childCity},{item?.parentState},{" "}
+                                        {item?.parentCountry}{" "}
+                                      </span>
+                                    </span>
+
+                                    {/* <div className="find-creator-address ">
+                                      {item.profession?.map(
+                                        (profession, index) => (
+                                          <React.Fragment key={index}>
+                                            {profession.value}
+                                            {index !==
+                                              item.profession.length - 1 && ","}
+                                          </React.Fragment>
+                                        )
+                                      )}
+                                    </div> */}
                                   </div>
                                 </div>
                               </div>
@@ -1185,9 +1328,9 @@ const FindCreators = () => {
             </div>
             <div className="modal-body">
               <div className="mb-3">
-                <div class="rating-box">
+                <div className="rating-box">
                   <h3> Rate {modalData?.preferredChildFirstname}</h3>
-                  <div class="stars">
+                  <div className="stars">
                     {[...Array(5)].map((star, index) => {
                       return (
                         <i

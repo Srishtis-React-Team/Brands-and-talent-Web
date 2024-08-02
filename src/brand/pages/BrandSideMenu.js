@@ -5,10 +5,14 @@ import { NavLink } from "react-router-dom";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
+import CurrentUser from "../../CurrentUser";
+
 const postJob = require("../../assets/icons/postJob.png");
 const postJobHv = require("../../assets/icons/postJob-h.png");
 
 const BrandSideMenu = ({ onChildClick, myState }) => {
+  const { currentUserType, avatarImage } = CurrentUser();
+
   // useEffect(() => {
   //   const handleBeforeUnload = (e) => {
   //     const confirmationMessage =
@@ -170,6 +174,10 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
         <div className="talent-profile">
           <div className="talent-data-wrapper">
             <div className="profImg">
+              {!brandData?.brandImage[0] && (
+                <img className="profile-img" src={avatarImage} alt="" />
+              )}
+
               <img
                 className="profile-img"
                 src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
@@ -213,9 +221,10 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
               <div className="brand-menu-text">Create Gig/Job</div>
             </Link> */}
           <Link
-            to={`/brand-dashboard/${brandData?.brandName.replace(/\s+/g, "")}`}
+            to={`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`}
             className={
-              location.pathname === "/brand-dashboard"
+              location.pathname ===
+              `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -232,8 +241,8 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             }
           >
             {/* <i className="bi bi-person-plus icons"></i>
-            <i class="fa-solid fa-user-tie"></i> */}
-            {/* <i class="bi bi-person-add icons"></i> */}
+            <i className="fa-solid fa-user-tie"></i> */}
+            {/* <i className="bi bi-person-add icons"></i> */}
             <img src={postJob} className="iconMenu normal" alt="icon" />
             <img src={postJobHv} className="iconMenu hover" alt="icon" />
 
@@ -248,9 +257,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            {/* <i class="bi bi-person-gear icons"></i> */}
+            {/* <i className="bi bi-person-gear icons"></i> */}
 
-            <i class="bi bi-send icons"></i>
+            <i className="bi bi-send icons"></i>
             <div className="brand-menu-text">Invite To Apply</div>
           </Link>
 
@@ -274,7 +283,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i class="bi bi-people icons"></i>
+            <i className="bi bi-people icons"></i>
             <div className="brand-menu-text">Applicants</div>
           </Link>
 
@@ -286,7 +295,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i class="bi bi-person-bounding-box icons"></i>
+            <i className="bi bi-person-bounding-box icons"></i>
             <div className="brand-menu-text">Find Talent</div>
           </Link> */}
 
@@ -299,7 +308,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             }
           >
             <i className="bi bi-heart icons"></i>
-            <div className="brand-menu-text">Favourite Talent</div>
+            <div className="brand-menu-text">Favourite Talents</div>
           </Link>
 
           <Link

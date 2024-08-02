@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../../helpers/ApiHelper.js";
 import { API } from "../../config/api.js";
 import TalentHeader from "../../layout/TalentHeader.js";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import Bootstrap JavaScript
 import PopUp from "../../components/PopUp.js";
 import "../../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../../layout/TalentSideMenu.js";
@@ -61,6 +60,7 @@ const BrandNotification = () => {
   };
 
   const viewNotification = async (item) => {
+    console.log(item, "item viewNotification");
     const formData = {
       notificationId: item?._id,
     };
@@ -71,11 +71,14 @@ const BrandNotification = () => {
         }
       })
       .catch((err) => {});
-    navigate("/preview-job", {
-      state: {
-        from: "brand-notification",
-        jobId: item?.gigId,
-      },
+    // navigate("/preview-job", {
+    //   state: {
+    //     from: "brand-notification",
+    //     jobId: item?.gigId,
+    //   },
+    // });
+    navigate(`/talent/${item?.talentDetails?.publicUrl}`, {
+      state: { talentData: item?.talentDetails },
     });
   };
 
@@ -184,6 +187,9 @@ const BrandNotification = () => {
                     );
                   })}
                 </>
+              )}
+              {notificationList && notificationList.length === 0 && (
+                <>No Notifications Available</>
               )}
             </div>
           </div>

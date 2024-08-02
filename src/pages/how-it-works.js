@@ -8,6 +8,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../config/api";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -89,7 +91,7 @@ const HowItWorks = () => {
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
         location: "Australia",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         rating: 4,
       },
       {
@@ -98,7 +100,7 @@ const HowItWorks = () => {
         name: "william",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "America",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         isFavorite: false,
         rating: 3,
       },
@@ -108,7 +110,7 @@ const HowItWorks = () => {
         name: "Michael",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "Canada",
-        booked: "6 Jobs Booked",
+        booked: "6 Projects Booked",
         isFavorite: false,
         rating: 5,
       },
@@ -119,11 +121,79 @@ const HowItWorks = () => {
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
         location: "Russia",
-        booked: "150 Jobs Booked",
+        booked: "150 Projects Booked",
         rating: 1,
       },
     ]);
   }, []);
+
+  const [content, setContent] = useState([]);
+  const [faqList, setFaqList] = useState([]);
+
+  useEffect(() => {
+    fetchContentByType();
+    getFaq();
+  }, []);
+
+  const fetchContentByType = async () => {
+    const formData = {
+      contentType: "How It works",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        console.log(resData?.data?.data?.items, "resDataterms");
+        if (resData) {
+          setContent(resData?.data?.data?.items);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const [brandsFaq, setBrandsFaq] = useState([]);
+  const [talentsFaq, setTalentsFaq] = useState([]);
+  const [bestPracticesFaq, setBestPracticesFaq] = useState([]);
+
+  const getFaq = async () => {
+    const brands = [];
+    const talents = [];
+    const bestPractices = [];
+    const formData = {
+      contentType: "faq",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        if (resData) {
+          setFaqList(resData?.data?.data?.items);
+          console.log(resData?.data?.data?.items, "getFaq");
+          resData?.data?.data?.items.forEach((item) => {
+            if (item.userType === "Brands") {
+              brands.push(item);
+              setBrandsFaq(brands);
+              console.log(brandsFaq, "brands faq");
+            } else if (item.userType === "Talent") {
+              talents.push(item);
+              setTalentsFaq(talents);
+            } else if (item.userType === "Best Practices") {
+              bestPractices.push(item);
+              setBestPracticesFaq(bestPractices);
+            }
+          });
+          console.log(brands, "brands");
+          setBrandsFaq(brands);
+          setTalentsFaq(talents);
+          setBestPracticesFaq(bestPractices);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(brandsFaq, "brands faq");
+    console.log(talentsFaq, "talents faq");
+    console.log(bestPracticesFaq, "bestPractices faq");
+    console.log(content, "content");
+  }, []);
+
   return (
     <>
       <Header />
@@ -151,9 +221,17 @@ const HowItWorks = () => {
                 and empowering experience. Here's how it works:
               </h1>
 
+              <div>
+                {/* style={{
+          width: '600px',
+          height: '400px',
+          borderRadius: '15px',
+        }} */}
+              </div>
+
               <div className="howitworks-labels">
                 <div className="howitworks-labels-text">
-                  <a href="#brand">Brands/Clients</a>
+                  <a href="#brand">Brands / Clients</a>
                 </div>
                 <div className="howitworks-labels-text">
                   <a href="#talent">Talent</a>
@@ -163,9 +241,384 @@ const HowItWorks = () => {
                 </div>
               </div>
 
-              <h2 className="maintitles text-center"> Brands/Clients</h2>
+              <div>
+                <h2 className="maintitles text-center">
+                  For Brands / Clients{" "}
+                </h2>
+                <div className="video-container">
+                  <video
+                    src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/9a0040f1-6bd1-4a31-9dfc-5e8a76f4fb2b.mp4"
+                    autoPlay
+                    loop
+                    controls
+                    className="responsive-video mb-3"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div className="how-it-works-mobile-only">
+                  {content
+                    .filter((resource) => resource.userType === "Brands")
+                    .map((resource, index) => (
+                      <div
+                        key={resource.uniqueId}
+                        className=" align-items-center row"
+                      >
+                        {index % 2 === 0 ? (
+                          <>
+                            <div
+                              className="resource-name mb-3"
+                              dangerouslySetInnerHTML={{
+                                __html: resource.title,
+                              }}
+                            />
+                            <div className="resource-image-wrapper imgL col-md-6">
+                              <div className="resource-image-padding">
+                                {resource.image ? (
+                                  <img
+                                    className="resource-image imgWid"
+                                    src={resource.image}
+                                    alt="Resource"
+                                  />
+                                ) : (
+                                  <div className="placeholder">
+                                    No Image Available
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-description space">
+                                {resource.description.map((desc, descIndex) => (
+                                  <div
+                                    key={descIndex}
+                                    dangerouslySetInnerHTML={{
+                                      __html: desc,
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div
+                              className="resource-name mb-3"
+                              dangerouslySetInnerHTML={{
+                                __html: resource.title,
+                              }}
+                            />
+                            <div className="resource-image-wrapper imgL col-md-6">
+                              <div className="resource-image-padding">
+                                {resource.image ? (
+                                  <img
+                                    className="resource-image imgWid"
+                                    src={resource.image}
+                                    alt="Resource"
+                                  />
+                                ) : (
+                                  <div className="placeholder">
+                                    No Image Available
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-description space">
+                                {resource.description.map((desc, descIndex) => (
+                                  <div
+                                    key={descIndex}
+                                    dangerouslySetInnerHTML={{
+                                      __html: desc,
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    ))}
+                </div>
 
-              <div className="resource-wrapper align-items-center row">
+                <div className="how-it-works-desktop-only">
+                  {content
+                    .filter((resource) => resource.userType === "Brands")
+                    .map((resource, index) => (
+                      <div
+                        key={resource.uniqueId}
+                        className="resource-wrapper align-items-center row"
+                      >
+                        {index % 2 === 0 ? (
+                          <>
+                            <div className="resource-image-wrapper imgL col-md-6">
+                              <div className="resource-image-padding">
+                                {resource.image ? (
+                                  <img
+                                    className="resource-image imgWid"
+                                    src={resource.image}
+                                    alt="Resource"
+                                  />
+                                ) : (
+                                  <div className="placeholder">
+                                    No Image Available
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
+                              <div className="resource-description space">
+                                {resource.description.map((desc, descIndex) => (
+                                  <div
+                                    key={descIndex}
+                                    dangerouslySetInnerHTML={{ __html: desc }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
+                              <div className="resource-description space">
+                                {resource.description.map((desc, descIndex) => (
+                                  <div
+                                    key={descIndex}
+                                    dangerouslySetInnerHTML={{ __html: desc }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                            <div className="resource-image-wrapper imgL col-md-6">
+                              <div className="resource-image-padding">
+                                {resource.image ? (
+                                  <img
+                                    className="resource-image imgWid"
+                                    src={resource.image}
+                                    alt="Resource"
+                                  />
+                                ) : (
+                                  <div className="placeholder">
+                                    No Image Available
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <div>
+                <div id="talent">
+                  <h2 className="maintitles text-center">For Talent</h2>
+
+                  <div className="video-container">
+                    <video
+                      src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/370b2c13-5f1c-47e4-9ef2-2b8e76e392c4.mp4"
+                      loop
+                      controls
+                      className="responsive-video mb-3"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+
+                  <div className="how-it-works-mobile-only">
+                    {content
+                      .filter((resource) => resource.userType === "Talent")
+                      .map((resource, index) => (
+                        <div
+                          key={resource.uniqueId}
+                          className=" align-items-center row"
+                        >
+                          {index % 2 === 0 ? (
+                            <>
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
+                              <div className="resource-image-wrapper imgL col-md-6">
+                                <div className="resource-image-padding">
+                                  {resource.image ? (
+                                    <img
+                                      className="resource-image imgWid"
+                                      src={resource.image}
+                                      alt="Resource"
+                                    />
+                                  ) : (
+                                    <div className="placeholder">
+                                      No Image Available
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="resource-content-wrapper col-md-6 padSpace">
+                                <div className="resource-description space">
+                                  {resource.description.map(
+                                    (desc, descIndex) => (
+                                      <div
+                                        key={descIndex}
+                                        dangerouslySetInnerHTML={{
+                                          __html: desc,
+                                        }}
+                                      />
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div
+                                className="resource-name"
+                                dangerouslySetInnerHTML={{
+                                  __html: resource.title,
+                                }}
+                              />
+                              <div className="resource-image-wrapper imgL col-md-6">
+                                <div className="resource-image-padding">
+                                  {" "}
+                                  {resource.image ? (
+                                    <img
+                                      className="resource-image imgWid"
+                                      src={resource.image}
+                                      alt="Resource"
+                                    />
+                                  ) : (
+                                    <div className="placeholder">
+                                      No Image Available
+                                    </div>
+                                  )}{" "}
+                                </div>
+                              </div>
+                              <div className="resource-content-wrapper col-md-6 padSpace">
+                                <div className="resource-description space">
+                                  {resource.description.map(
+                                    (desc, descIndex) => (
+                                      <div
+                                        key={descIndex}
+                                        dangerouslySetInnerHTML={{
+                                          __html: desc,
+                                        }}
+                                      />
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      ))}
+                  </div>
+                  <div className="how-it-works-desktop-only">
+                    {content
+                      .filter((resource) => resource.userType === "Talent")
+                      .map((resource, index) => (
+                        <div
+                          key={resource.uniqueId}
+                          className="resource-wrapper align-items-center row"
+                        >
+                          {index % 2 === 0 ? (
+                            <>
+                              <div className="resource-image-wrapper imgL col-md-6">
+                                <div className="resource-image-padding">
+                                  {resource.image ? (
+                                    <img
+                                      className="resource-image imgWid"
+                                      src={resource.image}
+                                      alt="Resource"
+                                    />
+                                  ) : (
+                                    <div className="placeholder">
+                                      No Image Available
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="resource-content-wrapper col-md-6 padSpace">
+                                <div
+                                  className="resource-name"
+                                  dangerouslySetInnerHTML={{
+                                    __html: resource.title,
+                                  }}
+                                />
+                                <div className="resource-description space">
+                                  {resource.description.map(
+                                    (desc, descIndex) => (
+                                      <div
+                                        key={descIndex}
+                                        dangerouslySetInnerHTML={{
+                                          __html: desc,
+                                        }}
+                                      />
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="resource-content-wrapper col-md-6 padSpace">
+                                <div
+                                  className="resource-name"
+                                  dangerouslySetInnerHTML={{
+                                    __html: resource.title,
+                                  }}
+                                />
+                                <div className="resource-description space">
+                                  {resource.description.map(
+                                    (desc, descIndex) => (
+                                      <div
+                                        key={descIndex}
+                                        dangerouslySetInnerHTML={{
+                                          __html: desc,
+                                        }}
+                                      />
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                              <div className="resource-image-wrapper imgL col-md-6">
+                                <div className="resource-image-padding">
+                                  {" "}
+                                  {resource.image ? (
+                                    <img
+                                      className="resource-image imgWid"
+                                      src={resource.image}
+                                      alt="Resource"
+                                    />
+                                  ) : (
+                                    <div className="placeholder">
+                                      No Image Available
+                                    </div>
+                                  )}{" "}
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* <div className="resource-wrapper align-items-center row">
                 <div className="resource-image-wrapper imgL col-md-6">
                   <img
                     className="resource-image imgWid"
@@ -383,23 +836,17 @@ const HowItWorks = () => {
                     src={resorcesBanner12}
                   ></img>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="howIts mt-5">
+      <section className="howIts mt-5" id="faq">
         <h2 className="maintitles text-center">
           Frequently Asked Questions (FAQs)
         </h2>
         <div className="container">
-          {/* <div className="tabs faq">
-            <div className="active-tab tabLink">For Brands/Clients</div>
-            <div className="tabLink">For Talent</div>
-            <div className="tabLink">Best Practices</div>
-          </div> */}
-
           <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs
@@ -429,310 +876,114 @@ const HowItWorks = () => {
             <CustomTabPanel value={valueTabs} index={0}>
               <div className="faq-section faqWraper">
                 <div className="accordion accordion-pad" id="accordionExample">
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingOne">
-                      <button
-                        className="accordion-button"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne"
-                        aria-expanded="true"
-                        aria-controls="collapseOne"
+                  {brandsFaq.map((faq, index) => (
+                    <div className="accordion-item" key={faq.uniqueId}>
+                      <h2 className="accordion-header" id={`heading${index}`}>
+                        <button
+                          className="accordion-button"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target={`#collapse${index}`}
+                          aria-expanded="true"
+                          aria-controls={`collapse${index}`}
+                          dangerouslySetInnerHTML={{ __html: faq.title }}
+                        />
+                      </h2>
+                      <div
+                        id={`collapse${index}`}
+                        className={`accordion-collapse collapse ${
+                          index === 0 ? "show" : ""
+                        }`}
+                        aria-labelledby={`heading${index}`}
+                        data-bs-parent="#accordionExample"
                       >
-                        How do I find the right talent for my project?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseOne"
-                      className="accordion-collapse collapse show"
-                      aria-labelledby="headingOne"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        Use our advanced search filters to browse talent based
-                        on skills, expertise, location, and more. We recommend
-                        you to post a job with  a project brief outlining your
-                        requirements to attract relevant talent. You can benefit
-                        from both the features : find talent and post a job
-                        feature to receive a large number of qualified
-                        applications.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingTwo">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo"
-                        aria-expanded="false"
-                        aria-controls="collapseTwo"
-                      >
-                        How does payment work on Brands & Talent?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseTwo"
-                      className="accordion-collapse collapse"
-                      aria-labelledby="headingTwo"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        Payment arrangements are made directly between you and
-                        the talent. Brands & Talent does not charge any
-                        middlemen fees or commissions, allowing you to negotiate
-                        rates and terms directly with the talent.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingThree">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree"
-                        aria-expanded="false"
-                        aria-controls="collapseThree"
-                      >
-                        Can I communicate directly with talent?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseThree"
-                      className="accordion-collapse collapse"
-                      aria-labelledby="headingThree"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        <div className="accordion-pad">
-                          Yes, you can communicate directly with talent through
-                          our platform. Send messages, collaboration requests,
-                          and project updates to ensure clear communication
-                          throughout the collaboration process.
+                        <div className="accordion-body">
+                          {faq.description.map((desc, i) => (
+                            <div
+                              key={i}
+                              dangerouslySetInnerHTML={{ __html: desc }}
+                            />
+                          ))}
                         </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
               <div className="faq-section faqWraper">
                 <div className="accordion accordion-pad" id="accordionExample">
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingOne">
-                      <button
-                        className="accordion-button"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne"
-                        aria-expanded="true"
-                        aria-controls="collapseOne"
+                  {talentsFaq.map((faq, index) => (
+                    <div className="accordion-item" key={faq.uniqueId}>
+                      <h2 className="accordion-header" id={`heading${index}`}>
+                        <button
+                          className="accordion-button"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target={`#collapse${index}`}
+                          aria-expanded="true"
+                          aria-controls={`collapse${index}`}
+                          dangerouslySetInnerHTML={{ __html: faq.title }}
+                        />
+                      </h2>
+                      <div
+                        id={`collapse${index}`}
+                        className={`accordion-collapse collapse ${
+                          index === 0 ? "show" : ""
+                        }`}
+                        aria-labelledby={`heading${index}`}
+                        data-bs-parent="#accordionExample"
                       >
-                        How do I create a compelling profile on Brands & Talent?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseOne"
-                      className="accordion-collapse collapse show"
-                      aria-labelledby="headingOne"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        Showcase your skills, expertise, portfolio, and rates on
-                        your profile with a brief bio. Provide detailed
-                        descriptions of your services and highlight your unique
-                        talents and experiences to attract potential clients.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingTwo">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo"
-                        aria-expanded="false"
-                        aria-controls="collapseTwo"
-                      >
-                        How do I apply for a job?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseTwo"
-                      className="accordion-collapse collapse"
-                      aria-labelledby="headingTwo"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        Browse jobs posted by brands and clients, and submit
-                        applications through our easy to apply features on the
-                        platform. We recommend you to update your profile with
-                        an attractive bio, your rates, portfolio, sample works,
-                        and other additional information in your profile which
-                        will increase your application success rate. If your
-                        profile has sufficient information and is up to date,
-                        you also may get invited to jobs directly by the
-                        brands/clients. From your dashboard you can set/manage
-                        notifications for potential job/collaboration
-                        opportunities.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingThree">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree"
-                        aria-expanded="false"
-                        aria-controls="collapseThree"
-                      >
-                        Do you charge any commission?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseThree"
-                      className="accordion-collapse collapse"
-                      aria-labelledby="headingThree"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        <div className="accordion-pad">
-                          No, we do not charge any commissions. You get to keep
-                          100% of your earnings. Apply as many jobs as you like
-                          that best matches with your skill sets. Deliver and
-                          earn more.
+                        <div className="accordion-body">
+                          {faq.description.map((desc, i) => (
+                            <div
+                              key={i}
+                              dangerouslySetInnerHTML={{ __html: desc }}
+                            />
+                          ))}
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingFour">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseFour"
-                        aria-expanded="false"
-                        aria-controls="collapseFour"
-                      >
-                        How do I negotiate rates with clients?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseFour"
-                      className="accordion-collapse collapse"
-                      aria-labelledby="headingFour"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        <div className="accordion-pad">
-                          Negotiate rates directly with clients based on the
-                          scope of the project, your expertise, and the value
-                          you can provide. Be transparent about your rates and
-                          ensure alignment on expectations before accepting
-                          collaboration offers.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
               <div className="faq-section faqWraper">
                 <div className="accordion accordion-pad" id="accordionExample">
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingOne">
-                      <button
-                        className="accordion-button"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne"
-                        aria-expanded="true"
-                        aria-controls="collapseOne"
+                  {bestPracticesFaq.map((faq, index) => (
+                    <div className="accordion-item" key={faq.uniqueId}>
+                      <h2 className="accordion-header" id={`heading${index}`}>
+                        <button
+                          className="accordion-button"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target={`#collapse${index}`}
+                          aria-expanded="true"
+                          aria-controls={`collapse${index}`}
+                          dangerouslySetInnerHTML={{ __html: faq.title }}
+                        />
+                      </h2>
+                      <div
+                        id={`collapse${index}`}
+                        className={`accordion-collapse collapse ${
+                          index === 0 ? "show" : ""
+                        }`}
+                        aria-labelledby={`heading${index}`}
+                        data-bs-parent="#accordionExample"
                       >
-                        What are some best practices for creating a successful
-                        job post for my project?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseOne"
-                      className="accordion-collapse collapse show"
-                      aria-labelledby="headingOne"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        Provide clear and detailed information about your
-                        project requirements, objectives, and expectations.
-                        Include relevant details such as deliverables,
-                        deadlines, and budget constraints.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingTwo">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo"
-                        aria-expanded="false"
-                        aria-controls="collapseTwo"
-                      >
-                        How can I ensure effective communication with talent
-                        throughout the project?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseTwo"
-                      className="accordion-collapse collapse"
-                      aria-labelledby="headingTwo"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        Maintain regular communication with talent, provide
-                        timely feedback, and clarify any questions or concerns
-                        promptly. Establish clear expectations and maintain
-                        professionalism in all interactions.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingThree">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree"
-                        aria-expanded="false"
-                        aria-controls="collapseThree"
-                      >
-                        What are some tips for delivering high-quality work as a
-                        talent?
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseThree"
-                      className="accordion-collapse collapse"
-                      aria-labelledby="headingThree"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div className="accordion-body">
-                        <div className="accordion-pad">
-                          Prioritize clear communication with the client, adhere
-                          to project deadlines, and ensure that deliverables
-                          meet or exceed expectations. Seek feedback throughout
-                          the project lifecycle to ensure client satisfaction.
+                        <div className="accordion-body">
+                          {faq.description.map((desc, i) => (
+                            <div
+                              key={i}
+                              dangerouslySetInnerHTML={{ __html: desc }}
+                            />
+                          ))}
                         </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </CustomTabPanel>

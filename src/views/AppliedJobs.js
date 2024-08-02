@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import Bootstrap JavaScript
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
@@ -182,29 +181,45 @@ const AppliedJobs = () => {
                                 </span>
                               </div>
                               <div className="mb-2">
-                                <span className="job-company-name">
-                                  {job?.state}
+                                <span className="job-company_dtls">
+                                  <i className="bi bi-person-workspace"></i>
                                 </span>{" "}
-                                ,
-                                <span className="job-company-name">
-                                  {job?.city}
+                                {/* . */}
+                                <span className="job-company_dtls">
+                                  {job?.jobType} <i className="bi bi-dot"></i>
                                 </span>
-                              </div>
-                              <div className="mb-2">
-                                <span className="job-company-name">
-                                  <i class="bi bi-person-workspace"></i>
-                                </span>{" "}
-                                .
-                                <span className="job-company-name">
-                                  {job?.jobType}
+                                <span className="job-company_dtls">
+                                  <i className="bi bi-geo-alt-fill location-icon"></i>
+                                  {job?.state}, {job?.city}{" "}
+                                  <i className="bi bi-dot"></i>
                                 </span>
-                                .
-                                <span className="job-company-name">
-                                  {job?.employmentType}
+                                <span className="job-company_dtls">
+                                  {job?.employmentType}{" "}
+                                  <i className="bi bi-dot"></i>
                                 </span>
-                                .
-                                <span className="job-company-name">
-                                  {Object.keys(job?.compensation)[0]}
+                                <span className="job-company_dtls">
+                                  {job?.category} <i className="bi bi-dot"></i>
+                                </span>
+                                <span className="job-company_dtls">
+                                  {Object.keys(job?.compensation)[0] ===
+                                  "paid_collaboration_and_gift"
+                                    ? "Paid Collaboration + Product/Gift"
+                                    : Object.keys(job?.compensation)[0] ===
+                                      "product_gift"
+                                    ? "Product/Gift"
+                                    : Object.keys(job?.compensation)[0] ===
+                                      "paid_collaboration"
+                                    ? "Paid Collaboration"
+                                    : ""}
+
+                                  {/* {Object.keys(job?.compensation)[0]
+                                    ?.split("_")
+                                    .map(
+                                      (word) =>
+                                        word.charAt(0).toUpperCase() +
+                                        word.slice(1)
+                                    )
+                                    .join(" ")} */}
                                 </span>
                               </div>
                               <div className="mb-2">

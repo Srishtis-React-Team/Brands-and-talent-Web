@@ -41,12 +41,15 @@ const Dashboard = () => {
   const calvinIcon = require("../assets/icons/6539ea694436eb9715c9cba3_image 10.png");
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
+  const pinkStar = require("../assets/icons/pink-star.png");
+
   const heartIcon = require("../assets/icons/heart.png");
   const chatIcon = require("../assets/icons/chat-icon.png");
   const favoruiteIcon = require("../assets/icons/favorite.png");
   const locationIcon = require("../assets/icons/locationIcon.png");
   const darkStar = require("../assets/icons/darkStar.png");
   const brightStar = require("../assets/icons/brightStar.png");
+  const handshake = require("../assets/icons/handshake.png");
   const jobIcon = require("../assets/icons/jobIcon.png");
   const girl1 = require("../assets/images/girl1.png");
   const girl2 = require("../assets/images/girl2.png");
@@ -58,6 +61,9 @@ const Dashboard = () => {
   const girl8 = require("../assets/images/girl8.png");
   const girl9 = require("../assets/images/girl9.png");
   const girl10 = require("../assets/images/girl10.png");
+  const newbanner_1 = require("../assets/images/newbanner_1.png");
+  const newbanner_2 = require("../assets/images/newbanner_2.png");
+  const newbanner_3 = require("../assets/images/newbanner_3.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -91,6 +97,8 @@ const Dashboard = () => {
   const [talentList, setTalentList] = useState([]);
   const [caseList, setCaseList] = useState([]);
   const [talentsList, setTalentsList] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(10);
+
   const [photoGraphersList, setphotoGraphersList] = useState([]);
   const [messageFromHeader, setMessageFromHeader] = useState("");
   const [hideAll, setHideAll] = useState(false);
@@ -136,6 +144,10 @@ const Dashboard = () => {
       .catch((err) => {});
   };
 
+  const handleReadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 4);
+  };
+
   useEffect(() => {
     getTalentList();
     setTalentList([
@@ -146,7 +158,7 @@ const Dashboard = () => {
         address: "Copenhagen, Denmark",
         isFavorite: false,
         location: "Australia",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         rating: 4,
       },
       {
@@ -155,7 +167,7 @@ const Dashboard = () => {
         name: "william",
         address: "Copenhagen, Denmark",
         location: "America",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         isFavorite: false,
         rating: 3,
       },
@@ -165,7 +177,7 @@ const Dashboard = () => {
         name: "Michael",
         address: "Pitsburg, Canada",
         location: "Canada",
-        booked: "6 Jobs Booked",
+        booked: "6 Projects Booked",
         isFavorite: false,
         rating: 5,
       },
@@ -176,7 +188,7 @@ const Dashboard = () => {
         address: "North Carolina, USA",
         isFavorite: false,
         location: "Russia",
-        booked: "150 Jobs Booked",
+        booked: "150 Projects Booked",
         rating: 1,
       },
       {
@@ -186,7 +198,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -196,7 +208,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -206,7 +218,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -216,7 +228,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -226,7 +238,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -236,7 +248,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -246,7 +258,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -256,7 +268,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
     ]);
@@ -268,7 +280,7 @@ const Dashboard = () => {
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
         location: "Australia",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         rating: 4,
       },
       {
@@ -277,7 +289,7 @@ const Dashboard = () => {
         name: "william",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "America",
-        booked: "3 Jobs Booked",
+        booked: "3 Projects Booked",
         isFavorite: false,
         rating: 3,
       },
@@ -287,7 +299,7 @@ const Dashboard = () => {
         name: "Michael",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "Canada",
-        booked: "6 Jobs Booked",
+        booked: "6 Projects Booked",
         isFavorite: false,
         rating: 5,
       },
@@ -298,7 +310,7 @@ const Dashboard = () => {
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
         location: "Russia",
-        booked: "150 Jobs Booked",
+        booked: "150 Projects Booked",
         rating: 1,
       },
     ]);
@@ -309,7 +321,7 @@ const Dashboard = () => {
         name: "Alexander",
         address: "Copenhagen, Denmark",
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         isFavorite: false,
         rating: 4,
       },
@@ -320,7 +332,7 @@ const Dashboard = () => {
         address: "Copenhagen, Denmark",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 3,
       },
       {
@@ -330,7 +342,7 @@ const Dashboard = () => {
         address: "Pitsburg, Canada",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 5,
       },
       {
@@ -340,7 +352,7 @@ const Dashboard = () => {
         address: "North Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       {
@@ -350,7 +362,7 @@ const Dashboard = () => {
         address: "South Carolina, USA",
         isFavorite: false,
         location: "China",
-        booked: "8 Jobs Booked",
+        booked: "8 Projects Booked",
         rating: 1,
       },
       // {
@@ -360,7 +372,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
       // {
@@ -370,7 +382,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
       // {
@@ -380,7 +392,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
       // {
@@ -390,7 +402,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
       // {
@@ -400,7 +412,7 @@ const Dashboard = () => {
       //   address: "South Carolina, USA",
       //   isFavorite: false,
       //   location: "China",
-      //   booked: "8 Jobs Booked",
+      //   booked: "8 Projects Booked",
       //   rating: 1,
       // },
     ]);
@@ -456,7 +468,7 @@ const Dashboard = () => {
     // window.scrollTo(0, 0);
     if (data == "find-talent") {
       if (!currentUserId) {
-        setMessage("You Must Be Logged In");
+        setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -470,7 +482,7 @@ const Dashboard = () => {
 
   const addFavorite = async (data) => {
     if (!currentUserId) {
-      setMessage("You Must Be Logged In");
+      setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
@@ -484,7 +496,7 @@ const Dashboard = () => {
       await ApiHelper.post(`${API.setUserFavorite}${data._id}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
-            setMessage("Added The Talent To Your Favorites ");
+            setMessage("Talent added to your favourite list");
             setOpenPopUp(true);
             getTalentList();
             setTimeout(function() {
@@ -504,7 +516,7 @@ const Dashboard = () => {
 
   const removeFavorite = async (item) => {
     if (!currentUserId) {
-      setMessage("You Must Be Logged In");
+      setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
@@ -545,6 +557,14 @@ const Dashboard = () => {
   useEffect(() => {
     setGenderList(["Male", "Female"]);
   }, []);
+
+  const createHandleMenuClick = (blogData) => {
+    return () => {
+      navigate(`/view-blog`, {
+        state: { blogData },
+      });
+    };
+  };
 
   const handleSelectChange = (event) => {
     setGenders(event.target.value);
@@ -651,9 +671,9 @@ const Dashboard = () => {
 
   const openTalent = (item) => {
     console.log(item, "item");
-    // navigate("/talent-profile", { state: { talentData: item } });
+    // navigate("/talent", { state: { talentData: item } });
 
-    navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+    navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
   };
@@ -670,6 +690,7 @@ const Dashboard = () => {
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
   const rateTalent = (item) => {
+    // alert("rateTalent");
     if (currentUserType === "brand") {
       setModalData(item);
       const modalElement = document.getElementById("ratingModal");
@@ -685,6 +706,7 @@ const Dashboard = () => {
       reviewerName: talentName ? talentName : brandName,
       reviewerId: currentUserId,
       talentId: talent?._id,
+      isReported: false,
     };
     await ApiHelper.post(API.reviewsPosting, formData)
       .then((resData) => {
@@ -719,6 +741,37 @@ const Dashboard = () => {
     });
   });
 
+  useEffect(() => {
+    getFeaturedArticles();
+  }, []);
+
+  const [featuredBlogsLsit, setFeaturedBlogsLsit] = useState(0);
+
+  const getFeaturedArticles = async () => {
+    await ApiHelper.get(API.getFeaturedArticles)
+      .then((resData) => {
+        if (resData) {
+          console.log(resData?.data?.data, "resData getFeaturedArticles");
+          setFeaturedBlogsLsit(resData?.data?.data.slice(0, 4));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const blogReadMore = async () => {
+    // navigate("/blogs", { state: { step: 4 } });
+    window.open("https://brandsandtalent.substack.com", "_blank");
+  };
+
+  const handleAirtableClick = () => {
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
+  };
+
   return (
     <>
       <div className="dashboard-main">
@@ -730,7 +783,7 @@ const Dashboard = () => {
               <div className="col-lg-12">
                 <div className="brand-section flex-column banner-title-section">
                   <p className="brand-title">
-                    <span>C</span>onnecting <span>B</span>rands and
+                    <span>C</span>onnecting <span>B</span>rands and{" "}
                     <span>T</span>
                     alent
                   </p>
@@ -743,18 +796,24 @@ const Dashboard = () => {
                 <div className="brand-options">
                   <div className="section-title">Get Booked</div>
                   <div className="section-description brand-secription">
-                    Get discovered by top Brands / Client, set your own rates,
-                    and keep 100% of your earnings. Chat directly with Brands /
-                    Client you love and build lasting relationships. We put
-                    creators first. Sign up today and start earning!
+                    Get discovered by top brands, set your own rates, and keep
+                    100% of your earnings. Chat directly with brands you love
+                    and build lasting relationships. We put creators first. Sign
+                    up today!
                   </div>
                   <div
+                    className="Join-now-wrapper"
+                    onClick={() => handleAirtableClick()}
+                  >
+                    <div className="joinnow-text">Join Now</div>
+                  </div>
+                  {/* <div
                     className="Join-now-wrapper"
                     data-bs-toggle="modal"
                     data-bs-target="#verify_age"
                   >
                     <div className="joinnow-text">Join Now</div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="col-lg-6">
@@ -767,6 +826,12 @@ const Dashboard = () => {
 
                   <div
                     className="Join-now-wrapper hireBtn"
+                    onClick={() => handleAirtableClick()}
+                  >
+                    <div className="joinnow-text">Hire Now</div>
+                  </div>
+                  {/* <div
+                    className="Join-now-wrapper hireBtn"
                     onClick={(e) => {
                       navigate("/signup", {
                         state: { signupCategory: "brand" },
@@ -774,7 +839,7 @@ const Dashboard = () => {
                     }}
                   >
                     <div className="joinnow-text">Hire Now</div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -854,7 +919,7 @@ const Dashboard = () => {
           <div className="container">
             <div className="gallery-section wraper">
               <div className="gallery-main showContent">
-                {talentsList?.map((item) => {
+                {talentsList?.slice(0, visibleCount)?.map((item) => {
                   return (
                     <div className="gallery-wrapper">
                       <div className="gallery-top">
@@ -922,7 +987,60 @@ const Dashboard = () => {
                               ? `${item?.preferredChildFirstname}`
                               : "Elizabeth"}
                           </div>
-                          <div className="address">
+                          {item?.averageStarRatings &&
+                            item?.averageStarRatings > 0 && (
+                              <>
+                                <div className="talent-details-wrapper">
+                                  <div className="logo-fill">
+                                    <img
+                                      className="talent-logo"
+                                      src={pinkStar}
+                                    ></img>
+                                  </div>
+                                  <div className="contSect">
+                                    <span>
+                                      *{item?.averageStarRatings} (
+                                      {item?.totalReviews} ratings)
+                                    </span>
+                                  </div>
+                                </div>
+                              </>
+                            )}
+
+                          {item?.noOfJobsCompleted && (
+                            <>
+                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                <div className="logo-fill-briefcase">
+                                  <i className="bi bi-briefcase-fill model-job-icons"></i>
+                                </div>
+                                <div className="contSect">
+                                  <span>
+                                    {item?.noOfJobsCompleted} Jobs Completed
+                                  </span>
+                                </div>
+                              </div>
+                            </>
+                          )}
+                          {item?.profession && (
+                            <>
+                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                <div className="logo-fill-briefcase">
+                                  <i className="bi bi-person-workspace model-job-icons"></i>
+                                </div>
+                                <div className="contSect">
+                                  <span>{item?.profession[0]?.value}</span>
+                                </div>
+                              </div>
+                            </>
+                          )}
+                          <span className="job-company_dtls nweAlign pt-2 d-flex">
+                            <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
+                            <span>
+                              {item?.childCity},{item?.parentState},{" "}
+                              {item?.parentCountry}{" "}
+                            </span>
+                          </span>
+                          {/* <div className="address">
                             {item.profession?.map((profession, index) => (
                               <React.Fragment key={index}>
                                 {profession.value}
@@ -942,10 +1060,10 @@ const Dashboard = () => {
                             <div className="location-wrapper">
                               <img src={jobIcon} alt="" />
                               <div className="location-name">
-                                25 Jobs Booked
+                                25 Projects Booked
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -954,43 +1072,51 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="find-more wraper">
-              <NavLink onClick={() => handleClick("find-talent")}>
-                <div className="moreBtn">Find More</div>
-              </NavLink>
-            </div>
+            {visibleCount < talentList.length && (
+              <div className="find-more wraper">
+                <div onClick={() => handleReadMore()} className="moreBtn">
+                  Find More
+                </div>
+              </div>
+            )}
           </div>
         </div>
+        {/* {talentCount} */}
+        {/* {brandUserCount} */}
 
-        <div className="communityWraper wraper secSpac">
+        {/* <div className="communityWraper wraper secSpac">
           <div className="container">
             <div className="title">Our Community</div>
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="community-card-wrapper card-background">
-                  <div className="count">{talentCount}</div>
-                  <div className="cards-text">Talents in community</div>
+                  <div className="count">500+</div>
+                  <div className="cards-text">Talent in Our Community</div>
                 </div>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="community-card-wrapper  card-background">
-                  <div className="count">0</div>
-                  <div className="cards-text">
-                    Brands / Client Professionals
-                  </div>
+                  <div className="count">50</div>
+                  <div className="cards-text">Brand Collaborators </div>
                 </div>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="community-card-wrapper  card-background">
-                  <div className="count">{brandUserCount}</div>
-                  <div className="cards-text">Brands / Client</div>
+                  <div className="count">50</div>
+                  <div className="cards-text">Happy Clients</div>
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="community-card-wrapper  card-background">
+                  <div className="count">200+</div>
+                  <div className="cards-text">Projects Completed</div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="productsWraper wraper secSpac">
           <div className="container">
@@ -1003,8 +1129,10 @@ const Dashboard = () => {
                   </div>
                   <div className="card-title">Talent Marketplace</div>
                   <div className="cards-description">
-                    A platform where talents can create a profile, showcase
-                    their work, and connect with...
+                    Brands & Talent (BT) is a creator-booking platform where you
+                    can find verified talent for your projects and campaigns. If
+                    you are a creator, simply create your profile, get verified,
+                    and get booked by brands and clients globally.
                   </div>
                 </div>
               </div>
@@ -1012,12 +1140,13 @@ const Dashboard = () => {
               <div className="col-md-4">
                 <div className="card-wrapper">
                   <div className="card-picture">
-                    <img src={lockIcon}></img>
+                    <i className="fa-solid fa-handshake handshake-icon"></i>
                   </div>
                   <div className="card-title">Hire Talent</div>
                   <div className="cards-description">
-                    The platform will help Brands / Client find, attract, and
-                    hire the best talent as per their ...
+                    Easily find, attract, and hire the best talent tailored to
+                    your needs. Connect with skilled professionals ready to
+                    elevate your brand.
                   </div>
                 </div>
               </div>
@@ -1029,8 +1158,10 @@ const Dashboard = () => {
                   </div>
                   <div className="card-title">Find Jobs</div>
                   <div className="cards-description">
-                    Talent can  build and manage their personal Brands / Client
-                    and will have a unique url ...
+                    Build, manage, and share your profile with a unique URL to
+                    potential clients. You can also use the URL in your resume.
+                    Discover job opportunities and connect with potential
+                    clients effortlessly.
                   </div>
                 </div>
               </div>
@@ -1038,50 +1169,58 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="caseWraper wraper secSpac">
-          <div className="title">Case studies</div>
+        {/* <div className="caseWraper wraper secSpac">
+          <div className="title">Blog</div>
           <div className="container">
             <div className="gallery-section">
               <div className="case-study-main row">
-                {caseList?.map((item) => {
-                  return (
-                    <div className="col-sm-6 col-md-4 col-lg-3">
-                      <div className="case-wrapper">
-                        <div className="caseBox">
-                          <img className="case-img" src={item.photo}></img>
-                        </div>
-                        <div className="case-gallery-content">
-                          <div className="caseCont">
-                            <div className="case-study-name">{item.name}</div>
-                            <div className="case-study-address">
-                              {item.address}
+                {featuredBlogsLsit && featuredBlogsLsit.length > 0 && (
+                  <>
+                    {featuredBlogsLsit?.map((item) => {
+                      return (
+                        <div className="col-sm-6 col-md-4 col-lg-3 my-3">
+                          <div
+                            className="case-wrapper"
+                            onClick={createHandleMenuClick(item)}
+                          >
+                            <div className="caseBox">
+                              <img
+                                className="case-img"
+                                src={`${API.userFilePath}${item.image}`}
+                              ></img>
+                            </div>
+                            <div className="case-gallery-content">
+                              <div className="caseCont">
+                                <div className="case-study-name">
+                                  {item.title}
+                                </div>
+                                <div className="case-study-address">
+                                  {item.heading}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </>
+                )}
               </div>
             </div>
           </div>
           <div className="container">
-            {!currentUserId && (
-              <NavLink onClick={() => handleClick("find-talent")}>
-                <div className="find-more wraper">
-                  <div className="moreBtn">Find More</div>
-                </div>
-              </NavLink>
-            )}
+            <div onClick={() => blogReadMore()} className="find-more wraper">
+              <div className="moreBtn">Read More</div>
+            </div>
           </div>
-        </div>
+        </div> */}
 
         {/* data-bs-ride="carousel" <= under id="carouselExampleControls"
             className="carousel slide" */}
 
         <div
           style={{
-            backgroundImage: `url(${sliderBackground})`,
+            backgroundImage: `url(${"https://brandsandtalent.com/static/media/slider-background.f9e862a140ea767c3108.png"})`,
           }}
           className="carousel-section storyCar secSpac wraper"
         >
@@ -1093,7 +1232,12 @@ const Dashboard = () => {
                   <div className="carousel-wrapper">
                     <div className="box-one">
                       <div className="carimg_Box">
-                        <img className="carousel-img" src={gents}></img>
+                        <img
+                          className="carousel-img"
+                          src={
+                            "https://brandsandtalent.com/static/media/gents.08fab317c10a5f2426d6.png"
+                          }
+                        ></img>
                       </div>
                       <div className="box-content">
                         <div className="quote">
@@ -1118,7 +1262,12 @@ const Dashboard = () => {
                     </div>
                     <div className="box-one box-two">
                       <div className="carimg_Box">
-                        <img className="carousel-img" src={female}></img>
+                        <img
+                          className="carousel-img"
+                          src={
+                            "https://brandsandtalent.com/static/media/female.3a451379c6815c96176f.png"
+                          }
+                        ></img>
                       </div>
                       <div className="box-content">
                         <div className="quote">
@@ -1147,7 +1296,12 @@ const Dashboard = () => {
                   <div className="carousel-wrapper">
                     <div className="box-one">
                       <div className="carimg_Box">
-                        <img className="carousel-img" src={girl}></img>
+                        <img
+                          className="carousel-img"
+                          src={
+                            "https://brandsandtalent.com/static/media/girl.8e1e0d21ee54e6b4e980.png"
+                          }
+                        ></img>
                       </div>
                       <div className="box-content">
                         <div className="quote">
@@ -1172,7 +1326,12 @@ const Dashboard = () => {
                     </div>
                     <div className="box-one box-two">
                       <div className="carimg_Box">
-                        <img className="carousel-img" src={fashion}></img>
+                        <img
+                          className="carousel-img"
+                          src={
+                            "https://brandsandtalent.com/static/media/fashion.040356690b771726e51c.png"
+                          }
+                        ></img>
                       </div>
                       <div className="box-content">
                         <div className="quote">
@@ -1211,13 +1370,13 @@ const Dashboard = () => {
                 <span className="visually-hidden">Previous</span>
               </button>
               <button
-                className="carousel-control-next"
+                className="carousel-control-next carousel-next-control"
                 type="button"
                 data-bs-target="#carouselExampleControls"
                 data-bs-slide="next"
               >
                 <span
-                  className="carousel-control-next-icon carousel-icons"
+                  className="carousel-control-next-icon  carousel-icons"
                   aria-hidden="true"
                 ></span>
                 <span className="visually-hidden">Next</span>
@@ -1282,9 +1441,9 @@ const Dashboard = () => {
               </div>
               <div className="modal-body">
                 <div className="mb-3">
-                  <div class="rating-box">
+                  <div className="rating-box">
                     <h3> Rate {modalData?.preferredChildFirstname}</h3>
-                    <div class="stars">
+                    <div className="stars">
                       {[...Array(5)].map((star, index) => {
                         return (
                           <i

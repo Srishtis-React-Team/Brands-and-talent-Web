@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import Bootstrap JavaScript
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
@@ -26,18 +25,110 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Select from "react-select";
 import Header from "../layout/header.js";
+import useFieldDatas from "../config/useFieldDatas.js";
 
 const GetBooked = () => {
+  const { categoryList, professionList } = useFieldDatas();
+
   const workPlaceTypesOptions = [
     "Man",
     "Woman",
-    "Non binary",
+    "Non-binary",
     "TransworkPlaceType Woman",
     "TransworkPlaceType Man",
     "AworkPlaceType",
     "Other",
     "Prefer not to say",
   ];
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [kidsCity, setKidsCity] = useState("");
+  useEffect(() => {
+    getCountries();
+  }, []);
+
+  const getCountries = async () => {
+    await ApiHelper.get(API.listCountries)
+      .then((resData) => {
+        if (resData) {
+          setCountryList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const employmentTypeList = [
+    "Full Time",
+    "Part Time",
+    "Per Diem",
+    "Contractor",
+    "Temporary",
+    "Other",
+  ];
+
+  const customStylesProfession = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "45px",
+      // Ensure the control is above other elements
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px", // Adjust the maxHeight as per your requirement
+      // Ensure the menu appears above other elements
+    }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensure menu portal appears above other elements
+  };
+
+  const getCities = async (data) => {
+    const formData = data;
+    await ApiHelper.post(API.listCity, formData)
+      .then((resData) => {
+        if (resData) {
+          setCityList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const handleSelectedCountry = (event) => {
+    console.log(event, "event");
+    console.log(event?.value, "event?.value");
+    setCountry(event?.value);
+    // setState("");
+    // handleSelectedState("");
+    getStates(event?.value);
+    console.log(country, "country");
+  };
+  const handleSelectedState = (state) => {
+    console.log(state, "state");
+    setState(state?.label);
+    // setKidsCity("");
+    getCities({
+      countryName: country,
+      stateName: state?.label,
+    });
+  };
+
+  const handleSelectedCity = (state) => {
+    setKidsCity(state?.label);
+  };
+
+  const getStates = async (data) => {
+    const formData = {
+      countryName: data,
+    };
+    await ApiHelper.post(API.listStates, formData)
+      .then((resData) => {
+        if (resData) {
+          setStateList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
 
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,7 +141,7 @@ const GetBooked = () => {
   const [currentUser_image, setCurrentUserImage] = useState("");
   const [currentUser_type, setCurrentUserType] = useState("");
   const girl1 = require("../assets/images/girl1.png");
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const sliderIcon = require("../assets/icons/sliders.png");
   const customStyles = {
     control: (provided, state) => ({
@@ -113,7 +204,7 @@ const GetBooked = () => {
 
   const applyjobs = async (data) => {
     if (!currentUserId) {
-      setMessage("You Must Be Logged In");
+      setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
@@ -132,7 +223,7 @@ const GetBooked = () => {
   };
   const viewJob = async (jobId) => {
     if (!currentUserId) {
-      setMessage("You Must Be Logged In");
+      setMessage("You must be logged in");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
@@ -155,7 +246,7 @@ const GetBooked = () => {
     };
     await ApiHelper.post(API.applyjobs, formData)
       .then((resData) => {
-        setMessage("Job Applied SuccessFully!");
+        setMessage("Job applied successfully");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -222,7 +313,15 @@ const GetBooked = () => {
   const [jobTypeError, setJobTypeError] = useState(false);
   const [workPlaceType, setWorkPlaceType] = useState("");
   const ageList = ["4-17", "18+"];
+  const selectedSkillsRef = useRef([]);
 
+  const selectSkills = (selectedOptions) => {
+    if (!selectedOptions || selectedOptions.length === 0) {
+      selectedSkillsRef.current = []; // Clear the selected skills
+    } else {
+      selectedSkillsRef.current = selectedOptions.map((option) => option.value);
+    }
+  };
   const applyFilter = async () => {
     let key_word;
     let job_location;
@@ -231,6 +330,8 @@ const GetBooked = () => {
     let job_type;
     let work_place_type;
     let job_name;
+    let category;
+    let employment_type;
 
     // Get the select element
     var selectElement = document.getElementById("workPlaceSelect");
@@ -247,11 +348,25 @@ const GetBooked = () => {
     console.log(job_type, "job_type");
 
     // Get the select element
+    var selectEmploymentElement = document.getElementById("employmentTypeID");
+    // Get the selected value
+    employment_type = selectEmploymentElement?.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(employment_type, "employment_type");
+
+    // Get the select element
     var selectAgeElement = document.getElementById("ageSelectID");
     // Get the selected value
     job_age = selectAgeElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
     console.log(job_age, "job_age");
+
+    // Get the select element
+    var selectCategoryElement = document.getElementById("selectedCategoryID");
+    // Get the selected value
+    category = selectCategoryElement?.value;
+    // Now you can use the selectedValue variable to access the value of the selected option
+    console.log(category, "job_age");
 
     if (keyWordRef.current) {
       key_word = keyWordRef?.current?.value;
@@ -284,14 +399,21 @@ const GetBooked = () => {
       age: job_age,
       jobType: job_type,
       workPlaceType: work_place_type,
-      skills: selectedSkills,
+      skills: selectedSkillsRef?.current,
+      talentId: talentId,
+      category: category,
+      employmentType: employment_type,
+      country: country,
+      state: state,
+      city: kidsCity,
     };
     console.log(formData, "formData talentFilterData");
     setIsLoading(true);
     await ApiHelper.post(API.searchJobs, formData)
       .then((resData) => {
-        console.log();
+        console.log(resData.data, "searchJobs");
         if (resData.data.status === true) {
+          setGigsList(resData.data.data);
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
           setTimeout(function() {
@@ -374,12 +496,16 @@ const GetBooked = () => {
       })
       .catch((err) => {
         console.log(err);
-        setMessage("Error Occured Try Again");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-          getRecentGigs();
-        }, 1000);
+        if (!currentUserId) {
+          setMessage("You must be logged in");
+          setOpenPopUp(true);
+          setTimeout(function() {
+            setOpenPopUp(false);
+            getRecentGigs();
+            navigate("/login");
+          }, 3000);
+        }
+        // setMessage("Error Occured Try Again");
       });
 
     setOpen(false);
@@ -413,19 +539,6 @@ const GetBooked = () => {
     setOpen(false);
   };
 
-  const selectSkills = (selectedOptions) => {
-    setSkillsError(false);
-    if (!selectedOptions || selectedOptions.length === 0) {
-      // Handle case when all options are cleared
-      setSelectedSkills([]); // Clear the languages state
-      return;
-    }
-
-    // Extract values of all selected languages
-    const selectedLanguages = selectedOptions.map((option) => option.value);
-    setSelectedSkills(selectedLanguages); // Update languages state with all selected languages
-  };
-
   return (
     <>
       <Header />
@@ -440,161 +553,207 @@ const GetBooked = () => {
                     Filter Jobs
                     <img className="filter-icon" src={sliderIcon} alt="" />
                   </div>
-                  <BootstrapDialog
-                    onClose={handleClose}
-                    aria-labelledby="customized-dialog-title"
+                  <Dialog
                     open={open}
+                    onClose={handleClose}
                     PaperProps={{
-                      sx: {
-                        marginTop: "10vh", // Adjust this value to suit your needs
-                        position: "absolute",
-                        top: 0,
-                        maxHeight: "90vh", // Optional: Limit the height of the dialog
+                      component: "form",
+                      onSubmit: (event) => {
+                        event.preventDefault();
+                        const formData = new FormData(event.currentTarget);
+                        const formJson = Object.fromEntries(formData.entries());
+                        const email = formJson.email;
+                        console.log(email);
+                        handleClose();
                       },
                     }}
                   >
-                    <DialogTitle
-                      sx={{ m: 0, p: 2 }}
-                      id="customized-dialog-title"
-                    >
-                      Filter Jobs
-                    </DialogTitle>
-                    <IconButton
-                      aria-label="close"
-                      onClick={handleClose}
-                      sx={{
-                        position: "absolute",
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                      }}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                    <DialogContent dividers>
+                    <div className="gift-dialog-header">
+                      <DialogTitle>Filter</DialogTitle>
+                      <i
+                        className="bi bi-x-lg close-gift"
+                        onClick={handleClose}
+                      ></i>
+                    </div>
+                    <DialogContent>
                       <div className="search-filter-section">
-                        <div className="search-labels">Keywords</div>
-                        <div>
-                          {/* <TextField
-                      autoFocus
-                      required
-                      margin="dense"
-                      id="name"
-                      name="email"
-                      label="Email Address"
-                      type="email"
-                      fullWidth
-                      variant="standard"
-                    /> */}
+                        <div className="kids-form-row row">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Keywords</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Keyword"
+                              ref={keyWordRef}
+                            ></input>
+                          </div>
 
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Category</label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              style={{ fontSize: "14px" }}
+                              id="selectedCategoryID"
+                            >
+                              <option value="" disabled selected>
+                                Select Category
+                              </option>
+                              {categoryList.map((option, index) => (
+                                <option key={index} value={option?.value}>
+                                  {option?.value}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="kids-form-row row">
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <label className="form-label">Country</label>
+                          <Select
+                            placeholder="Search country..."
+                            options={countryList.map((country, index) => ({
+                              value: country,
+                              label: country,
+                              key: index,
+                            }))}
+                            value={country?.value}
+                            onChange={handleSelectedCountry}
+                            isSearchable={true}
+                            styles={customStylesProfession}
+                          />
+                        </div>
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <label className="form-label">State</label>
+                          <Select
+                            placeholder="Select state..."
+                            options={stateList.map((state) => ({
+                              value: state.stateId, // or whatever unique identifier you want to use
+                              label: state.name,
+                            }))}
+                            value={state?.label}
+                            onChange={handleSelectedState}
+                            isSearchable={true}
+                            styles={customStylesProfession}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="kids-form-row row">
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <label className="form-label">City</label>
+                          <Select
+                            placeholder="Select City..."
+                            options={cityList.map((city) => ({
+                              value: city.cityId, // or whatever unique identifier you want to use
+                              label: city.name,
+                            }))}
+                            value={kidsCity?.label}
+                            onChange={handleSelectedCity}
+                            isSearchable={true}
+                            styles={customStylesProfession}
+                          />
+                        </div>
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <label className="form-label">Age</label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            style={{ fontSize: "14px" }}
+                            id="ageSelectID"
+                          >
+                            <option value="" disabled selected>
+                              Select Age
+                            </option>
+                            {ageList.map((option, index) => (
+                              <option key={index} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <label className="form-label">Skills</label>
+                          <Select
+                            isMulti
+                            name="skills"
+                            options={skillsList}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            onChange={(value) => selectSkills(value)}
+                            styles={customStyles}
+                          />
+                        </div>
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <div className=" ">
+                            <label className="form-label">Job Type</label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              style={{ fontSize: "14px" }}
+                              id="jobtypeID"
+                            >
+                              <option value="" disabled selected>
+                                Select Employment Type
+                              </option>
+                              {jobTypeOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="kids-form-row row ">
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <label className="form-label">Job Title</label>
                           <input
                             type="text"
                             className="form-control"
-                            placeholder="Enter Keyword"
-                            ref={keyWordRef}
-                            // onChange={(e) => {
-                            //   e.preventDefault();
-                            //   setJobName(e.target.value);
-                            // }}
+                            placeholder="Enter Job Title"
+                            ref={jobNameRef}
                           ></input>
                         </div>
-
-                        <div className="kids-form-row mt-3 row">
-                          <div className="kids-form-section col-md-6 mb-3">
-                            
-                              <label className="form-label">Location</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Location"
-                                ref={jobLocationRef}
-                              ></input>
-                           
-                          </div>
-                          <div className="kids-form-section kids-form-section">
-                          
-                              <label className="form-label">Age</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "14px" }}
-                                id="ageSelectID"
-                              >
-                                <option value="" disabled selected>
-                                  Select Age
+                        <div className="kids-form-section col-md-6 mb-3">
+                          <div className=" ">
+                            <label className="form-label">
+                              Employment Type
+                            </label>
+                            <select
+                              className="form-select"
+                              aria-label="Default select example"
+                              style={{ fontSize: "14px" }}
+                              id="employmentTypeID"
+                            >
+                              <option value="" disabled selected>
+                                Select Employment Type
+                              </option>
+                              {employmentTypeList.map((option, index) => (
+                                <option key={index} value={option}>
+                                  {option}
                                 </option>
-                                {ageList.map((option, index) => (
-                                  <option key={index} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
-                           
-                          </div>
-                        </div>
-                        {/* <div className="kids-form-section">
-                            <div className="mb-3">
-                              <label className="form-label">Skills</label>
-                              <Select
-                                isMulti
-                                name="colors"
-                                options={skillsList}
-                                valueField="value"
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                onChange={(value) => selectSkills(value)}
-                                styles={customStyles}
-                              />
-                            </div>
-                          </div> */}
-                        <div className="kids-form-row mt-3 row">
-                          <div className="kids-form-section col-md-6 mb-3">
-                            
-                              <label className="form-label">Job Name</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Enter Name"
-                                ref={jobNameRef}
-                              ></input>
-
-
-
-                              
-                           
-                          </div>
-                          <div className="kids-form-section col-md-6 mb-3">
-                          
-                              <label className="form-label">Job Type</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "14px" }}
-                                id="jobtypeID"
-                              >
-                                <option value="" disabled selected>
-                                  Select Job Type
-                                </option>
-                                {jobTypeOptions.map((option, index) => (
-                                  <option key={index} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
-                           
+                              ))}
+                            </select>
                           </div>
                         </div>
                       </div>
                     </DialogContent>
                     <DialogActions>
-                      <Button
-                        className="search-popup-btn"
+                      {/* <Button onClick={handleClose}>Cancel</Button> */}
+                      <button
+                        type="button"
+                        className="btn gift-payment-btn"
                         onClick={applyFilter}
                       >
-                        Filter
-                      </Button>
+                        {isLoading ? "Loading..." : "Filter"}
+                      </button>
                     </DialogActions>
-                  </BootstrapDialog>
+                  </Dialog>
                 </React.Fragment>
               </div>
 
@@ -696,91 +855,58 @@ const GetBooked = () => {
                             </div>
                           </div>
                           <div className="recent-settwo pt-0">
-                            <div className="recent-gigs-count-wrapper">
-                              <div className="recent-gigs-logo">
-                                <i className="bi bi-person-check-fill"></i>
-                              </div>
-                              <div className="recent-gig-count-details">
-                                <div className="recent-gig-name">Followers</div>
-                                <div className="recent-gigs-count">2500</div>
-                              </div>
+                            <div className="mb-2">
+                              <span className="job-company_dtls">
+                                <i className="bi bi-person-workspace"></i>
+                              </span>{" "}
+                              {/* . */}
+                              <span className="job-company_dtls">
+                                {item?.jobType} <i className="bi bi-dot"></i>
+                              </span>
+                              <span className="job-company_dtls">
+                                <i className="bi bi-geo-alt-fill location-icon"></i>
+                                {item?.state}, {item?.city}{" "}
+                                <i className="bi bi-dot"></i>
+                              </span>
+                              <span className="job-company_dtls">
+                                {item?.employmentType}{" "}
+                                <i className="bi bi-dot"></i>
+                              </span>
+                              <span className="job-company_dtls">
+                                {item?.category} <i className="bi bi-dot"></i>
+                              </span>
+                              <span className="job-company_dtls">
+                                {Object.keys(item?.compensation)[0] ===
+                                "paid_collaboration_and_gift"
+                                  ? "Paid Collaboration + Product/Gift"
+                                  : Object.keys(item?.compensation)[0] ===
+                                    "product_gift"
+                                  ? "Product/Gift"
+                                  : Object.keys(item?.compensation)[0] ===
+                                    "paid_collaboration"
+                                  ? "Paid Collaboration"
+                                  : ""}
+                              </span>
                             </div>
-
-                            <div className="recent-gigs-count-wrapper">
-                              {/* <div className="recent-gigs-logo">
-                                    <i className="bi bi-person-arms-up"></i>
-                                  </div> */}
-                              {/* <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Age</div>
-                                    <div className="recent-gigs-count">
-                                      {item.age}
-                                    </div>
-                                    <div className="recent-gig-details">
-                                      <div className="recent-gig-company">
-                                        {item.hiringCompany}
-                                      </div>
-                                      <div className="recent-gig-name">
-                                        {item.jobTitle}
-                                      </div>
-                                      <div className="recent-gig-description">
-                                        {item.description}
-                                      </div>
-                                    </div>
-                                  </div> */}
-
-                              <div className="recent-settwo">
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-person-check-fill"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">
-                                      Followers
-                                    </div>
-                                    <div className="recent-gigs-count">
-                                      2500
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-person-arms-up"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">Age</div>
-                                    <div className="recent-gigs-count">
-                                      {item.age}
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-gender-ambiguous"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">
-                                      Gender
-                                    </div>
-                                    <div className="recent-gigs-count">
-                                      {item.gender}
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="recent-gigs-count-wrapper">
-                                  <div className="recent-gigs-logo">
-                                    <i className="bi bi-geo-alt-fill"></i>
-                                  </div>
-                                  <div className="recent-gig-count-details">
-                                    <div className="recent-gig-name">
-                                      Location
-                                    </div>
-                                    <div className="recent-gigs-count">
-                                      {item.jobLocation}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          </div>
+                          <div className="mb-2">
+                            <span
+                              style={{ fontWeight: "bold" }}
+                              className="job-company_dtls"
+                            >
+                              Application Deadline :{" "}
+                            </span>{" "}
+                            <span>
+                              {" "}
+                              {new Date(
+                                item.lastDateForApply
+                              ).toLocaleDateString("en-GB", {
+                                weekday: "long",
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              })}
+                            </span>
                           </div>
                         </div>
                       </>

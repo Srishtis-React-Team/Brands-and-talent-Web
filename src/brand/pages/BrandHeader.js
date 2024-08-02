@@ -18,8 +18,10 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserType, avatarImage } = CurrentUser();
   console.log(hideToggleButton, "hideToggleButton");
   const navigate = useNavigate();
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const model1 = require("../../assets/images/girl1.png");
+  const cofeeIcon = require("../../assets/icons/cofeeIcon.png");
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [brandId, setBrandId] = useState(null);
   const [notificationList, setNotifications] = useState([]);
@@ -146,13 +148,11 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "profile") {
-        navigate(
-          `/brand-dashboard/${brandData?.brandName.replace(/\s+/g, "")}`
-        );
+        navigate(`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`);
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
-        setMessage("Logged Out SuccessFully");
+        setMessage("Logged out successfully");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -165,12 +165,21 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     };
   };
 
+  const handleClickBlogs = (step) => {
+    // navigate("/blogs", { state: { step: step } });
+    window.open("https://brandsandtalent.substack.com/", "_blank");
+  };
+
   useEffect(() => {
     if (myState === true) {
       getBrand();
       // alert("getBrandHeader");
     }
   }, [myState]);
+
+  const handleCoffeeLink = () => {
+    window.open("https://buymeacoffee.com/brandsandtalent", "_blank");
+  };
 
   return (
     <>
@@ -253,38 +262,38 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                               className="dropdown-item dropdown-toggle"
                               dropdown-toggle
                               data-bs-toggle="dropdown"
+                              onClick={() => handleClickBlogs(0)}
                             >
-                              <NavLink to="/blogs">Blogs</NavLink>
+                              Newsletter
                             </a>
-                            <ul className="dropdown-menu blogs-menu">
-                              <li>
-                                <a href="" className="dropdown-item">
-                                  <NavLink to="/blogs">
-                                    Industry News & Insights
-                                  </NavLink>
+                            {/* <ul className="dropdown-menu blogs-menu">
+                              <li onClick={() => handleClickBlogs(1)}>
+                                <a className="dropdown-item">
+                                  News & Announcements
                                 </a>
                               </li>
-                              <li>
-                                <a href="" className="dropdown-item">
-                                   Case Studies
+                              <li onClick={() => handleClickBlogs(2)}>
+                                <a className="dropdown-item">
+                                  Industry Insights
                                 </a>
                               </li>
-                              <li>
-                                <a href="" className="dropdown-item">
-                                  Talent Diaries
+                              <li onClick={() => handleClickBlogs(3)}>
+                                <a className="dropdown-item">Interviews</a>
+                              </li>
+                              <li onClick={() => handleClickBlogs(4)}>
+                                <a className="dropdown-item">Case Studies</a>
+                              </li>
+                              <li onClick={() => handleClickBlogs(5)}>
+                                <a className="dropdown-item">
+                                  Talent Tips & Tricks
                                 </a>
                               </li>
-                              <li>
-                                <a href="" className="dropdown-item">
-                                   Talent Tips & Tricks
+                              <li onClick={() => handleClickBlogs(6)}>
+                                <a className="dropdown-item">
+                                  Brand Tips & Tricks
                                 </a>
                               </li>
-                              <li>
-                                <a href="" className="dropdown-item">
-                                   Brand Tips & Tricks
-                                </a>
-                              </li>
-                            </ul>
+                            </ul> */}
                           </li>
                           <li>
                             <hr className="dropdown-divider"></hr>
@@ -298,6 +307,14 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                           </li>
                         </ul>
                       </li>
+                    </div>
+                    <div
+                      className="navTxt cofee-link"
+                      style={{ cursor: "pointer" }}
+                      onClick={handleCoffeeLink}
+                    >
+                      Support BT
+                      <img src={cofeeIcon} alt="" className="cofeeIcon-img" />
                     </div>
                   </nav>
                   <React.Fragment>

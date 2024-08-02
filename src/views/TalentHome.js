@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import Bootstrap JavaScript
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
@@ -102,9 +101,7 @@ const TalentHome = () => {
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main">
-          <div className="create-job-title">
-            Welcome To Brands / Client And Talent
-          </div>
+          <div className="create-job-title">Welcome To Brands and Talent</div>
           <div className="home-cards mt-1 row pad8">
             <div className="col-md-4 col-lg-3 pad8">
               <Link to="/edit-talent-profile">

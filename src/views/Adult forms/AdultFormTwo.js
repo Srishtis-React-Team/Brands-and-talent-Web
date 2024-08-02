@@ -50,7 +50,7 @@ const AdultFormTwo = () => {
     console.log(talentData, "talentData");
   }, [talentData]);
 
-  const btLogo = require("../../assets/images/LOGO.jpg");
+  const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const adultsBanner = require("../../assets/images/adultsBanner.png");
@@ -97,7 +97,7 @@ const AdultFormTwo = () => {
           updateProfileStatus();
           setTimeout(function() {
             setOpenPopUp(false);
-            navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
+            navigate(`/talent/${talentData.publicUrl}`, {
               state: { talentData: talentData },
             });
           }, 1000);
@@ -119,12 +119,9 @@ const AdultFormTwo = () => {
     await ApiHelper.post(`${API.updateProfileStatus}${queryString}`)
       .then((resData) => {
         let stateObject = resData.data.data;
-        navigate(
-          `/talent-profile/${resData.data.data.preferredChildFirstname}?${queryString}`,
-          {
-            state: { stateObject },
-          }
-        );
+        navigate(`/talent/${resData.data.data.publicUrl}?${queryString}`, {
+          state: { stateObject },
+        });
       })
       .catch((err) => {
         setIsLoading(false);

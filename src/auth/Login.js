@@ -35,7 +35,7 @@ const Login = () => {
     console.log(token, "token");
   }, []);
 
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const googleLogo = require("../assets/icons/googleLogo.png");
   const importIcon = require("../assets/icons/instagram.png");
   const userIcon = require("../assets/icons/user.png");
@@ -120,8 +120,9 @@ const Login = () => {
   };
 
   const handleForgotPassword = (userType) => {
-    navigate(`/forgot-password?${userType}`);
+    navigate(`/forgot-password`);
   };
+
   const brandSignup = () => {
     navigate(`/brand-firstGig`);
   };
@@ -141,7 +142,7 @@ const Login = () => {
           if (resData.data.status === true) {
             console.log("called");
             setIsLoading(false);
-            setMessage("Logged In SuccessFully!");
+            setMessage("Logged in successfully!");
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
@@ -149,13 +150,10 @@ const Login = () => {
               setBrandsLocalStorage(resData.data);
               console.log(resData.data, "resData.data");
               navigate(
-                `/brand-dashboard/${resData?.data?.data?.brandName.replace(
-                  /\s+/g,
-                  ""
-                )}`
+                `/brand/${resData?.data?.data?.publicUrl.replace(/\s+/g, "")}`
               );
-              window.location.reload();
-              // navigate(`/talent-profile/${item.preferredChildFirstname}`, {
+              // window.location.reload();
+              // navigate(`/talent/${item.publicUrl}`, {
               //   state: { talentData: item },
               // });
             }, 1000);
@@ -186,7 +184,7 @@ const Login = () => {
           if (resData.data.status === true) {
             console.log("called");
             setIsLoading(false);
-            setMessage("Logged In SuccessFully!");
+            setMessage("Logged in successfully!");
             setOpenPopUp(true);
             setTimeout(function() {
               setOpenPopUp(false);
@@ -195,10 +193,10 @@ const Login = () => {
               if (resData.data.type === "adult") {
                 console.log("adult block");
                 navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-                window.location.reload();
+                // window.location.reload();
               } else if (resData.data.type === "kids") {
                 navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
-                window.location.reload();
+                // window.location.reload();
                 // navigate(`/otp?${resData?.data?.data?.email}`);
               }
             }, 1000);
@@ -227,6 +225,7 @@ const Login = () => {
     localStorage.setItem("emailID", data?.email);
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
+
     localStorage.setItem("currentUserType", data?.user?.userType);
     localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
     localStorage.setItem(
@@ -267,6 +266,9 @@ const Login = () => {
       <Header onData={data} />
       <div className="login-main">
         <div className="login-container">
+          <div className="login-logo">
+            <img className="btLogo" src={btLogo} alt="" />
+          </div>
           <div className="choose-who">
             <div
               className={`iam-brand ${
@@ -391,12 +393,12 @@ const Login = () => {
             />
           </div> */}
 
-          {selectedItem === "brand" && (
+          {/* {selectedItem === "brand" && (
             <>
               <div className="new-account-wrapper">
-                <span className="need-account">Need an account ?</span>
+                <span className="need-account">No account?</span>
                 <div onClick={() => brandSignup()} className="signup-login">
-                  Sign Up as Brand/Client
+                  Sign up as a Brand/Client
                 </div>
               </div>
             </>
@@ -404,13 +406,13 @@ const Login = () => {
           {selectedItem === "talent" && (
             <>
               <div className="new-account-wrapper">
-                <span className="need-account">Need an account ?</span>
+                <span className="need-account">No account?</span>
                 <div onClick={() => talentSignup()} className="signup-login">
-                  Sign Up as Talent
+                  Sign up as a Talent
                 </div>
               </div>
             </>
-          )}
+          )} */}
           {/* <div className="stroke-wrapper login-input-containers">
             <div className="stroke-div"></div>
             <div className="or-signup">Or Login with</div>
@@ -422,10 +424,6 @@ const Login = () => {
               <div className="media-text">Google</div>
             </div>
           </div> */}
-
-          <div className="login-logo">
-            <img className="btLogo" src={btLogo} alt="" />
-          </div>
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

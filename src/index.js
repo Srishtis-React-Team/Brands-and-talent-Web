@@ -12,6 +12,9 @@ import { StyledEngineProvider } from "@mui/material";
 // https://hybrid.sicsglobal.com/project/brandsandtalent/
 // "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent/",
 
+// basename=""
+// "homepage": "https://staging.brandsandtalent.com/",
+// "homepage": "https://brandsandtalent.com/",
 ReactDOM.render(
   <BrowserRouter>
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">

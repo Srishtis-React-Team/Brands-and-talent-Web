@@ -24,7 +24,14 @@ import CurrentUser from "../CurrentUser";
 import BrandHeader from "../brand/pages/BrandHeader";
 import BrandSideMenu from "../brand/pages/BrandSideMenu";
 import Spinner from "../components/Spinner";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router";
+
 const ContactUs = () => {
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const {
@@ -120,39 +127,52 @@ const ContactUs = () => {
     setMobileError(false);
   };
 
+  const handleNavigation = (event) => {
+    if (location.state && location.state.from) {
+      navigate(`/${location.state.from}`);
+    } else {
+      navigate(-1); // Equivalent to history.goBack() in v5
+    }
+  };
+
   return (
     <>
-      <main style={{ margin: "30px" }} id="mainBrand" className="">
+      <main
+        style={{ margin: "30px auto", width: "50%" }}
+        id="mainBrand"
+        className=""
+      >
         <div className="brand-content-main boxBg edit_talentprofile">
           <div className="create-job-title">How Can we help?</div>
           <p>
-            If you need assistance about specific enquiry please feel free to
-            get in touch with us using the form below. we will try to get you
-            with in 1-2 bussiness days.{" "}
+            Have a question? Fill out the form below, and we'll get back to you
+            within 1-2 business days
           </p>
 
-          <div className="update-password-main w-100 row">
-            <div className="kids-form-section col-md-6 mb-3">
+          <div className="update-password-main w-100">
+            <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">
-                Name <span className="mandatory">*</span>
+                Full Name <span className="mandatory">*</span>
               </label>
-              <div className="form-group has-search adult-password-wrapper">
-                <span className="fa fa-lock form-control-feedback"></span>
+              <div className="form-group adult-password-wrapper">
+                {" "}
                 <input
                   type="text"
                   className="form-control adult-signup-inputs"
-                  placeholder="Enter Name"
+                  placeholder="Enter Full Name"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
                 ></input>
                 {nameError && (
-                  <div className="invalid-fields">Please Enter Your Name</div>
+                  <div className="invalid-fields">
+                    Please enter Your Full Name
+                  </div>
                 )}
               </div>
             </div>
-            <div className="kids-form-section col-md-6 mb-3">
+            <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">
                 E-mail <span className="mandatory">*</span>
               </label>
@@ -174,10 +194,8 @@ const ContactUs = () => {
                 <div className="invalid-fields">Please enter Email</div>
               )}
             </div>
-            <div className="kids-form-section col-md-6 mb-3">
-              <label className="form-label">
-                Mobile No <span className="optional">(Optional)</span>
-              </label>
+            <div className="kids-form-section col-md-12 mb-3">
+              <label className="form-label">Mobile Number</label>
 
               <MuiPhoneNumber
                 defaultCountry={"kh"}
@@ -192,15 +210,15 @@ const ContactUs = () => {
                 <div className="invalid-fields">Only Numbers Allowed</div>
               )}
             </div>
-            <div className="kids-form-section col-md-6 mb-3">
+            <div className="kids-form-section col-md-12 mb-3">
               <label
                 htmlFor="exampleFormControlTextarea1"
                 className="form-label"
               >
-                Enquiry<span className="mandatory">*</span>
+                Message<span className="mandatory">*</span>
               </label>
               <textarea
-                className="form-control address-textarea w-100"
+                className="contact-us-textarea w-100"
                 id="exampleFormControlTextarea1"
                 value={enquiry}
                 rows="3"
@@ -210,11 +228,21 @@ const ContactUs = () => {
                 }}
               ></textarea>
               {enquiryError && (
-                <div className="invalid-fields">Please Enter Enquiry</div>
+                <div className="invalid-fields">Please enter Message</div>
               )}
             </div>
-            <div className="add-portfoli-section">
-              <div className="add-portfolia-btn">
+            <div className="add-portfoli-section ">
+              <div className="add-portfolia-btn contactus-btn-wrapper">
+                <div
+                  className="edit-profile-navigation-btn"
+                  onClick={() => {
+                    handleNavigation("back");
+                  }}
+                >
+                  <i className="bi bi-arrow-left-circle-fill arrow-left-circle"></i>
+                  <span className="edit-profile-navigation-text">Back</span>
+                </div>
+
                 <Button
                   onClick={postSupportMail}
                   className="edit-profileimg-btn"

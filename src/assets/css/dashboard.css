@@ -139,6 +139,22 @@ body {
 .form-select {
   height: 45px !important;
 }
+.kids-form-section .MuiInputBase-input,
+.add-skill-wrapper .MuiInputBase-input {
+  height: 45px;
+  padding: 0 15px;
+  font-size: 15px;
+}
+.add-skill-wrapper .MuiInputBase-fullWidth {
+  padding: 0;
+  height: 45px;
+}
+
+.add-skill-wrapper .MuiFormLabel-root {
+  line-height: 12px;
+  font-size: 15px;
+  min-height: 20px;
+}
 
 .css-13cymwt-control {
   height: 45px !important;
@@ -291,14 +307,36 @@ img.iconMenu.hover {
   color: #ffffff;
 }
 
+/* @import url("https://fonts.googleapis.com/css2?family=Matcherator&display=swap"); */
+
+/* @font-face {
+  font-family: "Aaux Next Medium";
+  src: url("/path-to-fonts/aaux-next-medium.woff2") format("woff2"),
+    url("/path-to-fonts/aaux-next-medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+} */
+
+/* @font-face {
+  font-family: "Corporate S WGL Regular";
+  src: url("/path-to-fonts/corporate-s-wgl-regular.woff2") format("woff2"),
+    url("/path-to-fonts/corporate-s-wgl-regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; */
+
+@import url("https://fonts.fontsquirrel.com/css/corporate-s-wgl-regular");
+
 .brand-section > .brand-title {
   color: #fff;
   font-size: 53px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: bold;
   line-height: normal;
   text-align: center;
   margin: 0 0 7px !important;
+  /* font-family: "Gutta Percha" !important; */
+  /* font-family: "Corporate S WGL Regular"; */
+  font-family: sans-serif;
 }
 
 .brand-section > p > span {
@@ -309,6 +347,9 @@ img.iconMenu.hover {
   color: #fff;
   font-size: 18px;
   text-align: center;
+  /* font-family: "Gutta Percha" !important; */
+  /* font-family: "Corporate S WGL Regular" !important; */
+  font-family: sans-serif;
 }
 .banner-content .col-lg-6 {
   justify-content: center;
@@ -617,6 +658,36 @@ a:hover {
 .signup-terms-linetwo > span {
   color: #c2114b;
   text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.kids-signup-terms {
+  color: #000;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 8px 0px;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 23px;
+}
+
+.kids-signup-terms-linetwo {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 0px 0px;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 20px;
+}
+
+.kids-signup-terms-linetwo > span {
+  color: #c2114b;
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -1193,7 +1264,7 @@ input[type="radio"] {
 } */
 
 .section-description {
-  padding: 0;
+  padding: 10px 0px;
   width: 100%;
   color: #fff;
   text-align: center;
@@ -1201,6 +1272,8 @@ input[type="radio"] {
   font-style: normal;
   font-weight: 300;
   line-height: 28px;
+  /* font-family: "Gutta Percha" !important; */
+  font-family: sans-serif;
   min-height: 120px;
 }
 
@@ -1239,6 +1312,7 @@ input[type="radio"] {
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  cursor: pointer;
 }
 .case-study-address {
   color: #000;
@@ -1246,6 +1320,7 @@ input[type="radio"] {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  cursor: pointer;
 }
 
 .social-medias > img {
@@ -1337,7 +1412,8 @@ input[type="radio"] {
 }
 
 .adults-select-btn {
-  width: 25%;
+  /* width: 25%; */
+  padding: 0 15px;
   height: 50px;
   border-radius: 25px;
   border: 1px solid #fff;
@@ -1392,6 +1468,7 @@ input[type="radio"] {
   width: 100%;
   height: 260px;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .active-tab {
@@ -1433,7 +1510,7 @@ input[type="radio"] {
   transition: 0.5s;
 }
 
-.storyCar .carousel-control-next,
+.storyCar .carousel-next-control,
 .storyCar .carousel-control-prev {
   width: auto;
   height: auto;
@@ -1444,12 +1521,18 @@ input[type="radio"] {
   left: -35px;
 }
 
-.storyCar .carousel-control-next {
+.storyCar .carousel-next-control {
   right: -35px;
 }
 
-.carousel-control-next,
+.carousel-next-control,
 .carousel-control-prev .carousel-img {
+  width: 219px;
+  height: 293px;
+  border-radius: 16px;
+  border: 1px solid white;
+}
+.carousel-img {
   width: 219px;
   height: 293px;
   border-radius: 16px;
@@ -1532,10 +1615,23 @@ input[type="radio"] {
 }
 
 .get-discover {
-  font-size: 42px;
+  font-size: 32px;
   color: #fff;
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: sans-serif;
+}
+
+.get-discover-description {
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 300;
+  padding: 10px 0px;
+  width: 70%;
+  line-height: 25px;
+  text-align: center;
+  font-style: italic;
 }
 
 .footer-wrapper {
@@ -1781,7 +1877,7 @@ input[type="radio"] {
   right: 0 !important;
   left: inherit !important;
   transform: translate(0px, 22px) !important;
-  top: 0 !important;
+  top: -3px !important;
 }
 .headerDashboard ul.blogs-menu,
 .header ul.blogs-menu {
@@ -1808,12 +1904,12 @@ input[type="radio"] {
   font-size: 11px;
   padding-right: 1px;
 }
-
+/* https://brandsandtalent.com/backend/uploads/5651c497-52fc-42c9-bf74-bb6c0630997b.png */
 .bannerImg {
   position: relative;
   z-index: 0;
-  background-image: url("../images/banner_bg.png");
-  /* background-position: center center !important; */
+  background-image: url("https://brandsandtalent.com//backend/uploads/f2956536-993b-4710-b05d-8230bd438ac1.webp");
+  background-position: center center !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
 
@@ -1840,6 +1936,14 @@ input[type="radio"] {
 .bannerImg .relCont {
   position: relative;
   z-index: 1;
+}
+
+.splitterDiv {
+  justify-content: space-between;
+}
+
+.splitterDiv .form-control {
+  width: 48%;
 }
 
 /* MEDIA-QUERY START */
@@ -1882,12 +1986,15 @@ input[type="radio"] {
     margin-bottom: 15px;
     font-size: 16px;
     line-height: 25px;
+    font-family: sans-serif;
   }
   .section-title {
     margin-bottom: 10px;
     font-size: 26px;
+    font-family: sans-serif;
   }
   .brand-section > .brand-description {
+    font-family: sans-serif;
     font-size: 16px;
   }
   .gallery-wrapper {
@@ -2021,13 +2128,15 @@ input[type="radio"] {
     padding: 0 !important;
   }
   .mobile-nav-functions .login-text {
-    margin-right: 0 !important;
+    margin-right: 15px !important;
   }
 }
 
 @media (max-width: 580px) {
   .section-description {
     font-size: 14px;
+    font-family: sans-serif;
+
     line-height: 22px;
   }
   .banner-title-section {
@@ -2035,6 +2144,7 @@ input[type="radio"] {
   }
   .brand-options .section-title {
     font-size: 24px;
+    font-family: sans-serif;
     color: #fff;
   }
   .joinnow-text {
@@ -2102,7 +2212,7 @@ input[type="radio"] {
   }
 
   .adults-select-btn {
-    width: 45%;
+    /* width: 45%; */
     height: 40px;
     border-radius: 25px;
     border: 1px solid #fff;
@@ -2863,6 +2973,7 @@ head .profile-image-header {
     font-size: 34px;
     margin: 0 0 25px !important;
     line-height: 42px;
+    font-family: "emoji";
   }
 }
 @media (min-width: 480px) {
@@ -2872,7 +2983,7 @@ head .profile-image-header {
 
   .nav-link {
     color: #000;
-    font-size: 16px;
+    font-size: 14px;
     padding: 0;
   }
   .nav-link:hover {
@@ -2954,7 +3065,7 @@ head .profile-image-header {
   }
 
   .kids-select-btn {
-    width: 25%;
+    width: 150px;
     height: 50px;
     border-radius: 25px;
     border: 1px solid #fff;
@@ -3058,6 +3169,8 @@ head .profile-image-header {
     justify-content: center;
     align-items: center;
     padding: 15px;
+    width: 60px;
+    height: 60px;
   }
 
   .cards {
@@ -3132,6 +3245,8 @@ head .profile-image-header {
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    /* font-family: "Gutta Percha" !important; */
+    font-family: sans-serif;
   }
 
   .mobile-section {
@@ -3326,6 +3441,8 @@ head .profile-image-header {
   .brand-section > .brand-description {
     color: #fff;
     font-size: 16px;
+    font-family: sans-serif;
+
     text-align: center;
   }
   .section-description {
@@ -3333,6 +3450,8 @@ head .profile-image-header {
     width: 90%;
     color: #fff;
     text-align: center;
+    font-family: sans-serif;
+
     font-size: 14px;
     font-style: normal;
     font-weight: 300;
@@ -3371,6 +3490,7 @@ head .profile-image-header {
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    font-family: sans-serif;
     text-align: center;
   }
 
@@ -3412,6 +3532,8 @@ head .profile-image-header {
     justify-content: center;
     align-items: center;
     padding: 15px;
+    width: 60px;
+    height: 60px;
   }
   .brands-row-title {
     margin: 15px 0px;
@@ -3512,5 +3634,42 @@ head .profile-image-header {
 }
 
 .ql-editor {
-  height: 200px !important;
+  height: 150px !important;
+}
+
+.cofee-link {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.cofee-link:hover {
+  color: #c2114b;
+}
+
+.coffee-icon {
+  padding-right: 6px;
+  color: rgb(255, 136, 0);
+}
+.coffee-icon:hover {
+  color: #c2114b;
+}
+
+.cofeeIcon-img {
+  padding-left: 2px;
+  color: rgb(255, 136, 0);
+  width: 25px;
+  height: 25px;
+}
+
+.rating {
+}
+
+.handshake-icon {
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.social-media-icons:hover {
+  color: #c2124b;
+  cursor: pointer;
 }

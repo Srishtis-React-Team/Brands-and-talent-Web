@@ -14,15 +14,24 @@
   display: flex;
   cursor: pointer;
   align-items: center;
+  padding: 10px 0px;
 }
 
+.question-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.trash {
+  padding-left: 10px;
+}
 .add-more-questions-text {
   color: #c2114b;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  padding-left: 15px;
+  padding-left: 8px;
 }
 
 .compensation-radios {
@@ -65,7 +74,7 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  padding-left: 10px;
+  padding-left: 6px;
 }
 
 .create-job-buttons {
@@ -85,7 +94,7 @@
   border-radius: 60px;
   object-fit: cover;
 }
-.browseJob .job-company_dtls{
+.browseJob .job-company_dtls {
   font-size: 15px;
   font-weight: 500;
   line-height: 20px;
@@ -95,10 +104,10 @@
 .browseJob .job-company-logo {
   border-radius: 0;
 }
-.browseJob .logoSpc .job-company-name{ 
+.browseJob .logoSpc .job-company-name {
   padding-left: 15px;
   font-weight: 600;
-  font-size: 16px; 
+  font-size: 16px;
 }
 
 .createjob-btn {
@@ -129,7 +138,8 @@
     display: flex;
     align-items: center;
     background-color: #c2114b;
-    padding: 10px;
+    height: 30px;
+    padding: 6px;
     border-radius: 3px;
     margin-bottom: 10px;
     .skill-text {
@@ -473,6 +483,4 @@
   .browseJob .recent-set-three.col-md-5 {
     justify-content: center;
   }
-
-  
 }

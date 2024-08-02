@@ -6,13 +6,15 @@ import BrandHeader from "../../brand/pages/BrandHeader";
 import { io } from "socket.io-client";
 import TalentHeader from "../../layout/TalentHeader";
 import Axios from "axios";
-import { Dropdown } from "react-bootstrap";
 import PopUp from "../PopUp";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { create } from "@mui/material/styles/createTransitions";
+import CurrentUser from "../../CurrentUser";
+import { Dropdown } from "@mui/base";
 
 const MessageTalents = () => {
+  const { currentUserType } = CurrentUser();
   const location = useLocation();
   const avatar = require("../../assets/images/avatar.webp");
   const navigate = useNavigate();
@@ -75,6 +77,12 @@ const MessageTalents = () => {
   };
 
   const handleBackClick = () => {
+    // if (currentUserType == "brand") {
+    //   navigate(`/brand`);
+    // }
+    // if (currentUserType == "talent") {
+    //   navigate("/talent-dashboard");
+    // }
     if (location.state && location.state.from) {
       navigate(`/${location.state.from}`);
     } else {
@@ -593,7 +601,7 @@ const MessageTalents = () => {
         <BrandHeader hideToggleButton={true} toggleMenu={toggleMenu} />
       )}
       <div className="message-main px-2">
-        <div className="container-fluid">
+        <div className="container-fluid message-section-container">
           <div className="messages-section m-0">
             <div className="message-header">
               <div className="message-header-main row">
@@ -647,7 +655,7 @@ const MessageTalents = () => {
                         )}
                         {selectedUser?.preferredChildFirstname && (
                           <div className="message-user-name">
-                            {`${selectedUser?.preferredChildFirstname}${selectedUser?.preferredChildLastName}`}
+                            {`${selectedUser?.preferredChildFirstname} ${selectedUser?.preferredChildLastName}`}
                           </div>
                         )}
                         {selectedUser?.preferredChildFirstname && (
@@ -659,9 +667,9 @@ const MessageTalents = () => {
                       </div>
                     </div>
                     <div>
-                      <div className="message-more">More</div>
+                      {/* <div className="message-more">More</div> */}
                       <div className="go-dashboard" onClick={handleBackClick}>
-                        Go to Dashboard
+                        Back
                       </div>
                     </div>
                   </div>
@@ -675,8 +683,10 @@ const MessageTalents = () => {
                     <div className="message-list-wrapper">
                       {userList.length === 0 && (
                         <div className="no-data">
-                          <p>When an Brand/Client or Talent contact you</p>
-                          <p>You will see them Here</p>
+                          <p>
+                            You will be able to see a brand / client or talent
+                            contact you here
+                          </p>
                         </div>
                       )}
                       {userList.length > 0 &&
@@ -723,7 +733,7 @@ const MessageTalents = () => {
                                   )}
                                   {item?.preferredChildFirstname && (
                                     <div className="message-user-name">
-                                      {`${item?.preferredChildFirstname}${item?.preferredChildLastName}`}
+                                      {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                     </div>
                                   )}
                                   <span
@@ -824,22 +834,12 @@ const MessageTalents = () => {
                                     </div>
                                   )}
                                 </div>
-                                {item.senderId === currentUserId && (
+                                {/* {item.senderId === currentUserId && (
                                   <div>
                                     <Dropdown className="reportDrop">
                                       <Dropdown.Toggle className="dropColorHead message-elips-dropdown">
-                                        {/* <img
-                                        className="message-elipsis-options"
-                                        src={elipsis}
-                                        alt=""
-                                      /> */}
                                       </Dropdown.Toggle>
                                       <Dropdown.Menu>
-                                        {/* <Dropdown.Item
-                                          onClick={() => handleView(item?.chatFile)}
-                                        >
-                                          Edit
-                                        </Dropdown.Item> */}
                                         <Dropdown.Item
                                           onClick={() => handleDelete(item)}
                                         >
@@ -848,7 +848,7 @@ const MessageTalents = () => {
                                       </Dropdown.Menu>
                                     </Dropdown>
                                   </div>
-                                )}
+                                )} */}
                               </div>
                             </div>
                           </>

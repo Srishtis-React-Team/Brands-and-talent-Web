@@ -1,7 +1,7 @@
 .kidsform-one {
   .select__control {
     font-size: 15px;
-    min-height: 50px;
+    min-height: 45px;
   }
   .kids-wrapper {
     margin: 30px 0px;
@@ -1020,6 +1020,13 @@
   font-weight: 500;
   text-align: right;
 }
+.pub-url-btn:hover {
+  background-color: #c2114b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right;
+}
 
 .update-password-main {
   padding: 30px;
@@ -1152,6 +1159,31 @@
   cursor: pointer;
 }
 
+.errorMessage {
+  font-family: sans-serif;
+  color: red;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 8px 0px;
+  margin: 0;
+}
+
+.pub-url-btn {
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: #c2114b;
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: sans-serif;
+}
+
+.image-upload-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: #000;
+  padding: 8px 0px;
+}
+
 .update-password-main .password_strength_box {
   margin-top: 0;
 }
@@ -1259,4 +1291,45 @@
   max-height: 450px;
   overflow-x: hidden;
   overflow-y: scroll;
+}
+
+.kids-form-section .MuiFormControl-root.MuiTextField-root.form-control {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.public-url-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 8px;
+}
+
+.public-url-input {
+  margin-left: 0px;
+}
+
+.bi-pencil-square {
+  color: #c2114b;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.public-url-text {
+  // min-width: 100%;
+  width: 88%;
+}
+
+.contactus-btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.contact-us-textarea {
+  border: 1px solid#d7d7d7;
+  border-radius: 6px;
 }

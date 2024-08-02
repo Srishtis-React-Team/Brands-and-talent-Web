@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 
 const KidsFormTwo = () => {
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -47,15 +47,16 @@ const KidsFormTwo = () => {
     console.log(index);
     setSelectedIndex(index);
     if (!selectedPlan) {
-      setMessage("Please Choose Annual Or Monthly");
+      setMessage("Please choose Annual Or Monthly");
       setOpenPopUp(true);
       setTimeout(function() {
         setOpenPopUp(false);
       }, 1000);
     } else if (selectedPlan) {
       const formData = {
-        parentEmail: userEmail,
-        subscriptionPlan: selectedPlan,
+        subscriptionPlan: "annual",
+        planName: "Premium",
+        user_id: "668cc6fb9545f3d7afde294e",
       };
       console.log(formData, "formData subscription");
       await ApiHelper.post(`${API.subscriptionPlan}${userId}`, formData)
@@ -242,7 +243,7 @@ const KidsFormTwo = () => {
                                   </>
                                 )}
                               </div>
-                              <div
+                              {/* <div
                                 className={
                                   index == 0
                                     ? "choose-btn free-btn"
@@ -255,7 +256,7 @@ const KidsFormTwo = () => {
                                 onClick={() => choosePlan()}
                               >
                                 Choose plan
-                              </div>
+                              </div> */}
                               <div className="include">What's Included</div>
                               <div className="included-things">
                                 {item.data.map((item) => {
@@ -263,7 +264,7 @@ const KidsFormTwo = () => {
                                     <>
                                       <div className="plan-content">
                                         <div className="icPrice">
-                                          <i class="bi bi-check-circle-fill"></i>
+                                          <i className="bi bi-check-circle-fill"></i>
                                         </div>
                                         {/* <img
                                       className="listIc"

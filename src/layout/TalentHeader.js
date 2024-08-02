@@ -25,15 +25,18 @@ import TextField from "@mui/material/TextField";
 import Select from "react-select";
 import CurrentUser from "../CurrentUser";
 import SearchHeaderComponent from "./SearchHeaderComponent";
+import { useLocation } from "react-router-dom";
 
 const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
   console.log(hideToggleButton, "hideToggleButton");
 
   const navigate = useNavigate();
-  const btLogo = require("../assets/images/LOGO.jpg");
+  const btLogo = require("../assets/images/LOGO.png");
   const model1 = require("../assets/images/girl1.png");
   const sliderIcon = require("../assets/icons/sliders.png");
+  const cofeeIcon = require("../assets/icons/cofeeIcon.png");
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
@@ -47,8 +50,10 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const [age, setAge] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const currentPathname = window.location.pathname;
-  const isTalentProfilePage = currentPathname.includes("/talent-profile");
+  // const currentPathname = window.location.pathname;
+  const location = useLocation();
+  const currentPathname = location.pathname;
+  const isTalentProfilePage = /^\/talent\/.+/.test(currentPathname);
   console.log(isTalentProfilePage, "isTalentProfilePage");
 
   const customStyles = {
@@ -73,6 +78,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       getTalentNotification();
     }
   }, [talentId]);
+
+  const handleClickBlogs = (step) => {
+    // navigate("/blogs", { state: { step: step } });
+    window.open("https://brandsandtalent.substack.com/", "_blank");
+  };
 
   useEffect(() => {
     // Function to toggle dropdown when clicking the bell icon
@@ -137,6 +147,10 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     console.log(notificationList, "notificationList");
   }, [notificationList]);
 
+  const handleCoffeeLink = () => {
+    window.open("https://buymeacoffee.com/brandsandtalent", "_blank");
+  };
+
   const getTalentById = async () => {
     await ApiHelper.post(
       `${API.getTalentById}${localStorage.getItem("userId")}`
@@ -168,14 +182,14 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "profile") {
-        navigate(`/talent-profile/${talentData.preferredChildFirstname}`, {
+        navigate(`/talent/${talentData.publicUrl}`, {
           state: { talentData },
         });
-        // navigate("/talent-profile", { state: { talentData: talentData } });
+        // navigate("/talent", { state: { talentData: talentData } });
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
-        setMessage("Logged Out SuccessFully");
+        setMessage("Logged out successfully");
         setOpenPopUp(true);
         setTimeout(function() {
           setOpenPopUp(false);
@@ -396,41 +410,38 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                         </li>
                         <li className="dropend">
                           <a
-                            className="dropdown-item dropdown-toggle"
+                            className="dropdown-item"
                             dropdown-toggle
-                            data-bs-toggle="dropdown"
+                            onClick={() => handleClickBlogs(0)}
                           >
-                            <NavLink to="/blogs">Blogs</NavLink>
+                            Newsletter
                           </a>
-                          <ul className="dropdown-menu blogs-menu">
-                            <li>
-                              <a href="" className="dropdown-item">
-                                <NavLink to="/blogs">
-                                  Industry News & Insights
-                                </NavLink>
+                          {/* <ul className="dropdown-menu blogs-menu">
+                            <li onClick={() => handleClickBlogs(1)}>
+                              <a className="dropdown-item">
+                                News & Announcements
                               </a>
                             </li>
-                            <li>
-                              <a href="" className="dropdown-item">
-                                 Case Studies
+                            <li onClick={() => handleClickBlogs(2)}>
+                              <a className="dropdown-item">Industry Insights</a>
+                            </li>
+                            <li onClick={() => handleClickBlogs(3)}>
+                              <a className="dropdown-item">Interviews</a>
+                            </li>
+                            <li onClick={() => handleClickBlogs(4)}>
+                              <a className="dropdown-item">Case Studies</a>
+                            </li>
+                            <li onClick={() => handleClickBlogs(5)}>
+                              <a className="dropdown-item">
+                                Talent Tips & Tricks
                               </a>
                             </li>
-                            <li>
-                              <a href="" className="dropdown-item">
-                                Talent Diaries
+                            <li onClick={() => handleClickBlogs(6)}>
+                              <a className="dropdown-item">
+                                Brand Tips & Tricks
                               </a>
                             </li>
-                            <li>
-                              <a href="" className="dropdown-item">
-                                 Talent Tips & Tricks
-                              </a>
-                            </li>
-                            <li>
-                              <a href="" className="dropdown-item">
-                                 Brand Tips & Tricks
-                              </a>
-                            </li>
-                          </ul>
+                          </ul> */}
                         </li>
                         <li>
                           <hr className="dropdown-divider"></hr>
@@ -444,6 +455,15 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                         </li>
                       </ul>
                     </li>
+                  </div>
+
+                  <div
+                    className="navTxt cofee-link"
+                    style={{ cursor: "pointer" }}
+                    onClick={handleCoffeeLink}
+                  >
+                    Support BT
+                    <img src={cofeeIcon} alt="" className="cofeeIcon-img" />
                   </div>
 
                   <React.Fragment>
@@ -752,7 +772,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                         style={{ cursor: "pointer" }}
                         onClick={createHandleMenuClick("dashboard")}
                       >
-                        DashBoard
+                        Dashboard
                       </MenuItem>
                     )}
                     <MenuItem

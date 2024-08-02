@@ -20,6 +20,7 @@ const BrandHome = () => {
   const [talentList, setTalentList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
 
   const headsetLogo = require("../../assets/icons/headset.png");
   const getTalentList = async () => {
@@ -27,6 +28,26 @@ const BrandHome = () => {
       .then((resData) => {
         if (resData) {
           setTalentList(resData.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (brandId) {
+      getBrand();
+    }
+  }, [brandId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
         }
       })
       .catch((err) => {
@@ -109,6 +130,55 @@ const BrandHome = () => {
     navigate("/contact-us");
   };
 
+  useEffect(() => {
+    getBrandsPricingList();
+  }, []);
+
+  const [basicList, setBasicList] = useState([]);
+  const [proList, setProList] = useState([]);
+  const [premiumList, setPremiumList] = useState([]);
+  const [filteresPricingList, setFilteresPricingList] = useState([]);
+
+  const [pricingList, setPricingList] = useState(null);
+
+  const getBrandsPricingList = async () => {
+    const basic_list = [];
+    const pro_list = [];
+    const premium_list = [];
+
+    await ApiHelper.get(API.brandsPricingList)
+      .then((resData) => {
+        if (resData) {
+          console.log(resData, "resData");
+          resData?.data?.data?.forEach((item) => {
+            if (brandData?.planName == "Basic" && item?.planname === "Basic") {
+              setFilteresPricingList(item.data);
+            } else if (
+              brandData?.planName == "Pro" &&
+              item.planname === "Pro"
+            ) {
+              setFilteresPricingList(item.data);
+            } else if (
+              brandData?.planName == "Premium" &&
+              item.planname === "Premium"
+            ) {
+              console.log(item.data, "itemPremium");
+              setFilteresPricingList(item.data);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log(pricingList, "pricingList");
+    console.log(basicList, "pricingList");
+    console.log(filteresPricingList, "filteresPricingList");
+  }, []);
+
   return (
     <>
       <BrandHeader toggleMenu={toggleMenu} />
@@ -151,17 +221,28 @@ const BrandHome = () => {
               </div>
               <div className="brand-home-title-flex">
                 <div className="kids-title">Talents</div>
-                <div className="view-all-text">View All</div>
+                <div
+                  className="view-all-text"
+                  onClick={() => {
+                    navigate("/find-talents");
+                  }}
+                >
+                  View All
+                </div>
               </div>
 
               <div className="photos-slider">
                 <Talentscarousel talentList={talentList} />
               </div>
               <div className="brand-home-title-flex">
-                <div className="kids-title">Most Recent Campaigns</div>
-                <div className="view-all-text" onClick={listJob}>
-                  View All
-                </div>
+                <div className="kids-title pb-2">Most Recent Campaigns</div>
+                {jobsList && (
+                  <>
+                    <div className="view-all-text" onClick={listJob}>
+                      View All
+                    </div>
+                  </>
+                )}
               </div>
               {!jobsList && (
                 <>
@@ -199,7 +280,7 @@ const BrandHome = () => {
                               {jobsList?.hiringCompany}
                             </span>
                           </div>
-                          <div className="mb-2">
+                          {/* <div className="mb-2">
                             <span className="job-company-name">
                               {jobsList?.state}
                             </span>{" "}
@@ -210,17 +291,17 @@ const BrandHome = () => {
                           </div>
                           <div className="mb-2">
                             <span className="job-company-name">
-                              <i class="bi bi-person-workspace"></i>
+                              <i className="bi bi-person-workspace"></i>
                             </span>{" "}
-                            <i class="bi bi-dot"></i>
+                            <i className="bi bi-dot"></i>
                             <span className="job-company-name">
                               {jobsList?.jobType}
                             </span>
-                            <i class="bi bi-dot"></i>
+                            <i className="bi bi-dot"></i>
                             <span className="job-company-name">
                               {jobsList?.employmentType}
                             </span>
-                            <i class="bi bi-dot"></i>
+                            <i className="bi bi-dot"></i>
                             <span className="job-company-name">
                               {jobsList && jobsList.compensation
                                 ? Object.keys(jobsList.compensation)[0]
@@ -232,6 +313,54 @@ const BrandHome = () => {
                                     )
                                     .join(" ")
                                 : ""}
+                            </span>
+                          </div> */}
+                          <div className="mb-2">
+                            <span className="job-company-name">
+                              <i className="bi bi-person-workspace"></i>
+                            </span>{" "}
+                            <span className="job-company-name">
+                              {jobsList?.jobType}
+                            </span>
+                            <i className="bi bi-dot"></i>
+                            <span className="job-company_dtls">
+                              <i className="bi bi-geo-alt-fill location-icon"></i>
+                              {jobsList?.state}, {jobsList?.city}
+                            </span>
+                            <i className="bi bi-dot"></i>
+                            <span className="job-company-name">
+                              {jobsList?.employmentType}
+                            </span>
+                            <i className="bi bi-dot"></i>
+                            <span className="job-company_dtls">
+                              {jobsList?.category} <i className="bi bi-dot"></i>
+                            </span>
+                            <span className="job-company-name">
+                              {jobsList && jobsList.compensation && (
+                                <>
+                                  {Object.keys(jobsList.compensation)[0] ===
+                                  "paid_collaboration_and_gift"
+                                    ? "Paid Collaboration + Product/Gift"
+                                    : Object.keys(jobsList.compensation)[0] ===
+                                      "product_gift"
+                                    ? "Product/Gift"
+                                    : Object.keys(jobsList.compensation)[0] ===
+                                      "paid_collaboration"
+                                    ? "Paid Collaboration"
+                                    : ""}
+                                </>
+                              )}
+
+                              {/* {jobsList && jobsList.compensation
+                                ? Object.keys(jobsList.compensation)[0]
+                                    .split("_")
+                                    .map(
+                                      (word) =>
+                                        word.charAt(0).toUpperCase() +
+                                        word.slice(1)
+                                    )
+                                    .join(" ")
+                                : ""} */}
                             </span>
                           </div>
                           <div className="mb-2">
@@ -297,8 +426,8 @@ const BrandHome = () => {
                   </div>
                   <p className="contact-q">Seeking Assistance?</p>
                   <div className="contact-description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Corrupti, voluptatum labore aspernatur at temporibus
+                    Have a question? Fill out the form below, and we'll get back
+                    to you within 1-2 business days
                   </div>
                   <div className="contact-btn" onClick={() => contactUs()}>
                     Contact Now
@@ -312,23 +441,45 @@ const BrandHome = () => {
                 <div className="my-plan-contents">
                   <p className="my-plan">My Plan</p>
                   <div className="my-plan-features scroll">
-                    {planBenefits?.map((item, index) => {
-                      return (
-                        <>
-                          <div className="myplan-wrapper" key={item}>
-                            <div>
-                              <i
-                                style={{ color: "#c2114b", fontSize: "18px" }}
-                                className="bi bi-check-square-fill"
-                              ></i>
-                            </div>
-                            <div className="myplan-features-text">{item}</div>
-                          </div>
-                        </>
-                      );
-                    })}
+                    {filteresPricingList && filteresPricingList.length > 0 && (
+                      <>
+                        {filteresPricingList?.map((item, index) => {
+                          return (
+                            <>
+                              <div className="myplan-wrapper" key={index}>
+                                <div>
+                                  <i
+                                    style={{
+                                      color: "#c2114b",
+                                      fontSize: "18px",
+                                    }}
+                                    className="bi bi-check-square-fill"
+                                  ></i>
+                                </div>
+                                <div className="myplan-features-text">
+                                  {item}
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })}
+                      </>
+                    )}
                   </div>
-                  <div className="contact-btn">Upgrade Now</div>
+                  {brandData?.planName !== "Premium" && (
+                    <div
+                      className="contact-btn"
+                      onClick={() => {
+                        navigate("/pricing");
+                      }}
+                    >
+                      {brandData?.planName === "Basic"
+                        ? "Upgrade to Pro/Premium"
+                        : brandData?.planName === "Pro"
+                        ? "Upgrade to Premium"
+                        : ""}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
