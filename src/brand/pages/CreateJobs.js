@@ -290,9 +290,10 @@ const CreateJobs = () => {
       const hiringCompanyDescriptionContentBlocks = convertFromHTML(
         hiringCompanyDescriptionContent
       );
-      const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
-        hiringCompanyDescriptionContentBlocks
-      );
+      const hiringCompanyDescriptionContentState =
+        ContentState.createFromBlockArray(
+          hiringCompanyDescriptionContentBlocks
+        );
       const hiringCompanyDescription = EditorState.createWithContent(
         hiringCompanyDescriptionContentState
       );
@@ -499,9 +500,10 @@ const CreateJobs = () => {
       const hiringCompanyDescriptionContentBlocks = convertFromHTML(
         hiringCompanyDescriptionContent
       );
-      const hiringCompanyDescriptionContentState = ContentState.createFromBlockArray(
-        hiringCompanyDescriptionContentBlocks
-      );
+      const hiringCompanyDescriptionContentState =
+        ContentState.createFromBlockArray(
+          hiringCompanyDescriptionContentBlocks
+        );
       const hiringCompanyDescription = EditorState.createWithContent(
         hiringCompanyDescriptionContentState
       );
@@ -584,10 +586,8 @@ const CreateJobs = () => {
   const [editorStateWhyWorkWithUs, setEditorStateWhyWorkWithUs] = useState(
     EditorState.createEmpty()
   );
-  const [
-    editorStateClientDescription,
-    setEditorStateClientDescription,
-  ] = useState(EditorState.createEmpty());
+  const [editorStateClientDescription, setEditorStateClientDescription] =
+    useState(EditorState.createEmpty());
 
   const [editorStateHowToApply, setEditorStateHowToApply] = useState(
     EditorState.createEmpty()
@@ -607,9 +607,8 @@ const CreateJobs = () => {
   const [addressError, setAddressError] = useState(false);
   const [parentLastNameError, setparentLastNameError] = useState(false);
   const [talentPasswordError, settalentPasswordError] = useState(false);
-  const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
-    false
-  );
+  const [talentConfirmPasswordError, settalentConfirmPasswordError] =
+    useState(false);
   const [kidsLegalFirstNameError, setkidsLegalFirstNameError] = useState(false);
   const [kidsLegalLastNameError, setkidsLegalLastNameError] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -668,9 +667,8 @@ const CreateJobs = () => {
     setSelectedApplyOption(e.target.value);
   };
 
-  const [selectedOption, setCompensationChange] = useState(
-    "paid_collaboration"
-  );
+  const [selectedOption, setCompensationChange] =
+    useState("paid_collaboration");
   const [type, setType] = useState("");
   const [currency, setCurrency] = useState("");
   const [productCurrency, setProductCurrency] = useState("");
@@ -1264,7 +1262,7 @@ const CreateJobs = () => {
             if (resData.data.status === true) {
               setMessage("Job Updated SuccessFully!");
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
                 navigate("/preview-job", {
                   state: {
@@ -1275,7 +1273,7 @@ const CreateJobs = () => {
             } else if (resData.data.status === false) {
               setMessage(resData.data.message);
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
               }, 1000);
             }
@@ -1287,7 +1285,7 @@ const CreateJobs = () => {
             if (resData.data.status === true) {
               setMessage("Job Updated SuccessFully!");
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
                 navigate("/preview-job", {
                   state: {
@@ -1298,7 +1296,7 @@ const CreateJobs = () => {
             } else if (resData.data.status === false) {
               setMessage(resData.data.message);
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
               }, 1000);
             }
@@ -1308,7 +1306,7 @@ const CreateJobs = () => {
     } else {
       setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 2000);
     }
@@ -1410,14 +1408,14 @@ const CreateJobs = () => {
             setIsLoading(false);
             setMessage("Job Created SuccessFully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               if (brandData?.planName === "Basic") {
                 setMessage(
                   "Your job will be approved by admin within 2 days. Upgrade to Pro for instant approval"
                 );
                 setOpenPopUp(true);
-                setTimeout(function() {
+                setTimeout(function () {
                   setOpenPopUp(false);
                   navigate("/list-jobs");
                 }, 3000);
@@ -1433,7 +1431,7 @@ const CreateJobs = () => {
             setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               if (resData?.data?.statusInfo == "limit-reached") {
                 navigate("/pricing");
@@ -1445,7 +1443,7 @@ const CreateJobs = () => {
     } else {
       setMessage("Please fill out all mandatory fields");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
         setIsLoading(false);
       }, 2000);
@@ -1483,7 +1481,7 @@ const CreateJobs = () => {
         setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
         console.log(portofolioFile, "portofolioFile");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -1582,7 +1580,7 @@ const CreateJobs = () => {
 
         console.log(profileFile, "profileFile");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -2728,14 +2726,16 @@ const CreateJobs = () => {
                             <div className="kids-form-section col-md-6 mb-3">
                               {questions.map((question, index) => (
                                 <div className=" mb-2" key={index}>
-                                  <label className="form-label mb-2">{`Question ${index +
-                                    1}:`}</label>
+                                  <label className="form-label mb-2">{`Question ${
+                                    index + 1
+                                  }:`}</label>
                                   <div className="question-input-wrapper">
                                     <input
                                       type="text"
                                       className="form-control "
-                                      placeholder={`Enter Question ${index +
-                                        1}`}
+                                      placeholder={`Enter Question ${
+                                        index + 1
+                                      }`}
                                       value={question}
                                       id={`question${index + 1}`}
                                       onChange={(event) =>

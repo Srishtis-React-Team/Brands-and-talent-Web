@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/dashboard.css";
 import "../../assets/css/register.scss";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
-import Axios from "axios";
 import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
 import MuiPhoneNumber from "material-ui-phone-number";
@@ -16,9 +15,7 @@ const BrandDetails = () => {
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [position, setPosition] = useState("");
   const [brandName, setBrandName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [zipCode, setZipCode] = useState("");
@@ -59,8 +56,6 @@ const BrandDetails = () => {
     console.log(event, "event");
     console.log(event?.value, "event?.value");
     setCountry(event?.value);
-    // setState("");
-    // handleSelectedState("");
     getStates(event?.value);
     console.log(country, "country");
   };
@@ -68,7 +63,6 @@ const BrandDetails = () => {
     console.log(state, "state");
     setStateError(false);
     setState(state?.label);
-    // setKidsCity("");
     getCities({
       countryName: country,
       stateName: state?.label,
@@ -108,18 +102,10 @@ const BrandDetails = () => {
   };
 
   useEffect(() => {
-    // Check if data is passed through state
     if (location.state && location.state.data) {
       setReceivedData(location.state.data);
     }
   }, [location.state]);
-
-  useEffect(() => {
-    // console.log(receivedData, "receivedData");
-    // if (receivedData?.brandName) {
-    //   setBrandName(receivedData?.brandName);
-    // }
-  }, [receivedData]);
 
   const aboutUsOptions = [
     "Streaming Audio (Pandora, Spotify, etc.)",
@@ -149,7 +135,6 @@ const BrandDetails = () => {
   ];
 
   useEffect(() => {
-    //code for google auth
     console.log(openPopUp, "openPopUp");
   }, [openPopUp]);
 
@@ -193,7 +178,6 @@ const BrandDetails = () => {
         facebookUrl: facebookUrl,
         twitterUrl: twitterUrl,
       };
-      // setIsLoading(true);
       await ApiHelper.post(
         `${API.editBrands}${receivedData?.brandUserId}`,
         formData
@@ -201,21 +185,19 @@ const BrandDetails = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             console.log(resData.data, "brandetails");
-            // setIsLoading(false);
             setMessage("Registered SuccessFully!");
             setTalentLocalStorage(resData.data.data);
             navigate("/brand-logo", {
               state: { data: resData.data.data },
             });
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           } else if (resData.data.status === false) {
-            // setIsLoading(false);
             setMessage("Error Occured Try Again!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -224,19 +206,16 @@ const BrandDetails = () => {
           setIsLoading(false);
           setMessage("Error Occured Try Again!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         });
     }
   };
 
-  // Function to set user ID
   const setTalentLocalStorage = (data) => {
     console.log(data, "data otp");
     localStorage.setItem("brandId", data?.brand_id);
-    // localStorage.setItem("emailID", data?.email);
-    // localStorage.setItem("token", data?.token);
   };
 
   const selectHearAbout = (event) => {
@@ -253,7 +232,6 @@ const BrandDetails = () => {
 
   const handleBrandName = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setBrandNameLetterError(false);
@@ -267,7 +245,6 @@ const BrandDetails = () => {
   };
 
   const handleBrandNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setBrandNameLetterError(false);
     }
@@ -279,7 +256,6 @@ const BrandDetails = () => {
 
   const handleYourName = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setYourNameLetterError(false);
@@ -317,7 +293,6 @@ const BrandDetails = () => {
   };
 
   const handleYourNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setYourNameLetterError(false);
     }
@@ -327,7 +302,6 @@ const BrandDetails = () => {
 
   const handleZipCodeChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only numbers and the "+" symbol
     const onlyNumbersRegex = /^[0-9+]*$/;
     if (!onlyNumbersRegex.test(value)) {
       setZipCodeValidation(true);
@@ -338,34 +312,13 @@ const BrandDetails = () => {
   };
 
   const handleZipCodeKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setBrandNameLetterError(false);
     }
   };
   const [mobileValidation, setMobileValidation] = useState(false);
 
-  // const handleMobbileChange = (e) => {
-  //   const value = e.target.value;
-  //   // Regular expression to allow only numbers and the "+" symbol
-  //   const onlyNumbersRegex = /^[0-9+]*$/;
-  //   if (!onlyNumbersRegex.test(value)) {
-  //     setMobileValidation(true);
-  //   } else {
-  //     setPhoneNumber(value);
-  //     setMobileValidation(false);
-  //   }
-  // };
-
-  // const handleMobileKeyPress = (e) => {
-  //   // If the Backspace key is pressed and the input value is empty, clear the error
-  //   if (e.key === "Backspace") {
-  //     setBrandNameLetterError(false);
-  //   }
-  // };
-
   const handleMobileChange = (value, countryData) => {
-    // Update the parentMobile state with the new phone number
     console.log(value, "handleMobileChange");
     setPhoneNumber(value);
     setPhoneNumberError(false);
@@ -488,17 +441,6 @@ const BrandDetails = () => {
                     Phone Number<span className="mandatory">*</span>
                   </label>
                   <div className="form-group">
-                    {/* <input
-                  type="text"
-                  className="form-control adult-signup-inputs"
-                  placeholder="Phone Number "
-                  onChange={(e) => {
-                    handleMobbileChange(e);
-                    setPhoneNumber(false);
-                  }}
-                  onKeyDown={handleMobileKeyPress}
-                ></input> */}
-
                     <MuiPhoneNumber
                       defaultCountry={"kh"}
                       className="form-control"
@@ -699,41 +641,9 @@ const BrandDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="mb-3">
-              <label
-                htmlFor="exampleFormControlTextarea1"
-                className="form-label"
-              >
-                Brand / Client Address<span className="mandatory">*</span>
-              </label>
-              <textarea
-                style={{ width: "100%" }}
-                className="form-control address-textarea"
-                id="exampleFormControlTextarea1"
-                value={address}
-                rows="3"
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                  setAddressError(false);
-                }}
-              ></textarea>
-              {addressError && (
-                <div className="invalid-fields">Please enter Address</div>
-              )}
-            </div> */}
           </div>
         </div>
         <div className="dialog-footer">
-          {/* <button
-            type="button"
-            onClick={() => {
-              navigate("/");
-            }}
-            className="step-back"
-          >
-            Back
-          </button> */}
           <button
             type="button"
             className="step-continue"

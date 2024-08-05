@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
-import Select from "react-select";
 import Axios from "axios";
 import { useNavigate } from "react-router";
 import { API } from "../config/api";
@@ -12,7 +8,6 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import "../assets/css/talent-dashboard.scss";
 import "../assets/css/forms/kidsform-one.scss";
 import PopUp from "../components/PopUp";
-import { event } from "jquery";
 import { v4 as uuidv4 } from "uuid";
 import RichTextEditor from "../views/RichTextEditor";
 
@@ -25,16 +20,8 @@ const KidsServices = () => {
   const imageType = require("../assets/icons/imageType.png");
   const videoType = require("../assets/icons/videoType.png");
   const audiotype = require("../assets/icons/audiotype.png");
-  const idCard = require("../assets/icons/id-card.png");
   const elipsis = require("../assets/icons/elipsis.png");
   const greenTickCircle = require("../assets/icons/small-green-tick.png");
-  const fbLogo = require("../assets/icons/social-media-icons/fbLogo.png");
-  const instagram = require("../assets/icons/social-media-icons/instagram.png");
-  const threads = require("../assets/icons/social-media-icons/thread-fill.png");
-  const tikTok = require("../assets/icons/social-media-icons/tikTok.png");
-  const xTwitter = require("../assets/icons/social-media-icons/xTwitter.png");
-  const youTube = require("../assets/icons/social-media-icons/youTube.png");
-  const linkdin = require("../assets/icons/social-media-icons/linkdin.png");
   const docsIcon = require("../assets/icons/docsIcon.png");
   const [isLoading, setIsLoading] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -44,11 +31,6 @@ const KidsServices = () => {
   console.log(" queryString:", queryString);
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-  const onEditorSummary = (editorState) => {
-    // setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
-    setEditorState(editorState);
-  };
 
   const handleSubmit = async () => {
     let formData = {
@@ -61,10 +43,8 @@ const KidsServices = () => {
           setMessage("Updated SuccessFully Login to Continue");
           setOpenPopUp(true);
           loginTemplate(resData?.data?.data?.email);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
-            // navigate(`/talent-signup-files-success`);
-
             navigate(
               `/login?type=talent&user_id=${resData?.data?.data?.user_id}`
             );
@@ -73,7 +53,7 @@ const KidsServices = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -141,9 +121,6 @@ const KidsServices = () => {
     console.log(index, "index handleEditorStateChange");
     const newInputs = [...inputs];
     newInputs[index]["editorState"] = editorState;
-    // newInputs[index]["editorState"] = [
-    //   draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    // ];
     setInputs(newInputs);
   };
 
@@ -163,10 +140,7 @@ const KidsServices = () => {
     console.log(inputs, "inputs");
   };
 
-  const serviceFilesUpload = () => {};
-
   const uploadProfile = async (fileData, callback) => {
-    // Your upload logic remains the same
     const params = new FormData();
     params.append("file", fileData);
     params.append("fileName", fileData.name);
@@ -182,7 +156,7 @@ const KidsServices = () => {
         fileData: resData.data.data.filename,
         type: resData?.data?.data?.filetype,
       };
-      callback(fileObj); // Call the callback with the uploaded file object
+      callback(fileObj);
     } catch (err) {
       console.error("Error uploading file:", err);
     }
@@ -192,11 +166,6 @@ const KidsServices = () => {
     let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
     window.open(viewImage, "_blank");
   };
-
-  // Function to handle deleting image
-  const handleServiceFilesDelete = (item, index) => {};
-
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -240,11 +209,6 @@ const KidsServices = () => {
                   <div>
                     {inputs.map((input, serviceIndex) => (
                       <>
-                        {/* <div className="adults-titles">
-                          {inputs.length > 1 && serviceIndex === 0
-                            ? "Services"
-                            : `Services (set ${serviceIndex + 1})`}
-                        </div> */}
                         <div key={serviceIndex}>
                           <div className="">
                             <div className="">
@@ -310,33 +274,6 @@ const KidsServices = () => {
                           <div className="adults-titles">Features</div>
                           <div className="rich-editor">
                             <label className="form-label">Features</label>
-                            {/* <Editor
-                              editorStyle={{
-                                overflow: "hidden",
-                              }}
-                              value={input.editorState}
-                              onEditorStateChange={(editorState) =>
-                                handleEditorStateChange(
-                                  serviceIndex,
-                                  editorState
-                                )
-                              }
-                              toolbar={{
-                                options: [
-                                  "inline",
-                                  "blockType",
-                                  "fontSize",
-                                  "list",
-                                  "textAlign",
-                                  "history",
-                                ],
-                                inline: { inDropdown: true },
-                                list: { inDropdown: true },
-                                textAlign: { inDropdown: true },
-                                link: { inDropdown: true },
-                                history: { inDropdown: true },
-                              }}
-                            /> */}
 
                             <RichTextEditor
                               value={input.editorState}
@@ -371,7 +308,6 @@ const KidsServices = () => {
                               Drag and drop your photos/work samples here.
                             </div>
                           </div>
-                          {/* Display uploaded files for this input */}
                           {input.files.map((file, fileIndex) => (
                             <div
                               key={fileIndex}

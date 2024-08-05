@@ -1,21 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import "../../assets/css/forms/kidsform-one.scss";
 import "../../assets/css/createjobs.scss";
 import "../../assets/css/talent-profile.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
-import Select from "react-select";
-import Axios from "axios";
-import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
-import { ApiHelper } from "../../helpers/ApiHelper";
-import { useNavigate } from "react-router";
-import RangeSlider from "../../components/RangeSlider";
-import nationalityOptions from "../../components/nationalities.js";
-import languageOptions from "../../components/languages.js";
 import BrandHeader from "./BrandHeader.js";
 import BrandSideMenu from "./BrandSideMenu.js";
 const BrandHelp = () => {

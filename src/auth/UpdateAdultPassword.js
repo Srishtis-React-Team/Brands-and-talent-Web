@@ -5,16 +5,13 @@ import { useNavigate } from "react-router";
 import PopUp from "../components/PopUp";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
-import Axios from "axios";
 import { useLocation } from "react-router-dom";
 const UpdateAdultPassword = (props) => {
   console.log(props, "props");
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -26,15 +23,10 @@ const UpdateAdultPassword = (props) => {
   const [receivedData, setReceivedData] = useState(null);
 
   useEffect(() => {
-    // Check if data is passed through state
     if (location.state && location.state.data) {
       setReceivedData(location.state.data);
     }
   }, [location.state]);
-
-  useEffect(() => {
-    console.log(receivedData, "receivedData");
-  }, [receivedData]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -64,7 +56,7 @@ const UpdateAdultPassword = (props) => {
             setIsLoading(false);
             setMessage("Password Updated SuccessFully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               navigate(`/otp-verification?${receivedData?.email}`);
             }, 2000);
@@ -72,7 +64,7 @@ const UpdateAdultPassword = (props) => {
             setIsLoading(false);
             setMessage("Error Occured Try Again!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -81,7 +73,7 @@ const UpdateAdultPassword = (props) => {
           setIsLoading(false);
           setMessage("Error Occured Try Again!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         });

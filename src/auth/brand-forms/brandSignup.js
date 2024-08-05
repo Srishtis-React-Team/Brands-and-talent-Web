@@ -5,33 +5,17 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
-import Axios from "axios";
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import PopUp from "../../components/PopUp";
-import { LoginSocialFacebook } from "reactjs-social-login";
-import { FacebookLoginButton } from "react-social-login-buttons";
-import MyFacebookLoginButton from "../facebookButton";
 import CurrentUser from "../../CurrentUser";
 
 const BrandSignup = () => {
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-    fcmToken,
-  } = CurrentUser();
+  const { fcmToken } = CurrentUser();
 
   console.log(fcmToken, "fcmToken");
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
-  const fbLogo = require("../../assets/icons/fbLogo.png");
-  const googleLogo = require("../../assets/icons/googleLogo.png");
-  const kidsImage = require("../../assets/images/kidsImage.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -47,26 +31,16 @@ const BrandSignup = () => {
   const location = useLocation();
   const [receivedData, setReceivedData] = useState(null);
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
-    false
-  );
-  useEffect(() => {
-    //code for google auth
-    console.log(openPopUp, "openPopUp");
-  }, [openPopUp]);
+  const [talentConfirmPasswordError, settalentConfirmPasswordError] =
+    useState(false);
 
   useEffect(() => {
-    console.log(receivedData, "receivedData");
-  }, [receivedData]);
-  useEffect(() => {
-    // Check if data is passed through state
     if (location.state && location.state.data) {
       setReceivedData(location.state.data);
     }
   }, [location.state]);
 
   useEffect(() => {
-    //code for google auth
     console.log(googleUser, "googleUser");
   }, [googleUser]);
 
@@ -108,7 +82,7 @@ const BrandSignup = () => {
           setMessage("Registered Successfully Update Your Password");
           setGoogleUser(resData?.data);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             navigate("/update-talent-password", {
               state: { data: resData.data },
@@ -120,7 +94,7 @@ const BrandSignup = () => {
           setIsLoading(false);
           setMessage("Error Occured Try Again!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -129,7 +103,7 @@ const BrandSignup = () => {
         setIsLoading(false);
         setMessage("Error Occured Try Again!");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 2000);
       });
@@ -171,7 +145,7 @@ const BrandSignup = () => {
             setIsLoading(false);
             setMessage("Registered Successfully");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               navigate(`/otp-verification-brands?${resData?.data?.data}`);
             }, 2000);
@@ -179,7 +153,7 @@ const BrandSignup = () => {
             setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -188,21 +162,21 @@ const BrandSignup = () => {
           setIsLoading(false);
           setMessage("Error Occured Try Again!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         });
     } else {
       setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     }
     if (!passwordMatch) {
       setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     }
@@ -242,7 +216,7 @@ const BrandSignup = () => {
       password_strength_box.style.display = "none";
     }
 
-    password.oninput = function() {
+    password.oninput = function () {
       if (password.value.length == 0) {
         password_strength_box.style.display = "none";
       }

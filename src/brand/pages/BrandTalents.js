@@ -4,24 +4,17 @@ import "../../assets/css/createjobs.scss";
 import "../../assets/css/talent-profile.css";
 import "../../assets/css/findcreators.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
 import Select from "react-select";
-import Axios from "axios";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 import RangeSlider from "../../components/RangeSlider";
-import nationalityOptions from "../../components/nationalities.js";
 import languageOptions from "../../components/languages.js";
 import BrandHeader from "./BrandHeader.js";
 import BrandSideMenu from "./BrandSideMenu.js";
 import CurrentUser from "../../CurrentUser.js";
 import nationalitiesArray from "../../components/NationalitiesArray.js";
-import categoriesArray from "../../components/categoriesArray.js";
 import SocialMediasList from "../../components/SocialMediasList.js";
 import useFieldDatas from "../../config/useFieldDatas.js";
 const BrandTalents = () => {
@@ -36,39 +29,12 @@ const BrandTalents = () => {
   const { categoryList, professionList } = useFieldDatas();
 
   const navigate = useNavigate();
-  const searchIcon = require("../../assets/icons/search.png");
   const heartIcon = require("../../assets/icons/heart.png");
-  const gents = require("../../assets/images/gents.png");
-  const girl1 = require("../../assets/images/girl1.png");
-  const girl2 = require("../../assets/images/girl2.png");
-  const girl3 = require("../../assets/images/girl3.png");
-  const girl4 = require("../../assets/images/girl4.jpg");
-  const girl5 = require("../../assets/images/girl5.png");
-  const girl6 = require("../../assets/images/girl6.png");
-  const girl7 = require("../../assets/images/girl7.png");
-  const girl8 = require("../../assets/images/girl8.png");
-  const girl9 = require("../../assets/images/girl9.png");
-  const girl10 = require("../../assets/images/girl10.png");
-  const girl11 = require("../../assets/images/girl11.png");
-  const girl12 = require("../../assets/images/girl12.png");
-  const girl13 = require("../../assets/images/girl13.png");
-  const girl14 = require("../../assets/images/girl14.png");
-  const girl15 = require("../../assets/images/girl15.png");
-  const girl16 = require("../../assets/images/girl16.png");
-  const starIcon = require("../../assets/icons/star.png");
   const favoruiteIcon = require("../../assets/icons/favorite.png");
-  const locationIcon = require("../../assets/icons/locationIcon.png");
-  const darkStar = require("../../assets/icons/darkStar.png");
-  const brightStar = require("../../assets/icons/brightStar.png");
-  const jobIcon = require("../../assets/icons/jobIcon.png");
   const pinkStar = require("../../assets/icons/pink-star.png");
 
   const [filterOpen, setFilterOpen] = useState(false);
-  const [isClearable, setIsClearable] = useState(true);
-  const [isSearchable, setIsSearchable] = useState(true);
-  const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isRtl, setIsRtl] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedKeyword, setSelectedKeywords] = useState("");
   const [profession, setProfession] = useState("");
@@ -81,7 +47,6 @@ const BrandTalents = () => {
   const [talentList, setTalentList] = useState([]);
   const [min, setMinAge] = useState("0");
   const [max, setMaxAge] = useState("100");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [countryList, setCountryList] = useState([]);
@@ -96,8 +61,6 @@ const BrandTalents = () => {
   const [features, setFeature] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [kidsCity, setKidsCity] = useState("");
-  const [stateError, setStateError] = useState(false);
-  const [cityError, setCityError] = useState(false);
   const [keywordsList, setkeywordsList] = useState([]);
   const [currentUserData, steCurrentUserData] = useState([]);
   const [showSidebar, setShowSidebar] = useState(true);
@@ -149,7 +112,7 @@ const BrandTalents = () => {
         if (resData) {
           setMessage("Removed SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getUserSearchKeyword();
           }, 800);
@@ -160,7 +123,6 @@ const BrandTalents = () => {
 
   useEffect(() => {
     checkUserStatus();
-    console.log(currentUserData, "currentUserData");
   }, []);
 
   const checkUserStatus = async () => {
@@ -208,7 +170,6 @@ const BrandTalents = () => {
     setNationality([]);
     setFullName("");
     setFeature([]);
-    // window.location.reload();
   };
 
   const customNoOptionsMessageState = ({ inputValue }) =>
@@ -248,65 +209,6 @@ const BrandTalents = () => {
     "Persian",
     "Other",
   ];
-
-  const industryList = [
-    "Fashion",
-    "Parenting and family",
-    "Sports/Martial Arts/Dance",
-    "Arts and photography",
-    "Videography",
-    "Music",
-    "Comedy/Entertainment",
-    "Education",
-    "Transportation",
-    "Food and beverage",
-    "Finance",
-    "Beauty/Cosmetics",
-    "Luxury",
-    "Business and Technology",
-    "Travel/Tourism",
-    "Health/Wellness/Fitness",
-    "Home and Gardening",
-    "Eco-friendly/Nature/Sustainability",
-    "Diversity and inclusion",
-    "Outdoor and nature",
-    "Content Creation",
-    "Lifestyle",
-    "Celebrity",
-    "Animals/Pets",
-    "Web3",
-    "Home and DIY",
-    "Anime/Memes",
-    "Website/Mobile Applications",
-    "Gaming",
-    "Lifecoach/Relationships",
-    "Cosplay/Memes",
-    "Other",
-  ];
-
-  // const industryList = [
-  //   "Animal",
-  //   "Arts and Entertainment",
-  //   "Automotive",
-  //   "Business",
-  //   "Construction",
-  //   "Education",
-  //   "Energy and Environment",
-  //   "Engineering",
-  //   "Finance and Insurance",
-  //   "Food",
-  //   "Government",
-  //   "Healthcare",
-  //   "Legal",
-  //   "Manufacturing",
-  //   "Personal Care",
-  //   "Real Estate",
-  //   "Retail",
-  //   "Technology",
-  //   "Transportation and Storage",
-  //   "Travel",
-  //   "N/A",
-  // ];
 
   const gendersOptions = [
     "Man",
@@ -366,16 +268,6 @@ const BrandTalents = () => {
     clear();
   };
 
-  const genderList = [
-    {
-      value: "option 1",
-      label: "option 1",
-      color: "#00B8D9",
-      isFixed: true,
-    },
-    { value: "option 2", label: "option 2", color: "#5243AA" },
-  ];
-
   const getCountries = async () => {
     await ApiHelper.get(API.listCountries)
       .then((resData) => {
@@ -403,13 +295,13 @@ const BrandTalents = () => {
           setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
           getTalentList();
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("Please Login First");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -419,10 +311,7 @@ const BrandTalents = () => {
       });
   };
   const openTalent = (item) => {
-    // alert("sd");
     console.log(item, "item");
-    // navigate("/talent", { state: { talentData: item } });
-
     navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
@@ -450,13 +339,13 @@ const BrandTalents = () => {
           setOpenPopUp(true);
           getTalentList();
 
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -490,31 +379,22 @@ const BrandTalents = () => {
 
   const selectLanguage = (selectedOptions) => {
     if (!selectedOptions || selectedOptions.length === 0) {
-      // Handle case when all options are cleared
-      setLanguages([]); // Clear the languages state
+      setLanguages([]);
       return;
     }
-
-    // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    setLanguages(selectedLanguages); // Update languages state with all selected languages
+    setLanguages(selectedLanguages);
   };
 
   const selectNationality = (selectedOptions) => {
     console.log(selectedOptions, "selectedOptions selectedLanguages");
     if (!selectedOptions || selectedOptions.length === 0) {
-      // Handle case when all options are cleared
-      setNationality([]); // Clear the languages state
+      setNationality([]);
       return;
     }
-    // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
     console.log(selectedLanguages, "selectedLanguages");
-    setNationality(selectedLanguages); // Update languages state with all selected languages
-  };
-
-  const selectMaritalStatus = (event) => {
-    setMaritalStatus(event.target.value);
+    setNationality(selectedLanguages);
   };
 
   const getStates = async (data) => {
@@ -542,10 +422,10 @@ const BrandTalents = () => {
   };
 
   const onMinChange = (event) => {
-    setMinAge(event.target.value); // Update the state with the new value
+    setMinAge(event.target.value);
   };
   const onMaxChange = (event) => {
-    setMaxAge(event.target.value); // Update the state with the new value
+    setMaxAge(event.target.value);
   };
 
   const search = async () => {
@@ -580,13 +460,13 @@ const BrandTalents = () => {
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
           setTalentList(resData?.data?.data);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("No Matching Users Found");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -594,18 +474,6 @@ const BrandTalents = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      minHeight: "unset", // Reset the minHeight to avoid clipping
-    }),
-    menu: (provided, state) => ({
-      ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
-    }),
   };
 
   const handleSelectedCity = (state) => {
@@ -630,16 +498,10 @@ const BrandTalents = () => {
     ]);
   }, []);
 
-  useEffect(() => {}, []);
-
   const [starCount, setStarCount] = useState(0);
   const handleStarClick = (index) => {
     setStarCount(index + 1);
   };
-
-  useEffect(() => {
-    console.log(starCount, "starCount");
-  }, [starCount]);
 
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
@@ -664,7 +526,7 @@ const BrandTalents = () => {
       .then((resData) => {
         setMessage("Rating Submitted SuccessFully!");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           const modalElement = document.getElementById("ratingModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
@@ -677,15 +539,12 @@ const BrandTalents = () => {
       });
   };
 
-  // ---- ---- Const ---- ---- //
   const stars = document.querySelectorAll(".stars i");
   const starsNone = document.querySelector(".rating-box");
 
-  // ---- ---- Stars ---- ---- //
   stars.forEach((star, index1) => {
     star.addEventListener("click", () => {
       stars.forEach((star, index2) => {
-        // ---- ---- Active Star ---- ---- //
         index1 >= index2
           ? star.classList.add("active")
           : star.classList.remove("active");
@@ -696,24 +555,13 @@ const BrandTalents = () => {
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "55px", // Reset the minHeight to avoid clipping
+      minHeight: "55px",
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
+      maxHeight: "500px",
+      zIndex: 9999,
     }),
-  };
-
-  const selectCategory = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
-    if (!selectedOptions || selectedOptions.length === 0) {
-      setCategories([]);
-      return;
-    }
-    const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
-    setCategories(selectedLanguages);
   };
 
   const selectSocialMedias = (selectedOptions) => {
@@ -840,21 +688,6 @@ const BrandTalents = () => {
                             />
                           </div>
                         </div>
-                        {/* <div className="keyword-wrapper">
-                          <div className="filter-items">Category</div>
-                          <div className="creators-filter-select inpWid">
-                            <Select
-                              isMulti
-                              name="colors"
-                              options={categoriesArray}
-                              valueField="value"
-                              className="basic-multi-select"
-                              classNamePrefix="select"
-                              onChange={(value) => selectCategory(value)}
-                              styles={customStylesProfession}
-                            />
-                          </div>
-                        </div> */}
                         <div className="keyword-wrapper">
                           <div className="filter-items">Country</div>
                           <div className="creators-filter-select inpWid">
@@ -881,7 +714,7 @@ const BrandTalents = () => {
                             <Select
                               placeholder="Select state..."
                               options={stateList.map((state) => ({
-                                value: state.stateId, // or whatever unique identifier you want to use
+                                value: state.stateId,
                                 label: state.name,
                               }))}
                               value={
@@ -899,7 +732,7 @@ const BrandTalents = () => {
                             <Select
                               placeholder="Select City..."
                               options={cityList.map((city) => ({
-                                value: city.cityId, // or whatever unique identifier you want to use
+                                value: city.cityId,
                                 label: city.name,
                               }))}
                               value={
@@ -979,10 +812,6 @@ const BrandTalents = () => {
                               max={100}
                               onChange={onRangeChange}
                             />
-                            {/* <p>
-                        Change in slider:
-                        {min},{max}
-                      </p> */}
                           </div>
                         </div>
                         <div className="keyword-wrapper creator-age-main ">
@@ -1229,18 +1058,6 @@ const BrandTalents = () => {
                                             </>
                                           )}
 
-                                          {/* <div className="find-creator-address ">
-                                      {item.profession?.map(
-                                        (profession, index) => (
-                                          <React.Fragment key={index}>
-                                            {profession.value}
-                                            {index !==
-                                              item.profession.length - 1 && ","}
-                                          </React.Fragment>
-                                        )
-                                      )}
-                                    </div> */}
-
                                           {item?.profession && (
                                             <>
                                               <div className="talent-details-wrapper nweAlign pt-1 pb-0">
@@ -1256,42 +1073,12 @@ const BrandTalents = () => {
                                             </>
                                           )}
 
-                                          {/* {item?.relevantCategories && (
-                                            <>
-                                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
-                                                <div className="logo-fill-briefcase">
-                                                  <i className="bi bi-bookmarks-fill model-job-icons"></i>
-                                                </div>
-                                                <div className="contSect">
-                                                  <span>
-                                                    {
-                                                      item
-                                                        ?.relevantCategories[0]
-                                                    }
-                                                  </span>
-                                                </div>
-                                              </div>
-                                            </>
-                                          )} */}
-
                                           <span className="job-company_dtls nweAlign pt-2 pb-0 d-flex">
                                             <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
                                             {item?.childCity},{" "}
                                             {item?.parentState},{" "}
                                             {item?.parentCountry}{" "}
                                           </span>
-
-                                          {/* <div className="find-creator-address ">
-                                      {item.profession?.map(
-                                        (profession, index) => (
-                                          <React.Fragment key={index}>
-                                            {profession.value}
-                                            {index !==
-                                              item.profession.length - 1 && ","}
-                                          </React.Fragment>
-                                        )
-                                      )}
-                                    </div> */}
                                         </div>
                                       </div>
                                     </div>
@@ -1320,9 +1107,6 @@ const BrandTalents = () => {
         <div className="modal-dialog  modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              {/* <p id="ratingModalLabel" className="modal-job-title">
-                  Rate {modalData?.preferredChildFirstname}
-                </p> */}
               <button
                 type="button"
                 className="btn-close"

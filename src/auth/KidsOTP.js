@@ -4,39 +4,23 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
-import Header from "../layout/header";
 const KidsOTP = () => {
   const navigate = useNavigate();
 
   const btLogo = require("../assets/images/LOGO.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
   const [isLoading, setIsLoading] = useState(false);
-  //   const [userId, setUserId] = useState(null);
-  //   const [emailID, setEmailID] = useState(null);
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
-  useEffect(() => {
-    // const storedUserId = localStorage.getItem("userId");
-    // const storedEmailID = localStorage.getItem("emailID");
-    // if (storedUserId) {
-    //   setUserId(storedUserId);
-    // }
-    // if (storedEmailID) {
-    //   setEmailID(storedEmailID);
-    // }
-  }, []);
 
   const handleChange = (index, value) => {
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-
-    // Move focus to the next input field
     if (value !== "" && index < otp.length - 1) {
       inputRefs[index + 1].current.focus();
     }
@@ -45,11 +29,8 @@ const KidsOTP = () => {
   const handleVerify = () => {
     const newOTP = otp.join("");
     console.log(newOTP, "newOTP");
-    // Perform verification logic here, such as sending OTP to the server for validation
     otpVerification(newOTP);
-    // Reset OTP input fields
     setOtp(["", "", "", ""]);
-    // Reset focus to the first input field
     inputRefs[0].current.focus();
   };
 
@@ -65,10 +46,10 @@ const KidsOTP = () => {
         if (resData.data.status === true) {
           setMessage("Verification Successful");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
-          setTimeout(function() {
+          setTimeout(function () {
             let successData = "verified";
             navigate(
               `/talent-social-media-connections?${resData.data.data["userId"]}`
@@ -78,7 +59,7 @@ const KidsOTP = () => {
           console.log("false called");
           setMessage("Enter Correct OTP");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -91,11 +72,8 @@ const KidsOTP = () => {
   const otpResend = () => {
     const newOTP = otp.join("");
     console.log(newOTP, "newOTP");
-    // Perform verification logic here, such as sending OTP to the server for validation
     resendOtp(newOTP);
-    // Reset OTP input fields
     setOtp(["", "", "", ""]);
-    // Reset focus to the first input field
     inputRefs[0].current.focus();
   };
 
@@ -110,14 +88,14 @@ const KidsOTP = () => {
           setMessage(resData.data.message);
           setOpenPopUp(true);
           setIsLoading(false);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("Send Again");
           setOpenPopUp(true);
           setIsLoading(false);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }

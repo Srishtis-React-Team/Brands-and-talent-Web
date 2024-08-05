@@ -7,16 +7,10 @@ import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
 const PasswordSuccess = () => {
   const btLogo = require("../assets/images/LOGO.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [confirmPassword, setConfirmPassword] = useState(null);
-  const [showPassword, setShowPassword] = useState(false);
   const [paramsValue, setParamsValue] = useState("");
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  // Get the current URL
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log("Search queryString:", typeof queryString);

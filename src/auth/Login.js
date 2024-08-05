@@ -36,19 +36,9 @@ const Login = () => {
   }, []);
 
   const btLogo = require("../assets/images/LOGO.png");
-  const googleLogo = require("../assets/icons/googleLogo.png");
-  const importIcon = require("../assets/icons/instagram.png");
-  const userIcon = require("../assets/icons/user.png");
-  const mailIcon = require("../assets/icons/mail.png");
-  const lockiIcon = require("../assets/icons/lock.png");
-  const eyeOff = require("../assets/icons/eye-off.png");
-  const eyeOpen = require("../assets/icons/eyeOpen.png");
-  const gmail = require("../assets/icons/social-media-icons/gmail.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [selectedItem, setSelectedItem] = useState("talent");
-  const [talentName, setTalentName] = useState("");
   const [talentPassword, setTalentPassword] = useState("");
   const [talentEmail, setTalentEmail] = useState("");
   const [paramsValue, setParamsValue] = useState("");
@@ -76,10 +66,10 @@ const Login = () => {
     };
 
     extractValuesFromURL();
-  }, []); // Empty dependency array ensures the effect runs only once on component mount
+  }, []);
   useEffect(() => {
     console.log(userType, "userType");
-  }, [userType]); // Log userType when it changes
+  }, [userType]);
 
   useEffect(() => {
     console.log(selectedItem, "selectedItem");
@@ -87,7 +77,7 @@ const Login = () => {
 
   useEffect(() => {
     console.log(currentUser_id, "currentUser_id");
-  }, [currentUser_id]); // Log currentUser_id when it changes
+  }, [currentUser_id]);
 
   const getUserIdLocalStorage = () => {
     return localStorage.getItem("userId");
@@ -144,7 +134,7 @@ const Login = () => {
             setIsLoading(false);
             setMessage("Logged in successfully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               setIsLoading(false);
               setBrandsLocalStorage(resData.data);
@@ -162,7 +152,7 @@ const Login = () => {
             console.log("false called");
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -186,7 +176,7 @@ const Login = () => {
             setIsLoading(false);
             setMessage("Logged in successfully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               setIsLoading(false);
               setTalentLocalStorage(resData.data.data);
@@ -205,7 +195,7 @@ const Login = () => {
             console.log("false called");
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setIsLoading(false);
               setOpenPopUp(false);
             }, 1000);
@@ -287,22 +277,6 @@ const Login = () => {
               I am a Talent
             </div>
           </div>
-          {/* <div className="mb-3 login-input-containers">
-            <label className="form-label">User Type</label>
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              onChange={selectType}
-            >
-              <option value="" disabled selected>
-                Select User Type
-              </option>
-              <option defaultValue value="brand">
-                Brand
-              </option>
-              <option value="brand">Talent</option>
-            </select>
-          </div> */}
           <div className="mb-3 login-input-containers">
             <label className="form-label">Email</label>
             <div className="form-group has-search">

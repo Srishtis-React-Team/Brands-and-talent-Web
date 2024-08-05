@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/brand-home.scss";
 import BrandHeader from "./BrandHeader";
-import CreateJobs from "./CreateJobs";
-import DuplicateJobs from "./DuplicateJobs";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import { API } from "../../config/api";
 import Talentscarousel from "../../views/Talentscarousel.js";
@@ -12,11 +10,9 @@ import { useNavigate } from "react-router-dom";
 const BrandHome = () => {
   const navigate = useNavigate();
   const bigAdd = require("../../assets/icons/sidemenu/bigAdd.png");
-  const users = require("../../assets/icons/sidemenu/users.png");
   const girl1 = require("../../assets/images/girl1.png");
   const [showSidebar, setShowSidebar] = useState(true);
   const [mobileSideBar, setMobileSidebar] = useState(true);
-  const [photosList, setPhotosList] = useState([]);
   const [talentList, setTalentList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [brandId, setBrandId] = useState(null);
@@ -135,17 +131,11 @@ const BrandHome = () => {
   }, []);
 
   const [basicList, setBasicList] = useState([]);
-  const [proList, setProList] = useState([]);
-  const [premiumList, setPremiumList] = useState([]);
   const [filteresPricingList, setFilteresPricingList] = useState([]);
 
   const [pricingList, setPricingList] = useState(null);
 
   const getBrandsPricingList = async () => {
-    const basic_list = [];
-    const pro_list = [];
-    const premium_list = [];
-
     await ApiHelper.get(API.brandsPricingList)
       .then((resData) => {
         if (resData) {
@@ -280,41 +270,7 @@ const BrandHome = () => {
                               {jobsList?.hiringCompany}
                             </span>
                           </div>
-                          {/* <div className="mb-2">
-                            <span className="job-company-name">
-                              {jobsList?.state}
-                            </span>{" "}
-                            ,
-                            <span className="job-company-name">
-                              {jobsList?.city}
-                            </span>
-                          </div>
-                          <div className="mb-2">
-                            <span className="job-company-name">
-                              <i className="bi bi-person-workspace"></i>
-                            </span>{" "}
-                            <i className="bi bi-dot"></i>
-                            <span className="job-company-name">
-                              {jobsList?.jobType}
-                            </span>
-                            <i className="bi bi-dot"></i>
-                            <span className="job-company-name">
-                              {jobsList?.employmentType}
-                            </span>
-                            <i className="bi bi-dot"></i>
-                            <span className="job-company-name">
-                              {jobsList && jobsList.compensation
-                                ? Object.keys(jobsList.compensation)[0]
-                                    .split("_")
-                                    .map(
-                                      (word) =>
-                                        word.charAt(0).toUpperCase() +
-                                        word.slice(1)
-                                    )
-                                    .join(" ")
-                                : ""}
-                            </span>
-                          </div> */}
+
                           <div className="mb-2">
                             <span className="job-company-name">
                               <i className="bi bi-person-workspace"></i>
@@ -350,17 +306,6 @@ const BrandHome = () => {
                                     : ""}
                                 </>
                               )}
-
-                              {/* {jobsList && jobsList.compensation
-                                ? Object.keys(jobsList.compensation)[0]
-                                    .split("_")
-                                    .map(
-                                      (word) =>
-                                        word.charAt(0).toUpperCase() +
-                                        word.slice(1)
-                                    )
-                                    .join(" ")
-                                : ""} */}
                             </span>
                           </div>
                           <div className="mb-2">

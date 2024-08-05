@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/dashboard.css";
 import "../../assets/css/register.scss";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
-import { API } from "../../config/api";
-import { ApiHelper } from "../../helpers/ApiHelper";
-import Axios from "axios";
 import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
 const BrandActivation = () => {
@@ -18,22 +15,12 @@ const BrandActivation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const [receivedData, setReceivedData] = useState(null);
-  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    console.log(receivedData, "receivedData");
-  }, [receivedData]);
-  useEffect(() => {
-    // Check if data is passed through state
     if (location.state && location.state.data) {
       setReceivedData(location.state.data);
     }
   }, [location.state]);
-
-  useEffect(() => {
-    //code for google auth
-    console.log(openPopUp, "openPopUp");
-  }, [openPopUp]);
 
   const brandsSignup = async () => {
     console.log(receivedData, "receivedData");
@@ -112,15 +99,6 @@ const BrandActivation = () => {
           </div>
         </div>
         <div className="dialog-footer">
-          {/* <button
-            type="button"
-            onClick={() => {
-              navigate("/");
-            }}
-            className="step-back"
-          >
-            Back
-          </button> */}
           <button
             type="button"
             className="step-continue"

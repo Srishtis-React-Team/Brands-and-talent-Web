@@ -4,12 +4,9 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { useNavigate } from "react-router-dom";
-import Header from "../../layout/header";
 const BrandsOtp = () => {
   const navigate = useNavigate();
-
   const btLogo = require("../../assets/images/LOGO.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -37,8 +34,6 @@ const BrandsOtp = () => {
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-
-    // Move focus to the next input field
     if (value !== "" && index < otp.length - 1) {
       inputRefs[index + 1].current.focus();
     }
@@ -47,11 +42,8 @@ const BrandsOtp = () => {
   const handleVerify = () => {
     const newOTP = otp.join("");
     console.log(newOTP, "newOTP");
-    // Perform verification logic here, such as sending OTP to the server for validation
     otpVerification(newOTP);
-    // Reset OTP input fields
     setOtp(["", "", "", ""]);
-    // Reset focus to the first input field
     inputRefs[0].current.focus();
   };
 
@@ -68,7 +60,7 @@ const BrandsOtp = () => {
         if (resData.data.status === true) {
           setMessage("Verification Successful");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             setIsLoading(false);
             navigate("/brand-details", {
@@ -80,7 +72,7 @@ const BrandsOtp = () => {
           setMessage("Enter Correct OTP");
           setOpenPopUp(true);
           setIsLoading(false);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -93,11 +85,8 @@ const BrandsOtp = () => {
   const otpResend = () => {
     const newOTP = otp.join("");
     console.log(newOTP, "newOTP");
-    // Perform verification logic here, such as sending OTP to the server for validation
     resendOtp(newOTP);
-    // Reset OTP input fields
     setOtp(["", "", "", ""]);
-    // Reset focus to the first input field
     inputRefs[0].current.focus();
   };
 
@@ -106,21 +95,20 @@ const BrandsOtp = () => {
       parentEmail: queryString,
     };
     setIsLoading(true);
-
     await ApiHelper.post(API.otpResend, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
           setIsLoading(false);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("Send Again");
           setOpenPopUp(true);
           setIsLoading(false);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -133,7 +121,6 @@ const BrandsOtp = () => {
 
   return (
     <>
-      {/* <Header /> */}
       <div className="header-wrapper">
         <div className="step-wrapper">
           <img
@@ -183,9 +170,6 @@ const BrandsOtp = () => {
             Didn’t received the OTP?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
           </div>
-          {/* <div className="otp-back" onClick={() => navigate(`/brand-signup`)}>
-            Back
-          </div> */}
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}

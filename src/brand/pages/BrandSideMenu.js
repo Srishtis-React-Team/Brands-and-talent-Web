@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/brand-dashboard.scss";
 import "../../assets/css/talentHeader.scss";
-import { NavLink } from "react-router-dom";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import CurrentUser from "../../CurrentUser";
@@ -12,21 +11,6 @@ const postJobHv = require("../../assets/icons/postJob-h.png");
 
 const BrandSideMenu = ({ onChildClick, myState }) => {
   const { currentUserType, avatarImage } = CurrentUser();
-
-  // useEffect(() => {
-  //   const handleBeforeUnload = (e) => {
-  //     const confirmationMessage =
-  //       "You have unsaved changes. Are you sure you want to leave?";
-  //     e.returnValue = confirmationMessage;
-  //     return confirmationMessage;
-  //   };
-
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, []);
 
   const location = useLocation();
   const [showSidebar, setShowSidebar] = useState(true);
@@ -67,40 +51,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
       });
   };
 
-  const setMenu = (e) => {
-    console.log(e, "setMenu setMenu");
-    if (e === "create-job") {
-      setCreateJob(true);
-    } else {
-      setCreateJob(false);
-    }
-    if (e === "view-dashboard") {
-      setViewDashboard(true);
-    } else {
-      setViewDashboard(false);
-    }
-    if (e === "my-jobs") {
-      setMyJobs(true);
-    } else {
-      setMyJobs(false);
-    }
-    if (e === "view-talents") {
-      setViewTalents(true);
-    } else {
-      setViewTalents(false);
-    }
-    if (e === "view-favorites") {
-      setViewFavorites(true);
-    } else {
-      setViewFavorites(false);
-    }
-    if (e === "view-help") {
-      setViewHelp(true);
-    } else {
-      setViewHelp(false);
-    }
-  };
-
   const jobCount = async () => {
     await ApiHelper.post(`${API.jobCount}${brandId}`)
       .then((resData) => {
@@ -114,10 +64,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
       });
   };
 
-  useEffect(() => {
-    console.log(createJob, "createJobStatus setMenu");
-  }, [createJob]);
-
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
@@ -130,13 +76,8 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
         setIsSmallScreen(false);
       }
     };
-    // Call handleResize initially to check the screen size
     handleResize();
-
-    // Add event listener for window resize
     window.addEventListener("resize", handleResize);
-
-    // Cleanup function to remove event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -146,16 +87,9 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     console.log(isSmallScreen, "isSmallScreen");
   }, [isSmallScreen]);
 
-  const handleClick = () => {
-    if (typeof onChildClick === "function" && isSmallScreen) {
-      onChildClick();
-    }
-  };
-
   useEffect(() => {
     if (myState === true) {
       getBrand();
-      // alert("getBrand sidemenu");
     }
   }, [myState]);
 
@@ -207,19 +141,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
         </div>
 
         <div className="sidenavWraper scroll">
-          {/* <Link
-              to="/create-jobs"
-              className={
-                location.pathname === "/create-jobs"
-                  ? "sidemenu-active mt-2"
-                  : "brand-menu-wrapper mt-2"
-              }
-              onClick={() => handleClick()}
-            >
-              <i className="bi bi-plus-square-fill "
-              ></i>
-              <div className="brand-menu-text">Create Gig/Job</div>
-            </Link> */}
           <Link
             to={`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`}
             className={
@@ -240,9 +161,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            {/* <i className="bi bi-person-plus icons"></i>
-            <i className="fa-solid fa-user-tie"></i> */}
-            {/* <i className="bi bi-person-add icons"></i> */}
             <img src={postJob} className="iconMenu normal" alt="icon" />
             <img src={postJobHv} className="iconMenu hover" alt="icon" />
 
@@ -257,8 +175,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            {/* <i className="bi bi-person-gear icons"></i> */}
-
             <i className="bi bi-send icons"></i>
             <div className="brand-menu-text">Invite To Apply</div>
           </Link>
@@ -286,18 +202,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             <i className="bi bi-people icons"></i>
             <div className="brand-menu-text">Applicants</div>
           </Link>
-
-          {/* <Link
-            to="/find-talents"
-            className={
-              location.pathname === "/find-talents"
-                ? "sidemenu-active mt-2"
-                : "brand-menu-wrapper mt-2"
-            }
-          >
-            <i className="bi bi-person-bounding-box icons"></i>
-            <div className="brand-menu-text">Find Talent</div>
-          </Link> */}
 
           <Link
             to="/favorite-talents"
@@ -358,18 +262,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             <i className="bi bi-gear icons"></i>
             <div className="brand-menu-text">Settings</div>
           </Link>
-
-          {/* <Link
-              to="/find-talents"
-              className={
-                location.pathname === "/find-talents"
-                  ? "sidemenu-active mt-2"
-                  : "brand-menu-wrapper mt-2"
-              }
-            >
-              <i className="bi bi-people-fill"></i>
-              <div className="brand-menu-text">Invite To Apply</div>
-            </Link> */}
 
           {/* <Link
               to="/brand-help"

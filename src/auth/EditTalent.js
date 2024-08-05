@@ -22,13 +22,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
 import { EditorState, convertFromHTML, ContentState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
 import Modal from "react-modal";
-import { ta } from "date-fns/locale";
 import { v4 as uuidv4 } from "uuid";
 import RichTextEditor from "../views/RichTextEditor";
 import CreatableSelect from "react-select/creatable";
@@ -67,8 +63,6 @@ const EditTalent = () => {
   const { categoryList, professionList, featuresList } = useFieldDatas();
 
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const [anchorE2, setAnchorE2] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -118,13 +112,8 @@ const EditTalent = () => {
     return label;
   };
 
-  const imageType = require("../assets/icons/imageType.png");
-  const videoType = require("../assets/icons/videoType.png");
-  const audiotype = require("../assets/icons/audiotype.png");
-  const idCard = require("../assets/icons/id-card.png");
   const elipsis = require("../assets/icons/elipsis.png");
   const greenTickCircle = require("../assets/icons/small-green-tick.png");
-  const docsIcon = require("../assets/icons/docsIcon.png");
   const [editProfileImage, setEditProfileImage] = useState("");
   const [editProfileImageObject, setEditProfileImageObject] = useState(null);
   const [portofolioFile, setPortofolioFile] = useState([]);
@@ -141,7 +130,6 @@ const EditTalent = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [updateDisabled, setUpdateDisabled] = useState(false);
   const [value, setValue] = useState(null);
-  const [showError, setShowError] = useState(false);
   const [kidsFillData, setKidsFillData] = useState(null);
   const [parentFirstNameError, setparentFirstNameError] = useState(false);
   const [parentMobileError, setParentMobileError] = useState(false);
@@ -157,14 +145,8 @@ const EditTalent = () => {
   const [dobError, setDobError] = useState(false);
   const [languageError, setLanguageError] = useState(false);
   const [addressError, setAddressError] = useState(false);
-  const [parentLastNameError, setparentLastNameError] = useState(false);
   const [parentEmailError, setparentEmailError] = useState(false);
-  const [talentPasswordError, settalentPasswordError] = useState(false);
-  const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
-    false
-  );
   const [kidsLegalFirstNameError, setkidsLegalFirstNameError] = useState(false);
-  const [kidsLegalLastNameError, setkidsLegalLastNameError] = useState(false);
   const [genderError, setgenderError] = useState(false);
   const [message, setMessage] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -187,15 +169,10 @@ const EditTalent = () => {
   const [ethnicity, setEthnicity] = useState("");
   const [languages, setLanguages] = useState([]);
   const [dateOfBirth, setDob] = useState("");
-  const [profession, setProfession] = useState([]);
   const [aboutYou, setAboutYou] = useState([]);
-  const [relevantCategories, setRelevantCategories] = useState([]);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
-  const [talentPassword, setTalentPassword] = useState("");
-  const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(true);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -206,7 +183,6 @@ const EditTalent = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [allJobsList, setAllJobsList] = useState([]);
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
-  const [selectedProfessionsEdit, setSelectedProfessionsEdit] = useState([]);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
   const [videoUrl, setVideoUrl] = useState("");
@@ -222,12 +198,12 @@ const EditTalent = () => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "55px", // Reset the minHeight to avoid clipping
+      minHeight: "55px",
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
+      maxHeight: "500px",
+      zIndex: 9999,
     }),
   };
 
@@ -254,17 +230,13 @@ const EditTalent = () => {
 
   const handleProfessionChange = (selectedOptions) => {
     console.log(selectedOptions, "selectedOptions");
-    // setSelectedProfessions(selectedOptions);
-    // setProfessionError(false);
     if (selectedOptions.length > 5) {
-      // setProfessionError(true);
-      // Optionally show a message to the user
       setMessage("You can only select up to 5 skills");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 2000);
-      return; // Prevent the state update
+      return;
     } else {
       setSelectedProfessions(selectedOptions);
       setProfessionError(false);
@@ -325,12 +297,12 @@ const EditTalent = () => {
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "55px", // Reset the minHeight to avoid clipping
+      minHeight: "55px",
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
+      maxHeight: "500px",
+      zIndex: 9999,
     }),
   };
 
@@ -340,28 +312,9 @@ const EditTalent = () => {
 
   useEffect(() => {}, [updateDisabled]);
 
-  // Function to handle date picker change
   const handleDateChange = (e) => {
-    // const selectedDate = e.target.value; // Assuming your date picker provides the selected date
-    // setDob(selectedDate); // Set the DOB in state
-    // // Calculate age
-    // const dobDate = new Date(selectedDate);
-    // const today = new Date();
-    // const diff = today - dobDate;
-    // const ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)); // Calculating age in years
-    // setAge(String(ageInYears)); // Set the age in state
     setValue(e);
     setDob(e);
-    // let dateString = e;
-    // if (dateString) {
-    //   let dateObject = new Date(dateString);
-    //   console.log(dateObject, "dateObject");
-    //   console.log(typeof dateObject, "dateObject");
-    //   if (dateObject) {
-    //     let formattedDate = dateObject?.toISOString()?.split("T")[0];
-    //     console.log(formattedDate, "formattedDate");
-    //   }
-    // }
     let dobDate = new Date(e);
     let today = new Date();
     let diff = today - dobDate;
@@ -375,23 +328,12 @@ const EditTalent = () => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
-  // Function to handle email input change
   const handleEmailChange = (e) => {
     setparentEmailError(false);
     const email = e.target.value;
     setParentEmail(e.target.value);
-    // Validate email using regex
     setIsValidEmail(emailRegex.test(email));
   };
-
-  const handleKidsEmailChange = (e) => {
-    const email = e.target.value;
-    // setKidsEmail(e.target.value);
-    // Validate email using regex
-    setIsValidEmail(emailRegex.test(email));
-  };
-
-  // Function to handle country selection
 
   const selectEthnicity = (event) => {
     console.log(event.target.value, "selectEthnicity");
@@ -407,16 +349,14 @@ const EditTalent = () => {
     console.log(selectedOptions, "selectedOptions selectedLanguages");
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
-      // Handle case when all options are cleared
-      setLanguages([]); // Clear the languages state
+      setLanguages([]);
       setSelectedLanguageOptions([]);
 
       return;
     }
-    // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
     console.log(selectedLanguages, "selectedLanguages");
-    setLanguages(selectedLanguages); // Update languages state with all selected languages
+    setLanguages(selectedLanguages);
 
     setSelectedLanguageOptions(selectedOptions);
   };
@@ -447,21 +387,9 @@ const EditTalent = () => {
     }
   }, [talentId]);
 
-  const initializeEditorState = (htmlContent) => {
-    console.log(htmlContent, "htmlContent");
-    const blocksFromHTML = convertFromHTML(...htmlContent);
-    const contentState = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
-    return EditorState.createWithContent(contentState);
-  };
-
   const [services, setServices] = useState();
-  const [updatedServices, setUpdatedServices] = useState();
 
   const getKidsData = async () => {
-    // alert("getKidsData");
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -478,21 +406,14 @@ const EditTalent = () => {
             setKidsLegalFirstName(resData?.data?.data?.childFirstName);
             setKidsLegalLastName(resData?.data?.data?.childLastName);
             setDob(resData?.data?.data?.childDob);
-            // handleSelectedCountry({
-            //   value: resData?.data?.data?.parentCountry,
-            //   label: resData?.data?.data?.parentCountry,
-            //   key: 0,
-            // });
             setCountry(resData?.data?.data?.parentCountry);
             setState(resData?.data?.data?.parentState);
             getStates(resData?.data?.data?.parentCountry);
             setKidsCity(resData?.data?.data?.childCity);
-
             getCities({
               countryName: resData?.data?.data?.parentCountry,
               stateName: resData?.data?.data?.parentState,
             });
-
             setKidsPreferedFirstName(
               resData?.data?.data?.preferredChildFirstname
             );
@@ -504,9 +425,6 @@ const EditTalent = () => {
             setNationality(resData?.data?.data?.childNationality);
             setMaritalStatus(resData?.data?.data?.maritalStatus);
             setEthnicity(resData?.data?.data?.childEthnicity);
-            // setKidsEmail(resData?.data?.data?.childEmail);
-            // setKidsPhone(resData?.data?.data?.childPhone);
-            // setKidsLocation(resData?.data?.data?.childLocation);
             setSelectedCategories([
               ...selectedCategories,
               ...resData.data.data?.relevantCategories,
@@ -537,13 +455,6 @@ const EditTalent = () => {
             );
             console.log(selectedProfessionOptions, "selectedProfessionOptions");
             setSelectedProfessions(resData.data.data?.profession);
-            // const initialState = featuresList.reduce((acc, curr) => {
-            //   const initialValueObj = resData?.data?.data?.features?.find(
-            //     (item) => item.label === curr.label
-            //   );
-            //   acc[curr.label] = initialValueObj ? initialValueObj.value : "";
-            //   return acc;
-            // }, {});
             setFeatures(resData?.data?.data?.features);
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
@@ -561,11 +472,6 @@ const EditTalent = () => {
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
             setDob(resData?.data?.data?.childDob);
-            // handleSelectedCountry({
-            //   value: resData?.data?.data?.parentCountry,
-            //   label: resData?.data?.data?.parentCountry,
-            //   key: 0,
-            // });
             setCountry(resData?.data?.data?.parentCountry);
             setState(resData?.data?.data?.parentState);
             setKidsCity(resData?.data?.data?.childCity);
@@ -580,9 +486,6 @@ const EditTalent = () => {
             setNationality(resData?.data?.data?.childNationality);
             setMaritalStatus(resData?.data?.data?.maritalStatus);
             setEthnicity(resData?.data?.data?.childEthnicity);
-            // setKidsEmail(resData?.data?.data?.childEmail);
-            // setKidsPhone(resData?.data?.data?.childPhone);
-            // setKidsLocation(resData?.data?.data?.childLocation);
             setKidsCity(resData?.data?.data?.childCity);
             setSelectedCategories([
               ...selectedCategories,
@@ -633,7 +536,7 @@ const EditTalent = () => {
       if (/^\d+$/.test(value)) {
         finalValue = `${value} cm`;
       } else {
-        return; // Exit if the value is not a number
+        return;
       }
     }
 
@@ -725,7 +628,7 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage("Updated SuccessFully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               setMyState(true);
             }, 1000);
@@ -733,7 +636,7 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -772,14 +675,14 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage("Updated SuccessFully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -793,10 +696,8 @@ const EditTalent = () => {
   const [firstNameLetterError, setFirstNameLetterError] = useState(false);
   const [lastNameLetterError, setLastNameLetterError] = useState(false);
   const [kidsLegalFirstLetterError, setKidsLegalFirstError] = useState(false);
-  const [
-    kidsLegalLastNameLetterError,
-    setKidsLegalLastNameLetterError,
-  ] = useState(false);
+  const [kidsLegalLastNameLetterError, setKidsLegalLastNameLetterError] =
+    useState(false);
   const [
     kidsPrefferedFirstNameLetterError,
     setKidsPrefferedFirstNameLetterError,
@@ -808,7 +709,6 @@ const EditTalent = () => {
 
   const handleFirstNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value?.trim() === "") {
       setFirstNameLetterError(false);
@@ -822,14 +722,12 @@ const EditTalent = () => {
   };
 
   const handleKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setFirstNameLetterError(false);
     }
   };
   const handleLastNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value?.trim() === "") {
       setLastNameLetterError(false);
@@ -843,7 +741,6 @@ const EditTalent = () => {
   };
 
   const handleLastNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setLastNameLetterError(false);
     }
@@ -851,7 +748,6 @@ const EditTalent = () => {
 
   const KidsLegalFirstNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setKidsLegalFirstError(false);
@@ -865,7 +761,6 @@ const EditTalent = () => {
   };
 
   const handleKidsLegalKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setKidsLegalFirstError(false);
     }
@@ -873,7 +768,6 @@ const EditTalent = () => {
 
   const KidsLegalLastNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value?.trim() === "") {
       setKidsLegalLastNameLetterError(false);
@@ -887,7 +781,6 @@ const EditTalent = () => {
   };
 
   const handleKidsLegalLastNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setKidsLegalLastNameLetterError(false);
     }
@@ -895,7 +788,6 @@ const EditTalent = () => {
 
   const kidsPreferedFirstNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value?.trim() === "") {
       setKidsPrefferedFirstNameLetterError(false);
@@ -909,14 +801,12 @@ const EditTalent = () => {
   };
 
   const handleKidsPrefferedFirstNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setKidsPrefferedFirstNameLetterError(false);
     }
   };
   const kidsPreferedLastNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value?.trim() === "") {
       setKidsPrefferedLastNameLetterError(false);
@@ -930,7 +820,6 @@ const EditTalent = () => {
   };
 
   const handleKidsPrefferedLasttNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setKidsPrefferedLastNameLetterError(false);
     }
@@ -939,7 +828,6 @@ const EditTalent = () => {
   const [mobileNumError, setMobileNumError] = useState();
 
   const handleMobileChange = (value, countryData) => {
-    // Update the parentMobile state with the new phone number
     console.log(value, "handleMobileChange");
     setParentMobile(value);
     setParentMobileError(false);
@@ -1003,7 +891,6 @@ const EditTalent = () => {
   const serviceFileInputRefs = useRef([]);
 
   const serviceFile = (index) => {
-    // console.log(eachService, "serviceFileUpload"); // should correctly log each service
     if (serviceFileInputRefs.current[index]) {
       serviceFileInputRefs.current[index].click();
     }
@@ -1027,7 +914,6 @@ const EditTalent = () => {
   };
 
   const getFileType = (fileType) => {
-    // Extract main category from MIME type
     if (fileType.startsWith("image/")) {
       return "image";
     } else if (fileType.startsWith("video/")) {
@@ -1047,7 +933,6 @@ const EditTalent = () => {
     params.append("file", fileData);
     params.append("fileName", fileData.name);
     params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
     await Axios.post(API.uploadFile, params, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -1065,7 +950,6 @@ const EditTalent = () => {
           console.log(fileObj, "fileObj");
           setEditProfileImage(fileObj?.fileData);
           setEditProfileImageObject(fileObj);
-          // updateProfile(fileObj);
         }
       })
       .catch((err) => {
@@ -1079,7 +963,6 @@ const EditTalent = () => {
     params.append("file", fileData);
     params.append("fileName", fileData.name);
     params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
     await Axios.post(API.uploadFile, params, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -1124,7 +1007,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("Portfolio Added Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
           }, 2000);
@@ -1132,7 +1015,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 2000);
         }
@@ -1148,7 +1031,6 @@ const EditTalent = () => {
     params.append("file", fileData);
     params.append("fileName", fileData.name);
     params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
     await Axios.post(API.uploadFile, params, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -1192,7 +1074,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("File Added Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
           }, 2000);
@@ -1200,7 +1082,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 2000);
         }
@@ -1215,7 +1097,6 @@ const EditTalent = () => {
     params.append("file", fileData);
     params.append("fileName", fileData.name);
     params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
     await Axios.post(API.uploadFile, params, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -1259,7 +1140,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("File Added Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
           }, 2000);
@@ -1267,7 +1148,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 2000);
         }
@@ -1283,7 +1164,6 @@ const EditTalent = () => {
     params.append("file", fileData);
     params.append("fileName", fileData.name);
     params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
     await Axios.post(API.uploadFile, params, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -1344,7 +1224,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("File Added Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
           }, 2000);
@@ -1352,7 +1232,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 2000);
         }
@@ -1377,7 +1257,7 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage("Profile image updated successfully");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setMyState(true);
               setOpenPopUp(false);
             }, 2000);
@@ -1385,7 +1265,7 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 2000);
           }
@@ -1400,7 +1280,7 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage("Profile image updated successfully");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setMyState(true);
               setOpenPopUp(false);
             }, 2000);
@@ -1408,7 +1288,7 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 2000);
           }
@@ -1423,7 +1303,7 @@ const EditTalent = () => {
 
   const File = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click(); // Trigger the click event on the file input
+      fileInputRef.current.click();
     }
   };
 
@@ -1431,7 +1311,7 @@ const EditTalent = () => {
 
   const portfolioFile = () => {
     if (portfolioFileInputRef.current) {
-      portfolioFileInputRef.current.click(); // Trigger the click event on the file input
+      portfolioFileInputRef.current.click();
     }
   };
 
@@ -1439,7 +1319,7 @@ const EditTalent = () => {
 
   const videoFile = () => {
     if (videoFileInputRef.current) {
-      videoFileInputRef.current.click(); // Trigger the click event on the file input
+      videoFileInputRef.current.click();
     }
   };
 
@@ -1447,7 +1327,7 @@ const EditTalent = () => {
 
   const resumeFileFunction = () => {
     if (resumeFileInputRef.current) {
-      resumeFileInputRef.current.click(); // Trigger the click event on the file input
+      resumeFileInputRef.current.click();
     }
   };
 
@@ -1499,7 +1379,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("File Deleted Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
           }, 2000);
@@ -1507,7 +1387,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 2000);
         }
@@ -1530,7 +1410,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("File Deleted Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
           }, 2000);
@@ -1538,7 +1418,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 2000);
         }
@@ -1581,14 +1461,14 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("Services Updated Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -1614,14 +1494,14 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("Features Updated Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -1634,17 +1514,6 @@ const EditTalent = () => {
   useEffect(() => {
     console.log(services, "services");
   }, [services]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Prepare data for submission, converting EditorState to HTML
-    const submittedServices = services.map((service) => ({
-      ...service,
-      editorState: service.editorState.getCurrentContent().getPlainText(), // Convert editor content to HTML
-    }));
-    // Replace the following line with your actual submit logic, e.g., API call.
-    console.log("Submitted services:", submittedServices);
-  };
 
   const handleEditorChange = (index, editorState) => {
     const editInputs = [...services];
@@ -1681,7 +1550,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("Service Removed Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
           }, 1000);
@@ -1689,7 +1558,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -1706,10 +1575,7 @@ const EditTalent = () => {
 
   const handleAddUrl = async () => {
     if (videoUrl.trim() !== "") {
-      // setUrls([...urls, videoUrl]);
-      // console.log([...urls, videoUrl], "handleAddUrl");
       setVideoUrl("");
-      // navigate(`/talent-signup-files-success`);
       const formData = {
         videosAndAudios: [...talentData?.videoAudioUrls, videoUrl],
         videoAudioUrls: [...talentData?.videoAudioUrls, videoUrl],
@@ -1734,7 +1600,7 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage("Updated SuccessFully");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               getKidsData();
             }, 1000);
@@ -1756,7 +1622,6 @@ const EditTalent = () => {
   };
 
   const submitVideoAudios = async () => {
-    // navigate(`/talent-signup-files-success`);
     const formData = {
       videosAndAudios: urls,
       videoAudioUrls: urls,
@@ -1770,7 +1635,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("Updated SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
           }, 1000);
@@ -1783,7 +1648,6 @@ const EditTalent = () => {
   };
 
   const deleteVideoUrls = async (item, index) => {
-    // navigate(`/talent-signup-files-success`);
     const formData = {
       talentId: talentId,
       index: index,
@@ -1797,7 +1661,7 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("Deleted SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
           }, 1000);
@@ -1816,7 +1680,6 @@ const EditTalent = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   const handleOptionClick = (option) => {
-    // Handle the option click here
     if (option === "view") {
       // Code to view the image in a new window
       window.open("your-image-url", "_blank");
@@ -1869,7 +1732,7 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage("Url updated successfully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               setMyState(true);
             }, 1000);
@@ -1877,7 +1740,7 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -1896,14 +1759,14 @@ const EditTalent = () => {
             setIsLoading(false);
             setMessage("Url updated successfully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -3260,7 +3123,8 @@ const EditTalent = () => {
                                                           item: item,
                                                           label:
                                                             "delete-service",
-                                                          eachService: eachService,
+                                                          eachService:
+                                                            eachService,
                                                         });
                                                       }}
                                                     >

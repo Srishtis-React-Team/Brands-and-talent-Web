@@ -3,19 +3,12 @@ import "../../assets/css/forms/kidsform-one.scss";
 import "../../assets/css/createjobs.scss";
 import "../../assets/css/talent-profile.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
-import Select from "react-select";
-import Axios from "axios";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
-import { NavLink } from "react-router-dom";
 import Modal from "react-modal";
 import Spinner from "../../components/Spinner";
 
@@ -39,7 +32,6 @@ const Applicants = () => {
       left: "50%",
       right: "auto",
       bottom: "auto",
-      /* margin: '0 auto', */
       width: "500px",
       hight: "100%",
       transform: "translate(-50%, -50%)",
@@ -54,9 +46,7 @@ const Applicants = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const jobImage = require("../../assets/icons/jobImage.png");
   const [showSidebar, setShowSidebar] = useState(true);
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [newCandidates, showNewCandidates] = useState(true);
@@ -70,15 +60,6 @@ const Applicants = () => {
     setShowSidebar(!showSidebar);
   };
 
-  function editJob() {}
-
-  function inviteToInterview(candidate) {
-    const formData = {
-      talentId: candidate?.talentId,
-      selectedLevel: "interviewInvitations",
-      interviewType: "online",
-    };
-  }
   const sortListCandidate = async (candidate) => {
     console.log(candidate?.gigId, "candidate GigId");
     const formData = {
@@ -89,10 +70,9 @@ const Applicants = () => {
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          // getNewCandidates(brandId, "new");
           setMessage("Candidate Shortlisted SuccessFully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             handleForms("sortlisted-candidates");
             setOpenPopUp(false);
           }, 1000);
@@ -112,10 +92,9 @@ const Applicants = () => {
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          // getNewCandidates(brandId, "new");
           setMessage("Candidate Booked SuccessFully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             handleForms("booked-candidates");
             setOpenPopUp(false);
           }, 1000);
@@ -126,26 +105,12 @@ const Applicants = () => {
       });
   };
 
-  const deleteJob = async () => {};
-
   useEffect(() => {
     console.log(candidatesList, "candidatesList");
   }, [candidatesList]);
   useEffect(() => {
     console.log(newCandidates, "newCandidates");
   }, [newCandidates]);
-
-  const postJob = async () => {};
-
-  function PreviewJob(jobId) {
-    navigate("/preview-job", {
-      state: {
-        jobId: jobId,
-      },
-    });
-  }
-
-  const getAllJobs = () => {};
 
   function handleForms(e) {
     console.log(e, "handleForms");
@@ -236,14 +201,6 @@ const Applicants = () => {
       });
   };
   const [interviewMode, setInterviewMode] = useState("offline");
-  const handleToggle = (event) => {
-    const { checked } = event.target;
-    if (checked) {
-      setInterviewMode("online");
-    } else {
-      setInterviewMode("offline");
-    }
-  };
 
   const onlineInvite = async () => {
     const formData = {
@@ -278,7 +235,7 @@ const Applicants = () => {
         if (resData.data.status === true) {
           setMessage("An Invite has been send to the candidate");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             handleForms("interview-invitations");
             setOpenPopUp(false);
           }, 1000);
@@ -324,7 +281,7 @@ const Applicants = () => {
 
           setMessage("An Invite has been send to the candidate");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             handleForms("interview-invitations");
             setOpenPopUp(false);
           }, 1000);
@@ -348,7 +305,7 @@ const Applicants = () => {
         if (resData.data.status === true) {
           setMessage("Candidate Rejected SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             handleForms("rejected-candidates");
             setOpenPopUp(false);
           }, 1000);
@@ -701,29 +658,16 @@ const Applicants = () => {
       </>
       <Modal style={customStylesAlert} isOpen={alertpop?.status === true}>
         <div>
-          {/* <div className='uploadHead'>
-                        <h4 className='mt-2'>Reason For stock Return</h4>
-                        <img src={CloseIcon} className='pop-close' onClick={() => { setIsModalOpen(false); }} />
-                    </div> */}
           <div className="alertBox">
             <div className="col-md-12  mx-5">
               <div className="alert-icon-section">
                 <i className="bi bi-headset interview-headset"></i>
-                {/* <i className="alert-icon bi bi-exclamation-triangle-fill"></i> */}
               </div>
               {alertpop?.label == "invite" && (
                 <>
                   <h5 className="interview-model-title">
                     Invite to Apply/Interview
                   </h5>
-                  {/* <label className="toggleSwitch nolabel">
-                    <input type="checkbox" onChange={handleToggle} />
-                    <a></a>
-                    <span>
-                      <span className="left-span">Offline</span>
-                      <span className="right-span">Online</span>
-                    </span>
-                  </label> */}
                   <div className="invite-box">
                     {interviewMode && interviewMode == "offline" && (
                       <>
