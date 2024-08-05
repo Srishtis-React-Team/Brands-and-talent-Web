@@ -632,7 +632,7 @@ const Header = ({ onData }) => {
           //   navigate("/");
           // }}
         >
-          <img className="btLogo" src={mbtLogo}></img>
+          <img alt="img" className="btLogo" src={mbtLogo}></img>
         </div>
 
         <div className="mobile-nav-functions">
@@ -795,7 +795,7 @@ const Header = ({ onData }) => {
             onClick={handleCoffeeLink}
           >
             Support BT
-            <img src={cofeeIcon} alt="" className="cofeeIcon-img" />
+            <img src={cofeeIcon} alt="img" className="cofeeIcon-img" />
           </div>
         </div>
         <div className="header-search-wrapper">
@@ -825,7 +825,7 @@ const Header = ({ onData }) => {
               navigate("/");
             }}
           >
-            <img className="btLogo" src={btLogo}></img>
+            <img alt="img" className="btLogo" src={btLogo}></img>
           </div>
           <div className="header-items">
             <div className=" menu-items">
@@ -981,7 +981,7 @@ const Header = ({ onData }) => {
                 onClick={handleCoffeeLink}
               >
                 Support BT
-                <img src={cofeeIcon} alt="" className="cofeeIcon-img" />
+                <img src={cofeeIcon} alt="img" className="cofeeIcon-img" />
               </div>
             </div>
             <div className="header-functions">
@@ -1082,7 +1082,7 @@ const Header = ({ onData }) => {
                           <img
                             className="talent-profile-icon-img"
                             src={`${API.userFilePath}${talentData?.image?.fileData}`}
-                            alt=""
+                            alt="img"
                           />
                         </>
                       )}
@@ -1091,7 +1091,7 @@ const Header = ({ onData }) => {
                           <img
                             className="talent-profile-icon-img"
                             src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
-                            alt=""
+                            alt="img"
                           />
                         </>
                       )}

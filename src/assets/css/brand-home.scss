@@ -538,9 +538,15 @@
   // .brand-main-container {
   //   padding-left: 31%;
   // }
+  // .brand-home-main {
+  //   display: flex;
+  //   flex-direction: column;
+  // }
   .brand-home-main {
     display: flex;
-    flex-direction: column;
+    justify-content: center; // Centers horizontally
+    align-items: center; // Centers vertically
+    min-height: 100vh; // Ensures it takes the full viewport height
   }
   .brand-home-left-container {
     width: 100%;
@@ -580,10 +586,10 @@
   .not-sidebar {
     display: none;
   }
-  .brand-home-main {
-    display: block;
-    justify-content: space-evenly;
-  }
+  // .brand-home-main {
+  //   display: block;
+  //   justify-content: space-evenly;
+  // }
   .brand-home-left-container {
     width: 100%;
   }
@@ -593,11 +599,16 @@
     flex-wrap: wrap;
   }
   .brand-content-main {
-    padding: 20px;
-    float: left;
-    width: 100%;
-    background-color: #fff;
+    background-color: #ffffff;
+    box-shadow: rgb(0 0 0 / 11%) 0px 3px 3px;
     border-radius: 10px;
+    padding: 20px;
+    width: 50%; // Adjust width as needed
+    margin-top: 40px; // Ensure there's a top margin
+  }
+
+  .edit_talentprofile {
+    margin: 0 auto; // Center the element within the container
   }
   .brand-home-one {
     padding: 10px;

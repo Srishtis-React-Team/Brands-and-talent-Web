@@ -72,7 +72,8 @@ const About = () => {
                 <img
                   className="img-fluid"
                   src={
-                    "https://brandsandtalent.com/static/media/abt1.5b3df7cb4e1d8d66a71f.png"
+                    // "https://brandsandtalent.com/static/media/abt1.5b3df7cb4e1d8d66a71f.png"
+                    "https://brandsandtalent.com//backend/uploads/060b5e10-128d-455e-9a63-9d4bd1531031.webp"
                   }
                 ></img>
               </div>
@@ -83,7 +84,8 @@ const About = () => {
                 <img
                   className="img-fluid"
                   src={
-                    "https://brandsandtalent.com/static/media/abt2.7fb0e7c0e8bee70c4360.png"
+                    // "https://brandsandtalent.com/static/media/abt2.7fb0e7c0e8bee70c4360.png"
+                    "https://brandsandtalent.com//backend/uploads/76f0ef01-9a84-4459-90f6-b2c7aaa9f1e3.webp"
                   }
                 ></img>
               </div>

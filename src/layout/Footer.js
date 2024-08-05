@@ -252,7 +252,7 @@ const Footer = (props) => {
           <div className="footer-section row">
             <div className="footer-wrapper col-md-4 col-lg-4">
               <div className="footer-icon">
-                <img className="btLogo" src={btLogo}></img>
+                <img alt="img" className="btLogo" src={btLogo}></img>
               </div>
               <div className="company-info">
                 connecting brands and talent™ <br /> Welcome to Brands & Talent

@@ -1,53 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import "../assets/css/forms/kidsform-one.scss";
-import Select from "react-select";
-import Axios from "axios";
-import { API } from "../config/api";
-import PopUp from "../components/PopUp";
-import nationalityOptions from "../components/nationalities";
-import languageOptions from "../components/languages";
-import MuiPhoneNumber from "material-ui-phone-number";
-import TextField from "@mui/material/TextField";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import TalentHeader from "../layout/TalentHeader";
-import TalentSideMenu from "../layout/TalentSideMenu";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { ApiHelper } from "../helpers/ApiHelper";
-import CurrentUser from "../CurrentUser";
-import BrandHeader from "../brand/pages/BrandHeader";
-import BrandSideMenu from "../brand/pages/BrandSideMenu";
+import MuiPhoneNumber from "material-ui-phone-number";
+import Header from "../layout/header";
+import Footer from "../layout/Footer";
 import Spinner from "../components/Spinner";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router";
+import PopUp from "../components/PopUp";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../config/api";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ContactUs = () => {
   const navigate = useNavigate();
-
   const location = useLocation();
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-  } = CurrentUser();
-
-  const open = Boolean(anchorEl);
-  const handleFileClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -61,73 +27,53 @@ const ContactUs = () => {
   const [mobileError, setMobileError] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const [showSidebar, setShowSidebar] = useState(true);
-
-  const toggleMenu = () => {
-    setShowSidebar(!showSidebar);
-  };
+  const [mobileNumError, setMobileNumError] = useState();
 
   const handleEmailChange = (e) => {
     setEmailError(false);
     const email = e.target.value;
-    setEmail(e.target.value);
-    // Validate email using regex
+    setEmail(email);
     setIsValidEmail(emailRegex.test(email));
   };
 
   const postSupportMail = async () => {
-    if (!name) {
-      setNameError(true);
-    }
-    if (!email) {
-      setEmailError(true);
-    }
-    if (!enquiry) {
-      setEnquiryError(true);
-    }
-    const formData = {
-      name: name,
-      phoneNo: mobile,
-      enquiry: enquiry,
-      email: email,
-    };
+    if (!name) setNameError(true);
+    if (!email) setEmailError(true);
+    if (!enquiry) setEnquiryError(true);
+
+    const formData = { name, phoneNo: mobile, enquiry, email };
     setIsLoading(true);
-    await ApiHelper.post(`${API.postSupportMail}`, formData)
-      .then((resData) => {
-        console.log(resData, "resData");
-        if (resData.data.status === true) {
-          setIsLoading(false);
-          setMessage("Contact Form Submitted SuccessFully");
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-            setName("");
-            setEmail("");
-            setMobile("");
-            setEnquiry("");
-          }, 2000);
-        } else if (resData.data.status === false) {
-          setIsLoading(false);
-          setMessage(resData?.data?.message);
-          setOpenPopUp(true);
-          setTimeout(function() {
-            setOpenPopUp(false);
-          }, 2000);
-        }
-      })
-      .catch((err) => {});
+    try {
+      const resData = await ApiHelper.post(`${API.postSupportMail}`, formData);
+      if (resData.data.status) {
+        setIsLoading(false);
+        setMessage("Contact Form Submitted Successfully");
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+          setName("");
+          setEmail("");
+          setMobile("");
+          setEnquiry("");
+        }, 2000);
+      } else {
+        setIsLoading(false);
+        setMessage(resData.data.message);
+        setOpenPopUp(true);
+        setTimeout(() => setOpenPopUp(false), 2000);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      // Handle error
+    }
   };
 
-  const [mobileNumError, setMobileNumError] = useState();
-
-  const handleMobileChange = (value, countryData) => {
-    // Update the parentMobile state with the new phone number
-    console.log(value, "handleMobileChange");
+  const handleMobileChange = (value) => {
     setMobile(value);
     setMobileError(false);
   };
 
-  const handleNavigation = (event) => {
+  const handleNavigation = () => {
     if (location.state && location.state.from) {
       navigate(`/${location.state.from}`);
     } else {
@@ -137,34 +83,27 @@ const ContactUs = () => {
 
   return (
     <>
-      <main
-        style={{ margin: "30px auto", width: "50%" }}
-        id="mainBrand"
-        className=""
-      >
-        <div className="brand-content-main boxBg edit_talentprofile">
+      <Header />
+      <main className="brand-home-main" style={{ margin: "30px auto", width: "50%" }}>
+        <div className="brand-content-main boxBg edit_talentprofile" style={{marginTop:'12%'}}>
           <div className="create-job-title">How Can we help?</div>
           <p>
             Have a question? Fill out the form below, and we'll get back to you
             within 1-2 business days
           </p>
-
           <div className="update-password-main w-100">
             <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">
                 Full Name <span className="mandatory">*</span>
               </label>
               <div className="form-group adult-password-wrapper">
-                {" "}
-                <input
+                <input  
                   type="text"
                   className="form-control adult-signup-inputs"
                   placeholder="Enter Full Name"
                   value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                ></input>
+                  onChange={(e) => setName(e.target.value)}
+                />
                 {nameError && (
                   <div className="invalid-fields">
                     Please enter Your Full Name
@@ -178,9 +117,7 @@ const ContactUs = () => {
               </label>
               <input
                 type="email"
-                className={`form-control ${
-                  !isValidEmail ? "is-invalid" : "form-control"
-                }`}
+                className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"}`}
                 onChange={handleEmailChange}
                 placeholder="Enter E-mail"
                 value={email}
@@ -196,7 +133,6 @@ const ContactUs = () => {
             </div>
             <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">Mobile Number</label>
-
               <MuiPhoneNumber
                 defaultCountry={"kh"}
                 className="form-control"
@@ -226,7 +162,7 @@ const ContactUs = () => {
                   setEnquiry(e.target.value);
                   setEnquiryError(false);
                 }}
-              ></textarea>
+              />
               {enquiryError && (
                 <div className="invalid-fields">Please enter Message</div>
               )}
@@ -235,14 +171,11 @@ const ContactUs = () => {
               <div className="add-portfolia-btn contactus-btn-wrapper">
                 <div
                   className="edit-profile-navigation-btn"
-                  onClick={() => {
-                    handleNavigation("back");
-                  }}
+                  onClick={handleNavigation}
                 >
                   <i className="bi bi-arrow-left-circle-fill arrow-left-circle"></i>
                   <span className="edit-profile-navigation-text">Back</span>
                 </div>
-
                 <Button
                   onClick={postSupportMail}
                   className="edit-profileimg-btn"
@@ -258,8 +191,8 @@ const ContactUs = () => {
         </div>
       </main>
       {isLoading && <Spinner />}
-
       {openPopUp && <PopUp message={message} />}
+      <Footer />
     </>
   );
 };
