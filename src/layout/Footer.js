@@ -9,7 +9,6 @@ import { API } from "../config/api";
 import CurrentUser from "../CurrentUser";
 import Header from "./header";
 const Footer = (props) => {
-  console.log(props.props, "propsfopter");
   const {
     currentUserId,
     currentUserImage,
@@ -72,7 +71,7 @@ const Footer = (props) => {
     //   clear();
     //   await ApiHelper.post(API.subscriptionStatus, formData)
     //     .then((resData) => {
-    //       console.log(resData, "resData");
+    //
     //       if (resData.data.status === true) {
     //         setMessage("Subscribed successfully! Kindly check your inbox");
     //         setOpenPopUp(true);
@@ -88,7 +87,7 @@ const Footer = (props) => {
     //       }
     //     })
     //     .catch((err) => {
-    //       console.log(err);
+    //
     //     });
     // }
     window.open("https://brandsandtalent.substack.com", "_blank");
@@ -137,7 +136,7 @@ const Footer = (props) => {
   // }, [navigate]);
 
   // const handleMessageFromHeader = (message) => {
-  //   console.log(message, "message from header");
+  //
   //   if (message === "open-kids-form") {
   //     openModal();
   //   }

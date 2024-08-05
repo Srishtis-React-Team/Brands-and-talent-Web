@@ -13,7 +13,6 @@ const IndustryNews = () => {
   const bl_image = require("../assets/images/blogs/blog1.png");
 
   const navigateTO = async (event) => {
-    console.log(event, "event");
     if (event == "industry-news") {
       navigate("/view-blog");
     }
@@ -33,8 +32,6 @@ const IndustryNews = () => {
 
   const location = useLocation();
   const selectedBlogData = location.state && location.state.blogData;
-
-  console.log(selectedBlogData, "selectedBlogData");
 
   const handleBackClick = () => {
     if (location.state && location.state.from) {

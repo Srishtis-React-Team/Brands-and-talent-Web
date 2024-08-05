@@ -14,7 +14,7 @@
 //   const [onlineUsers, setOnlineUsers] = useState([]);
 //   const socket = useRef();
 //   const user = localStorage.getItem("currentUser");
-//   console.log(user, "userMainID");
+//
 //   const scrollRef = useRef();
 //   const [selectedUSerImage, setSelectedUSerIMage] = useState("");
 
@@ -50,7 +50,7 @@
 //         const res = await axios.get("/conversations/" + user);
 //         setConversations(res.data);
 //       } catch (err) {
-//         console.log(err);
+//
 //       }
 //     };
 //     getConversations();
@@ -62,7 +62,7 @@
 //         const res = await axios.get("/messages/" + currentChat?._id);
 //         setMessages(res.data);
 //       } catch (err) {
-//         console.log(err);
+//
 //       }
 //     };
 //     getMessages();
@@ -96,7 +96,7 @@
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 
 //     // try {
@@ -104,7 +104,7 @@
 //     //   setMessages([...messages, res.data]);
 //     //   setNewMessage("");
 //     // } catch (err) {
-//     //   console.log(err);
+//     //
 //     // }
 //   };
 
@@ -134,7 +134,7 @@
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
@@ -146,13 +146,13 @@
 //     await ApiHelper.post(API.addConversation, formData)
 //       .then((resData) => {
 //         if (resData) {
-//           console.log(resData, "resDataCOnversation");
-//           console.log(resData?.data?._id, "resDataCOnversation");
+//
+//
 //           setConversationID(resData?.data?._id);
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
@@ -170,7 +170,7 @@
 //   //         }
 //   //       })
 //   //       .catch((err) => {
-//   //         console.log(err);
+//   //
 //   //       });
 //   //   };
 
@@ -185,19 +185,19 @@
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
 //   useEffect(() => {
-//     console.log(conversationID, "conversationID");
+//
 //     if (conversationID) {
 //       listByConversationId();
 //     }
 //   }, [conversationID]);
 
 //   useEffect(() => {
-//     console.log(userList, "userList");
+//
 //     if (userList && userList?.length > 0) {
 //       setSelectedUser(userList[0]);
 //       addConversation(userList[0]?._id);
@@ -212,7 +212,7 @@
 //   useEffect(() => {
 //     if (selectedUser) {
 //       if (selectedUser.brandImage && selectedUser.brandImage.length > 0) {
-//         console.log(selectedUser, "selectedUser");
+//
 //         setSelectedUSerIMage(selectedUser.brandImage[0]?.fileData);
 //       }
 //     }

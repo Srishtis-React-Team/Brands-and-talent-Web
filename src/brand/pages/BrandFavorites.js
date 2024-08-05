@@ -25,9 +25,7 @@ const BrandFavorites = () => {
     setStarCount(index + 1);
   };
 
-  useEffect(() => {
-    console.log(starCount, "starCount");
-  }, [starCount]);
+  useEffect(() => {}, [starCount]);
 
   const [showSidebar, setShowSidebar] = useState(true);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -47,24 +45,18 @@ const BrandFavorites = () => {
         if (resData) {
           setTalentList(resData.data.data);
         }
-        console.log("talentList", resData.data.data);
-        console.log("talentList", talentList);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const addFavorite = async (item) => {
-    console.log(item);
     const formData = {
       type: item?.type,
       user: item?._id,
     };
     let brandId = localStorage.getItem("brandId");
     let talentId = localStorage.getItem("userId");
-    console.log(brandId, "userid");
-    console.log(talentId, "userid");
+
     let loggidInID;
     if (brandId) {
       loggidInID = brandId;
@@ -88,21 +80,17 @@ const BrandFavorites = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const removeFavorite = async (item) => {
-    console.log(item);
     const formData = {
       type: item?.type,
       user: item?._id,
     };
     let brandId = localStorage.getItem("brandId");
     let talentId = localStorage.getItem("userId");
-    console.log(brandId, "userid");
-    console.log(talentId, "userid");
+
     let loggidInID;
     if (brandId) {
       loggidInID = brandId;
@@ -127,13 +115,10 @@ const BrandFavorites = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const openTalent = (item) => {
-    console.log(item, "item");
     navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
@@ -174,9 +159,7 @@ const BrandFavorites = () => {
           getFavorites();
         }, 2000);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const stars = document.querySelectorAll(".stars i");
   const starsNone = document.querySelector(".rating-box");

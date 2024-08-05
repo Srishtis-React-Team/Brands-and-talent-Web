@@ -17,10 +17,9 @@ export let ApiHelper = {
       token = brandToken;
     }
     if (tokenNeed && token) {
-      console.log("true", "tokencalled");
       headers["x-access-token"] = token;
     }
-    console.log(headers, "headers");
+
     return await Axios.get(url, {
       headers,
     }).catch((error) => {
@@ -42,14 +41,11 @@ export let ApiHelper = {
     if (brandToken) {
       token = brandToken;
     }
-    console.log(brandToken, "brandToken");
-    console.log(token, "tokenAPiHelper");
-    console.log(tokenNeed, "tokenNeed");
+
     if (tokenNeed && token) {
-      console.log("true", "tokencalled");
       headers["x-access-token"] = token;
     }
-    console.log(headers, "headers");
+
     return await Axios.post(url, data, {
       headers,
       ...config,

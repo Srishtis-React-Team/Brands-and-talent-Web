@@ -11,9 +11,7 @@ function SocialCount() {
           "http://localhost:3000/api/twitter-followers"
         );
         setFollowers(response.data.followers);
-      } catch (error) {
-        console.error("Error fetching follower count:", error);
-      }
+      } catch (error) {}
     };
 
     fetchFollowers();

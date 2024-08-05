@@ -15,7 +15,6 @@ const KidsOTP = () => {
   const [isLoading, setIsLoading] = useState(false);
   const url = window.location.href;
   const queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
 
   const handleChange = (index, value) => {
     const newOtp = [...otp];
@@ -28,7 +27,7 @@ const KidsOTP = () => {
 
   const handleVerify = () => {
     const newOTP = otp.join("");
-    console.log(newOTP, "newOTP");
+
     otpVerification(newOTP);
     setOtp(["", "", "", ""]);
     inputRefs[0].current.focus();
@@ -39,10 +38,9 @@ const KidsOTP = () => {
       otp: newOTP,
       parentEmail: queryString,
     };
-    console.log(formData, "formData otpVerification");
+
     await ApiHelper.post(API.otpVerification, formData)
       .then((resData) => {
-        console.log("otpVerification response", resData.data);
         if (resData.data.status === true) {
           setMessage("Verification Successful");
           setOpenPopUp(true);
@@ -56,7 +54,6 @@ const KidsOTP = () => {
             );
           }, 1000);
         } else if (resData.data.status === false) {
-          console.log("false called");
           setMessage("Enter Correct OTP");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -64,14 +61,12 @@ const KidsOTP = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const otpResend = () => {
     const newOTP = otp.join("");
-    console.log(newOTP, "newOTP");
+
     resendOtp(newOTP);
     setOtp(["", "", "", ""]);
     inputRefs[0].current.focus();
@@ -101,7 +96,6 @@ const KidsOTP = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
       });
   };

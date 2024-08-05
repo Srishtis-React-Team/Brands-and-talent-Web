@@ -3673,3 +3673,8 @@ head .profile-image-header {
   color: #c2124b;
   cursor: pointer;
 }
+
+.product-service-image {
+  width: 45px;
+  height: 24px;
+}

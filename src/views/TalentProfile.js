@@ -2,8 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import "../assets/css/findcreators.css";
 import "../assets/css/talent-profile.css";
 import "../assets/css/dashboard.css";
-import Header from "../layout/header.js";
-import Footer from "../layout/Footer.js";
 import { useLocation } from "react-router-dom";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
@@ -11,7 +9,6 @@ import PhotosCarousel from "./PhotosCarousel.js";
 import CardCarousel from "./CardCarousel.js";
 import ServicesCarousel from "./ServicesCarousel.js";
 import TalentHeader from "../layout/TalentHeader.js";
-import PdfModal from "../components/PdfModal.js";
 import Select from "react-select";
 import Button from "@mui/material/Button";
 import BrandHeader from "../brand/pages/BrandHeader.js";
@@ -25,51 +22,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 const TalentProfile = () => {
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-  } = CurrentUser();
+  const { currentUserType, avatarImage } = CurrentUser();
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const { talentData } = location.state;
-  console.log(avatarImage, "avatarImage");
-  const girl1 = require("../assets/images/girl.png");
-  const model = require("../assets/images/model-profile.png");
-  const model1 = require("../assets/images/model1.png");
-  const model2 = require("../assets/images/model2.png");
-  const model3 = require("../assets/images/model3.png");
-  const model4 = require("../assets/images/model4.png");
-  const model5 = require("../assets/images/model5.png");
-  const model6 = require("../assets/images/model6.png");
-  const model7 = require("../assets/images/model7.png");
-  const model8 = require("../assets/images/model8.png");
-  const model9 = require("../assets/images/whiteBG.png");
-  const model10 = require("../assets/images/model10.png");
-  const model11 = require("../assets/images/model11.png");
-  const model12 = require("../assets/images/model12.png");
-  const model13 = require("../assets/images/model13.png");
-  const model14 = require("../assets/images/model14.png");
-  const model15 = require("../assets/images/model15.png");
-  const mapPin = require("../assets/icons/map-pin.png");
-  const messageIcon = require("../assets/icons/message-circle.png");
-  const share = require("../assets/icons/share-2.png");
-  const plus = require("../assets/icons/plus-square.png");
-  const calander = require("../assets/icons/calendar.png");
-  const user = require("../assets/icons/user-plus.png");
   const pinkStar = require("../assets/icons/pink-star.png");
-  const greyStar = require("../assets/icons/grey-star.png");
-  const darkStar = require("../assets/icons/darkStar.png");
-  const blackstar = require("../assets/icons/blackstar.png");
   const instaLogo = require("../assets/icons/social-media-icons/instagram.png");
-  const xLogo = require("../assets/icons/twitter_x.png");
   const userFill = require("../assets/icons/userFill.png");
   const mapFill = require("../assets/icons/mapFill.png");
-  const checkShield = require("../assets/icons/check-shield.png");
   const whitePlus = require("../assets/icons/whitePlus.png");
   const white_star = require("../assets/icons/white_star.png");
-  const check = require("../assets/icons/check.png");
   const fbIcon = require("../assets/icons/facebook logo_icon.png");
   const linkdin = require("../assets/icons/linkdin_icon.png");
   const twitterLogo = require("../assets/icons/twitterLogo.png");
@@ -77,15 +37,6 @@ const TalentProfile = () => {
   const threadLogo = require("../assets/icons/threadLogo.png");
   const tiktok = require("../assets/icons/tiktok_social media_icon.png");
   const blueShield = require("../assets/icons/blue-shield.png");
-  const greenTickCircle = require("../assets/icons/grey-filled-circle.png");
-  const elipsis = require("../assets/icons/elipsis.png");
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState();
-  const pdfUrl =
-    "https://brandsandtalent.com/backend/uploads/72e654db-4dd1-4663-89d8-52db0df93ca4.pdf";
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
   const [isLoading, setIsLoading] = useState(false);
   const [portofolio, showPortofolio] = useState(true);
   const [services, showServices] = useState(false);
@@ -96,7 +47,6 @@ const TalentProfile = () => {
   const [CV, showCV] = useState(false);
   const [socialMedia, showSocialMedia] = useState(false);
   const [test, setTest] = useState("");
-  const [data, setData] = useState([]);
   const [talentData, setTalentData] = useState([]);
   const [photosList, setPhotosList] = useState([]);
   const [videoAudioList, setVideoAudioList] = useState([]);
@@ -118,17 +68,12 @@ const TalentProfile = () => {
   useEffect(() => {
     setCurrentUserType(localStorage.getItem("currentUserType"));
   }, []);
-  useEffect(() => {
-    console.log(currentUser_type, "currentUser_type header");
-  }, [currentUser_type]);
 
   const location = useLocation();
   const selectedTalent = location.state && location.state.talentData;
-  console.log(selectedTalent, "selectedTalent");
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -153,19 +98,6 @@ const TalentProfile = () => {
     }
   }, [selectedTalent]);
 
-  useEffect(() => {
-    console.log(photosList, "photosList");
-  }, [photosList]);
-  useEffect(() => {
-    console.log(videoAudioList, "videoAudioList");
-  }, [videoAudioList]);
-  useEffect(() => {
-    console.log(featuresList, "featuresList");
-  }, [featuresList]);
-  useEffect(() => {
-    console.log(cvList, "cvList");
-  }, [cvList]);
-
   const fetchPhotos = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
@@ -173,17 +105,13 @@ const TalentProfile = () => {
       }/1`
     )
       .then((resData) => {
-        console.log(resData, "resData photos");
         if (resData.data.status === true) {
           if (resData.data.data) {
             setPhotosList(resData.data.data);
           }
-          console.log(photosList, "photosList");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const fetchVideoAudios = async () => {
     await ApiHelper.post(
@@ -192,18 +120,11 @@ const TalentProfile = () => {
       }/2`
     )
       .then((resData) => {
-        console.log(resData, "resData videos");
         if (resData.data.status === true) {
-          console.log(
-            resData.data.data[0].videosAndAudios,
-            "resData.data.data[0].videosAndAudios"
-          );
           setVideoAudioList(resData.data.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const fetchURLS = async () => {
     await ApiHelper.post(
@@ -212,15 +133,11 @@ const TalentProfile = () => {
       }/8`
     )
       .then((resData) => {
-        console.log(resData, "resData videos");
         if (resData.data.status === true) {
-          console.log(resData.data.videoAudioUrls, "resData.data.dataURL");
           setURLList(resData.data.videoAudioUrls);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const fetchFeatures = async () => {
     await ApiHelper.post(
@@ -229,14 +146,11 @@ const TalentProfile = () => {
       }/4`
     )
       .then((resData) => {
-        console.log(resData, "resData features");
         if (resData.data.status === true) {
           setFeaturesList(resData.data.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const fetchCV = async () => {
     await ApiHelper.post(
@@ -245,14 +159,11 @@ const TalentProfile = () => {
       }/3`
     )
       .then((resData) => {
-        console.log(resData, "resData cv");
         if (resData.data.status === true) {
           setCvList(resData.data.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const fetchReviews = async () => {
     await ApiHelper.post(
@@ -261,39 +172,27 @@ const TalentProfile = () => {
       }/7`
     )
       .then((resData) => {
-        console.log(resData.data.data, "resData Reviews");
         if (resData.data.status === true) {
           setreviewsList(resData.data.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const getTalentById = async (talent_id) => {
     await ApiHelper.post(`${API.getTalentById}${talent_id}`)
       .then((resData) => {
         if (resData) {
-          console.log(resData, "resData talentDataProfile");
           setTalentData(resData.data.data);
-          console.log(resData.data.data, "resData.data");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
-
-  useEffect(() => {
-    console.log(talentData, "talentDataProfile");
-  }, [talentData]);
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
     setBrandImage(localStorage.getItem("currentUserImage"));
-    console.log(brandId, "brandId");
-    console.log(brandImage, "brandImage");
+
     if (brandId && brandId != null) {
       getAllJobs(brandId);
     }
@@ -302,20 +201,16 @@ const TalentProfile = () => {
   const getAllJobs = async (id) => {
     await ApiHelper.get(`${API.getBrandPostedJobsByID}${id}`)
       .then((resData) => {
-        console.log(resData.data.data, "getJobsList");
         if (resData.data.status === true) {
           if (resData.data.data) {
             setAllJobsList(resData.data.data, "resData.data.data");
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleChange = (e) => {
-    console.log(e, "selectedJobID");
     setSelectedJob(e?.value);
   };
 
@@ -368,23 +263,6 @@ const TalentProfile = () => {
     }
   }
 
-  const [selectedPDF, setSelectedPDF] = useState(null);
-
-  const openPDFModal = (pdfSrc) => {
-    setSelectedPDF(pdfSrc);
-    const modal = document.getElementById("pdfModal");
-    modal.classList.add("show");
-    modal.style.display = "block";
-    document.body.classList.add("modal-open");
-  };
-
-  const closePDFModal = () => {
-    setSelectedPDF(null);
-    const modal = document.getElementById("pdfModal");
-    modal.classList.remove("show");
-    modal.style.display = "none";
-    document.body.classList.remove("modal-open");
-  };
   const [showSidebar, setShowSidebar] = useState(true);
 
   const toggleMenu = () => {
@@ -412,7 +290,7 @@ const TalentProfile = () => {
     if (currentUserType == "brand" && talentData?.planName === "Basic") {
       setMessage("Purchase Pro or Premium Plan to unlock this feature");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
         navigate(`/pricing`);
       }, 3000);
@@ -420,7 +298,7 @@ const TalentProfile = () => {
       if (currentUserType == "talent") {
         setMessage("Please log in as a Brand/Client and post a job first");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 3000);
@@ -431,16 +309,6 @@ const TalentProfile = () => {
   };
   const messageNow = () => {
     navigate(`/message?${talentData?._id}`);
-    // if (talentData?.planName == "Basic") {
-    //   setMessage("Upgrade to Pro/Premium member");
-    //   setOpenPopUp(true);
-    //   setTimeout(function() {
-    //     setOpenPopUp(false);
-    //     navigate(`/pricing`);
-    //   }, 3000);
-    // } else {
-    //   navigate(`/message?${talentData?._id}`);
-    // }
   };
 
   const inviteToApply = async () => {
@@ -454,29 +322,26 @@ const TalentProfile = () => {
     await ApiHelper.post(`${API.inviteTalentToApply}`, formData)
       .then((resData) => {
         if (resData) {
-          console.log(resData, "inviteToApply");
           if (resData?.data?.status === true) {
             setShowModal(false);
             setMessage("Invitation Sent SuccessFully");
             setIsLoading(false);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 2000);
           } else {
             setIsLoading(false);
             setMessage("Error Occured Try Again");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               setShowModal(false);
             }, 2000);
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const [isSliderOpen, setSliderOpen] = useState(false);
@@ -488,13 +353,11 @@ const TalentProfile = () => {
   };
 
   const handleClose = () => {
-    // alert("handleCloseSlider");
     setSliderOpen(false);
   };
   const [modalData, setModalData] = useState(null);
 
   const reportReview = async (item) => {
-    // alert("reportReview");
     setModalData(item);
     const modalElement = document.getElementById("ratingModal");
     const bootstrapModal = new window.bootstrap.Modal(modalElement);
@@ -502,7 +365,6 @@ const TalentProfile = () => {
   };
 
   const handleCloseModal = async (modalData) => {
-    console.log(modalData, "modalData");
     const formData = {
       comment: comments,
       reviewerName: modalData?.reviewerName,
@@ -513,21 +375,17 @@ const TalentProfile = () => {
       .then((resData) => {
         setMessage("Reported SuccessFully!");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           const modalElement = document.getElementById("ratingModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
         }, 2000);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(isSliderOpen, "isSliderOpen ImageSlider");
-  }, [isSliderOpen]);
+  useEffect(() => {}, [isSliderOpen]);
   const [currentIndex, setCurrentIndex] = useState(currentImageIndex);
 
   useEffect(() => {
@@ -575,14 +433,10 @@ const TalentProfile = () => {
   };
 
   const isInstagramUrl = (url) => url.includes("instagram.com");
-
-  // Function to extract Instagram shortcode
   const extractInstagramShortcode = (url) => {
     const match = url.match(/\/(p|reel)\/([^\/?]+)/);
     return match ? match[2] : null;
   };
-
-  // Function to get embed URL for Instagram
   const getInstagramEmbedUrl = (url) => {
     const shortcode = extractInstagramShortcode(url);
     return shortcode
@@ -591,8 +445,6 @@ const TalentProfile = () => {
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const [anchorE2, setAnchorE2] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -612,18 +464,12 @@ const TalentProfile = () => {
 
   return (
     <>
-      {/* <Header /> */}
       {currentUser_type == "brand" && <BrandHeader toggleMenu={toggleMenu} />}
       {currentUser_type == "talent" && <TalentHeader toggleMenu={toggleMenu} />}
 
       <section>
         <div className="popular-header">
           <div className="header-title">Profile</div>
-          {/* <div className="header-menu">
-            <div>Home</div>
-            <div>Talents</div>
-            <div>Profile</div>
-          </div> */}
         </div>
       </section>
 
@@ -634,7 +480,6 @@ const TalentProfile = () => {
               <div className="col-md-4 col-lg-3 pr-0">
                 <div className="talent-wrapper">
                   <div className="talent-backdrop">
-                    {/* <img className="talent-img-backdrop" src={model9}></img> */}
                     <div className="profImg">
                       {talentData && talentData?.image && (
                         <img
@@ -646,12 +491,6 @@ const TalentProfile = () => {
                         <img className="talent-img" src={avatarImage}></img>
                       )}
                     </div>
-                    {/* <div className="talent-status">
-                      <span>
-                        <img src={blackstar}></img>
-                      </span>
-                      <span>Pro</span>
-                    </div> */}
                     {talentData?.planName != "Basic" && (
                       <>
                         <div
@@ -1076,10 +915,6 @@ const TalentProfile = () => {
                           dangerouslySetInnerHTML={{ __html: htmlContent }}
                         />
                       ))}
-
-                      {/* <div className="bio-info">
-                        dangerouslySetInnerHTML={{ __html: talentData?.childAboutYou }}
-                      </div> */}
                     </div>
 
                     <div className="individual-talent-tabs">
@@ -1172,19 +1007,6 @@ const TalentProfile = () => {
                       >
                         CV
                       </div>
-
-                      {/* <div
-                        className={
-                          socialMedia
-                            ? "active-tab individual-talent-tab"
-                            : "individual-talent-tab"
-                        }
-                        onClick={(e) => {
-                          handleForms("social-media");
-                        }}
-                      >
-                        Social Media Posts
-                      </div> */}
                     </div>
 
                     <div className="talent-all-details-wrapper">
@@ -1226,7 +1048,6 @@ const TalentProfile = () => {
                             <div className="portofolio-title mt-4">
                               Social Media Posts
                             </div>
-                            {/* <div className="view-all">View All</div> */}
                           </div>
                           <CardCarousel />
 
@@ -1259,12 +1080,6 @@ const TalentProfile = () => {
                                 was required and everything was effortless.
                               </div>
                             </div>
-                            {/* <div className="booked-btn">
-                              <div className="wrapper">
-                                <img src={check}></img>
-                              </div>
-                              <div className="posted-jobs">24 Projects Booked</div>
-                            </div> */}
                           </div>
 
                           <div className="portofolio-section">
@@ -1442,7 +1257,6 @@ const TalentProfile = () => {
 
                           <div className="cvlist-wrapper">
                             {cvList.map((pdf) => {
-                              console.log(pdf, "pdf");
                               return (
                                 <>
                                   <>
@@ -1459,12 +1273,6 @@ const TalentProfile = () => {
                                       >
                                         View
                                       </button>
-                                      {/* {showModal && (
-                                        <PdfModal
-                                          pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
-                                          onHide={() => setShowModal(false)}
-                                        />
-                                      )} */}
                                     </div>
                                   </>
                                 </>
@@ -1497,7 +1305,6 @@ const TalentProfile = () => {
                           <section className="photos-gallery  w-100">
                             {photosList &&
                               photosList.map((image, index) => {
-                                console.log(image, "image");
                                 return (
                                   <>
                                     {/* col-lg-3 col-md-4 padSpc */}
@@ -1714,12 +1521,6 @@ const TalentProfile = () => {
                                     >
                                       View PDF
                                     </button>
-                                    {/* {showModal && (
-                                      <PdfModal
-                                        pdfUrl={`${API.userFilePath}${pdf?.fileData}`}
-                                        onHide={() => setShowModal(false)}
-                                      />
-                                    )} */}
                                   </div>
                                 </>
                               </>
@@ -1795,9 +1596,6 @@ const TalentProfile = () => {
                                       <div className="review-title">
                                         {item.comment}
                                       </div>
-                                      {/* <div className="review-content">
-                                    {item.comment}
-                                  </div> */}
                                       <div className="reviewer-section pb-0">
                                         <div className="reviewers-rating">
                                           {[
@@ -1857,7 +1655,6 @@ const TalentProfile = () => {
           </div>
         </div>
       </section>
-      {/* <Footer /> */}
       {isLoading && <Spinner />}
       {openPopUp && <PopUp message={message} />}
       <Modal
@@ -1926,9 +1723,6 @@ const TalentProfile = () => {
         <div className="modal-dialog  modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              {/* <p id="ratingModalLabel" className="modal-job-title">
-                  Rate {modalData?.preferredChildFirstname}
-                </p> */}
               <button
                 type="button"
                 className="btn-close"
@@ -1973,54 +1767,3 @@ const TalentProfile = () => {
 };
 
 export default TalentProfile;
-
-{
-  /* <div className="model-profile">
-        <div>
-          <img className="modal-profile-img" src={model}></img>
-        </div>
-        <div className="model-details">
-          <div className="model-infos">Professional model</div>
-          <div className="model-location">
-            <div>
-              <img src={mapPin}></img>
-            </div>
-            <div className="location-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-          </div>
-          <div className="models-options">
-            <div className="share-wrapper center">
-              <img className="share-icon" src={share}></img>
-            </div>
-            <div className="message-wrapper">
-              <img src={message}></img>
-              <span>Message</span>
-            </div>
-            <div className="reserve-background">
-              <img src={plus}></img>
-              <span className="text-span">Reserve</span>
-            </div>
-            <div className="reserve-background invite">
-              <img src={calander}></img>
-              <span className="text-span">Invite to Casting</span>
-            </div>
-            <div className="reserve-background follow">
-              <img src={user}></img>
-              <span className="text-span">Follow</span>
-            </div>
-          </div>
-          <div className="models-social-counts">
-            <span className="count-wrapper">
-              Views <span>11863</span>
-            </span>
-            <span className="count-wrapper">
-              Followers <span>77</span>Followers <span>77</span>
-            </span>
-            <span className="count-wrapper">
-              Last login<span> More than 3 months</span>
-            </span>
-          </div>
-        </div>
-      </div> */
-}

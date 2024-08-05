@@ -11,17 +11,12 @@ import { useLocation } from "react-router-dom";
 const SavedJobs = () => {
   const location = useLocation();
   const { jobId } = location.state || {};
-  console.log(jobId, "jobId");
+
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
-  const [updateDisabled, setUpdateDisabled] = useState(false);
-  const [jobTitleError, setjobTitleError] = useState(false);
   const [jobTitle, setjobTitle] = useState("");
   const [jobData, setJobData] = useState("");
   const [message, setMessage] = useState("");
-  const [minPay, setMinPay] = useState("");
-  const [maxPay, setMaxpay] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
   const [userId, setUserId] = useState(null);
   const jobImage = require("../assets/icons/jobImage.png");
@@ -32,7 +27,7 @@ const SavedJobs = () => {
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
-    console.log(storedUserId, "storedUserId");
+
     setUserId(storedUserId);
     if (storedUserId) {
       getSavedJobsByTalentId(storedUserId);
@@ -47,14 +42,12 @@ const SavedJobs = () => {
       .then((resData) => {
         if (resData?.data?.status === true) {
           setAllJobsList(resData?.data?.data);
-          console.log(resData?.data?.data, "resDatagetSavedJobsByTalentId");
         }
       })
       .catch((err) => {});
   };
 
   function PreviewJob(jobId) {
-    console.log(jobId, "jobId");
     navigate("/preview-job-talent", {
       state: {
         jobId: jobId,
@@ -66,12 +59,9 @@ const SavedJobs = () => {
     setShowSidebar(!showSidebar);
   };
 
-  useEffect(() => {
-    console.log(allJobsList, "allJobsList");
-  }, [allJobsList]);
+  useEffect(() => {}, [allJobsList]);
 
   const addToSavedJobs = async (data) => {
-    console.log(data, "dataaddToSavedJobs");
     const formData = {
       gigId: data?._id,
       brandId: data?.brandId,
@@ -82,45 +72,41 @@ const SavedJobs = () => {
         if (resData.data.status === true) {
           setMessage("Job Saved SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getSavedJobsByTalentId(userId);
           }, 1000);
         }
       })
       .catch((err) => {
-        console.log(err);
         setMessage("Error Occured Try Again");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           getSavedJobsByTalentId(userId);
         }, 1000);
       });
   };
   const removeFromSavedJobs = async (data) => {
-    console.log(data, "dataremoveFromSavedJobs");
     const formData = {
       gigId: data?.gigId,
       talentId: userId,
     };
     await ApiHelper.post(API.removeFavouritesJob, formData)
       .then((resData) => {
-        console.log(resData, "resDataremoveFromSavedJobs");
         if (resData.data.status === true) {
           setMessage("Jab Removed From Saved Jobs");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getSavedJobsByTalentId(userId);
           }, 1000);
         }
       })
       .catch((err) => {
-        console.log(err);
         setMessage("Error Occured Try Again");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           getSavedJobsByTalentId(userId);
         }, 1000);

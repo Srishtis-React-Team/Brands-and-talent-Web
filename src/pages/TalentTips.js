@@ -8,7 +8,6 @@ const TalentTips = () => {
   const navigate = useNavigate();
 
   const navigateTO = async (event) => {
-    console.log(event, "event");
     if (event == "industry-news") {
       navigate("/view-blog");
     }

@@ -28,7 +28,7 @@ const KidsServices = () => {
   const [showOptions, setShowOptions] = useState(false);
   const url = window.location.href;
   let queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
+
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -70,7 +70,6 @@ const KidsServices = () => {
     setIsLoading(true);
     await ApiHelper.post(API.loginTemplate, formData)
       .then((resData) => {
-        console.log(resData, "resData");
         if (resData.data.status === true) {
         } else {
         }
@@ -92,8 +91,6 @@ const KidsServices = () => {
   ]);
 
   const handleFileChange = (index, event) => {
-    console.log("handleFileChange");
-    console.log(index, "index file");
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
       uploadProfile(fileData, (fileObj) => {
@@ -103,7 +100,7 @@ const KidsServices = () => {
             ...(newInputs[index]["files"] || []),
             fileObj,
           ];
-          console.log(newInputs, "newInputs");
+
           return newInputs;
         });
       });
@@ -111,14 +108,12 @@ const KidsServices = () => {
   };
 
   const handleInputChange = (index, key, value) => {
-    console.log(index, "index handleInputChange");
     const newInputs = [...inputs];
     newInputs[index][key] = value;
     setInputs(newInputs);
   };
 
   const handleEditorStateChange = (index, editorState) => {
-    console.log(index, "index handleEditorStateChange");
     const newInputs = [...inputs];
     newInputs[index]["editorState"] = editorState;
     setInputs(newInputs);
@@ -136,8 +131,6 @@ const KidsServices = () => {
         uniqueId: uuidv4(),
       },
     ]);
-
-    console.log(inputs, "inputs");
   };
 
   const uploadProfile = async (fileData, callback) => {
@@ -157,9 +150,7 @@ const KidsServices = () => {
         type: resData?.data?.data?.filetype,
       };
       callback(fileObj);
-    } catch (err) {
-      console.error("Error uploading file:", err);
-    }
+    } catch (err) {}
   };
 
   const handleView = (imageUrl) => {

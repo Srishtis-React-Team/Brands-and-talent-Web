@@ -20,9 +20,7 @@ const JobSuccess = () => {
   const [receivedData, setReceivedData] = useState(null);
   const [loader, setLoader] = useState(false);
 
-  useEffect(() => {
-    console.log(receivedData, "receivedData");
-  }, [receivedData]);
+  useEffect(() => {}, [receivedData]);
   useEffect(() => {
     // Check if data is passed through state
     if (location.state && location.state.data) {
@@ -32,7 +30,6 @@ const JobSuccess = () => {
 
   useEffect(() => {
     //code for google auth
-    console.log(openPopUp, "openPopUp");
   }, [openPopUp]);
 
   const brandsSignup = async () => {

@@ -6,33 +6,17 @@ import { useNavigate } from "react-router";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
-import { NavLink } from "react-router-dom";
-import ChatBot from "../components/ChatBot";
 import CurrentUser from "../CurrentUser";
 const Dashboard = () => {
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-    talentName,
-    brandName,
-  } = CurrentUser();
+  const { currentUserId, currentUserType, talentName, brandName } =
+    CurrentUser();
   console.log(talentName, "talentName");
   console.log(brandName, "brandName");
   const navigate = useNavigate();
-  const starIcon = require("../assets/icons/star.png");
   const whiteStar = require("../assets/icons/white_star.png");
   const checkMark = require("../assets/icons/check-circle.png");
-  const lockIcon = require("../assets/icons/white-lock.png");
-  const gents = require("../assets/images/gents.png");
-  const girl = require("../assets/images/girl.png");
-  const female = require("../assets/images/female.png");
-  const fashion = require("../assets/images/fashion.png");
-  const sliderBackground = require("../assets/images/slider-background.png");
   const adidasIcon = require("../assets/icons/6539fea9ad514fe89ff5d7fc_adidas.png");
   const ubisoftIcon = require("../assets/icons/6539fd74ad514fe89ff48cdd_ubisoft.png");
-  const mapIcon = require("../assets/icons/map-pin.png");
   const wppIcon = require("../assets/icons/651508c575f862fac120d7b1_wpp.webp");
   const lorealIcon = require("../assets/icons/6539e8f83c874a7714db103c_Loreal 1.webp");
   const havasIcon = require("../assets/icons/6539e8f8ac5a3259e7f64ef8_Havas_logo 3.webp");
@@ -42,64 +26,24 @@ const Dashboard = () => {
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
   const pinkStar = require("../assets/icons/pink-star.png");
-
   const heartIcon = require("../assets/icons/heart.png");
-  const chatIcon = require("../assets/icons/chat-icon.png");
   const favoruiteIcon = require("../assets/icons/favorite.png");
-  const locationIcon = require("../assets/icons/locationIcon.png");
-  const darkStar = require("../assets/icons/darkStar.png");
-  const brightStar = require("../assets/icons/brightStar.png");
-  const handshake = require("../assets/icons/handshake.png");
-  const jobIcon = require("../assets/icons/jobIcon.png");
-  const girl1 = require("../assets/images/girl1.png");
-  const girl2 = require("../assets/images/girl2.png");
-  const girl3 = require("../assets/images/girl3.png");
-  const girl4 = require("../assets/images/girl4.jpg");
-  const girl5 = require("../assets/images/girl5.png");
-  const girl6 = require("../assets/images/girl6.png");
-  const girl7 = require("../assets/images/girl7.png");
-  const girl8 = require("../assets/images/girl8.png");
-  const girl9 = require("../assets/images/girl9.png");
-  const girl10 = require("../assets/images/girl10.png");
-  const newbanner_1 = require("../assets/images/newbanner_1.png");
-  const newbanner_2 = require("../assets/images/newbanner_2.png");
-  const newbanner_3 = require("../assets/images/newbanner_3.png");
-  const [loader, setLoader] = useState(false);
+
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  useEffect(() => {
-    console.log(message, "message openPopUp");
-    console.log(openPopUp, "openPopUp openPopUp");
-  }, []);
-
   const [All, showAll] = useState(true);
   const [featuredMembers, setFeaturedMembers] = useState(false);
   const [Actor, showActor] = useState(false);
   const [Model, showModel] = useState(false);
-  const [influencers, setInfluencers] = useState(false);
   const [Director, showDirector] = useState(false);
   const [Singer, showSinger] = useState(false);
-  const [more, showMore] = useState(false);
-  const [above_18, setAbove_18] = useState(false);
-  const [below_18, setBelow_18] = useState(false);
-  const [formOne_visibility, showFormOne] = useState(true);
-  const [formTwo_visibility, showFormTwo] = useState(false);
-  const [formThree_visibility, showForThree] = useState(false);
-  const [formFour_visibility, showFormFour] = useState(false);
-  const [formFive_visibility, showFormFive] = useState(false);
   const [model, setModel] = useState(true);
   const [seeker, setSeeker] = useState(false);
-  const [dob, setDOB] = useState("");
-  const [phone, setPhone] = useState("");
-  const [fullName, setFullName] = useState("");
   const [gender, setGenders] = useState("");
   const [genderList, setGenderList] = useState([]);
   const [talentList, setTalentList] = useState([]);
-  const [caseList, setCaseList] = useState([]);
   const [talentsList, setTalentsList] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
-
-  const [photoGraphersList, setphotoGraphersList] = useState([]);
   const [messageFromHeader, setMessageFromHeader] = useState("");
   const [hideAll, setHideAll] = useState(false);
   const [adultUserCount, setAdultUserCount] = useState(0);
@@ -108,18 +52,28 @@ const Dashboard = () => {
   const [talentCount, setTalentCount] = useState(0);
   const [allUsersCount, setAllUsersCount] = useState(0);
 
-  function userType(e) {
-    if (e == "above_18") {
-      setAbove_18(true);
-    } else {
-      setAbove_18(false);
-    }
-    if (e == "below_18") {
-      setBelow_18(true);
-    } else {
-      setBelow_18(false);
-    }
-  }
+  const [productServicesList, setProductServicesList] = useState([]);
+
+  useEffect(() => {
+    fetchContentByType();
+  }, []);
+
+  const fetchContentByType = async () => {
+    const formData = {
+      contentType: "Product And Services",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        if (resData) {
+          setProductServicesList(resData?.data?.data?.items);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(productServicesList, "productServicesList");
+  }, [productServicesList]);
 
   const getByProfession = async (e) => {
     let formData = {
@@ -150,285 +104,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     getTalentList();
-    setTalentList([
-      {
-        id: 1,
-        photo: girl1,
-        name: "Alexander",
-        address: "Copenhagen, Denmark",
-        isFavorite: false,
-        location: "Australia",
-        booked: "3 Projects Booked",
-        rating: 4,
-      },
-      {
-        id: 2,
-        photo: girl2,
-        name: "william",
-        address: "Copenhagen, Denmark",
-        location: "America",
-        booked: "3 Projects Booked",
-        isFavorite: false,
-        rating: 3,
-      },
-      {
-        id: 3,
-        photo: girl3,
-        name: "Michael",
-        address: "Pitsburg, Canada",
-        location: "Canada",
-        booked: "6 Projects Booked",
-        isFavorite: false,
-        rating: 5,
-      },
-      {
-        id: 4,
-        photo: girl4,
-        name: "Andrea",
-        address: "North Carolina, USA",
-        isFavorite: false,
-        location: "Russia",
-        booked: "150 Projects Booked",
-        rating: 1,
-      },
-      {
-        id: 5,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-      {
-        id: 6,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-      {
-        id: 7,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-      {
-        id: 8,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-      {
-        id: 9,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-      {
-        id: 10,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-      {
-        id: 11,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-      {
-        id: 12,
-        photo: girl5,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-    ]);
-    setCaseList([
-      {
-        id: 1,
-        photo: girl1,
-        name: "Alexander",
-        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
-        isFavorite: false,
-        location: "Australia",
-        booked: "3 Projects Booked",
-        rating: 4,
-      },
-      {
-        id: 2,
-        photo: girl2,
-        name: "william",
-        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
-        location: "America",
-        booked: "3 Projects Booked",
-        isFavorite: false,
-        rating: 3,
-      },
-      {
-        id: 3,
-        photo: girl3,
-        name: "Michael",
-        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
-        location: "Canada",
-        booked: "6 Projects Booked",
-        isFavorite: false,
-        rating: 5,
-      },
-      {
-        id: 4,
-        photo: girl4,
-        name: "Andrea",
-        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
-        isFavorite: false,
-        location: "Russia",
-        booked: "150 Projects Booked",
-        rating: 1,
-      },
-    ]);
-    setphotoGraphersList([
-      {
-        id: 1,
-        photo: girl6,
-        name: "Alexander",
-        address: "Copenhagen, Denmark",
-        location: "China",
-        booked: "8 Projects Booked",
-        isFavorite: false,
-        rating: 4,
-      },
-      {
-        id: 2,
-        photo: girl7,
-        name: "william",
-        address: "Copenhagen, Denmark",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 3,
-      },
-      {
-        id: 3,
-        photo: girl8,
-        name: "Michael",
-        address: "Pitsburg, Canada",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 5,
-      },
-      {
-        id: 4,
-        photo: girl9,
-        name: "Andrea",
-        address: "North Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-      {
-        id: 5,
-        photo: girl10,
-        name: "Alexa",
-        address: "South Carolina, USA",
-        isFavorite: false,
-        location: "China",
-        booked: "8 Projects Booked",
-        rating: 1,
-      },
-      // {
-      //   id: 6,
-      //   photo: girl10,
-      //   name: "Alexa",
-      //   address: "South Carolina, USA",
-      //   isFavorite: false,
-      //   location: "China",
-      //   booked: "8 Projects Booked",
-      //   rating: 1,
-      // },
-      // {
-      //   id: 7,
-      //   photo: girl10,
-      //   name: "Alexa",
-      //   address: "South Carolina, USA",
-      //   isFavorite: false,
-      //   location: "China",
-      //   booked: "8 Projects Booked",
-      //   rating: 1,
-      // },
-      // {
-      //   id: 8,
-      //   photo: girl10,
-      //   name: "Alexa",
-      //   address: "South Carolina, USA",
-      //   isFavorite: false,
-      //   location: "China",
-      //   booked: "8 Projects Booked",
-      //   rating: 1,
-      // },
-      // {
-      //   id: 9,
-      //   photo: girl10,
-      //   name: "Alexa",
-      //   address: "South Carolina, USA",
-      //   isFavorite: false,
-      //   location: "China",
-      //   booked: "8 Projects Booked",
-      //   rating: 1,
-      // },
-      // {
-      //   id: 10,
-      //   photo: girl10,
-      //   name: "Alexa",
-      //   address: "South Carolina, USA",
-      //   isFavorite: false,
-      //   location: "China",
-      //   booked: "8 Projects Booked",
-      //   rating: 1,
-      // },
-    ]);
-    getDemo();
     getUsersCount();
   }, []);
-
-  const getDemo = async () => {
-    await ApiHelper.post(API.getDemo)
-      .then((resData) => {
-        console.log("getDemo", resData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   const getUsersCount = async () => {
     await ApiHelper.get(API.countUsers)
@@ -464,27 +141,11 @@ const Dashboard = () => {
       });
   };
 
-  const handleClick = (data) => {
-    // window.scrollTo(0, 0);
-    if (data == "find-talent") {
-      if (!currentUserId) {
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function() {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
-      } else if (currentUserType === "brand" && currentUserId) {
-        navigate("/find-creators");
-      }
-    }
-  };
-
   const addFavorite = async (data) => {
     if (!currentUserId) {
       setMessage("You must be logged in");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
         navigate("/login");
       }, 2000);
@@ -499,13 +160,13 @@ const Dashboard = () => {
             setMessage("Talent added to your favourite list");
             setOpenPopUp(true);
             getTalentList();
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           } else if (resData.data.status === false) {
             setMessage("Please Login First");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -518,7 +179,7 @@ const Dashboard = () => {
     if (!currentUserId) {
       setMessage("You must be logged in");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
         navigate("/login");
       }, 2000);
@@ -537,13 +198,13 @@ const Dashboard = () => {
             setMessage("Removed Talent From Favorites");
             setOpenPopUp(true);
             getTalentList();
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           } else if (resData.data.status === false) {
             setMessage(resData.data.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }
@@ -565,47 +226,6 @@ const Dashboard = () => {
       });
     };
   };
-
-  const handleSelectChange = (event) => {
-    setGenders(event.target.value);
-    const selectedName = event.target.options[event.target.selectedIndex].text;
-    // setRoomType(selectedName);
-  };
-
-  function handleForms(e) {
-    console.log(e, "e");
-    if (e == "form-one") {
-      showFormOne(false);
-      showFormTwo(true);
-    } else {
-      showFormTwo(false);
-    }
-    if (e == "form-two") {
-      showForThree(true);
-    } else {
-      showForThree(false);
-    }
-    if (e == "form-three") {
-      showFormFour(true);
-    } else {
-      showFormFour(false);
-    }
-    if (e == "form-four") {
-      showFormFive(true);
-    } else {
-      showFormFive(false);
-    }
-    if (e == "model") {
-      setModel(true);
-    } else {
-      setModel(false);
-    }
-    if (e == "seeker") {
-      setSeeker(true);
-    } else {
-      setSeeker(false);
-    }
-  }
 
   function handleTabs(e) {
     if (e === "All") {
@@ -671,8 +291,6 @@ const Dashboard = () => {
 
   const openTalent = (item) => {
     console.log(item, "item");
-    // navigate("/talent", { state: { talentData: item } });
-
     navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
@@ -690,7 +308,6 @@ const Dashboard = () => {
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
   const rateTalent = (item) => {
-    // alert("rateTalent");
     if (currentUserType === "brand") {
       setModalData(item);
       const modalElement = document.getElementById("ratingModal");
@@ -712,7 +329,7 @@ const Dashboard = () => {
       .then((resData) => {
         setMessage("Rating Submitted SuccessFully!");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           const modalElement = document.getElementById("ratingModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
@@ -725,15 +342,11 @@ const Dashboard = () => {
       });
   };
 
-  // ---- ---- Const ---- ---- //
   const stars = document.querySelectorAll(".stars i");
   const starsNone = document.querySelector(".rating-box");
-
-  // ---- ---- Stars ---- ---- //
   stars.forEach((star, index1) => {
     star.addEventListener("click", () => {
       stars.forEach((star, index2) => {
-        // ---- ---- Active Star ---- ---- //
         index1 >= index2
           ? star.classList.add("active")
           : star.classList.remove("active");
@@ -776,7 +389,6 @@ const Dashboard = () => {
     <>
       <div className="dashboard-main">
         <Header sendMessageToParent={handleMessageFromHeader} />
-
         <section className="section-1 bannerImg wraper">
           <div className="container-fluid relCont">
             <div className="row banner-content">
@@ -1122,7 +734,24 @@ const Dashboard = () => {
           <div className="container">
             <div className="title">Products and Services</div>
             <div className="row">
-              <div className="col-md-4">
+              {productServicesList.map((service, index) => (
+                <div className="col-md-4">
+                  <div className="card-wrapper">
+                    <div className="card-picture">
+                      <img
+                        className="product-service-image"
+                        src={service?.icon}
+                      ></img>
+                    </div>
+                    <div className="card-title">{service?.title}</div>
+                    <div className="cards-description">
+                      {service?.description[0]}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* <div className="col-md-4">
                 <div className="card-wrapper">
                   <div className="card-picture">
                     <img src={checkMark}></img>
@@ -1136,7 +765,6 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-
               <div className="col-md-4">
                 <div className="card-wrapper">
                   <div className="card-picture">
@@ -1164,7 +792,7 @@ const Dashboard = () => {
                     clients effortlessly.
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

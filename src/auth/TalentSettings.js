@@ -118,7 +118,6 @@ const TalentSettings = () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
         if (resData.data.status === true) {
-          console.log(resData?.data?.data, "KIDSFETCH");
           if (resData?.data?.data?.type === "kids") {
             setTalentData(resData?.data?.data);
             setEditProfileImage(resData.data.data?.image?.fileData);
@@ -192,7 +191,6 @@ const TalentSettings = () => {
       };
       await ApiHelper.post(`${API.updatePassword}`, formData)
         .then((resData) => {
-          console.log(resData, "resData");
           if (resData.data.status === true) {
             setMessage("Password Updated Successfully");
             setOpenPopUp(true);

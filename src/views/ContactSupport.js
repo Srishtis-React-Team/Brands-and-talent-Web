@@ -27,12 +27,8 @@ import Spinner from "../components/Spinner";
 const ContactSupport = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-  } = CurrentUser();
+  const { currentUserId, currentUserImage, currentUserType, avatarImage } =
+    CurrentUser();
 
   const open = Boolean(anchorEl);
   const handleFileClick = (event) => {
@@ -87,12 +83,11 @@ const ContactSupport = () => {
     setIsLoading(true);
     await ApiHelper.post(`${API.postSupportMail}`, formData)
       .then((resData) => {
-        console.log(resData, "resData");
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Contact Form Submitted SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             setName("");
             setEmail("");
@@ -103,7 +98,7 @@ const ContactSupport = () => {
           setIsLoading(false);
           setMessage(resData?.data?.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 2000);
         }
@@ -115,7 +110,7 @@ const ContactSupport = () => {
 
   const handleMobileChange = (value, countryData) => {
     // Update the parentMobile state with the new phone number
-    console.log(value, "handleMobileChange");
+
     setMobile(value);
     setMobileError(false);
   };

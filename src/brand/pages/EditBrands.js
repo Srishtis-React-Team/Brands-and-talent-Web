@@ -113,9 +113,8 @@ const EditBrands = () => {
   const [personalProfileImage, setPersonalProfileImage] = useState(
     "cd2f455f-de24-48d1-a91a-a45b3ad74d94.webp"
   );
-  const [personalProfileImageObject, setPersonalProfileImageObject] = useState(
-    null
-  );
+  const [personalProfileImageObject, setPersonalProfileImageObject] =
+    useState(null);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [addressError, setAddressError] = useState(false);
   const [address, setAddress] = useState("");
@@ -166,16 +165,13 @@ const EditBrands = () => {
 
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
-    console.log(event, "event");
-    console.log(event?.value, "event?.value");
+
     setCountry(event?.value);
     // setState("");
     // handleSelectedState("");
     getStates(event?.value);
-    console.log(country, "country");
   };
   const handleSelectedState = (state) => {
-    console.log(state, "state");
     setStateError(false);
     setState(state?.label);
     // setKidsCity("");
@@ -185,9 +181,7 @@ const EditBrands = () => {
     });
   };
 
-  useEffect(() => {
-    console.log(state, "stateUseeffect");
-  }, [state]);
+  useEffect(() => {}, [state]);
 
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
@@ -195,7 +189,6 @@ const EditBrands = () => {
   };
 
   const onEditorSummary = (editorState) => {
-    console.log(editorState, "editorState");
     setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
     // setAboutYou(editorState);
     setEditorState(editorState);
@@ -243,7 +236,7 @@ const EditBrands = () => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
+
     if (brandId) {
       getBrand();
     }
@@ -252,14 +245,11 @@ const EditBrands = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const publicUrlChange = async (event) => {
-    console.log(initialUrl, "initialUrl");
-    console.log(initialUrl, "initialUrl");
     const inputValue = event.target.value.replace(/ /g, "-");
-    console.log(inputValue, "inputValue");
+
     const formData = { name: inputValue, type: "brand" };
     await ApiHelper.post(`${API.checkPublicUrlName}`, formData)
       .then((resData) => {
-        console.log(resData, "resDatapublicUrlChange");
         if (resData?.data?.status === true || publicUrl) {
           setPublicUrl(inputValue);
           setErrorMessage("");
@@ -270,9 +260,7 @@ const EditBrands = () => {
           );
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const getBrand = async () => {
@@ -310,29 +298,20 @@ const EditBrands = () => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(brandData, "brandDataEditBrands");
-  }, [brandData]);
+  useEffect(() => {}, [brandData]);
 
-  useEffect(() => {
-    console.log(aboutBrand, "aboutBrand");
-  }, [aboutBrand]);
+  useEffect(() => {}, [aboutBrand]);
 
   const [valueTabs, setValueTabs] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    console.log(newValue, "newValue");
     setValueTabs(newValue);
   };
 
   const handleNavigation = (event) => {
-    console.log(valueTabs, "valueTabs");
-    console.log(event, "event");
     if (valueTabs === 0 && event === "back") {
       setValueTabs(0);
     } else if (event === "next") {
@@ -360,7 +339,7 @@ const EditBrands = () => {
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadProfile(fileData);
     }
   };
@@ -376,7 +355,7 @@ const EditBrands = () => {
   const personalImageUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadPersonalProfile(fileData);
     }
   };
@@ -408,7 +387,6 @@ const EditBrands = () => {
       },
     })
       .then((resData) => {
-        console.log(resData, "uploadProfileDATA");
         if (resData?.data?.status === true) {
           let fileObj = {
             id: resData.data.data.fileId,
@@ -416,7 +394,7 @@ const EditBrands = () => {
             fileData: resData.data.data.filename,
             type: resData?.data?.data?.filetype,
           };
-          console.log(fileObj, "fileObj");
+
           setEditProfileImage(fileObj?.fileData);
           setEditProfileImageObject([fileObj]);
           // updateProfile(fileObj);
@@ -437,7 +415,6 @@ const EditBrands = () => {
       },
     })
       .then((resData) => {
-        console.log(resData, "uploadProfileDATA");
         if (resData?.data?.status === true) {
           let fileObj = {
             id: resData.data.data.fileId,
@@ -445,7 +422,7 @@ const EditBrands = () => {
             fileData: resData.data.data.filename,
             type: resData?.data?.data?.filetype,
           };
-          console.log(fileObj, "fileObj");
+
           setPersonalProfileImage(fileObj?.fileData);
           setPersonalProfileImageObject([fileObj]);
           // updateProfile(fileObj);
@@ -463,14 +440,14 @@ const EditBrands = () => {
         if (resData.data.status === true) {
           setMessage("Profile image updated successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setMyState(true);
             setOpenPopUp(false);
           }, 2000);
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 2000);
         }
@@ -507,14 +484,14 @@ const EditBrands = () => {
         if (resData.data.status === true) {
           setMessage("Updated SuccessFully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             setMyState(true);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -531,14 +508,14 @@ const EditBrands = () => {
         if (resData.data.status === true) {
           setMessage("Url updated successfully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             setMyState(true);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -613,7 +590,7 @@ const EditBrands = () => {
 
   const handleMobileChange = (value, countryData) => {
     // Update the parentMobile state with the new phone number
-    console.log(value, "handleMobileChange");
+
     setBrandPhone(value);
     setBrandPhoeError(false);
   };
@@ -643,9 +620,7 @@ const EditBrands = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(editProfileImage, "editProfileImage");
-  }, [editProfileImage]);
+  useEffect(() => {}, [editProfileImage]);
 
   const handleEditorChange = (editorState) => {
     setAboutBrand(editorState);

@@ -21,22 +21,18 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
   const windowUrl = window.location.href;
-  console.log(windowUrl, "windowUrl");
+
   const queryString = windowUrl.split("?")[1];
-  console.log("Search queryString:", queryString);
-  console.log("Search queryString:", typeof queryString);
+
   const pathParts = windowUrl.split("/");
   const userType = pathParts[4];
   const token = pathParts[5];
-
-  console.log("Type: extracted", userType);
-  console.log("Token: extracted", token);
 
   const navigate = useNavigate();
   useEffect(() => {
     if (queryString) {
       setParamsValue(queryString);
-      console.log(paramsValue, "paramsValue");
+
       setSelectedItem(paramsValue);
     }
   }, [paramsValue]);
@@ -74,7 +70,7 @@ const ResetPassword = () => {
           resetPasswordToken: token,
         };
         setIsLoading(true);
-        console.log(formData, "formData kidsLogin");
+
         await ApiHelper.post(API.brandsResetPassword, formData)
           .then((resData) => {
             if (resData.data.status === true) {
@@ -86,7 +82,6 @@ const ResetPassword = () => {
                 navigate(`/success-password?${paramsValue}`);
               }, 2000);
             } else if (resData.data.status === false) {
-              console.log("Error Occured Goback And Try Again!");
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
@@ -95,16 +90,14 @@ const ResetPassword = () => {
               }, 1000);
             }
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       } else if (userType == "adult") {
         const formData = {
           password: confirmPassword,
           resetPasswordToken: token,
         };
         setIsLoading(true);
-        console.log(formData, "formData kidsLogin");
+
         await ApiHelper.post(API.adultResetPassword, formData)
           .then((resData) => {
             if (resData.data.status === true) {
@@ -116,7 +109,6 @@ const ResetPassword = () => {
                 navigate(`/success-password?${paramsValue}`);
               }, 2000);
             } else if (resData.data.status === false) {
-              console.log("Error Occured Goback And Try Again!");
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
@@ -125,16 +117,14 @@ const ResetPassword = () => {
               }, 1000);
             }
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       } else {
         const formData = {
           password: confirmPassword,
           resetPasswordToken: paramsValue,
         };
         setIsLoading(true);
-        console.log(formData, "formData kidsLogin");
+
         await ApiHelper.post(API.resetPassword, formData)
           .then((resData) => {
             if (resData.data.status === true) {
@@ -146,7 +136,6 @@ const ResetPassword = () => {
                 navigate(`/success-password?${paramsValue}`);
               }, 2000);
             } else if (resData.data.status === false) {
-              console.log("Error Occured Goback And Try Again!");
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
@@ -155,9 +144,7 @@ const ResetPassword = () => {
               }, 1000);
             }
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       }
     } else {
       setMessage("Password Does not match!");

@@ -32,7 +32,7 @@ import useFieldDatas from "../../config/useFieldDatas";
 
 const CreateJobs = () => {
   const { categoryList, professionList } = useFieldDatas();
-  console.log(professionList, "professionList");
+  
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -111,15 +111,15 @@ const CreateJobs = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "resData.data.data");
+            
             setBrandData(resData.data.data);
             companyList.push(resData.data.data?.brandName);
-            console.log(companyList, "companyList");
+            
           }
         }
       })
       .catch((err) => {
-        console.log(err);
+        
       });
   };
 
@@ -136,7 +136,7 @@ const CreateJobs = () => {
   };
 
   useEffect(() => {
-    console.log(editData, "editData");
+    
     if (editData?.value && editData?.type) {
       getJobsByID(editData?.value, editData?.type);
     }
@@ -145,8 +145,8 @@ const CreateJobs = () => {
   const updateJobFormDatas = (editData) => {
     // alert("updateJobFormDatas");
     if (editData) {
-      console.log(editData, "editDataupdateJobFormDatas");
-      console.log(editData?.category, "editData?.category");
+      
+      
       setCategory(editData?.category);
       setEmploymentType(editData?.employmentType);
       setLastdateApply(editData?.lastDateForApply);
@@ -186,13 +186,13 @@ const CreateJobs = () => {
       const genderUpdatedOptions = editData?.gender.map((gender) => {
         return gendersOptions.find((option) => option.label === gender);
       });
-      console.log(genderUpdatedOptions, "genderUpdatedOptions");
+      
       setSelectedGenderOptions(genderUpdatedOptions);
 
       const selectedOptions = editData?.languages.map((language) => {
         return languageOptions.find((option) => option.label === language);
       });
-      console.log(selectedOptions, "selectedOptions");
+      
 
       setSelectedLanguageOptions(selectedOptions);
 
@@ -306,7 +306,7 @@ const CreateJobs = () => {
 
   // handle onChange event of the dropdown
   const handleChange = (e) => {
-    console.log(e, "selectedJobID");
+    
     setSelectedJobID(e?.value);
     getJobsByID(e?.value, e?.type);
     setIsDuplicateJob(true);
@@ -316,7 +316,7 @@ const CreateJobs = () => {
     if (type == "Posted") {
       await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
         .then((resData) => {
-          console.log(resData, "getEditJobsData");
+          
           if (resData.data.status === true) {
             if (resData.data.data) {
               setEditJobData(resData.data.data, "resData.data.data");
@@ -325,12 +325,12 @@ const CreateJobs = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          
         });
     } else if (type == "Draft") {
       await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
         .then((resData) => {
-          console.log(resData.data.data, "getJobsList");
+          
           if (resData.data.status === true) {
             if (resData.data.data) {
               setEditJobData(resData.data.data, "resData.data.data");
@@ -339,21 +339,21 @@ const CreateJobs = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          
         });
     }
   };
 
   useEffect(() => {
-    console.log(editJobData, "editJobData");
+    
   }, [editJobData]);
 
   const duplicateJob = () => {
-    console.log(editJobData, "editJobData duplicateJob");
+    
     if (editJobData) {
       setSelectedTab("create-job");
-      console.log(editJobData, "editJobDataupdateJobFormDatas");
-      console.log(editJobData?.category, "editJobData?.category");
+      
+      
       setCategory(editJobData?.category);
       setEmploymentType(editJobData?.employmentType);
       setLastdateApply(editJobData?.lastDateForApply);
@@ -393,13 +393,13 @@ const CreateJobs = () => {
       const genderUpdatedOptions = editJobData?.gender.map((gender) => {
         return gendersOptions.find((option) => option.label === gender);
       });
-      console.log(genderUpdatedOptions, "genderUpdatedOptions");
+      
       setSelectedGenderOptions(genderUpdatedOptions);
 
       const selectedOptions = editJobData?.languages.map((language) => {
         return languageOptions.find((option) => option.label === language);
       });
-      console.log(selectedOptions, "selectedOptions");
+      
 
       setSelectedLanguageOptions(selectedOptions);
 
@@ -552,7 +552,7 @@ const CreateJobs = () => {
   const getAllJobs = async (id) => {
     await ApiHelper.get(`${API.getAllJobs}${id}`)
       .then((resData) => {
-        console.log(resData.data.data, "getJobsList");
+        
         if (resData.data.status === true) {
           if (resData.data.data) {
             setAllJobsList(resData.data.data, "resData.data.data");
@@ -560,15 +560,15 @@ const CreateJobs = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        
       });
   };
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
     setBrandImage(localStorage.getItem("currentUserImage"));
-    console.log(brandId, "brandId");
-    console.log(brandImage, "brandImage");
+    
+    
     if (brandId && brandId != null) {
       getAllJobs(brandId);
       getBrand();
@@ -663,7 +663,7 @@ const CreateJobs = () => {
   const [categoryError, setCategoryError] = useState(false);
 
   const handleApplyOption = (e) => {
-    console.log(e.target.value, "e.target.value");
+    
     setSelectedApplyOption(e.target.value);
   };
 
@@ -680,7 +680,7 @@ const CreateJobs = () => {
   const [productValue, setProductValue] = useState("");
 
   const compensationChange = (event) => {
-    console.log(event.target.value, "compensationChange");
+    
     setCompensationChange(event.target.value);
   };
 
@@ -771,7 +771,7 @@ const CreateJobs = () => {
         break;
     }
     return data;
-    console.log(data);
+    
     // Here you can make your API call with the 'data' object
   };
 
@@ -911,13 +911,13 @@ const CreateJobs = () => {
   // Function to handle country selection
 
   const selectEthnicity = (event) => {
-    console.log(event.target.value, "selectEthnicity");
+    
     setEthnicity(event.target.value);
     setEthnicityError(false);
   };
 
   // const selectLanguage = (event) => {
-  //   console.log(event, "selectLanguage");
+  //   
   //   if (event[0].value) {
   //     setLanguages(event[0].value);
   //     setLanguageError(false);
@@ -925,7 +925,7 @@ const CreateJobs = () => {
   // };
 
   const selectLanguage = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
@@ -936,14 +936,14 @@ const CreateJobs = () => {
     }
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+    
     setLanguages(selectedLanguages); // Update languages state with all selected languages
 
     setSelectedLanguageOptions(selectedOptions);
   };
 
   const selectNationality = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
       setNationality([]); // Clear the languages state
@@ -953,7 +953,7 @@ const CreateJobs = () => {
     }
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+    
     setNationality(selectedLanguages); // Update languages state with all selected languages
     setSelectedNationalityOptions(selectedOptions);
   };
@@ -964,7 +964,7 @@ const CreateJobs = () => {
   // };
 
   const selectGender = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
+    
     setGenderError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
@@ -975,13 +975,13 @@ const CreateJobs = () => {
     }
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+    
     setGender(selectedLanguages); // Update languages state with all selected languages
     setSelectedGenderOptions(selectedOptions);
   };
 
   const selectCategory = (event) => {
-    console.log(event.target.value, "selectCategory");
+    
     setCategory(event.target.value);
     setCategoryError(false);
   };
@@ -1004,28 +1004,28 @@ const CreateJobs = () => {
   };
 
   const onEditorJobDescription = (editorState) => {
-    console.log(editorState, "editorState");
+    
     setJobDescription([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
     setEditorStateJobDescription(editorState);
   };
   const onEditorRequirements = (editorState) => {
-    console.log(editorState, "editorState");
+    
     setJobRequirements([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
     setEditorStateJobRequirements(editorState);
   };
   const onEditorWhyWorkWithUS = (editorState) => {
-    console.log(editorState, "editorState");
+    
     setWhyWorkWithUs([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
     setEditorStateWhyWorkWithUs(editorState);
   };
   const onEditorClientDescription = (editorState) => {
-    console.log(editorState, "editorState");
+    
     setClientDescription([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
@@ -1033,7 +1033,7 @@ const CreateJobs = () => {
   };
 
   const onEditorHowToApply = (editorState) => {
-    console.log(editorState, "editorState");
+    
     setHowToApplyDescription([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
@@ -1119,11 +1119,11 @@ const CreateJobs = () => {
 
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
-    console.log(event, "event");
-    console.log(event?.value, "event?.value");
+    
+    
     setCountry(event?.value);
     getStates(event?.value);
-    console.log(country, "country");
+    
   };
   const handleSelectedState = (state) => {
     setStateError(false);
@@ -1313,17 +1313,7 @@ const CreateJobs = () => {
   };
   const createGigs = async () => {
     setIsLoading(true);
-    console.log(
-      jobTitle,
-      jobType,
-      skills,
-      country,
-      state,
-      kidsCity,
-      category,
-      employmentType,
-      "PAYLOD_PRINT"
-    );
+    
     if (jobTitle === "") {
       setjobTitleError(true);
     }
@@ -1400,10 +1390,10 @@ const CreateJobs = () => {
         youTubeMin: youTubeMin,
         youTubeMax: youTubeMax,
       };
-      console.log(formData, "CREATEJOB_PAYLOAD");
+      
       await ApiHelper.post(API.draftJob, formData)
         .then((resData) => {
-          console.log(resData, "draftedData");
+          
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Job Created SuccessFully!");
@@ -1453,7 +1443,7 @@ const CreateJobs = () => {
   const handlePortofolioDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+    
     uploadFile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -1479,7 +1469,7 @@ const CreateJobs = () => {
           type: resData?.data?.data?.filetype,
         };
         setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
-        console.log(portofolioFile, "portofolioFile");
+        
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -1528,7 +1518,7 @@ const CreateJobs = () => {
   const portofolioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+      
       uploadFile(fileData);
     }
   };
@@ -1537,7 +1527,7 @@ const CreateJobs = () => {
   const handleProfileDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+    
     uploadFile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -1550,7 +1540,7 @@ const CreateJobs = () => {
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+      
       uploadProfile(fileData);
     }
   };
@@ -1575,10 +1565,10 @@ const CreateJobs = () => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        console.log(fileObj, "fileObj profileFile");
+        
         setProfileFile(fileObj);
 
-        console.log(profileFile, "profileFile");
+        
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -1627,7 +1617,7 @@ const CreateJobs = () => {
   };
 
   const paymentOptionValue = () => {
-    console.log("paymentOptionValue");
+    
     if (selectedPaymentOption === "fixed") {
       const data = {
         label: "fixed",
@@ -1635,43 +1625,43 @@ const CreateJobs = () => {
       };
       return data;
       // Perform API call with data
-      console.log(data);
+      
     } else {
       const data = {
         label: "range",
         minPay: minimumPaymnt,
         maxPay: maximumPayment,
       };
-      console.log(data, "datapaymentType");
+      
       // Perform API call with data
       return data;
-      console.log(data);
+      
     }
   };
 
   const [selectedTab, setSelectedTab] = useState("create-job");
 
   const handleJobTabs = (e) => {
-    console.log(e.target.value, "e.target.value");
+    
     setSelectedTab(e.target.value);
   };
 
   useEffect(() => {
-    console.log(showQuestions, "showQuestions");
-    console.log(employmentError, "employmentError");
-    console.log(isDuplicateJob, "isDuplicateJob");
+    
+    
+    
   }, [showQuestions, employmentError, isDuplicateJob]);
 
   const handleButtonClick = (data) => {
     setShowSidebar(!showSidebar);
-    console.log(data, "handleButtonClickData");
+    
   };
 
   const [skills, setSkills] = useState([]);
   const [skillInputValue, setSkillInputValue] = useState("");
 
   const handleKeyDown = (e) => {
-    // console.log(e.inputProps.value, "e");
+    // 
     setSkillInputValue(e.inputProps.value);
     if (e.key === "Enter") {
       addSkill();
@@ -1693,10 +1683,10 @@ const CreateJobs = () => {
   };
 
   useEffect(() => {
-    console.log(skillInputValue, "skills");
+    
   }, [skills]);
   useEffect(() => {
-    console.log(skills, "skills");
+    
   }, [skills]);
 
   const skillsListing = [
@@ -1760,12 +1750,12 @@ const CreateJobs = () => {
     { title: "Videographer" },
   ];
 
-  console.log(skillInputValue, "skillInputValue");
+  
 
   const [lastdateApply, setLastdateApply] = useState(null);
 
   const handleDateChange = (date) => {
-    console.log(date, "ehandleDateChange");
+    
     // Format the date to ensure it's correctly parsed and displayed
     const formattedDate = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     setLastdateApply(formattedDate);
@@ -1780,10 +1770,10 @@ const CreateJobs = () => {
   };
 
   useEffect(() => {
-    console.log(lastdateApply, "lastdateApply");
+    
   }, [lastdateApply]);
   useEffect(() => {
-    console.log(category, "category");
+    
   }, [category]);
 
   const onMinChange = (event) => {
@@ -2176,7 +2166,7 @@ const CreateJobs = () => {
                                 lastdateApply ? parseISO(lastdateApply) : null
                               }
                               onChange={(newValue) => {
-                                console.log(newValue, "newValue");
+                                
                                 handleDateChange(newValue);
                               }}
                               renderInput={(params) => (

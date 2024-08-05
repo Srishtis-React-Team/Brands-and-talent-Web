@@ -11,7 +11,6 @@ import CurrentUser from "../../CurrentUser";
 const BrandSignup = () => {
   const { fcmToken } = CurrentUser();
 
-  console.log(fcmToken, "fcmToken");
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -40,9 +39,7 @@ const BrandSignup = () => {
     }
   }, [location.state]);
 
-  useEffect(() => {
-    console.log(googleUser, "googleUser");
-  }, [googleUser]);
+  useEffect(() => {}, [googleUser]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -52,8 +49,6 @@ const BrandSignup = () => {
   };
 
   const socialSignup = async (response, mediaType) => {
-    console.log(response, "socialSignupresponse");
-    console.log(mediaType, "mediaType");
     // facebookId
     //provider : "facebook".
     let formData;
@@ -77,7 +72,7 @@ const BrandSignup = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           // alert("dfd");
-          console.log(resData.data, "resdata.data socialSignup");
+
           setIsLoading(false);
           setMessage("Registered Successfully Update Your Password");
           setGoogleUser(resData?.data);
@@ -141,7 +136,6 @@ const BrandSignup = () => {
       await ApiHelper.post(API.brandsRegister, formData)
         .then((resData) => {
           if (resData.data.status === true) {
-            console.log(resData.data);
             setIsLoading(false);
             setMessage("Registered Successfully");
             setOpenPopUp(true);
@@ -486,17 +480,17 @@ const BrandSignup = () => {
                   );
                 }}
                 onError={() => {
-                  console.log("Login Failed");
+                  
                 }}
               /> */}
               {/* <LoginSocialFacebook
                 appId="7401795359899121"
                 onResolve={(response) => {
                   socialSignup(response, "facebook");
-                  console.log(response, "responsefacebook");
+                  
                 }}
                 onReject={(error) => {
-                  console.log(error, "error");
+                  
                 }}
               >
                 <MyFacebookLoginButton />

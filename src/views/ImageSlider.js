@@ -5,7 +5,6 @@ import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 import { API } from "../config/api";
 
 const ImageSlider = ({ images, open, initialIndex, handleClose }) => {
-  console.log(images, "images");
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   useEffect(() => {
@@ -13,8 +12,6 @@ const ImageSlider = ({ images, open, initialIndex, handleClose }) => {
   }, [initialIndex]);
 
   useEffect(() => {
-    console.log(open, "open ImageSlider");
-
     if (open) {
       setCurrentIndex(initialIndex);
     }

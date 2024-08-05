@@ -20,7 +20,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [updateDisabled, setUpdateDisabled] = useState(false);
 
   const userId = urlParams.get("userId");
-  console.log(userId, "userId");
 
   const [talentData, setTalentData] = useState();
 
@@ -35,19 +34,14 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getTalentById");
             setTalentData(resData.data.data, "resData.data.data");
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(talentData, "talentDataKidsThree");
-  }, [talentData]);
+  useEffect(() => {}, [talentData]);
 
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -84,9 +78,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const kidsImage = require("../assets/images/kidsImage.png");
 
   useEffect(() => {
-    console.log(profileFile, "profileFile");
-    console.log(portofolioFile, "portofolioFile");
-    console.log(portofolioFile.length, "portofolioFile.length");
     if (profileFile === null || portofolioFile.length === 0) {
       setUpdateDisabled(true);
     } else if (profileFile !== null || portofolioFile.length !== 0) {
@@ -94,19 +85,16 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     }
   }, [profileFile, portofolioFile]);
 
-  useEffect(() => {
-    console.log(updateDisabled, "updateDisabled");
-  }, [updateDisabled]);
+  useEffect(() => {}, [updateDisabled]);
 
   const handleProfileDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+
     uploadProfile(droppedFiles[0]);
   };
 
   const handleEditorStateChange = (editorState) => {
-    console.log(editorState, "editorStateRichText");
     setAboutYou(editorState);
   };
 
@@ -172,13 +160,12 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleUrlChange = (e) => {
     setVideoUrl(e.target.value);
-    console.log(e.target.value, "handleUrlChange");
   };
 
   const handleAddUrl = () => {
     if (videoUrl.trim() !== "") {
       setUrls([...urls, videoUrl]);
-      console.log([...urls, videoUrl], "handleAddUrl");
+
       setVideoUrl("");
     }
   };
@@ -188,7 +175,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       "text"
     );
     setVideoUrl(pastedText);
-    console.log(pastedText, "handlePaste");
   };
 
   const handleDeleteUrl = (index) => {
@@ -208,7 +194,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         return;
       }
 
-      console.log(file, "fileData");
       uploadProfile(file);
     }
   };
@@ -232,7 +217,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         return;
       }
       imageFiles.forEach((file) => {
-        console.log(file, "fileData");
         uploadFile(file);
       });
     }
@@ -335,10 +319,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        console.log(fileObj, "fileObj profileFile");
+
         setProfileFile(fileObj);
 
-        console.log(profileFile, "profileFile");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -369,7 +352,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           type: resData?.data?.data?.filetype,
         };
         setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
-        console.log(portofolioFile, "portofolioFile");
+
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -500,7 +483,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       updatedValues.push({ label, value: finalValue });
     }
 
-    console.log(updatedValues, "updatedValues");
     setFeature(updatedValues);
   };
 
@@ -551,26 +533,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       videoAudioUrls: urls,
     };
     setIsLoading(true);
-    console.log("kidsFiles Image:", formData.image);
-    console.log("kidsFiles CV:", formData.cv);
-    console.log("kidsFiles Portfolio:", formData.portfolio);
-    console.log("kidsFiles Videos and Audios:", formData.videosAndAudios);
-    console.log("kidsFiles Instagram Followers:", formData.instaFollowers);
-    console.log("kidsFiles TikTok Followers:", formData.tiktokFollowers);
-    console.log("kidsFiles Twitter Followers:", formData.twitterFollowers);
-    console.log("kidsFiles YouTube Followers:", formData.youtubeFollowers);
-    console.log("kidsFiles Facebook Followers:", formData.facebookFollowers);
-    console.log("kidsFiles LinkedIn Followers:", formData.linkedinFollowers);
-    console.log("kidsFiles Threads Followers:", formData.threadsFollowers);
-    console.log("kidsFiles ID Type:", formData.idType);
-    console.log("kidsFiles Verification ID:", formData.verificationId);
-    console.log("kidsFiles Features:", formData.features);
-    console.log("kidsFiles Child About You:", formData.childAboutYou);
-    console.log("kidsFiles Video and Audio URLs:", formData.videoAudioUrls);
+
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
-        console.log(resData, "resData");
-        console.log(resData.data, "resData.data");
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Updated SuccessFully");
@@ -601,11 +566,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     navigate(`/talent-signup-plan-details?userId=${userId}`);
   };
 
-  useEffect(() => {
-    console.log(videoUrl, "videoUrl");
-    console.log(urls, "urls");
-    console.log(featuresList, "featuresList");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>

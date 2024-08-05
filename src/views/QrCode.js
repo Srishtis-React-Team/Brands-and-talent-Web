@@ -13,19 +13,13 @@ const QrCode = () => {
 
   useEffect(() => {
     if (qrCodeHtml) {
-      console.log(qrCodeHtml, "qrCodeHtml");
-
       const sanitizedHtml = DOMPurify.sanitize(qrCodeHtml);
-      console.log(sanitizedHtml, "sanitizedHtml");
+
       setHtmlContent(sanitizedHtml);
     }
   }, [qrCodeHtml]);
-  useEffect(() => {
-    console.log(htmlContent, "htmlContent");
-  }, [htmlContent]);
+  useEffect(() => {}, [htmlContent]);
 
-  console.log(qrCodeHtml, "qrCodeHtml");
-  console.log(typeof qrCodeHtml, "qrCodeHtml");
   return (
     <>
       <Header />

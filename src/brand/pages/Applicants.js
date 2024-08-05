@@ -61,7 +61,6 @@ const Applicants = () => {
   };
 
   const sortListCandidate = async (candidate) => {
-    console.log(candidate?.gigId, "candidate GigId");
     const formData = {
       talentId: candidate?.talentId,
       selectedLevel: "shortlistedCandidates",
@@ -78,12 +77,9 @@ const Applicants = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const bookCandidate = async (candidate) => {
-    console.log(candidate?.gigId, "candidate GigId");
     const formData = {
       talentId: candidate?.talentId,
       selectedLevel: "bookedCandidates",
@@ -100,20 +96,13 @@ const Applicants = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(candidatesList, "candidatesList");
-  }, [candidatesList]);
-  useEffect(() => {
-    console.log(newCandidates, "newCandidates");
-  }, [newCandidates]);
+  useEffect(() => {}, [candidatesList]);
+  useEffect(() => {}, [newCandidates]);
 
   function handleForms(e) {
-    console.log(e, "handleForms");
     if (e == "new-candidates") {
       showNewCandidates(true);
       getNewCandidates(brandId, "new");
@@ -139,7 +128,6 @@ const Applicants = () => {
       showRejectedCandidates(false);
     }
     if (e == "booked-candidates") {
-      console.log("booked-candidatesCAlled");
       showBookedCandidates(true);
       getNewCandidates(brandId, "bookedCandidates");
     } else {
@@ -148,7 +136,6 @@ const Applicants = () => {
   }
 
   const getNewCandidates = async (id, filterCandidates) => {
-    console.log(filterCandidates, "filterCandidates");
     let apiUrl;
     let formData;
     if (filterCandidates == "new") {
@@ -176,29 +163,23 @@ const Applicants = () => {
         selectedLevel: "rejectedCandidates",
       };
     } else if (filterCandidates == "bookedCandidates") {
-      console.log("bookedCandidatesFROMDATASETTING");
       apiUrl = `${API.getSelectionList}`;
       formData = {
         brandId: id,
         selectedLevel: "bookedCandidates ",
       };
     }
-    console.log(formData, "formDatagetNewCandidates");
+
     await ApiHelper.post(apiUrl, formData)
       .then((resData) => {
-        console.log(resData, "resData newCandidatesresData");
         if (resData.data.status === true) {
-          console.log(resData.data.data, "newCandidatesresData");
           setCandidatesList(resData.data.data, "resData.data.data");
         }
         if (resData.data.status === false) {
-          console.log(resData.data.data, "newCandidatesresData");
           setCandidatesList(resData.data.data, "resData.data.data");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const [interviewMode, setInterviewMode] = useState("offline");
 
@@ -215,9 +196,7 @@ const Applicants = () => {
           onlineInterviewCall();
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const onlineInterviewCall = async () => {
@@ -231,7 +210,7 @@ const Applicants = () => {
     await ApiHelper.post(API.informSelectedLevel, formData)
       .then((resData) => {
         setIsLoading(false);
-        console.log(resData, "onlineInvite resData");
+
         if (resData.data.status === true) {
           setMessage("An Invite has been send to the candidate");
           setOpenPopUp(true);
@@ -242,13 +221,11 @@ const Applicants = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
       });
   };
 
   const offlineInvite = async () => {
-    console.log("offlineInvite");
     const formData = {
       talentId: alertpop?.talentId,
       selectedLevel: "interviewInvitations",
@@ -261,9 +238,7 @@ const Applicants = () => {
           offlineInviteCall();
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const offlineInviteCall = async () => {
     const formData = {
@@ -289,8 +264,6 @@ const Applicants = () => {
       })
       .catch((err) => {
         setIsLoading(false);
-
-        console.log(err);
       });
   };
 
@@ -311,31 +284,19 @@ const Applicants = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(address, "textAreaValue");
-  }, [address]);
-  useEffect(() => {
-    console.log(candidatesList, "candidatesList");
-  }, [candidatesList]);
-  useEffect(() => {
-    console.log(interviewMode, "interviewMode");
-  }, [interviewMode]);
+  useEffect(() => {}, [address]);
+  useEffect(() => {}, [candidatesList]);
+  useEffect(() => {}, [interviewMode]);
 
   useEffect(() => {
     if (newCandidates && brandId != null) {
-      console.log(brandId, "brandId");
-      console.log(newCandidates, "newCandidates");
       getNewCandidates(brandId, "new");
     }
   }, [newCandidates, brandId]);
-  useEffect(() => {
-    console.log(alertpop, "alertpop");
-  }, [alertpop]);
+  useEffect(() => {}, [alertpop]);
 
   return (
     <>

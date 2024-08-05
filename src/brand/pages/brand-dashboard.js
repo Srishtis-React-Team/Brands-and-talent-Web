@@ -25,12 +25,10 @@ const BrandDashboard = () => {
   };
 
   const handlePreviewData = (buttonName, additionalData) => {
-    console.log(additionalData, "additionalData");
     setHomePageData(additionalData);
   };
 
   useEffect(() => {
-    console.log(homePageData, "homePageData");
     if (homePageData === "create-job" || homePageData === "start-now") {
       setMenu("create-job");
       setSelectedTab("create-job");
@@ -38,9 +36,7 @@ const BrandDashboard = () => {
   }, [homePageData]);
 
   useEffect(() => {
-    console.log(createJobData, "createJobData");
     if (createJobData?.jobId && createJobData?.condition == "preview") {
-      console.log(createJobData, "createJobData");
       setViewJobID(createJobData?.jobId);
       setMenu("preview-page");
     }
@@ -50,7 +46,6 @@ const BrandDashboard = () => {
     setShowSidebar(!showSidebar);
   };
   const setMenu = (e) => {
-    console.log(e, "e");
     if (e === "preview-page") {
       setPreviewPage(true);
     } else {

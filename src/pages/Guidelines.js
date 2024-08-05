@@ -22,7 +22,7 @@ const Guidelines = () => {
     };
     await ApiHelper.post(API.fetchContentByType, formData)
       .then((resData) => {
-        console.log(resData?.data?.data?.content, "resDataterms");
+        
         if (resData) {
           setGuidelinesList(resData?.data?.data?.content);
         }

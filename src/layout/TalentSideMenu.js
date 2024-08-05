@@ -7,16 +7,11 @@ import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 import CurrentUser from "../CurrentUser";
 const TalentSideMenu = ({ myState }) => {
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-  } = CurrentUser();
+  const { currentUserId, currentUserImage, currentUserType, avatarImage } =
+    CurrentUser();
 
   const location = useLocation();
   const [talentData, setTalentData] = useState();
-  console.log(myState, "myState");
 
   useEffect(() => {
     if (currentUserId) {
@@ -29,19 +24,14 @@ const TalentSideMenu = ({ myState }) => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getTalentById");
             setTalentData(resData.data.data, "resData.data.data");
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+  useEffect(() => {}, [talentData]);
 
   useEffect(() => {
     if (myState === true) {
@@ -72,9 +62,7 @@ const TalentSideMenu = ({ myState }) => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(isSmallScreen, "isSmallScreen");
-  }, [isSmallScreen]);
+  useEffect(() => {}, [isSmallScreen]);
 
   return (
     <>

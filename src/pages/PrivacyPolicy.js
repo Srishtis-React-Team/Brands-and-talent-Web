@@ -19,7 +19,6 @@ const PrivacyPolicy = () => {
     };
     await ApiHelper.post(API.fetchContentByType, formData)
       .then((resData) => {
-        console.log(resData?.data?.data?.content, "resDataterms");
         if (resData) {
           setPrivacyPolicyList(resData?.data?.data?.content);
         }

@@ -13,7 +13,7 @@
 //   const [brandId, setBrandId] = useState(null);
 //   useEffect(() => {
 //     setBrandId(localStorage.getItem("brandId"));
-//     console.log(brandId, "brandId");
+//
 //     if (brandId) {
 //       listTalentsForChat();
 //     }
@@ -36,7 +36,7 @@
 //     if (socket === null) return;
 //     socket.emit("addNewUser", brandId);
 //     socket.on("getOnlineUsers", (res) => {
-//       console.log(res, "getOnlineUsers");
+//
 //       setOnlineUsers(res);
 //     });
 //   }, [socket]);
@@ -56,7 +56,7 @@
 //   useEffect(() => {
 //     if (socket === null) return;
 //     socket.on("getMessage", (res) => {
-//       console.log(res, "getMessage");
+//
 //       setMessages(res);
 //     });
 //   }, [socket]);
@@ -66,7 +66,6 @@
 //   useEffect(() => {}, []);
 
 //   const createChat = async () => {
-//     console.log();
 //     const formData = {
 //       firstId: brandId,
 //       secondId: selectedUser?._id ? selectedUser?._id : userList[0]?._id,
@@ -74,18 +73,18 @@
 //     await ApiHelper.post(API.createChat, formData)
 //       .then((resData) => {
 //         if (resData) {
-//           console.log(resData, "createChat");
+//
 //           // setUsersList(resData.data.data);
 //           setConversationID(resData?.data?._id);
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
 //   useEffect(() => {
-//     console.log(userList, "userList");
+//
 //     if (userList && userList?.length > 0) {
 //       setSelectedUser(userList[0]);
 //       // addConversation(userList[0]?._id);
@@ -121,7 +120,7 @@
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
@@ -133,12 +132,12 @@
 //   //   await ApiHelper.post(API.addConversation, formData)
 //   //     .then((resData) => {
 //   //       if (resData) {
-//   //         console.log(resData.data.conversation._id, "resDataCOnversation");
+//   //
 //   //         setConversationID(resData?.data?.conversation?._id);
 //   //       }
 //   //     })
 //   //     .catch((err) => {
-//   //       console.log(err);
+//   //
 //   //     });
 //   // };
 
@@ -156,7 +155,7 @@
 //     //     }
 //     //   })
 //     //   .catch((err) => {
-//     //     console.log(err);
+//     //
 //     //   });
 //     const formData = {
 //       chatId: conversationID,
@@ -170,7 +169,7 @@
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
@@ -185,12 +184,12 @@
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
 //   useEffect(() => {
-//     console.log(conversationID, "conversationID");
+//
 //     if (conversationID) {
 //       listByConversationId();
 //     }

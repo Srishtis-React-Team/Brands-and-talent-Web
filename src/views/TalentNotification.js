@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
@@ -13,7 +13,6 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { Avatar } from "@mui/material";
 import CurrentUser from "../CurrentUser.js";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,13 +40,7 @@ function a11yProps(index) {
   };
 }
 const TalentNotification = () => {
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-    fcmToken,
-  } = CurrentUser();
+  const { avatarImage } = CurrentUser();
 
   const [talentId, setTalentId] = useState(null);
   const [talentEmail, setTalentEmail] = useState(null);
@@ -63,13 +56,10 @@ const TalentNotification = () => {
   const [valueTabs, setValueTabs] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    console.log(newValue, "newValue");
     setValueTabs(newValue);
   };
 
   const handleNavigation = (event) => {
-    console.log(valueTabs, "valueTabs");
-    console.log(event, "event");
     if (valueTabs === 0 && event === "back") {
       setValueTabs(0);
     } else if (event === "next") {
@@ -91,12 +81,11 @@ const TalentNotification = () => {
   }, [data]);
 
   useEffect(() => {
-    setTimeout(function() {
+    setTimeout(function () {
       setTalentId(localStorage.getItem("userId"));
       setTalentEmail(localStorage.getItem("emailID"));
     }, 1000);
 
-    console.log(talentId, "talentId");
     if (talentId) {
       getTalentNotification();
       getKidsData();
@@ -107,12 +96,8 @@ const TalentNotification = () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
         if (resData.data.status === true) {
-          console.log(resData?.data?.data, "KIDSFETCH");
           setTalentData(resData.data.data, "resData.data.data");
-          console.log(
-            resData?.data?.data?.subscriptionType,
-            "subscriptionType"
-          );
+
           setSubscriptionCategory(resData?.data?.data?.subscriptionType);
           if (resData?.data?.data?.subscriptionType == "weekly") {
             setWeekly(true);
@@ -179,7 +164,7 @@ const TalentNotification = () => {
           if (resData.data.status === true) {
             setMessage("Subscribed To Job Alert");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               getKidsData();
             }, 1000);
@@ -195,7 +180,7 @@ const TalentNotification = () => {
           if (resData.data.status === true) {
             setMessage("Unsubscribed Successfully");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               getKidsData();
             }, 1000);
@@ -205,12 +190,8 @@ const TalentNotification = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(notificationList, "notificationListMain");
-  }, [notificationList]);
-  useEffect(() => {
-    console.log(talentData, "talentData notificationMain");
-  }, [talentData]);
+  useEffect(() => {}, [notificationList]);
+  useEffect(() => {}, [talentData]);
 
   function setSubscriptionType(e) {
     if (e == "weekly") {
@@ -301,7 +282,6 @@ const TalentNotification = () => {
                                 }}
                               >
                                 {item?.talentNotificationMessage}&nbsp;
-                                {/* {item?.gigDetails?.jobTitle} */}
                               </div>
                             </div>
 

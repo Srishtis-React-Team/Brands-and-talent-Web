@@ -40,14 +40,12 @@ const Header = ({ onData }) => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
+
     if (brandId) {
       getBrand();
     }
   }, [brandId]);
-  useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
+  useEffect(() => {}, [brandData]);
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
@@ -58,21 +56,15 @@ const Header = ({ onData }) => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  console.log(searchPathOptions, "searchPathOptions");
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
     setCurrentUserType(localStorage.getItem("currentUserType"));
-    console.log(currentUserId, "currentUserId header");
   }, [currentUserId]);
-  useEffect(() => {
-    console.log(currentUser_type, "currentUser_type header");
-  }, [currentUser_type]);
+  useEffect(() => {}, [currentUser_type]);
 
   const login = () => {
     navigate("/login");
@@ -83,7 +75,7 @@ const Header = ({ onData }) => {
     setcurrentUserId(null);
     setMessage("Logged out successfully");
     setOpenPopUp(true);
-    setTimeout(function() {
+    setTimeout(function () {
       setOpenPopUp(false);
       navigate("/");
     }, 1000);
@@ -118,10 +110,10 @@ const Header = ({ onData }) => {
   };
 
   useEffect(() => {
-    setTimeout(function() {
+    setTimeout(function () {
       setTalentId(localStorage.getItem("userId"));
     }, 1000);
-    console.log(talentId, "talentId");
+
     if (talentId) {
       getTalentById();
     }
@@ -138,9 +130,7 @@ const Header = ({ onData }) => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const modalRef = useRef(null);
@@ -189,7 +179,7 @@ const Header = ({ onData }) => {
       ) {
         setMessage("Purchase Pro or Premium Plan to unlock this feature");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/pricing");
         }, 3000);
@@ -212,7 +202,6 @@ const Header = ({ onData }) => {
   };
 
   useEffect(() => {
-    console.log(onData, "onData");
     if (onData === "talent-signup") {
       setTalent(true);
       openModal();
@@ -288,13 +277,12 @@ const Header = ({ onData }) => {
   };
 
   const handleLabelClick = (route) => {
-    console.log(route, "handleLabelClick");
     if (route === "/find-creators") {
       if (!currentUserId || currentUser_type != "brand") {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -307,7 +295,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -332,7 +320,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -349,7 +337,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -362,7 +350,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -375,7 +363,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -388,7 +376,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -401,7 +389,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -414,7 +402,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -427,7 +415,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -453,7 +441,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -466,7 +454,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -479,7 +467,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -492,7 +480,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -505,7 +493,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -518,7 +506,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -531,7 +519,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -544,7 +532,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -557,7 +545,7 @@ const Header = ({ onData }) => {
 
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -569,7 +557,7 @@ const Header = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -581,7 +569,7 @@ const Header = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -609,19 +597,12 @@ const Header = ({ onData }) => {
   ).map((label) => searchPathOptions.find((option) => option.label === label));
 
   const handleClickBlogs = (step) => {
-    // console.log(step, "handleClickBlogsSTEP");
+    //
     // navigate("/blogs", { state: { step: step } });
     window.open("https://brandsandtalent.substack.com/", "_blank");
   };
 
-  useEffect(() => {
-    console.log(
-      talentData,
-      "TalentHeader DataHeader ",
-      brandData,
-      "BrandHeader DataHeader"
-    );
-  }, [talentData, brandData]);
+  useEffect(() => {}, [talentData, brandData]);
 
   return (
     <>

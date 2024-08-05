@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
@@ -6,7 +6,7 @@ import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useNavigate } from "react-router-dom";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const TalentHome = () => {
   const [talentId, setTalentId] = useState(null);
@@ -16,11 +16,10 @@ const TalentHome = () => {
   const [showSidebar, setShowSidebar] = useState(true);
 
   useEffect(() => {
-    setTimeout(function() {
+    setTimeout(function () {
       setTalentId(localStorage.getItem("userId"));
     }, 1000);
 
-    console.log(talentId, "talentId");
     if (talentId) {
       getTalentNotification();
     }
@@ -39,40 +38,7 @@ const TalentHome = () => {
     setShowSidebar(!showSidebar);
   };
 
-  const viewNotification = async (item) => {
-    const formData = {
-      notificationId: item?._id,
-    };
-    await ApiHelper.post(`${API.readNotification}`, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          getTalentNotification();
-        }
-      })
-      .catch((err) => {});
-    navigate("/preview-job-talent", {
-      state: {
-        jobId: item?.gigId,
-      },
-    });
-  };
-
-  const deleteNotification = async (item) => {
-    const formData = {
-      notificationId: item?._id,
-    };
-    await ApiHelper.post(`${API.deleteNotification}`, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          getTalentNotification();
-        }
-      })
-      .catch((err) => {});
-  };
-
-  useEffect(() => {
-    console.log(notificationList, "notificationListMain");
-  }, [notificationList]);
+  useEffect(() => {}, [notificationList]);
 
   const navigate = useNavigate();
 

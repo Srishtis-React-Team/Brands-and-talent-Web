@@ -37,7 +37,6 @@ const ChatBot = () => {
   const chatInputRef = useRef(null);
 
   useEffect(() => {
-    console.log(newSectionID, "newSectionID");
     if (newSectionID === null) {
       setNewSectionID(generateSessionId());
     }
@@ -46,9 +45,7 @@ const ChatBot = () => {
     setInputHeight(chatInputRef.current.scrollHeight);
   }, []);
 
-  useEffect(() => {
-    console.log(messages, "messages");
-  }, [messages]);
+  useEffect(() => {}, [messages]);
 
   const handleSend = async (e) => {
     const message = chatInputRef.current.value.trim();
@@ -61,9 +58,7 @@ const ChatBot = () => {
       };
       await ApiHelper.post(API.chatbot, formData)
         .then((resData) => {
-          console.log(resData, "resData");
           if (resData) {
-            console.log(resData.data.message, "message");
             setMessages([...messages, { role: "bot", content: resData.data }]);
             var elem = document.getElementById("message-box");
             elem.scrollTop = elem.scrollHeight;

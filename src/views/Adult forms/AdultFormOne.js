@@ -42,19 +42,14 @@ const AdultFormOne = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getTalentById");
             setTalentData(resData.data.data, "resData.data.data");
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+  useEffect(() => {}, [talentData]);
 
   const customStyles = {
     control: (provided, state) => ({
@@ -117,25 +112,18 @@ const AdultFormOne = () => {
   const [dateOfBirth, setDob] = useState("");
   const [kidsEmail, setKidsEmail] = useState("");
 
-  const [selectedProfessionsError, setSelectedProfessionsError] = useState(
-    false
-  );
+  const [selectedProfessionsError, setSelectedProfessionsError] =
+    useState(false);
   const [selectedCategoriesError, setSelectedCategoriesError] = useState(false);
   const [ageError, setAgeError] = useState(false);
-  const [
-    adultsPreferedFirstNameError,
-    setAdultsPreferedFirstNameError,
-  ] = useState(false);
-  const [
-    adultsPreferedLastNameError,
-    setAdultsPreferedLastNameError,
-  ] = useState(false);
-  const [adultsLegalFirstNameError, setAdultsLegalFirstNameError] = useState(
-    false
-  );
-  const [adultsLegalLastNameError, setAdultsLegalLastNameError] = useState(
-    false
-  );
+  const [adultsPreferedFirstNameError, setAdultsPreferedFirstNameError] =
+    useState(false);
+  const [adultsPreferedLastNameError, setAdultsPreferedLastNameError] =
+    useState(false);
+  const [adultsLegalFirstNameError, setAdultsLegalFirstNameError] =
+    useState(false);
+  const [adultsLegalLastNameError, setAdultsLegalLastNameError] =
+    useState(false);
   const [adultsPhoneError, setAdultsPhoneError] = useState(false);
   const [adultsLocationError, setAdultsLocationError] = useState(false);
   const [kidsCityError, setKidsCityError] = useState(false);
@@ -152,17 +140,14 @@ const AdultFormOne = () => {
   useEffect(() => {
     getCountries();
     const storedUserId = localStorage.getItem("userId");
-    console.log(storedUserId, "storedUserId");
+
     setUserId(storedUserId);
   }, [userId]);
 
   const handleSelectedCountry = (event) => {
-    console.log(event, "event");
-    console.log(event?.value, "event?.value");
     setCountry(event?.value);
     getStates(event?.value);
     setCountryError(false);
-    console.log(country, "country");
   };
   const handleSelectedState = (state) => {
     setState(state?.label);
@@ -276,11 +261,11 @@ const AdultFormOne = () => {
     // let dateString = e;
     // if (dateString) {
     //   let dateObject = new Date(dateString);
-    //   console.log(dateObject, "dateObject");
-    //   console.log(typeof dateObject, "dateObject");
+    //
+    //
     //   if (dateObject) {
     //     let formattedDate = dateObject?.toISOString()?.split("T")[0];
-    //     console.log(formattedDate, "formattedDate");
+    //
     //   }
     // }
     let dobDate = new Date(e);
@@ -291,40 +276,6 @@ const AdultFormOne = () => {
   };
 
   const updateAdultSignup = async () => {
-    console.log(
-      adultsLegalFirstName,
-      "adultsLegalFirstName",
-      adultsLegalLastName,
-      "adultsLegalLastName",
-      adultsPreferedFirstName,
-      "adultsPreferedFirstName",
-      adultsPreferedLastName,
-      "adultsPreferedLastName",
-      selectedProfessions,
-      "selectedProfessions",
-      selectedCategories,
-      "selectedCategories",
-      gender,
-      "gender",
-      languages,
-      "languages",
-      dateOfBirth,
-      "dateOfBirth",
-      adultsPhone,
-      "adultsPhone",
-      kidsEmail,
-      "kidsEmail",
-      adultsLocation,
-      "adultsLocation",
-      country,
-      "country",
-      state,
-      "state",
-      address,
-      "address",
-      age,
-      "age"
-    );
     if (adultsLegalFirstName === "") {
       setAdultsLegalFirstNameError(true);
     }
@@ -395,9 +346,6 @@ const AdultFormOne = () => {
       noOfJobsCompleted: completedJobs,
       publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
     };
-    Object.entries(formData).forEach(([key, value]) =>
-      console.log(value, `<${key}> AdultFormData`)
-    );
 
     if (
       adultsLegalFirstName !== "" &&
@@ -439,9 +387,7 @@ const AdultFormOne = () => {
         noOfJobsCompleted: completedJobs,
         publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
       };
-      Object.values(formData).forEach((value) =>
-        console.log(value, "formDataAdultSignup")
-      );
+
       if (userId) {
         await ApiHelper.post(`${API.updateAdults}${userId}`, formData)
           .then((resData) => {
@@ -449,7 +395,7 @@ const AdultFormOne = () => {
               setIsLoading(false);
               setMessage("Updated SuccessFully!");
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(`/adult-social-medias-details?${userId}`);
               }, 1000);
@@ -457,7 +403,7 @@ const AdultFormOne = () => {
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
               }, 1000);
             }
@@ -469,7 +415,7 @@ const AdultFormOne = () => {
     } else {
       setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     }
@@ -484,7 +430,7 @@ const AdultFormOne = () => {
       // Optionally show a message to the user
       setMessage("You can only select up to 5 skills");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 2000);
       return; // Prevent the state update
@@ -498,8 +444,7 @@ const AdultFormOne = () => {
   const handleDetailChange = (index, field, value) => {
     const updatedSelectedProfessions = [...selectedProfessions];
     updatedSelectedProfessions[index][field] = value;
-    console.log(value, "value");
-    console.log(selectedProfessions, "selectedProfessions");
+
     setSelectedProfessions(updatedSelectedProfessions);
     setProfessionError(false);
   };
@@ -517,7 +462,7 @@ const AdultFormOne = () => {
         // setCategoryError(true);
         setMessage("you can only select 6 categories");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 2000);
       }
@@ -553,7 +498,6 @@ const AdultFormOne = () => {
   // };
 
   const selectNationality = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
       setNationality([]); // Clear the languages state
@@ -563,7 +507,7 @@ const AdultFormOne = () => {
     }
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+
     setNationality(selectedLanguages); // Update languages state with all selected languages
     setSelectedNationalityOptions(selectedOptions);
     setNationalityError(false);
@@ -583,15 +527,13 @@ const AdultFormOne = () => {
 
   const handleMobileChange = (value, countryData) => {
     // Update the parentMobile state with the new phone number
-    console.log(value, "handleMobileChange");
+
     setAdultsPhone(value);
     setAdultsPhoneError(false);
   };
 
-  const [
-    adultsLegalFirstNameLetterError,
-    setAdultsLegalFirstNameLetterError,
-  ] = useState(false);
+  const [adultsLegalFirstNameLetterError, setAdultsLegalFirstNameLetterError] =
+    useState(false);
 
   const adultsLegalFirstNameChange = (e) => {
     const value = e.target.value;
@@ -614,10 +556,8 @@ const AdultFormOne = () => {
       setAdultsLegalFirstNameLetterError(false);
     }
   };
-  const [
-    adultsLegalLastNameLetterError,
-    setAdultsLegalLastNameLetterError,
-  ] = useState(false);
+  const [adultsLegalLastNameLetterError, setAdultsLegalLastNameLetterError] =
+    useState(false);
 
   const adultsLegalLastNameChange = (e) => {
     const value = e.target.value;
@@ -695,8 +635,6 @@ const AdultFormOne = () => {
   };
 
   const deleteProfession = (profession, index) => {
-    console.log(profession, "profession");
-    console.log(index, "profession index");
     setSelectedProfessions((prevSelectedProfessions) =>
       prevSelectedProfessions.filter((item) => item.value !== profession.value)
     );
@@ -726,9 +664,7 @@ const AdultFormOne = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(maritalStatus, "maritalStatus");
-  }, [maritalStatus]);
+  useEffect(() => {}, [maritalStatus]);
 
   return (
     <>
@@ -1182,7 +1118,6 @@ const AdultFormOne = () => {
                           <DatePicker
                             value={value}
                             onChange={(newValue) => {
-                              console.log(newValue, "newValue");
                               handleDateChange(newValue);
                             }}
                             renderInput={(params) => <TextField {...params} />}

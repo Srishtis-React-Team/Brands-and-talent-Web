@@ -16,7 +16,7 @@ import SearchHeaderComponent from "../../layout/SearchHeaderComponent";
 import CurrentUser from "../../CurrentUser";
 const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserType, avatarImage } = CurrentUser();
-  console.log(hideToggleButton, "hideToggleButton");
+
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
   const model1 = require("../../assets/images/girl1.png");
@@ -69,8 +69,6 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     navigate("/");
   };
 
-  console.log(myState, "myState");
-
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
       .then((resData) => {
@@ -80,17 +78,12 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
+  useEffect(() => {}, [brandData]);
 
   const gotomessage = (item) => {
-    console.log(item, "gotomessage");
     navigate(`/message?${item?.talentId}`);
   };
 
@@ -128,7 +121,6 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
   useEffect(() => {
     if (notificationList) {
-      console.log(notificationList, "notificationList");
     }
   }, [notificationList]);
 
@@ -148,7 +140,6 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       } else if (menuItem == "edit") {
         navigate("/edit-brand-profile");
       }
-      console.log(`Clicked on ${menuItem}`);
     };
   };
 

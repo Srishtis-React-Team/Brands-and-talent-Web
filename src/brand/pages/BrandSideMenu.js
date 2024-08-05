@@ -27,15 +27,13 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
+
     if (brandId) {
       getBrand();
       jobCount();
     }
   }, [brandId]);
-  useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
+  useEffect(() => {}, [brandData]);
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
@@ -46,22 +44,17 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const jobCount = async () => {
     await ApiHelper.post(`${API.jobCount}${brandId}`)
       .then((resData) => {
         if (resData) {
-          console.log(resData.data.data[2].count, "countData");
           setJobCountNumber(resData.data.data[2].count);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -83,9 +76,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(isSmallScreen, "isSmallScreen");
-  }, [isSmallScreen]);
+  useEffect(() => {}, [isSmallScreen]);
 
   useEffect(() => {
     if (myState === true) {

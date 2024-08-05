@@ -53,14 +53,11 @@ const BrandDetails = () => {
 
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
-    console.log(event, "event");
-    console.log(event?.value, "event?.value");
+
     setCountry(event?.value);
     getStates(event?.value);
-    console.log(country, "country");
   };
   const handleSelectedState = (state) => {
-    console.log(state, "state");
     setStateError(false);
     setState(state?.label);
     getCities({
@@ -69,9 +66,7 @@ const BrandDetails = () => {
     });
   };
 
-  useEffect(() => {
-    console.log(state, "stateUseeffect");
-  }, [state]);
+  useEffect(() => {}, [state]);
 
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
@@ -134,9 +129,7 @@ const BrandDetails = () => {
     "Staffing Agency",
   ];
 
-  useEffect(() => {
-    console.log(openPopUp, "openPopUp");
-  }, [openPopUp]);
+  useEffect(() => {}, [openPopUp]);
 
   const brandsSignup = async () => {
     if (brandName === "") {
@@ -184,7 +177,6 @@ const BrandDetails = () => {
       )
         .then((resData) => {
           if (resData.data.status === true) {
-            console.log(resData.data, "brandetails");
             setMessage("Registered SuccessFully!");
             setTalentLocalStorage(resData.data.data);
             navigate("/brand-logo", {
@@ -214,7 +206,6 @@ const BrandDetails = () => {
   };
 
   const setTalentLocalStorage = (data) => {
-    console.log(data, "data otp");
     localStorage.setItem("brandId", data?.brand_id);
   };
 
@@ -319,7 +310,6 @@ const BrandDetails = () => {
   const [mobileValidation, setMobileValidation] = useState(false);
 
   const handleMobileChange = (value, countryData) => {
-    console.log(value, "handleMobileChange");
     setPhoneNumber(value);
     setPhoneNumberError(false);
   };

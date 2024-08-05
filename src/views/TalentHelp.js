@@ -17,11 +17,10 @@ const TalentHelp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(function() {
+    setTimeout(function () {
       setTalentId(localStorage.getItem("userId"));
     }, 1000);
 
-    console.log(talentId, "talentId");
     if (talentId) {
       getTalentNotification();
     }
@@ -86,9 +85,7 @@ const TalentHelp = () => {
     setEditors(newEditors);
   };
 
-  useEffect(() => {
-    console.log(editors, "editors");
-  }, [editors]);
+  useEffect(() => {}, [editors]);
 
   return (
     <>
