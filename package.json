@@ -2,6 +2,7 @@
   "name": "brands-and-talent-web",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://brandsandtalent.com/",
   "dependencies": {
     "@cyntler/react-doc-viewer": "^1.14.1",
     "@emotion/react": "^11.11.4",
