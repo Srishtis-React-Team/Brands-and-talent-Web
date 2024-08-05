@@ -247,7 +247,7 @@ const HowItWorks = () => {
                 </h2>
                 <div className="video-container">
                   <video
-                    src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/9a0040f1-6bd1-4a31-9dfc-5e8a76f4fb2b.mp4"
+                    src="https://brandsandtalent.com/backend/uploads/db93829f-8cf9-4787-9d2e-6ae76b9ff3ae.mp4"
                     autoPlay
                     loop
                     controls
@@ -428,7 +428,7 @@ const HowItWorks = () => {
 
                   <div className="video-container">
                     <video
-                      src="https://hybrid.sicsglobal.com/project/brandsandtalent/backend/uploads/370b2c13-5f1c-47e4-9ef2-2b8e76e392c4.mp4"
+                      src="https://brandsandtalent.com/backend/uploads/7813127a-686c-4e23-bed6-dc3ec51784ec.mp4"
                       loop
                       controls
                       className="responsive-video mb-3"
