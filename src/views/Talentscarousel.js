@@ -11,51 +11,21 @@ import PopUp from "../components/PopUp";
 
 const Talentscarousel = ({ talentList }) => {
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(null);
   const favoruiteIcon = require("../assets/icons/favorite.png");
-  const locationIcon = require("../assets/icons/locationIcon.png");
-  const darkStar = require("../assets/icons/darkStar.png");
-  const brightStar = require("../assets/icons/brightStar.png");
-  const jobIcon = require("../assets/icons/jobIcon.png");
   const heartIcon = require("../assets/icons/heart.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  // const [talentList, setTalentList] = useState([]);
 
-  // useEffect(() => {
-  //   getTalentList();
-  // }, []);
-
-  // const getTalentList = async () => {
-  //   // alert("getTalentList");
-  //   await ApiHelper.get(API.getTalentList)
-  //     .then((resData) => {
-  //       if (resData) {
-  //         console.log(resData, "resData getTalentList");
-  //         if (resData.data.data?.length > 0) {
-  //           setTalentList(resData.data.data);
-  //         }
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  useEffect(() => {
-    console.log(talentList, "talentList");
-  }, [talentList]);
+  useEffect(() => {}, [talentList]);
 
   const addFavorite = async (item) => {
-    console.log(item);
     const formData = {
       type: item?.type,
       user: item?._id,
     };
     let brandId = localStorage.getItem("brandId");
     let talentId = localStorage.getItem("userId");
-    console.log(brandId, "userid");
-    console.log(talentId, "userid");
+
     let loggidInID;
     if (brandId) {
       loggidInID = brandId;
@@ -65,46 +35,37 @@ const Talentscarousel = ({ talentList }) => {
 
     await ApiHelper.post(`${API.setUserFavorite}${loggidInID}`, formData, true)
       .then((resData) => {
-        console.log(resData, "addFavorite");
         if (resData.data.status === true) {
-          console.log("addFavoriteBlock", "addFavorite");
           setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
-          // getTalentList();
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
       })
       .catch((err) => {
-        console.log(err);
         setMessage("Please Login First");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       });
   };
 
   const openTalent = (item) => {
-    console.log(item, "item");
-    // navigate("/talent", { state: { talentData: item } });
-
     navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
   };
 
   const removeFavorite = async (item) => {
-    console.log(item);
     const formData = {
       type: item?.type,
       user: item?._id,
     };
     let brandId = localStorage.getItem("brandId");
     let talentId = localStorage.getItem("userId");
-    console.log(brandId, "userid");
-    console.log(talentId, "userid");
+
     let loggidInID;
     if (brandId) {
       loggidInID = brandId;
@@ -113,22 +74,18 @@ const Talentscarousel = ({ talentList }) => {
     }
     await ApiHelper.post(`${API.removeFavorite}${loggidInID}`, formData, true)
       .then((resData) => {
-        console.log(resData, "removeFavorite");
         if (resData.data.status === true) {
-          console.log("removeFavoriteBlock", "removeFavorite");
           setMessage("Removed Talent From Favorites");
           setOpenPopUp(true);
-          // getTalentList();
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
       })
       .catch((err) => {
-        console.log(err);
         setMessage("Unable To Remove Please Try Again");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       });
@@ -138,16 +95,13 @@ const Talentscarousel = ({ talentList }) => {
     <>
       <OwlCarousel
         className="owl-theme photos-carousel-owl"
-        // loop
         margin={10}
         nav
         items={talentList?.length === 1 ? 1 : 5}
         responsive={{
-          // Breakpoint from 0 up
           0: {
             items: 2,
           },
-          // Breakpoint from 768 up
           768: {
             items: 4,
           },
@@ -156,8 +110,6 @@ const Talentscarousel = ({ talentList }) => {
         {talentList &&
           talentList.length > 0 &&
           talentList.map((item, index) => {
-            // console.log(talentList, "talentList map");
-            console.log(item, "item");
             return (
               <>
                 <div

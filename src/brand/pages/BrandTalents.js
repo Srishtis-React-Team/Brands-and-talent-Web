@@ -134,21 +134,16 @@ const BrandTalents = () => {
         if (resData) {
           steCurrentUserData(resData.data.data);
         }
-        console.log("checkUserStatus", resData.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
     getUserSearchKeyword();
-    console.log(keywordsList, "keywordsList");
   }, [keywordsList]);
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
   }, [brandId]);
 
   const clear = () => {
@@ -246,7 +241,7 @@ const BrandTalents = () => {
     } else {
       updatedValues.push({ label, value });
     }
-    console.log(updatedValues, "updatedValues");
+
     setFeature(updatedValues);
   };
 
@@ -256,12 +251,8 @@ const BrandTalents = () => {
         if (resData) {
           setTalentList(resData.data.data);
         }
-        console.log("talentList", resData.data.data);
-        console.log("talentList", talentList);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const reset = async () => {
@@ -283,7 +274,6 @@ const BrandTalents = () => {
   };
 
   const addFavorite = async (item) => {
-    console.log(item);
     const formData = {
       type: item?.type,
       user: item?._id,
@@ -306,12 +296,9 @@ const BrandTalents = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const openTalent = (item) => {
-    console.log(item, "item");
     navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
@@ -326,7 +313,6 @@ const BrandTalents = () => {
   };
 
   const removeFavorite = async (item) => {
-    console.log(item);
     const formData = {
       type: item?.type,
       user: item?._id,
@@ -350,24 +336,17 @@ const BrandTalents = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const onRangeChange = (e) => {
-    console.log(Math.round(e.min), "e");
-    console.log(Math.round(e.max), "e");
     setMinAge(Math.round(e.min));
     setMaxAge(Math.round(e.max));
   };
 
   const handleSelectedCountry = (event) => {
-    console.log(event, "event");
-    console.log(event?.value, "event?.value");
     setCountry(event?.value);
     getStates(event?.value);
-    console.log(country, "country");
   };
 
   const selectIndustry = (event) => {
@@ -387,13 +366,12 @@ const BrandTalents = () => {
   };
 
   const selectNationality = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
     if (!selectedOptions || selectedOptions.length === 0) {
       setNationality([]);
       return;
     }
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+
     setNationality(selectedLanguages);
   };
 
@@ -449,13 +427,11 @@ const BrandTalents = () => {
       features: features,
       childEthnicity: ethnicity,
     };
-    console.log(formData, "formData talentFilterData");
+
     setIsLoading(true);
     await ApiHelper.post(API.talentFilterData, formData)
       .then((resData) => {
-        console.log("talentFilterData response", resData);
         if (resData.data.status === true) {
-          console.log(resData?.data?.data, "filtered talents");
           setIsLoading(false);
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
@@ -471,9 +447,7 @@ const BrandTalents = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleSelectedCity = (state) => {
@@ -534,9 +508,7 @@ const BrandTalents = () => {
           getTalentList();
         }, 2000);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const stars = document.querySelectorAll(".stars i");
@@ -565,13 +537,12 @@ const BrandTalents = () => {
   };
 
   const selectSocialMedias = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
     if (!selectedOptions || selectedOptions.length === 0) {
       setSocialMedias([]);
       return;
     }
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+
     setSocialMedias(selectedLanguages);
   };
 

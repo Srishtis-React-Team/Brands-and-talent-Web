@@ -23,8 +23,6 @@ const CurrentUser = () => {
     setCurrentUserType(localStorage.getItem("currentUserType"));
     setTalentName(localStorage.getItem("talentName"));
     setBrandName(localStorage.getItem("brandName"));
-    console.log(localStorage.getItem("fcmToken"), "fcmTokenCurrentUs4er5");
-    // serFcmToken(localStorage.getItem("fcmToken"));
     setAvatarImage(avatar);
   }, []);
 

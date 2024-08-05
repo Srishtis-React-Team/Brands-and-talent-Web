@@ -18,12 +18,11 @@ const ForgotPassword = () => {
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
-  console.log("Search queryString:", typeof queryString);
-  console.log("Search queryString:", queryString);
+
   useEffect(() => {
     if (queryString) {
       setParamsValue(queryString);
-      console.log(paramsValue, "paramsValue");
+
       setSelectedItem(paramsValue);
     }
   }, [paramsValue]);
@@ -45,7 +44,6 @@ const ForgotPassword = () => {
     await ApiHelper.post(API.typeChecking, typeData)
       .then((resData) => {
         if (resData.data.status === true) {
-          console.log(resData.data.modelType, "resData.data");
           if (resData.data.modelType == "adult") {
             userType = "adult";
           } else if (resData.data.modelType == "brand") {
@@ -62,9 +60,7 @@ const ForgotPassword = () => {
           }, 2000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     if (userType) {
       if (userType == "brand") {
@@ -72,12 +68,12 @@ const ForgotPassword = () => {
           brandEmail: talentEmail,
         };
         setIsLoading(true);
-        console.log(formData, "formData kidsLogin");
+
         await ApiHelper.post(API.brandsForgotPassword, formData)
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              console.log("true resData");
+
               setMessage("Open Your Gmail For Password Reset Link!");
               setOpenPopUp(true);
               setTimeout(function () {
@@ -92,9 +88,7 @@ const ForgotPassword = () => {
               }, 1000);
             }
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       } else {
         let formdata = {
           email: talentEmail,
@@ -110,9 +104,7 @@ const ForgotPassword = () => {
               }, 2000);
             }
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       }
     }
   };
@@ -125,7 +117,7 @@ const ForgotPassword = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          console.log("true resData");
+
           setMessage("Open Your Gmail For Password Reset Link!");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -141,9 +133,7 @@ const ForgotPassword = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const kidsForgotPassword = async (enteredOTP) => {
@@ -154,7 +144,7 @@ const ForgotPassword = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          console.log("true resData");
+
           setMessage("Open Your Gmail For Password Reset Link!");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -169,9 +159,7 @@ const ForgotPassword = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (

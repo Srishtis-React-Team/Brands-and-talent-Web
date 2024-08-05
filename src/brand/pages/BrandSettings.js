@@ -76,7 +76,7 @@ const BrandSettings = () => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
+
     if (brandId) {
       getBrand();
     }
@@ -92,9 +92,7 @@ const BrandSettings = () => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const customStylesAlert = {
@@ -197,7 +195,6 @@ const BrandSettings = () => {
       };
       await ApiHelper.post(`${API.updatePasswordInSettings}`, formData)
         .then((resData) => {
-          console.log(resData, "resData");
           if (resData.data.status === true) {
             setMessage("Password Updated Successfully");
             setOpenPopUp(true);

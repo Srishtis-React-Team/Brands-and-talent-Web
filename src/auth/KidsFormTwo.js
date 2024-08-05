@@ -19,12 +19,9 @@ const KidsFormTwo = () => {
   const urlParams = new URLSearchParams(paramsValues);
   const userId = urlParams.get("userId");
   const userEmail = urlParams.get("userEmail");
-  console.log(userId, "userId");
-  console.log(userEmail, "userEmail");
 
   useEffect(() => {
     getPricingList();
-    console.log(selectedPlan, "selectedPlan");
   }, [selectedPlan]);
 
   const getPricingList = async () => {
@@ -34,14 +31,10 @@ const KidsFormTwo = () => {
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const subscriptionPlan = async (index) => {
-    console.log(selectedPlan, "selectedPlan");
-    console.log(index);
     setSelectedIndex(index);
     if (!selectedPlan) {
       setMessage("Please choose Annual Or Monthly");
@@ -55,11 +48,10 @@ const KidsFormTwo = () => {
         planName: "Premium",
         user_id: "668cc6fb9545f3d7afde294e",
       };
-      console.log(formData, "formData subscription");
+
       await ApiHelper.post(`${API.subscriptionPlan}${userId}`, formData)
         .then((resData) => {
           if (resData) {
-            console.log(resData.data, "resData subscriptionPlan");
             setMessage("Plan Selected SuccessFully!");
             setOpenPopUp(true);
             setTimeout(function () {
@@ -67,9 +59,7 @@ const KidsFormTwo = () => {
             }, 1000);
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }
   };
   const choosePlan = async (index) => {
@@ -78,7 +68,6 @@ const KidsFormTwo = () => {
 
   const handleRadioChange = (event, plan, type) => {
     setPlan(type);
-    console.log("Selected Plan:", type);
   };
 
   const goBack = () => {

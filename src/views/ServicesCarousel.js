@@ -8,7 +8,6 @@ import PopUp from "../components/PopUp";
 const ServicesCarousel = ({ talentData }) => {
   const navigate = useNavigate();
 
-  console.log(talentData, "talentData ");
   const [servicesList, setServicesList] = useState([]);
   const [userId, setUserId] = useState(null);
   const [videoAudioList, setVideoAudioList] = useState([]);
@@ -22,70 +21,40 @@ const ServicesCarousel = ({ talentData }) => {
       fetchVideoAudios();
     }
   }, [talentData?._id]);
-  useEffect(() => {
-    console.log(servicesList, "servicesList");
-  }, [servicesList]);
+  useEffect(() => {}, [servicesList]);
 
   const fetchServices = async () => {
     await ApiHelper.post(`${API.unifiedDataFetch}${talentData?._id}/6`)
       .then((resData) => {
-        console.log(resData, "resData cv");
         if (resData.data.status === true) {
           setServicesList(resData.data.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const fetchVideoAudios = async () => {
     await ApiHelper.post(`${API.unifiedDataFetch}${talentData?._id}/2`)
       .then((resData) => {
-        console.log(resData, "resData videos");
         if (resData.data.status === true) {
-          console.log(
-            resData.data.data[0].videosAndAudios,
-            "resData.data.data[0].videosAndAudios"
-          );
           setVideoAudioList(resData.data.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const messageNow = () => {
     navigate(`/message?${talentData?._id}`);
-
-    // if (talentData?.planName == "Basic") {
-    //   setMessage("Purchase Pro or Premium Plan to unlock this feature");
-    //   setOpenPopUp(true);
-    //   setTimeout(function() {
-    //     setOpenPopUp(false);
-    //     navigate(`/pricing`);
-    //   }, 3000);
-    // } else {
-    //   navigate(`/message?${talentData?._id}`);
-    // }
   };
 
   return (
     <>
-      {servicesList && servicesList.length > 0 && (
-        <></>
-        // <div className="portofolio-section">
-        //   <div className="portofolio-title">Services</div>
-        //   <div className="view-all">View All</div>
-        // </div>
-      )}
+      {servicesList && servicesList.length > 0 && <></>}
 
       <div className="service-list-main">
         {servicesList &&
           servicesList.length > 0 &&
           servicesList?.map((item, index) => {
-            console.log(item, "item");
             return (
               <>
                 <div className="service-list-wrapper" key={index}>
@@ -138,78 +107,3 @@ const ServicesCarousel = ({ talentData }) => {
 };
 
 export default ServicesCarousel;
-
-{
-  /* <div className="talents-carousel-post-wrapper">
-<img className="talents-carousel-img" src={model2}></img>
-<div className="talents-post-details">
-  <img src={instaLogo}></img>
-  <div className="talents-likes">234 Likes 340 comments</div>
-  <div className="talents-date">23 Nov 2023</div>
-</div>
-<div className="talents-post-content">
-  Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-  elit...
-</div>
-</div>
-<div className="talents-carousel-post-wrapper">
-<img className="talents-carousel-img" src={model3}></img>
-<div className="talents-post-details">
-  <img src={instaLogo}></img>
-  <div className="talents-likes">234 Likes 340 comments</div>
-  <div className="talents-date">23 Nov 2023</div>
-</div>
-<div className="talents-post-content">
-  Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-  elit...
-</div>
-</div>
-<div className="talents-carousel-post-wrapper">
-<img className="talents-carousel-img" src={model4}></img>
-<div className="talents-post-details">
-  <img src={instaLogo}></img>
-  <div className="talents-likes">234 Likes 340 comments</div>
-  <div className="talents-date">23 Nov 2023</div>
-</div>
-<div className="talents-post-content">
-  Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-  elit...
-</div>
-</div>
-<div className="talents-carousel-post-wrapper">
-<img className="talents-carousel-img" src={model5}></img>
-<div className="talents-post-details">
-  <img src={instaLogo}></img>
-  <div className="talents-likes">234 Likes 340 comments</div>
-  <div className="talents-date">23 Nov 2023</div>
-</div>
-<div className="talents-post-content">
-  Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-  elit...
-</div>
-</div>
-<div className="talents-carousel-post-wrapper">
-<img className="talents-carousel-img" src={model6}></img>
-<div className="talents-post-details">
-  <img src={instaLogo}></img>
-  <div className="talents-likes">234 Likes 340 comments</div>
-  <div className="talents-date">23 Nov 2023</div>
-</div>
-<div className="talents-post-content">
-  Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-  elit...
-</div>
-</div>
-<div className="talents-carousel-post-wrapper">
-<img className="talents-carousel-img" src={model7}></img>
-<div className="talents-post-details">
-  <img src={instaLogo}></img>
-  <div className="talents-likes">234 Likes 340 comments</div>
-  <div className="talents-date">23 Nov 2023</div>
-</div>
-<div className="talents-post-content">
-  Lorem ipsum dolor sit amet, consectetur adipiscing consectet
-  elit...
-</div>
-</div> */
-}

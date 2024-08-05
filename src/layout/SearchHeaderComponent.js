@@ -32,15 +32,15 @@ const SearchHeaderComponent = ({ onData }) => {
   const [currentUser_type, setCurrentUserType] = useState("");
   const [talentData, setTalentData] = useState();
   const [talentId, setTalentId] = useState(null);
-  console.log(searchPathOptions, "searchPathOptions");
+  
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
     setCurrentUserType(localStorage.getItem("currentUserType"));
-    console.log(currentUserId, "currentUserId header");
+    
   }, [currentUserId]);
   useEffect(() => {
-    console.log(currentUser_type, "currentUser_type header");
+    
   }, [currentUser_type]);
 
   const login = () => {
@@ -90,7 +90,7 @@ const SearchHeaderComponent = ({ onData }) => {
     setTimeout(function() {
       setTalentId(localStorage.getItem("userId"));
     }, 1000);
-    console.log(talentId, "talentId");
+    
     if (talentId) {
       getTalentById();
     }
@@ -108,7 +108,7 @@ const SearchHeaderComponent = ({ onData }) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        
       });
   };
 
@@ -155,7 +155,7 @@ const SearchHeaderComponent = ({ onData }) => {
   };
 
   useEffect(() => {
-    console.log(onData, "onData");
+    
     if (onData === "talent-signup") {
       setTalent(true);
       openModal();
@@ -219,7 +219,7 @@ const SearchHeaderComponent = ({ onData }) => {
   };
 
   const handleLabelClick = (route) => {
-    console.log(route, "handleLabelClick");
+    
     if (route === "/find-creators") {
       if (!currentUserId || currentUser_type != "brand") {
         handleClose();

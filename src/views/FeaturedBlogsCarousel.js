@@ -61,13 +61,10 @@ const FeaturedBlogsCarousel = () => {
     await ApiHelper.get(API.getFeaturedArticles)
       .then((resData) => {
         if (resData) {
-          console.log(resData?.data?.data, "resData getFeaturedArticles");
           setFeaturedBlogsLsit(resData?.data?.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const fetchBlogByType = async () => {
@@ -77,13 +74,10 @@ const FeaturedBlogsCarousel = () => {
     await ApiHelper.post(API.fetchBlogByType, formdata)
       .then((resData) => {
         if (resData) {
-          console.log(resData?.data?.data, "resData fetchBlogByType");
           setBlogsLsit(resData?.data?.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const createHandleMenuClick = (blogData) => {

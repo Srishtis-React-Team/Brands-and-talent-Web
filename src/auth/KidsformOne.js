@@ -17,7 +17,7 @@ import { Tooltip } from "react-tooltip";
 
 const KidsformOne = () => {
   const { categoryList, professionList } = useFieldDatas();
-  console.log(categoryList, "categoryList kidsformone");
+
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
   const userId = urlParams.get("userId");
@@ -179,7 +179,6 @@ const KidsformOne = () => {
   };
 
   const selectEthnicity = (event) => {
-    console.log(event.target.value, "selectEthnicity");
     setEthnicity(event.target.value);
     setEthnicityError(false);
   };
@@ -190,7 +189,7 @@ const KidsformOne = () => {
 
   const handleJobsCompleted = (event) => {
     setCompletedJobs(event.target.value);
-    console.log(event.target.value, "handleJobsCompleted");
+
     setJobsCompletedError(false);
   };
 
@@ -206,14 +205,13 @@ const KidsformOne = () => {
   };
 
   const selectNationality = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
     if (!selectedOptions || selectedOptions.length === 0) {
       setNationality([]);
       setSelectedNationalityOptions([]);
       return;
     }
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+
     setNationality(selectedLanguages);
     setSelectedNationalityOptions(selectedOptions);
     setNationalityError(false);
@@ -248,14 +246,12 @@ const KidsformOne = () => {
   const handleDetailChange = (index, field, value) => {
     const updatedSelectedProfessions = [...selectedProfessions];
     updatedSelectedProfessions[index][field] = value;
-    console.log(value, "value");
-    console.log(selectedProfessions, "selectedProfessions");
+
     setSelectedProfessions(updatedSelectedProfessions);
     setProfessionError(false);
   };
 
   const chooseCategory = (category) => {
-    console.log(category, "category");
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -280,8 +276,6 @@ const KidsformOne = () => {
   };
 
   const deleteProfession = (profession, index) => {
-    console.log(profession, "profession");
-    console.log(index, "profession index");
     setSelectedProfessions((prevSelectedProfessions) =>
       prevSelectedProfessions.filter((item) => item.value !== profession.value)
     );
@@ -338,14 +332,11 @@ const KidsformOne = () => {
 
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
-    console.log(event, "event");
-    console.log(event?.value, "event?.value");
+
     setCountry(event?.value);
     getStates(event?.value);
-    console.log(country, "country");
   };
   const handleSelectedState = (state) => {
-    console.log(state, "state");
     setStateError(false);
     setState(state?.label);
     getCities({
@@ -354,9 +345,7 @@ const KidsformOne = () => {
     });
   };
 
-  useEffect(() => {
-    console.log(state, "stateUseeffect");
-  }, [state]);
+  useEffect(() => {}, [state]);
 
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
@@ -515,7 +504,6 @@ const KidsformOne = () => {
             setIsLoading(false);
           });
       } else if (userId) {
-        console.log("edit block");
         await ApiHelper.post(`${API.editKids}${userId}`, formData)
           .then((resData) => {
             if (resData.data.status === true) {
@@ -548,7 +536,7 @@ const KidsformOne = () => {
         setOpenPopUp(false);
       }, 1000);
     }
-    console.log(passwordMatch, "passwordMatch");
+
     if (!passwordMatch) {
       setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
@@ -704,7 +692,6 @@ const KidsformOne = () => {
   const [mobileNumError, setMobileNumError] = useState();
 
   const handleMobileChange = (value, countryData) => {
-    console.log(value, "handleMobileChange");
     setParentMobile(value);
     setParentMobileError(false);
   };
@@ -806,10 +793,7 @@ const KidsformOne = () => {
     };
   }
 
-  useEffect(() => {
-    console.log(selectedProfessions, "selectedProfessions");
-    console.log(selectedCategories, "selectedCategories");
-  }, [selectedProfessions]);
+  useEffect(() => {}, [selectedProfessions]);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -1548,7 +1532,6 @@ const KidsformOne = () => {
                           <DatePicker
                             value={value}
                             onChange={(newValue) => {
-                              console.log(newValue, "newValue");
                               handleDateChange(newValue);
                             }}
                             renderInput={(params) => <TextField {...params} />}

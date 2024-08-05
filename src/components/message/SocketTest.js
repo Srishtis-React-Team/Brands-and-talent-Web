@@ -14,13 +14,13 @@
 //   const [onlineUsers, setOnlineUsers] = useState([]);
 //   const socket = useRef();
 //   const user = localStorage.getItem("currentUser");
-//   console.log(user, "userMainID");
+//
 //   const scrollRef = useRef();
 
 //   useEffect(() => {
 //     socket.current = io("http://13.234.177.61:4014");
 //     socket.current.on("getMessage", (data) => {
-//       console.log(data, "getMessage");
+//
 //       setArrivalMessage({
 //         sender: data.senderId,
 //         text: data.text,
@@ -39,7 +39,7 @@
 //     let userId = user;
 //     socket.current.emit("addUser", userId);
 //     socket.current.on("getUsers", (users) => {
-//       console.log(users, "getUsers");
+//
 //       setOnlineUsers();
 //       //   users.followings.filter((f) => users.some((u) => u.userId === f));
 //     });
@@ -51,7 +51,7 @@
 //         const res = await axios.get("/conversations/" + user);
 //         setConversations(res.data);
 //       } catch (err) {
-//         console.log(err);
+//
 //       }
 //     };
 //     getConversations();
@@ -63,7 +63,7 @@
 //         const res = await axios.get("/messages/" + currentChat?._id);
 //         setMessages(res.data);
 //       } catch (err) {
-//         console.log(err);
+//
 //       }
 //     };
 //     getMessages();
@@ -90,7 +90,7 @@
 //       setMessages([...messages, res.data]);
 //       setNewMessage("");
 //     } catch (err) {
-//       console.log(err);
+//
 //     }
 //   };
 
@@ -108,7 +108,7 @@
 
 //   useEffect(() => {
 //     setBrandId(localStorage.getItem("brandId"));
-//     console.log(brandId, "brandId");
+//
 //     if (brandId) {
 //       listTalentsForChat();
 //     }
@@ -125,7 +125,7 @@
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
@@ -137,13 +137,13 @@
 //     await ApiHelper.post(API.addConversation, formData)
 //       .then((resData) => {
 //         if (resData) {
-//           console.log(resData, "resDataCOnversation");
-//           console.log(resData?.data?._id, "resDataCOnversation");
+//
+//
 //           setConversationID(resData?.data?._id);
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
@@ -165,7 +165,7 @@
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
@@ -180,19 +180,19 @@
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
 //   useEffect(() => {
-//     console.log(conversationID, "conversationID");
+//
 //     if (conversationID) {
 //       listByConversationId();
 //     }
 //   }, [conversationID]);
 
 //   useEffect(() => {
-//     console.log(userList, "userList");
+//
 //     if (userList && userList?.length > 0) {
 //       setSelectedUser(userList[0]);
 //       addConversation(userList[0]?._id);

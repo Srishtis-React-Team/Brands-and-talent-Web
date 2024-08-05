@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
-
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
@@ -10,31 +9,23 @@ import "../assets/css/talent-dashboard.scss";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { styled } from "@mui/system";
 import Button from "@mui/material/Button";
-// import { styled } from "@mui/material/styles";
-
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import Select from "react-select";
 import TalentPreviewJob from "./TalentPreviewJob.js";
 import useFieldDatas from "../config/useFieldDatas.js";
 
 const TalentDashBoard = () => {
-  const { categoryList, professionList } = useFieldDatas();
+  const { categoryList } = useFieldDatas();
 
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const offcanvasRef = useRef(null); // Reference to the offcanvas element
+  const offcanvasRef = useRef(null);
   const [gigsList, setGigsList] = useState([]);
   const [topBrandsList, setTopBrandsList] = useState([]);
-  const [selectedSkills, setSelectedSkills] = useState([]);
   const [isFilled, setIsFilled] = useState(true);
   const [job, setJob] = useState("");
-  const girl1 = require("../assets/images/girl1.png");
-  const btLogo = require("../assets/images/LOGO.png");
   const sliderIcon = require("../assets/icons/sliders.png");
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -58,18 +49,11 @@ const TalentDashBoard = () => {
   };
 
   const handleSelectedCountry = (event) => {
-    console.log(event, "event");
-    console.log(event?.value, "event?.value");
     setCountry(event?.value);
-    // setState("");
-    // handleSelectedState("");
     getStates(event?.value);
-    console.log(country, "country");
   };
   const handleSelectedState = (state) => {
-    console.log(state, "state");
     setState(state?.label);
-    // setKidsCity("");
     getCities({
       countryName: country,
       stateName: state?.label,
@@ -97,14 +81,14 @@ const TalentDashBoard = () => {
     control: (provided, state) => ({
       ...provided,
       minHeight: "45px",
-      zIndex: 1, // Ensure the control is above other elements
+      zIndex: 1,
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 1, // Ensure the menu appears above other elements
+      maxHeight: "500px",
+      zIndex: 1,
     }),
-    menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensure menu portal appears above other elements
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
   };
 
   const getCities = async (data) => {
@@ -121,15 +105,15 @@ const TalentDashBoard = () => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "50px", // Reset the minHeight to avoid clipping
+      minHeight: "50px",
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
+      maxHeight: "500px",
+      zIndex: 9999,
     }),
   };
-  console.log(job, "jobNewTalentPreview");
+
   const jobImage = require("../assets/icons/jobImage.png");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -144,17 +128,14 @@ const TalentDashBoard = () => {
   const url = window.location.href;
   const location = useLocation();
 
-  useEffect(() => {
-    console.log("Current Route:", location.pathname);
-  }, [location]);
+  useEffect(() => {}, [location]);
 
   const queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
 
   useEffect(() => {
     getTopBrands();
     const storedUserId = localStorage.getItem("userId");
-    console.log(storedUserId, "storedUserId");
+
     setUserId(storedUserId);
     if (userId) {
       checkProfileStatus();
@@ -167,11 +148,8 @@ const TalentDashBoard = () => {
         if (resData.data.profileStatus === false) {
           openDoItNowModal();
         }
-        console.log("checkProfileStatus", resData.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const getRecentGigs = async () => {
@@ -183,19 +161,14 @@ const TalentDashBoard = () => {
         if (resData) {
           setGigsList(resData.data.data);
         }
-        console.log("gigsList", resData.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const [modalData, setModalData] = useState(null);
 
   const applyjobs = async (data) => {
-    console.log(data, "applyJobData");
-    setModalData(data); // Set data to be displayed in the modal
-    // Open the modal programmatically
+    setModalData(data);
     if (data?.isApplied != "Applied") {
       const modalElement = document.getElementById("exampleModal");
       const bootstrapModal = new window.bootstrap.Modal(modalElement);
@@ -204,18 +177,13 @@ const TalentDashBoard = () => {
   };
 
   const viewJob = async (jobId) => {
-    console.log(jobId, "flag");
     setJob(jobId);
     setFlag(true);
   };
 
-  useEffect(() => {
-    console.log(gigsList, "gigsList");
-  }, [gigsList]);
+  useEffect(() => {}, [gigsList]);
 
-  useEffect(() => {
-    console.log(flag, "flag");
-  }, [flag]);
+  useEffect(() => {}, [flag]);
 
   const getTopBrands = async () => {
     await ApiHelper.post(API.getTopBrands)
@@ -223,23 +191,18 @@ const TalentDashBoard = () => {
         if (resData) {
           setTopBrandsList(resData.data.data);
         }
-        console.log("topBrandsList", resData.data.data);
-        console.log("topBrandsList", topBrandsList);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const toggleMenu = () => {
-    console.log("toggleMenucalled");
     setShowSidebar(!showSidebar);
   };
   const [talentId, setTalentId] = useState(null);
 
   useEffect(() => {
     setTalentId(localStorage.getItem("userId"));
-    console.log(talentId, "brandId");
+
     if (talentId) {
       getRecentGigs();
     }
@@ -252,14 +215,12 @@ const TalentDashBoard = () => {
     }, 800);
   };
 
-  // Define refs for the modals
   const doItNowRef = useRef(null);
   const openDoItNowModal = () => {
     const modal = new window.bootstrap.Modal(doItNowRef.current);
     modal.show();
   };
 
-  // Function to close the "doItNow" modal
   const closeDoItNowModal = () => {
     const modal = new window.bootstrap.Modal(doItNowRef.current);
     modal.hide();
@@ -275,23 +236,18 @@ const TalentDashBoard = () => {
       .then((resData) => {
         setMessage("Job applied successfully");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           getRecentGigs();
-          // Close the modal programmatically
           const modalElement = document.getElementById("exampleModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
         }, 1000);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(modalData, "modalDataCOnsole");
-  }, [modalData]);
+  useEffect(() => {}, [modalData]);
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     "& .MuiDialogContent-root": {
@@ -313,17 +269,6 @@ const TalentDashBoard = () => {
   };
   const [category, setCategory] = useState("");
 
-  const selectCategory = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const [keywordError, setKeywordError] = useState(false);
-  const [jobNameError, setJobNameError] = useState(false);
-  const [locationError, setLocationError] = useState(false);
-  const [ageError, setAgeError] = useState(false);
-  const [skillsError, setSkillsError] = useState(false);
-  const [jobTypeError, setJobTypeError] = useState(false);
-  const [workPlaceType, setWorkPlaceType] = useState("");
   const ageList = ["4-17", "18+"];
 
   const employmentTypeList = [
@@ -339,7 +284,7 @@ const TalentDashBoard = () => {
 
   const selectSkills = (selectedOptions) => {
     if (!selectedOptions || selectedOptions.length === 0) {
-      selectedSkillsRef.current = []; // Clear the selected skills
+      selectedSkillsRef.current = [];
     } else {
       selectedSkillsRef.current = selectedOptions.map((option) => option.value);
     }
@@ -356,40 +301,16 @@ const TalentDashBoard = () => {
     let category;
     let employment_type;
 
-    // Get the select element
     var selectElement = document.getElementById("workPlaceSelect");
-    // Get the selected value
     work_place_type = selectElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(work_place_type, "workPlaceSelect");
-
-    // Get the select element
     var selectJobElement = document.getElementById("jobtypeID");
-    // Get the selected value
     job_type = selectJobElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(job_type, "job_type");
-
-    // Get the select element
     var selectEmploymentElement = document.getElementById("employmentTypeID");
-    // Get the selected value
     employment_type = selectEmploymentElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(employment_type, "employment_type");
-
-    // Get the select element
     var selectAgeElement = document.getElementById("ageSelectID");
-    // Get the selected value
     job_age = selectAgeElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(job_age, "job_age");
-
-    // Get the select element
     var selectCategoryElement = document.getElementById("selectedCategoryID");
-    // Get the selected value
     category = selectCategoryElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(category, "job_age");
 
     if (keyWordRef.current) {
       key_word = keyWordRef?.current?.value;
@@ -403,18 +324,7 @@ const TalentDashBoard = () => {
     if (jobFullNameRef?.current) {
       job_full_name = jobFullNameRef?.current?.value;
     }
-    console.log(
-      key_word,
-      "key_word",
-      job_location,
-      "job_location",
-      job_age,
-      "job_age",
-      job_type,
-      "job_type",
-      work_place_type,
-      "work_place_type"
-    );
+
     const formData = {
       keyword: key_word,
       jobTitle: job_name,
@@ -430,34 +340,30 @@ const TalentDashBoard = () => {
       state: state,
       city: kidsCity,
     };
-    console.log(formData, "formData talentFilterData");
+
     setIsLoading(true);
     await ApiHelper.post(API.searchJobs, formData)
       .then((resData) => {
-        console.log(resData.data, "searchJobs");
         if (resData.data.status === true) {
           setGigsList(resData.data.data);
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("No Matching Users Found");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     setOpen(false);
   };
 
-  // Ref to store the input element
   const keyWordRef = useRef(null);
   const jobLocationRef = useRef(null);
   const jobNameRef = useRef(null);
@@ -479,7 +385,6 @@ const TalentDashBoard = () => {
 
   const [jobType, setjobType] = useState("");
 
-  // Function to handle getting the input value
   const selectjobType = (event) => {
     setjobType(event.target.value);
   };
@@ -489,18 +394,14 @@ const TalentDashBoard = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setSkillsList(resData.data.data);
-          console.log(resData.data.data, "getSkills");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     setOpen(false);
   };
 
   const addToSavedJobs = async (data) => {
-    console.log(data, "dataaddToSavedJobs");
     const formData = {
       gigId: data?._id,
       brandId: data?.brandId,
@@ -511,17 +412,16 @@ const TalentDashBoard = () => {
         if (resData.data.status === true) {
           setMessage("Job Saved SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getRecentGigs();
           }, 1000);
         }
       })
       .catch((err) => {
-        console.log(err);
         setMessage("Error Occured Try Again");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           getRecentGigs();
         }, 1000);
@@ -536,21 +436,19 @@ const TalentDashBoard = () => {
     };
     await ApiHelper.post(API.removeFavouritesJob, formData)
       .then((resData) => {
-        console.log(resData, "resDataremoveFromSavedJobs");
         if (resData.data.status === true) {
           setMessage("Removed From Saved Jobs");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getRecentGigs();
           }, 1000);
         }
       })
       .catch((err) => {
-        console.log(err);
         setMessage("Error Occured Try Again");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       });
@@ -606,7 +504,6 @@ const TalentDashBoard = () => {
                       <span className="talent-popup-span">Profile</span>
                     </div>
                     <div>
-                      {/* Progress bar */}
                       <div
                         style={{
                           border: "1px solid #ccc",
@@ -676,7 +573,7 @@ const TalentDashBoard = () => {
                             formData.entries()
                           );
                           const email = formJson.email;
-                          console.log(email);
+
                           handleClose();
                         },
                       }}
@@ -743,7 +640,7 @@ const TalentDashBoard = () => {
                             <Select
                               placeholder="Select state..."
                               options={stateList.map((state) => ({
-                                value: state.stateId, // or whatever unique identifier you want to use
+                                value: state.stateId,
                                 label: state.name,
                               }))}
                               value={state?.label}
@@ -760,7 +657,7 @@ const TalentDashBoard = () => {
                             <Select
                               placeholder="Select City..."
                               options={cityList.map((city) => ({
-                                value: city.cityId, // or whatever unique identifier you want to use
+                                value: city.cityId,
                                 label: city.name,
                               }))}
                               value={kidsCity?.label}
@@ -857,7 +754,6 @@ const TalentDashBoard = () => {
                         </div>
                       </DialogContent>
                       <DialogActions>
-                        {/* <Button onClick={handleClose}>Cancel</Button> */}
                         <button
                           type="button"
                           className="btn gift-payment-btn"
@@ -873,7 +769,6 @@ const TalentDashBoard = () => {
                 {gigsList.length && (
                   <div className="recent-gigs-main">
                     {gigsList.map((item, index) => {
-                      console.log(item, "item gigsList");
                       return (
                         <>
                           <div className="recent-gigs-wrapper browseJob">
@@ -1004,15 +899,6 @@ const TalentDashBoard = () => {
                                             )[0] === "paid_collaboration"
                                           ? "Paid Collaboration"
                                           : ""}
-
-                                        {/* {Object.keys(item?.compensation)[0]
-                                          ?.split("_")
-                                          .map(
-                                            (word) =>
-                                              word.charAt(0).toUpperCase() +
-                                              word.slice(1)
-                                          )
-                                          .join(" ")} */}
                                       </span>
                                     </div>
                                     <div className="mb-2">
@@ -1127,14 +1013,6 @@ const TalentDashBoard = () => {
                                   "paid_collaboration"
                                 ? "Paid Collaboration"
                                 : ""}
-
-                              {/* {Object.keys(modalData?.compensation)[0]
-                                ?.split("_")
-                                .map(
-                                  (word) =>
-                                    word.charAt(0).toUpperCase() + word.slice(1)
-                                )
-                                .join(" ")} */}
                             </div>
                           </div>
                         )}
@@ -1151,14 +1029,15 @@ const TalentDashBoard = () => {
                           </div>
                         </div>
                       )}
-                      {modalData?.gender && Array.isArray(modalData?.gender) && (
-                        <div className="modal-job-flex">
-                          <i className="bi bi-gender-ambiguous model-job-icons"></i>
-                          <div className="model-job-name">
-                            {modalData.gender.join(", ")}
+                      {modalData?.gender &&
+                        Array.isArray(modalData?.gender) && (
+                          <div className="modal-job-flex">
+                            <i className="bi bi-gender-ambiguous model-job-icons"></i>
+                            <div className="model-job-name">
+                              {modalData.gender.join(", ")}
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
 
                       {modalData?.lastDateForApply && (
                         <div className="modal-job-flex">
@@ -1344,9 +1223,6 @@ const TalentDashBoard = () => {
           </div>
         </div>
       </main>
-
-      {/* Bootstrap Modal */}
-      {/* Bootstrap Modal */}
 
       {openPopUp && <PopUp message={message} />}
     </>

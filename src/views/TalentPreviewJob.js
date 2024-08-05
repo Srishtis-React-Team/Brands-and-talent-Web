@@ -1,59 +1,36 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
-import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
 import CurrentUser from "../CurrentUser.js";
 
 const TalentPreviewJob = (props) => {
   const { job } = props;
   const job_id = job;
-  console.log(job_id, "job_id");
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
 
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-  } = CurrentUser();
-
-  // useEffect(() => {
-  //   console.log(currentUserId, "currentUserIdpreview");
-  //   if (!currentUserId) {
-  //     navigate("/login");
-  //   }
-  // }, [currentUserId]);
+  const { currentUserId } = CurrentUser();
 
   const location = useLocation();
 
   const { jobId } = location.state || {};
-  console.log(jobId, "jobId");
 
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
-  const [updateDisabled, setUpdateDisabled] = useState(false);
-  const [jobTitleError, setjobTitleError] = useState(false);
-  const [jobTitle, setjobTitle] = useState("");
   const [jobData, setJobData] = useState("");
   const [message, setMessage] = useState("");
-  const [minPay, setMinPay] = useState("");
-  const [maxPay, setMaxpay] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
   const [brandData, setBrandData] = useState(null);
 
   const getJobsByID = async () => {
     await ApiHelper.get(`${API.getAnyJobById}${job_id ? job_id : queryString}`)
       .then((resData) => {
-        console.log(resData.data.data, "getJobsByID");
         setJobData(resData.data.data);
         getBrand(resData.data.data?.brandId);
       })
@@ -65,18 +42,14 @@ const TalentPreviewJob = (props) => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "resData.data.data");
             setBrandData(resData.data.data);
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const toggleMenu = () => {
-    console.log("toggleMenucalledTalentPreview");
     setShowSidebar(!showSidebar);
   };
 
@@ -88,7 +61,7 @@ const TalentPreviewJob = (props) => {
     if (jobId ? jobId : queryString) {
       setMessage("Job Saved To Draft");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 2000);
     }
@@ -97,12 +70,10 @@ const TalentPreviewJob = (props) => {
   const postJob = async () => {
     await ApiHelper.post(`${API.postJobByDraft}${jobId ? jobId : queryString}`)
       .then((resData) => {
-        console.log(resData, "draftedData");
-        console.log(resData.data.data._id, "draftedData");
         if (resData.data.status === true) {
           setMessage("Job Posted SuccessFully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             navigate("/list-jobs", {
               state: {
@@ -113,7 +84,7 @@ const TalentPreviewJob = (props) => {
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -125,13 +96,8 @@ const TalentPreviewJob = (props) => {
     getJobsByID();
   }, [job_id]);
 
-  useEffect(() => {
-    console.log(jobData, "jobData");
-    console.log(jobData?.questions, "jobData questions");
-  }, [jobData]);
-  useEffect(() => {
-    console.log(jobId, "jobId");
-  }, [jobId]);
+  useEffect(() => {}, [jobData]);
+  useEffect(() => {}, [jobId]);
 
   const createJob = () => {
     navigate("/talent-dashboard");
@@ -141,15 +107,13 @@ const TalentPreviewJob = (props) => {
     if (location.state && location.state.from) {
       navigate(`/${location.state.from}`);
     } else {
-      navigate(-1); // Equivalent to history.goBack() in v5
+      navigate(-1);
     }
   };
   const [modalData, setModalData] = useState(null);
 
   const applyjobs = async (data) => {
-    console.log(data, "applyJobData");
-    setModalData(data); // Set data to be displayed in the modal
-    // Open the modal programmatically
+    setModalData(data);
     if (data?.isApplied != "Applied") {
       const modalElement = document.getElementById("exampleModal");
       const bootstrapModal = new window.bootstrap.Modal(modalElement);
@@ -167,41 +131,26 @@ const TalentPreviewJob = (props) => {
       .then((resData) => {
         setMessage("Job applied successfully");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           getJobsByID();
-          // Close the modal programmatically
           const modalElement = document.getElementById("exampleModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
         }, 1000);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const viewUpdateFile = (item) => {
-    console.log(item, "viewFile");
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
 
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
-      {/* <div
-        id="sidebarBrand"
-        className={`brand-sidebar ${
-          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
-        }`}
-      >
-        <TalentSideMenu />
-      </div> */}
 
-      <main
-        id="mainBrand"
-        // className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
-      >
+      <main id="mainBrand">
         <div className="brand-content-main boxBg px-4">
           <div className="back-create">
             <i className="bi bi-arrow-left-circle-fill"></i>
@@ -241,14 +190,8 @@ const TalentPreviewJob = (props) => {
                     (!jobData?.isApplied && <div>Easy Apply</div>)}
                   {jobData?.isApplied === "Applied" && <div>Applied</div>}
                 </div>
-
-                {/* <div className="easy-apply-btn">Easy Apply</div> */}
               </div>
             )}
-
-            {/* <div className="easy-apply-section">
-                <div className="easy-apply-btn">Easy Apply</div>
-              </div> */}
           </div>
           <div className="preview-section-two">
             <div className="d-flex">
@@ -262,7 +205,6 @@ const TalentPreviewJob = (props) => {
 
             <div className="company-location">
               <span className="job-feature-heading">Location :&nbsp; </span>
-              {/* {jobData?.paymentType?.label} */}
               <span>
                 <span className="">
                   {jobData?.state}, {jobData?.country}, {jobData?.jobLocation}
@@ -287,36 +229,8 @@ const TalentPreviewJob = (props) => {
               </span>
             </div>
 
-            {/* <div className="company-location">
-              <span>Payment :&nbsp; </span>
-              <span>
-                {jobData?.paymentType?.label === "range" && (
-                  <>
-                    <span className="job-pay">
-                      {jobData?.paymentType?.minPay}&nbsp;
-                      {jobData?.jobCurrency}
-                    </span>
-                    <span className="job-to-pay">to</span>
-                    <span className="job-pay">
-                      {jobData?.paymentType?.maxPay}&nbsp;
-                      {jobData?.jobCurrency}
-                    </span>
-                  </>
-                )}
-                {jobData?.paymentType?.label === "fixed" && (
-                  <>
-                    <span className="job-pay">
-                      {jobData?.paymentType?.amount}
-                      {jobData?.jobCurrency}
-                    </span>
-                  </>
-                )}
-              </span>
-            </div> */}
-
             <div className="company-location">
               <span className="job-feature-heading">Job Type :&nbsp; </span>
-              {/* {jobData?.paymentType?.label} */}
               <span>
                 <span className="">{jobData?.jobType}</span>
               </span>
@@ -360,15 +274,6 @@ const TalentPreviewJob = (props) => {
                                   </span>
                                 </>
                               )}
-                              {/* <p>
-                                      <strong>{key}</strong>
-                                    </p>
-                                    <p>Type: {value.type}</p>
-                                    <p>Product Name: {value.product_name}</p>
-                                    <p>Min Pay: {value.minPay}</p>
-                                    <p>Max Pay: {value.maxPay}</p>
-                                    <p>Currency: {value.currency}</p>
-                                    <p>Frequency: {value.frequency}</p> */}
                             </span>
                           )
                         )}
@@ -377,23 +282,6 @@ const TalentPreviewJob = (props) => {
                 )}
               </span>
             </div>
-
-            {/* 
-            <div className="company-location">
-              <span>Application Type :&nbsp; </span>
-              <span>
-                <span className="">
-                  {jobData?.howLikeToApply
-                    ? jobData.howLikeToApply
-                        .split("-")
-                        .map(
-                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
-                        )
-                        .join(" ")
-                    : ""}
-                </span>
-              </span>
-            </div> */}
 
             <div className="job-features-benefits pb-0">
               <div className="row">
@@ -587,19 +475,6 @@ const TalentPreviewJob = (props) => {
                     </ul>
                   </div>
                 </div>
-                {/* <div className="job-benefits col-md-6">
-                    <div className="job-feature-title">Benefits</div>
-                    <div className="job-benefits-points">
-                      <ul>
-                        {jobData?.benefits &&
-                          jobData.benefits.map((benefit, index) => (
-                            <li className="job-benefits-values" key={index}>
-                              <span>{benefit}</span>
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                  </div> */}
               </div>
             </div>
             <div className="job-questions-section">
@@ -766,30 +641,6 @@ const TalentPreviewJob = (props) => {
                 </div>
               </div>
             )}
-
-            {/* <div className="job-feature-title">Work Samples</div>
-
-              <div className="cvlist-wrapper">
-                {jobData?.workSamples?.length > 0 &&
-                  jobData?.workSamples.map((file) => {
-                    return (
-                      <>
-                        <>
-                          <div className="cv-card" key={file.title}>
-                            <i className="fa-solid fa-file"></i>
-                            <div className="fileName">{file.title}</div>
-                            <button
-                              className="view-cv"
-                              onClick={() => viewFile(file)}
-                            >
-                              View
-                            </button>
-                          </div>
-                        </>
-                      </>
-                    );
-                  })}
-              </div> */}
 
             {jobData?.type == "Draft" && (
               <>

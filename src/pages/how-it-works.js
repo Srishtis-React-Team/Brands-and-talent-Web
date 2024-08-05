@@ -73,7 +73,6 @@ const HowItWorks = () => {
   };
 
   function handleForms(e) {
-    console.log(e, "e");
     if (e == "question_1") {
       selectQuestion1(!question_1);
     }
@@ -141,7 +140,6 @@ const HowItWorks = () => {
     };
     await ApiHelper.post(API.fetchContentByType, formData)
       .then((resData) => {
-        console.log(resData?.data?.data?.items, "resDataterms");
         if (resData) {
           setContent(resData?.data?.data?.items);
         }
@@ -164,12 +162,11 @@ const HowItWorks = () => {
       .then((resData) => {
         if (resData) {
           setFaqList(resData?.data?.data?.items);
-          console.log(resData?.data?.data?.items, "getFaq");
+
           resData?.data?.data?.items.forEach((item) => {
             if (item.userType === "Brands") {
               brands.push(item);
               setBrandsFaq(brands);
-              console.log(brandsFaq, "brands faq");
             } else if (item.userType === "Talent") {
               talents.push(item);
               setTalentsFaq(talents);
@@ -178,7 +175,7 @@ const HowItWorks = () => {
               setBestPracticesFaq(bestPractices);
             }
           });
-          console.log(brands, "brands");
+
           setBrandsFaq(brands);
           setTalentsFaq(talents);
           setBestPracticesFaq(bestPractices);
@@ -187,12 +184,7 @@ const HowItWorks = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(brandsFaq, "brands faq");
-    console.log(talentsFaq, "talents faq");
-    console.log(bestPracticesFaq, "bestPractices faq");
-    console.log(content, "content");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>

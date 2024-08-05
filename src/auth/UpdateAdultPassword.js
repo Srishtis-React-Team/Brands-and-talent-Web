@@ -7,7 +7,6 @@ import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { useLocation } from "react-router-dom";
 const UpdateAdultPassword = (props) => {
-  console.log(props, "props");
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -52,7 +51,6 @@ const UpdateAdultPassword = (props) => {
       await ApiHelper.post(API.updateAdultPassword, formData)
         .then((resData) => {
           if (resData.data.status === true) {
-            console.log(resData.data);
             setIsLoading(false);
             setMessage("Password Updated SuccessFully!");
             setOpenPopUp(true);

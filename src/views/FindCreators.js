@@ -153,7 +153,7 @@ const FindCreators = () => {
         if (resData) {
           setMessage("Removed SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getUserSearchKeyword();
           }, 800);
@@ -164,16 +164,12 @@ const FindCreators = () => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
   }, [brandId]);
 
   useEffect(() => {
     checkUserStatus();
-    console.log(currentUserData, "currentUserData");
   }, []);
-  useEffect(() => {
-    console.log(keywordsList, "keywordsList");
-  }, [keywordsList]);
+  useEffect(() => {}, [keywordsList]);
 
   const checkUserStatus = async () => {
     const formData = {
@@ -184,11 +180,8 @@ const FindCreators = () => {
         if (resData) {
           steCurrentUserData(resData.data.data);
         }
-        console.log("checkUserStatus", resData.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -345,7 +338,7 @@ const FindCreators = () => {
     } else {
       updatedValues.push({ label, value });
     }
-    console.log(updatedValues, "updatedValues");
+
     setFeature(updatedValues);
   };
 
@@ -355,12 +348,8 @@ const FindCreators = () => {
         if (resData) {
           setTalentList(resData.data.data);
         }
-        console.log("talentList", resData.data.data);
-        console.log("talentList", talentList);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const reset = async () => {
@@ -382,15 +371,13 @@ const FindCreators = () => {
   };
 
   const addFavorite = async (item) => {
-    console.log(item);
     const formData = {
       type: item?.type,
       user: item?._id,
     };
     let brandId = localStorage.getItem("brandId");
     let talentId = localStorage.getItem("userId");
-    console.log(brandId, "userid");
-    console.log(talentId, "userid");
+
     let loggidInID;
     if (brandId) {
       loggidInID = brandId;
@@ -403,23 +390,20 @@ const FindCreators = () => {
           setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
           getTalentList();
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("Please Login First");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const openTalent = (item) => {
-    console.log(item, "item");
     // navigate("/talent", { state: { talentData: item } });
 
     navigate(`/talent/${item.publicUrl}`, {
@@ -436,15 +420,13 @@ const FindCreators = () => {
   };
 
   const removeFavorite = async (item) => {
-    console.log(item);
     const formData = {
       type: item?.type,
       user: item?._id,
     };
     let brandId = localStorage.getItem("brandId");
     let talentId = localStorage.getItem("userId");
-    console.log(brandId, "userid");
-    console.log(talentId, "userid");
+
     let loggidInID;
     if (brandId) {
       loggidInID = brandId;
@@ -458,35 +440,28 @@ const FindCreators = () => {
           setOpenPopUp(true);
           getTalentList();
 
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const onRangeChange = (e) => {
-    console.log(Math.round(e.min), "e");
-    console.log(Math.round(e.max), "e");
     setMinAge(Math.round(e.min));
     setMaxAge(Math.round(e.max));
   };
 
   const handleSelectedCountry = (event) => {
-    console.log(event, "event");
-    console.log(event?.value, "event?.value");
     setCountry(event?.value);
     getStates(event?.value);
-    console.log(country, "country");
   };
 
   const selectIndustry = (event) => {
@@ -497,24 +472,22 @@ const FindCreators = () => {
   };
 
   const selectCategory = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
     if (!selectedOptions || selectedOptions.length === 0) {
       setCategories([]);
       return;
     }
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+
     setCategories(selectedLanguages);
   };
 
   const selectSocialMedias = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
     if (!selectedOptions || selectedOptions.length === 0) {
       setSocialMedias([]);
       return;
     }
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+
     setSocialMedias(selectedLanguages);
   };
 
@@ -530,7 +503,6 @@ const FindCreators = () => {
     setLanguages(selectedLanguages); // Update languages state with all selected languages
   };
   const selectNationality = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
       setNationality([]); // Clear the languages state
@@ -538,7 +510,7 @@ const FindCreators = () => {
     }
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+
     setNationality(selectedLanguages); // Update languages state with all selected languages
   };
   const selectMaritalStatus = (event) => {
@@ -605,31 +577,27 @@ const FindCreators = () => {
       selectedTerms: selectedKeyword,
       features: features,
     };
-    console.log(formData, "formData talentFilterData");
+
     setIsLoading(true);
     await ApiHelper.post(API.talentFilterData, formData)
       .then((resData) => {
-        console.log("talentFilterData response", resData);
         if (resData.data.status === true) {
-          console.log(resData?.data?.data, "filtered talents");
           setIsLoading(false);
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
           setTalentList(resData?.data?.data);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("No Matching Users Found");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const customStyles = {
@@ -681,9 +649,7 @@ const FindCreators = () => {
     setStarCount(index + 1);
   };
 
-  useEffect(() => {
-    console.log(starCount, "starCount");
-  }, [starCount]);
+  useEffect(() => {}, [starCount]);
 
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
@@ -708,7 +674,7 @@ const FindCreators = () => {
       .then((resData) => {
         setMessage("Rating Submitted SuccessFully!");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           const modalElement = document.getElementById("ratingModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
@@ -716,9 +682,7 @@ const FindCreators = () => {
           getTalentList();
         }, 2000);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   // ---- ---- Const ---- ---- //

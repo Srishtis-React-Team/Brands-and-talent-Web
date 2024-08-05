@@ -36,19 +36,14 @@ const AdultFormTwo = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getTalentById");
             setTalentData(resData.data.data, "resData.data.data");
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+  useEffect(() => {}, [talentData]);
 
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -74,7 +69,7 @@ const AdultFormTwo = () => {
   const [showOptions, setShowOptions] = useState(false);
   const url = window.location.href;
   let queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
+
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -90,12 +85,11 @@ const AdultFormTwo = () => {
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          console.log(resData.data, "serviceresponse");
           setIsLoading(false);
           setMessage("Updated SuccessFully!");
           setOpenPopUp(true);
           updateProfileStatus();
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             navigate(`/talent/${talentData.publicUrl}`, {
               state: { talentData: talentData },
@@ -105,7 +99,7 @@ const AdultFormTwo = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -139,8 +133,6 @@ const AdultFormTwo = () => {
   ]);
 
   const handleFileChange = (index, event) => {
-    console.log("handleFileChange");
-    console.log(index, "index file");
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
       uploadProfile(fileData, (fileObj) => {
@@ -150,7 +142,7 @@ const AdultFormTwo = () => {
             ...(newInputs[index]["files"] || []),
             fileObj,
           ];
-          console.log(newInputs, "newInputs");
+
           return newInputs;
         });
       });
@@ -158,14 +150,12 @@ const AdultFormTwo = () => {
   };
 
   const handleInputChange = (index, key, value) => {
-    console.log(index, "index handleInputChange");
     const newInputs = [...inputs];
     newInputs[index][key] = value;
     setInputs(newInputs);
   };
 
   const handleEditorStateChange = (index, editorState) => {
-    console.log(index, "index handleEditorStateChange");
     const newInputs = [...inputs];
     newInputs[index]["editorState"] = editorState;
     setInputs(newInputs);
@@ -182,8 +172,6 @@ const AdultFormTwo = () => {
         files: [],
       },
     ]);
-
-    console.log(inputs, "inputs");
   };
 
   const serviceFilesUpload = () => {};
@@ -206,9 +194,7 @@ const AdultFormTwo = () => {
         type: resData?.data?.data?.filetype,
       };
       callback(fileObj); // Call the callback with the uploaded file object
-    } catch (err) {
-      console.error("Error uploading file:", err);
-    }
+    } catch (err) {}
   };
 
   const handleView = (imageUrl) => {

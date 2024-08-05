@@ -39,9 +39,7 @@ const AdultSignup = () => {
     setPasswordMatch(e.target.value === adultPassword);
     setConfirmPasswordError(false);
   };
-  useEffect(() => {
-    console.log(googleUser, "googleUser");
-  }, [googleUser]);
+  useEffect(() => {}, [googleUser]);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -49,8 +47,6 @@ const AdultSignup = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
   const socialSignup = async (response, mediaType) => {
-    console.log(response, "socialSignupresponse");
-    console.log(mediaType, "mediaType");
     // facebookId
     //provider : "facebook".
     let formData;
@@ -82,7 +78,6 @@ const AdultSignup = () => {
     await ApiHelper.post(API.socialSignup, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          console.log(resData.data, "resdata.data socialSignup");
           setGoogleUser(resData?.data);
           setMessage("Registered Successfully Please Update Your Password");
           setOpenPopUp(true);
@@ -139,7 +134,6 @@ const AdultSignup = () => {
         .then((resData) => {
           setIsLoading(false);
           if (resData.data.status === true) {
-            console.log(resData.data, "adultSignUp");
             setMessage("Registered Successfully");
             setOpenPopUp(true);
             setTimeout(function () {
@@ -471,7 +465,6 @@ const AdultSignup = () => {
                   );
                 }}
                 onError={() => {
-                  console.log("Login Failed");
                 }}
               /> */}
               {/* <LoginSocialFacebook>
@@ -481,10 +474,8 @@ const AdultSignup = () => {
                 appId="7401795359899121"
                 onResolve={(response) => {
                   socialSignup(response, "facebook");
-                  console.log(response, "responsefacebook");
                 }}
                 onReject={(error) => {
-                  console.log(error, "error");
                 }}
               >
                 <MyFacebookLoginButton />

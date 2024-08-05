@@ -17,7 +17,6 @@ const BrandsOtp = () => {
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -41,7 +40,7 @@ const BrandsOtp = () => {
 
   const handleVerify = () => {
     const newOTP = otp.join("");
-    console.log(newOTP, "newOTP");
+
     otpVerification(newOTP);
     setOtp(["", "", "", ""]);
     inputRefs[0].current.focus();
@@ -53,10 +52,9 @@ const BrandsOtp = () => {
       brandEmail: queryString,
     };
     setIsLoading(true);
-    console.log(formData, "formData otpVerification");
+
     await ApiHelper.post(API.otpVerificationBrands, formData)
       .then((resData) => {
-        console.log("otpVerification response", resData);
         if (resData.data.status === true) {
           setMessage("Verification Successful");
           setOpenPopUp(true);
@@ -68,7 +66,6 @@ const BrandsOtp = () => {
             });
           }, 1000);
         } else if (resData.data.status === false) {
-          console.log("false called");
           setMessage("Enter Correct OTP");
           setOpenPopUp(true);
           setIsLoading(false);
@@ -77,14 +74,12 @@ const BrandsOtp = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const otpResend = () => {
     const newOTP = otp.join("");
-    console.log(newOTP, "newOTP");
+
     resendOtp(newOTP);
     setOtp(["", "", "", ""]);
     inputRefs[0].current.focus();
@@ -114,7 +109,6 @@ const BrandsOtp = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
       });
   };

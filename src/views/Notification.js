@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom";
 const Notification = () => {
   const location = useLocation();
   const { jobId } = location.state || {};
-  console.log(jobId, "jobId");
+
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -33,7 +33,7 @@ const Notification = () => {
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
-    console.log(storedUserId, "storedUserId");
+
     setUserId(storedUserId);
     if (storedUserId) {
       getAppliedjobs(storedUserId);
@@ -68,7 +68,7 @@ const Notification = () => {
     if (jobId) {
       setMessage("Job Saved To Draft");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 2000);
     }
@@ -80,23 +80,18 @@ const Notification = () => {
     };
     await ApiHelper.post(API.getAppliedjobs, formData)
       .then((resData) => {
-        console.log(resData, "getAppliedjobs");
         setAllJobsList(resData?.data?.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const postJob = async () => {
     await ApiHelper.post(`${API.postJobByDraft}${jobId}`)
       .then((resData) => {
-        console.log(resData, "draftedData");
-        console.log(resData.data.data._id, "draftedData");
         if (resData.data.status === true) {
           setMessage("Job Posted SuccessFully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             navigate("/list-jobs", {
               state: {
@@ -107,7 +102,7 @@ const Notification = () => {
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -118,12 +113,8 @@ const Notification = () => {
   useEffect(() => {
     getJobsByID();
   }, []);
-  useEffect(() => {
-    console.log(jobData, "jobData");
-  }, [jobData]);
-  useEffect(() => {
-    console.log(jobId, "jobId");
-  }, [jobId]);
+  useEffect(() => {}, [jobData]);
+  useEffect(() => {}, [jobId]);
 
   const createJob = () => {
     navigate("/talent-dashboard");

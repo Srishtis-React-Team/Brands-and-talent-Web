@@ -35,19 +35,14 @@ const AdultSocialMedias = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getTalentById");
             setTalentData(resData.data.data, "resData.data.data");
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+  useEffect(() => {}, [talentData]);
 
   const [profileFile, setProfileFile] = useState(null);
   const btLogo = require("../../assets/images/LOGO.png");
@@ -90,8 +85,7 @@ const AdultSocialMedias = () => {
   const [verificationID, setVerificationID] = useState("");
   const url = window.location.href;
   let queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
-  console.log("Search queryString:", typeof queryString);
+
   const navigate = useNavigate();
   const [videoUrl, setVideoUrl] = useState("");
   const [urls, setUrls] = useState([]);
@@ -144,7 +138,7 @@ const AdultSocialMedias = () => {
           setIsLoading(false);
           setMessage("Updated SuccessFully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             navigate(`/adult-signup-files-details?${queryString}`);
           }, 1000);
@@ -152,7 +146,7 @@ const AdultSocialMedias = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -165,7 +159,7 @@ const AdultSocialMedias = () => {
   const handleProfileDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+
     uploadFile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -182,7 +176,7 @@ const AdultSocialMedias = () => {
   const handlePortofolioDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+
     uploadFile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -193,7 +187,7 @@ const AdultSocialMedias = () => {
   const handleVideoDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+
     uploadVideoudio(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -204,7 +198,7 @@ const AdultSocialMedias = () => {
   const handleResumeDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+
     uploadResume(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -216,7 +210,7 @@ const AdultSocialMedias = () => {
   const portofolioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadFile(fileData);
     }
   };
@@ -229,7 +223,7 @@ const AdultSocialMedias = () => {
   const resumeUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData resume");
+
       uploadResume(fileData);
     }
   };
@@ -267,7 +261,7 @@ const AdultSocialMedias = () => {
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadProfile(fileData);
     }
   };
@@ -292,11 +286,11 @@ const AdultSocialMedias = () => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        console.log(fileObj, "fileObj profileFile");
+
         setProfileFile(fileObj);
-        console.log(profileFile, "profileFile");
+
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -320,7 +314,7 @@ const AdultSocialMedias = () => {
         `You can only upload up to ${maxPhotos} photos as a ${userPlan} member.`
       );
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 3000);
 
@@ -348,7 +342,7 @@ const AdultSocialMedias = () => {
         };
         setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -378,7 +372,7 @@ const AdultSocialMedias = () => {
         };
         setVideoAudioFile((prevFiles) => [...prevFiles, fileObj]);
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -409,7 +403,7 @@ const AdultSocialMedias = () => {
         setResumeFile((prevFiles) => [...prevFiles, fileObj]);
 
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -439,7 +433,7 @@ const AdultSocialMedias = () => {
         };
         setVerificationID((prevFiles) => [...prevFiles, fileObj]);
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -486,7 +480,6 @@ const AdultSocialMedias = () => {
 
   const handleUrlChange = (e) => {
     setVideoUrl(e.target.value);
-    console.log(e.target.value, "handleUrlChange");
   };
 
   const handleAddUrl = () => {
@@ -504,7 +497,7 @@ const AdultSocialMedias = () => {
         `You can only add up to ${maxUrls} URLs as a ${userPlan} member.`
       );
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 3000);
       return;
@@ -512,7 +505,7 @@ const AdultSocialMedias = () => {
 
     if (videoUrl.trim() !== "") {
       setUrls([...urls, videoUrl]);
-      console.log([...urls, videoUrl], "handleAddUrl");
+
       setVideoUrl("");
     }
   };
@@ -522,7 +515,6 @@ const AdultSocialMedias = () => {
       "text"
     );
     setVideoUrl(pastedText);
-    console.log(pastedText, "handlePaste");
   };
 
   const handleDeleteUrl = (index) => {

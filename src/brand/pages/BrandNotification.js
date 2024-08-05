@@ -20,7 +20,7 @@ const BrandNotification = () => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
+
     if (brandId) {
       getBrand();
     }
@@ -36,15 +36,12 @@ const BrandNotification = () => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const getBrandNotification = async () => {
     await ApiHelper.get(`${API.getBrandNotification}${brandId}`)
       .then((resData) => {
-        console.log(resData, "resDatagetBrandNotification");
         if (resData.data.status === true) {
           setNotifications(resData.data.data);
         }
@@ -57,7 +54,6 @@ const BrandNotification = () => {
   };
 
   const viewNotification = async (item) => {
-    console.log(item, "item viewNotification");
     const formData = {
       notificationId: item?._id,
     };
@@ -87,13 +83,10 @@ const BrandNotification = () => {
   };
 
   const handleChildClick = () => {
-    console.log("Child button clicked");
     setMobileSidebar(false);
   };
 
-  useEffect(() => {
-    console.log(notificationList, "notificationListMain");
-  }, [notificationList]);
+  useEffect(() => {}, [notificationList]);
 
   return (
     <>

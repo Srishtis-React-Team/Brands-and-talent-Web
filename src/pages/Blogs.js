@@ -66,12 +66,12 @@
 //     await ApiHelper.post(API.fetchBlogByType, formdata)
 //       .then((resData) => {
 //         if (resData) {
-//           console.log(resData?.data?.data, "resData fetchBlogByType");
+//
 //           setBlogsLsit(resData?.data?.data);
 //         }
 //       })
 //       .catch((err) => {
-//         console.log(err);
+//
 //       });
 //   };
 
@@ -84,7 +84,7 @@
 
 //   const location = useLocation();
 //   let recievedStep = location?.state?.step;
-//   console.log(recievedStep, "recievedStep");
+//
 //   const [step, setStep] = useState(0);
 
 //   useEffect(() => {
@@ -95,7 +95,7 @@
 
 //   useEffect(() => {
 //     if (blogStep || blogStep === 0) {
-//       console.log(blogStep, "blogStep");
+//
 //       setValueTabs(blogStep);
 //       if (blogStep === 0) {
 //         fetchBlogByType("All");
@@ -117,12 +117,12 @@
 
 //   useEffect(() => {
 //     if (location.state && location.state.step !== undefined) {
-//       console.log(location.state.step, "location.state.step");
+//
 //     }
 //   }, [location.state]);
 
 //   useEffect(() => {
-//     console.log(step, "steplocation");
+//
 //   }, [step]);
 
 //   return (

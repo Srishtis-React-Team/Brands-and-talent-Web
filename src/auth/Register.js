@@ -106,31 +106,25 @@ const Register = () => {
   };
 
   const handleChildData = (data) => {
-    console.log(data, "from child");
     if (data.signupStatus === true) {
-      console.log("handleChildData true");
       setSignupDisabled(true);
       setParentData(data);
-      console.log(parentData, "parentData");
     } else {
       setSignupDisabled(false);
     }
   };
 
   const handleAdultOtp = (data) => {
-    console.log(data, "from Adult Otp");
-    console.log(typeof data, "from Adult Otp");
     if (data === "back") {
       setAdultsStep(1);
     }
     if (data == "verified") {
-      console.log("sdsd");
       setAdultsStep(3);
     }
     // if (data.signupStatus === true) {
-    //   console.log("handleAdultOtp true");
+    //
     //   setAdultSignUpData(data);
-    //   console.log(adultSignUpData, "adultSignUpData");
+    //
     // } else {
     //   setSignupDisabled(false);
     // }
@@ -138,15 +132,12 @@ const Register = () => {
 
   const [dataFromChild, setDataFromChild] = useState("");
   const handleDataFromChild = (data) => {
-    console.log(data, "payment sucess DATA");
     if (data === "payment success") {
       setPaymentStatus(true);
     }
     setDataFromChild(data);
   };
   const paymentSuccess = () => {
-    console.log("paymentSuccess");
-    console.log(paymentStatus, "paymentStatus");
     if (paymentStatus === true) {
       setKidsStep(4);
     }
@@ -155,9 +146,8 @@ const Register = () => {
   const [childData, setChildData] = useState("");
   // Function to receive data from ChildComponent
   const receiveDataFromChild = (dataFromChild) => {
-    console.log(dataFromChild, "dataFromChild");
     setChildData(dataFromChild);
-    console.log(childData, "childData");
+
     if (dataFromChild === "back") {
       setKidsStep(1);
     }
@@ -167,9 +157,8 @@ const Register = () => {
   };
 
   const DataFromKidsOtp = (dataFromChild) => {
-    console.log(dataFromChild, "dataFromChild");
     setChildData(dataFromChild);
-    console.log(childData, "childData");
+
     if (dataFromChild === "back") {
       setKidsStep(1);
     }
@@ -180,7 +169,6 @@ const Register = () => {
 
   const location = useLocation();
   const routeData = location.state;
-  console.log(routeData, "routeData");
 
   useEffect(() => {
     if (routeData?.signupCategory == "kids") {
@@ -421,9 +409,9 @@ const Register = () => {
           setIsLoading(false);
           setAdultSignupDisabled(true);
           setMessage("Registered SuccessFully!");
-          console.log(resData?.data, "resData?.data");
+
           setAdultParentData(resData?.data);
-          console.log(adultParentData, "adultParentData");
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

@@ -59,21 +59,15 @@ const Pricing = () => {
   useEffect(() => {
     getBrandsPricingList();
   }, []);
-  useEffect(() => {
-    console.log(comment, "comment");
-  }, [comment]);
+  useEffect(() => {}, [comment]);
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
       .then((resData) => {
         if (resData) {
           setPricingList(resData.data.data);
         }
-        console.log("getPricingList", resData.data.data);
-        console.log("pricingList", pricingList);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const getBrandsPricingList = async () => {
@@ -82,12 +76,8 @@ const Pricing = () => {
         if (resData) {
           setPricingList(resData.data.data);
         }
-        console.log("getPricingList", resData.data.data);
-        console.log("pricingList", pricingList);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const choosePlan = async (event) => {
@@ -97,7 +87,6 @@ const Pricing = () => {
       .then((resData) => {
         setIsLoading(false);
 
-        console.log("getpayment", resData);
         // alert("sfsf");
         let stateObj = resData?.data?.data;
         // navigate("/qrcode-payment", { state: stateObj });
@@ -106,8 +95,6 @@ const Pricing = () => {
       })
       .catch((err) => {
         setIsLoading(false);
-
-        console.log(err);
       });
 
     // window.location.href =
@@ -115,7 +102,6 @@ const Pricing = () => {
   };
 
   function handleForms(e) {
-    console.log(e, "e");
     if (e == "plan-1") {
       selectPlan1(true);
     } else {
@@ -135,7 +121,7 @@ const Pricing = () => {
 
   const handleToggle = (event) => {
     const { checked } = event.target;
-    console.log(checked, "checked");
+
     if (checked) {
       getPricingList();
     } else {
@@ -154,7 +140,7 @@ const Pricing = () => {
       setSenderNameLetterError(true);
     } else {
       setSenderName(value);
-      console.log(value, "value handleSenderNameChange");
+
       setSenderNameLetterError(false);
     }
   };
@@ -237,29 +223,28 @@ const Pricing = () => {
       giftReceiversEmail: recieverEmail,
       comment: comment,
     };
-    console.log(formData, "formData giftSubscription");
+
     setIsLoading(true);
     await ApiHelper.post(API.giftMail, formData)
       .then((resData) => {
         setIsLoading(false);
-        console.log(resData, "sendGiftSubscription");
+
         if (resData.data.status === true) {
           handleClose();
           setMessage("Gift Subscription Sent Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 3000);
         } else if (resData.data.status === false) {
           setMessage("Error Occured!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
       });
   };
@@ -477,7 +462,7 @@ const Pricing = () => {
               const formData = new FormData(event.currentTarget);
               const formJson = Object.fromEntries(formData.entries());
               const email = formJson.email;
-              console.log(email);
+
               handleClose();
             },
           }}

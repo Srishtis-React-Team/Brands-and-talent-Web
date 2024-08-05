@@ -13,12 +13,12 @@ const PasswordSuccess = () => {
   const [paramsValue, setParamsValue] = useState("");
   const url = window.location.href;
   const queryString = url.split("?")[1];
-  console.log("Search queryString:", typeof queryString);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (queryString) {
       setParamsValue(queryString);
-      console.log(paramsValue, "paramsValue");
+
       setSelectedItem(paramsValue);
     }
   }, [paramsValue]);

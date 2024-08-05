@@ -13,7 +13,7 @@ import BrandSideMenu from "./BrandSideMenu";
 const PreviewJob = ({ data, onButtonClick }) => {
   const location = useLocation();
   const { jobId } = location.state || {};
-  console.log(jobId, "jobId");
+
   const navigate = useNavigate();
   const [openPopUp, setOpenPopUp] = useState(false);
   const [jobData, setJobData] = useState("");
@@ -40,7 +40,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
     if (jobId) {
       setMessage("Job Saved To Draft");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
         navigate("/list-jobs", {
           state: {
@@ -55,7 +55,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
+
     if (brandId && brandId != null) {
       getBrand();
     }
@@ -70,20 +70,16 @@ const PreviewJob = ({ data, onButtonClick }) => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const postJob = async () => {
     await ApiHelper.post(`${API.postJobByDraft}${jobId}`)
       .then((resData) => {
-        console.log(resData, "draftedData");
-        console.log(resData.data.data._id, "draftedData");
         if (resData.data.status === true) {
           setMessage("Job Posted SuccessFully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             navigate("/list-jobs", {
               state: {
@@ -94,7 +90,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -105,12 +101,8 @@ const PreviewJob = ({ data, onButtonClick }) => {
   useEffect(() => {
     getJobsByID();
   }, []);
-  useEffect(() => {
-    console.log(jobData, "jobData");
-  }, [jobData]);
-  useEffect(() => {
-    console.log(jobId, "jobId");
-  }, [jobId]);
+  useEffect(() => {}, [jobData]);
+  useEffect(() => {}, [jobId]);
 
   const handleBackClick = () => {
     if (location.state && location.state.from) {
@@ -121,7 +113,6 @@ const PreviewJob = ({ data, onButtonClick }) => {
   };
 
   const viewUpdateFile = (item) => {
-    console.log(item, "viewFile");
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
 
@@ -371,23 +362,24 @@ const PreviewJob = ({ data, onButtonClick }) => {
                             </span>
                           </li>
                         )}
-                        {jobData?.languages && jobData?.languages?.length > 0 && (
-                          <li className="job-features-li">
-                            <span className="job-feature-heading">
-                              Languages :
-                            </span>
-                            <span className="job-feature-values">
-                              {jobData?.languages &&
-                                jobData.languages
-                                  .map((skill, index) =>
-                                    index === jobData.languages.length - 1
-                                      ? skill
-                                      : skill + ", "
-                                  )
-                                  .join("")}
-                            </span>
-                          </li>
-                        )}
+                        {jobData?.languages &&
+                          jobData?.languages?.length > 0 && (
+                            <li className="job-features-li">
+                              <span className="job-feature-heading">
+                                Languages :
+                              </span>
+                              <span className="job-feature-values">
+                                {jobData?.languages &&
+                                  jobData.languages
+                                    .map((skill, index) =>
+                                      index === jobData.languages.length - 1
+                                        ? skill
+                                        : skill + ", "
+                                    )
+                                    .join("")}
+                              </span>
+                            </li>
+                          )}
                         {jobData?.nationality && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
@@ -528,22 +520,23 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   )}
               </div>
 
-              {jobData?.jobDescription && jobData?.jobDescription.length > 0 && (
-                <>
-                  <div className="job-about-section">
-                    <div className="job-feature-title">Job Description</div>
-                    <div className="job-about-values">
-                      {jobData?.jobDescription &&
-                        jobData?.jobDescription?.map((htmlContent, index) => (
-                          <div
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: htmlContent }}
-                          />
-                        ))}
+              {jobData?.jobDescription &&
+                jobData?.jobDescription.length > 0 && (
+                  <>
+                    <div className="job-about-section">
+                      <div className="job-feature-title">Job Description</div>
+                      <div className="job-about-values">
+                        {jobData?.jobDescription &&
+                          jobData?.jobDescription?.map((htmlContent, index) => (
+                            <div
+                              key={index}
+                              dangerouslySetInnerHTML={{ __html: htmlContent }}
+                            />
+                          ))}
+                      </div>
                     </div>
-                  </div>
-                </>
-              )}
+                  </>
+                )}
 
               {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
                 <>

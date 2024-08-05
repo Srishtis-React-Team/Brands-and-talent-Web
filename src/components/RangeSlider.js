@@ -137,7 +137,7 @@ export default RangeSlider;
   const [start, setStart] = useState();
   const [trackRect, setTrackRect] = useState();
   useEffect(() => {
-    console.log("mount");
+    
     setTrackRect(track.current.getBoundingClientRect());
   }, []);
 
@@ -149,10 +149,10 @@ export default RangeSlider;
 
   const getMousePosition = e => {
     //const rect = track.current.getBoundingClientRect();
-    console.log(trackRect.left);
+    
 
     const x = e.clientX - trackRect.left;
-    console.log("getMousePosition:", x);
+    
     return +x;
   };
 
@@ -160,19 +160,19 @@ export default RangeSlider;
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
     const xPos = getMousePosition(e);
-    console.log("onMouseDown:", xPos, setStart);
+    
     setStart(xPos);
-    console.log({ start });
+    
   };
   const onMouseMove = e => {
-    console.log("move", start);
+    
     const newX = getMousePosition(e) - start;
-    console.log(newX);
+    
   };
   const onMouseUp = e => {
     window.removeEventListener("mousemove", onMouseMove);
     window.removeEventListener("mouseup", onMouseUp);
-    console.log("up");
+    
   };
 
   return (

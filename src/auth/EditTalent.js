@@ -84,8 +84,6 @@ const EditTalent = () => {
     '<p><span style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-size: 14px;font-family: Open Sans", Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text</span>&nbsp;</p>\n',
   ];
 
-  console.log(EditorState.createEmpty(testEditor), "testEditor");
-
   const creatableOptions = ["Dress Size", "Shoe Size"];
 
   const creatableInputOptions = [
@@ -229,7 +227,6 @@ const EditTalent = () => {
   }
 
   const handleProfessionChange = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions");
     if (selectedOptions.length > 5) {
       setMessage("You can only select up to 5 skills");
       setOpenPopUp(true);
@@ -336,7 +333,6 @@ const EditTalent = () => {
   };
 
   const selectEthnicity = (event) => {
-    console.log(event.target.value, "selectEthnicity");
     setEthnicity(event.target.value);
     setEthnicityError(false);
   };
@@ -346,7 +342,6 @@ const EditTalent = () => {
   };
 
   const selectLanguage = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions selectedLanguages");
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       setLanguages([]);
@@ -355,7 +350,7 @@ const EditTalent = () => {
       return;
     }
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    console.log(selectedLanguages, "selectedLanguages");
+
     setLanguages(selectedLanguages);
 
     setSelectedLanguageOptions(selectedOptions);
@@ -393,7 +388,6 @@ const EditTalent = () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
         if (resData.data.status === true) {
-          console.log(resData?.data?.data, "KIDSFETCH");
           if (resData?.data?.data?.type === "kids") {
             setTalentData(resData.data.data, "resData.data.data");
             setEditProfileImage(resData.data.data?.image?.fileData);
@@ -442,18 +436,16 @@ const EditTalent = () => {
               }
             );
             setSelectedLanguageOptions(selectedOptions);
-            console.log(selectedOptions, "selectedOptions");
+
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
-                console.log(profession, "professionmap");
-                console.log(professionList, "professionList");
                 return professionList.find(
                   (option) => option.label === profession
                 );
               }
             );
-            console.log(selectedProfessionOptions, "selectedProfessionOptions");
+
             setSelectedProfessions(resData.data.data?.profession);
             setFeatures(resData?.data?.data?.features);
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
@@ -504,18 +496,16 @@ const EditTalent = () => {
               }
             );
             setSelectedLanguageOptions(selectedOptions);
-            console.log(selectedOptions, "selectedOptions");
+
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
-                console.log(profession, "professionmap");
-                console.log(professionList, "professionList");
                 return professionList.find(
                   (option) => option.label === profession
                 );
               }
             );
-            console.log(selectedProfessionOptions, "selectedProfessionOptions");
+
             setSelectedProfessions(resData.data.data?.profession);
             setFeatures(resData?.data?.data?.features);
           }
@@ -546,17 +536,14 @@ const EditTalent = () => {
       updatedValues.push({ label, value: finalValue });
     }
 
-    console.log(updatedValues, "updatedValues");
     setFeatures(updatedValues);
   };
 
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
-    console.log(event, "event");
-    console.log(event, "event?.value");
+
     setCountry(event?.value);
     getStates(event?.value);
-    console.log(country, "country");
   };
   const handleSelectedState = (state) => {
     setStateError(false);
@@ -828,7 +815,6 @@ const EditTalent = () => {
   const [mobileNumError, setMobileNumError] = useState();
 
   const handleMobileChange = (value, countryData) => {
-    console.log(value, "handleMobileChange");
     setParentMobile(value);
     setParentMobileError(false);
   };
@@ -836,13 +822,10 @@ const EditTalent = () => {
   const [valueTabs, setValueTabs] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    console.log(newValue, "newValue");
     setValueTabs(newValue);
   };
 
   const handleNavigation = (event) => {
-    console.log(valueTabs, "valueTabs");
-    console.log(event, "event");
     if (valueTabs === 0 && event === "back") {
       setValueTabs(0);
     } else if (event === "next") {
@@ -852,22 +835,16 @@ const EditTalent = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(valueTabs, "valueTabs");
-  }, [valueTabs]);
+  useEffect(() => {}, [valueTabs]);
 
-  useEffect(() => {
-    console.log(editProfileImage, "editProfileImage");
-  }, [editProfileImage]);
+  useEffect(() => {}, [editProfileImage]);
 
-  useEffect(() => {
-    console.log(features, "features");
-  }, [features]);
+  useEffect(() => {}, [features]);
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadProfile(fileData);
     }
   };
@@ -875,7 +852,7 @@ const EditTalent = () => {
   const newPortfolioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadNewPortfolio(fileData);
     }
   };
@@ -883,7 +860,7 @@ const EditTalent = () => {
   const newVideoUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadNewVideo(fileData);
     }
   };
@@ -897,10 +874,9 @@ const EditTalent = () => {
   };
 
   const newServiceFileUpload = (event, serviceData) => {
-    console.log(serviceData, "serviceData newServiceFileUploadINDEX");
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadNewServiceFile(fileData, serviceData);
     }
   };
@@ -908,7 +884,7 @@ const EditTalent = () => {
   const newResumeUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadNewResume(fileData);
     }
   };
@@ -939,7 +915,6 @@ const EditTalent = () => {
       },
     })
       .then((resData) => {
-        console.log(resData, "uploadProfileDATA");
         if (resData?.data?.status === true) {
           let fileObj = {
             id: resData.data.data.fileId,
@@ -947,7 +922,7 @@ const EditTalent = () => {
             fileData: resData.data.data.filename,
             type: resData?.data?.data?.filetype,
           };
-          console.log(fileObj, "fileObj");
+
           setEditProfileImage(fileObj?.fileData);
           setEditProfileImageObject(fileObj);
         }
@@ -969,7 +944,6 @@ const EditTalent = () => {
       },
     })
       .then((resData) => {
-        console.log(resData, "uploadProfileDATA");
         if (resData?.data?.status === true) {
           let fileObj = {
             id: resData.data.data.fileId,
@@ -988,7 +962,7 @@ const EditTalent = () => {
 
   const updatePortfolioAPI = async (fileObj) => {
     let portofolioArray = [...portofolioFile, fileObj];
-    console.log(portofolioArray, "portofolioArray");
+
     let formData;
     if (portofolioArray.length > 0) {
       formData = {
@@ -1037,7 +1011,6 @@ const EditTalent = () => {
       },
     })
       .then((resData) => {
-        console.log(resData, "uploadProfileDATA");
         if (resData?.data?.status === true) {
           let fileObj = {
             id: resData.data.data.fileId,
@@ -1055,7 +1028,7 @@ const EditTalent = () => {
 
   const updateVideoAPI = async (fileObj) => {
     let portofolioArray = [...videoAUdioFile, fileObj];
-    console.log(portofolioArray, "portofolioArray");
+
     let formData;
     if (portofolioArray.length > 0) {
       formData = {
@@ -1103,7 +1076,6 @@ const EditTalent = () => {
       },
     })
       .then((resData) => {
-        console.log(resData, "uploadProfileDATA");
         if (resData?.data?.status === true) {
           let fileObj = {
             id: resData.data.data.fileId,
@@ -1121,7 +1093,7 @@ const EditTalent = () => {
 
   const updateResumeAPI = async (fileObj) => {
     let portofolioArray = [...resumeFile, fileObj];
-    console.log(portofolioArray, "portofolioArray");
+
     let formData;
     if (portofolioArray.length > 0) {
       formData = {
@@ -1170,7 +1142,6 @@ const EditTalent = () => {
       },
     })
       .then((resData) => {
-        console.log(resData, "uploadProfileDATA");
         if (resData?.data?.status === true) {
           let fileObj = {
             id: resData.data.data.fileId,
@@ -1187,11 +1158,9 @@ const EditTalent = () => {
   };
 
   const updateServiceFileAPI = async (fileObj, serviceData) => {
-    console.log(serviceData, "serviceData  updateServiceFileAPI");
     let serviceFilesArray = [...resumeFile, fileObj];
     let myValue = services.map((item) => {
       if (item?.uniqueId === serviceData?.uniqueId) {
-        console.log(item, "item updateServiceFileAPI");
         if (item?.files?.length > 0) {
           return {
             ...item,
@@ -1206,7 +1175,7 @@ const EditTalent = () => {
       }
       return item;
     });
-    console.log(myValue, "myValue");
+
     let formData = {
       services: myValue,
     };
@@ -1253,7 +1222,6 @@ const EditTalent = () => {
       await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
-            console.log(resData.data, "resData.dataupdateProfileImage");
             setIsLoading(false);
             setMessage("Profile image updated successfully");
             setOpenPopUp(true);
@@ -1332,12 +1300,10 @@ const EditTalent = () => {
   };
 
   const viewUpdateFile = (item) => {
-    console.log(item, "viewFile");
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
 
   const viewVideoFile = (item) => {
-    console.log(item, "viewFile");
     window.open(item, "_blank");
   };
 
@@ -1355,8 +1321,6 @@ const EditTalent = () => {
   };
 
   const deleteProfession = (profession, index) => {
-    console.log(profession, "profession");
-    console.log(index, "profession index");
     setSelectedProfessions((prevSelectedProfessions) =>
       prevSelectedProfessions.filter((item) => item.value !== profession.value)
     );
@@ -1398,7 +1362,6 @@ const EditTalent = () => {
   };
 
   const deleteServiceFile = async () => {
-    console.log(alertpop, "alertpop");
     const formData = {
       talentId: talentData?._id,
       serviceUniqueId: alertpop?.eachService?.uniqueId,
@@ -1428,9 +1391,7 @@ const EditTalent = () => {
       });
   };
 
-  useEffect(() => {
-    console.log(portofolioFile, "portofolioFile");
-  }, [portofolioFile]);
+  useEffect(() => {}, [portofolioFile]);
 
   const addService = () => {
     setServices([
@@ -1445,7 +1406,6 @@ const EditTalent = () => {
   };
 
   const submitServices = async () => {
-    console.log(services, "servicessubmitServices");
     let formData = {
       services: services,
     };
@@ -1478,7 +1438,6 @@ const EditTalent = () => {
       });
   };
   const submitFeatures = async () => {
-    console.log(services, "servicessubmitServices");
     let formData = {
       features: features,
     };
@@ -1511,41 +1470,32 @@ const EditTalent = () => {
       });
   };
 
-  useEffect(() => {
-    console.log(services, "services");
-  }, [services]);
+  useEffect(() => {}, [services]);
 
   const handleEditorChange = (index, editorState) => {
     const editInputs = [...services];
     editInputs[index]["editorState"] = editorState;
-    console.log(editInputs, "editInputs");
+
     setServices(editInputs);
   };
 
-  useEffect(() => {
-    console.log(featuresList, "featuresList");
-  }, [featuresList]);
-  useEffect(() => {
-    console.log(features, "features");
-  }, [features]);
+  useEffect(() => {}, [featuresList]);
+  useEffect(() => {}, [features]);
 
   const handleInputChange = (index, key, value) => {
-    console.log(index, "index handleInputChange");
     const newInputs = [...services];
     newInputs[index][key] = value;
-    console.log(newInputs, "newInputs");
+
     setServices(newInputs);
   };
 
   const removeServices = async (data) => {
-    console.log(alertpop, "alertpop");
     let formData = {
       talentId: talentId,
       serviceId: alertpop?.item?.uniqueId,
     };
     await ApiHelper.post(`${API.deleteIndividualService}`, formData)
       .then((resData) => {
-        console.log(resData, "resDataremoveServices");
         if (resData) {
           setIsLoading(false);
           setMessage("Service Removed Successfully");
@@ -1570,7 +1520,6 @@ const EditTalent = () => {
 
   const handleUrlChange = (e) => {
     setVideoUrl(e.target.value);
-    console.log(e.target.value, "handleUrlChange");
   };
 
   const handleAddUrl = async () => {
@@ -1580,7 +1529,7 @@ const EditTalent = () => {
         videosAndAudios: [...talentData?.videoAudioUrls, videoUrl],
         videoAudioUrls: [...talentData?.videoAudioUrls, videoUrl],
       };
-      console.log(formData, "formDatahandleAddUrl");
+
       setIsLoading(true);
 
       let apiUrl;
@@ -1594,8 +1543,6 @@ const EditTalent = () => {
 
       await ApiHelper.post(`${apiUrl}${talentId}`, formData)
         .then((resData) => {
-          console.log(resData, "resData");
-          console.log(resData.data, "resData.data");
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Updated SuccessFully");
@@ -1618,7 +1565,6 @@ const EditTalent = () => {
       "text"
     );
     setVideoUrl(pastedText);
-    console.log(pastedText, "handlePaste");
   };
 
   const submitVideoAudios = async () => {
@@ -1629,8 +1575,6 @@ const EditTalent = () => {
     setIsLoading(true);
     await ApiHelper.post(`${API.editKids}${talentId}`, formData)
       .then((resData) => {
-        console.log(resData, "resData");
-        console.log(resData.data, "resData.data");
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Updated SuccessFully");
@@ -1655,8 +1599,6 @@ const EditTalent = () => {
     setIsLoading(true);
     await ApiHelper.post(`${API.deleteVideoUrls}`, formData)
       .then((resData) => {
-        console.log(resData, "resDatadeleteVideoUrls");
-        console.log(resData.data, "resData.data");
         if (resData.data.message === "URL deleted successfully") {
           setIsLoading(false);
           setMessage("Deleted SuccessFully");
@@ -1694,10 +1636,8 @@ const EditTalent = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const publicUrlChange = async (event) => {
-    console.log(initialUrl, "initialUrl");
-    console.log(initialUrl, "initialUrl");
     const inputValue = event.target.value.replace(/ /g, "-");
-    console.log(inputValue, "inputValue");
+
     const formData = {
       name: inputValue,
       type: "talent",
@@ -1705,7 +1645,6 @@ const EditTalent = () => {
     };
     await ApiHelper.post(`${API.checkPublicUrlName}`, formData)
       .then((resData) => {
-        console.log(resData, "resDatapublicUrlChange");
         if (resData?.data?.status === true || publicUrl) {
           setPublicUrl(inputValue);
           setErrorMessage("");
@@ -1716,9 +1655,7 @@ const EditTalent = () => {
           );
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const updatePublicUrl = async () => {
@@ -1777,9 +1714,7 @@ const EditTalent = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedProfessions, "selectedProfessions");
-  }, [selectedProfessions]);
+  useEffect(() => {}, [selectedProfessions]);
 
   return (
     <>
@@ -2109,7 +2044,6 @@ const EditTalent = () => {
                       <DatePicker
                         value={dateOfBirth}
                         onChange={(newValue) => {
-                          console.log(newValue, "newValue");
                           handleDateChange(newValue);
                         }}
                         renderInput={(params) => <TextField {...params} />}
@@ -2942,7 +2876,6 @@ const EditTalent = () => {
                   {services &&
                     services?.length > 0 &&
                     services?.map((eachService, servicesIndex) => {
-                      console.log(eachService, "eachService");
                       return (
                         <>
                           <div className="edit-service-section-wrapper">

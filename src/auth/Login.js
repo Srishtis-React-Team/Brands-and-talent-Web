@@ -19,8 +19,6 @@ const Login = () => {
     fcmToken,
   } = CurrentUser();
 
-  console.log(fcmToken, "fcmToken");
-
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -31,9 +29,7 @@ const Login = () => {
 
     fetchToken();
   }, []);
-  useEffect(() => {
-    console.log(token, "token");
-  }, []);
+  useEffect(() => {}, []);
 
   const btLogo = require("../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -55,8 +51,7 @@ const Login = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const talentParam = urlParams.get("type");
       const userIDParam = urlParams.get("user_id");
-      console.log("Talent param:", talentParam);
-      console.log("User ID param:", userIDParam);
+
       if (talentParam) {
         setUserType(talentParam);
       }
@@ -67,17 +62,11 @@ const Login = () => {
 
     extractValuesFromURL();
   }, []);
-  useEffect(() => {
-    console.log(userType, "userType");
-  }, [userType]);
+  useEffect(() => {}, [userType]);
 
-  useEffect(() => {
-    console.log(selectedItem, "selectedItem");
-  }, [selectedItem]);
+  useEffect(() => {}, [selectedItem]);
 
-  useEffect(() => {
-    console.log(currentUser_id, "currentUser_id");
-  }, [currentUser_id]);
+  useEffect(() => {}, [currentUser_id]);
 
   const getUserIdLocalStorage = () => {
     return localStorage.getItem("userId");
@@ -94,9 +83,7 @@ const Login = () => {
       setEmailID(storedEmailID);
     }
   }, [paramsValue]);
-  useEffect(() => {
-    console.log(isLoading, "isLoading");
-  }, [isLoading]);
+  useEffect(() => {}, [isLoading]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -124,13 +111,11 @@ const Login = () => {
         brandPassword: talentPassword,
         fcmToken: fcmToken,
       };
-      console.log(formData, "formData talentLogin");
+
       setIsLoading(true);
       await ApiHelper.post(API.brandsLogin, formData)
         .then((resData) => {
-          console.log("brandLogin response", resData);
           if (resData.data.status === true) {
-            console.log("called");
             setIsLoading(false);
             setMessage("Logged in successfully!");
             setOpenPopUp(true);
@@ -138,7 +123,7 @@ const Login = () => {
               setOpenPopUp(false);
               setIsLoading(false);
               setBrandsLocalStorage(resData.data);
-              console.log(resData.data, "resData.data");
+
               navigate(
                 `/brand/${resData?.data?.data?.publicUrl.replace(/\s+/g, "")}`
               );
@@ -149,7 +134,7 @@ const Login = () => {
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
-            console.log("false called");
+
             setMessage(resData.data.message);
             setOpenPopUp(true);
             setTimeout(function () {
@@ -157,22 +142,18 @@ const Login = () => {
             }, 1000);
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     } else if (selectedItem === "talent") {
       const formData = {
         email: talentEmail,
         password: talentPassword,
         fcmToken: fcmToken,
       };
-      console.log(formData, "formData talentLogin");
+
       setIsLoading(true);
       await ApiHelper.post(API.talentLogin, formData)
         .then((resData) => {
-          console.log("TalentLoginRESPONSE", resData.data);
           if (resData.data.status === true) {
-            console.log("called");
             setIsLoading(false);
             setMessage("Logged in successfully!");
             setOpenPopUp(true);
@@ -181,7 +162,6 @@ const Login = () => {
               setIsLoading(false);
               setTalentLocalStorage(resData.data.data);
               if (resData.data.type === "adult") {
-                console.log("adult block");
                 navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
                 // window.location.reload();
               } else if (resData.data.type === "kids") {
@@ -192,7 +172,7 @@ const Login = () => {
             }, 1000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
-            console.log("false called");
+
             setMessage(resData.data.message);
             setOpenPopUp(true);
             setTimeout(function () {
@@ -202,7 +182,6 @@ const Login = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
           setIsLoading(false);
         });
     }
@@ -210,7 +189,6 @@ const Login = () => {
 
   // Function to set user ID
   const setTalentLocalStorage = (data) => {
-    console.log(data?.user, "TalentObject");
     localStorage.setItem("userId", data?.user?._id);
     localStorage.setItem("emailID", data?.email);
     localStorage.setItem("token", data?.token);
@@ -226,7 +204,6 @@ const Login = () => {
   };
 
   const setBrandsLocalStorage = (data) => {
-    console.log(data, "brandObject");
     localStorage.setItem("brandId", data?.data?._id);
     localStorage.setItem("currentUser", data?.data?._id);
     localStorage.setItem("brandEmail", data?.data?.brandEmail);
@@ -246,10 +223,7 @@ const Login = () => {
     setData("talent-signup");
   };
 
-  const socialSignup = async (response, mediaType) => {
-    console.log(response, "socialSignupresponse");
-    console.log(mediaType, "mediaType");
-  };
+  const socialSignup = async (response, mediaType) => {};
 
   return (
     <>
@@ -362,7 +336,7 @@ const Login = () => {
                 );
               }}
               onError={() => {
-                console.log("Login Failed");
+                
               }}
             />
           </div> */}

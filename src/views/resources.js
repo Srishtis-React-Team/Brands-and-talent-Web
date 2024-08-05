@@ -20,7 +20,6 @@ const Resources = () => {
   const [caseList, setCaseList] = useState([]);
 
   function handleForms(e) {
-    console.log(e, "e");
     if (e == "question_1") {
       selectQuestion1(!question_1);
     }

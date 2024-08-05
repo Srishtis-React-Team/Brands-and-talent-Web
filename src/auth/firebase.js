@@ -11,8 +11,7 @@ const firebaseConfig = {
   measurementId: "G-FQPBVVZXZQ",
 };
 
-// console.log("*** Environment ***", process.env.REACT_APP_ENV);
-console.log("*** Firebase Config ***", firebaseConfig);
+//
 
 const firebaseApp = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebaseApp);
@@ -20,14 +19,14 @@ const messaging = getMessaging(firebaseApp);
 export const generateToken = async () => {
   // alert("generateToken");
   const permission = await Notification.requestPermission();
-  console.log(permission, "permission");
+
   let passToken;
   if (permission === "granted") {
     const token = await getToken(messaging, {
       vapidKey:
         "BOrRUsFr6qM_RnH76mGZmeCu3_zRjKrl9rshpQSB2QRRe38Q-NbFYEZ2Bm-VTapy9UgzUHw313RFfT1bu8slsp4",
     });
-    console.log(token, "permission token");
+
     localStorage.setItem("fcmToken", token);
     passToken = token;
   }

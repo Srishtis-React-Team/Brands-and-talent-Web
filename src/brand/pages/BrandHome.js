@@ -26,9 +26,7 @@ const BrandHome = () => {
           setTalentList(resData.data.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -46,9 +44,7 @@ const BrandHome = () => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const toggleMenu = () => {
@@ -72,7 +68,7 @@ const BrandHome = () => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-    console.log(brandId, "brandId");
+
     if (brandId) {
       getAllJobs();
     }
@@ -82,25 +78,18 @@ const BrandHome = () => {
     await ApiHelper.get(`${API.getAllJobs}${brandId}`)
       .then((resData) => {
         if (resData) {
-          console.log(resData.data, "resData.getAllJobs");
           setJobsList(resData.data.data[0]);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
     getTalentList();
   }, []);
 
-  useEffect(() => {
-    console.log(jobsList, "jobsList");
-  }, [jobsList]);
-  useEffect(() => {
-    console.log(talentList, "jobsList");
-  }, [talentList]);
+  useEffect(() => {}, [jobsList]);
+  useEffect(() => {}, [talentList]);
 
   function PreviewJob(jobId) {
     navigate("/preview-job", {
@@ -111,16 +100,11 @@ const BrandHome = () => {
   }
 
   const handleChildClick = () => {
-    console.log("Child button clicked");
     setMobileSidebar(false);
   };
 
-  useEffect(() => {
-    console.log(mobileSideBar, "ChildmobileSideBar");
-  }, [mobileSideBar]);
-  useEffect(() => {
-    console.log(showSidebar, "ChildshowSidebar");
-  }, [showSidebar]);
+  useEffect(() => {}, [mobileSideBar]);
+  useEffect(() => {}, [showSidebar]);
 
   const contactUs = () => {
     navigate("/contact-us");
@@ -139,7 +123,6 @@ const BrandHome = () => {
     await ApiHelper.get(API.brandsPricingList)
       .then((resData) => {
         if (resData) {
-          console.log(resData, "resData");
           resData?.data?.data?.forEach((item) => {
             if (brandData?.planName == "Basic" && item?.planname === "Basic") {
               setFilteresPricingList(item.data);
@@ -152,22 +135,15 @@ const BrandHome = () => {
               brandData?.planName == "Premium" &&
               item.planname === "Premium"
             ) {
-              console.log(item.data, "itemPremium");
               setFilteresPricingList(item.data);
             }
           });
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(pricingList, "pricingList");
-    console.log(basicList, "pricingList");
-    console.log(filteresPricingList, "filteresPricingList");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>

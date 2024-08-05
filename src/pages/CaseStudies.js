@@ -10,7 +10,6 @@ const CaseStudies = () => {
   const bl_image = require("../assets/images/blogs/blog1.png");
 
   const navigateTO = async (event) => {
-    console.log(event, "event");
     if (event == "industry-news") {
       navigate("/view-blog");
     }

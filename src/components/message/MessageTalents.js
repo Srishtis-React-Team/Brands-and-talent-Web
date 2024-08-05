@@ -51,12 +51,12 @@ const MessageTalents = () => {
       if (fileData.size > 1048576) {
         setPopUpMessage("File size should be less than 1MB");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 3000);
         return;
       }
-      console.log(fileData, "fileData");
+
       uploadProfile(fileData);
     }
   };
@@ -108,19 +108,18 @@ const MessageTalents = () => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        console.log(fileObj, "fileObj profileFile");
+
         setProfileFile(fileObj);
         if (Object.values(fileObj).every((value) => !!value)) {
           if (fileObj) {
             sendMessage(fileObj);
           }
         } else {
-          console.log("Some values are missing");
         }
-        console.log(profileFile, "profileFile");
+
         setPopUpMessage("File Uploaded Successfully");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -131,19 +130,16 @@ const MessageTalents = () => {
   let urlUserID = url.split("?")[1];
 
   useEffect(() => {
-    console.log("FIND_MESSAGE_LOPP_useEffect1");
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
-    console.log(urlUserID, "urlUserID");
+
     if (urlUserID) {
-      console.log("FIND_MESSAGE_LOPP_useEffect1");
       setClickedUserId(urlUserID);
       getMessageByUser(urlUserID);
       // fetchUserData(urlUserID);
       createChat(urlUserID);
     }
     if (currentUserId) {
-      console.log("FIND_MESSAGE_LOPP_useEffect1");
       // alert("findPreviousChatUsers currentUserId");
       getMessageByUser(currentUserId);
       findPreviousChatUsers();
@@ -153,12 +149,12 @@ const MessageTalents = () => {
 
   //socket codes
   // useEffect(() => {
-  //   console.log("FIND_MESSAGE_LOPP_newSocket");
-  //   console.log(currentUserId, "currentUserId");
+  //
+  //
   //   const newSocket = io(
   //     "https://hybrid.sicsglobal.com/project/brandsandtalent"
   //   );
-  //   console.log(newSocket, "newSocket");
+  //
   //   setSocket(newSocket);
   //   return () => {
   //     newSocket.disconnect();
@@ -169,10 +165,8 @@ const MessageTalents = () => {
   // });
 
   useEffect(() => {
-    console.log("FIND_MESSAGE_LOPP_newSocket");
-    console.log(currentUserId, "currentUserId");
     const newSocket = io("http://13.234.177.61:4014");
-    console.log(newSocket, "newSocket");
+
     setSocket(newSocket);
     return () => {
       newSocket.disconnect();
@@ -180,10 +174,10 @@ const MessageTalents = () => {
   }, [currentUserId]);
 
   // useEffect(() => {
-  //   console.log("FIND_MESSAGE_LOPP_newSocket");
-  //   console.log(currentUserId, "currentUserId");
+  //
+  //
   //   const newSocket = io("http://13.234.177.61:4014");
-  //   console.log(newSocket, "newSocket");
+  //
   //   setSocket(newSocket);
   //   return () => {
   //     newSocket.disconnect();
@@ -191,21 +185,14 @@ const MessageTalents = () => {
   // }, [currentUserId]);
 
   useEffect(() => {
-    console.log("FIND_MESSAGE_LOPP_setuserType");
-
     setuserType(localStorage.getItem("currentUserType"));
   }, [userType]);
 
   useEffect(() => {
     // if (socket === null) return;
     if (socket != null) {
-      console.log("FIND_MESSAGE_LOPP_getOnlineUsers");
-      console.log(socket, "socket");
-      console.log(socket, "currentUserId");
-      console.log(currentUserId, "currentUserIdSocketONline");
       socket.emit("addNewUser", currentUserId);
       socket.on("getOnlineUsers", (res) => {
-        console.log(res, "getOnlineUsers");
         setOnlineUsers(res);
       });
     }
@@ -215,14 +202,11 @@ const MessageTalents = () => {
     // if (socket === null) return;
     if (socket != null) {
       socket.on("connect", () => {
-        console.log("Socket connected with ID:");
-        console.log(socket.id, "socket_ID");
-        // console.log(typeof socket.id, "socket_ID");
+        //
         socket.emit("createChat", currentUserId, clickedUserId, socket.id);
         setSocketId(socket.id);
       });
       socket.on("chatCreated", (res) => {
-        console.log(res, "chatCreatedRESPONSE");
         if (res) {
           findPreviousChatUsers();
         }
@@ -232,25 +216,18 @@ const MessageTalents = () => {
 
   useEffect(() => {
     if (socketId) {
-      console.log(socketId, "socketId");
       // createChat("fromSocketID");
     }
   }, [socketId]);
 
   const createChat = async (secand_id) => {
-    console.log(
-      currentUserId,
-      secand_id,
-      socketId,
-      "socketId CREATECHAT_FORMDATA"
-    );
     if (currentUserId && secand_id) {
       const formData = {
         firstId: currentUserId,
         secondId: secand_id,
         socketId: socketId,
       };
-      console.log(formData, "CREATECHAT_FORMDATA");
+
       await ApiHelper.post(API.createChat, formData)
         .then((resData) => {
           if (resData) {
@@ -258,20 +235,15 @@ const MessageTalents = () => {
             findPreviousChatUsers();
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }
   };
 
-  useEffect(() => {
-    console.log(userList, "userList");
-  }, [userList]);
+  useEffect(() => {}, [userList]);
 
   const findPreviousChatUsers = async () => {
     await ApiHelper.post(`${API.findPreviousChatUsers}${currentUserId}`)
       .then((resData) => {
-        console.log(resData, "resData findPreviousChatUsers");
         if (resData) {
           setUsersList(resData?.data?.data);
           if (resData.data.data.length > 0 && userList.length === 0) {
@@ -283,9 +255,7 @@ const MessageTalents = () => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleKeyPress = (e) => {
@@ -304,7 +274,7 @@ const MessageTalents = () => {
       let current_chat = currentChat?._id;
       let userImage = currentUserImage;
       let chat_file = fileObj;
-      console.log("FIND_MESSAGE_LOPP_socket.emitsendMessage");
+
       socket.emit("sendMessage", {
         current_chat,
         text,
@@ -326,7 +296,6 @@ const MessageTalents = () => {
       receiverId: clickedUserId ? clickedUserId : selectedUser?._id,
       chatFile: chat_file ? chat_file : null,
     };
-    console.log("FIND_MESSAGE_LOPP_socket.createMessageAPICALL");
 
     await ApiHelper.post(API.createMessage, formData)
       .then((resData) => {
@@ -336,34 +305,27 @@ const MessageTalents = () => {
           setMessage("");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const getMessages = async () => {
-    console.log("FIND_MESSAGE_LOPP_socketgetMessagesAPICALL");
     await ApiHelper.get(`${API.getMessages}${currentChat?._id}`)
       .then((resData) => {
         if (resData) {
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
     if (socket != null) {
-      console.log("FIND_MESSAGE_LOPP_ socket.ongetMessage");
       socket.on("getMessage", (res) => {
-        console.log(res, "SocketgetMessage");
         setClickedUserId(res?.senderId);
         createChat(res?.senderId);
         // findPreviousChatUsers();
         setRecivedUser(res?.senderId);
         getMessageByUser(res?.senderId);
-        console.log(currentChat?._id, "currentChat?._id");
+
         if (currentChat?._id !== res?.current_chat) return;
         setMessagesList((prev) => [...prev, res]);
         // setApiMessage((prev) => [...prev, res]);
@@ -379,18 +341,14 @@ const MessageTalents = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getUserByIDRESPONSE");
             setSelectedUser(resData.data.data);
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
-    console.log(selectedUser, "selectedUser");
     if (selectedUser) {
       if (selectedUser.brandImage && selectedUser.brandImage.length > 0) {
         setSelectedUSerIMage(selectedUser.brandImage[0]?.fileData);
@@ -405,20 +363,16 @@ const MessageTalents = () => {
   }, [selectedUser]);
 
   const searchNames = async (data) => {
-    console.log(data, "data");
     const formData = {
       startingSequence: data,
     };
     await ApiHelper.post(`${API.filterNames}${currentUserId}`, formData)
       .then((resData) => {
         if (resData) {
-          console.log(resData?.data?.data, "resData");
           setUsersList(resData?.data?.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleDelete = async (data) => {
@@ -430,15 +384,13 @@ const MessageTalents = () => {
         if (resData?.data?.status === true) {
           setPopUpMessage("Message Deleted Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getMessageByUser(data?.receiverId);
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const toggleMenu = () => {
@@ -446,52 +398,33 @@ const MessageTalents = () => {
   };
 
   useEffect(() => {
-    console.log(currentChat, "currentChat");
     getMessages();
   }, [currentChat]);
-  useEffect(() => {
-    console.log(socket, "socket");
-  }, [socket]);
-  useEffect(() => {
-    console.log(onlineUsers, "onlineUsers");
-  }, [onlineUsers]);
-  useEffect(() => {
-    console.log(selectedUSerImage, "selectedUSerImage");
-  }, [selectedUSerImage]);
-  useEffect(() => {
-    console.log(messagesList, "messagesList");
-  }, [messagesList]);
-  useEffect(() => {
-    console.log(profileFile, "profileFile");
-  }, [profileFile]);
+  useEffect(() => {}, [socket]);
+  useEffect(() => {}, [onlineUsers]);
+  useEffect(() => {}, [selectedUSerImage]);
+  useEffect(() => {}, [messagesList]);
+  useEffect(() => {}, [profileFile]);
 
   const setCLickedUser = (data) => {
-    console.log(data, "setCLickedUser");
     setClickedUserId(data?._id);
     setSelectedUser(data);
     if (currentUserId && selectedUser?._id) {
-      console.log("FIND_MESSAGE_LOPP_ socket.setCLickedUser");
       // createChat("createChatFromsetCLickedUser");
       // findChat();
       getMessageByUser(data?._id);
     }
   };
 
-  useEffect(() => {
-    console.log(clickedUserId, "clickedUserId");
-  }, [clickedUserId]);
+  useEffect(() => {}, [clickedUserId]);
 
   const findChat = async () => {
-    console.log("FIND_MESSAGE_LOPP_ socket.findChatAPICALL");
-
     await ApiHelper.get(`${API.findChat}${currentUserId}/${clickedUserId}`)
       .then((resData) => {
         if (resData) {
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   // const [currentTime, setCurrentTime] = useState("");
@@ -505,8 +438,8 @@ const MessageTalents = () => {
   //     const formattedHours = hours % 12 || 12; // Convert 0 to 12
   //     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // Add leading zero if needed
   //     setCurrentTime(`${formattedHours}:${formattedMinutes} ${ampm}`);
-  //     console.log(currentTime, "currentTime");
-  //     console.log(typeof currentTime, "currentTime");
+  //
+  //
   //   }, 1000); // Update time every second
 
   //   return () => clearInterval(interval); // Clean up interval on component unmount
@@ -529,22 +462,16 @@ const MessageTalents = () => {
   }, []);
 
   // Log currentTime only when it updates
-  useEffect(() => {
-    console.log(currentTime, "currentTime");
-    console.log(typeof currentTime, "currentTime");
-  }, [currentTime]);
+  useEffect(() => {}, [currentTime]);
 
   const setInitaialUser = async (userData, selectedID) => {
-    console.log("FIND_MESSAGE_LOPP_ socket.setInitaialUser");
-    console.log(userData, "userData callingblock");
-    console.log(selectedID, "selectedID callingblock");
     if (userData.length > 0) {
       const obj = userData.find((item) => item._id === selectedID);
-      console.log(obj, "obj callingblock");
+
       setSelectedUser(obj);
-      console.log(selectedUser, "selectedUser callingblock");
+
       if (currentUserId && selectedID) {
-        // console.log("FIND_MESSAGE_LOPP_ socket.setCLickedUser");
+        //
         // createChat("createChatFromsetInitaialUser");
         // findChat();
         getMessageByUser(selectedID);
@@ -560,24 +487,18 @@ const MessageTalents = () => {
   // }, [clickedUserId, currentUserId]);
 
   const getMessageByUser = async (sender_id) => {
-    console.log(currentUserId, "currentUserId getMessageByUser");
     const formData = {
       senderId: sender_id,
       receiverId: currentUserId,
     };
-    console.log(formData, "getMessageByUserPAYLOAD");
-    console.log("FIND_MESSAGE_LOPP_ socket.getMessageByUserAPICALL");
 
     await ApiHelper.post(API.getMessageByUser, formData)
       .then((resData) => {
         if (resData) {
-          console.log(resData?.data, "resData.data getMessageByUserRESPONSE");
           setMessagesList(resData?.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleView = (imageUrl) => {

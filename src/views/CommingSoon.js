@@ -41,12 +41,12 @@ const CommingSoon = () => {
     await ApiHelper.post(API.fetchBlogByType, formdata)
       .then((resData) => {
         if (resData) {
-          console.log(resData?.data?.data, "resData fetchBlogByType");
+          
           setBlogsLsit(resData?.data?.data);
         }
       })
       .catch((err) => {
-        console.log(err);
+        
       });
   };
 
@@ -69,7 +69,7 @@ const CommingSoon = () => {
 
   const location = useLocation();
   let recievedStep = location?.state?.step;
-  console.log(recievedStep, "recievedStep");
+  
   const [step, setStep] = useState(0);
 
   useEffect(() => {
@@ -80,12 +80,12 @@ const CommingSoon = () => {
 
   useEffect(() => {
     if (location.state && location.state.step !== undefined) {
-      console.log(location.state.step, "location.state.step");
+      
     }
   }, [location.state]);
 
   useEffect(() => {
-    console.log(step, "steplocation");
+    
   }, [step]);
 
   const logoWhite = require("../assets/images/logo-white.png");

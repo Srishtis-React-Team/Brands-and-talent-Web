@@ -50,7 +50,7 @@ const BrandLogo = () => {
   const handlePortofolioDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+
     uploadFile(droppedFiles[0]);
   };
   const handlePortofolioDragOver = (e) => {
@@ -59,7 +59,7 @@ const BrandLogo = () => {
   const portofolioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      console.log(fileData, "fileData");
+
       uploadFile(fileData);
     }
   };
@@ -97,7 +97,7 @@ const BrandLogo = () => {
           type: resData?.data?.data?.filetype,
         };
         setPortofolioFile([fileObj]);
-        console.log(portofolioFile, "portofolioFile");
+
         setPortofolioFileError(false);
         setOpenPopUp(true);
         setTimeout(function () {
@@ -133,7 +133,6 @@ const BrandLogo = () => {
     await ApiHelper.post(`${API.editBrands}${receivedData?.brand_id}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          console.log(resData.data.data, "brandsSignup");
           setBrandsLocalStorage(resData.data.data);
           setMessage("Registered SuccessFully!");
           navigate("/brand-activated", {
@@ -162,17 +161,13 @@ const BrandLogo = () => {
   };
 
   const setBrandsLocalStorage = (data) => {
-    console.log(data, "data otp");
     localStorage.setItem("brandId", data?.brand_id);
     localStorage.setItem("currentUser", data?.brand_id);
     localStorage.setItem("currentUserType", "brand");
     localStorage.setItem("currentUserImage", data?.brandImage[0]?.fileData);
   };
 
-  useEffect(() => {
-    console.log(portofolioFile, "portofolioFile");
-    console.log(portofolioFile.length, "portofolioFile length");
-  }, [portofolioFile]);
+  useEffect(() => {}, [portofolioFile]);
 
   return (
     <>

@@ -29,7 +29,6 @@ import { useLocation } from "react-router-dom";
 
 const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
-  console.log(hideToggleButton, "hideToggleButton");
 
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -54,7 +53,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const location = useLocation();
   const currentPathname = location.pathname;
   const isTalentProfilePage = /^\/talent\/.+/.test(currentPathname);
-  console.log(isTalentProfilePage, "isTalentProfilePage");
 
   const customStyles = {
     control: (provided, state) => ({
@@ -69,10 +67,10 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   };
 
   useEffect(() => {
-    setTimeout(function() {
+    setTimeout(function () {
       setTalentId(localStorage.getItem("userId"));
     }, 1000);
-    console.log(talentId, "talentId");
+
     if (talentId) {
       getTalentById();
       getTalentNotification();
@@ -125,8 +123,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     };
   }, []);
 
-  console.log(myState, "myState");
-
   useEffect(() => {
     if (myState === true) {
       getTalentById();
@@ -143,9 +139,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(notificationList, "notificationList");
-  }, [notificationList]);
+  useEffect(() => {}, [notificationList]);
 
   const handleCoffeeLink = () => {
     window.open("https://buymeacoffee.com/brandsandtalent", "_blank");
@@ -162,20 +156,15 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
     getSkills();
   }, []);
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+  useEffect(() => {}, [talentData]);
 
   const gotomessage = (item) => {
-    console.log(item, "gotomessage");
     navigate(`/message?${item?.brandId}`);
   };
 
@@ -191,7 +180,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setcurrentUserId(null);
         setMessage("Logged out successfully");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/");
         }, 1000);
@@ -204,14 +193,13 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       if (menuItem == "find-talent" && talentData?.planName == "Basic") {
         setMessage("Purchase Pro or Premium Plan to unlock this feature");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/pricing");
         }, 3000);
       } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
         navigate("/find-creators");
       }
-      console.log(`Clicked on ${menuItem}`);
     };
 
     // if (menuItem == "find-talent") {
@@ -262,27 +250,25 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       jobLocation: job_location,
       age: job_age,
     };
-    console.log(formData, "formData talentFilterData");
+
     setIsLoading(true);
     await ApiHelper.post(API.searchJobs, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("No Matching Users Found");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     setOpen(false);
   };
@@ -316,12 +302,9 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       .then((resData) => {
         if (resData.data.status === true) {
           setSkillsList(resData.data.data);
-          console.log(resData.data.data, "getSkills");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     setOpen(false);
   };

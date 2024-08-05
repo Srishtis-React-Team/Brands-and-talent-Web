@@ -30,9 +30,7 @@ const BrandFirstGig = () => {
     "250+ jobs",
   ];
 
-  useEffect(() => {
-    console.log(openPopUp, "openPopUp");
-  }, [openPopUp]);
+  useEffect(() => {}, [openPopUp]);
 
   const brandsSignup = async () => {
     if (position === "") {

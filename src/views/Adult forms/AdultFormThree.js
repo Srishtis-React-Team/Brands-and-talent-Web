@@ -39,19 +39,14 @@ const AdultFormThree = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getTalentById");
             setTalentData(resData.data.data, "resData.data.data");
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+  useEffect(() => {}, [talentData]);
 
   const [profileFile, setProfileFile] = useState(null);
   const btLogo = require("../../assets/images/LOGO.png");
@@ -93,17 +88,13 @@ const AdultFormThree = () => {
   const [verificationID, setVerificationID] = useState("");
   const url = window.location.href;
   let queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
-  console.log("Search queryString:", typeof queryString);
+
   const navigate = useNavigate();
   const [updateDisabled, setUpdateDisabled] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
   const [urls, setUrls] = useState([]);
 
   useEffect(() => {
-    console.log(profileFile, "profileFile");
-    console.log(portofolioFile, "portofolioFile");
-    console.log(portofolioFile.length, "portofolioFile.length");
     if (profileFile === null || portofolioFile.length === 0) {
       setUpdateDisabled(true);
     } else if (profileFile !== null || portofolioFile.length !== 0) {
@@ -111,12 +102,8 @@ const AdultFormThree = () => {
     }
   }, [profileFile, portofolioFile]);
 
-  useEffect(() => {
-    console.log(updateDisabled, "updateDisabled");
-  }, [updateDisabled]);
-  useEffect(() => {
-    console.log(featuresList, "featuresList");
-  }, [featuresList]);
+  useEffect(() => {}, [updateDisabled]);
+  useEffect(() => {}, [featuresList]);
 
   const creatableOptions = ["Dress Size", "Shoe Size"];
 
@@ -171,7 +158,6 @@ const AdultFormThree = () => {
       updatedValues.push({ label, value: finalValue });
     }
 
-    console.log(updatedValues, "updatedValues");
     setFeature(updatedValues);
   };
 
@@ -192,7 +178,7 @@ const AdultFormThree = () => {
           setIsLoading(false);
           setMessage("Updated SuccessFully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             if (talentData?.planName == "Basic") {
               navigate(`/talent/${talentData.publicUrl}`, {
@@ -206,7 +192,7 @@ const AdultFormThree = () => {
           setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -219,7 +205,7 @@ const AdultFormThree = () => {
   const handleProfileDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+
     uploadProfile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -271,7 +257,7 @@ const AdultFormThree = () => {
   const handleVideoDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    console.log(droppedFiles[0], "droppedFiles");
+
     uploadVideoudio(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -343,7 +329,7 @@ const AdultFormThree = () => {
 
       // Iterate through each image file and upload
       imageFiles.forEach((file) => {
-        console.log(file, "fileData"); // Logging each file object
+        // Logging each file object
 
         // Call uploadFile function for each image file
         uploadFile(file);
@@ -464,13 +450,12 @@ const AdultFormThree = () => {
         // Show error message for non-image files
         setMessage("You can only upload images");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
         return; // Stop further execution
       }
 
-      console.log(file, "fileData");
       uploadProfile(file);
     }
   };
@@ -495,11 +480,11 @@ const AdultFormThree = () => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        console.log(fileObj, "fileObj profileFile");
+
         setProfileFile(fileObj);
-        console.log(profileFile, "profileFile");
+
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -523,7 +508,7 @@ const AdultFormThree = () => {
         `You can only upload up to ${maxPhotos} photos as a ${userPlan} member.`
       );
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 3000);
 
@@ -551,7 +536,7 @@ const AdultFormThree = () => {
         };
         setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -581,7 +566,7 @@ const AdultFormThree = () => {
         };
         setVideoAudioFile((prevFiles) => [...prevFiles, fileObj]);
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -612,7 +597,7 @@ const AdultFormThree = () => {
         setResumeFile((prevFiles) => [...prevFiles, fileObj]);
 
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -633,7 +618,6 @@ const AdultFormThree = () => {
       },
     })
       .then((resData) => {
-        console.log(resData, "resDatasetVerificationID");
         setMessage(resData.data.message);
         let fileObj = {
           id: resData.data.data.fileId,
@@ -643,7 +627,7 @@ const AdultFormThree = () => {
         };
         setVerificationID((prevFiles) => [...prevFiles, fileObj]);
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       })
@@ -694,7 +678,6 @@ const AdultFormThree = () => {
 
   const handleUrlChange = (e) => {
     setVideoUrl(e.target.value);
-    console.log(e.target.value, "handleUrlChange");
   };
 
   const handleAddUrl = () => {
@@ -710,7 +693,7 @@ const AdultFormThree = () => {
         `You can only add up to ${maxUrls} URLs as a ${userPlan} member.`
       );
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 3000);
       return;
@@ -718,7 +701,7 @@ const AdultFormThree = () => {
 
     if (videoUrl.trim() !== "") {
       setUrls([...urls, videoUrl]);
-      console.log([...urls, videoUrl], "handleAddUrl");
+
       setVideoUrl("");
     }
   };
@@ -728,7 +711,6 @@ const AdultFormThree = () => {
       "text"
     );
     setVideoUrl(pastedText);
-    console.log(pastedText, "handlePaste");
   };
 
   const handleDeleteUrl = (index) => {
@@ -737,13 +719,10 @@ const AdultFormThree = () => {
   };
 
   const handleEditorStateChange = (editorState) => {
-    console.log(editorState, "editorStateRichText");
     setAboutYou(editorState);
   };
 
-  useEffect(() => {
-    console.log(verificationID, "verificationID");
-  }, [verificationID]);
+  useEffect(() => {}, [verificationID]);
 
   return (
     <>

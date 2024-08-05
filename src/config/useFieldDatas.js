@@ -14,10 +14,6 @@ const useFieldDatas = () => {
         const formdata = { type: "category" };
         const resData = await ApiHelper.post(API.getFieldDatas, formdata);
         if (resData) {
-          console.log(
-            resData?.data?.data[0]?.features,
-            "categoryList useFieldDatas"
-          );
           setCategoryList(resData?.data?.data[0]?.features);
         }
       } catch (err) {
@@ -31,10 +27,6 @@ const useFieldDatas = () => {
         const formdata = { type: "features" };
         const resData = await ApiHelper.post(API.getFieldDatas, formdata);
         if (resData) {
-          console.log(
-            resData?.data?.data[0]?.features,
-            "featuresList useFieldDatas"
-          );
           setFeaturesList(resData?.data?.data[0]?.features);
         }
       } catch (err) {
@@ -48,10 +40,6 @@ const useFieldDatas = () => {
         const formdata = { type: "profession" };
         const resData = await ApiHelper.post(API.getFieldDatas, formdata);
         if (resData) {
-          console.log(
-            resData?.data?.data[0]?.features,
-            "professionList useFieldDatas "
-          );
           setProfessionList(resData?.data?.data[0]?.features);
         }
       } catch (err) {

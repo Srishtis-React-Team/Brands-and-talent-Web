@@ -95,16 +95,12 @@ const GetBooked = () => {
   };
 
   const handleSelectedCountry = (event) => {
-    console.log(event, "event");
-    console.log(event?.value, "event?.value");
     setCountry(event?.value);
     // setState("");
     // handleSelectedState("");
     getStates(event?.value);
-    console.log(country, "country");
   };
   const handleSelectedState = (state) => {
-    console.log(state, "state");
     setState(state?.label);
     // setKidsCity("");
     getCities({
@@ -167,20 +163,18 @@ const GetBooked = () => {
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
 
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
     setCurrentUserType(localStorage.getItem("currentUserType"));
-    console.log(currentUserId, "currentUserId header");
   }, [currentUserId]);
 
   useEffect(() => {
     getRecentGigs();
     getTopBrands();
     const storedUserId = localStorage.getItem("userId");
-    console.log(storedUserId, "storedUserId");
+
     setUserId(storedUserId);
   }, [userId]);
 
@@ -193,11 +187,8 @@ const GetBooked = () => {
         if (resData) {
           setGigsList(resData.data.data);
         }
-        console.log("gigsList", resData.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const [modalData, setModalData] = useState(null);
@@ -206,12 +197,11 @@ const GetBooked = () => {
     if (!currentUserId) {
       setMessage("You must be logged in");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
         navigate("/login");
       }, 1000);
     } else if (currentUserId && currentUser_type == "talent") {
-      console.log(data, "applyJobData");
       setModalData(data); // Set data to be displayed in the modal
       // Open the modal programmatically
       if (data?.isApplied != "Applied") {
@@ -225,7 +215,7 @@ const GetBooked = () => {
     if (!currentUserId) {
       setMessage("You must be logged in");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
         navigate("/login");
       }, 1000);
@@ -248,7 +238,7 @@ const GetBooked = () => {
       .then((resData) => {
         setMessage("Job applied successfully");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           getRecentGigs();
           // Close the modal programmatically
@@ -257,14 +247,10 @@ const GetBooked = () => {
           bootstrapModal.hide();
         }, 1000);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(gigsList, "gigsList");
-  }, [gigsList]);
+  useEffect(() => {}, [gigsList]);
 
   const getTopBrands = async () => {
     await ApiHelper.post(API.getTopBrands)
@@ -272,19 +258,14 @@ const GetBooked = () => {
         if (resData) {
           setTopBrandsList(resData.data.data);
         }
-        console.log("topBrandsList", resData.data.data);
-        console.log("topBrandsList", topBrandsList);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const [talentId, setTalentId] = useState(null);
 
   useEffect(() => {
     setTalentId(localStorage.getItem("userId"));
-    console.log(talentId, "brandId");
   }, [talentId]);
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -338,35 +319,30 @@ const GetBooked = () => {
     // Get the selected value
     work_place_type = selectElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(work_place_type, "workPlaceSelect");
 
     // Get the select element
     var selectJobElement = document.getElementById("jobtypeID");
     // Get the selected value
     job_type = selectJobElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(job_type, "job_type");
 
     // Get the select element
     var selectEmploymentElement = document.getElementById("employmentTypeID");
     // Get the selected value
     employment_type = selectEmploymentElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(employment_type, "employment_type");
 
     // Get the select element
     var selectAgeElement = document.getElementById("ageSelectID");
     // Get the selected value
     job_age = selectAgeElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(job_age, "job_age");
 
     // Get the select element
     var selectCategoryElement = document.getElementById("selectedCategoryID");
     // Get the selected value
     category = selectCategoryElement?.value;
     // Now you can use the selectedValue variable to access the value of the selected option
-    console.log(category, "job_age");
 
     if (keyWordRef.current) {
       key_word = keyWordRef?.current?.value;
@@ -380,18 +356,7 @@ const GetBooked = () => {
     if (jobFullNameRef?.current) {
       job_full_name = jobFullNameRef?.current?.value;
     }
-    console.log(
-      key_word,
-      "key_word",
-      job_location,
-      "job_location",
-      job_age,
-      "job_age",
-      job_type,
-      "job_type",
-      work_place_type,
-      "work_place_type"
-    );
+
     const formData = {
       keyword: key_word,
       jobTitle: job_name,
@@ -407,29 +372,26 @@ const GetBooked = () => {
       state: state,
       city: kidsCity,
     };
-    console.log(formData, "formData talentFilterData");
+
     setIsLoading(true);
     await ApiHelper.post(API.searchJobs, formData)
       .then((resData) => {
-        console.log(resData.data, "searchJobs");
         if (resData.data.status === true) {
           setGigsList(resData.data.data);
           setMessage("Filtered SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("No Matching Users Found");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     setOpen(false);
   };
@@ -466,18 +428,14 @@ const GetBooked = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setSkillsList(resData.data.data);
-          console.log(resData.data.data, "getSkills");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     setOpen(false);
   };
 
   const addToSavedJobs = async (data) => {
-    console.log(data, "dataaddToSavedJobs");
     const formData = {
       gigId: data?._id,
       brandId: data?.brandId,
@@ -488,18 +446,17 @@ const GetBooked = () => {
         if (resData.data.status === true) {
           setMessage("Job Saved SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getRecentGigs();
           }, 1000);
         }
       })
       .catch((err) => {
-        console.log(err);
         if (!currentUserId) {
           setMessage("You must be logged in");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getRecentGigs();
             navigate("/login");
@@ -517,21 +474,19 @@ const GetBooked = () => {
     };
     await ApiHelper.post(API.removeFavouritesJob, formData)
       .then((resData) => {
-        console.log(resData, "resDataremoveFromSavedJobs");
         if (resData.data.status === true) {
           setMessage("Removed From Saved Jobs");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getRecentGigs();
           }, 1000);
         }
       })
       .catch((err) => {
-        console.log(err);
         setMessage("Error Occured Try Again");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       });
@@ -563,7 +518,7 @@ const GetBooked = () => {
                         const formData = new FormData(event.currentTarget);
                         const formJson = Object.fromEntries(formData.entries());
                         const email = formJson.email;
-                        console.log(email);
+
                         handleClose();
                       },
                     }}
@@ -760,7 +715,6 @@ const GetBooked = () => {
               {gigsList.length && (
                 <div className="recent-gigs-main">
                   {gigsList.map((item, index) => {
-                    console.log(item, "item gigsList");
                     return (
                       <>
                         <div className="recent-gigs-wrapper">

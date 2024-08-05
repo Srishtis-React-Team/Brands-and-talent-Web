@@ -31,14 +31,10 @@ const PhotosCarousel = ({ photosList }) => {
     await ApiHelper.post(`${API.getTalentById}${talent_id}`)
       .then((resData) => {
         if (resData) {
-          console.log(resData, "resData talentDataProfile");
           setTalentData(resData.data.data);
-          console.log(resData.data.data, "resData.data");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleImageClick = (index) => {
@@ -51,17 +47,13 @@ const PhotosCarousel = ({ photosList }) => {
     setSliderOpen(false);
   };
 
-  useEffect(() => {
-    console.log(isSliderOpen, "isSliderOpen ImageSlider");
-  }, [isSliderOpen]);
+  useEffect(() => {}, [isSliderOpen]);
   const [currentIndex, setCurrentIndex] = useState(currentImageIndex);
 
   useEffect(() => {
     setCurrentIndex(currentImageIndex);
   }, [currentImageIndex]);
-  useEffect(() => {
-    console.log(talentData, "talentDataPhotosCarousel");
-  }, [talentData]);
+  useEffect(() => {}, [talentData]);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % photosList.length);
@@ -96,8 +88,8 @@ const PhotosCarousel = ({ photosList }) => {
           {photosList &&
             photosList.length > 0 &&
             photosList.map((image, index) => {
-              // console.log(photosList, "photosList map");
-              console.log(image, "image");
+              //
+
               return (
                 <>
                   <div className="item" key={index}>

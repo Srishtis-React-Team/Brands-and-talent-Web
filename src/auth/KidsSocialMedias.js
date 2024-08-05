@@ -34,7 +34,6 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
   const [updateDisabled, setUpdateDisabled] = useState(false);
   const url = window.location.href;
   const queryString = url.split("?")[1];
-  console.log(" queryString:", queryString);
 
   const editKids = async () => {
     const formData = {
@@ -49,7 +48,6 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
     setIsLoading(true);
     await ApiHelper.post(`${API.editKids}${queryString}`, formData)
       .then((resData) => {
-        console.log(resData, "resData");
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Updated SuccessFully!");

@@ -39,14 +39,10 @@ const ListJobs = () => {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(brandData, "brandDataListJobs");
-  }, [brandData]);
+  useEffect(() => {}, [brandData]);
 
   const navigate = useNavigate();
 
@@ -132,9 +128,9 @@ const ListJobs = () => {
         if (resData.data.status === true) {
           setMessage("Job Deleted SuccessFully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
-            console.log(resData?.data?.response?.type, "resData?.data");
+
             if (resData?.data?.response?.type == "Draft") {
               getAllJobs("draft-jobs", brandId);
             } else if (resData?.data?.response?.type == "Posted") {
@@ -143,16 +139,11 @@ const ListJobs = () => {
           }, 1000);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
-    console.log(allJobs, "allJobsdf");
     if (allJobs && brandId != null) {
-      console.log(brandId, "allJobsdf brandId");
-      console.log("allJobsdfCAlled");
       getAllJobs("all-jobs", brandId);
     }
   }, [allJobs, brandId]);
@@ -169,29 +160,25 @@ const ListJobs = () => {
     }
   }, [postedJobs]);
 
-  useEffect(() => {
-    console.log(allJobsList, "allJobsList");
-  }, [allJobsList]);
+  useEffect(() => {}, [allJobsList]);
 
   const postJob = async () => {
     await ApiHelper.post(`${API.postJobByDraft}${alertpop?.jobId}`)
       .then((resData) => {
-        console.log(resData.data.status, "draftedData");
-
         if (resData.data.status === true) {
           if (brandData?.planName == "Basic") {
             setMessage(
               "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
             );
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               setAllJobsList(resData.data.data, "resData.data.data");
             }, 5000);
           } else {
             setMessage("Job Posted SuccessFully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               setAllJobsList(resData.data.data, "resData.data.data");
             }, 2000);
@@ -199,11 +186,9 @@ const ListJobs = () => {
         }
 
         if (resData.data.status == false) {
-          console.log(resData.data.status, "checkStatus");
-          console.log("status draftedData");
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -228,10 +213,9 @@ const ListJobs = () => {
     } else if (filterJob == "posted-jobs") {
       apiUrl = `${API.getBrandPostedJobsByID}${id}`;
     }
-    console.log(apiUrl, "apiUrl");
+
     await ApiHelper.get(apiUrl)
       .then((resData) => {
-        console.log(resData.data.data, "getJobsList");
         if (resData.data.status === true) {
           if (resData.data.data) {
             setAllJobsList(resData.data.data, "resData.data.data");
@@ -240,9 +224,7 @@ const ListJobs = () => {
           setAllJobsList(resData.data.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (
