@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/brand-dashboard.scss";
 import "../../assets/css/talentHeader.scss";
 import BrandHeader from "./BrandHeader";
-import CreateJobs from "./CreateJobs";
-import DuplicateJobs from "./DuplicateJobs";
 import BrandHome from "./BrandHome";
 import PreviewJob from "./PreviewJob";
 import ListJobs from "./ListJobs";
@@ -11,12 +9,6 @@ import BrandTalents from "./BrandTalents";
 const BrandDashboard = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const girl1 = require("../../assets/images/girl1.png");
-  const menu_1 = require("../../assets/icons/sidemenu/add-job.png");
-  const menu_2 = require("../../assets/icons/sidemenu/box.png");
-  const menu_3 = require("../../assets/icons/sidemenu/codec.png");
-  const menu_5 = require("../../assets/icons/sidemenu/heart.png");
-  const menu_6 = require("../../assets/icons/sidemenu/help-circle.png");
-  const menu_4 = require("../../assets/icons/sidemenu/users.png");
   const [createJob, setCreateJob] = useState(true);
   const [viewDashboard, setViewDashboard] = useState(false);
   const [myJobs, setMyJobs] = useState(false);
@@ -36,17 +28,6 @@ const BrandDashboard = () => {
     console.log(additionalData, "additionalData");
     setHomePageData(additionalData);
   };
-
-  const handleCreateJobData = (data) => {
-    setCreateJobData(data);
-  };
-
-  useEffect(() => {
-    console.log(myJobs, "myJobs");
-  }, [myJobs]);
-  useEffect(() => {
-    console.log(viewJobID, "viewJobID");
-  }, [viewJobID]);
 
   useEffect(() => {
     console.log(homePageData, "homePageData");
@@ -108,11 +89,6 @@ const BrandDashboard = () => {
   };
 
   const [selectedTab, setSelectedTab] = useState("create-job");
-
-  const handleJobTabs = (e) => {
-    console.log(e.target.value, "e.target.value");
-    setSelectedTab(e.target.value);
-  };
 
   return (
     <>

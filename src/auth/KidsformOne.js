@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsform-one.scss";
 import Select from "react-select";
-import Axios from "axios";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
-import ReactFlagsSelect from "react-flags-select";
 import { useNavigate } from "react-router";
-import nationalityOptions from "../components/nationalities";
 import languageOptions from "../components/languages";
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from "@mui/material/TextField";
@@ -15,11 +12,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import nationalitiesArray from "../components/NationalitiesArray";
-import zIndex from "@mui/material/styles/zIndex";
 import useFieldDatas from "../config/useFieldDatas";
 import { Tooltip } from "react-tooltip";
 
-const KidsformOne = ({ sendDataToParent }) => {
+const KidsformOne = () => {
   const { categoryList, professionList } = useFieldDatas();
   console.log(categoryList, "categoryList kidsformone");
   const paramsValues = window.location.search;
@@ -29,11 +25,9 @@ const KidsformOne = ({ sendDataToParent }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
   const kidsImage = require("../assets/images/kidsImage.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [updateDisabled, setUpdateDisabled] = useState(false);
   const [value, setValue] = useState(null);
-  const [showError, setShowError] = useState(false);
   const [kidsFillData, setKidsFillData] = useState(null);
   const [parentFirstNameError, setparentFirstNameError] = useState(false);
   const [parentMobileError, setParentMobileError] = useState(false);
@@ -49,15 +43,12 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [dobError, setDobError] = useState(false);
   const [languageError, setLanguageError] = useState(false);
   const [addressError, setAddressError] = useState(false);
-  const [parentLastNameError, setparentLastNameError] = useState(false);
   const [parentEmailError, setparentEmailError] = useState(false);
   const [completedError, setJobsCompletedError] = useState(false);
   const [talentPasswordError, settalentPasswordError] = useState(false);
-  const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
-    false
-  );
+  const [talentConfirmPasswordError, settalentConfirmPasswordError] =
+    useState(false);
   const [kidsLegalFirstNameError, setkidsLegalFirstNameError] = useState(false);
-  const [kidsLegalLastNameError, setkidsLegalLastNameError] = useState(false);
   const [genderError, setgenderError] = useState(false);
   const [message, setMessage] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -80,9 +71,7 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [ethnicity, setEthnicity] = useState("");
   const [languages, setLanguages] = useState([]);
   const [dateOfBirth, setDob] = useState("");
-  const [profession, setProfession] = useState([]);
   const [aboutYou, setAboutYou] = useState([]);
-  const [relevantCategories, setRelevantCategories] = useState([]);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
@@ -144,31 +133,6 @@ const KidsformOne = ({ sendDataToParent }) => {
     "Prefer not to say",
   ];
 
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      minHeight: "55px", // Reset the minHeight to avoid clipping
-    }),
-    menu: (provided, state) => ({
-      ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
-    }),
-  };
-
-  // const customStylesProfession = {
-  //   control: (provided, state) => ({
-  //     ...provided,
-  //     minHeight: "55px",
-  //     zIndex: 9999, // Reset the minHeight to avoid clipping
-  //   }),
-  //   menu: (provided, state) => ({
-  //     ...provided,
-  //     maxHeight: "500px", // Adjust the maxHeight as per your requirement
-  //     zIndex: 9999, // Ensure menu appears above other elements
-  //   }),
-  // };
-
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
@@ -190,30 +154,9 @@ const KidsformOne = ({ sendDataToParent }) => {
     }
   }, []);
 
-  useEffect(() => {}, [updateDisabled]);
-
-  // Function to handle date picker change
   const handleDateChange = (e) => {
-    // const selectedDate = e.target.value; // Assuming your date picker provides the selected date
-    // setDob(selectedDate); // Set the DOB in state
-    // // Calculate age
-    // const dobDate = new Date(selectedDate);
-    // const today = new Date();
-    // const diff = today - dobDate;
-    // const ageInYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)); // Calculating age in years
-    // setAge(String(ageInYears)); // Set the age in state
     setValue(e);
     setDob(e);
-    // let dateString = e;
-    // if (dateString) {
-    //   let dateObject = new Date(dateString);
-    //   console.log(dateObject, "dateObject");
-    //   console.log(typeof dateObject, "dateObject");
-    //   if (dateObject) {
-    //     let formattedDate = dateObject?.toISOString()?.split("T")[0];
-    //     console.log(formattedDate, "formattedDate");
-    //   }
-    // }
     let dobDate = new Date(e);
     let today = new Date();
     let diff = today - dobDate;
@@ -228,23 +171,12 @@ const KidsformOne = ({ sendDataToParent }) => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
-  // Function to handle email input change
   const handleEmailChange = (e) => {
     setparentEmailError(false);
     const email = e.target.value;
     setParentEmail(e.target.value);
-    // Validate email using regex
     setIsValidEmail(emailRegex.test(email));
   };
-
-  const handleKidsEmailChange = (e) => {
-    const email = e.target.value;
-    // setKidsEmail(e.target.value);
-    // Validate email using regex
-    setIsValidEmail(emailRegex.test(email));
-  };
-
-  // Function to handle country selection
 
   const selectEthnicity = (event) => {
     console.log(event.target.value, "selectEthnicity");
@@ -265,35 +197,26 @@ const KidsformOne = ({ sendDataToParent }) => {
   const selectLanguage = (selectedOptions) => {
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
-      // Handle case when all options are cleared
-      setLanguages([]); // Clear the languages state
+      setLanguages([]);
       return;
     }
 
-    // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    setLanguages(selectedLanguages); // Update languages state with all selected languages
+    setLanguages(selectedLanguages);
   };
 
   const selectNationality = (selectedOptions) => {
     console.log(selectedOptions, "selectedOptions selectedLanguages");
     if (!selectedOptions || selectedOptions.length === 0) {
-      // Handle case when all options are cleared
-      setNationality([]); // Clear the languages state
+      setNationality([]);
       setSelectedNationalityOptions([]);
       return;
     }
-    // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
     console.log(selectedLanguages, "selectedLanguages");
-    setNationality(selectedLanguages); // Update languages state with all selected languages
+    setNationality(selectedLanguages);
     setSelectedNationalityOptions(selectedOptions);
     setNationalityError(false);
-  };
-
-  const selectMaritalStatus = (event) => {
-    setMaritalStatus(event.target.value);
-    setMaritalError(false);
   };
 
   const handlePasswordChange = (e) => {
@@ -309,18 +232,13 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleProfessionChange = (selectedOptions) => {
-    // setSelectedProfessions(selectedOptions);
-    // setProfessionError(false);
-
     if (selectedOptions.length > 5) {
-      // setProfessionError(true);
-      // Optionally show a message to the user
       setMessage("You can only select up to 5 skills");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 2000);
-      return; // Prevent the state update
+      return;
     } else {
       setSelectedProfessions(selectedOptions);
       setProfessionError(false);
@@ -336,10 +254,6 @@ const KidsformOne = ({ sendDataToParent }) => {
     setProfessionError(false);
   };
 
-  const handleSubmit = () => {
-    // Construct the final object containing selected professions and their details
-  };
-
   const chooseCategory = (category) => {
     console.log(category, "category");
     if (selectedCategories.includes(category)) {
@@ -351,10 +265,9 @@ const KidsformOne = ({ sendDataToParent }) => {
         setSelectedCategories([...selectedCategories, category]);
         setCategoryError(false);
       } else {
-        // setCategoryError(true);
         setMessage("you can only select 6 categories");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 2000);
       }
@@ -411,9 +324,6 @@ const KidsformOne = ({ sendDataToParent }) => {
           setNationality(resData?.data?.data?.childNationality);
           setMaritalStatus(resData?.data?.data?.maritalStatus);
           setEthnicity(resData?.data?.data?.childEthnicity);
-          // setKidsEmail(resData?.data?.data?.childEmail);
-          // setKidsPhone(resData?.data?.data?.childPhone);
-          // setKidsLocation(resData?.data?.data?.childLocation);
           setKidsCity(resData?.data?.data?.childCity);
           setSelectedCategories([
             ...selectedCategories,
@@ -431,8 +341,6 @@ const KidsformOne = ({ sendDataToParent }) => {
     console.log(event, "event");
     console.log(event?.value, "event?.value");
     setCountry(event?.value);
-    // setState("");
-    // handleSelectedState("");
     getStates(event?.value);
     console.log(country, "country");
   };
@@ -440,7 +348,6 @@ const KidsformOne = ({ sendDataToParent }) => {
     console.log(state, "state");
     setStateError(false);
     setState(state?.label);
-    // setKidsCity("");
     getCities({
       countryName: country,
       stateName: state?.label,
@@ -535,26 +442,6 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (completedJobs === "") {
       setJobsCompletedError(true);
     }
-    console.log(parentFirstName, "parentFirstName kidsPayload");
-    console.log(parentEmail, "parentEmail kidsPayload");
-    console.log(talentPassword, "talentPassword kidsPayload");
-    console.log(talentConfirmPassword, "talentConfirmPassword kidsPayload");
-    console.log(kidsLegalFirstName, "kidsLegalFirstName kidsPayload");
-    console.log(gender, "gender kidsPayload");
-    console.log(parentMobile, "parentMobile kidsPayload");
-    console.log(country, "country kidsPayload");
-    console.log(kidsCity, "kidsCity kidsPayload");
-    console.log(address, "address kidsPayload");
-    console.log(selectedProfessions, "selectedProfessions kidsPayload");
-    console.log(selectedProfessions, "selectedProfessions kidsPayload");
-    console.log(selectedCategories, "selectedCategories kidsPayload");
-    console.log(selectedCategories, "selectedCategories kidsPayload");
-    console.log(kidsPreferedFirstName, "kidsPreferedFirstName kidsPayload");
-    console.log(nationality, "nationality kidsPayload");
-    console.log(ethnicity, "ethnicity kidsPayload");
-    console.log(languages, "languages kidsPayload");
-    console.log(maritalStatus, "maritalStatus kidsPayload");
-    console.log(dateOfBirth, "dateOfBirth kidsPayload");
     if (
       parentFirstName !== "" &&
       parentEmail !== "" &&
@@ -604,16 +491,14 @@ const KidsformOne = ({ sendDataToParent }) => {
         publicUrl: kidsPreferedFirstName.replace(/ /g, "-"),
       };
       setIsLoading(true);
-      console.log(userId, "userId");
       if (!userId) {
-        console.log("signup block");
         await ApiHelper.post(API.kidsSignUp, formData)
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
               setMessage("Registered Successfully");
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(`/talent-otp?${resData.data.data}`);
               }, 1000);
@@ -621,7 +506,7 @@ const KidsformOne = ({ sendDataToParent }) => {
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
               }, 1000);
             }
@@ -637,7 +522,7 @@ const KidsformOne = ({ sendDataToParent }) => {
               setIsLoading(false);
               setMessage("Updated SuccessFully!");
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(
                   `/talent-signup-plan-details?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
@@ -647,7 +532,7 @@ const KidsformOne = ({ sendDataToParent }) => {
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
               }, 1000);
             }
@@ -659,7 +544,7 @@ const KidsformOne = ({ sendDataToParent }) => {
     } else {
       setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     }
@@ -667,7 +552,7 @@ const KidsformOne = ({ sendDataToParent }) => {
     if (!passwordMatch) {
       setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     }
@@ -676,10 +561,8 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [firstNameLetterError, setFirstNameLetterError] = useState(false);
   const [lastNameLetterError, setLastNameLetterError] = useState(false);
   const [kidsLegalFirstLetterError, setKidsLegalFirstError] = useState(false);
-  const [
-    kidsLegalLastNameLetterError,
-    setKidsLegalLastNameLetterError,
-  ] = useState(false);
+  const [kidsLegalLastNameLetterError, setKidsLegalLastNameLetterError] =
+    useState(false);
   const [
     kidsPrefferedFirstNameLetterError,
     setKidsPrefferedFirstNameLetterError,
@@ -691,7 +574,6 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const handleFirstNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setFirstNameLetterError(false);
@@ -716,14 +598,12 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setFirstNameLetterError(false);
     }
   };
   const handleLastNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setLastNameLetterError(false);
@@ -737,7 +617,6 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleLastNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setLastNameLetterError(false);
     }
@@ -745,7 +624,6 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const KidsLegalFirstNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setKidsLegalFirstError(false);
@@ -759,7 +637,6 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleKidsLegalKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setKidsLegalFirstError(false);
     }
@@ -767,7 +644,6 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const KidsLegalLastNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setKidsLegalLastNameLetterError(false);
@@ -781,7 +657,6 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleKidsLegalLastNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setKidsLegalLastNameLetterError(false);
     }
@@ -789,7 +664,6 @@ const KidsformOne = ({ sendDataToParent }) => {
 
   const kidsPreferedFirstNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setKidsPrefferedFirstNameLetterError(false);
@@ -803,14 +677,12 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleKidsPrefferedFirstNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setKidsPrefferedFirstNameLetterError(false);
     }
   };
   const kidsPreferedLastNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setKidsPrefferedLastNameLetterError(false);
@@ -824,7 +696,6 @@ const KidsformOne = ({ sendDataToParent }) => {
   };
 
   const handleKidsPrefferedLasttNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setKidsPrefferedLastNameLetterError(false);
     }
@@ -833,23 +704,10 @@ const KidsformOne = ({ sendDataToParent }) => {
   const [mobileNumError, setMobileNumError] = useState();
 
   const handleMobileChange = (value, countryData) => {
-    // Update the parentMobile state with the new phone number
     console.log(value, "handleMobileChange");
     setParentMobile(value);
     setParentMobileError(false);
   };
-
-  // const handleMobileChange = (e) => {
-  //   const value = e.target.value;
-  //   // Regular expression to allow only numbers and the "+" symbol
-  //   const onlyNumbersRegex = /^[0-9+]*$/;
-  //   if (!onlyNumbersRegex.test(value)) {
-  //     setMobileNumError(true);
-  //   } else {
-  //     setParentMobile(value);
-  //     setMobileNumError(false);
-  //   }
-  // };
 
   let line = document.querySelector(".line");
   let text = document.querySelector(".text");
@@ -861,7 +719,7 @@ const KidsformOne = ({ sendDataToParent }) => {
       password_strength_box.style.display = "none";
     }
 
-    password.oninput = function() {
+    password.oninput = function () {
       if (password.value.length == 0) {
         password_strength_box.style.display = "none";
       }
@@ -1270,19 +1128,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                         <label className="form-label">
                           Mobile No <span className="mandatory">*</span>
                         </label>
-
-                        {/* <input
-                            type="text"
-                            className="form-control"
-                            maxLength="15"
-                            pattern="[0-9]{10}"
-                            value={parentMobile}
-                            onChange={(e) => {
-                              handleMobileChange(e);
-                              setParentMobileError(false);
-                            }}
-                            placeholder=" Mobile No"
-                          ></input> */}
 
                         <MuiPhoneNumber
                           defaultCountry={"kh"}
@@ -1699,18 +1544,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                         <label className="form-label">
                           Date of Birth <span className="mandatory">*</span>
                         </label>
-
-                        {/* <input
-                            type="date"
-                            className="form-control"
-                            value={dateOfBirth}
-                            onChange={(e) => {
-                              handleDateChange(e);
-                              setDobError(false);
-                            }}
-                            placeholder=""
-                          ></input> */}
-
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                           <DatePicker
                             value={value}
@@ -1740,7 +1573,6 @@ const KidsformOne = ({ sendDataToParent }) => {
                           value={completedJobs}
                           onChange={(e) => {
                             const value = e.target.value;
-                            // Check if the value is a valid number and is non-negative
                             if (
                               /^\d*\.?\d*$/.test(value) &&
                               (value >= 0 || value === "")

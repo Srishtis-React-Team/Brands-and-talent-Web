@@ -1,20 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/css/forms/kidsformthree.scss";
-import Axios from "axios";
-import { API } from "../config/api";
 import PopUp from "../components/PopUp";
-import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 
 const AdultSuccess = () => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const greenTick = require("../assets/icons/greenTick.png");
   const bigTick = require("../assets/icons/bigTick.png");
   const gmailGrey = require("../assets/icons/gmailGrey.png");
   useEffect(() => {}, []);

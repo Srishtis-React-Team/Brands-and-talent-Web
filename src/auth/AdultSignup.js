@@ -5,12 +5,6 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
-import Axios from "axios";
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
-import { LoginSocialFacebook } from "reactjs-social-login";
-import { FacebookLoginButton } from "react-social-login-buttons";
-import MyFacebookLoginButton from "./facebookButton";
 import PopUp from "../components/PopUp";
 import { generateToken } from "../auth/firebase";
 
@@ -20,10 +14,6 @@ const AdultSignup = () => {
   }, []);
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
-  const fbLogo = require("../assets/icons/fbLogo.png");
-  const googleLogo = require("../assets/icons/googleLogo.png");
-  const kidsImage = require("../assets/images/kidsImage.png");
-  const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [adultName, setAdultName] = useState("");
@@ -39,11 +29,6 @@ const AdultSignup = () => {
   const [message, setMessage] = useState("");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [talentPasswordError, settalentPasswordError] = useState(false);
-  const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
-    false
-  );
-  const [talentConfirmPassword, setTalentConfirmPassword] = useState("");
   const handlePasswordChange = (e) => {
     setAdultPassword(e.target.value);
     setPasswordMatch(e.target.value === adultConfirmPassword);
@@ -55,7 +40,6 @@ const AdultSignup = () => {
     setConfirmPasswordError(false);
   };
   useEffect(() => {
-    //code for google auth
     console.log(googleUser, "googleUser");
   }, [googleUser]);
   const togglePasswordVisibility = () => {
@@ -98,12 +82,11 @@ const AdultSignup = () => {
     await ApiHelper.post(API.socialSignup, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          // alert("dfd");
           console.log(resData.data, "resdata.data socialSignup");
           setGoogleUser(resData?.data);
           setMessage("Registered Successfully Please Update Your Password");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             navigate("/update-talent-password", {
               state: { data: resData.data },
@@ -115,7 +98,7 @@ const AdultSignup = () => {
       .catch((err) => {
         setMessage("Error Occured Try Again");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       });
@@ -159,14 +142,14 @@ const AdultSignup = () => {
             console.log(resData.data, "adultSignUp");
             setMessage("Registered Successfully");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               navigate(`/otp-verification?${resData?.data?.data}`);
             }, 2000);
           } else if (resData.data.status === false) {
             setMessage(resData?.data?.message);
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 3000);
           }
@@ -175,21 +158,21 @@ const AdultSignup = () => {
           setIsLoading(false);
           setMessage("Error Occured Try Again");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         });
     } else {
       setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     }
     if (!passwordMatch) {
       setMessage("Password did not match");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     }
@@ -205,7 +188,7 @@ const AdultSignup = () => {
       password_strength_box.style.display = "none";
     }
 
-    password.oninput = function() {
+    password.oninput = function () {
       if (password.value.length == 0) {
         password_strength_box.style.display = "none";
       }

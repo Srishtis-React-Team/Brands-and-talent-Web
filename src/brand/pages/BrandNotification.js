@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../../helpers/ApiHelper.js";
 import { API } from "../../config/api.js";
-import TalentHeader from "../../layout/TalentHeader.js";
 import PopUp from "../../components/PopUp.js";
 import "../../assets/css/talent-dashboard.scss";
-import TalentSideMenu from "../../layout/TalentSideMenu.js";
-import { useLocation } from "react-router-dom";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import BrandHeader from "./BrandHeader.js";
@@ -71,12 +68,6 @@ const BrandNotification = () => {
         }
       })
       .catch((err) => {});
-    // navigate("/preview-job", {
-    //   state: {
-    //     from: "brand-notification",
-    //     jobId: item?.gigId,
-    //   },
-    // });
     navigate(`/talent/${item?.talentDetails?.publicUrl}`, {
       state: { talentData: item?.talentDetails },
     });

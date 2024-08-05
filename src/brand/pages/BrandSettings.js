@@ -1,32 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/forms/kidsform-one.scss";
-import Select from "react-select";
-import Axios from "axios";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
-import { useNavigate } from "react-router";
-import nationalityOptions from "../../components/nationalities";
-import languageOptions from "../../components/languages";
-import MuiPhoneNumber from "material-ui-phone-number";
-import TextField from "@mui/material/TextField";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import TalentHeader from "../../layout/TalentHeader";
-import TalentSideMenu from "../../layout/TalentSideMenu";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
 import Modal from "react-modal";
 import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
@@ -77,15 +59,12 @@ const BrandSettings = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [talentId, setTalentId] = useState(null);
-  const [talentData, setTalentData] = useState();
   const [showSidebar, setShowSidebar] = useState(true);
   const [talentPasswordError, settalentPasswordError] = useState(false);
   const [oldPasswordError, setOldPasswordError] = useState(false);
   const [allSamePasswordError, setAllSamePasswordError] = useState(false);
-  const [talentConfirmPasswordError, settalentConfirmPasswordError] = useState(
-    false
-  );
+  const [talentConfirmPasswordError, settalentConfirmPasswordError] =
+    useState(false);
   const [valueTabs, setValueTabs] = React.useState(0);
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
@@ -124,7 +103,6 @@ const BrandSettings = () => {
       left: "50%",
       right: "auto",
       bottom: "auto",
-      /* margin: '0 auto', */
       width: "450px",
       height: "270px",
       transform: "translate(-50%, -50%)",
@@ -162,7 +140,7 @@ const BrandSettings = () => {
         if (resData.data.status === true) {
           setMessage("Status Changed Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getBrand();
           }, 2000);
@@ -180,7 +158,7 @@ const BrandSettings = () => {
         if (resData.data.status === true) {
           setMessage("Status Changed Successfully");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             getBrand();
           }, 2000);
@@ -223,7 +201,7 @@ const BrandSettings = () => {
           if (resData.data.status === true) {
             setMessage("Password Updated Successfully");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               setTalentOldPassword("");
               setTalentPassword("");
@@ -233,7 +211,7 @@ const BrandSettings = () => {
             setMessage(resData?.data?.message);
             setOpenPopUp(true);
             setOldPasswordError(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
               getBrand();
             }, 2000);
@@ -261,7 +239,7 @@ const BrandSettings = () => {
       password_strength_box.style.display = "none";
     }
 
-    password.oninput = function() {
+    password.oninput = function () {
       if (password.value.length == 0) {
         password_strength_box.style.display = "none";
       }
@@ -388,154 +366,148 @@ const BrandSettings = () => {
             <CustomTabPanel value={valueTabs} index={0}>
               <div className="update-password-main w-100 py-3 px-0 row">
                 <div className="kids-form-section col-md-6 mb-3">
-                  
-                    <label className="form-label">
-                      Old Password <span className="mandatory">*</span>
-                    </label>
-                    <div className="form-group has-search adult-password-wrapper">
-                      <span className="fa fa-lock form-control-feedback"></span>
-                      <input
-                        type={showOldPassword ? "text" : "password"}
-                        className="form-control adult-signup-inputs"
-                        placeholder="Old Password"
-                        value={oldPassword}
-                        onChange={(e) => {
-                          handleOldPasswordChange(e);
-                          setTalentOldPassword(e.target.value);
-                          setOldPasswordError(false);
-                        }}
-                      ></input>
-                      {showOldPassword ? (
-                        <span
-                          className="fa fa-eye show-password-icon"
-                          onClick={toggleOldPasswordVisibility}
-                        ></span>
-                      ) : (
-                        <span
-                          className="fa fa-eye-slash show-password-icon"
-                          onClick={toggleOldPasswordVisibility}
-                        ></span>
-                      )}
-                      {oldPasswordError && (
-                        <div className="invalid-fields">
-                          Enter Correct Old Password
-                        </div>
-                      )}
-                    </div>
-                  
+                  <label className="form-label">
+                    Old Password <span className="mandatory">*</span>
+                  </label>
+                  <div className="form-group has-search adult-password-wrapper">
+                    <span className="fa fa-lock form-control-feedback"></span>
+                    <input
+                      type={showOldPassword ? "text" : "password"}
+                      className="form-control adult-signup-inputs"
+                      placeholder="Old Password"
+                      value={oldPassword}
+                      onChange={(e) => {
+                        handleOldPasswordChange(e);
+                        setTalentOldPassword(e.target.value);
+                        setOldPasswordError(false);
+                      }}
+                    ></input>
+                    {showOldPassword ? (
+                      <span
+                        className="fa fa-eye show-password-icon"
+                        onClick={toggleOldPasswordVisibility}
+                      ></span>
+                    ) : (
+                      <span
+                        className="fa fa-eye-slash show-password-icon"
+                        onClick={toggleOldPasswordVisibility}
+                      ></span>
+                    )}
+                    {oldPasswordError && (
+                      <div className="invalid-fields">
+                        Enter Correct Old Password
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="kids-form-section col-md-6 mb-3">
-                  
-                    <label className="form-label">
-                      New Password <span className="mandatory">*</span>
-                    </label>
-                    <div className="form-group has-search adult-password-wrapper">
-                      <span className="fa fa-lock form-control-feedback"></span>
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        className="form-control password adult-signup-inputs"
-                        placeholder="New Password"
-                        value={talentPassword}
-                        onChange={(e) => {
-                          handlePasswordChange(e);
-                          setTalentPassword(e.target.value);
-                          settalentPasswordError(false);
-                        }}
-                      ></input>
-                      {talentPassword && (
-                        <div className="password_strength_box">
-                          <div className="password_strength">
-                            <p className="text">Weak</p>
-                            <div className="line_box">
-                              <div className="line"></div>
-                            </div>
-                          </div>
-                          <div className="tool_tip_box">
-                            <span>
-                              <i className="bi bi-question-circle"></i>
-                            </span>
-                            <div className="tool_tip">
-                              <p style={{ listStyleType: "none" }}>
-                                <b>Password must be:</b>
-                              </p>
-                              <p>At least 8 character long</p>
-                              <p>At least 1 uppercase letter</p>
-                              <p>At least 1 lowercase letter</p>
-                              <p>At least 1 number</p>
-                              <p>At least 1 special character from !@#$%^&*</p>
-                            </div>
+                  <label className="form-label">
+                    New Password <span className="mandatory">*</span>
+                  </label>
+                  <div className="form-group has-search adult-password-wrapper">
+                    <span className="fa fa-lock form-control-feedback"></span>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control password adult-signup-inputs"
+                      placeholder="New Password"
+                      value={talentPassword}
+                      onChange={(e) => {
+                        handlePasswordChange(e);
+                        setTalentPassword(e.target.value);
+                        settalentPasswordError(false);
+                      }}
+                    ></input>
+                    {talentPassword && (
+                      <div className="password_strength_box">
+                        <div className="password_strength">
+                          <p className="text">Weak</p>
+                          <div className="line_box">
+                            <div className="line"></div>
                           </div>
                         </div>
-                      )}
-                      {showPassword ? (
-                        <span
-                          className="fa fa-eye show-password-icon"
-                          onClick={togglePasswordVisibility}
-                        ></span>
-                      ) : (
-                        <span
-                          className="fa fa-eye-slash show-password-icon"
-                          onClick={togglePasswordVisibility}
-                        ></span>
-                      )}
-                      {talentPasswordError && (
-                        <div className="invalid-fields">
-                          Please enter Password
+                        <div className="tool_tip_box">
+                          <span>
+                            <i className="bi bi-question-circle"></i>
+                          </span>
+                          <div className="tool_tip">
+                            <p style={{ listStyleType: "none" }}>
+                              <b>Password must be:</b>
+                            </p>
+                            <p>At least 8 character long</p>
+                            <p>At least 1 uppercase letter</p>
+                            <p>At least 1 lowercase letter</p>
+                            <p>At least 1 number</p>
+                            <p>At least 1 special character from !@#$%^&*</p>
+                          </div>
                         </div>
-                      )}
-                    </div>
-                 
+                      </div>
+                    )}
+                    {showPassword ? (
+                      <span
+                        className="fa fa-eye show-password-icon"
+                        onClick={togglePasswordVisibility}
+                      ></span>
+                    ) : (
+                      <span
+                        className="fa fa-eye-slash show-password-icon"
+                        onClick={togglePasswordVisibility}
+                      ></span>
+                    )}
+                    {talentPasswordError && (
+                      <div className="invalid-fields">
+                        Please enter Password
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="kids-form-section col-md-6 mb-3">
-               
-                    <label className="form-label">
-                      Confirm New Password <span className="mandatory">*</span>
-                    </label>
-                    <div className="form-group has-search adult-confirm-password-wrapper">
-                      <span className="fa fa-lock form-control-feedback"></span>
-                      <input
-                        type={showConfirmPassword ? "text" : "password"}
-                        className="form-control adult-signup-inputs"
-                        placeholder="Confirm New Password"
-                        value={talentConfirmPassword}
-                        onChange={(e) => {
-                          handleConfirmPasswordChange(e);
-                          setTalentConfirmPassword(e.target.value);
-                          settalentConfirmPasswordError(false);
-                        }}
-                      ></input>
-                      {showConfirmPassword ? (
-                        <span
-                          className="fa fa-eye show-confirm-password-icon"
-                          onClick={toggleConfirmPasswordVisibility}
-                        ></span>
-                      ) : (
-                        <span
-                          className="fa fa-eye-slash show-confirm-password-icon"
-                          onClick={toggleConfirmPasswordVisibility}
-                        ></span>
-                      )}
-                      {talentConfirmPasswordError && (
-                        <div className="invalid-fields">
-                          Please enter Password
-                        </div>
-                      )}
-                    </div>
-                    {!passwordMatch &&
-                      talentConfirmPassword &&
-                      talentConfirmPassword.length && (
-                        <p className="password-wrong">
-                          Passwords does not match.
-                        </p>
-                      )}
-                    {allSamePasswordError &&
-                      talentConfirmPassword &&
-                      talentConfirmPassword.length && (
-                        <p className="password-wrong">
-                          Old and new password can't be same
-                        </p>
-                      )}
-                  
+                  <label className="form-label">
+                    Confirm New Password <span className="mandatory">*</span>
+                  </label>
+                  <div className="form-group has-search adult-confirm-password-wrapper">
+                    <span className="fa fa-lock form-control-feedback"></span>
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      className="form-control adult-signup-inputs"
+                      placeholder="Confirm New Password"
+                      value={talentConfirmPassword}
+                      onChange={(e) => {
+                        handleConfirmPasswordChange(e);
+                        setTalentConfirmPassword(e.target.value);
+                        settalentConfirmPasswordError(false);
+                      }}
+                    ></input>
+                    {showConfirmPassword ? (
+                      <span
+                        className="fa fa-eye show-confirm-password-icon"
+                        onClick={toggleConfirmPasswordVisibility}
+                      ></span>
+                    ) : (
+                      <span
+                        className="fa fa-eye-slash show-confirm-password-icon"
+                        onClick={toggleConfirmPasswordVisibility}
+                      ></span>
+                    )}
+                    {talentConfirmPasswordError && (
+                      <div className="invalid-fields">
+                        Please enter Password
+                      </div>
+                    )}
+                  </div>
+                  {!passwordMatch &&
+                    talentConfirmPassword &&
+                    talentConfirmPassword.length && (
+                      <p className="password-wrong">
+                        Passwords does not match.
+                      </p>
+                    )}
+                  {allSamePasswordError &&
+                    talentConfirmPassword &&
+                    talentConfirmPassword.length && (
+                      <p className="password-wrong">
+                        Old and new password can't be same
+                      </p>
+                    )}
                 </div>
                 <div className="add-portfoli-section">
                   <div className="add-portfolia-btn">
@@ -575,7 +547,10 @@ const BrandSettings = () => {
                     </span>
                   </div>
                 </div>
-                <div className="btn-img-edit-wrapper" style={{justifyContent: 'left'}} >
+                <div
+                  className="btn-img-edit-wrapper"
+                  style={{ justifyContent: "left" }}
+                >
                   <Button
                     onClick={(e) => {
                       setAlertpop({
@@ -606,10 +581,6 @@ const BrandSettings = () => {
 
       <Modal style={customStylesAlert} isOpen={alertpop?.status === true}>
         <div>
-          {/* <div className='uploadHead'>
-                        <h4 className='mt-2'>Reason For stock Return</h4>
-                        <img src={CloseIcon} className='pop-close' onClick={() => { setIsModalOpen(false); }} />
-                    </div> */}
           <div className="alertBox">
             <div className="col-md-12  mx-5">
               <div className="alert-icon-section">

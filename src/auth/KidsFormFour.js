@@ -1,34 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsformthree.scss";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
-import Select from "react-select";
-import Axios from "axios";
-import { API } from "../config/api";
 import PopUp from "../components/PopUp";
-import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 
 const KidsFormFour = ({ onDataFromChild, ...props }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const greenTick = require("../assets/icons/greenTick.png");
   const bigTick = require("../assets/icons/bigTick.png");
   const gmailGrey = require("../assets/icons/gmailGrey.png");
   useEffect(() => {}, []);
   const openGmail = () => {
-    // Open Gmail in a new tab
     window.open("https://mail.google.com/", "_blank");
   };
-  const handleRadioChange = () => {};
 
   return (
     <>
@@ -42,7 +28,6 @@ const KidsFormFour = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            {/* <div className="step-text">Step 6 of 6</div> */}
           </div>
           <button
             type="button"

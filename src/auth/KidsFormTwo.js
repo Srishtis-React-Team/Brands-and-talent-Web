@@ -9,15 +9,12 @@ import { useNavigate } from "react-router";
 const KidsFormTwo = () => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [pricingList, setPricingList] = useState([]);
   const [selectedPlan, setPlan] = useState("");
   const [selectedIndex, setSelectedIndex] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const greenTick = require("../assets/icons/greenTick.png");
-
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
   const userId = urlParams.get("userId");
@@ -49,7 +46,7 @@ const KidsFormTwo = () => {
     if (!selectedPlan) {
       setMessage("Please choose Annual Or Monthly");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     } else if (selectedPlan) {
@@ -65,7 +62,7 @@ const KidsFormTwo = () => {
             console.log(resData.data, "resData subscriptionPlan");
             setMessage("Plan Selected SuccessFully!");
             setOpenPopUp(true);
-            setTimeout(function() {
+            setTimeout(function () {
               setOpenPopUp(false);
             }, 1000);
           }

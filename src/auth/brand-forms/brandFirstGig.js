@@ -1,11 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/dashboard.css";
 import "../../assets/css/register.scss";
 import { useNavigate } from "react-router";
-import { useLocation } from "react-router-dom";
-import { API } from "../../config/api";
-import { ApiHelper } from "../../helpers/ApiHelper";
-import Axios from "axios";
 import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
 import { generateToken } from "../firebase";
@@ -15,7 +11,6 @@ const BrandFirstGig = () => {
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [adultSignupDisabled, setAdultSignupDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [position, setPosition] = useState("");
   const [positionError, setPositionError] = useState(false);
@@ -36,7 +31,6 @@ const BrandFirstGig = () => {
   ];
 
   useEffect(() => {
-    //code for google auth
     console.log(openPopUp, "openPopUp");
   }, [openPopUp]);
 

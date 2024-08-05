@@ -20,20 +20,14 @@ const ResetPassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
-
-  // Get the current URL
   const windowUrl = window.location.href;
   console.log(windowUrl, "windowUrl");
   const queryString = windowUrl.split("?")[1];
   console.log("Search queryString:", queryString);
   console.log("Search queryString:", typeof queryString);
-
-  // Split the URL path by '/'
   const pathParts = windowUrl.split("/");
-
-  // Extract type and token from the pathParts array
-  const userType = pathParts[4]; // "brand"
-  const token = pathParts[5]; // "38e9e46b425e7bcbbcaf9d9ecd8adf4242bde1c8"
+  const userType = pathParts[4];
+  const token = pathParts[5];
 
   console.log("Type: extracted", userType);
   console.log("Token: extracted", token);
@@ -87,7 +81,7 @@ const ResetPassword = () => {
               setIsLoading(false);
               setMessage("Password Reset Successfull!");
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(`/success-password?${paramsValue}`);
               }, 2000);
@@ -96,7 +90,7 @@ const ResetPassword = () => {
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
               }, 1000);
             }
@@ -117,7 +111,7 @@ const ResetPassword = () => {
               setIsLoading(false);
               setMessage("Password Reset Successfull!");
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(`/success-password?${paramsValue}`);
               }, 2000);
@@ -126,7 +120,7 @@ const ResetPassword = () => {
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
               }, 1000);
             }
@@ -147,7 +141,7 @@ const ResetPassword = () => {
               setIsLoading(false);
               setMessage("Password Reset Successfull!");
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(`/success-password?${paramsValue}`);
               }, 2000);
@@ -156,7 +150,7 @@ const ResetPassword = () => {
               setIsLoading(false);
               setMessage(resData.data.message);
               setOpenPopUp(true);
-              setTimeout(function() {
+              setTimeout(function () {
                 setOpenPopUp(false);
               }, 1000);
             }
@@ -168,7 +162,7 @@ const ResetPassword = () => {
     } else {
       setMessage("Password Does not match!");
       setOpenPopUp(true);
-      setTimeout(function() {
+      setTimeout(function () {
         setOpenPopUp(false);
       }, 2000);
     }

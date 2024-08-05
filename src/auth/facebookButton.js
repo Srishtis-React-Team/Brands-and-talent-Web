@@ -12,7 +12,6 @@ const config = {
   },
   activeStyle: { background: "#293e69" },
 };
-/** My Facebook login button. */
 const MyFacebookLoginButton = createButton(config);
 
 export default MyFacebookLoginButton;

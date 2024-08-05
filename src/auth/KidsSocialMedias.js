@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsform-one.scss";
 import "../assets/css/forms/kidsformthree.scss";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import Axios from "axios";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
@@ -19,7 +18,6 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
   const xTwitter = require("../assets/icons/social-media-icons/xTwitter.png");
   const youTube = require("../assets/icons/social-media-icons/youTube.png");
   const linkdin = require("../assets/icons/social-media-icons/linkdin.png");
-  const docsIcon = require("../assets/icons/docsIcon.png");
 
   const [isLoading, setIsLoading] = useState(false);
   const [instagramFollowers, setInstagramFollowers] = useState("");
@@ -29,24 +27,16 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
   const [threadsFollowers, setThreadsFollowers] = useState("");
   const [tiktoksFollowers, setTiktoksFollowers] = useState("");
   const [youtubesFollowers, setYoutubesFollowers] = useState("");
-
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const kidsImage = require("../assets/images/kidsImage.png");
   const paramsValues = window.location.search;
-  const urlParams = new URLSearchParams(paramsValues);
   const [updateDisabled, setUpdateDisabled] = useState(false);
-
   const url = window.location.href;
   const queryString = url.split("?")[1];
   console.log(" queryString:", queryString);
 
-  useEffect(() => {}, []);
-  useEffect(() => {}, [updateDisabled]);
-
   const editKids = async () => {
-    // navigate(`/talent-signup-files-success`);
     const formData = {
       instaFollowers: instagramFollowers,
       tiktokFollowers: tiktoksFollowers,
@@ -64,7 +54,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
           setIsLoading(false);
           setMessage("Updated SuccessFully!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
             navigate(
               `/talent-signup-plan-details?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
@@ -76,10 +66,6 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
       .catch((err) => {
         setIsLoading(false);
       });
-  };
-
-  const goBack = () => {
-    navigate(`/talent-signup-plan-details?userId=${queryString}`);
   };
 
   return (

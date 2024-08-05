@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/forms/kidsform-one.scss";
 import "../../assets/css/createjobs.scss";
 import "../../assets/css/talent-profile.css";
-import Select from "react-select";
-import Axios from "axios";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
@@ -36,10 +34,6 @@ const BrandFavorites = () => {
   const [message, setMessage] = useState("");
   const heartIcon = require("../../assets/icons/heart.png");
   const favoruiteIcon = require("../../assets/icons/favorite.png");
-  const locationIcon = require("../../assets/icons/locationIcon.png");
-  const darkStar = require("../../assets/icons/darkStar.png");
-  const brightStar = require("../../assets/icons/brightStar.png");
-  const jobIcon = require("../../assets/icons/jobIcon.png");
   const pinkStar = require("../../assets/icons/pink-star.png");
 
   const toggleMenu = () => {
@@ -83,13 +77,13 @@ const BrandFavorites = () => {
           setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
           getFavorites();
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("Please Login First");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -122,13 +116,13 @@ const BrandFavorites = () => {
           setOpenPopUp(true);
           getFavorites();
 
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage(resData.data.message);
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -140,8 +134,6 @@ const BrandFavorites = () => {
 
   const openTalent = (item) => {
     console.log(item, "item");
-    // navigate("/talent", { state: { talentData: item } });
-
     navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
@@ -154,7 +146,6 @@ const BrandFavorites = () => {
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
   const rateTalent = (item) => {
-    // alert("rateTalent");
     if (currentUserType === "brand") {
       setModalData(item);
       const modalElement = document.getElementById("ratingModal");
@@ -175,7 +166,7 @@ const BrandFavorites = () => {
       .then((resData) => {
         setMessage("Rating Submitted SuccessFully!");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           const modalElement = document.getElementById("ratingModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
@@ -187,16 +178,11 @@ const BrandFavorites = () => {
         console.log(err);
       });
   };
-
-  // ---- ---- Const ---- ---- //
   const stars = document.querySelectorAll(".stars i");
   const starsNone = document.querySelector(".rating-box");
-
-  // ---- ---- Stars ---- ---- //
   stars.forEach((star, index1) => {
     star.addEventListener("click", () => {
       stars.forEach((star, index2) => {
-        // ---- ---- Active Star ---- ---- //
         index1 >= index2
           ? star?.classList.add("active")
           : star?.classList.remove("active");
@@ -378,9 +364,6 @@ const BrandFavorites = () => {
         <div className="modal-dialog  modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              {/* <p id="ratingModalLabel" className="modal-job-title">
-                  Rate {modalData?.preferredChildFirstname}
-                </p> */}
               <button
                 type="button"
                 className="btn-close"

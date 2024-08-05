@@ -331,7 +331,7 @@ const Register = () => {
         setJobImage(resData.data.data);
         setMessage(resData.data.message);
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 2000);
       })
@@ -401,7 +401,7 @@ const Register = () => {
         setMessage(resData.data.msg);
         if (resData.data.status === true) {
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -425,7 +425,7 @@ const Register = () => {
           setAdultParentData(resData?.data);
           console.log(adultParentData, "adultParentData");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
@@ -433,7 +433,7 @@ const Register = () => {
           setAdultSignupDisabled(false);
           setMessage("Error Occured Try Again!");
           setOpenPopUp(true);
-          setTimeout(function() {
+          setTimeout(function () {
             setOpenPopUp(false);
           }, 1000);
         }
@@ -443,7 +443,7 @@ const Register = () => {
         setAdultSignupDisabled(false);
         setMessage("Error Occured Try Again!");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
         }, 1000);
       });

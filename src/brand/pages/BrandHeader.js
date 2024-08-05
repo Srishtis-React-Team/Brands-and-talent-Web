@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import { Dropdown } from "@mui/base/Dropdown";
-import { Menu, MenuListboxSlotProps } from "@mui/base/Menu";
+import { Menu } from "@mui/base/Menu";
 import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
 import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { styled } from "@mui/system";
@@ -33,23 +33,18 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const sliderIcon = require("../../assets/icons/sliders.png");
 
   useEffect(() => {
-    // Function to toggle dropdown when clicking the bell icon
     const handleBellIconClick = (event) => {
       if (event.target.closest(".notification_icon")) {
         const dropdown = document.querySelector(".notification-dropdown");
         dropdown.classList.toggle("active");
       }
     };
-
-    // Function to close dropdown when clicking the close icon
     const handleCloseIconClick = (event) => {
       if (event.target.closest(".notification-close")) {
         const dropdown = document.querySelector(".notification-dropdown");
         dropdown.classList.remove("active");
       }
     };
-
-    // Function to close dropdown when clicking outside of it
     const handleCloseDropdownOutsideClick = (event) => {
       const dropdown = document.querySelector(".notification-dropdown");
       if (
@@ -60,23 +55,15 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       }
     };
 
-    // Attach event listeners when the component mounts
     document.addEventListener("click", handleBellIconClick);
     document.addEventListener("click", handleCloseIconClick);
     document.addEventListener("click", handleCloseDropdownOutsideClick);
-
-    // Clean up event listeners when the component unmounts
     return () => {
       document.removeEventListener("click", handleBellIconClick);
       document.removeEventListener("click", handleCloseIconClick);
       document.removeEventListener("click", handleCloseDropdownOutsideClick);
     };
   }, []);
-
-  const closeNotification = () => {
-    // var dropdown = document.querySelector(".notification-dropdown");
-    // dropdown.classList.toggle("active");
-  };
 
   const logout = () => {
     navigate("/");
@@ -154,7 +141,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setcurrentUserId(null);
         setMessage("Logged out successfully");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/");
         }, 1000);
@@ -166,14 +153,12 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   };
 
   const handleClickBlogs = (step) => {
-    // navigate("/blogs", { state: { step: step } });
     window.open("https://brandsandtalent.substack.com/", "_blank");
   };
 
   useEffect(() => {
     if (myState === true) {
       getBrand();
-      // alert("getBrandHeader");
     }
   }, [myState]);
 
@@ -213,7 +198,6 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                 <div
                   onClick={() => {
                     setMenuOpen(!menuOpen);
-                    // sendMessageToParent({ menuStatus: menuOpen });
                   }}
                   className="menu-icon"
                 >
@@ -320,240 +304,9 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                   <React.Fragment>
                     <div className="header-search-wrapper">
                       <SearchHeaderComponent />
-
-                      {/* <div className="header-search-icon">
-                        <i className="fas fa-search"></i>
-                      </div>
-                      <div className="header-search-input">
-                        <input
-                          type="text"
-                          className="header-search-input-style"
-                        />
-                      </div>
-                      <div className="header-filter-icon">
-                        <img className="filter-icon" src={sliderIcon} alt="" />
-                      </div> */}
                     </div>
-                    {/* <BootstrapDialog
-                      onClose={handleClose}
-                      aria-labelledby="customized-dialog-title"
-                      open={open}
-                      PaperProps={{
-                        sx: {
-                          marginTop: "10vh", // Adjust this value to suit your needs
-                          position: "absolute",
-                          top: 0,
-                          maxHeight: "90vh", // Optional: Limit the height of the dialog
-                        },
-                      }}
-                    >
-                      <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                        Filter Jobs
-                      </DialogTitle>
-                      <IconButton
-                        aria-label="close"
-                        onClick={handleClose}
-                        sx={{
-                          position: "absolute",
-                          right: 8,
-                          top: 8,
-                          color: (theme) => theme.palette.grey[500],
-                        }}
-                      >
-                        <CloseIcon />
-                      </IconButton>
-                      <DialogContent dividers>
-                        <div className="search-filter-section">
-                          <div className="search-labels">Keywords</div>
-                          <div>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Enter Keyword"
-                              ref={jobNameRef}
-                            ></input>
-                          </div>
-
-                          <div className="kids-form-row mt-3">
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
-                                <label className="form-label">Location</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Location"
-                                  ref={jobLocationRef}
-                                ></input>
-                              </div>
-                            </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3">
-                                <label className="form-label">Age</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Age"
-                                  ref={jobAgeRef}
-                                ></input>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="kids-form-section">
-                            <div className="mb-3">
-                              <label className="form-label">Skills</label>
-                              <Select
-                                isMulti
-                                name="colors"
-                                options={skillsList}
-                                valueField="value"
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                onChange={(value) => selectSkills(value)}
-                                styles={customStyles}
-                              />
-                            </div>
-                          </div>
-                          <div className="kids-form-row mt-3">
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
-                                <label className="form-label">Job Name</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Location"
-                                  ref={jobFullNameRef}
-                                ></input>
-                              </div>
-                            </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
-                                <label className="form-label">Job Type</label>
-                                <select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  onChange={selectjobType}
-                                  value={jobType}
-                                  style={{ fontSize: "14px" }}
-                                >
-                                  <option value="" disabled selected>
-                                    Select Job Type
-                                  </option>
-                                  {jobTypeOptions.map((option, index) => (
-                                    <option key={index} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button className="search-popup-btn" onClick={handleClose}>
-                          Filter
-                        </Button>
-                      </DialogActions>
-                    </BootstrapDialog> */}
                   </React.Fragment>
                 </div>
-
-                {/* <div className="notification-bell-wrapper">
-                  <div className="notification_wrap">
-                    <div className="notification_icon ">
-                      <i className="bi bi-bell"></i>
-                    </div>
-                    <div className="notification-dropdown">
-                      <div className=" notification-header">
-                        <div className="notification-message-text">Notifications</div>
-                        <div>
-                          <i className="fas fa-close notification-close"></i>
-                        </div>
-                      </div>
-                      {notificationList &&
-                        notificationList.length > 0 &&
-                        notificationList.map((item, index) => (
-                          <div
-                            className="notify_item"
-                            key={index}
-                            onClick={(e) => {
-                              gotomessage(item);
-                            }}
-                          >
-                            <div className="notify_img">
-                              {item?.talentDetails?.image &&
-                                item.talentDetails.image[0]?.fileData && (
-                                  <img
-                                    className="notification-user-image"
-                                    src={`${API.userFilePath}${item.talentDetails.image[0].fileData}`}
-                                    alt="profile_pic"
-                                  />
-                                )}
-                            </div>
-                            <div className="notify_info">
-                              <p>
-                                {item?.talentDetails?.preferredChildFirstname} Applied
-                                for {item?.gigDetails?.jobTitle}
-                              </p>
-                              <span className="notify_time">Just now</span>
-                            </div>
-                          </div>
-                        ))}
-
-                      {notificationList.length === 0 && (
-                        <>
-                          <div className="notify_item">
-                            No Notifications Available
-                          </div>
-                        </>
-                      )} */}
-
-                {/* <div className="notify_item">
-                        <div className="notify_img">
-                          <img
-                            className="notification-user-image"
-                            src={model1}
-                            alt="profile_pic"
-                          ></img>
-                        </div>
-                        <div className="notify_info">
-                          <p>Alex Send a message</p>
-                          <span className="notify_time">55 minutes ago</span>
-                        </div>
-                      </div>
-                      <div className="notify_item">
-                        <div className="notify_img">
-                          <img
-                            className="notification-user-image"
-                            src={model1}
-                            alt="profile_pic"
-                          ></img>
-                        </div>
-                        <div className="notify_info">
-                          <p>Alex Send a message</p>
-                          <span className="notify_time">2 hours ago</span>
-                        </div>
-                      </div>
-                      <div className="notify_item">
-                        <div className="notify_img">
-                          <img
-                            className="notification-user-image"
-                            src={model1}
-                            alt="profile_pic"
-                          ></img>
-                        </div>
-                        <div className="notify_info">
-                          <p>Alex Send a message</p>
-                          <span className="notify_time">6 hours ago</span>
-                        </div>
-                      </div> */}
-                {/* </div>
-                  </div>
-                </div>
-
-                <div className="chat-icon-header">
-                  <i className="bi bi-chat-dots"></i>
-                </div> */}
 
                 <Dropdown>
                   <MenuButton>
@@ -570,12 +323,6 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                     </div>
                   </MenuButton>
                   <Menu slots={{ listbox: AnimatedListbox }}>
-                    {/* <MenuItem
-                      style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("profile")}
-                    >
-                      Profile
-                    </MenuItem> */}
                     <MenuItem
                       style={{ cursor: "pointer" }}
                       onClick={createHandleMenuClick("profile")}
