@@ -15,7 +15,7 @@ const PrivacyPolicy = () => {
 
   const fetchContentByType = async () => {
     const formData = {
-      contentType: "privacy policy",
+      contentType: "Privacy policy",
     };
     await ApiHelper.post(API.fetchContentByType, formData)
       .then((resData) => {

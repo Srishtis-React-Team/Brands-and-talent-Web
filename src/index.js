@@ -1,20 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import "./index.css";
-import App from "./App";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import reportWebVitals from "./reportWebVitals";
-
 import { StyledEngineProvider } from "@mui/material";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "./index.css";
 
-// basename="/project/brandsandtalent/"basename="/project/brandsandtalent/"
-// https://hybrid.sicsglobal.com/project/brandsandtalent/
-// "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent/",
-
-// basename=""
-// "homepage": "https://staging.brandsandtalent.com/",
-// "homepage": "https://brandsandtalent.com/",
 ReactDOM.render(
   <BrowserRouter>
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
@@ -22,8 +14,8 @@ ReactDOM.render(
         <App />
       </StyledEngineProvider>
     </GoogleOAuthProvider>
-    ;
   </BrowserRouter>,
   document.getElementById("root")
 );
+
 reportWebVitals();
