@@ -3,36 +3,17 @@ import "../assets/css/resources.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 const Resources = () => {
-  const [data, setDate] = useState([]);
   useEffect(() => {}, []);
-  let condition;
   const [question_1, selectQuestion1] = useState(true);
   const [question_2, selectQuestion2] = useState(false);
-  const [question_3, selectQuestion3] = useState(false);
-  const resorcesBanner1 = require("../assets/images/resources/Group 3960.png");
-  const resorcesBanner2 = require("../assets/images/resources/Group 3961.png");
-  const talentGroup_1 = require("../assets/images/resources/Group 4.png");
-  const talentGroup_2 = require("../assets/images/resources/Group 5.png");
-  const talentGroup_3 = require("../assets/images/resources/Group 6.png");
-  const talentGroup_4 = require("../assets/images/resources/Group 6.png");
-  const checkIcon = require("../assets/icons/check-square.png");
-  const plus = require("../assets/icons/plus-square.png");
   const [caseList, setCaseList] = useState([]);
-
-  function handleForms(e) {
-    if (e == "question_1") {
-      selectQuestion1(!question_1);
-    }
-    if (e == "question_2") {
-      selectQuestion2(!question_2);
-    }
-  }
 
   useEffect(() => {
     setCaseList([
       {
         id: 1,
-        photo: talentGroup_1,
+        photo:
+          "https://brandsandtalent.com/backend/uploads/1098fe83-e450-4f8a-bacd-a6054d58cef2.png",
         name: "Alexander",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
@@ -42,7 +23,8 @@ const Resources = () => {
       },
       {
         id: 2,
-        photo: talentGroup_2,
+        photo:
+          "https://brandsandtalent.com/backend/uploads/400ce9f3-ffae-4278-9916-3ed3173383cf.png",
         name: "william",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "America",
@@ -52,7 +34,8 @@ const Resources = () => {
       },
       {
         id: 3,
-        photo: talentGroup_3,
+        photo:
+          "https://brandsandtalent.com/backend/uploads/e472e377-c3b9-468b-b6d7-cc0fc6585d3f.png",
         name: "Michael",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         location: "Canada",
@@ -62,7 +45,8 @@ const Resources = () => {
       },
       {
         id: 4,
-        photo: talentGroup_4,
+        photo:
+          "https://brandsandtalent.com/backend/uploads/7b95da22-a37c-4cc1-a7cf-8806351cd543.png",
         name: "Andrea",
         address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
         isFavorite: false,
@@ -71,7 +55,8 @@ const Resources = () => {
         rating: 1,
       },
     ]);
-  }, []);
+    console.log(caseList, "caseLis");
+  }, [caseList]);
   return (
     <>
       <Header />
@@ -108,12 +93,18 @@ const Resources = () => {
                 </div>
               </div>
               <div className="resource-image-wrapper">
-                <img className="resource-image" src={resorcesBanner2}></img>
+                <img
+                  className="resource-image"
+                  src="https://brandsandtalent.com/static/media/abt1.5b3df7cb4e1d8d66a71f.png"
+                ></img>
               </div>
             </div>
             <div className="resource-wrapper top-space">
               <div className="resource-image-wrapper">
-                <img className="resource-image" src={resorcesBanner1}></img>
+                <img
+                  className="resource-image"
+                  src="https://brandsandtalent.com/static/media/abt2.7fb0e7c0e8bee70c4360.png"
+                ></img>
               </div>
               <div className="resource-content-wrapper">
                 <div className="resource-name">

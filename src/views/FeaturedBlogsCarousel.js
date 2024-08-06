@@ -6,34 +6,23 @@ import { useNavigate } from "react-router";
 
 const FeaturedBlogsCarousel = () => {
   const navigate = useNavigate();
-
-  const model1 = require("../assets/images/model1.png");
-  const model2 = require("../assets/images/model2.png");
-  const model3 = require("../assets/images/model3.png");
-  const model4 = require("../assets/images/model4.png");
-  const model5 = require("../assets/images/model5.png");
-  const model6 = require("../assets/images/model6.png");
-  const model7 = require("../assets/images/model7.png");
-  const model8 = require("../assets/images/model8.png");
-  const model9 = require("../assets/images/model9.png");
-  const instaLogo = require("../assets/icons/social-media-icons/instagram.png");
   const blogs = [
     {
-      image: model1,
+      image: "",
       title: "Exploring the Beauty of Nature",
       heading: "Nature's Wonders",
       description:
         "Discover the breathtaking landscapes and diverse wildlife that nature has to offer in this in-depth exploration of the great outdoors.",
     },
     {
-      image: model2,
+      image: "",
       title: "Tech Innovations of 2024",
       heading: "Future of Technology",
       description:
         "A look at the most exciting technological advancements and innovations that are set to shape our future in 2024 and beyond.",
     },
     {
-      image: model3,
+      image: "",
       title: "Healthy Eating Habits",
       heading: "Nutrition and Wellness",
       description:

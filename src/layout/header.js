@@ -18,7 +18,6 @@ import searchPathOptions from "../components/SearchPaths";
 const Header = ({ onData }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
-  const mbtLogo = require("../assets/images/bt-logo.jpg");
   const gridLogo = require("../assets/icons/4243313_ux_basic_app_menu_icon 1.png");
   const cofeeIcon = require("../assets/icons/cofeeIcon.png");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -613,7 +612,7 @@ const Header = ({ onData }) => {
           //   navigate("/");
           // }}
         >
-          <img alt="img" className="btLogo" src={mbtLogo}></img>
+          <img alt="img" className="btLogo" src={btLogo}></img>
         </div>
 
         <div className="mobile-nav-functions">

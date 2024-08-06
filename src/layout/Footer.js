@@ -17,7 +17,6 @@ const Footer = (props) => {
     fcmToken,
   } = CurrentUser();
   const navigate = useNavigate();
-  const fieldsBackground = require("../assets/images/fields-background.png");
   const btLogo = require("../assets/images/LOGO.png");
   const socialIcons = require("../assets/icons/Social.png");
   const fbBlack = require("../assets/icons/social-media-icons/fb-black.png");
@@ -169,6 +168,25 @@ const Footer = (props) => {
     );
   };
 
+  const [contentsList, setContentsList] = useState([]);
+
+  useEffect(() => {
+    fetchPageContents();
+  }, []);
+
+  const fetchPageContents = async () => {
+    const formData = {
+      contentType: "Page Contents",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        if (resData) {
+          setContentsList(resData?.data?.data?.items[0]);
+        }
+      })
+      .catch((err) => {});
+  };
+
   return (
     <>
       {/* <Header sendMessageToParent={handleMessageFromHeader} /> */}
@@ -177,12 +195,10 @@ const Footer = (props) => {
           {props.props != "blog" && (
             <section className="main-footer-form">
               <div className="get-discover title mt-0">
-                Stay Ahead with Our Newsletter
+                {contentsList?.title6}
               </div>
               <div className="get-discover-description mt-0">
-                Your go-to source for creator jobs, industry news & insights,
-                exclusive interviews, compelling case studies, brand tips &
-                tricks, talent tips & tricks, and the latest announcements
+                {contentsList?.title7}
               </div>
               <div className="form-fields row justify-content-center">
                 {/* <div className="col-md-4 form-group">
@@ -254,10 +270,7 @@ const Footer = (props) => {
                 <img alt="img" className="btLogo" src={btLogo}></img>
               </div>
               <div className="company-info">
-                connecting brands and talent™ <br /> Welcome to Brands & Talent
-                (BT), the ultimate platform for creators, influencers, and
-                talent to shine. Connect directly with brands and clients,
-                amplify your voice, and showcase your work globally.
+                connecting brands and talent™ <br /> {contentsList?.title8}
               </div>
               <div className="social-medias">
                 <div>

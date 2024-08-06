@@ -10,8 +10,6 @@ const IndustryNews = () => {
   const navigate = useNavigate();
   const props = "blog";
 
-  const bl_image = require("../assets/images/blogs/blog1.png");
-
   const navigateTO = async (event) => {
     if (event == "industry-news") {
       navigate("/view-blog");

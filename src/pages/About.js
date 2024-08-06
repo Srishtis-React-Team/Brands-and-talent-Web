@@ -3,10 +3,6 @@ import Header from "../layout/header";
 import Footer from "../layout/Footer";
 
 const About = () => {
-  const navigate = useNavigate();
-  const banner1 = require("../assets/images/abt1.png");
-  const banner2 = require("../assets/images/abt2.png");
-
   return (
     <>
       <Header />{" "}
@@ -14,10 +10,6 @@ const About = () => {
         <div className="popular-header">
           <div className="container">
             <div className="header-title">About Us</div>
-            {/* <div className="header-menu">
-              <div>Home</div>
-              <div>Learn</div>
-            </div> */}
           </div>
         </div>
       </section>
@@ -72,7 +64,6 @@ const About = () => {
                 <img
                   className="img-fluid"
                   src={
-                    // "https://brandsandtalent.com/static/media/abt1.5b3df7cb4e1d8d66a71f.png"
                     "https://brandsandtalent.com//backend/uploads/060b5e10-128d-455e-9a63-9d4bd1531031.webp"
                   }
                 ></img>
@@ -84,7 +75,6 @@ const About = () => {
                 <img
                   className="img-fluid"
                   src={
-                    // "https://brandsandtalent.com/static/media/abt2.7fb0e7c0e8bee70c4360.png"
                     "https://brandsandtalent.com//backend/uploads/76f0ef01-9a84-4459-90f6-b2c7aaa9f1e3.webp"
                   }
                 ></img>

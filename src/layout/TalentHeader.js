@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import { Dropdown } from "@mui/base/Dropdown";
-import { Menu, MenuListboxSlotProps } from "@mui/base/Menu";
+import { Menu } from "@mui/base/Menu";
 import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
 import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { styled } from "@mui/system";
@@ -13,16 +13,7 @@ import { CssTransition } from "@mui/base/Transitions";
 import { PopupContext } from "@mui/base/Unstable_Popup";
 import PopUp from "../components/PopUp";
 import Button from "@mui/material/Button";
-// import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Select from "react-select";
 import CurrentUser from "../CurrentUser";
 import SearchHeaderComponent from "./SearchHeaderComponent";
 import { useLocation } from "react-router-dom";
@@ -32,8 +23,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
-  const model1 = require("../assets/images/girl1.png");
-  const sliderIcon = require("../assets/icons/sliders.png");
   const cofeeIcon = require("../assets/icons/cofeeIcon.png");
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,27 +33,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const [currentUserId, setcurrentUserId] = useState(null);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [jobName, setJobName] = useState("");
-  const [jobLocation, setJobLocation] = useState("");
-  const [age, setAge] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // const currentPathname = window.location.pathname;
   const location = useLocation();
   const currentPathname = location.pathname;
   const isTalentProfilePage = /^\/talent\/.+/.test(currentPathname);
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      minHeight: "50px", // Reset the minHeight to avoid clipping
-    }),
-    menu: (provided, state) => ({
-      ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
-    }),
-  };
 
   useEffect(() => {
     setTimeout(function () {
@@ -78,12 +51,10 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   }, [talentId]);
 
   const handleClickBlogs = (step) => {
-    // navigate("/blogs", { state: { step: step } });
     window.open("https://brandsandtalent.substack.com/", "_blank");
   };
 
   useEffect(() => {
-    // Function to toggle dropdown when clicking the bell icon
     const handleBellIconClick = (event) => {
       if (event.target.closest(".notification_icon")) {
         const dropdown = document.querySelector(".notification-dropdown");
@@ -91,7 +62,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       }
     };
 
-    // Function to close dropdown when clicking the close icon
     const handleCloseIconClick = (event) => {
       if (event.target.closest(".notification-close")) {
         const dropdown = document.querySelector(".notification-dropdown");
@@ -99,7 +69,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       }
     };
 
-    // Function to close dropdown when clicking outside of it
     const handleCloseDropdownOutsideClick = (event) => {
       const dropdown = document.querySelector(".notification-dropdown");
       if (
@@ -109,13 +78,9 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         dropdown?.classList?.remove("active");
       }
     };
-
-    // Attach event listeners when the component mounts
     document.addEventListener("click", handleBellIconClick);
     document.addEventListener("click", handleCloseIconClick);
     document.addEventListener("click", handleCloseDropdownOutsideClick);
-
-    // Clean up event listeners when the component unmounts
     return () => {
       document.removeEventListener("click", handleBellIconClick);
       document.removeEventListener("click", handleCloseIconClick);
@@ -174,7 +139,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         navigate(`/talent/${talentData.publicUrl}`, {
           state: { talentData },
         });
-        // navigate("/talent", { state: { talentData: talentData } });
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
@@ -185,7 +149,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
           navigate("/");
         }, 1000);
       } else if (menuItem === "dashboard") {
-        // navigate(`${"/talent-dashboard"}?${talentData?._id}`);
         navigate(`${"/talent-home"}`);
       } else if (menuItem === "edit") {
         navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
@@ -201,15 +164,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         navigate("/find-creators");
       }
     };
-
-    // if (menuItem == "find-talent") {
-    //   setMessage("You need to sign Up as Brand to find talents");
-    //   setOpenPopUp(true);
-    //   setTimeout(function() {
-    //     setOpenPopUp(false);
-    //     navigate("/brand-firstGig");
-    //   }, 3000);
-    // }
   };
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -273,7 +227,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     setOpen(false);
   };
 
-  // Ref to store the input element
   const jobNameRef = useRef(null);
   const jobLocationRef = useRef(null);
   const jobAgeRef = useRef(null);
@@ -287,15 +240,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     "Temporary",
     "Other",
   ];
-
-  const [jobType, setjobType] = useState("");
-
-  const selectSkills = (event) => {};
-
-  // Function to handle getting the input value
-  const selectjobType = (event) => {
-    setjobType(event.target.value);
-  };
 
   const getSkills = async () => {
     await ApiHelper.get(API.getSkills)
@@ -340,7 +284,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                 <div
                   onClick={() => {
                     setMenuOpen(!menuOpen);
-                    // sendMessageToParent({ menuStatus: menuOpen });
                   }}
                   className="menu-icon"
                 >
@@ -361,9 +304,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                   >
                     Find Talent
                   </div>
-                  {/* <div className="navTxt">
-                    <NavLink to="/job-list">Jobs List</NavLink>
-                  </div> */}
                   <div className="navTxt">
                     <NavLink to="/how-it-works">How it works</NavLink>
                   </div>
