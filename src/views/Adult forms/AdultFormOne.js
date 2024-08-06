@@ -706,8 +706,8 @@ const AdultFormOne = () => {
                   <div className="profession-section-cover">
                     <div className="row">
                       <div className="kids-form-section col-md-12 mb-3">
-                        <label className="adults-titles kids-form-title mb-2">
-                          Profession / Skills (Choose any 5){" "}
+                        <label style={{fontWeight:'bold',fontSize:'small'}} className="adults-titles kids-form-title mb-2">
+                          Select 1 to 5 profession/skills that showcase your talents, experience, and passion{" "}
                           <span className="mandatory">*</span>
                         </label>
 
@@ -821,8 +821,8 @@ const AdultFormOne = () => {
                     </div>
                   </div>
                   <div className="adults-titles kids-form-title mb-2">
-                    <span>
-                      Select 3 to 6 categories relevant to your profile{" "}
+                    <span style={{fontWeight:'bold',fontSize:'small'}}>
+                    Select 3 to 6 categories that best reflect your skills and interests for portfolio and job notifications{" "}
                       <span className="mandatory">*</span>
                     </span>
                   </div>
@@ -853,7 +853,7 @@ const AdultFormOne = () => {
                     selectedCategories?.length > 6) &&
                     selectedCategoriesError && (
                       <div className="invalid-fields">
-                        Please select 3 to 6 categories relevant to your profile
+                        Select 3 to 6 categories that best reflect your skills and interests for portfolio and job notifications
                       </div>
                     )}
                   <div className="adults-titles kids-form-title mt-3">
