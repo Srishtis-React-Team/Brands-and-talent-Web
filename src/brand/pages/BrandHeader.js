@@ -19,7 +19,6 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
-  const model1 = require("../../assets/images/girl1.png");
   const cofeeIcon = require("../../assets/icons/cofeeIcon.png");
 
   const [menuOpen, setMenuOpen] = useState(false);

@@ -7,14 +7,12 @@ import RangeSlider from "../components/RangeSlider.js";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import { useNavigate } from "react-router-dom";
-import nationalityOptions from "../components/nationalities.js";
 import languageOptions from "../components/languages.js";
 import PopUp from "../components/PopUp.js";
 import CurrentUser from "../CurrentUser.js";
 import nationalitiesArray from "../components/NationalitiesArray.js";
 import categoriesArray from "../components/categoriesArray.js";
 import SocialMediasList from "../components/SocialMediasList.js";
-import CreatableSelect from "react-select/creatable";
 import useFieldDatas from "../config/useFieldDatas.js";
 
 const FindCreators = () => {
@@ -29,37 +27,11 @@ const FindCreators = () => {
     brandName,
   } = CurrentUser();
   const navigate = useNavigate();
-  const searchIcon = require("../assets/icons/search.png");
   const heartIcon = require("../assets/icons/heart.png");
-  const gents = require("../assets/images/gents.png");
-  const girl1 = require("../assets/images/girl1.png");
-  const girl2 = require("../assets/images/girl2.png");
-  const girl3 = require("../assets/images/girl3.png");
-  const girl4 = require("../assets/images/girl4.jpg");
-  const girl5 = require("../assets/images/girl5.png");
-  const girl6 = require("../assets/images/girl6.png");
-  const girl7 = require("../assets/images/girl7.png");
-  const girl8 = require("../assets/images/girl8.png");
-  const girl9 = require("../assets/images/girl9.png");
-  const girl10 = require("../assets/images/girl10.png");
-  const girl11 = require("../assets/images/girl11.png");
-  const girl12 = require("../assets/images/girl12.png");
-  const girl13 = require("../assets/images/girl13.png");
-  const girl14 = require("../assets/images/girl14.png");
   const pinkStar = require("../assets/icons/pink-star.png");
 
-  const girl15 = require("../assets/images/girl15.png");
-  const girl16 = require("../assets/images/girl16.png");
-  const starIcon = require("../assets/icons/star.png");
   const favoruiteIcon = require("../assets/icons/favorite.png");
-  const locationIcon = require("../assets/icons/locationIcon.png");
-  const darkStar = require("../assets/icons/darkStar.png");
-  const brightStar = require("../assets/icons/brightStar.png");
-  const jobIcon = require("../assets/icons/jobIcon.png");
   const [filterOpen, setFilterOpen] = useState(false);
-  const [isClearable, setIsClearable] = useState(true);
-  const [isSearchable, setIsSearchable] = useState(true);
-  const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isRtl, setIsRtl] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -123,14 +95,14 @@ const FindCreators = () => {
       ...provided,
       minHeight: "55px",
       fontSize: "14px",
-      fontFamily: "sans-serif", // Reset the minHeight to avoid clipping
+      fontFamily: "sans-serif",
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "600px", // Adjust the maxHeight as per your requirement
+      maxHeight: "600px",
       zIndex: 9999,
       fontSize: "14px",
-      fontFamily: "sans-serif", // Ensure menu appears above other elements
+      fontFamily: "sans-serif",
     }),
   };
 
@@ -209,7 +181,6 @@ const FindCreators = () => {
     setNationality([]);
     setFullName("");
     setFeature([]);
-    // window.location.reload();
   };
 
   const customNoOptionsMessageState = ({ inputValue }) =>
@@ -284,30 +255,6 @@ const FindCreators = () => {
     "Cosplay/Memes",
     "Other",
   ];
-
-  // const industryList = [
-  //   "Animal",
-  //   "Arts and Entertainment",
-  //   "Automotive",
-  //   "Business",
-  //   "Construction",
-  //   "Education",
-  //   "Energy and Environment",
-  //   "Engineering",
-  //   "Finance and Insurance",
-  //   "Food",
-  //   "Government",
-  //   "Healthcare",
-  //   "Legal",
-  //   "Manufacturing",
-  //   "Personal Care",
-  //   "Real Estate",
-  //   "Retail",
-  //   "Technology",
-  //   "Transportation and Storage",
-  //   "Travel",
-  //   "N/A",
-  // ];
 
   const gendersOptions = [
     "Man",
@@ -404,8 +351,6 @@ const FindCreators = () => {
       .catch((err) => {});
   };
   const openTalent = (item) => {
-    // navigate("/talent", { state: { talentData: item } });
-
     navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
@@ -493,25 +438,20 @@ const FindCreators = () => {
 
   const selectLanguage = (selectedOptions) => {
     if (!selectedOptions || selectedOptions.length === 0) {
-      // Handle case when all options are cleared
-      setLanguages([]); // Clear the languages state
+      setLanguages([]);
       return;
     }
-
-    // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    setLanguages(selectedLanguages); // Update languages state with all selected languages
+    setLanguages(selectedLanguages);
   };
   const selectNationality = (selectedOptions) => {
     if (!selectedOptions || selectedOptions.length === 0) {
-      // Handle case when all options are cleared
-      setNationality([]); // Clear the languages state
+      setNationality([]);
       return;
     }
-    // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
 
-    setNationality(selectedLanguages); // Update languages state with all selected languages
+    setNationality(selectedLanguages);
   };
   const selectMaritalStatus = (event) => {
     setMaritalStatus(event.target.value);
@@ -542,17 +482,17 @@ const FindCreators = () => {
   };
 
   const onMinChange = (event) => {
-    setMinAge(event.target.value); // Update the state with the new value
+    setMinAge(event.target.value);
   };
   const onMaxChange = (event) => {
-    setMaxAge(event.target.value); // Update the state with the new value
+    setMaxAge(event.target.value);
   };
 
   const onMinFollowersChange = (event) => {
-    setMinFollowers(event.target.value); // Update the state with the new value
+    setMinFollowers(event.target.value);
   };
   const onMaxFollowersChange = (event) => {
-    setMaxFollowers(event.target.value); // Update the state with the new value
+    setMaxFollowers(event.target.value);
   };
 
   const search = async () => {
@@ -598,18 +538,6 @@ const FindCreators = () => {
         }
       })
       .catch((err) => {});
-  };
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      minHeight: "unset", // Reset the minHeight to avoid clipping
-    }),
-    menu: (provided, state) => ({
-      ...provided,
-      maxHeight: "200px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
-    }),
   };
 
   const handleSelectedCity = (state) => {
@@ -685,15 +613,12 @@ const FindCreators = () => {
       .catch((err) => {});
   };
 
-  // ---- ---- Const ---- ---- //
   const stars = document.querySelectorAll(".stars i");
   const starsNone = document.querySelector(".rating-box");
 
-  // ---- ---- Stars ---- ---- //
   stars.forEach((star, index1) => {
     star.addEventListener("click", () => {
       stars.forEach((star, index2) => {
-        // ---- ---- Active Star ---- ---- //
         index1 >= index2
           ? star.classList.add("active")
           : star.classList.remove("active");
@@ -708,10 +633,6 @@ const FindCreators = () => {
         <div className="popular-header" style={{ marginTop: "64px" }}>
           <div className="container">
             <div className="header-title">Find Talents</div>
-            {/* <div className="header-menu">
-              <div>Home</div>
-              <div>Talents</div>
-            </div> */}
           </div>
         </div>
       </section>
@@ -811,21 +732,6 @@ const FindCreators = () => {
                       />
                     </div>
                   </div>
-                  {/* <div className="keyword-wrapper">
-                    <div className="filter-items">Category</div>
-                    <div className="creators-filter-select inpWid">
-                      <Select
-                        isMulti
-                        name="colors"
-                        options={categoriesArray}
-                        valueField="value"
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        onChange={(value) => selectCategory(value)}
-                        styles={customStylesProfession}
-                      />
-                    </div>
-                  </div> */}
                   <div className="keyword-wrapper">
                     <div className="filter-items">Country</div>
                     <div className="creators-filter-select inpWid">
@@ -850,7 +756,7 @@ const FindCreators = () => {
                       <Select
                         placeholder="Select state..."
                         options={stateList.map((state) => ({
-                          value: state.stateId, // or whatever unique identifier you want to use
+                          value: state.stateId,
                           label: state.name,
                         }))}
                         value={state ? { value: state, label: state } : null}
@@ -866,7 +772,7 @@ const FindCreators = () => {
                       <Select
                         placeholder="Select City..."
                         options={cityList.map((city) => ({
-                          value: city.cityId, // or whatever unique identifier you want to use
+                          value: city.cityId,
                           label: city.name,
                         }))}
                         value={
@@ -945,10 +851,6 @@ const FindCreators = () => {
                     <div className="filter-items">Age</div>
                     <div className="creators-filter-select creators-filter-select-range inpWid">
                       <RangeSlider min={1} max={100} onChange={onRangeChange} />
-                      {/* <p>
-                        Change in slider:
-                        {min},{max}
-                      </p> */}
                     </div>
                   </div>
                   <div className="keyword-wrapper creator-age-main ">
@@ -1189,18 +1091,6 @@ const FindCreators = () => {
                                       </>
                                     )}
 
-                                    {/* <div className="find-creator-address ">
-                                      {item.profession?.map(
-                                        (profession, index) => (
-                                          <React.Fragment key={index}>
-                                            {profession.value}
-                                            {index !==
-                                              item.profession.length - 1 && ","}
-                                          </React.Fragment>
-                                        )
-                                      )}
-                                    </div> */}
-
                                     {item?.profession && (
                                       <>
                                         <div className="talent-details-wrapper nweAlign pt-1 pb-0">
@@ -1216,21 +1106,6 @@ const FindCreators = () => {
                                       </>
                                     )}
 
-                                    {/* {item?.relevantCategories && (
-                                      <>
-                                        <div className="talent-details-wrapper nweAlign pt-1 pb-0">
-                                          <div className="logo-fill-briefcase">
-                                            <i className="bi bi-bookmarks-fill model-job-icons"></i>
-                                          </div>
-                                          <div className="contSect">
-                                            <span>
-                                              {item?.relevantCategories[0]}
-                                            </span>
-                                          </div>
-                                        </div>
-                                      </>
-                                    )} */}
-
                                     <span className="job-company_dtls nweAlign pt-2 d-flex">
                                       <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
                                       <span>
@@ -1238,18 +1113,6 @@ const FindCreators = () => {
                                         {item?.parentCountry}{" "}
                                       </span>
                                     </span>
-
-                                    {/* <div className="find-creator-address ">
-                                      {item.profession?.map(
-                                        (profession, index) => (
-                                          <React.Fragment key={index}>
-                                            {profession.value}
-                                            {index !==
-                                              item.profession.length - 1 && ","}
-                                          </React.Fragment>
-                                        )
-                                      )}
-                                    </div> */}
                                   </div>
                                 </div>
                               </div>
@@ -1280,9 +1143,6 @@ const FindCreators = () => {
         <div className="modal-dialog  modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              {/* <p id="ratingModalLabel" className="modal-job-title">
-                  Rate {modalData?.preferredChildFirstname}
-                </p> */}
               <button
                 type="button"
                 className="btn-close"

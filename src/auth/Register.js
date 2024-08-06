@@ -31,7 +31,6 @@ const Register = () => {
   const greenTick = require("../assets/icons/greenTick.png");
   const bigTick = require("../assets/icons/bigTick.png");
   const gmailGrey = require("../assets/icons/gmailGrey.png");
-  const model = require("../assets/images/model-profile.png");
   const kidsImage = require("../assets/images/kidsImage.png");
 
   const [loader, setLoader] = useState(false);
@@ -1156,9 +1155,9 @@ const Register = () => {
                       alt=""
                     />
                   )}
-                  {!gigPreview && (
+                  {/* {!gigPreview && (
                     <img className="gig-image" src={model} alt="" />
-                  )}
+                  )} */}
                 </div>
                 <div className="gig-content">
                   <div className="gig-name">{jobTitle}</div>

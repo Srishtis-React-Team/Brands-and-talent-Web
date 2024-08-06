@@ -1,45 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
-import TalentHeader from "../layout/TalentHeader.js";
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.scss";
-import TalentSideMenu from "../layout/TalentSideMenu.js";
-import { Dropdown } from "@mui/base/Dropdown";
-import { Menu, MenuListboxSlotProps } from "@mui/base/Menu";
-import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
-import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { styled } from "@mui/system";
-import { CssTransition } from "@mui/base/Transitions";
-import { PopupContext } from "@mui/base/Unstable_Popup";
-import Button from "@mui/material/Button";
-// import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Select from "react-select";
 import Header from "../layout/header.js";
 import useFieldDatas from "../config/useFieldDatas.js";
 
 const GetBooked = () => {
   const { categoryList, professionList } = useFieldDatas();
-
-  const workPlaceTypesOptions = [
-    "Man",
-    "Woman",
-    "Non-binary",
-    "TransworkPlaceType Woman",
-    "TransworkPlaceType Man",
-    "AworkPlaceType",
-    "Other",
-    "Prefer not to say",
-  ];
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
@@ -73,14 +48,12 @@ const GetBooked = () => {
     control: (provided, state) => ({
       ...provided,
       minHeight: "45px",
-      // Ensure the control is above other elements
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      // Ensure the menu appears above other elements
+      maxHeight: "500px",
     }),
-    menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensure menu portal appears above other elements
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
   };
 
   const getCities = async (data) => {
@@ -96,13 +69,10 @@ const GetBooked = () => {
 
   const handleSelectedCountry = (event) => {
     setCountry(event?.value);
-    // setState("");
-    // handleSelectedState("");
     getStates(event?.value);
   };
   const handleSelectedState = (state) => {
     setState(state?.label);
-    // setKidsCity("");
     getCities({
       countryName: country,
       stateName: state?.label,
@@ -127,42 +97,33 @@ const GetBooked = () => {
   };
 
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const offcanvasRef = useRef(null); // Reference to the offcanvas element
+  const offcanvasRef = useRef(null);
   const [gigsList, setGigsList] = useState([]);
   const [topBrandsList, setTopBrandsList] = useState([]);
-  const [selectedSkills, setSelectedSkills] = useState([]);
-  const [isFilled, setIsFilled] = useState(true);
   const [currentUserId, setcurrentUserId] = useState(null);
   const [currentUser_image, setCurrentUserImage] = useState("");
   const [currentUser_type, setCurrentUserType] = useState("");
-  const girl1 = require("../assets/images/girl1.png");
-  const btLogo = require("../assets/images/LOGO.png");
+
   const sliderIcon = require("../assets/icons/sliders.png");
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "50px", // Reset the minHeight to avoid clipping
+      minHeight: "50px",
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
+      maxHeight: "500px",
+      zIndex: 9999,
     }),
   };
   const jobImage = require("../assets/icons/jobImage.png");
-  const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const doitnow = require("../assets/images/doitnow.png");
-  const headsetLogo = require("../assets/icons/headset.png");
-  const [showSidebar, setShowSidebar] = useState(true);
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [skillsList, setSkillsList] = useState([]);
 
   const url = window.location.href;
-  const queryString = url.split("?")[1];
 
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
@@ -202,8 +163,7 @@ const GetBooked = () => {
         navigate("/login");
       }, 1000);
     } else if (currentUserId && currentUser_type == "talent") {
-      setModalData(data); // Set data to be displayed in the modal
-      // Open the modal programmatically
+      setModalData(data);
       if (data?.isApplied != "Applied") {
         const modalElement = document.getElementById("applyModal");
         const bootstrapModal = new window.bootstrap.Modal(modalElement);
@@ -241,7 +201,6 @@ const GetBooked = () => {
         setTimeout(function () {
           setOpenPopUp(false);
           getRecentGigs();
-          // Close the modal programmatically
           const modalElement = document.getElementById("applyModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
@@ -286,13 +245,6 @@ const GetBooked = () => {
     setOpen(false);
   };
 
-  const [keywordError, setKeywordError] = useState(false);
-  const [jobNameError, setJobNameError] = useState(false);
-  const [locationError, setLocationError] = useState(false);
-  const [ageError, setAgeError] = useState(false);
-  const [skillsError, setSkillsError] = useState(false);
-  const [jobTypeError, setJobTypeError] = useState(false);
-  const [workPlaceType, setWorkPlaceType] = useState("");
   const ageList = ["4-17", "18+"];
   const selectedSkillsRef = useRef([]);
 
@@ -314,36 +266,16 @@ const GetBooked = () => {
     let category;
     let employment_type;
 
-    // Get the select element
     var selectElement = document.getElementById("workPlaceSelect");
-    // Get the selected value
     work_place_type = selectElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-
-    // Get the select element
     var selectJobElement = document.getElementById("jobtypeID");
-    // Get the selected value
     job_type = selectJobElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-
-    // Get the select element
     var selectEmploymentElement = document.getElementById("employmentTypeID");
-    // Get the selected value
     employment_type = selectEmploymentElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-
-    // Get the select element
     var selectAgeElement = document.getElementById("ageSelectID");
-    // Get the selected value
     job_age = selectAgeElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-
-    // Get the select element
     var selectCategoryElement = document.getElementById("selectedCategoryID");
-    // Get the selected value
     category = selectCategoryElement?.value;
-    // Now you can use the selectedValue variable to access the value of the selected option
-
     if (keyWordRef.current) {
       key_word = keyWordRef?.current?.value;
     }
@@ -396,7 +328,6 @@ const GetBooked = () => {
     setOpen(false);
   };
 
-  // Ref to store the input element
   const keyWordRef = useRef(null);
   const jobLocationRef = useRef(null);
   const jobNameRef = useRef(null);
@@ -415,13 +346,6 @@ const GetBooked = () => {
   useEffect(() => {
     getSkills();
   }, []);
-
-  const [jobType, setjobType] = useState("");
-
-  // Function to handle getting the input value
-  const selectjobType = (event) => {
-    setjobType(event.target.value);
-  };
 
   const getSkills = async () => {
     await ApiHelper.get(API.getSkills)
@@ -462,7 +386,6 @@ const GetBooked = () => {
             navigate("/login");
           }, 3000);
         }
-        // setMessage("Error Occured Try Again");
       });
 
     setOpen(false);
@@ -585,7 +508,7 @@ const GetBooked = () => {
                           <Select
                             placeholder="Select state..."
                             options={stateList.map((state) => ({
-                              value: state.stateId, // or whatever unique identifier you want to use
+                              value: state.stateId,
                               label: state.name,
                             }))}
                             value={state?.label}
@@ -602,7 +525,7 @@ const GetBooked = () => {
                           <Select
                             placeholder="Select City..."
                             options={cityList.map((city) => ({
-                              value: city.cityId, // or whatever unique identifier you want to use
+                              value: city.cityId,
                               label: city.name,
                             }))}
                             value={kidsCity?.label}
@@ -699,7 +622,6 @@ const GetBooked = () => {
                       </div>
                     </DialogContent>
                     <DialogActions>
-                      {/* <Button onClick={handleClose}>Cancel</Button> */}
                       <button
                         type="button"
                         className="btn gift-payment-btn"
@@ -721,7 +643,6 @@ const GetBooked = () => {
                           <div className="recent-setone alignDivs mb-2">
                             <div className="userBox">
                               <div className="recent-img-div">
-                                {/* <i className="bi bi-briefcase-fill "></i> */}
                                 {item?.brandImage && (
                                   <img
                                     className="recent-img"
@@ -876,8 +797,6 @@ const GetBooked = () => {
         </div>
       </div>
 
-      {/* Bootstrap Modal */}
-      {/* Bootstrap Modal */}
       <div
         className="modal fade"
         id="applyModal"

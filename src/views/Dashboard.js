@@ -10,11 +10,7 @@ import CurrentUser from "../CurrentUser";
 const Dashboard = () => {
   const { currentUserId, currentUserType, talentName, brandName } =
     CurrentUser();
-  console.log(talentName, "talentName");
-  console.log(brandName, "brandName");
   const navigate = useNavigate();
-  const whiteStar = require("../assets/icons/white_star.png");
-  const checkMark = require("../assets/icons/check-circle.png");
   const adidasIcon = require("../assets/icons/6539fea9ad514fe89ff5d7fc_adidas.png");
   const ubisoftIcon = require("../assets/icons/6539fd74ad514fe89ff48cdd_ubisoft.png");
   const wppIcon = require("../assets/icons/651508c575f862fac120d7b1_wpp.webp");
@@ -37,10 +33,6 @@ const Dashboard = () => {
   const [Model, showModel] = useState(false);
   const [Director, showDirector] = useState(false);
   const [Singer, showSinger] = useState(false);
-  const [model, setModel] = useState(true);
-  const [seeker, setSeeker] = useState(false);
-  const [gender, setGenders] = useState("");
-  const [genderList, setGenderList] = useState([]);
   const [talentList, setTalentList] = useState([]);
   const [talentsList, setTalentsList] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
@@ -53,9 +45,14 @@ const Dashboard = () => {
   const [allUsersCount, setAllUsersCount] = useState(0);
 
   const [productServicesList, setProductServicesList] = useState([]);
+  const [contentsList, setContentsList] = useState([]);
 
   useEffect(() => {
+    getTalentList();
+    getUsersCount();
     fetchContentByType();
+    getFeaturedArticles();
+    fetchPageContents();
   }, []);
 
   const fetchContentByType = async () => {
@@ -71,9 +68,22 @@ const Dashboard = () => {
       .catch((err) => {});
   };
 
+  const fetchPageContents = async () => {
+    const formData = {
+      contentType: "Page Contents",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        if (resData) {
+          setContentsList(resData?.data?.data?.items[0]);
+        }
+      })
+      .catch((err) => {});
+  };
+
   useEffect(() => {
-    console.log(productServicesList, "productServicesList");
-  }, [productServicesList]);
+    console.log(contentsList, "contentsList");
+  }, [contentsList]);
 
   const getByProfession = async (e) => {
     let formData = {
@@ -91,7 +101,6 @@ const Dashboard = () => {
     await ApiHelper.get(API.getTalentList)
       .then((resData) => {
         if (resData) {
-          console.log(resData, "resData");
           setTalentsList(resData.data.data);
         }
       })
@@ -102,15 +111,9 @@ const Dashboard = () => {
     setVisibleCount((prevCount) => prevCount + 4);
   };
 
-  useEffect(() => {
-    getTalentList();
-    getUsersCount();
-  }, []);
-
   const getUsersCount = async () => {
     await ApiHelper.get(API.countUsers)
       .then((resData) => {
-        console.log("countUsers", resData?.data?.data);
         const data = resData?.data?.data;
         if (data) {
           data.forEach((item) => {
@@ -136,9 +139,7 @@ const Dashboard = () => {
           });
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const addFavorite = async (data) => {
@@ -209,15 +210,9 @@ const Dashboard = () => {
             }, 1000);
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }
   };
-
-  useEffect(() => {
-    setGenderList(["Male", "Female"]);
-  }, []);
 
   const createHandleMenuClick = (blogData) => {
     return () => {
@@ -228,52 +223,46 @@ const Dashboard = () => {
   };
 
   function handleTabs(e) {
-    if (e === "All") {
-      getTalentList();
-      showAll(true);
+    const actions = {
+      All: () => {
+        getTalentList();
+        showAll(true);
+      },
+      more: () => {
+        navigate(`/find-creators`);
+      },
+      Actor: () => {
+        showActor(true);
+      },
+      Model: () => {
+        showModel(true);
+      },
+      "featured-members": () => {
+        setFeaturedMembers(true);
+      },
+      Director: () => {
+        showDirector(true);
+      },
+      Singer: () => {
+        showSinger(true);
+      },
+    };
+    if (actions[e]) {
+      actions[e]();
     } else {
       showAll(false);
-    }
-    if (e !== "All") {
-      getByProfession(e);
-    }
-    if (e == "more") {
-      navigate(`/find-creators`);
-    }
-    if (e == "Actor") {
-      showActor(true);
-    } else {
       showActor(false);
-    }
-    if (e == "Model") {
-      showModel(true);
-    } else {
       showModel(false);
-    }
-    if (e == "featured-members") {
-      setFeaturedMembers(true);
-    } else {
       setFeaturedMembers(false);
-    }
-    if (e == "Actor") {
-      showActor(true);
-    } else {
-      showActor(false);
-    }
-    if (e == "Director") {
-      showDirector(true);
-    } else {
       showDirector(false);
-    }
-    if (e == "Singer") {
-      showSinger(true);
-    } else {
       showSinger(false);
+      if (e !== "All") {
+        getByProfession(e);
+      }
     }
   }
 
   const handleMessageFromHeader = (message) => {
-    console.log(message, "message from header");
     if (message === "open-kids-form") {
       openModal();
     }
@@ -290,7 +279,6 @@ const Dashboard = () => {
   };
 
   const openTalent = (item) => {
-    console.log(item, "item");
     navigate(`/talent/${item.publicUrl}`, {
       state: { talentData: item },
     });
@@ -300,10 +288,6 @@ const Dashboard = () => {
   const handleStarClick = (index) => {
     setStarCount(index + 1);
   };
-
-  useEffect(() => {
-    console.log(starCount, "starCount");
-  }, [starCount]);
 
   const [modalData, setModalData] = useState(null);
   const [comments, setComments] = useState(null);
@@ -337,9 +321,7 @@ const Dashboard = () => {
           getTalentList();
         }, 2000);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const stars = document.querySelectorAll(".stars i");
@@ -354,23 +336,16 @@ const Dashboard = () => {
     });
   });
 
-  useEffect(() => {
-    getFeaturedArticles();
-  }, []);
-
   const [featuredBlogsLsit, setFeaturedBlogsLsit] = useState(0);
 
   const getFeaturedArticles = async () => {
     await ApiHelper.get(API.getFeaturedArticles)
       .then((resData) => {
         if (resData) {
-          console.log(resData?.data?.data, "resData getFeaturedArticles");
           setFeaturedBlogsLsit(resData?.data?.data.slice(0, 4));
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const blogReadMore = async () => {
@@ -399,19 +374,14 @@ const Dashboard = () => {
                     <span>T</span>
                     alent
                   </p>
-                  <p className="brand-description">
-                    No Middlemen. No Commissions. No Hidden Fees
-                  </p>
+                  <p className="brand-description">{contentsList?.title2}</p>
                 </div>
               </div>
               <div className="col-lg-6">
                 <div className="brand-options">
                   <div className="section-title">Get Booked</div>
                   <div className="section-description brand-secription">
-                    Get discovered by top brands, set your own rates, and keep
-                    100% of your earnings. Chat directly with brands you love
-                    and build lasting relationships. We put creators first. Sign
-                    up today!
+                    {contentsList?.title3}
                   </div>
                   <div
                     className="Join-now-wrapper"
@@ -432,8 +402,7 @@ const Dashboard = () => {
                 <div className="brand-options">
                   <div className="section-title">Hire Talent</div>
                   <div className="section-description brand-secription">
-                    Skip the search, skip the stress. Hire dream talent in
-                    minutes.
+                    {contentsList?.title4}
                   </div>
 
                   <div
@@ -750,49 +719,6 @@ const Dashboard = () => {
                   </div>
                 </div>
               ))}
-
-              {/* <div className="col-md-4">
-                <div className="card-wrapper">
-                  <div className="card-picture">
-                    <img src={checkMark}></img>
-                  </div>
-                  <div className="card-title">Talent Marketplace</div>
-                  <div className="cards-description">
-                    Brands & Talent (BT) is a creator-booking platform where you
-                    can find verified talent for your projects and campaigns. If
-                    you are a creator, simply create your profile, get verified,
-                    and get booked by brands and clients globally.
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="card-wrapper">
-                  <div className="card-picture">
-                    <i className="fa-solid fa-handshake handshake-icon"></i>
-                  </div>
-                  <div className="card-title">Hire Talent</div>
-                  <div className="cards-description">
-                    Easily find, attract, and hire the best talent tailored to
-                    your needs. Connect with skilled professionals ready to
-                    elevate your brand.
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-4">
-                <div className="card-wrapper">
-                  <div className="card-picture">
-                    <img src={whiteStar}></img>
-                  </div>
-                  <div className="card-title">Find Jobs</div>
-                  <div className="cards-description">
-                    Build, manage, and share your profile with a unique URL to
-                    potential clients. You can also use the URL in your resume.
-                    Discover job opportunities and connect with potential
-                    clients effortlessly.
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
@@ -1015,9 +941,7 @@ const Dashboard = () => {
 
         <div className="secSpac logoWraper wraper my-4">
           <div className="container">
-            <div className="title brands-row-title">
-              Trusted by renowned Brands / Client
-            </div>
+            <div className="title brands-row-title">{contentsList?.title5}</div>
             <div className="brands-section">
               <div className="logospc">
                 <img src={adidasIcon}></img>

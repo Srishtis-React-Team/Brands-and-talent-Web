@@ -21,12 +21,6 @@ const CommingSoon = () => {
   };
 
   const navigate = useNavigate();
-  const [blogsList, setBlogsList] = useState([]);
-  const image1 = require("../assets/images/blogs/blog1.png");
-  const image2 = require("../assets/images/blogs/blog2.png");
-  const image3 = require("../assets/images/blogs/blog3.png");
-  const image4 = require("../assets/images/blogs/blog4.png");
-  const image5 = require("../assets/images/blogs/blog5.png");
 
   useEffect(() => {
     fetchBlogByType("Industry Insights");
@@ -41,13 +35,10 @@ const CommingSoon = () => {
     await ApiHelper.post(API.fetchBlogByType, formdata)
       .then((resData) => {
         if (resData) {
-          
           setBlogsLsit(resData?.data?.data);
         }
       })
-      .catch((err) => {
-        
-      });
+      .catch((err) => {});
   };
 
   const createHandleMenuClick = (blogData) => {
@@ -69,7 +60,7 @@ const CommingSoon = () => {
 
   const location = useLocation();
   let recievedStep = location?.state?.step;
-  
+
   const [step, setStep] = useState(0);
 
   useEffect(() => {
@@ -80,13 +71,10 @@ const CommingSoon = () => {
 
   useEffect(() => {
     if (location.state && location.state.step !== undefined) {
-      
     }
   }, [location.state]);
 
-  useEffect(() => {
-    
-  }, [step]);
+  useEffect(() => {}, [step]);
 
   const logoWhite = require("../assets/images/logo-white.png");
 

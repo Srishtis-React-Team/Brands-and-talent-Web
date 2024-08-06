@@ -38,35 +38,10 @@ function a11yProps(index) {
 }
 
 const HowItWorks = () => {
-  const navigate = useNavigate();
-  const checkIcon = require("../assets/icons/check-square.png");
-  const plus = require("../assets/icons/plus-square.png");
-  const [data, setDate] = useState([]);
   useEffect(() => {}, []);
-  let condition;
   const [question_1, selectQuestion1] = useState(true);
   const [question_2, selectQuestion2] = useState(false);
-  const [question_3, selectQuestion3] = useState(false);
   const [valueTabs, setValueTabs] = React.useState(0);
-
-  const resorcesBanner1 = require("../assets/images/term1.png");
-  const resorcesBanner2 = require("../assets/images/term2.png");
-  const resorcesBanner3 = require("../assets/images/term3.png");
-  const resorcesBanner4 = require("../assets/images/term4.png");
-  const resorcesBanner5 = require("../assets/images/term5.png");
-  const resorcesBanner6 = require("../assets/images/term6.png");
-  const resorcesBanner7 = require("../assets/images/term7.png");
-  const resorcesBanner8 = require("../assets/images/term8.png");
-  const resorcesBanner9 = require("../assets/images/term9.png");
-  const resorcesBanner10 = require("../assets/images/term10.png");
-  const resorcesBanner11 = require("../assets/images/term11.png");
-  const resorcesBanner12 = require("../assets/images/term12.png");
-
-  const talentGroup_1 = require("../assets/images/resources/Group 4.png");
-  const talentGroup_2 = require("../assets/images/resources/Group 5.png");
-  const talentGroup_3 = require("../assets/images/resources/Group 6.png");
-  const talentGroup_4 = require("../assets/images/resources/Group 6.png");
-  const [caseList, setCaseList] = useState([]);
 
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
@@ -80,51 +55,6 @@ const HowItWorks = () => {
       selectQuestion2(!question_2);
     }
   }
-
-  useEffect(() => {
-    setCaseList([
-      {
-        id: 1,
-        photo: talentGroup_1,
-        name: "Alexander",
-        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
-        isFavorite: false,
-        location: "Australia",
-        booked: "3 Projects Booked",
-        rating: 4,
-      },
-      {
-        id: 2,
-        photo: talentGroup_2,
-        name: "william",
-        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
-        location: "America",
-        booked: "3 Projects Booked",
-        isFavorite: false,
-        rating: 3,
-      },
-      {
-        id: 3,
-        photo: talentGroup_3,
-        name: "Michael",
-        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
-        location: "Canada",
-        booked: "6 Projects Booked",
-        isFavorite: false,
-        rating: 5,
-      },
-      {
-        id: 4,
-        photo: talentGroup_4,
-        name: "Andrea",
-        address: "Lorem ipsum dolor sit amet, consect adipiscing elit",
-        isFavorite: false,
-        location: "Russia",
-        booked: "150 Projects Booked",
-        rating: 1,
-      },
-    ]);
-  }, []);
 
   const [content, setContent] = useState([]);
   const [faqList, setFaqList] = useState([]);

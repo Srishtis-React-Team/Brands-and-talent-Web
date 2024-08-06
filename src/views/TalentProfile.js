@@ -1049,7 +1049,8 @@ const TalentProfile = () => {
                               Social Media Posts
                             </div>
                           </div>
-                          <CardCarousel />
+                          <p>No Social Media Posts Available</p>
+                          {/* <CardCarousel /> */}
 
                           <div className="portofolio-section">
                             <div className="portofolio-title">Reviews</div>
