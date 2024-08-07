@@ -7,14 +7,11 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import PopUp from "../../components/PopUp";
 import "../../assets/css/talent-dashboard.scss";
 import "../../assets/css/forms/kidsform-one.scss";
-import nationalityOptions from "../../components/nationalities";
-import languageOptions from "../../components/languages";
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import nationalitiesArray from "../../components/NationalitiesArray";
 import CurrentUser from "../../CurrentUser";
 import useFieldDatas from "../../config/useFieldDatas";
 import { Tooltip } from "react-tooltip";
@@ -27,7 +24,13 @@ const AdultFormOne = () => {
     avatarImage,
     fcmToken,
   } = CurrentUser();
-  const { categoryList, professionList } = useFieldDatas();
+  const {
+    categoryList,
+    professionList,
+    gendersList,
+    languagesList,
+    nationalitiesList,
+  } = useFieldDatas();
 
   const [talentData, setTalentData] = useState();
 
@@ -233,17 +236,6 @@ const AdultFormOne = () => {
     "In a Relationship",
     "Engaged",
     "Prefer Not to Say",
-  ];
-
-  const gendersOptions = [
-    "Man",
-    "Woman",
-    "Non-binary",
-    "Transgender Woman",
-    "Transgender Man",
-    "Agender",
-    "Other",
-    "Prefer not to say",
   ];
 
   const handleDateChange = (e) => {
@@ -706,8 +698,12 @@ const AdultFormOne = () => {
                   <div className="profession-section-cover">
                     <div className="row">
                       <div className="kids-form-section col-md-12 mb-3">
-                        <label style={{fontWeight:'bold',fontSize:'small'}} className="adults-titles kids-form-title mb-2">
-                          Select 1 to 5 profession/skills that showcase your talents, experience, and passion{" "}
+                        <label
+                          style={{ fontWeight: "bold", fontSize: "small" }}
+                          className="adults-titles kids-form-title mb-2"
+                        >
+                          Select 1 to 5 profession/skills that showcase your
+                          talents, experience, and passion{" "}
                           <span className="mandatory">*</span>
                         </label>
 
@@ -821,8 +817,9 @@ const AdultFormOne = () => {
                     </div>
                   </div>
                   <div className="adults-titles kids-form-title mb-2">
-                    <span style={{fontWeight:'bold',fontSize:'small'}}>
-                    Select 3 to 6 categories that best reflect your skills and interests for portfolio and job notifications{" "}
+                    <span style={{ fontWeight: "bold", fontSize: "small" }}>
+                      Select 3 to 6 categories that best reflect your skills and
+                      interests for portfolio and job notifications{" "}
                       <span className="mandatory">*</span>
                     </span>
                   </div>
@@ -853,7 +850,8 @@ const AdultFormOne = () => {
                     selectedCategories?.length > 6) &&
                     selectedCategoriesError && (
                       <div className="invalid-fields">
-                        Select 3 to 6 categories that best reflect your skills and interests for portfolio and job notifications
+                        Select 3 to 6 categories that best reflect your skills
+                        and interests for portfolio and job notifications
                       </div>
                     )}
                   <div className="adults-titles kids-form-title mt-3">
@@ -1045,7 +1043,7 @@ const AdultFormOne = () => {
                         <option value="" disabled selected>
                           Select Gender
                         </option>
-                        {gendersOptions.map((option, index) => (
+                        {gendersList.map((option, index) => (
                           <option key={index} value={option}>
                             {option}
                           </option>
@@ -1093,13 +1091,13 @@ const AdultFormOne = () => {
                         ))}
                       </select>
                     </div>
-                    <div className="kids-form-section col-md-6 mb-3">
+                    <div className="kids-form-section col-md-6 mb-3"> 
                       <label className="form-label">Nationality</label>
 
                       <Select
                         isMulti
                         name="colors"
-                        options={nationalitiesArray}
+                        options={nationalitiesList}
                         valueField="value"
                         className="basic-multi-select"
                         classNamePrefix="select"
@@ -1137,7 +1135,7 @@ const AdultFormOne = () => {
                       <Select
                         isMulti
                         name="colors"
-                        options={languageOptions}
+                        options={languagesList}
                         valueField="value"
                         className="basic-multi-select"
                         classNamePrefix="select"

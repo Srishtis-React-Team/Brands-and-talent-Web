@@ -10,11 +10,9 @@ import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 import RangeSlider from "../../components/RangeSlider";
-import languageOptions from "../../components/languages.js";
 import BrandHeader from "./BrandHeader.js";
 import BrandSideMenu from "./BrandSideMenu.js";
 import CurrentUser from "../../CurrentUser.js";
-import nationalitiesArray from "../../components/NationalitiesArray.js";
 import SocialMediasList from "../../components/SocialMediasList.js";
 import useFieldDatas from "../../config/useFieldDatas.js";
 const BrandTalents = () => {
@@ -26,7 +24,13 @@ const BrandTalents = () => {
     talentName,
     brandName,
   } = CurrentUser();
-  const { categoryList, professionList } = useFieldDatas();
+  const {
+    categoryList,
+    professionList,
+    gendersList,
+    languagesList,
+    nationalitiesList,
+  } = useFieldDatas();
 
   const navigate = useNavigate();
   const heartIcon = require("../../assets/icons/heart.png");
@@ -203,17 +207,6 @@ const BrandTalents = () => {
     "Arab",
     "Persian",
     "Other",
-  ];
-
-  const gendersOptions = [
-    "Man",
-    "Woman",
-    "Non-binary",
-    "Transgender Woman",
-    "Transgender Man",
-    "Agender",
-    "Other",
-    "Prefer not to say",
   ];
 
   const getFeatures = async () => {
@@ -767,7 +760,7 @@ const BrandTalents = () => {
                               <option value="" disabled selected>
                                 Select Gender
                               </option>
-                              {gendersOptions.map((option, index) => (
+                              {gendersList.map((option, index) => (
                                 <option key={index} value={option}>
                                   {option}
                                 </option>
@@ -831,7 +824,7 @@ const BrandTalents = () => {
                             <Select
                               isMulti
                               name="colors"
-                              options={nationalitiesArray}
+                              options={nationalitiesList}
                               valueField="value"
                               className="basic-multi-select"
                               classNamePrefix="select"
@@ -846,7 +839,7 @@ const BrandTalents = () => {
                             <Select
                               isMulti
                               name="colors"
-                              options={languageOptions}
+                              options={languagesList}
                               valueField="value"
                               className="basic-multi-select"
                               classNamePrefix="select"
