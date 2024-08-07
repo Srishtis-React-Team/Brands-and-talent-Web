@@ -7,17 +7,19 @@ import RangeSlider from "../components/RangeSlider.js";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import { useNavigate } from "react-router-dom";
-import languageOptions from "../components/languages.js";
 import PopUp from "../components/PopUp.js";
 import CurrentUser from "../CurrentUser.js";
-import nationalitiesArray from "../components/NationalitiesArray.js";
-import categoriesArray from "../components/categoriesArray.js";
 import SocialMediasList from "../components/SocialMediasList.js";
 import useFieldDatas from "../config/useFieldDatas.js";
 
 const FindCreators = () => {
-  const { categoryList, professionList } = useFieldDatas();
-
+  const {
+    categoryList,
+    professionList,
+    gendersList,
+    languagesList,
+    nationalitiesList,
+  } = useFieldDatas();
   const {
     currentUserId,
     currentUserImage,
@@ -254,17 +256,6 @@ const FindCreators = () => {
     "Lifecoach/Relationships",
     "Cosplay/Memes",
     "Other",
-  ];
-
-  const gendersOptions = [
-    "Man",
-    "Woman",
-    "Non-binary",
-    "Transgender Woman",
-    "Transgender Man",
-    "Agender",
-    "Other",
-    "Prefer not to say",
   ];
 
   const getFeatures = async () => {
@@ -839,7 +830,7 @@ const FindCreators = () => {
                         >
                           Select Gender
                         </option>
-                        {gendersOptions.map((option, index) => (
+                        {gendersList.map((option, index) => (
                           <option key={index} value={option}>
                             {option}
                           </option>
@@ -899,7 +890,7 @@ const FindCreators = () => {
                       <Select
                         isMulti
                         name="colors"
-                        options={nationalitiesArray}
+                        options={nationalitiesList}
                         valueField="value"
                         className="basic-multi-select"
                         classNamePrefix="select"
@@ -914,7 +905,7 @@ const FindCreators = () => {
                       <Select
                         isMulti
                         name="colors"
-                        options={languageOptions}
+                        options={languagesList}
                         valueField="value"
                         className="basic-multi-select"
                         classNamePrefix="select"

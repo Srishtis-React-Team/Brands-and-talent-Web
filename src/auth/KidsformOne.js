@@ -5,18 +5,22 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
-import languageOptions from "../components/languages";
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import nationalitiesArray from "../components/NationalitiesArray";
 import useFieldDatas from "../config/useFieldDatas";
 import { Tooltip } from "react-tooltip";
 
 const KidsformOne = () => {
-  const { categoryList, professionList } = useFieldDatas();
+  const {
+    categoryList,
+    professionList,
+    gendersList,
+    languagesList,
+    nationalitiesList,
+  } = useFieldDatas();
 
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
@@ -26,7 +30,6 @@ const KidsformOne = () => {
   const btLogo = require("../assets/images/LOGO.png");
   const kidsImage = require("../assets/images/kidsImage.png");
   const [openPopUp, setOpenPopUp] = useState(false);
-  const [updateDisabled, setUpdateDisabled] = useState(false);
   const [value, setValue] = useState(null);
   const [kidsFillData, setKidsFillData] = useState(null);
   const [parentFirstNameError, setparentFirstNameError] = useState(false);
@@ -37,7 +40,6 @@ const KidsformOne = () => {
   const [professionError, setProfessionError] = useState(false);
   const [categoryError, setCategoryError] = useState(false);
   const [preferedNameError, setPreferedNameError] = useState(false);
-  const [maritalError, setMaritalError] = useState(false);
   const [nationalityError, setNationalityError] = useState(false);
   const [ethnicityError, setEthnicityError] = useState(false);
   const [dobError, setDobError] = useState(false);
@@ -122,29 +124,18 @@ const KidsformOne = () => {
     "Other",
   ];
 
-  const gendersOptions = [
-    "Man",
-    "Woman",
-    "Non-binary",
-    "Transgender Woman",
-    "Transgender Man",
-    "Agender",
-    "Other",
-    "Prefer not to say",
-  ];
-
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
       minHeight: "45px",
-      // zIndex: 1, // Ensure the control is above other elements
+      // zIndex: 1,
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      // zIndex: 1, // Ensure the menu appears above other elements
+      maxHeight: "500px",
+      // zIndex: 1,
     }),
-    menuPortal: (base) => ({ ...base, zIndex: 9999 }), // Ensure menu portal appears above other elements
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
   };
 
   useEffect(() => {
@@ -246,7 +237,6 @@ const KidsformOne = () => {
   const handleDetailChange = (index, field, value) => {
     const updatedSelectedProfessions = [...selectedProfessions];
     updatedSelectedProfessions[index][field] = value;
-
     setSelectedProfessions(updatedSelectedProfessions);
     setProfessionError(false);
   };
@@ -344,8 +334,6 @@ const KidsformOne = () => {
       stateName: state?.label,
     });
   };
-
-  useEffect(() => {}, [state]);
 
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
@@ -1434,7 +1422,7 @@ const KidsformOne = () => {
                           <option value="" disabled selected>
                             Select Gender
                           </option>
-                          {gendersOptions.map((option, index) => (
+                          {gendersList?.map((option, index) => (
                             <option key={index} value={option}>
                               {option}
                             </option>
@@ -1453,7 +1441,7 @@ const KidsformOne = () => {
                         <Select
                           isMulti
                           name="colors"
-                          options={languageOptions}
+                          options={languagesList}
                           valueField="value"
                           className="basic-multi-select"
                           classNamePrefix="select"
@@ -1478,7 +1466,7 @@ const KidsformOne = () => {
                         <Select
                           isMulti
                           name="colors"
-                          options={nationalitiesArray}
+                          options={nationalitiesList}
                           valueField="value"
                           className="basic-multi-select"
                           classNamePrefix="select"
