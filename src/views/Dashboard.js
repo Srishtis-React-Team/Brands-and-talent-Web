@@ -774,7 +774,7 @@ const Dashboard = () => {
 
         <div
           style={{
-            backgroundImage: `url(${"https://brandsandtalent.com/static/media/slider-background.f9e862a140ea767c3108.png"})`,
+            backgroundImage: `url(${"https://brandsandtalent.com/backend/uploads/7b095214-6b38-46a7-a806-6293d4007b51.webp"})`,
           }}
           className="carousel-section storyCar secSpac wraper"
         >
@@ -789,7 +789,7 @@ const Dashboard = () => {
                         <img
                           className="carousel-img"
                           src={
-                            "https://brandsandtalent.com/static/media/gents.08fab317c10a5f2426d6.png"
+                            "https://brandsandtalent.com/backend/uploads/7d395e65-191b-426f-81fd-baf80a033275.webp"
                           }
                         ></img>
                       </div>
@@ -819,7 +819,7 @@ const Dashboard = () => {
                         <img
                           className="carousel-img"
                           src={
-                            "https://brandsandtalent.com/static/media/female.3a451379c6815c96176f.png"
+                            "https://brandsandtalent.com/backend/uploads/6cde52e8-2f83-4cc9-bb1c-c8e244fc5437.webp"
                           }
                         ></img>
                       </div>
@@ -853,7 +853,7 @@ const Dashboard = () => {
                         <img
                           className="carousel-img"
                           src={
-                            "https://brandsandtalent.com/static/media/girl.8e1e0d21ee54e6b4e980.png"
+                            "https://brandsandtalent.com/backend/uploads/279f9276-f06c-4682-8b6f-58bc8ed48876.webp"
                           }
                         ></img>
                       </div>
@@ -883,7 +883,7 @@ const Dashboard = () => {
                         <img
                           className="carousel-img"
                           src={
-                            "https://brandsandtalent.com/static/media/fashion.040356690b771726e51c.png"
+                            "https://brandsandtalent.com/backend/uploads/5b203bf5-6e37-42d4-a76b-da8cdb378e5b.webp"
                           }
                         ></img>
                       </div>
