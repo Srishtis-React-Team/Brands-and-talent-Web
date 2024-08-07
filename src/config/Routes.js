@@ -1,10 +1,9 @@
 import React from "react";
-import { Routes, Route, useRef, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PopUp from "../components/PopUp";
 import Dashboard from "../views/Dashboard";
 import FindCreators from "../views/FindCreators";
-
 import TalentProfile from "../views/TalentProfile";
 import Pricing from "../views/pricing";
 import Resources from "../views/resources";
@@ -28,7 +27,6 @@ import AdultFormThree from "../views/Adult forms/AdultFormThree";
 import OTPComponent from "../auth/OTPComponent";
 import KidsOTP from "../auth/KidsOTP";
 import KidsSocialMedias from "../auth/KidsSocialMedias";
-import AdultSignup from "../auth/AdultSignup";
 import AdultSuccess from "../auth/AdultSuccess";
 import KidsServices from "../auth/KidsServices";
 import UpdateAdultPassword from "../auth/UpdateAdultPassword";
@@ -56,8 +54,6 @@ import EditTalent from "../auth/EditTalent";
 import SavedJobs from "../views/SavedJobs";
 import TalentSettings from "../auth/TalentSettings";
 import TalentNotification from "../views/TalentNotification";
-import TalentHome from "../views/TalentHome";
-import TalentHelp from "../views/TalentHelp";
 import BrandNotification from "../brand/pages/BrandNotification";
 import BrandSettings from "../brand/pages/BrandSettings";
 import EditBrands from "../brand/pages/EditBrands";
@@ -66,15 +62,9 @@ import ContactSupport from "../views/ContactSupport";
 import ContactUs from "../views/ContactUs";
 import TermsConditions from "../pages/TermsConditions";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
-import CurrentUser from "../CurrentUser";
 import AdultSocialMedias from "../views/Adult forms/AdultSocialMedias";
 import IndustryNews from "../pages/IndustryNews";
-import CaseStudies from "../pages/CaseStudies";
-import TalentDiaries from "../pages/TalentDiaries";
-import TalentTips from "../pages/TalentTips";
-import BrandTips from "../pages/BrandTips";
 import CommingSoon from "../views/CommingSoon";
-import QrCode from "../views/QrCode";
 function Routing() {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [currentUserType, setCurrentUserType] = useState(null);
@@ -208,12 +198,7 @@ function Routing() {
         <Route path="/support" element={<ContactSupport />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/industry-news" element={<IndustryNews />} />
-        <Route path="/case-studies" element={<CaseStudies />} />
-        <Route path="/talent-diaries" element={<TalentDiaries />} />
-        <Route path="/talent-tips" element={<TalentTips />} />
-        <Route path="/brand-tips" element={<BrandTips />} />
         <Route path="/coming-soon" element={<CommingSoon />} />
-        <Route path="/qr-code" element={<QrCode />} />
         <Route
           path="/update-adult-password"
           element={<UpdateAdultPassword />}

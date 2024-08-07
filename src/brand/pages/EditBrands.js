@@ -6,8 +6,6 @@ import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import { useNavigate } from "react-router";
-import nationalityOptions from "../../components/nationalities";
-import languageOptions from "../../components/languages";
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";

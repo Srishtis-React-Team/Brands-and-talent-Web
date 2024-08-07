@@ -6,15 +6,13 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
-import nationalityOptions from "../components/nationalities";
-import languageOptions from "../components/languages";
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import TalentHeader from "../layout/TalentHeader";
-import TalentSideMenu from "../layout/TalentSideMenu";
+import TalentHeader from "../layout/TalentHeader"; 
+import TalentSideMenu from "../layout/TalentSideMenu"; 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -60,7 +58,14 @@ function a11yProps(index) {
 }
 
 const EditTalent = () => {
-  const { categoryList, professionList, featuresList } = useFieldDatas();
+  const {
+    categoryList,
+    professionList,
+    gendersList,
+    languagesList,
+    nationalitiesList,
+    featuresList,
+  } = useFieldDatas();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -280,16 +285,6 @@ const EditTalent = () => {
     "Other",
   ];
 
-  const gendersOptions = [
-    "Man",
-    "Woman",
-    "Non-binary",
-    "Transgender Woman",
-    "Transgender Man",
-    "Agender",
-    "Other",
-    "Prefer not to say",
-  ];
 
   const customStylesProfession = {
     control: (provided, state) => ({
@@ -430,7 +425,7 @@ const EditTalent = () => {
             setAge(resData.data.data?.age);
             const selectedOptions = resData.data.data?.languages.map(
               (language) => {
-                return languageOptions.find(
+                return languagesList.find(
                   (option) => option.label === language
                 );
               }
@@ -490,7 +485,7 @@ const EditTalent = () => {
             setAge(resData.data.data?.age);
             const selectedOptions = resData.data.data?.languages.map(
               (language) => {
-                return languageOptions.find(
+                return languagesList.find(
                   (option) => option.label === language
                 );
               }
@@ -1479,9 +1474,6 @@ const EditTalent = () => {
     setServices(editInputs);
   };
 
-  useEffect(() => {}, [featuresList]);
-  useEffect(() => {}, [features]);
-
   const handleInputChange = (index, key, value) => {
     const newInputs = [...services];
     newInputs[index][key] = value;
@@ -2010,7 +2002,7 @@ const EditTalent = () => {
                       <option value="" disabled selected>
                         Select Nationality
                       </option>
-                      {nationalityOptions.map((option, index) => (
+                      {nationalitiesList.map((option, index) => (
                         <option key={index} value={option}>
                           {option}
                         </option>
@@ -2064,7 +2056,7 @@ const EditTalent = () => {
                     <Select
                       isMulti
                       name="colors"
-                      options={languageOptions}
+                      options={languagesList}
                       valueField="value"
                       className="basic-multi-select"
                       classNamePrefix="select"
@@ -2089,12 +2081,12 @@ const EditTalent = () => {
                       aria-label="Default select example"
                       onChange={selectGender}
                       style={{ fontSize: "14px" }}
-                      value={gender}
+                      value={gender} 
                     >
                       <option value="" disabled selected>
                         Select Gender
                       </option>
-                      {gendersOptions.map((option, index) => (
+                      {gendersList.map((option, index) => (
                         <option key={index} value={option}>
                           {option}
                         </option>
