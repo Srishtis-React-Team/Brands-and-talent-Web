@@ -13,8 +13,6 @@ import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import ReactFlagsSelect from "react-flags-select";
 import { useNavigate } from "react-router";
-import nationalitiesArray from "../../components/NationalitiesArray";
-import languageOptions from "../../components/languages";
 import currencyList from "../../components/currency";
 import compensationType from "../../components/compensationType";
 import BrandHeader from "./BrandHeader";
@@ -31,8 +29,14 @@ import { FlashOnTwoTone } from "@mui/icons-material";
 import useFieldDatas from "../../config/useFieldDatas";
 
 const CreateJobs = () => {
-  const { categoryList, professionList } = useFieldDatas();
-  
+  const {
+    categoryList, 
+    professionList,
+    gendersList,
+    languagesList,
+    nationalitiesList,
+  } = useFieldDatas();
+
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -104,23 +108,19 @@ const CreateJobs = () => {
     []
   );
 
-  const [isDuplicateJob, setIsDuplicateJob] = useState(false);
+  const [isDuplicateJob, setIsDuplicateJob] = useState(false);  
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            
             setBrandData(resData.data.data);
             companyList.push(resData.data.data?.brandName);
-            
           }
         }
       })
-      .catch((err) => {
-        
-      });
+      .catch((err) => {});
   };
 
   const customStylesProfession = {
@@ -136,7 +136,6 @@ const CreateJobs = () => {
   };
 
   useEffect(() => {
-    
     if (editData?.value && editData?.type) {
       getJobsByID(editData?.value, editData?.type);
     }
@@ -145,8 +144,6 @@ const CreateJobs = () => {
   const updateJobFormDatas = (editData) => {
     // alert("updateJobFormDatas");
     if (editData) {
-      
-      
       setCategory(editData?.category);
       setEmploymentType(editData?.employmentType);
       setLastdateApply(editData?.lastDateForApply);
@@ -184,22 +181,21 @@ const CreateJobs = () => {
       setKidsCity(editData.city);
 
       const genderUpdatedOptions = editData?.gender.map((gender) => {
-        return gendersOptions.find((option) => option.label === gender);
+        return gendersList.find((option) => option.label === gender);
       });
-      
+
       setSelectedGenderOptions(genderUpdatedOptions);
 
       const selectedOptions = editData?.languages.map((language) => {
-        return languageOptions.find((option) => option.label === language);
+        return languagesList.find((option) => option.label === language);
       });
-      
 
       setSelectedLanguageOptions(selectedOptions);
 
-      const nationalityOptions = editData?.nationality.map((language) => {
-        return nationalitiesArray.find((option) => option.label === language);
+      const nationalitiesList = editData?.nationality.map((language) => {
+        return nationalitiesList.find((option) => option.label === language);
       });
-      setSelectedNationalityOptions(nationalityOptions);
+      setSelectedNationalityOptions(nationalitiesList);
 
       const dynamicKey = Object.keys(editData.compensation)[0];
       const minPayValue = editData.compensation[dynamicKey].minPay;
@@ -306,7 +302,6 @@ const CreateJobs = () => {
 
   // handle onChange event of the dropdown
   const handleChange = (e) => {
-    
     setSelectedJobID(e?.value);
     getJobsByID(e?.value, e?.type);
     setIsDuplicateJob(true);
@@ -316,7 +311,6 @@ const CreateJobs = () => {
     if (type == "Posted") {
       await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
         .then((resData) => {
-          
           if (resData.data.status === true) {
             if (resData.data.data) {
               setEditJobData(resData.data.data, "resData.data.data");
@@ -324,13 +318,10 @@ const CreateJobs = () => {
             }
           }
         })
-        .catch((err) => {
-          
-        });
+        .catch((err) => {});
     } else if (type == "Draft") {
       await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
         .then((resData) => {
-          
           if (resData.data.status === true) {
             if (resData.data.data) {
               setEditJobData(resData.data.data, "resData.data.data");
@@ -338,22 +329,16 @@ const CreateJobs = () => {
             }
           }
         })
-        .catch((err) => {
-          
-        });
+        .catch((err) => {});
     }
   };
 
-  useEffect(() => {
-    
-  }, [editJobData]);
+  useEffect(() => {}, [editJobData]);
 
   const duplicateJob = () => {
-    
     if (editJobData) {
       setSelectedTab("create-job");
-      
-      
+
       setCategory(editJobData?.category);
       setEmploymentType(editJobData?.employmentType);
       setLastdateApply(editJobData?.lastDateForApply);
@@ -391,22 +376,21 @@ const CreateJobs = () => {
       setKidsCity(editJobData.city);
 
       const genderUpdatedOptions = editJobData?.gender.map((gender) => {
-        return gendersOptions.find((option) => option.label === gender);
+        return gendersList.find((option) => option.label === gender);
       });
-      
+
       setSelectedGenderOptions(genderUpdatedOptions);
 
       const selectedOptions = editJobData?.languages.map((language) => {
-        return languageOptions.find((option) => option.label === language);
+        return languagesList.find((option) => option.label === language);
       });
-      
 
       setSelectedLanguageOptions(selectedOptions);
 
-      const nationalityOptions = editJobData?.nationality.map((language) => {
-        return nationalitiesArray.find((option) => option.label === language);
+      const nationalitiesList = editJobData?.nationality.map((language) => {
+        return nationalitiesList.find((option) => option.label === language);
       });
-      setSelectedNationalityOptions(nationalityOptions);
+      setSelectedNationalityOptions(nationalitiesList);
 
       const dynamicKey = Object.keys(editJobData.compensation)[0];
       const minPayValue = editJobData.compensation[dynamicKey].minPay;
@@ -552,23 +536,19 @@ const CreateJobs = () => {
   const getAllJobs = async (id) => {
     await ApiHelper.get(`${API.getAllJobs}${id}`)
       .then((resData) => {
-        
         if (resData.data.status === true) {
           if (resData.data.data) {
             setAllJobsList(resData.data.data, "resData.data.data");
           }
         }
       })
-      .catch((err) => {
-        
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
     setBrandImage(localStorage.getItem("currentUserImage"));
-    
-    
+
     if (brandId && brandId != null) {
       getAllJobs(brandId);
       getBrand();
@@ -663,7 +643,6 @@ const CreateJobs = () => {
   const [categoryError, setCategoryError] = useState(false);
 
   const handleApplyOption = (e) => {
-    
     setSelectedApplyOption(e.target.value);
   };
 
@@ -680,7 +659,6 @@ const CreateJobs = () => {
   const [productValue, setProductValue] = useState("");
 
   const compensationChange = (event) => {
-    
     setCompensationChange(event.target.value);
   };
 
@@ -771,7 +749,7 @@ const CreateJobs = () => {
         break;
     }
     return data;
-    
+
     // Here you can make your API call with the 'data' object
   };
 
@@ -911,13 +889,12 @@ const CreateJobs = () => {
   // Function to handle country selection
 
   const selectEthnicity = (event) => {
-    
     setEthnicity(event.target.value);
     setEthnicityError(false);
   };
 
   // const selectLanguage = (event) => {
-  //   
+  //
   //   if (event[0].value) {
   //     setLanguages(event[0].value);
   //     setLanguageError(false);
@@ -925,7 +902,6 @@ const CreateJobs = () => {
   // };
 
   const selectLanguage = (selectedOptions) => {
-    
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
@@ -936,14 +912,13 @@ const CreateJobs = () => {
     }
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    
+
     setLanguages(selectedLanguages); // Update languages state with all selected languages
 
     setSelectedLanguageOptions(selectedOptions);
   };
 
   const selectNationality = (selectedOptions) => {
-    
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
       setNationality([]); // Clear the languages state
@@ -953,7 +928,7 @@ const CreateJobs = () => {
     }
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    
+
     setNationality(selectedLanguages); // Update languages state with all selected languages
     setSelectedNationalityOptions(selectedOptions);
   };
@@ -964,7 +939,6 @@ const CreateJobs = () => {
   // };
 
   const selectGender = (selectedOptions) => {
-    
     setGenderError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       // Handle case when all options are cleared
@@ -975,13 +949,12 @@ const CreateJobs = () => {
     }
     // Extract values of all selected languages
     const selectedLanguages = selectedOptions.map((option) => option.value);
-    
+
     setGender(selectedLanguages); // Update languages state with all selected languages
     setSelectedGenderOptions(selectedOptions);
   };
 
   const selectCategory = (event) => {
-    
     setCategory(event.target.value);
     setCategoryError(false);
   };
@@ -1004,28 +977,24 @@ const CreateJobs = () => {
   };
 
   const onEditorJobDescription = (editorState) => {
-    
     setJobDescription([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
     setEditorStateJobDescription(editorState);
   };
   const onEditorRequirements = (editorState) => {
-    
     setJobRequirements([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
     setEditorStateJobRequirements(editorState);
   };
   const onEditorWhyWorkWithUS = (editorState) => {
-    
     setWhyWorkWithUs([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
     setEditorStateWhyWorkWithUs(editorState);
   };
   const onEditorClientDescription = (editorState) => {
-    
     setClientDescription([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
@@ -1033,7 +1002,6 @@ const CreateJobs = () => {
   };
 
   const onEditorHowToApply = (editorState) => {
-    
     setHowToApplyDescription([
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
     ]);
@@ -1045,16 +1013,7 @@ const CreateJobs = () => {
     setProfessionError(false);
   };
 
-  const gendersOptions = [
-    { value: "Man", label: "Man" },
-    { value: "Woman", label: "Woman" },
-    { value: "Non-binary", label: "Non-binary" },
-    { value: "Transgender Woman", label: "Transgender Woman" },
-    { value: "Transgender Man", label: "Transgender Man" },
-    { value: "Agender", label: "Agender" },
-    { value: "Other", label: "Other" },
-    { value: "Prefer not to say", label: "Prefer not to say" },
-  ];
+
 
   function chooseCategory(category) {
     if (selectedCategories.includes(category)) {
@@ -1119,11 +1078,9 @@ const CreateJobs = () => {
 
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
-    
-    
+
     setCountry(event?.value);
     getStates(event?.value);
-    
   };
   const handleSelectedState = (state) => {
     setStateError(false);
@@ -1313,7 +1270,7 @@ const CreateJobs = () => {
   };
   const createGigs = async () => {
     setIsLoading(true);
-    
+
     if (jobTitle === "") {
       setjobTitleError(true);
     }
@@ -1390,10 +1347,9 @@ const CreateJobs = () => {
         youTubeMin: youTubeMin,
         youTubeMax: youTubeMax,
       };
-      
+
       await ApiHelper.post(API.draftJob, formData)
         .then((resData) => {
-          
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Job Created SuccessFully!");
@@ -1443,7 +1399,7 @@ const CreateJobs = () => {
   const handlePortofolioDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    
+
     uploadFile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -1469,7 +1425,7 @@ const CreateJobs = () => {
           type: resData?.data?.data?.filetype,
         };
         setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
-        
+
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -1518,7 +1474,7 @@ const CreateJobs = () => {
   const portofolioUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      
+
       uploadFile(fileData);
     }
   };
@@ -1527,7 +1483,7 @@ const CreateJobs = () => {
   const handleProfileDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
-    
+
     uploadFile(droppedFiles[0]);
     // setFiles(droppedFiles);
   };
@@ -1540,7 +1496,7 @@ const CreateJobs = () => {
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let fileData = event.target.files[0];
-      
+
       uploadProfile(fileData);
     }
   };
@@ -1565,10 +1521,9 @@ const CreateJobs = () => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-        
+
         setProfileFile(fileObj);
 
-        
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -1617,7 +1572,6 @@ const CreateJobs = () => {
   };
 
   const paymentOptionValue = () => {
-    
     if (selectedPaymentOption === "fixed") {
       const data = {
         label: "fixed",
@@ -1625,43 +1579,35 @@ const CreateJobs = () => {
       };
       return data;
       // Perform API call with data
-      
     } else {
       const data = {
         label: "range",
         minPay: minimumPaymnt,
         maxPay: maximumPayment,
       };
-      
+
       // Perform API call with data
       return data;
-      
     }
   };
 
   const [selectedTab, setSelectedTab] = useState("create-job");
 
   const handleJobTabs = (e) => {
-    
     setSelectedTab(e.target.value);
   };
 
-  useEffect(() => {
-    
-    
-    
-  }, [showQuestions, employmentError, isDuplicateJob]);
+  useEffect(() => {}, [showQuestions, employmentError, isDuplicateJob]);
 
   const handleButtonClick = (data) => {
     setShowSidebar(!showSidebar);
-    
   };
 
   const [skills, setSkills] = useState([]);
   const [skillInputValue, setSkillInputValue] = useState("");
 
   const handleKeyDown = (e) => {
-    // 
+    //
     setSkillInputValue(e.inputProps.value);
     if (e.key === "Enter") {
       addSkill();
@@ -1682,12 +1628,8 @@ const CreateJobs = () => {
     setSkills(newSkills);
   };
 
-  useEffect(() => {
-    
-  }, [skills]);
-  useEffect(() => {
-    
-  }, [skills]);
+  useEffect(() => {}, [skills]);
+  useEffect(() => {}, [skills]);
 
   const skillsListing = [
     { title: "Actor" },
@@ -1750,12 +1692,9 @@ const CreateJobs = () => {
     { title: "Videographer" },
   ];
 
-  
-
   const [lastdateApply, setLastdateApply] = useState(null);
 
   const handleDateChange = (date) => {
-    
     // Format the date to ensure it's correctly parsed and displayed
     const formattedDate = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     setLastdateApply(formattedDate);
@@ -1769,12 +1708,8 @@ const CreateJobs = () => {
     setDobError(false);
   };
 
-  useEffect(() => {
-    
-  }, [lastdateApply]);
-  useEffect(() => {
-    
-  }, [category]);
+  useEffect(() => {}, [lastdateApply]);
+  useEffect(() => {}, [category]);
 
   const onMinChange = (event) => {
     setMinAge(event.target.value); // Update the state with the new value
@@ -2166,7 +2101,6 @@ const CreateJobs = () => {
                                 lastdateApply ? parseISO(lastdateApply) : null
                               }
                               onChange={(newValue) => {
-                                
                                 handleDateChange(newValue);
                               }}
                               renderInput={(params) => (
@@ -2322,7 +2256,7 @@ const CreateJobs = () => {
                             <Select
                               isMulti
                               name="colors"
-                              options={gendersOptions}
+                              options={gendersList}
                               valueField="value"
                               className="basic-multi-select"
                               classNamePrefix="select"
@@ -2330,23 +2264,6 @@ const CreateJobs = () => {
                               styles={customStylesProfession}
                               value={selectedGenderOptions}
                             />
-
-                            {/* <select
-                              className="form-select"
-                              aria-label="Default select example"
-                              onChange={selectGender}
-                              value={gender}
-                              style={{ fontSize: "14px" }}
-                            >
-                              <option value="" disabled selected>
-                                Select Gender
-                              </option>
-                              {gendersOptions.map((option, index) => (
-                                <option key={index} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select> */}
                           </div>
                         </div>
                       </div>
@@ -2357,7 +2274,7 @@ const CreateJobs = () => {
                           <Select
                             isMulti
                             name="colors"
-                            options={nationalitiesArray}
+                            options={nationalitiesList}
                             valueField="value"
                             className="basic-multi-select"
                             classNamePrefix="select"
@@ -2365,23 +2282,6 @@ const CreateJobs = () => {
                             styles={customStylesProfession}
                             value={selectedNationalityOptions}
                           />
-
-                          {/* <select
-                            className="form-select"
-                            aria-label="Default select example"
-                            onChange={selectNationality}
-                            value={nationality}
-                            style={{ fontSize: "14px" }}
-                          >
-                            <option value="" disabled selected>
-                              Select Nationality
-                            </option>
-                            {nationalityOptions.map((option, index) => (
-                              <option key={index} value={option}>
-                                {option}
-                              </option>
-                            ))}
-                          </select> */}
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
                           <div className="">
@@ -2390,7 +2290,7 @@ const CreateJobs = () => {
                             <Select
                               isMulti
                               name="colors"
-                              options={languageOptions}
+                              options={languagesList}
                               valueField="value"
                               className="basic-multi-select"
                               classNamePrefix="select"
@@ -2399,21 +2299,6 @@ const CreateJobs = () => {
                               value={selectedLanguageOptions}
                             />
 
-                            {/* <select
-                              className="form-select"
-                              aria-label="Default select example"
-                              onChange={selectLanguage}
-                              value={languages}
-                            >
-                              <option value="" disabled selected>
-                                Select Language
-                              </option>
-                              {languageOptions.map((option, index) => (
-                                <option key={index} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select> */}
                             {languageError && (
                               <div className="invalid-fields">
                                 Please select Language

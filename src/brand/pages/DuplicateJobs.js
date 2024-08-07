@@ -12,8 +12,6 @@ import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import ReactFlagsSelect from "react-flags-select";
 import { useNavigate } from "react-router";
-import nationalityOptions from "../../components/nationalities";
-import languageOptions from "../../components/languages";
 import Select from "react-select";
 
 const DuplicateJobs = ({ sendDataToParent }) => {

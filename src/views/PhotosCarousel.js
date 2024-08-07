@@ -5,7 +5,6 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
-import ImageSlider from "./ImageSlider";
 import { Modal, Box, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 import CurrentUser from "../CurrentUser";

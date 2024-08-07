@@ -89,7 +89,6 @@ const Pricing = () => {
 
         // alert("sfsf");
         let stateObj = resData?.data?.data;
-        // navigate("/qrcode-payment", { state: stateObj });
         // navigate("https://checkout-sandbox.payway.com.kh/api");
         window.location.href = "https://checkout-sandbox.payway.com.kh/api";
       })
