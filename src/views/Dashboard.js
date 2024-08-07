@@ -7,6 +7,8 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import CurrentUser from "../CurrentUser";
+import WebSlider from "./WebSlider";
+import MobileSlider from "./MobileSlider";
 const Dashboard = () => {
   const { currentUserId, currentUserType, talentName, brandName } =
     CurrentUser();
@@ -19,8 +21,6 @@ const Dashboard = () => {
   const americanExpress = require("../assets/icons/American-Express-Color.png");
   const joseIcon = require("../assets/icons/6539e8f8fe903bed35dc07f8_jose-cuervo-logo-black-and-white 1.webp");
   const calvinIcon = require("../assets/icons/6539ea694436eb9715c9cba3_image 10.png");
-  const roundProfile = require("../assets/icons/round-profile.png");
-  const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
   const pinkStar = require("../assets/icons/pink-star.png");
   const heartIcon = require("../assets/icons/heart.png");
   const favoruiteIcon = require("../assets/icons/favorite.png");
@@ -772,171 +772,11 @@ const Dashboard = () => {
         {/* data-bs-ride="carousel" <= under id="carouselExampleControls"
             className="carousel slide" */}
 
-        <div
-          style={{
-            backgroundImage: `url(${"https://brandsandtalent.com/backend/uploads/7b095214-6b38-46a7-a806-6293d4007b51.webp"})`,
-          }}
-          className="carousel-section storyCar secSpac wraper"
-        >
-          <div className="carousel-title title center">Success Stories</div>
-          <div className="container">
-            <div id="carouselExampleControls" className="carousel slide">
-              <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <div className="carousel-wrapper">
-                    <div className="box-one">
-                      <div className="carimg_Box">
-                        <img
-                          className="carousel-img"
-                          src={
-                            "https://brandsandtalent.com/backend/uploads/7d395e65-191b-426f-81fd-baf80a033275.webp"
-                          }
-                        ></img>
-                      </div>
-                      <div className="box-content">
-                        <div className="quote">
-                          <img src={quoteIcon}></img>
-                        </div>
-                        <div className="carousel-description">
-                          A great photographer's tool for online castings that
-                          really works!
-                        </div>
-                        <div className="profile-section">
-                          <div className="profImg">
-                            <img src={roundProfile}></img>
-                          </div>
-                          <div className="profile-content">
-                            <div className="profile-name">Dorothy</div>
-                            <div className="profile-info">
-                              Lorem ipsum dolor
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="box-one box-two">
-                      <div className="carimg_Box">
-                        <img
-                          className="carousel-img"
-                          src={
-                            "https://brandsandtalent.com/backend/uploads/6cde52e8-2f83-4cc9-bb1c-c8e244fc5437.webp"
-                          }
-                        ></img>
-                      </div>
-                      <div className="box-content">
-                        <div className="quote">
-                          <img src={quoteIcon}></img>
-                        </div>
-                        <div className="carousel-description">
-                          A great photographer's tool for online castings that
-                          really works!
-                        </div>
-                        <div className="profile-section">
-                          <div className="profImg">
-                            <img src={roundProfile}></img>
-                          </div>
-                          <div className="profile-content">
-                            <div className="profile-name">Dorothy</div>
-                            <div className="profile-info">
-                              Lorem ipsum dolor
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="carousel-item">
-                  <div className="carousel-wrapper">
-                    <div className="box-one">
-                      <div className="carimg_Box">
-                        <img
-                          className="carousel-img"
-                          src={
-                            "https://brandsandtalent.com/backend/uploads/279f9276-f06c-4682-8b6f-58bc8ed48876.webp"
-                          }
-                        ></img>
-                      </div>
-                      <div className="box-content">
-                        <div className="quote">
-                          <img src={quoteIcon}></img>
-                        </div>
-                        <div className="carousel-description">
-                          A great photographer's tool for online castings that
-                          really works!
-                        </div>
-                        <div className="profile-section">
-                          <div className="profImg">
-                            <img src={roundProfile}></img>
-                          </div>
-                          <div className="profile-content">
-                            <div className="profile-name">Dorothy</div>
-                            <div className="profile-info">
-                              Lorem ipsum dolor
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="box-one box-two">
-                      <div className="carimg_Box">
-                        <img
-                          className="carousel-img"
-                          src={
-                            "https://brandsandtalent.com/backend/uploads/5b203bf5-6e37-42d4-a76b-da8cdb378e5b.webp"
-                          }
-                        ></img>
-                      </div>
-                      <div className="box-content">
-                        <div className="quote">
-                          <img src={quoteIcon}></img>
-                        </div>
-                        <div className="carousel-description">
-                          A great photographer's tool for online castings that
-                          really works!
-                        </div>
-                        <div className="profile-section">
-                          <div className="profImg">
-                            <img src={roundProfile}></img>
-                          </div>
-                          <div className="profile-content">
-                            <div className="profile-name">Dorothy</div>
-                            <div className="profile-info">
-                              Lorem ipsum dolor
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button
-                className="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExampleControls"
-                data-bs-slide="prev"
-              >
-                <span
-                  className="carousel-control-prev-icon carousel-icons"
-                  aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Previous</span>
-              </button>
-              <button
-                className="carousel-control-next carousel-next-control"
-                type="button"
-                data-bs-target="#carouselExampleControls"
-                data-bs-slide="next"
-              >
-                <span
-                  className="carousel-control-next-icon  carousel-icons"
-                  aria-hidden="true"
-                ></span>
-                <span className="visually-hidden">Next</span>
-              </button>
-            </div>
-          </div>
+        <div className="web-carousel">
+          <WebSlider />
+        </div>
+        <div className="mobile-carousel">
+          <MobileSlider />
         </div>
 
         <div className="secSpac logoWraper wraper my-4">
