@@ -110,7 +110,6 @@ function Routing() {
 
   return (
     <>
-      <Suspense >
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route
@@ -207,7 +206,6 @@ function Routing() {
           <Route path="/message-talents" element={<MessageTalents />} />
           <Route path="/applicants" element={<Applicants />} />
         </Routes>
-      </Suspense>
       {openPopUp && (
         <PopUp
           open={openPopUp}
