@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
 import "../assets/css/dashboard.css";
 import { useNavigate } from "react-router";
 import { Dropdown } from "@mui/base/Dropdown";
@@ -14,6 +13,7 @@ import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { Button, Modal, Box, Typography } from "@mui/material";
 import searchPathOptions from "../components/SearchPaths";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Header = ({ onData }) => {
   const navigate = useNavigate();
@@ -602,29 +602,33 @@ const Header = ({ onData }) => {
   };
 
   useEffect(() => {}, [talentData, brandData]);
+  const location = useLocation();
+  const isLoginPage = location.pathname.includes("/login");
 
   return (
     <>
       <div className="mobile-navbar">
         <div
           className="icon"
-          // onClick={() => {
-          //   navigate("/");
-          // }}
+          onClick={() => {
+            navigate("/");
+          }}
         >
           <img alt="img" className="btLogo" src={btLogo}></img>
         </div>
 
         <div className="mobile-nav-functions">
-          <div className="">
-            <NavLink
-              to="/login"
-              className="login-text "
-              onClick={() => handleClick("")}
-            >
-              Login
-            </NavLink>
-          </div>
+          {!isLoginPage && (
+            <div className="">
+              <NavLink
+                to="/login"
+                className="login-text"
+                onClick={() => handleClick("")}
+              >
+                Login
+              </NavLink>
+            </div>
+          )}
           {!currentUserId && (
             <div
               className="signup mobile-signup"
@@ -642,7 +646,6 @@ const Header = ({ onData }) => {
               Sign up for free
             </div>
           )} */}
-
           <div
             onClick={() => {
               setMenuOpen(!menuOpen);
@@ -706,67 +709,72 @@ const Header = ({ onData }) => {
               </NavLink>
             </div>
           )}
-          <div className="navTxt">
-            <a
-              className="dropdown-toggle"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              data-bs-auto-close="outside"
-            >
-              Resources
-            </a>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <a className="dropdown-item">
-                  <NavLink to="/about-us" onClick={() => handleClick("")}>
-                    About
-                  </NavLink>
-                </a>
-              </li>
-              <li className="">
-                <a
-                  className="dropdown-item dropdown-toggle"
-                  dropdown-toggle
-                  data-bs-toggle="dropdown"
-                  onClick={() => handleClickBlogs(0)}
-                >
-                  Newsletter
-                </a>
-                {/* <ul className="dropdown-menu blogs-menu">
-                  <li onClick={() => handleClickBlogs(1)}>
-                    <a className="dropdown-item">News & Announcements</a>
-                  </li>
-                  <li onClick={() => handleClickBlogs(2)}>
-                    <a className="dropdown-item">Industry Insights</a>
-                  </li>
-                  <li onClick={() => handleClickBlogs(3)}>
-                    <a className="dropdown-item">Interviews</a>
-                  </li>
-                  <li onClick={() => handleClickBlogs(4)}>
-                    <a className="dropdown-item"> Case Studies</a>
-                  </li>
-                  <li onClick={() => handleClickBlogs(5)}>
-                    <a className="dropdown-item"> Talent Tips & Tricks</a>
-                  </li>
-                  <li onClick={() => handleClickBlogs(6)}>
-                    <a className="dropdown-item"> Brand Tips & Tricks</a>
-                  </li>
-                </ul> */}
-              </li>
-              <li>
-                <hr className="dropdown-divider"></hr>
-              </li>
 
-              <li>
-                <a className="dropdown-item">
+          <div className="navTxt">
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Resources
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
                   <NavLink to="/about-us" onClick={() => handleClick("")}>
-                    About
+                    <a className="dropdown-item">About</a>
                   </NavLink>
-                </a>
-              </li>
-            </ul>
+                </li>
+                <li className="dropend">
+                  {/* data-bs-toggle="dropdown" */}
+                  {/* className="dropdown-item dropdown-toggle" */}
+
+                  <a
+                    className="dropdown-item"
+                    dropdown-toggle
+                    onClick={() => handleClickBlogs(0)}
+                  >
+                    Newsletter
+                  </a>
+                  {/* <ul className="dropdown-menu blogs-menu">
+                        <li onClick={() => handleClickBlogs(1)}>
+                          <a className="dropdown-item">News & Announcements</a>
+                        </li>
+                        <li onClick={() => handleClickBlogs(2)}>
+                          <a className="dropdown-item">Industry Insights</a>
+                        </li>
+                        <li onClick={() => handleClickBlogs(3)}>
+                          <a className="dropdown-item">Interviews</a>
+                        </li>
+                        <li onClick={() => handleClickBlogs(4)}>
+                          <a className="dropdown-item">Case Studies</a>
+                        </li>
+                        <li onClick={() => handleClickBlogs(5)}>
+                          <a className="dropdown-item">Talent Tips & Tricks</a>
+                        </li>
+                        <li onClick={() => handleClickBlogs(6)}>
+                          <a className="dropdown-item">Brand Tips & Tricks</a>
+                        </li>
+                      </ul> */}
+                </li>
+                <li>
+                  <hr className="dropdown-divider"></hr>
+                </li>
+                <li>
+                  <a className="dropdown-item">
+                    <NavLink
+                      to="/community-guidelines"
+                      onClick={() => handleClick("")}
+                    >
+                      Community Guidelines
+                    </NavLink>
+                  </a>
+                </li>
+              </ul>
+            </li>
           </div>
 
           <div

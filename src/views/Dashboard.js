@@ -9,7 +9,7 @@ import PopUp from "../components/PopUp";
 import CurrentUser from "../CurrentUser";
 import WebSlider from "./WebSlider";
 import MobileSlider from "./MobileSlider";
-const Dashboard = React.memo((props) => {
+const Dashboard = () => {
   const { currentUserId, currentUserType, talentName, brandName } =
     CurrentUser();
   const navigate = useNavigate();
@@ -618,6 +618,6 @@ const Dashboard = React.memo((props) => {
       {openPopUp && <PopUp message={message} />}
     </>
   );
-});
+};
 
 export default Dashboard;

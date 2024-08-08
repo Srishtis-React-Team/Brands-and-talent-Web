@@ -9,7 +9,7 @@ import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
 import MuiPhoneNumber from "material-ui-phone-number";
 import Select from "react-select";
-const BrandDetails = React.memo((props) => {
+const BrandDetails = () => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -648,6 +648,6 @@ const BrandDetails = React.memo((props) => {
       {openPopUp && <PopUp message={message} />}
     </>
   );
-});
+};
 
 export default BrandDetails;

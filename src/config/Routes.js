@@ -65,6 +65,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy";
 import AdultSocialMedias from "../views/Adult forms/AdultSocialMedias";
 import IndustryNews from "../pages/IndustryNews";
 import CommingSoon from "../views/CommingSoon";
+import Spinner from "../components/Spinner";
 function Routing() {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [currentUserType, setCurrentUserType] = useState(null);
@@ -76,6 +77,7 @@ function Routing() {
 
   useEffect(() => {
     const fetchLocalStorageData = () => {
+      setIsLoading(true);
       try {
         const userString = localStorage.getItem("currentUser");
         const userType = localStorage.getItem("currentUserType");
@@ -104,9 +106,9 @@ function Routing() {
     fetchLocalStorageData();
   }, [location]);
 
-  if (isLoading) {
-    return <div>Loading...</div>; // Improved loading fallback
-  }
+  // if (isLoading) {
+  //   return setIsLoading(true); // Improved loading fallback
+  // }
 
   return (
     <>
@@ -214,6 +216,7 @@ function Routing() {
           setOpenPopUp={setOpenPopUp}
         />
       )}
+      {isLoading && <Spinner />}
     </>
   );
 }

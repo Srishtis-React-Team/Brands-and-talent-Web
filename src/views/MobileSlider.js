@@ -13,7 +13,7 @@ const MobileSlider = () => {
       >
         <div className="carousel-title title center">Success Stories</div>
         <div className="container">
-          <div id="carouselExampleControls" className="carousel slide">
+          <div id="carouselExampleControlsMobile" className="carousel slide">
             <div className="carousel-inner">
               <div className="carousel-item active">
                 <div className="carousel-wrapper">
@@ -209,7 +209,7 @@ const MobileSlider = () => {
             <button
               className="carousel-control-prev"
               type="button"
-              data-bs-target="#carouselExampleControls"
+              data-bs-target="#carouselExampleControlsMobile"
               data-bs-slide="prev"
             >
               <span
@@ -221,7 +221,7 @@ const MobileSlider = () => {
             <button
               className="carousel-control-next carousel-next-control"
               type="button"
-              data-bs-target="#carouselExampleControls"
+              data-bs-target="#carouselExampleControlsMobile"
               data-bs-slide="next"
             >
               <span
