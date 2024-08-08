@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
-const BrandActivation = () => {
+const BrandActivation = React.memo((props) => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
   const trialIcon = require("../../assets/icons/trial-icon.png");
@@ -113,6 +113,6 @@ const BrandActivation = () => {
       {openPopUp && <PopUp message={message} />}
     </>
   );
-};
+});
 
 export default BrandActivation;
