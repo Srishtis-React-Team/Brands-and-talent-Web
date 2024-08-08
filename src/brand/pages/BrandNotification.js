@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../../helpers/ApiHelper.js";
 import { API } from "../../config/api.js";
 import PopUp from "../../components/PopUp.js";
-import "../../assets/css/talent-dashboard.scss";
+import "../../assets/css/talent-dashboard.css";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import BrandHeader from "./BrandHeader.js";

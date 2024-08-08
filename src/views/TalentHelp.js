@@ -3,7 +3,7 @@ import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
 import PopUp from "../components/PopUp.js";
-import "../assets/css/talent-dashboard.scss";
+import "../assets/css/talent-dashboard.css";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useNavigate } from "react-router-dom";
 import RichTextEditor from "./RichTextEditor";

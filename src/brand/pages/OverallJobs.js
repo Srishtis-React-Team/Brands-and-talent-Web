@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../../assets/css/forms/kidsform-one.scss";
-import "../../assets/css/createjobs.scss";
+import "../../assets/css/forms/kidsform-one.css";
+import "../../assets/css/createjobs.css";
 import "../../assets/css/talent-profile.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { API } from "../../config/api";

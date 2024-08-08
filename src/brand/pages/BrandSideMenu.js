@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../../assets/css/brand-dashboard.scss";
-import "../../assets/css/talentHeader.scss";
+import "../../assets/css/brand-dashboard.css";
+import "../../assets/css/talentHeader.css";
 import { Link, useLocation } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";

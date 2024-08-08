@@ -4,7 +4,7 @@ import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
-import "../assets/css/talent-dashboard.scss";
+import "../assets/css/talent-dashboard.css";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
 
