@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import "../assets/css/slider.scss";
+import "../assets/css/slider.css";
 
 const propTypes = {
   min: PropTypes.number,
