@@ -384,11 +384,12 @@ const Dashboard = () => {
                     {contentsList?.title3}
                   </div>
                   <button
-                    className="Join-now-wrapper"
+                    className="Join-now-wrapper joinnow-text"
                     onClick={() => handleAirtableClick()}
                   >
-                    <div className="joinnow-text">Join Now</div>
+                    Join Now
                   </button>
+
                   {/* <div
                     className="Join-now-wrapper"
                     data-bs-toggle="modal"
@@ -406,10 +407,10 @@ const Dashboard = () => {
                   </div>
 
                   <button
-                    className="Join-now-wrapper hireBtn"
                     onClick={() => handleAirtableClick()}
+                    className="Join-now-wrapper hireBtn joinnow-text"
                   >
-                    <div className="joinnow-text">Hire Now</div>
+                    Hire Now
                   </button>
                   {/* <div
                     className="Join-now-wrapper hireBtn"

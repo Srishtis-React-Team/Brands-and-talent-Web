@@ -6,7 +6,6 @@ import { StyledEngineProvider } from "@mui/material";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-// basename=""
 // "homepage": "https://brandsandtalent.com/",
 // "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent",
 // basename="/project/brandsandtalent"

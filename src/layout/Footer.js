@@ -248,15 +248,16 @@ const Footer = (props) => {
                   )}
                 </div> */}
                 <div className="col-md-4 form-group">
-                  <div
+                  <button
                     className="subscribe-btn"
                     onClick={(e) => {
                       e.preventDefault();
                       subscribe();
                     }}
                   >
+                    {" "}
                     Subscribe Now
-                  </div>
+                  </button>
                 </div>
               </div>
             </section>
