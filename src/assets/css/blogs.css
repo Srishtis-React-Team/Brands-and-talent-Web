@@ -333,3 +333,11 @@ ul.shareDiv li:hover {
   animation: slideDownFromParent 1s ease-out;
   position: relative;
 } */
+
+.no-copy {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+}

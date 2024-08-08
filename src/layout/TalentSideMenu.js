@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../assets/css/brand-dashboard.scss";
-import "../assets/css/talentHeader.scss";
+import "../assets/css/brand-dashboard.css";
+import "../assets/css/talentHeader.css";
 import { NavLink } from "react-router-dom";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../config/api";

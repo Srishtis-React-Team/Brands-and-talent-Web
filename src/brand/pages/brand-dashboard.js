@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "../../assets/css/brand-dashboard.scss";
-import "../../assets/css/talentHeader.scss";
+import "../../assets/css/brand-dashboard.css";
+import "../../assets/css/talentHeader.css";
 import BrandHeader from "./BrandHeader";
 import BrandHome from "./BrandHome";
 import PreviewJob from "./PreviewJob";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../assets/css/brand-home.scss";
+import "../../assets/css/brand-home.css";
 import BrandHeader from "./BrandHeader";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import { API } from "../../config/api";

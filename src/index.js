@@ -7,9 +7,12 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 // "homepage": "https://brandsandtalent.com/",
+// "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent",
+// basename="/project/brandsandtalent"
+
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/project/brandsandtalent">
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
       <StyledEngineProvider injectFirst>
         <App />
@@ -18,5 +21,6 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById("root")
 );
+
 
 reportWebVitals();
