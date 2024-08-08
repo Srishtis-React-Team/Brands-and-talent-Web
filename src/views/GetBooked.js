@@ -3,7 +3,7 @@ import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
-import "../assets/css/talent-dashboard.scss";
+import "../assets/css/talent-dashboard.css";
 import { styled } from "@mui/system";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";

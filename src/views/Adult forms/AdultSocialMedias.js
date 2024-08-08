@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import PopUp from "../../components/PopUp";
-import "../../assets/css/talent-dashboard.scss";
+import "../../assets/css/talent-dashboard.css";
 import CurrentUser from "../../CurrentUser";
 
 const AdultSocialMedias = () => {

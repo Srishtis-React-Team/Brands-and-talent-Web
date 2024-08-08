@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/dashboard.css";
-import "../assets/css/register.scss";
+import "../assets/css/register.css";
 import { useNavigate } from "react-router";
 import PopUp from "../components/PopUp";
 import { API } from "../config/api";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../assets/css/forms/otp.scss";
+import "../assets/css/forms/otp.css";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";

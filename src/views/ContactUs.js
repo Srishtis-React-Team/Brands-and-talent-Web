@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../assets/css/forms/kidsform-one.scss";
+import "../assets/css/forms/kidsform-one.css";
 import Button from "@mui/material/Button";
 import MuiPhoneNumber from "material-ui-phone-number";
 import Header from "../layout/header";

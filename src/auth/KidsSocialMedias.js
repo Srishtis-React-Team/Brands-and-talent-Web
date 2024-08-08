@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../assets/css/forms/kidsform-one.scss";
-import "../assets/css/forms/kidsformthree.scss";
+import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/forms/kidsformthree.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
