@@ -3173,6 +3173,7 @@ section.section-1.bannerImg.wraper {
 }
 .Join-now-wrapper.hireBtn {
     background: #fff;
+    color: #000;
 }
 .Join-now-wrapper.hireBtn .joinnow-text {
     color: #c2124b;
@@ -3333,6 +3334,24 @@ textarea#exampleFormControlTextarea1 {
 div#carouselExampleControls button {
   opacity: 1;
 }
+.social-medias i {
+  margin: 0 !important;
+}
+.MuiFormControl-root.MuiTextField-root.form-control.css-1u3bzj6-MuiFormControl-root-MuiTextField-root input {
+  height: 30px !important;
+}
+textarea.contact-us-textarea.w-100 {
+  font-size: 13px;
+}
+
+
+
+
+
+
+
+
+
 
 
 }
