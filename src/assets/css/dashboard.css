@@ -3232,6 +3232,7 @@ head .profile-image-header {
   }
   .Join-now-wrapper.hireBtn {
     background: #fff;
+    color: #000;
   }
   .Join-now-wrapper.hireBtn .joinnow-text {
     color: #c2124b;
@@ -3400,6 +3401,57 @@ head .profile-image-header {
     opacity: 1;
   }
 }
+main.brand-home-main {
+  width: 100% !important;
+}
+.update-password-main.w-100 {
+  padding: 0;
+  margin-top: 20px;
+}
+.add-portfolia-btn.contactus-btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.add-portfolia-btn.contactus-btn-wrapper button {
+  background: #000;
+  color: #fff;
+  opacity: 1;
+  border-radius: 30px;
+  margin-left: 20px;
+}
+textarea#exampleFormControlTextarea1 {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.terms-container.container,
+.policy-container {
+  padding: 20px !important;
+}
+.terms-and-conditions h3 span,
+.terms-and-conditions h1 span,
+.terms-and-conditions h2 span {
+  font-weight: 600;
+}
+.terms-and-conditions h3,
+.terms-and-conditions h1,
+.terms-and-conditions h2 {
+  margin-top: 10px !important;
+}
+div#carouselExampleControls button {
+  opacity: 1;
+}
+.social-medias i {
+  margin: 0 !important;
+}
+.MuiFormControl-root.MuiTextField-root.form-control.css-1u3bzj6-MuiFormControl-root-MuiTextField-root
+  input {
+  height: 30px !important;
+}
+textarea.contact-us-textarea.w-100 {
+  font-size: 13px;
+}
+
 @media (max-width: 420px) {
   .mobile-navbar .icon {
     width: 45px;
