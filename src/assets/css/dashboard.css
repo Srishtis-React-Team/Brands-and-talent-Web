@@ -2560,6 +2560,26 @@ head .profile-image-header {
   margin: 0 -1%;
   width: 100%;
 }
+.nav-item.dropdown {
+  list-style-type: none;
+}
+.nav-link {
+  color: #000;
+  font-size: 14px;
+  padding: 0;
+}
+.nav-link:hover {
+  color: #c2114b;
+}
+.dropdown:hover > .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}
+.dropend:hover > .blogs-menu {
+  display: block;
+  margin-top: -25px;
+  margin-left: 160px;
+}
 @media (max-width: 430px) {
   .gallery-wrapper {
     width: 47%;
@@ -2584,6 +2604,7 @@ head .profile-image-header {
     font-family: "emoji";
   }
 }
+
 @media (min-width: 480px) {
   .nav-item.dropdown {
     list-style-type: none;
@@ -3197,12 +3218,16 @@ head .profile-image-header {
 }
 
 @media (max-width: 767px) {
+  ul.dropdown-menu.submenu {
+    position: relative !important;
+    width: 100%;
+  }
   .storyCar .carousel-next-control {
     right: 0;
   }
   .mobile-navbar .icon {
     overflow: hidden;
-    width: 50px;
+    width: 48px;
   }
   .btLogo {
     height: 40px !important;
@@ -3323,8 +3348,8 @@ head .profile-image-header {
     left: 0;
   }
   .quote > img {
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
     opacity: 0.5;
   }
   .brands-section .logospc img {
@@ -3400,56 +3425,57 @@ head .profile-image-header {
   div#carouselExampleControls button {
     opacity: 1;
   }
-}
-main.brand-home-main {
-  width: 100% !important;
-}
-.update-password-main.w-100 {
-  padding: 0;
-  margin-top: 20px;
-}
-.add-portfolia-btn.contactus-btn-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-.add-portfolia-btn.contactus-btn-wrapper button {
-  background: #000;
-  color: #fff;
-  opacity: 1;
-  border-radius: 30px;
-  margin-left: 20px;
-}
-textarea#exampleFormControlTextarea1 {
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-.terms-container.container,
-.policy-container {
-  padding: 20px !important;
-}
-.terms-and-conditions h3 span,
-.terms-and-conditions h1 span,
-.terms-and-conditions h2 span {
-  font-weight: 600;
-}
-.terms-and-conditions h3,
-.terms-and-conditions h1,
-.terms-and-conditions h2 {
-  margin-top: 10px !important;
-}
-div#carouselExampleControls button {
-  opacity: 1;
-}
-.social-medias i {
-  margin: 0 !important;
-}
-.MuiFormControl-root.MuiTextField-root.form-control.css-1u3bzj6-MuiFormControl-root-MuiTextField-root
-  input {
-  height: 30px !important;
-}
-textarea.contact-us-textarea.w-100 {
-  font-size: 13px;
+
+  main.brand-home-main {
+    width: 100% !important;
+  }
+  .update-password-main.w-100 {
+    padding: 0;
+    margin-top: 20px;
+  }
+  .add-portfolia-btn.contactus-btn-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .add-portfolia-btn.contactus-btn-wrapper button {
+    background: #000;
+    color: #fff;
+    opacity: 1;
+    border-radius: 30px;
+    margin-left: 20px;
+  }
+  textarea#exampleFormControlTextarea1 {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .terms-container.container,
+  .policy-container {
+    padding: 20px !important;
+  }
+  .terms-and-conditions h3 span,
+  .terms-and-conditions h1 span,
+  .terms-and-conditions h2 span {
+    font-weight: 600;
+  }
+  .terms-and-conditions h3,
+  .terms-and-conditions h1,
+  .terms-and-conditions h2 {
+    margin-top: 10px !important;
+  }
+  div#carouselExampleControls button {
+    opacity: 1;
+  }
+  .social-medias i {
+    margin: 0 !important;
+  }
+  .MuiFormControl-root.MuiTextField-root.form-control.css-1u3bzj6-MuiFormControl-root-MuiTextField-root
+    input {
+    height: 30px !important;
+  }
+  textarea.contact-us-textarea.w-100 {
+    font-size: 13px;
+  }
 }
 
 @media (max-width: 420px) {

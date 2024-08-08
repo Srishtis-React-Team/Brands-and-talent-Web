@@ -13,7 +13,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const ContactUs = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -84,9 +84,15 @@ const ContactUs = () => {
   return (
     <>
       <Header />
-      <main className="brand-home-main" style={{ margin: "30px auto", width: "50%" }}>
-        <div className="brand-content-main boxBg edit_talentprofile" style={{marginTop:'12%'}}>
-          <div className="create-job-title">How Can we help?</div>
+      <main
+        className="brand-home-main"
+        style={{ margin: "30px auto", width: "50%" }}
+      >
+        <div
+          className="brand-content-main boxBg edit_talentprofile"
+          style={{ marginTop: "12%" }}
+        >
+          <div className="create-job-title">How can we help?</div>
           <p>
             Have a question? Fill out the form below, and we'll get back to you
             within 1-2 business days
@@ -97,7 +103,7 @@ const ContactUs = () => {
                 Full Name <span className="mandatory">*</span>
               </label>
               <div className="form-group adult-password-wrapper">
-                <input  
+                <input
                   type="text"
                   className="form-control adult-signup-inputs"
                   placeholder="Enter Full Name"
@@ -117,7 +123,9 @@ const ContactUs = () => {
               </label>
               <input
                 type="email"
-                className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"}`}
+                className={`form-control ${
+                  !isValidEmail ? "is-invalid" : "form-control"
+                }`}
                 onChange={handleEmailChange}
                 placeholder="Enter E-mail"
                 value={email}
