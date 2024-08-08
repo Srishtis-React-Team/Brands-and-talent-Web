@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../assets/css/forms/kidsformthree.scss";
+import "../assets/css/forms/kidsformthree.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";

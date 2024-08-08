@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import "../assets/css/talentHeader.scss";
+import "../assets/css/talentHeader.css";
 import { useNavigate } from "react-router";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";

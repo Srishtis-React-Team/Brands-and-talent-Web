@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../../assets/css/forms/kidsform-one.scss";
+import "../../assets/css/forms/kidsform-one.css";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";

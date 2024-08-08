@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
-import "../assets/css/service-carousel.scss";
+import "../assets/css/service-carousel.css";
 import { useNavigate } from "react-router";
 import PopUp from "../components/PopUp";
 
