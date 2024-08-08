@@ -533,7 +533,7 @@ const TalentDashBoard = () => {
                 </div>
               </div>
               <div className="doitnow">
-                <div
+                <button
                   className="doit-btn"
                   onClick={() => {
                     openSignup();
@@ -542,7 +542,7 @@ const TalentDashBoard = () => {
                   aria-label="Close"
                 >
                   Update Profile Now
-                </div>
+                </button>
               </div>
             </div>
           </div>
