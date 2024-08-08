@@ -9,7 +9,7 @@ import PopUp from "../components/PopUp";
 import CurrentUser from "../CurrentUser";
 import WebSlider from "./WebSlider";
 import MobileSlider from "./MobileSlider";
-const Dashboard = () => {
+const Dashboard = React.memo((props) => {
   const { currentUserId, currentUserType, talentName, brandName } =
     CurrentUser();
   const navigate = useNavigate();
@@ -24,15 +24,8 @@ const Dashboard = () => {
   const pinkStar = require("../assets/icons/pink-star.png");
   const heartIcon = require("../assets/icons/heart.png");
   const favoruiteIcon = require("../assets/icons/favorite.png");
-
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [All, showAll] = useState(true);
-  const [featuredMembers, setFeaturedMembers] = useState(false);
-  const [Actor, showActor] = useState(false);
-  const [Model, showModel] = useState(false);
-  const [Director, showDirector] = useState(false);
-  const [Singer, showSinger] = useState(false);
   const [talentList, setTalentList] = useState([]);
   const [talentsList, setTalentsList] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
@@ -81,22 +74,6 @@ const Dashboard = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(contentsList, "contentsList");
-  }, [contentsList]);
-
-  const getByProfession = async (e) => {
-    let formData = {
-      type: e,
-    };
-    await ApiHelper.post(API.getByProfession, formData)
-      .then((resData) => {
-        if (resData) {
-          setTalentsList(resData.data.data);
-        }
-      })
-      .catch((err) => {});
-  };
   const getTalentList = async () => {
     await ApiHelper.get(API.getTalentList)
       .then((resData) => {
@@ -214,54 +191,6 @@ const Dashboard = () => {
     }
   };
 
-  const createHandleMenuClick = (blogData) => {
-    return () => {
-      navigate(`/view-blog`, {
-        state: { blogData },
-      });
-    };
-  };
-
-  function handleTabs(e) {
-    const actions = {
-      All: () => {
-        getTalentList();
-        showAll(true);
-      },
-      more: () => {
-        navigate(`/find-creators`);
-      },
-      Actor: () => {
-        showActor(true);
-      },
-      Model: () => {
-        showModel(true);
-      },
-      "featured-members": () => {
-        setFeaturedMembers(true);
-      },
-      Director: () => {
-        showDirector(true);
-      },
-      Singer: () => {
-        showSinger(true);
-      },
-    };
-    if (actions[e]) {
-      actions[e]();
-    } else {
-      showAll(false);
-      showActor(false);
-      showModel(false);
-      setFeaturedMembers(false);
-      showDirector(false);
-      showSinger(false);
-      if (e !== "All") {
-        getByProfession(e);
-      }
-    }
-  }
-
   const handleMessageFromHeader = (message) => {
     if (message === "open-kids-form") {
       openModal();
@@ -348,11 +277,6 @@ const Dashboard = () => {
       .catch((err) => {});
   };
 
-  const blogReadMore = async () => {
-    // navigate("/blogs", { state: { step: 4 } });
-    window.open("https://brandsandtalent.substack.com", "_blank");
-  };
-
   const handleAirtableClick = () => {
     window.open(
       "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
@@ -389,14 +313,6 @@ const Dashboard = () => {
                   >
                     Join Now
                   </button>
-
-                  {/* <div
-                    className="Join-now-wrapper"
-                    data-bs-toggle="modal"
-                    data-bs-target="#verify_age"
-                  >
-                    <div className="joinnow-text">Join Now</div>
-                  </div> */}
                 </div>
               </div>
               <div className="col-lg-6">
@@ -412,89 +328,16 @@ const Dashboard = () => {
                   >
                     Hire Now
                   </button>
-                  {/* <div
-                    className="Join-now-wrapper hireBtn"
-                    onClick={(e) => {
-                      navigate("/signup", {
-                        state: { signupCategory: "brand" },
-                      });
-                    }}
-                  >
-                    <div className="joinnow-text">Hire Now</div>
-                  </div> */}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* <div className="section-1">
-          <div className="brand-section"></div>
-          <div className="brand-options"></div>
-        </div> */}
-
         <div className="wraper">
           <div className="container-fluid">
             <div className="tabs-section">
               <div className="title">Popular Talent</div>
-              {/* <div className="tabs">
-                <div
-                  className={All ? "active-tab" : null}
-                  onClick={(e) => {
-                    handleTabs("All");
-                  }}
-                >
-                  All Talents
-                </div>
-                <div
-                  className={featuredMembers ? "active-tab" : null}
-                  onClick={(e) => {
-                    handleTabs("featured-members");
-                  }}
-                >
-                  Featured Members
-                </div>
-                <div
-                  className={Actor ? "active-tab" : null}
-                  onClick={(e) => {
-                    handleTabs("Actor");
-                  }}
-                >
-                  Actor
-                </div>
-                <div
-                  className={Director ? "active-tab" : null}
-                  onClick={(e) => {
-                    handleTabs("Director");
-                  }}
-                >
-                  Director
-                </div>
-                <div
-                  className={Singer ? "active-tab" : null}
-                  onClick={(e) => {
-                    handleTabs("Singer");
-                  }}
-                >
-                  Singer
-                </div>
-                <div
-                  className={Model ? "active-tab" : null}
-                  onClick={(e) => {
-                    handleTabs("Model");
-                  }}
-                >
-                  Model
-                </div>
-                <div
-                  className="more-text"
-                  onClick={(e) => {
-                    handleTabs("more");
-                  }}
-                >
-                  More
-                </div>
-              </div> */}
             </div>
           </div>
 
@@ -622,30 +465,6 @@ const Dashboard = () => {
                               {item?.parentCountry}{" "}
                             </span>
                           </span>
-                          {/* <div className="address">
-                            {item.profession?.map((profession, index) => (
-                              <React.Fragment key={index}>
-                                {profession.value}
-                                {index !== item.profession.length - 1 && ","}
-                              </React.Fragment>
-                            ))}
-                          </div>
-                          <div className="user-details">
-                            <div className="location-wrapper">
-                              <img src={locationIcon} alt="" />
-                              <div className="location-name">
-                                {item?.parentCountry
-                                  ? item?.parentCountry
-                                  : "cambodia"}
-                              </div>
-                            </div>
-                            <div className="location-wrapper">
-                              <img src={jobIcon} alt="" />
-                              <div className="location-name">
-                                25 Projects Booked
-                              </div>
-                            </div>
-                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -663,42 +482,6 @@ const Dashboard = () => {
             )}
           </div>
         </div>
-        {/* {talentCount} */}
-        {/* {brandUserCount} */}
-
-        {/* <div className="communityWraper wraper secSpac">
-          <div className="container">
-            <div className="title">Our Community</div>
-            <div className="row">
-              <div className="col-md-3">
-                <div className="community-card-wrapper card-background">
-                  <div className="count">500+</div>
-                  <div className="cards-text">Talent in Our Community</div>
-                </div>
-              </div>
-
-              <div className="col-md-3">
-                <div className="community-card-wrapper  card-background">
-                  <div className="count">50</div>
-                  <div className="cards-text">Brand Collaborators </div>
-                </div>
-              </div>
-
-              <div className="col-md-3">
-                <div className="community-card-wrapper  card-background">
-                  <div className="count">50</div>
-                  <div className="cards-text">Happy Clients</div>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="community-card-wrapper  card-background">
-                  <div className="count">200+</div>
-                  <div className="cards-text">Projects Completed</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
 
         <div className="productsWraper wraper secSpac">
           <div className="container">
@@ -723,55 +506,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
-        {/* <div className="caseWraper wraper secSpac">
-          <div className="title">Blog</div>
-          <div className="container">
-            <div className="gallery-section">
-              <div className="case-study-main row">
-                {featuredBlogsLsit && featuredBlogsLsit.length > 0 && (
-                  <>
-                    {featuredBlogsLsit?.map((item) => {
-                      return (
-                        <div className="col-sm-6 col-md-4 col-lg-3 my-3">
-                          <div
-                            className="case-wrapper"
-                            onClick={createHandleMenuClick(item)}
-                          >
-                            <div className="caseBox">
-                              <img
-                                className="case-img"
-                                src={`${API.userFilePath}${item.image}`}
-                              ></img>
-                            </div>
-                            <div className="case-gallery-content">
-                              <div className="caseCont">
-                                <div className="case-study-name">
-                                  {item.title}
-                                </div>
-                                <div className="case-study-address">
-                                  {item.heading}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="container">
-            <div onClick={() => blogReadMore()} className="find-more wraper">
-              <div className="moreBtn">Read More</div>
-            </div>
-          </div>
-        </div> */}
-
-        {/* data-bs-ride="carousel" <= under id="carouselExampleControls"
-            className="carousel slide" */}
 
         <div className="web-carousel">
           <WebSlider />
@@ -822,9 +556,6 @@ const Dashboard = () => {
           <div className="modal-dialog  modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                {/* <p id="ratingModalLabel" className="modal-job-title">
-                  Rate {modalData?.preferredChildFirstname}
-                </p> */}
                 <button
                   type="button"
                   className="btn-close"
@@ -884,12 +615,9 @@ const Dashboard = () => {
 
         <Footer />
       </div>
-      {/* <div className="chat-section">
-        <ChatBot />
-      </div> */}
       {openPopUp && <PopUp message={message} />}
     </>
   );
-};
+});
 
 export default Dashboard;

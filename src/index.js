@@ -9,10 +9,10 @@ import "./index.css";
 // "homepage": "https://brandsandtalent.com/",
 // "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent",
 // basename="/project/brandsandtalent"
-
+// "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent",
 
 ReactDOM.render(
-  <BrowserRouter basename="/project/brandsandtalent">
+  <BrowserRouter>
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
       <StyledEngineProvider injectFirst>
         <App />
@@ -21,6 +21,5 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById("root")
 );
-
 
 reportWebVitals();
