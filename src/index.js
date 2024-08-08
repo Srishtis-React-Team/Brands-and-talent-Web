@@ -13,7 +13,7 @@ import "./index.css";
 
 
 ReactDOM.render(
-  <BrowserRouter basename="/project/brandsandtalent">
+  <BrowserRouter basename="">
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
       <StyledEngineProvider injectFirst>
         <App />
