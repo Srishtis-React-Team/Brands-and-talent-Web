@@ -188,8 +188,8 @@ const HowItWorks = () => {
                                 __html: resource.title,
                               }}
                             />
-                            <div className="resource-content-wrapper col-md-6 padSpace">
-                              <div className="resource-description space">
+                            <div className="resource-content-wrapper col-md-12 padSpace">
+                              <div className="resource-description ">
                                 {resource.description.map((desc, descIndex) => (
                                   <div
                                     key={descIndex}
@@ -225,8 +225,8 @@ const HowItWorks = () => {
                                 )}
                               </div>
                             </div> */}
-                            <div className="resource-content-wrapper col-md-6 padSpace">
-                              <div className="resource-description space">
+                            <div className="resource-content-wrapper col-md-12 padSpace">
+                              <div className="resource-description ">
                                 {resource.description.map((desc, descIndex) => (
                                   <div
                                     key={descIndex}
@@ -269,14 +269,14 @@ const HowItWorks = () => {
                                 )}
                               </div>
                             </div> */}
-                            <div className="resource-content-wrapper col-md-6 padSpace">
+                            <div className="resource-content-wrapper col-md-12 padSpace">
                               <div
                                 className="resource-name no-copy"
                                 dangerouslySetInnerHTML={{
                                   __html: resource.title,
                                 }}
                               />
-                              <div className="resource-description space">
+                              <div className="resource-description ">
                                 {resource.description.map((desc, descIndex) => (
                                   <div
                                     key={descIndex}
@@ -289,14 +289,14 @@ const HowItWorks = () => {
                           </>
                         ) : (
                           <>
-                            <div className="resource-content-wrapper col-md-6 padSpace">
+                            <div className="resource-content-wrapper col-md-12 padSpace">
                               <div
                                 className="resource-name no-copy"
                                 dangerouslySetInnerHTML={{
                                   __html: resource.title,
                                 }}
                               />
-                              <div className="resource-description space">
+                              <div className="resource-description">
                                 {resource.description.map((desc, descIndex) => (
                                   <div
                                     key={descIndex}
@@ -374,7 +374,7 @@ const HowItWorks = () => {
                                 </div>
                               </div> */}
                               <div className="resource-content-wrapper col-md-6 padSpace">
-                                <div className="resource-description space">
+                                <div className="resource-description ">
                                   {resource.description.map(
                                     (desc, descIndex) => (
                                       <div
@@ -414,7 +414,7 @@ const HowItWorks = () => {
                                 </div>
                               </div> */}
                               <div className="resource-content-wrapper col-md-6 padSpace">
-                                <div className="resource-description space">
+                                <div className="resource-description ">
                                   {resource.description.map(
                                     (desc, descIndex) => (
                                       <div
@@ -465,7 +465,7 @@ const HowItWorks = () => {
                                     __html: resource.title,
                                   }}
                                 />
-                                <div className="resource-description space">
+                                <div className="resource-description ">
                                   {resource.description.map(
                                     (desc, descIndex) => (
                                       <div
@@ -489,7 +489,7 @@ const HowItWorks = () => {
                                     __html: resource.title,
                                   }}
                                 />
-                                <div className="resource-description space">
+                                <div className="resource-description ">
                                   {resource.description.map(
                                     (desc, descIndex) => (
                                       <div
@@ -550,7 +550,7 @@ const HowItWorks = () => {
               <div className="faq-section faqWraper">
                 <div className="accordion accordion-pad" id="accordionExample">
                   {brandsFaq.map((faq, index) => (
-                    <div className="accordion-item" key={faq.uniqueId}>
+                    <div className="accordion-item" key={faq._id}>
                       <h2 className="accordion-header" id={`heading${index}`}>
                         <button
                           className="accordion-button"
@@ -586,7 +586,7 @@ const HowItWorks = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
               <div className="faq-section faqWraper">
-                <div className="accordion accordion-pad" id="accordionExample">
+                <div className="accordion accordion-pad" id="accordionExample1">
                   {talentsFaq.map((faq, index) => (
                     <div className="accordion-item" key={faq.uniqueId}>
                       <h2 className="accordion-header" id={`heading${index}`}>
@@ -606,7 +606,7 @@ const HowItWorks = () => {
                           index === 0 ? "show" : ""
                         }`}
                         aria-labelledby={`heading${index}`}
-                        data-bs-parent="#accordionExample"
+                        data-bs-parent="#accordionExample1"
                       >
                         <div className="accordion-body">
                           {faq.description.map((desc, i) => (
@@ -624,7 +624,7 @@ const HowItWorks = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
               <div className="faq-section faqWraper">
-                <div className="accordion accordion-pad" id="accordionExample">
+                <div className="accordion accordion-pad" id="accordionExample2">
                   {bestPracticesFaq.map((faq, index) => (
                     <div className="accordion-item" key={faq.uniqueId}>
                       <h2 className="accordion-header" id={`heading${index}`}>
@@ -644,7 +644,7 @@ const HowItWorks = () => {
                           index === 0 ? "show" : ""
                         }`}
                         aria-labelledby={`heading${index}`}
-                        data-bs-parent="#accordionExample"
+                        data-bs-parent="#accordionExample2"
                       >
                         <div className="accordion-body">
                           {faq.description.map((desc, i) => (

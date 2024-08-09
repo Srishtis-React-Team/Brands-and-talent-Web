@@ -461,6 +461,7 @@ a {
 }
 .header-items .loginTxt {
   margin-right: 25px;
+  cursor: pointer;
 }
 .header-items .searchBtn {
   margin-right: 20px;
@@ -3218,9 +3219,9 @@ head .profile-image-header {
 }
 
 @media (max-width: 767px) {
-  ul.dropdown-menu.submenu {
+  .dropdown:hover > .dropdown-menu {
     position: relative !important;
-    width: 100%;
+    transform: unset !important;
   }
   .storyCar .carousel-next-control {
     right: 0;
@@ -3472,9 +3473,6 @@ head .profile-image-header {
   .MuiFormControl-root.MuiTextField-root.form-control.css-1u3bzj6-MuiFormControl-root-MuiTextField-root
     input {
     height: 30px !important;
-  }
-  textarea.contact-us-textarea.w-100 {
-    font-size: 13px;
   }
 }
 

@@ -30,7 +30,7 @@ import useFieldDatas from "../../config/useFieldDatas";
 
 const CreateJobs = () => {
   const {
-    categoryList, 
+    categoryList,
     professionList,
     gendersList,
     languagesList,
@@ -108,7 +108,7 @@ const CreateJobs = () => {
     []
   );
 
-  const [isDuplicateJob, setIsDuplicateJob] = useState(false);  
+  const [isDuplicateJob, setIsDuplicateJob] = useState(false);
 
   const getBrand = async () => {
     await ApiHelper.get(`${API.getBrandById}${brandId}`)
@@ -1012,8 +1012,6 @@ const CreateJobs = () => {
     setSelectedProfessions(selectedOptions);
     setProfessionError(false);
   };
-
-
 
   function chooseCategory(category) {
     if (selectedCategories.includes(category)) {
