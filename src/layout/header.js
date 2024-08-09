@@ -140,13 +140,18 @@ const Header = ({ onData }) => {
 
   const handleClick = (data) => {
     window.scrollTo(0, 0); // Scroll to top on link click
+    if (data == "login") {
+      window.open(
+        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        "_blank"
+      );
+    }
     if (data == "post-job") {
       if (!currentUserId) {
         window.open(
           "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
           "_blank"
         );
-
         // setMessage("You must be logged in");
         // setOpenPopUp(true);
         // setTimeout(function() {
@@ -619,14 +624,8 @@ const Header = ({ onData }) => {
 
         <div className="mobile-nav-functions">
           {!isLoginPage && (
-            <div className="">
-              <NavLink
-                to="/login"
-                className="login-text"
-                onClick={() => handleClick("")}
-              >
-                Login
-              </NavLink>
+            <div className="" onClick={() => handleClick("login")}>
+              Login
             </div>
           )}
           {!currentUserId && (
@@ -1031,14 +1030,8 @@ const Header = ({ onData }) => {
               </div>
 
               {!currentUserId && (
-                <div className="loginTxt">
-                  <NavLink
-                    to="/login"
-                    className="login-text"
-                    onClick={() => handleClick("")}
-                  >
-                    Log In
-                  </NavLink>
+                <div className="loginTxt" onClick={() => handleClick("login")}>
+                  Log In
                 </div>
               )}
 

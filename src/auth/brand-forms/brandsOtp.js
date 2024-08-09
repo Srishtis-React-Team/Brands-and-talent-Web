@@ -4,7 +4,8 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { useNavigate } from "react-router-dom";
-const BrandsOtp = () => {
+
+const BrandsOtp = React.memo((props) => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -169,6 +170,6 @@ const BrandsOtp = () => {
       {openPopUp && <PopUp message={message} />}
     </>
   );
-};
+});
 
 export default BrandsOtp;
