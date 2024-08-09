@@ -175,15 +175,15 @@ const ContactUs = () => {
                 <div className="invalid-fields">Please enter Message</div>
               )}
             </div>
-            <div className="add-portfoli-section ">
+            <div className="add-portfoli-section cn-btn">
               <div className="add-portfolia-btn contactus-btn-wrapper">
-                <div
-                  className="edit-profile-navigation-btn"
+                <button
+                  className="edit-profile-navigation-btn bk-btn"
                   onClick={handleNavigation}
                 >
                   <i className="bi bi-arrow-left-circle-fill arrow-left-circle"></i>
                   <span className="edit-profile-navigation-text">Back</span>
-                </div>
+                </button>
                 <Button
                   onClick={postSupportMail}
                   className="edit-profileimg-btn"

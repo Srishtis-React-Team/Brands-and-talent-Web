@@ -3220,6 +3220,7 @@ head .profile-image-header {
 .add-portfolia-btn.contactus-btn-wrapper {
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 .add-portfolia-btn.contactus-btn-wrapper button{
     background: #000;
@@ -3232,6 +3233,12 @@ head .profile-image-header {
 .accordion-pad {
     max-width: 100%;
 }
+span.edit-profile-navigation-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
 .css-1ujykiq-MuiButtonBase-root-MuiTab-root.Mui-selected {
     /* color: #c2114b; */
 }
@@ -3252,6 +3259,14 @@ head .profile-image-header {
 .accordion-pad {
     max-width: 100% !important;
 }
+button.edit-profile-navigation-btn.bk-btn {
+    height: 40px;
+    padding: 0px 10px;
+    background: #ccc;
+    border: 0;
+}
+
+
 @media (max-width: 767px) {
   .dropdown:hover > .dropdown-menu {
     position: relative !important;
