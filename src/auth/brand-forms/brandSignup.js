@@ -8,7 +8,7 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import PopUp from "../../components/PopUp";
 import CurrentUser from "../../CurrentUser";
 
-const BrandSignup = () => {
+const BrandSignup = React.memo((props) => {
   const { fcmToken } = CurrentUser();
 
   const navigate = useNavigate();
@@ -467,39 +467,39 @@ const BrandSignup = () => {
             </div>
 
             {/* <div className="stroke-wrapper">
-              <div className="stroke-div"></div>
-              <div className="or-signup">Or Signup with</div>
-              <div className="stroke-div"></div>
-            </div> */}
+                <div className="stroke-div"></div>
+                <div className="or-signup">Or Signup with</div>
+                <div className="stroke-div"></div>
+              </div> */}
             <div className="signup-options">
               {/* <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  socialSignup(
-                    jwtDecode(credentialResponse?.credential),
-                    "google"
-                  );
-                }}
-                onError={() => {
-                  
-                }}
-              /> */}
+                  onSuccess={(credentialResponse) => {
+                    socialSignup(
+                      jwtDecode(credentialResponse?.credential),
+                      "google"
+                    );
+                  }}
+                  onError={() => {
+                    
+                  }}
+                /> */}
               {/* <LoginSocialFacebook
-                appId="7401795359899121"
-                onResolve={(response) => {
-                  socialSignup(response, "facebook");
-                  
-                }}
-                onReject={(error) => {
-                  
-                }}
-              >
-                <MyFacebookLoginButton />
-              </LoginSocialFacebook> */}
+                  appId="7401795359899121"
+                  onResolve={(response) => {
+                    socialSignup(response, "facebook");
+                    
+                  }}
+                  onReject={(error) => {
+                    
+                  }}
+                >
+                  <MyFacebookLoginButton />
+                </LoginSocialFacebook> */}
 
               {/* <div className="google-media">
-                <img src={googleLogo} alt="" />
-                <div className="media-text">Google</div>
-              </div> */}
+                  <img src={googleLogo} alt="" />
+                  <div className="media-text">Google</div>
+                </div> */}
             </div>
             <div className="signup-terms">
               By registering you confirm that you accept the 
@@ -544,6 +544,6 @@ const BrandSignup = () => {
       {openPopUp && <PopUp message={message} />}
     </>
   );
-};
+});
 
 export default BrandSignup;
