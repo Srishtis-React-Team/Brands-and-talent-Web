@@ -3249,6 +3249,9 @@ head .profile-image-header {
     margin: 0 !important;
     margin-right: 20px !important;
 }
+.accordion-pad {
+    max-width: 100% !important;
+}
 @media (max-width: 767px) {
   .dropdown:hover > .dropdown-menu {
     position: relative !important;
