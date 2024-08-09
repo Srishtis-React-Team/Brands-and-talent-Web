@@ -3217,7 +3217,41 @@ head .profile-image-header {
   justify-content: flex-start;
   margin: 40px 0 10px;
 }
-
+.add-portfolia-btn.contactus-btn-wrapper {
+    display: flex;
+    gap: 20px;
+}
+.add-portfolia-btn.contactus-btn-wrapper button{
+    background: #000;
+    border-radius: 30px;
+    color: #fff;
+}
+.terms-container, .policy-container {
+    padding: 30px 15px !important;
+}
+.accordion-pad {
+    max-width: 100%;
+}
+.css-1ujykiq-MuiButtonBase-root-MuiTab-root.Mui-selected {
+    /* color: #c2114b; */
+}
+.resources {
+    padding-top: 60px;
+}
+.topCont.pt-5.pb-0 {
+    padding-top: 10px !important;
+}
+.main-footer-wrapper .form-fields {
+    padding-bottom: 0px;
+}
+.social-medias i {
+    padding: 0;
+    margin: 0 !important;
+    margin-right: 20px !important;
+}
+.accordion-pad {
+    max-width: 100% !important;
+}
 @media (max-width: 767px) {
   .dropdown:hover > .dropdown-menu {
     position: relative !important;
