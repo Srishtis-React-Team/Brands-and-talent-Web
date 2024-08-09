@@ -3265,9 +3265,14 @@ button.edit-profile-navigation-btn.bk-btn {
     background: #ccc;
     border: 0;
 }
-
+.section-description {
+    min-height: 130px !important;
+}
 
 @media (max-width: 767px) {
+    .section-description {
+        min-height: inherit !important;
+    }
   .dropdown:hover > .dropdown-menu {
     position: relative !important;
     transform: unset !important;
