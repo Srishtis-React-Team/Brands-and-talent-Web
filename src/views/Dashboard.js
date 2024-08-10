@@ -36,9 +36,9 @@ const Dashboard = () => {
   const [brandUserCount, setBrandUserCount] = useState(0);
   const [talentCount, setTalentCount] = useState(0);
   const [allUsersCount, setAllUsersCount] = useState(0);
-
   const [productServicesList, setProductServicesList] = useState([]);
   const [contentsList, setContentsList] = useState([]);
+  const [successStoryList, setSuccessStoryList] = useState([]);
 
   useEffect(() => {
     getTalentList();
@@ -46,7 +46,18 @@ const Dashboard = () => {
     fetchContentByType();
     getFeaturedArticles();
     fetchPageContents();
+    getSuccessStories();
   }, []);
+
+  const getSuccessStories = async () => {
+    await ApiHelper.get(API.getSuccessStories)
+      .then((resData) => {
+        if (resData) {
+          setSuccessStoryList(resData?.data?.data);
+        }
+      })
+      .catch((err) => {});
+  };
 
   const fetchContentByType = async () => {
     const formData = {
@@ -508,10 +519,10 @@ const Dashboard = () => {
         </div>
 
         <div className="web-carousel">
-          <WebSlider />
+          <WebSlider successStories={successStoryList} />
         </div>
         <div className="mobile-carousel">
-          <MobileSlider />
+          <MobileSlider successStories={successStoryList} />
         </div>
 
         <div className="secSpac logoWraper wraper my-4">
