@@ -1,8 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/dashboard.css";
-const WebSlider = () => {
+import { Key } from "@mui/icons-material";
+const WebSlider = ({ successStories }) => {
+  console.log(successStories, "WebSlider");
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
+
+  // Function to transform data
+  function transformData(data) {
+    const result = [];
+    for (let i = 0; i < data.length; i += 2) {
+      result.push(data.slice(i, i + 2));
+    }
+    return result;
+  }
+
+  // Transformed data
+  const transformedData = transformData(successStories);
+  console.log(transformedData, "transformedData");
+
   return (
     <>
       <div
@@ -15,7 +31,58 @@ const WebSlider = () => {
         <div className="container">
           <div id="carouselExampleControls" className="carousel slide">
             <div className="carousel-inner">
-              <div className="carousel-item active">
+              {transformedData?.map((item, index) => {
+                return (
+                  <>
+                    <div
+                      Key={index}
+                      className={`carousel-item ${index === 0 ? "active" : ""}`}
+                    >
+                      <div className="carousel-wrapper">
+                        {item?.map((story, index) => (
+                          <>
+                            <div
+                              className="box-one"
+                              Key={index}
+                              style={{ marginLeft: index === 1 ? "25px" : "0" }}
+                            >
+                              <div className="carimg_Box">
+                                <img
+                                  className="carousel-img"
+                                  src={story?.image}
+                                ></img>
+                              </div>
+                              <div className="box-content">
+                                <div className="quote">
+                                  <img src={quoteIcon}></img>
+                                </div>
+                                <div className="carousel-description">
+                                  {story?.content}
+                                </div>
+                                <div className="profile-section">
+                                  <div className="profImg">
+                                    <img src={roundProfile}></img>
+                                  </div>
+                                  <div className="profile-content">
+                                    <div className="profile-name">
+                                      {story?.name}
+                                    </div>
+                                    <div className="profile-info">
+                                      {story?.category}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+
+              {/* <div className="carousel-item active">
                 <div className="carousel-wrapper">
                   <div className="box-one">
                     <div className="carimg_Box">
@@ -134,7 +201,7 @@ const WebSlider = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <button
               className="carousel-control-prev"
