@@ -1588,7 +1588,7 @@ const TalentProfile = () => {
                                                 reportReview(item);
                                               }}
                                             >
-                                              <i class="bi bi-flag-fill flag-icon"></i>
+                                              <i className="bi bi-flag-fill flag-icon"></i>
                                               Report
                                             </MenuItem>
                                           </Menu>

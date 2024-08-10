@@ -15,7 +15,6 @@ import { Button, Modal, Box, Typography } from "@mui/material";
 import searchPathOptions from "../components/SearchPaths";
 import { NavLink, useLocation } from "react-router-dom";
 
-
 const Header = ({ onData }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -38,14 +37,30 @@ const Header = ({ onData }) => {
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
 
-  
   const mobilelogo = require("../assets/images/mobilelogo.png");
 
   const [show, setShow] = useState(false);
+  const dropdownRef = useRef(null);
 
-    const handleToggle = () => {
-        setShow(!show);
+  const handleToggle = () => {
+    setShow(!show);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShow(false);
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener to detect clicks outside of the dropdown
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
@@ -718,41 +733,46 @@ const Header = ({ onData }) => {
               </NavLink>
             </div>
           )}
-           <div className="dropdown">
+          <div className="dropdown" ref={dropdownRef}>
             <button
-                className=" dropdown-toggle border-0"
-                type="button"
-                id="dropdownMenuButton1"
-                aria-expanded={show}
-                onClick={handleToggle}
+              className=" dropdown-toggle border-0"
+              type="button"
+              id="dropdownMenuButton1"
+              aria-expanded={show}
+              onClick={handleToggle}
             >
-               Resources
+              Resources
             </button>
             <ul
-                className={`dropdown-menu ${show ? 'show' : ''}`}
-                aria-labelledby="dropdownMenuButton1"
+              className={`dropdown-menu ${show ? "show" : ""}`}
+              aria-labelledby="dropdownMenuButton1"
             >
-                <li><NavLink to="/about-us" onClick={() => handleClick("")}>
-                    <a className="dropdown-item mb-f">About</a>
-                  </NavLink></li>
-                <li><a
-                    className="dropdown-item mb-f"
-                    dropdown-toggle
-                    onClick={() => handleClickBlogs(0)}
+              <li>
+                <NavLink to="/about-us" onClick={() => handleClick("")}>
+                  <a className="dropdown-item mb-f">About</a>
+                </NavLink>
+              </li>
+              <li>
+                <a
+                  className="dropdown-item mb-f"
+                  dropdown-toggle
+                  onClick={() => handleClickBlogs(0)}
+                >
+                  Newsletter
+                </a>
+              </li>
+              <li>
+                <a className="dropdown-item mb-f">
+                  <NavLink
+                    to="/community-guidelines"
+                    onClick={() => handleClick("")}
                   >
-                    Newsletter
-                  </a></li>
-                <li><a className="dropdown-item mb-f">
-                    <NavLink
-                      to="/community-guidelines"
-                      onClick={() => handleClick("")}
-                    >
-                      Community Guidelines
-                    </NavLink>
-                  </a></li>
+                    Community Guidelines
+                  </NavLink>
+                </a>
+              </li>
             </ul>
-        </div>
-      
+          </div>
 
           <div
             className="navTxt cofee-link"
@@ -762,7 +782,6 @@ const Header = ({ onData }) => {
             Support BT
             <img src={cofeeIcon} alt="img" className="cofeeIcon-img" />
           </div>
-          
         </div>
         <div className="header-search-wrapper">
           <div className="header-search-icon">
@@ -937,7 +956,6 @@ const Header = ({ onData }) => {
                         </NavLink>
                       </a>
                     </li>
-                    
                   </ul>
                 </li>
               </div>
