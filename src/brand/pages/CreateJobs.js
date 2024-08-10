@@ -2540,7 +2540,7 @@ const CreateJobs = () => {
                           <div className="kids-form-section col-md-6">
                             <div className="mb-4">
                               <label className="form-label">
-                                <i class="bi bi-youtube followers-social-icons"></i>
+                                <i className="bi bi-youtube followers-social-icons"></i>
                                 Youtube
                               </label>
                               <div className="creators-filter-select creator-age-wrapper splitterDiv">

@@ -1335,7 +1335,7 @@ input[type="radio"] {
 .storyCar .carimg_Box {
   height: 355px;
   overflow: hidden;
-  width: 100%;
+  width: 50%;
 }
 .storyCar .carimg_Box img {
   min-height: 355px;
@@ -2608,7 +2608,7 @@ head .profile-image-header {
 
 @media (min-width: 480px) {
   .nav-item.dropdown {
-    list-style-type: none;
+    list-style-type: inherit;
   }
   .nav-link {
     color: #000;
@@ -3218,56 +3218,96 @@ head .profile-image-header {
   margin: 40px 0 10px;
 }
 .add-portfolia-btn.contactus-btn-wrapper {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+  display: flex;
+  gap: 20px;
+  align-items: center;
 }
-.add-portfolia-btn.contactus-btn-wrapper button{
-    background: #000;
-    border-radius: 30px;
-    color: #fff;
+.add-portfolia-btn.contactus-btn-wrapper button {
+  background: #000;
+  border-radius: 30px;
+  color: #fff;
 }
-.terms-container, .policy-container {
-    padding: 30px 15px !important;
+.terms-container,
+.policy-container {
+  padding: 30px 15px !important;
 }
 .accordion-pad {
-    max-width: 100%;
+  max-width: 100%;
 }
 span.edit-profile-navigation-text {
-    font-size: 14px;
-    font-weight: 500;
+  font-size: 14px;
+  font-weight: 500;
 }
-
 
 .css-1ujykiq-MuiButtonBase-root-MuiTab-root.Mui-selected {
-    /* color: #c2114b; */
+  /* color: #c2114b; */
 }
 .resources {
-    padding-top: 60px;
+  padding-top: 60px;
 }
 .topCont.pt-5.pb-0 {
-    padding-top: 10px !important;
+  padding-top: 10px !important;
 }
 .main-footer-wrapper .form-fields {
-    padding-bottom: 0px;
+  padding-bottom: 0px;
 }
 .social-medias i {
-    padding: 0;
-    margin: 0 !important;
-    margin-right: 20px !important;
+  padding: 0;
+  margin: 0 !important;
+  margin-right: 20px !important;
 }
 .accordion-pad {
-    max-width: 100% !important;
+  max-width: 100% !important;
 }
 button.edit-profile-navigation-btn.bk-btn {
-    height: 40px;
-    padding: 0px 10px;
-    background: #ccc;
-    border: 0;
+  height: 40px;
+  padding: 0px 10px;
+  background: #ccc;
+  border: 0;
+}
+.section-description {
+  min-height: 130px !important;
+}
+.faqWraper .accordion-button::after {
+  /* background-image: url(http://localhost:3001/static/media/minuse-faq.e9d8301….svg) !important; */
+  background-image: url(http://localhost:3001/static/media/plus-faq.830864a….svg) !important;
+}
+.faqWraper .accordion-button.collapsed::after {
+  background-image: url(http://localhost:3001/static/media/plus-faq.830864a….svg) !important;
+}
+.MuiBox-root.css-19kzrtu {
+  padding: 0px !important;
 }
 
-
+.terms-and-conditions h1 span,
+.terms-and-conditions h2 span,
+.terms-and-conditions h3 span {
+  font-weight: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+}
+.terms-and-conditions h1,
+.terms-and-conditions h2,
+.terms-and-conditions h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px 0px 10px 0px;
+}
+.terms-and-conditions h1 strong,
+.terms-and-conditions h2 strong,
+.terms-and-conditions h3 strong {
+  font-weight: bold;
+}
+li.nav-item.dropdown {
+  list-style-type: none;
+}
+.abtWraper .descp {
+  line-height: 22px;
+}
 @media (max-width: 767px) {
+  .section-description {
+    min-height: inherit !important;
+  }
   .dropdown:hover > .dropdown-menu {
     position: relative !important;
     transform: unset !important;
@@ -3276,8 +3316,8 @@ button.edit-profile-navigation-btn.bk-btn {
     right: 0;
   }
   .mobile-navbar .icon {
-    overflow: hidden;
-    width: 48px;
+    /* overflow: hidden;
+    width: 48px; */
   }
   .btLogo {
     height: 40px !important;
@@ -3306,8 +3346,8 @@ button.edit-profile-navigation-btn.bk-btn {
     background: linear-gradient(180deg, rgb(0 0 0 / 66%) 47.11%, #c2124b 100%);
   }
   .Join-now-wrapper.hireBtn {
-    background: #fff;
-    color: #000;
+    background: #c2124b;
+    color: #fff;
   }
   .Join-now-wrapper.hireBtn .joinnow-text {
     color: #c2124b;
@@ -3522,6 +3562,31 @@ button.edit-profile-navigation-btn.bk-btn {
   .MuiFormControl-root.MuiTextField-root.form-control.css-1u3bzj6-MuiFormControl-root-MuiTextField-root
     input {
     height: 30px !important;
+  }
+  .mobile-menu-items .navTxt:nth-child(3) {
+    padding-right: 0px !important;
+  }
+
+  .dropdown .dropdown-menu.show {
+    display: block !important;
+  }
+
+  ul.dropdown-menu {
+    display: none !important;
+  }
+  button#dropdownMenuButton1 {
+    background: none;
+    font-weight: 500;
+  }
+  a.dropdown-item.mb-f {
+    font-size: 14px;
+  }
+  ul.dropdown-menu.show {
+    margin-top: 10px !important;
+  }
+  .dropdown > .dropdown-menu {
+    position: relative !important;
+    transform: unset !important;
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/dashboard.css";
-const MobileSlider = () => {
+const MobileSlider = ({ successStories }) => {
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
   return (
@@ -15,196 +15,48 @@ const MobileSlider = () => {
         <div className="container">
           <div id="carouselExampleControlsMobile" className="carousel slide">
             <div className="carousel-inner">
-              <div className="carousel-item active">
-                <div className="carousel-wrapper">
-                  <div className="box-one">
-                    <div className="carimg_Box">
-                      <img
-                        className="carousel-img"
-                        src={
-                          "https://brandsandtalent.com/backend/uploads/7d395e65-191b-426f-81fd-baf80a033275.webp"
-                        }
-                      ></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
-                      </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div className="profImg">
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="box-one box-two">
-                    <div className="carimg_Box">
-                      <img
-                        className="carousel-img"
-                        src={
-                          "https://brandsandtalent.com/backend/uploads/6cde52e8-2f83-4cc9-bb1c-c8e244fc5437.webp"
-                        }
-                      ></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
-                      </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div className="profImg">
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="carousel-item">
-                <div className="carousel-wrapper">
-                  <div className="box-one">
-                    <div className="carimg_Box">
-                      <img
-                        className="carousel-img"
-                        src={
-                          "https://brandsandtalent.com/backend/uploads/279f9276-f06c-4682-8b6f-58bc8ed48876.webp"
-                        }
-                      ></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
-                      </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div className="profImg">
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="box-one box-two">
-                    <div className="carimg_Box">
-                      <img
-                        className="carousel-img"
-                        src={
-                          "https://brandsandtalent.com/backend/uploads/5b203bf5-6e37-42d4-a76b-da8cdb378e5b.webp"
-                        }
-                      ></img>
-                    </div>
-                    <div className="box-content">
-                      <div className="quote">
-                        <img src={quoteIcon}></img>
-                      </div>
-                      <div className="carousel-description">
-                        A great photographer's tool for online castings that
-                        really works!
-                      </div>
-                      <div className="profile-section">
-                        <div className="profImg">
-                          <img src={roundProfile}></img>
-                        </div>
-                        <div className="profile-content">
-                          <div className="profile-name">Dorothy</div>
-                          <div className="profile-info">Lorem ipsum dolor</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mobile-carousel">
-                <div className="carousel-item">
-                  <div className="carousel-wrapper">
-                    <div className="box-one">
-                      <div className="carimg_Box">
-                        <img
-                          className="carousel-img"
-                          src={
-                            "https://brandsandtalent.com/backend/uploads/6cde52e8-2f83-4cc9-bb1c-c8e244fc5437.webp"
-                          }
-                        ></img>
-                      </div>
-                      <div className="box-content">
-                        <div className="quote">
-                          <img src={quoteIcon}></img>
-                        </div>
-                        <div className="carousel-description">
-                          A great photographer's tool for online castings that
-                          really works! 3rd carousel
-                        </div>
-                        <div className="profile-section">
-                          <div className="profImg">
-                            <img src={roundProfile}></img>
+              {successStories?.map((story, index) => {
+                return (
+                  <>
+                    <div
+                      Key={index}
+                      className={`carousel-item ${index === 0 ? "active" : ""}`}
+                    >
+                      <div className="carousel-wrapper">
+                        <div className="box-one" Key={index}>
+                          <div className="carimg_Box">
+                            <img
+                              className="carousel-img"
+                              src={story?.image}
+                            ></img>
                           </div>
-                          <div className="profile-content">
-                            <div className="profile-name">Dorothy</div>
-                            <div className="profile-info">
-                              Lorem ipsum dolor
+                          <div className="box-content">
+                            <div className="quote">
+                              <img src={quoteIcon}></img>
+                            </div>
+                            <div className="carousel-description">
+                              {story?.content}
+                            </div>
+                            <div className="profile-section">
+                              <div className="profImg">
+                                <img src={roundProfile}></img>
+                              </div>
+                              <div className="profile-content">
+                                <div className="profile-name">
+                                  {story?.name}
+                                </div>
+                                <div className="profile-info">
+                                  {story?.category}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className="carousel-item">
-                  <div className="carousel-wrapper">
-                    <div className="box-one">
-                      <div className="carimg_Box">
-                        <img
-                          className="carousel-img"
-                          src={
-                            "https://brandsandtalent.com/backend/uploads/5b203bf5-6e37-42d4-a76b-da8cdb378e5b.webp"
-                          }
-                        ></img>
-                      </div>
-                      <div className="box-content">
-                        <div className="quote">
-                          <img src={quoteIcon}></img>
-                        </div>
-                        <div className="carousel-description">
-                          A great photographer's tool for online castings that
-                          really works! 4th slide
-                        </div>
-                        <div className="profile-section">
-                          <div className="profImg">
-                            <img src={roundProfile}></img>
-                          </div>
-                          <div className="profile-content">
-                            <div className="profile-name">Dorothy</div>
-                            <div className="profile-info">
-                              Lorem ipsum dolor
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  </>
+                );
+              })}
             </div>
             <button
               className="carousel-control-prev"

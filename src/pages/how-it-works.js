@@ -373,7 +373,7 @@ const HowItWorks = () => {
                                   )}
                                 </div>
                               </div> */}
-                              <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-content-wrapper col-md-12 padSpace">
                                 <div className="resource-description ">
                                   {resource.description.map(
                                     (desc, descIndex) => (
@@ -413,7 +413,7 @@ const HowItWorks = () => {
                                   )}{" "}
                                 </div>
                               </div> */}
-                              <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-content-wrapper col-md-12 padSpace">
                                 <div className="resource-description ">
                                   {resource.description.map(
                                     (desc, descIndex) => (
@@ -458,7 +458,7 @@ const HowItWorks = () => {
                                   )}
                                 </div>
                               </div> */}
-                              <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-content-wrapper col-md-12 padSpace">
                                 <div
                                   className="resource-name no-copy"
                                   dangerouslySetInnerHTML={{
@@ -482,7 +482,7 @@ const HowItWorks = () => {
                             </>
                           ) : (
                             <>
-                              <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-content-wrapper col-md-12 padSpace">
                                 <div
                                   className="resource-name no-copy"
                                   dangerouslySetInnerHTML={{
@@ -553,11 +553,13 @@ const HowItWorks = () => {
                     <div className="accordion-item" key={faq._id}>
                       <h2 className="accordion-header" id={`heading${index}`}>
                         <button
-                          className="accordion-button"
+                          className={`accordion-button ${
+                            index === 0 ? "" : "collapsed"
+                          }`} // Add 'collapsed' class only if not the first item
                           type="button"
                           data-bs-toggle="collapse"
                           data-bs-target={`#collapse${index}`}
-                          aria-expanded="true"
+                          aria-expanded={index === 0 ? "true" : "false"} // 'true' for the first item, 'false' for others
                           aria-controls={`collapse${index}`}
                           dangerouslySetInnerHTML={{ __html: faq.title }}
                         />
@@ -591,11 +593,13 @@ const HowItWorks = () => {
                     <div className="accordion-item" key={faq.uniqueId}>
                       <h2 className="accordion-header" id={`heading${index}`}>
                         <button
-                          className="accordion-button"
+                          className={`accordion-button ${
+                            index === 0 ? "" : "collapsed"
+                          }`} // Add 'collapsed' class only if not the first item
                           type="button"
                           data-bs-toggle="collapse"
                           data-bs-target={`#collapse${index}`}
-                          aria-expanded="true"
+                          aria-expanded={index === 0 ? "true" : "false"} // 'true' for the first item, 'false' for others
                           aria-controls={`collapse${index}`}
                           dangerouslySetInnerHTML={{ __html: faq.title }}
                         />
@@ -604,7 +608,7 @@ const HowItWorks = () => {
                         id={`collapse${index}`}
                         className={`accordion-collapse collapse ${
                           index === 0 ? "show" : ""
-                        }`}
+                        }`} // Add 'show' class only for the first item
                         aria-labelledby={`heading${index}`}
                         data-bs-parent="#accordionExample1"
                       >
@@ -629,11 +633,13 @@ const HowItWorks = () => {
                     <div className="accordion-item" key={faq.uniqueId}>
                       <h2 className="accordion-header" id={`heading${index}`}>
                         <button
-                          className="accordion-button"
+                          className={`accordion-button ${
+                            index === 0 ? "" : "collapsed"
+                          }`} // Add 'collapsed' class only if not the first item
                           type="button"
                           data-bs-toggle="collapse"
                           data-bs-target={`#collapse${index}`}
-                          aria-expanded="true"
+                          aria-expanded={index === 0 ? "true" : "false"} // 'true' for the first item, 'false' for others
                           aria-controls={`collapse${index}`}
                           dangerouslySetInnerHTML={{ __html: faq.title }}
                         />
@@ -642,7 +648,7 @@ const HowItWorks = () => {
                         id={`collapse${index}`}
                         className={`accordion-collapse collapse ${
                           index === 0 ? "show" : ""
-                        }`}
+                        }`} // Add 'show' class only for the first item
                         aria-labelledby={`heading${index}`}
                         data-bs-parent="#accordionExample2"
                       >
