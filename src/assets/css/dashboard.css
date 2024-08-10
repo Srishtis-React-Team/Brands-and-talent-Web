@@ -2608,7 +2608,7 @@ head .profile-image-header {
 
 @media (min-width: 480px) {
   .nav-item.dropdown {
-    list-style-type: none;
+    list-style-type: inherit;
   }
   .nav-link {
     color: #000;
@@ -3265,9 +3265,43 @@ button.edit-profile-navigation-btn.bk-btn {
     background: #ccc;
     border: 0;
 }
+.section-description {
+    min-height: 130px !important;
+}
+.faqWraper .accordion-button::after {
+    /* background-image: url(http://localhost:3001/static/media/minuse-faq.e9d8301….svg) !important; */
+    background-image: url(http://localhost:3001/static/media/plus-faq.830864a….svg) !important;
+}
+.faqWraper .accordion-button.collapsed::after {
+    background-image: url(http://localhost:3001/static/media/plus-faq.830864a….svg) !important;
+}
+.MuiBox-root.css-19kzrtu {
+    padding: 0px !important;
+}
 
-
+.terms-and-conditions h1 span, .terms-and-conditions h2 span, .terms-and-conditions h3 span {
+    font-weight: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+}
+.terms-and-conditions h1, .terms-and-conditions h2, .terms-and-conditions h3{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0px 10px 0px;
+}
+.terms-and-conditions h1 strong, .terms-and-conditions h2 strong, .terms-and-conditions h3 strong{
+    font-weight: bold;
+}
+li.nav-item.dropdown {
+    list-style-type: none;
+}
+.abtWraper .descp {
+    line-height: 22px;
+}
 @media (max-width: 767px) {
+    .section-description {
+        min-height: inherit !important;
+    }
   .dropdown:hover > .dropdown-menu {
     position: relative !important;
     transform: unset !important;
@@ -3276,8 +3310,8 @@ button.edit-profile-navigation-btn.bk-btn {
     right: 0;
   }
   .mobile-navbar .icon {
-    overflow: hidden;
-    width: 48px;
+    /* overflow: hidden;
+    width: 48px; */
   }
   .btLogo {
     height: 40px !important;
@@ -3306,8 +3340,8 @@ button.edit-profile-navigation-btn.bk-btn {
     background: linear-gradient(180deg, rgb(0 0 0 / 66%) 47.11%, #c2124b 100%);
   }
   .Join-now-wrapper.hireBtn {
-    background: #fff;
-    color: #000;
+    background: #c2124b;
+        color: #fff;
   }
   .Join-now-wrapper.hireBtn .joinnow-text {
     color: #c2124b;
@@ -3523,6 +3557,32 @@ button.edit-profile-navigation-btn.bk-btn {
     input {
     height: 30px !important;
   }
+  .mobile-menu-items .navTxt:nth-child(3) {
+    padding-right: 0px !important;
+}
+
+.dropdown .dropdown-menu.show {
+    display: block !important;
+}
+
+ul.dropdown-menu {
+    display: none !important;
+}
+button#dropdownMenuButton1 {
+    background: none;
+    font-weight: 500;
+}
+a.dropdown-item.mb-f {
+    font-size: 14px;
+}
+ul.dropdown-menu.show {
+    margin-top: 10px !important;
+}
+.dropdown > .dropdown-menu {
+    position: relative !important;
+    transform: unset !important;
+
+}
 }
 
 @media (max-width: 420px) {

@@ -373,7 +373,7 @@ const HowItWorks = () => {
                                   )}
                                 </div>
                               </div> */}
-                              <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-content-wrapper col-md-12 padSpace">
                                 <div className="resource-description ">
                                   {resource.description.map(
                                     (desc, descIndex) => (
@@ -413,7 +413,7 @@ const HowItWorks = () => {
                                   )}{" "}
                                 </div>
                               </div> */}
-                              <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-content-wrapper col-md-12 padSpace">
                                 <div className="resource-description ">
                                   {resource.description.map(
                                     (desc, descIndex) => (
@@ -458,7 +458,7 @@ const HowItWorks = () => {
                                   )}
                                 </div>
                               </div> */}
-                              <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-content-wrapper col-md-12 padSpace">
                                 <div
                                   className="resource-name no-copy"
                                   dangerouslySetInnerHTML={{
@@ -482,7 +482,7 @@ const HowItWorks = () => {
                             </>
                           ) : (
                             <>
-                              <div className="resource-content-wrapper col-md-6 padSpace">
+                              <div className="resource-content-wrapper col-md-12 padSpace">
                                 <div
                                   className="resource-name no-copy"
                                   dangerouslySetInnerHTML={{
@@ -553,7 +553,7 @@ const HowItWorks = () => {
                     <div className="accordion-item" key={faq._id}>
                       <h2 className="accordion-header" id={`heading${index}`}>
                         <button
-                          className="accordion-button"
+                          className="accordion-button "
                           type="button"
                           data-bs-toggle="collapse"
                           data-bs-target={`#collapse${index}`}
@@ -591,11 +591,11 @@ const HowItWorks = () => {
                     <div className="accordion-item" key={faq.uniqueId}>
                       <h2 className="accordion-header" id={`heading${index}`}>
                         <button
-                          className="accordion-button"
+                          className="accordion-button collapsed"
                           type="button"
                           data-bs-toggle="collapse"
                           data-bs-target={`#collapse${index}`}
-                          aria-expanded="true"
+                          aria-expanded="false"
                           aria-controls={`collapse${index}`}
                           dangerouslySetInnerHTML={{ __html: faq.title }}
                         />
@@ -629,11 +629,11 @@ const HowItWorks = () => {
                     <div className="accordion-item" key={faq.uniqueId}>
                       <h2 className="accordion-header" id={`heading${index}`}>
                         <button
-                          className="accordion-button"
+                          className="accordion-button collapsed"
                           type="button"
                           data-bs-toggle="collapse"
                           data-bs-target={`#collapse${index}`}
-                          aria-expanded="true"
+                          aria-expanded="false"
                           aria-controls={`collapse${index}`}
                           dangerouslySetInnerHTML={{ __html: faq.title }}
                         />
