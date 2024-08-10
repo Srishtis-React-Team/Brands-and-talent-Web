@@ -12,7 +12,7 @@ import "./index.css";
 // "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent",
 
 ReactDOM.render(
-  <BrowserRouter basename="">
+  <BrowserRouter basename="/">
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
       <StyledEngineProvider injectFirst>
         <App />
