@@ -15,6 +15,7 @@ import { Button, Modal, Box, Typography } from "@mui/material";
 import searchPathOptions from "../components/SearchPaths";
 import { NavLink, useLocation } from "react-router-dom";
 
+
 const Header = ({ onData }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -36,6 +37,15 @@ const Header = ({ onData }) => {
 
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
+
+  
+  const mobilelogo = require("../assets/images/mobilelogo.png");
+
+  const [show, setShow] = useState(false);
+
+    const handleToggle = () => {
+        setShow(!show);
+    };
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
@@ -619,7 +629,7 @@ const Header = ({ onData }) => {
             navigate("/");
           }}
         >
-          <img alt="img" className="btLogo" src={btLogo}></img>
+          <img alt="img" className="btLogo" src={mobilelogo}></img>
         </div>
 
         <div className="mobile-nav-functions">
@@ -708,73 +718,41 @@ const Header = ({ onData }) => {
               </NavLink>
             </div>
           )}
-
-          <div className="navTxt">
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Resources
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <NavLink to="/about-us" onClick={() => handleClick("")}>
-                    <a className="dropdown-item">About</a>
-                  </NavLink>
-                </li>
-                <li className="dropend">
-                  {/* data-bs-toggle="dropdown" */}
-                  {/* className="dropdown-item dropdown-toggle" */}
-
-                  <a
-                    className="dropdown-item"
+           <div className="dropdown">
+            <button
+                className=" dropdown-toggle border-0"
+                type="button"
+                id="dropdownMenuButton1"
+                aria-expanded={show}
+                onClick={handleToggle}
+            >
+               Resources
+            </button>
+            <ul
+                className={`dropdown-menu ${show ? 'show' : ''}`}
+                aria-labelledby="dropdownMenuButton1"
+            >
+                <li><NavLink to="/about-us" onClick={() => handleClick("")}>
+                    <a className="dropdown-item mb-f">About</a>
+                  </NavLink></li>
+                <li><a
+                    className="dropdown-item mb-f"
                     dropdown-toggle
                     onClick={() => handleClickBlogs(0)}
                   >
                     Newsletter
-                  </a>
-                  {/* <ul className="dropdown-menu blogs-menu">
-                        <li onClick={() => handleClickBlogs(1)}>
-                          <a className="dropdown-item">News & Announcements</a>
-                        </li>
-                        <li onClick={() => handleClickBlogs(2)}>
-                          <a className="dropdown-item">Industry Insights</a>
-                        </li>
-                        <li onClick={() => handleClickBlogs(3)}>
-                          <a className="dropdown-item">Interviews</a>
-                        </li>
-                        <li onClick={() => handleClickBlogs(4)}>
-                          <a className="dropdown-item">Case Studies</a>
-                        </li>
-                        <li onClick={() => handleClickBlogs(5)}>
-                          <a className="dropdown-item">Talent Tips & Tricks</a>
-                        </li>
-                        <li onClick={() => handleClickBlogs(6)}>
-                          <a className="dropdown-item">Brand Tips & Tricks</a>
-                        </li>
-                      </ul> */}
-                </li>
-                <li>
-                  <hr className="dropdown-divider"></hr>
-                </li>
-                <li>
-                  <a className="dropdown-item">
+                  </a></li>
+                <li><a className="dropdown-item mb-f">
                     <NavLink
                       to="/community-guidelines"
                       onClick={() => handleClick("")}
                     >
                       Community Guidelines
                     </NavLink>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </div>
+                  </a></li>
+            </ul>
+        </div>
+      
 
           <div
             className="navTxt cofee-link"
@@ -784,6 +762,7 @@ const Header = ({ onData }) => {
             Support BT
             <img src={cofeeIcon} alt="img" className="cofeeIcon-img" />
           </div>
+          
         </div>
         <div className="header-search-wrapper">
           <div className="header-search-icon">
@@ -958,6 +937,7 @@ const Header = ({ onData }) => {
                         </NavLink>
                       </a>
                     </li>
+                    
                   </ul>
                 </li>
               </div>
