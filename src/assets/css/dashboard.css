@@ -1295,8 +1295,8 @@ input[type="radio"] {
   margin-bottom: 40px;
 }
 .carousel-section.storyCar .carousel-wrapper .box-content {
-  padding: 5px 5px 5px 15px;
-  margin: 10px 0 0;
+  padding: 0px 5px 5px 15px;
+  margin: 0px 0 0;
 }
 .case-images {
   border-radius: 12px;
@@ -1314,10 +1314,10 @@ input[type="radio"] {
 }
 .carousel-description {
   color: #fff;
-  font-size: 22px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 40px;
+  line-height: 30px;
   min-height: 170px;
 }
 .quote > img {
@@ -1328,6 +1328,7 @@ input[type="radio"] {
   display: flex;
   flex-direction: column;
   padding-left: 5%;
+  width: 50%;
 }
 .box-content .quote {
   margin-bottom: 10px;
@@ -1335,12 +1336,12 @@ input[type="radio"] {
 .storyCar .carimg_Box {
   height: 355px;
   overflow: hidden;
-  width: 50%;
+  width: 300px;
 }
 .storyCar .carimg_Box img {
   min-height: 355px;
   object-fit: cover;
-  width: 100%;
+  width: 300px;
 }
 .get-discover {
   font-size: 32px;
@@ -1394,6 +1395,7 @@ input[type="radio"] {
 }
 .profile-section {
   display: flex;
+  margin-top: 15px;
 }
 .pad8 {
   padding: 0 8px;
@@ -2084,6 +2086,7 @@ input[type="radio"] {
     justify-content: space-evenly;
     flex-direction: column;
     padding-left: 20px;
+    width: 75%;
   }
   .quote > img {
     width: 20px;
@@ -2094,6 +2097,7 @@ input[type="radio"] {
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
+    text-align: left;
   }
   .box-two {
     display: none;

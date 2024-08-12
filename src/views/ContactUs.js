@@ -78,6 +78,17 @@ const ContactUs = () => {
     setMobile(value);
     setMobileError(false);
 
+    // Check if the value is in the format "+[countryCode][phoneNumber]"
+    const regex = /^\+(\d+)(.*)$/;
+    const match = value.match(regex);
+
+    if (match) {
+      // Extract country code and phone number
+      const code = `+${match[1]}`; // Format as +[countryCode]
+      const phoneNumber = match[2] ? match[2].trim() : ""; // Remove leading/trailing whitespace
+      console.log(code, "code");
+    }
+
     // Extract the country code
     const countryCode = value ? value.split(" ")[0] : "";
     // console.log(countryCode, "countryCode handleMobileChange");
@@ -111,6 +122,10 @@ const ContactUs = () => {
       navigate(-1); // Equivalent to history.goBack() in v5
     }
   };
+
+  useEffect(() => {
+    console.log(countryCode, "countryCode");
+  }, []);
 
   return (
     <>
