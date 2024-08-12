@@ -366,9 +366,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                             </li>
                           </ul> */}
                         </li>
-                        <li>
-                          <hr className="dropdown-divider"></hr>
-                        </li>
+
                         <li>
                           <a className="dropdown-item">
                             <NavLink to="/community-guidelines">

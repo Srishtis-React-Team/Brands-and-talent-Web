@@ -943,9 +943,7 @@ const Header = ({ onData }) => {
                         </li>
                       </ul> */}
                     </li>
-                    <li>
-                      <hr className="dropdown-divider"></hr>
-                    </li>
+                    <li></li>
                     <li>
                       <a className="dropdown-item">
                         <NavLink
