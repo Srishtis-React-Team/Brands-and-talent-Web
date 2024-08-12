@@ -3304,6 +3304,10 @@ li.nav-item.dropdown {
 .abtWraper .descp {
   line-height: 22px;
 }
+.feedback:hover {
+  cursor: pointer;
+  color: #c2114b;
+}
 @media (max-width: 767px) {
   .section-description {
     min-height: inherit !important;
