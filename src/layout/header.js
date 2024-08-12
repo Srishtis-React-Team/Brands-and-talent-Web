@@ -683,11 +683,11 @@ const Header = ({ onData }) => {
       </div>
       <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
         <div className="mobile-menu-items">
-          <div className="navTxt">
+          {/* <div className="navTxt">
             <NavLink to="/" onClick={() => handleClick("")}>
               Home
             </NavLink>
-          </div>
+          </div> */}
           {currentUser_type === "brand" && (
             <div
               className="navTxt"
@@ -814,11 +814,11 @@ const Header = ({ onData }) => {
           </div>
           <div className="header-items">
             <div className=" menu-items">
-              <div className="navTxt">
+              {/* <div className="navTxt">
                 <NavLink to="/" onClick={() => handleClick("")}>
                   Home
                 </NavLink>
-              </div>
+              </div> */}
 
               {currentUser_type === "brand" ||
                 (!currentUserId && (
