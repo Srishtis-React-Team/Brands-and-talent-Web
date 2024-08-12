@@ -112,10 +112,6 @@ const ContactUs = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(countryCode, "countryCode");
-  }, []);
-
   return (
     <>
       <Header />
@@ -181,12 +177,6 @@ const ContactUs = () => {
                 className="form-control"
                 onChange={handleMobileChange}
                 value={mobile}
-                ref={(ref) => {
-                  if (ref) {
-                    const currentCountryCode = ref.getCountryCode();
-                    setCountryCode(currentCountryCode);
-                  }
-                }}
               />
               {mobileNumberError && (
                 <div className="error">{mobileNumberError}</div>
