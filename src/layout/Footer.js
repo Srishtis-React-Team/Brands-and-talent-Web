@@ -513,7 +513,14 @@ const Footer = (props) => {
           <div className="copyright-section">
             <p>
               © Copyright 2024 Brands & Talent Management All rights reserved. |
-              Feedback & Reporting
+              <span
+                onClick={() =>
+                  handleIconClick("mailto:brandsntalent@gmail.com")
+                }
+                className="feedback"
+              >
+                Feedback & Reporting
+              </span>
             </p>
           </div>
         </section>
