@@ -11,6 +11,13 @@ import { API } from "../config/api";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CountryMobileDigits } from "./CountryMobileDigits";
 import { numericToAlpha2CountryCode } from "./numericToAlpha2CountryCode";
+import {
+  parsePhoneNumber,
+  isValidPhoneNumber,
+  getNumberType,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
+import parseMax from "libphonenumber-js/max";
 
 const ContactUs = () => {
   const navigate = useNavigate();
@@ -27,6 +34,7 @@ const ContactUs = () => {
   const [emailError, setEmailError] = useState(false);
   const [mobile, setMobile] = useState("");
   const [mobileError, setMobileError] = useState(false);
+  const [mobileValidationError, setMobileValidationError] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [mobileNumError, setMobileNumError] = useState();
@@ -74,34 +82,14 @@ const ContactUs = () => {
 
   const handleMobileChange = (value) => {
     console.log(value, "handleMobileChange");
-
-    setMobile(value);
-    setMobileError(false);
-
-    // Extract the country code
-    const countryCode = value ? value.split(" ")[0] : "";
-    // console.log(countryCode, "countryCode handleMobileChange");
-
-    // // Extract the numeric country code
-    // const match = value.match(/^\+(\d+)/);
-    // const numericCountryCode = match ? match[1] : "";
-
-    // // Convert numeric country code to alpha-2 code
-    // const countryCode = numericToAlpha2CountryCode[numericCountryCode] || "";
-    // const phoneNumber = value.replace(/^\+\d+\s*/, ""); // Remove country code from value
-
-    // // Get the digit limit for the country code
-    // const digitLimit = countryDigitLimits[countryCode] || 0;
-
-    // console.log("Country Code:", countryCode);
-    // console.log("Digit Limit:", digitLimit);
-
-    // // Validate phone number length
-    // if (digitLimit && phoneNumber.replace(/\D/g, "").length > digitLimit) {
-    //   setMobileNumberError(`Phone number should be ${digitLimit} digits long.`);
-    // } else {
-    //   setMobileNumberError("");
-    // }
+    isValidPhoneNumber(value);
+    if (isValidPhoneNumber(value)) {
+      setMobileError(false);
+      setMobileValidationError(false);
+      setMobile(value);
+    } else {
+      setMobileValidationError(true);
+    }
   };
 
   const handleNavigation = () => {
@@ -111,6 +99,10 @@ const ContactUs = () => {
       navigate(-1); // Equivalent to history.goBack() in v5
     }
   };
+
+  useEffect(() => {
+    console.log(countryCode, "countryCode");
+  }, []);
 
   return (
     <>
@@ -183,6 +175,11 @@ const ContactUs = () => {
               )}
               {mobileError && (
                 <div className="invalid-fields">Please enter Mobile Number</div>
+              )}
+              {mobileValidationError && (
+                <div className="invalid-fields">
+                  Please enter correct Mobile Number
+                </div>
               )}
               {mobileNumError && (
                 <div className="invalid-fields">Only Numbers Allowed</div>

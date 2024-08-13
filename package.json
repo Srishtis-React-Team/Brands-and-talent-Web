@@ -2,7 +2,6 @@
   "name": "brands-and-talent-web",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dev.brandsandtalent.com",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -23,6 +22,7 @@
     "firebase": "^10.11.0",
     "jquery": "^3.7.1",
     "jwt-decode": "^4.0.0",
+    "libphonenumber-js": "^1.11.5",
     "material-ui-phone-number": "^3.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.4",
@@ -34,6 +34,7 @@
     "react-loader-spinner": "^5.3.4",
     "react-modal": "^3.16.1",
     "react-owl-carousel": "^2.3.3",
+    "react-phone-number-input": "^3.4.5",
     "react-quill": "^2.0.0",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.10.0",

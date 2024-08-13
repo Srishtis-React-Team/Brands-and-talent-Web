@@ -6,13 +6,15 @@ import { StyledEngineProvider } from "@mui/material";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-// "homepage": "https://brandsandtalent.com/",
+// "homepage": "https://brandsandtalent.com",
 // "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent",
-// basename="/project/brandsandtalent"
-// "homepage": "https://hybrid.sicsglobal.com/project/brandsandtalent",
+// "homepage": "https://dev.brandsandtalent.com",
+// "homepage": "https://staging.brandsandtalent.com",
+
+// basename=""
 
 ReactDOM.render(
-  <BrowserRouter basename="/">
+  <BrowserRouter>
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
       <StyledEngineProvider injectFirst>
         <App />
