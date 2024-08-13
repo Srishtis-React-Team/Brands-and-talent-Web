@@ -14,6 +14,7 @@ export const API = {
   giftMail: BASEURL + "admin/giftMail",
   payment: BASEURL + "admin/payment",
   getSuccessStories: BASEURL + "admin/getSuccessStories",
+  getLogos: BASEURL + "admin/getLogos",
   getFieldDatas: BASEURL + "features/getFieldDatas",
 
   //Registration

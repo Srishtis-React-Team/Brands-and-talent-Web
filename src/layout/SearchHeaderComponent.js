@@ -32,19 +32,20 @@ const SearchHeaderComponent = ({ onData }) => {
   const [currentUser_type, setCurrentUserType] = useState("");
   const [talentData, setTalentData] = useState();
   const [talentId, setTalentId] = useState(null);
-  
+
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
     setCurrentUserType(localStorage.getItem("currentUserType"));
-    
   }, [currentUserId]);
-  useEffect(() => {
-    
-  }, [currentUser_type]);
+  useEffect(() => {}, [currentUser_type]);
 
   const login = () => {
-    navigate("/login");
+    // navigate("/login");
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
   };
 
   const logout = () => {
@@ -52,7 +53,7 @@ const SearchHeaderComponent = ({ onData }) => {
     setcurrentUserId(null);
     setMessage("Logged out successfully");
     setOpenPopUp(true);
-    setTimeout(function() {
+    setTimeout(function () {
       setOpenPopUp(false);
       navigate("/");
     }, 1000);
@@ -87,10 +88,10 @@ const SearchHeaderComponent = ({ onData }) => {
   };
 
   useEffect(() => {
-    setTimeout(function() {
+    setTimeout(function () {
       setTalentId(localStorage.getItem("userId"));
     }, 1000);
-    
+
     if (talentId) {
       getTalentById();
     }
@@ -107,9 +108,7 @@ const SearchHeaderComponent = ({ onData }) => {
           }
         }
       })
-      .catch((err) => {
-        
-      });
+      .catch((err) => {});
   };
 
   const modalRef = useRef(null);
@@ -124,7 +123,7 @@ const SearchHeaderComponent = ({ onData }) => {
       if (!currentUserId) {
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -137,7 +136,7 @@ const SearchHeaderComponent = ({ onData }) => {
       if (!currentUserId) {
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -146,7 +145,7 @@ const SearchHeaderComponent = ({ onData }) => {
       } else if (currentUser_type === "talent" && currentUserId) {
         setMessage("You need to sign Up as Brand to find talents");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/brand-firstGig");
         }, 3000);
@@ -155,7 +154,6 @@ const SearchHeaderComponent = ({ onData }) => {
   };
 
   useEffect(() => {
-    
     if (onData === "talent-signup") {
       setTalent(true);
       openModal();
@@ -219,13 +217,12 @@ const SearchHeaderComponent = ({ onData }) => {
   };
 
   const handleLabelClick = (route) => {
-    
     if (route === "/find-creators") {
       if (!currentUserId || currentUser_type != "brand") {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -237,7 +234,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -261,7 +258,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -271,13 +268,17 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/how-it-works") {
       navigate(route);
     } else if (route === "/login") {
-      navigate(route);
+      // navigate(route);
+      window.open(
+        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        "_blank"
+      );
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -289,7 +290,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -301,7 +302,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -313,7 +314,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -325,7 +326,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -337,7 +338,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -349,7 +350,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -361,7 +362,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -373,7 +374,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -385,7 +386,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -397,7 +398,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -409,7 +410,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -421,7 +422,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -433,7 +434,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -445,7 +446,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -457,7 +458,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -469,7 +470,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -481,7 +482,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
@@ -493,7 +494,7 @@ const SearchHeaderComponent = ({ onData }) => {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
-        setTimeout(function() {
+        setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);

@@ -39,6 +39,7 @@ const Dashboard = () => {
   const [productServicesList, setProductServicesList] = useState([]);
   const [contentsList, setContentsList] = useState([]);
   const [successStoryList, setSuccessStoryList] = useState([]);
+  const [brandLogosList, setBrandLogosList] = useState([]);
 
   useEffect(() => {
     getTalentList();
@@ -47,6 +48,7 @@ const Dashboard = () => {
     getFeaturedArticles();
     fetchPageContents();
     getSuccessStories();
+    getLogos();
   }, []);
 
   const getSuccessStories = async () => {
@@ -54,6 +56,17 @@ const Dashboard = () => {
       .then((resData) => {
         if (resData) {
           setSuccessStoryList(resData?.data?.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const getLogos = async () => {
+    await ApiHelper.get(API.getLogos)
+      .then((resData) => {
+        if (resData) {
+          console.log(resData?.data?.data[0]?.image, "brandLogosList");
+          setBrandLogosList(resData?.data?.data[0]?.image);
         }
       })
       .catch((err) => {});
@@ -345,7 +358,7 @@ const Dashboard = () => {
           </div>
         </section>
 
-        <div className="wraper">
+        {/* <div className="wraper">
           <div className="container-fluid">
             <div className="tabs-section">
               <div className="title">Popular Talent</div>
@@ -492,7 +505,7 @@ const Dashboard = () => {
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
         <div className="productsWraper wraper secSpac">
           <div className="container">
@@ -529,30 +542,14 @@ const Dashboard = () => {
           <div className="container">
             <div className="title brands-row-title">{contentsList?.title5}</div>
             <div className="brands-section">
-              <div className="logospc">
-                <img src={adidasIcon}></img>
-              </div>
-              <div className="logospc">
-                <img src={ubisoftIcon}></img>
-              </div>
-              <div className="logospc">
-                <img src={americanExpress}></img>
-              </div>
-              <div className="logospc">
-                <img src={wppIcon}></img>
-              </div>
-              <div className="logospc">
-                <img src={lorealIcon}></img>
-              </div>
-              <div className="logospc">
-                <img src={joseIcon}></img>
-              </div>
-              <div className="logospc">
-                <img src={calvinIcon}></img>
-              </div>
-              <div className="logospc">
-                <img src={havasIcon}></img>
-              </div>
+              {brandLogosList &&
+                brandLogosList.map((logo, index) => (
+                  <>
+                    <div className="logospc">
+                      <img src={logo?.url}></img>
+                    </div>
+                  </>
+                ))}
             </div>
           </div>
         </div>

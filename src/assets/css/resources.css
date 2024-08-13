@@ -32,6 +32,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  text-align: center;
 }
 .resource-description {
   color: #000;
@@ -39,6 +40,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
+  text-align: center;
 }
 .abtWraper .widthParg {
   max-width: 860px;
@@ -214,8 +216,6 @@
   background-size: cover;
   height: 17px;
 }
-
-
 
 .how-it-works-mobile-only {
   display: none;
