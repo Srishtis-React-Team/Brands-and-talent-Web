@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 html {
   height: auto;
   width: 100%;
@@ -1280,7 +1280,6 @@ input[type="radio"] {
   color: #fff;
 }
 .carousel-section {
-  border: 1px solid #c2114b;
   min-height: 524px;
   width: 100%;
   margin-top: 30px;

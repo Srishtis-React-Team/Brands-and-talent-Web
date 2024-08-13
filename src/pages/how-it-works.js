@@ -3,6 +3,7 @@ import Header from "../layout/header";
 import Footer from "../layout/Footer";
 import React, { useEffect, useState } from "react";
 import "../assets/css/blogs.css";
+import "../assets/css/resources.css";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -164,7 +165,6 @@ const HowItWorks = () => {
                 <div className="video-container">
                   <video
                     src="https://brandsandtalent.com/backend/uploads/db93829f-8cf9-4787-9d2e-6ae76b9ff3ae.mp4"
-                    autoPlay
                     loop
                     controls
                     className="responsive-video mb-3"

@@ -38,9 +38,9 @@ const MobileSlider = ({ successStories }) => {
                               {story?.content}
                             </div>
                             <div className="profile-section">
-                              <div className="profImg">
+                              {/* <div className="profImg">
                                 <img src={roundProfile}></img>
-                              </div>
+                              </div> */}
                               <div className="profile-content">
                                 <div className="profile-name">
                                   {story?.name}

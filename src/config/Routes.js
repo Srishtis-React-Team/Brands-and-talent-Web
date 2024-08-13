@@ -1,10 +1,16 @@
-import React, { Suspense, lazy, useEffect, useState, startTransition } from "react";
+import React, {
+  Suspense,
+  lazy,
+  useEffect,
+  useState,
+  startTransition,
+} from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Spinner from '../components/Spinner';
-import ErrorBoundary from '../components/ErrorBoundary'; 
+import Spinner from "../components/Spinner";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 // Lazy load components
-const PopUp = lazy(() => import('../components/PopUp'));
+const PopUp = lazy(() => import("../components/PopUp"));
 const Dashboard = lazy(() => import("../views/Dashboard"));
 const FindCreators = lazy(() => import("../views/FindCreators"));
 const TalentProfile = lazy(() => import("../views/TalentProfile"));
@@ -26,7 +32,9 @@ const KidsFormThree = lazy(() => import("../auth/KidsFormThree"));
 const KidsFormFour = lazy(() => import("../auth/KidsFormFour"));
 const AdultFormOne = lazy(() => import("../views/Adult forms/AdultFormOne"));
 const AdultFormTwo = lazy(() => import("../views/Adult forms/AdultFormTwo"));
-const AdultFormThree = lazy(() => import("../views/Adult forms/AdultFormThree"));
+const AdultFormThree = lazy(() =>
+  import("../views/Adult forms/AdultFormThree")
+);
 const OTPComponent = lazy(() => import("../auth/OTPComponent"));
 const KidsOTP = lazy(() => import("../auth/KidsOTP"));
 const KidsSocialMedias = lazy(() => import("../auth/KidsSocialMedias"));
@@ -38,7 +46,9 @@ const BrandFirstGig = lazy(() => import("../auth/brand-forms/brandFirstGig"));
 const BrandsOtp = lazy(() => import("../auth/brand-forms/brandsOtp"));
 const BrandDetails = lazy(() => import("../auth/brand-forms/brandDetails"));
 const BrandLogo = lazy(() => import("../auth/brand-forms/brandLogo"));
-const BrandActivation = lazy(() => import("../auth/brand-forms/brandActivation"));
+const BrandActivation = lazy(() =>
+  import("../auth/brand-forms/brandActivation")
+);
 const PreviewJob = lazy(() => import("../brand/pages/PreviewJob"));
 const BrandHome = lazy(() => import("../brand/pages/BrandHome"));
 const ListJobs = lazy(() => import("../brand/pages/ListJobs"));
@@ -47,7 +57,9 @@ const BrandTalents = lazy(() => import("../brand/pages/BrandTalents"));
 const BrandFavorites = lazy(() => import("../brand/pages/BrandFavorites"));
 const BrandHelp = lazy(() => import("../brand/pages/BrandHelp"));
 const JobSuccess = lazy(() => import("../brand/pages/JobSuccess"));
-const MessageTalents = lazy(() => import("../components/message/MessageTalents"));
+const MessageTalents = lazy(() =>
+  import("../components/message/MessageTalents")
+);
 const TalentPreviewJob = lazy(() => import("../views/TalentPreviewJob"));
 const Blogs = lazy(() => import("../pages/Blogs"));
 const AppliedJobs = lazy(() => import("../views/AppliedJobs"));
@@ -57,7 +69,9 @@ const EditTalent = lazy(() => import("../auth/EditTalent"));
 const SavedJobs = lazy(() => import("../views/SavedJobs"));
 const TalentSettings = lazy(() => import("../auth/TalentSettings"));
 const TalentNotification = lazy(() => import("../views/TalentNotification"));
-const BrandNotification = lazy(() => import("../brand/pages/BrandNotification"));
+const BrandNotification = lazy(() =>
+  import("../brand/pages/BrandNotification")
+);
 const BrandSettings = lazy(() => import("../brand/pages/BrandSettings"));
 const EditBrands = lazy(() => import("../brand/pages/EditBrands"));
 const GetBooked = lazy(() => import("../views/GetBooked"));
@@ -65,11 +79,12 @@ const ContactSupport = lazy(() => import("../views/ContactSupport"));
 const ContactUs = lazy(() => import("../views/ContactUs"));
 const TermsConditions = lazy(() => import("../pages/TermsConditions"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
-const AdultSocialMedias = lazy(() => import("../views/Adult forms/AdultSocialMedias"));
+const AdultSocialMedias = lazy(() =>
+  import("../views/Adult forms/AdultSocialMedias")
+);
 const IndustryNews = lazy(() => import("../pages/IndustryNews"));
 const CommingSoon = lazy(() => import("../views/CommingSoon"));
 // const ErrorBoundary = lazy(() => import('../components/ErrorBoundary'));
-
 
 function Routing() {
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -105,82 +120,126 @@ function Routing() {
 
   return (
     <>
-    <ErrorBoundary>
-      <Suspense fallback={<Spinner />}>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route
-            path="/find-creators"
-            element={currentUserId || brandID ? <FindCreators /> : <Navigate to="/login" replace />}
-          />
-          <Route
-            path="/talent/:name"
-            element={currentUserId ? <TalentProfile /> : <Navigate to="/login" replace />}
-          />
-          <Route path="/brand/:name" element={<BrandHome />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/signup" element={<Register />} />
-          <Route path="/otp" element={<OTPComponent />} />
-          <Route path="/about-us" element={<About />} />
-          <Route path="/community-guidelines" element={<Guidelines />} />
-          <Route path="/terms-conditions" element={<TermsConditions />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/post-job" element={<PostJob />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/job-list" element={<OverallJobs />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/reset-password/brand/:token" element={<ResetPassword />} />
-          <Route path="/reset-password/adult/:token" element={<ResetPassword />} />
-          <Route path="/success-password" element={<PasswordSuccess />} />
-          <Route path="/talent-dashboard" element={<TalentDashBoard />} />
-          <Route path="/talent-signup-basic-details" element={<KidsformOne />} />
-          <Route path="/talent-otp" element={<KidsOTP />} />
-          <Route path="/talent-social-media-connections" element={<KidsSocialMedias />} />
-          <Route path="/talent-profile-upload" element={<KidsFormTwo />} />
-          <Route path="/talent-services" element={<KidsServices />} />
-          <Route path="/talent-parental" element={<KidsFormThree />} />
-          <Route path="/talent-payment" element={<KidsFormFour />} />
-          <Route path="/edit-talent" element={<EditTalent />} />
-          <Route path="/edit-brand" element={<EditBrands />} />
-          <Route path="/applied-jobs" element={<AppliedJobs />} />
-          <Route path="/saved-jobs" element={<SavedJobs />} />
-          <Route path="/talent-notifications" element={<TalentNotification />} />
-          <Route path="/talent-settings" element={<TalentSettings />} />
-          <Route path="/adult-signup-basic-details" element={<AdultFormOne />} />
-          <Route path="/adult-services" element={<AdultFormTwo />} />
-          <Route path="/adult-social-media-connections" element={<AdultSocialMedias />} />
-          <Route path="/adult-profile-upload" element={<AdultFormThree />} />
-          <Route path="/signup-success" element={<AdultSuccess />} />
-          <Route path="/brand-signup-basic-details" element={<BrandSignup />} />
-          <Route path="/brand-first-gig" element={<BrandFirstGig />} />
-          <Route path="/brands-otp" element={<BrandsOtp />} />
-          <Route path="/brand-details" element={<BrandDetails />} />
-          <Route path="/brand-logo" element={<BrandLogo />} />
-          <Route path="/brand-activation" element={<BrandActivation />} />
-          <Route path="/preview-job" element={<PreviewJob />} />
-          <Route path="/list-jobs" element={<ListJobs />} />
-          <Route path="/create-jobs" element={<CreateJobs />} />
-          <Route path="/brand-talents" element={<BrandTalents />} />
-          <Route path="/brand-favorites" element={<BrandFavorites />} />
-          <Route path="/brand-help" element={<BrandHelp />} />
-          <Route path="/job-success" element={<JobSuccess />} />
-          <Route path="/message-talents" element={<MessageTalents />} />
-          <Route path="/talent-preview-job" element={<TalentPreviewJob />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/comming-soon" element={<CommingSoon />} />
-          <Route path="/contact-support" element={<ContactSupport />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/industry-news" element={<IndustryNews />} />
-          <Route path="/get-booked" element={<GetBooked />} />
-          <Route path="/brand-notifications" element={<BrandNotification />} />
-          <Route path="/brand-settings" element={<BrandSettings />} />
-          <Route path="/update-adult-password" element={<UpdateAdultPassword />} />
-        </Routes>
-      </Suspense>
-      {openPopUp && <PopUp message={message} onClose={() => setOpenPopUp(false)} />}
+      <ErrorBoundary>
+        <Suspense fallback={<Spinner />}>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route
+              path="/find-creators"
+              element={
+                currentUserId || brandID ? (
+                  <FindCreators />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route
+              path="/talent/:name"
+              element={
+                currentUserId ? (
+                  <TalentProfile />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route path="/brand/:name" element={<BrandHome />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/signup" element={<Register />} />
+            <Route path="/otp" element={<OTPComponent />} />
+            <Route path="/about-us" element={<About />} />
+            <Route path="/community-guidelines" element={<Guidelines />} />
+            <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/post-job" element={<PostJob />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/job-list" element={<OverallJobs />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route
+              path="/reset-password/brand/:token"
+              element={<ResetPassword />}
+            />
+            <Route
+              path="/reset-password/adult/:token"
+              element={<ResetPassword />}
+            />
+            <Route path="/success-password" element={<PasswordSuccess />} />
+            <Route path="/talent-dashboard" element={<TalentDashBoard />} />
+            <Route
+              path="/talent-signup-basic-details"
+              element={<KidsformOne />}
+            />
+            <Route path="/talent-otp" element={<KidsOTP />} />
+            <Route
+              path="/talent-social-media-connections"
+              element={<KidsSocialMedias />}
+            />
+            <Route path="/talent-profile-upload" element={<KidsFormTwo />} />
+            <Route path="/talent-services" element={<KidsServices />} />
+            <Route path="/talent-parental" element={<KidsFormThree />} />
+            <Route path="/talent-payment" element={<KidsFormFour />} />
+            <Route path="/edit-talent" element={<EditTalent />} />
+            <Route path="/edit-brand" element={<EditBrands />} />
+            <Route path="/applied-jobs" element={<AppliedJobs />} />
+            <Route path="/saved-jobs" element={<SavedJobs />} />
+            <Route
+              path="/talent-notifications"
+              element={<TalentNotification />}
+            />
+            <Route path="/talent-settings" element={<TalentSettings />} />
+            <Route
+              path="/adult-signup-basic-details"
+              element={<AdultFormOne />}
+            />
+            <Route path="/adult-services" element={<AdultFormTwo />} />
+            <Route
+              path="/adult-social-media-connections"
+              element={<AdultSocialMedias />}
+            />
+            <Route path="/adult-profile-upload" element={<AdultFormThree />} />
+            <Route path="/signup-success" element={<AdultSuccess />} />
+            <Route
+              path="/brand-signup-basic-details"
+              element={<BrandSignup />}
+            />
+            <Route path="/brand-first-gig" element={<BrandFirstGig />} />
+            <Route path="/brands-otp" element={<BrandsOtp />} />
+            <Route path="/brand-details" element={<BrandDetails />} />
+            <Route path="/brand-logo" element={<BrandLogo />} />
+            <Route path="/brand-activation" element={<BrandActivation />} />
+            <Route path="/preview-job" element={<PreviewJob />} />
+            <Route path="/list-jobs" element={<ListJobs />} />
+            <Route path="/create-jobs" element={<CreateJobs />} />
+            <Route path="/brand-talents" element={<BrandTalents />} />
+            <Route path="/brand-favorites" element={<BrandFavorites />} />
+            <Route path="/brand-help" element={<BrandHelp />} />
+            <Route path="/job-success" element={<JobSuccess />} />
+            <Route path="/message-talents" element={<MessageTalents />} />
+            <Route path="/talent-preview-job" element={<TalentPreviewJob />} />
+            <Route path="/blogs" element={<Blogs />} />
+            <Route path="/comming-soon" element={<CommingSoon />} />
+            <Route path="/contact-support" element={<ContactSupport />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/industry-news" element={<IndustryNews />} />
+            <Route path="/get-booked" element={<GetBooked />} />
+            <Route
+              path="/brand-notifications"
+              element={<BrandNotification />}
+            />
+            <Route path="/brand-settings" element={<BrandSettings />} />
+            <Route
+              path="/update-adult-password"
+              element={<UpdateAdultPassword />}
+            />
+          </Routes>
+        </Suspense>
+        {openPopUp && (
+          <PopUp message={message} onClose={() => setOpenPopUp(false)} />
+        )}
       </ErrorBoundary>
     </>
   );
