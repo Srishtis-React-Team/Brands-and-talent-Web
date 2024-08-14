@@ -3602,10 +3602,38 @@ li.nav-item.dropdown {
     position: relative !important;
     transform: unset !important;
   }
+  button.edit-profile-navigation-btn.bk-btn i,  button.edit-profile-navigation-btn.bk-btn span {
+    color: #fff;
+}
+.add-portfolia-btn.contactus-btn-wrapper {
+  gap: 0px;
+}
+.header-search-input, .header-search-input input {
+  width: 100%;
+}
+.mobile-menu-items {
+  height: 180px;
+  overflow-y: auto;
+}
+.mobile-nav-content {
+  justify-content: flex-start;
+}
+
+
+
+
+
+
+
+
 }
 
 @media (max-width: 420px) {
   .mobile-navbar .icon {
     width: 45px;
   }
+  .mobile-menu-items {
+    height: fit-content;
+    overflow-y: hidden;
+}
 }
