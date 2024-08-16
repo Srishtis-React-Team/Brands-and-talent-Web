@@ -873,7 +873,7 @@ input[type="radio"] {
 }
 .copyright-section p {
   color: #000;
-  font-size: 12px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 400;
 }
@@ -1395,6 +1395,7 @@ input[type="radio"] {
 .profile-section {
   display: flex;
   margin-top: 15px;
+  align-items: center;
 }
 .pad8 {
   padding: 0 8px;
@@ -1846,8 +1847,9 @@ input[type="radio"] {
     width: 50%;
   }
   .storyCar .carousel-description {
-    font-size: 19px;
+    font-size: 16px;
     line-height: 32px;
+    /* height: 100px; */
   }
 }
 @media (max-width: 480px) {
@@ -2040,6 +2042,13 @@ input[type="radio"] {
     padding-bottom: 10px;
     color: #000;
     text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px;
+  }
+  .available-places {
+    color: #000;
     font-size: 14px;
     font-style: normal;
     font-weight: 300;
@@ -3312,6 +3321,9 @@ li.nav-item.dropdown {
   color: #c2114b;
 }
 @media (max-width: 767px) {
+  .mobile-search {
+    margin-left: 4px !important;
+  }
   .section-description {
     min-height: inherit !important;
   }
@@ -3595,30 +3607,24 @@ li.nav-item.dropdown {
     position: relative !important;
     transform: unset !important;
   }
-  button.edit-profile-navigation-btn.bk-btn i,  button.edit-profile-navigation-btn.bk-btn span {
+  button.edit-profile-navigation-btn.bk-btn i,
+  button.edit-profile-navigation-btn.bk-btn span {
     color: #fff;
-}
-.add-portfolia-btn.contactus-btn-wrapper {
-  gap: 0px;
-}
-.header-search-input, .header-search-input input {
-  width: 100%;
-}
-.mobile-menu-items {
-  height: 180px;
-  overflow-y: auto;
-}
-.mobile-nav-content {
-  justify-content: flex-start;
-}
-
-
-
-
-
-
-
-
+  }
+  .add-portfolia-btn.contactus-btn-wrapper {
+    gap: 0px;
+  }
+  .header-search-input,
+  .header-search-input input {
+    width: 100%;
+  }
+  .mobile-menu-items {
+    height: 500px;
+    overflow-y: auto;
+  }
+  .mobile-nav-content {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 420px) {
@@ -3628,5 +3634,5 @@ li.nav-item.dropdown {
   .mobile-menu-items {
     height: fit-content;
     overflow-y: hidden;
-}
+  }
 }

@@ -273,79 +273,6 @@ const Footer = (props) => {
               <div className="company-info">
                 connecting brands and talent™ <br /> {contentsList?.title8}
               </div>
-              <div className="social-medias">
-                <div>
-                  <i
-                    className="bi bi-globe social-media-icons"
-                    onClick={() =>
-                      handleIconClick("https://brandsandtalent.com")
-                    }
-                    style={{
-                      cursor: "pointer",
-                      fontSize: "24px",
-                      margin: "0 10px",
-                    }}
-                  ></i>
-                  <i
-                    className="bi bi-instagram social-media-icons"
-                    onClick={() =>
-                      handleIconClick("https://instagram.com/brandsandtalent")
-                    }
-                    style={{
-                      cursor: "pointer",
-                      fontSize: "24px",
-                      margin: "0 10px",
-                    }}
-                  ></i>
-                  <i
-                    className="bi bi-telegram social-media-icons"
-                    onClick={() =>
-                      handleIconClick("https://t.me/brandsandtalent")
-                    }
-                    style={{
-                      cursor: "pointer",
-                      fontSize: "24px",
-                      margin: "0 10px",
-                    }}
-                  ></i>
-
-                  <i
-                    className="bi bi-send-arrow-down-fill social-media-icons"
-                    onClick={() =>
-                      handleIconClick("https://t.me/brandsandtalentmgmt")
-                    }
-                    style={{
-                      cursor: "pointer",
-                      fontSize: "24px",
-                      margin: "0 10px",
-                    }}
-                  ></i>
-                  <i
-                    className="bi bi-facebook social-media-icons"
-                    onClick={() =>
-                      handleIconClick(
-                        "https://web.facebook.com/brandsandtalent"
-                      )
-                    }
-                    style={{
-                      cursor: "pointer social-media-icons",
-                      fontSize: "24px",
-                      margin: "0 10px",
-                    }}
-                  ></i>
-                  <i
-                    className="bi bi-envelope social-media-icons"
-                    onClick={() =>
-                      handleIconClick("mailto:brandsntalent@gmail.com")
-                    }
-                    style={{
-                      cursor: "pointer",
-                      fontSize: "24px",
-                      margin: "0 10px",
-                    }}
-                  ></i>
-                </div>
-              </div>
             </div>
 
             <div className="footer-wrapper col-md-4 col-lg-2">
@@ -366,17 +293,17 @@ const Footer = (props) => {
                   </Link>
                 </li> */}
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/career" onClick={handleClick}>
                     Career
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/become-affliate" onClick={handleClick}>
                     Become an Affiliate
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/investors" onClick={handleClick}>
                     Investors
                   </Link>
                 </li>
@@ -509,19 +436,91 @@ const Footer = (props) => {
             </div>
           </div>
         </section>
+
+        <div className="row my-4">
+          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+            <div className="social-medias">
+              <div>
+                <i
+                  className="bi bi-globe social-media-icons"
+                  onClick={() => handleIconClick("https://brandsandtalent.com")}
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "24px",
+                    margin: "0 10px",
+                  }}
+                ></i>
+                <i
+                  className="bi bi-instagram social-media-icons"
+                  onClick={() =>
+                    handleIconClick("https://instagram.com/brandsandtalent")
+                  }
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "24px",
+                    margin: "0 10px",
+                  }}
+                ></i>
+                <i
+                  className="bi bi-telegram social-media-icons"
+                  onClick={() =>
+                    handleIconClick("https://t.me/brandsandtalent")
+                  }
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "24px",
+                    margin: "0 10px",
+                  }}
+                ></i>
+
+                <i
+                  className="bi bi-send-arrow-down-fill social-media-icons"
+                  onClick={() =>
+                    handleIconClick("https://t.me/brandsandtalentmgmt")
+                  }
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "24px",
+                    margin: "0 10px",
+                  }}
+                ></i>
+                <i
+                  className="bi bi-facebook social-media-icons"
+                  onClick={() =>
+                    handleIconClick("https://web.facebook.com/brandsandtalent")
+                  }
+                  style={{
+                    cursor: "pointer social-media-icons",
+                    fontSize: "24px",
+                    margin: "0 10px",
+                  }}
+                ></i>
+                <i
+                  className="bi bi-envelope social-media-icons"
+                  onClick={() =>
+                    handleIconClick("mailto:brandsntalent@gmail.com")
+                  }
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "24px",
+                    margin: "0 10px",
+                  }}
+                ></i>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 available-places">
+            Cambodia and the World
+          </div>
+        </div>
+
         <section>
           <div className="copyright-section">
             <p>
-              © Copyright 2024 Brands & Talent Management. All rights reserved.
-              |
-              <span
-                onClick={() =>
-                  handleIconClick("mailto:brandsntalent@gmail.com")
-                }
-                className="feedback"
-              >
-                Feedback & Reporting
-              </span>
+              © 2024 Brands & Talent Management | All Rights Reserved |
+              <Link onClick={handleClick} to="/feedback">
+                <span className="feedback"> Feedback & Reporting</span>
+              </Link>
             </p>
           </div>
         </section>

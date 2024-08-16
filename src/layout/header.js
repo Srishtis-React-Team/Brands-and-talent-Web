@@ -359,7 +359,11 @@ const Header = ({ onData }) => {
     } else if (route === "/how-it-works") {
       navigate(route);
     } else if (route === "/login") {
-      navigate(route);
+      // navigate(route);
+      window.open(
+        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        "_blank"
+      );
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
@@ -688,38 +692,41 @@ const Header = ({ onData }) => {
               Home
             </NavLink>
           </div> */}
-          {currentUser_type === "brand" && (
+          {currentUser_type === "brand" ||
+            (!currentUserId && (
+              <div
+                className="navTxt"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleClick("post-job")}
+              >
+                Post a Job
+              </div>
+            ))}
+
+          {!currentUserId && (
             <div
               className="navTxt"
-              style={{ cursor: "pointer" }}
               onClick={() => handleClick("post-job")}
+              style={{ cursor: "pointer" }}
             >
-              Post a Job
+              Get Booked
             </div>
           )}
 
-          {currentUser_type === "talent" && (
-            <div className="navTxt">
-              <NavLink to="/job-list" onClick={() => handleClick("list-job")}>
-                List Job
+          {currentUserId && currentUser_type == "talent" && (
+            <div className="navTxt" style={{ cursor: "pointer" }}>
+              <NavLink to="/talent-dashboard" onClick={() => handleClick("")}>
+                Get Booked
               </NavLink>
             </div>
           )}
-
-          {currentUser_type === "brand" && (
-            <div className="navTxt">
-              <NavLink to="/find-creators" onClick={() => handleClick("")}>
-                Find Talent
-              </NavLink>
-            </div>
-          )}
-          {currentUser_type === "talent" && (
-            <div className="navTxt">
-              <NavLink to="/find-creators" onClick={() => handleClick("")}>
-                Find Talent
-              </NavLink>
-            </div>
-          )}
+          <div
+            className="navTxt"
+            style={{ cursor: "pointer" }}
+            onClick={() => handleClick("find-talent")}
+          >
+            Find Talent
+          </div>
 
           <div className="navTxt">
             <NavLink to="/how-it-works" onClick={() => handleClick("")}>
@@ -782,24 +789,43 @@ const Header = ({ onData }) => {
             Support BT
             <img src={cofeeIcon} alt="img" className="cofeeIcon-img" />
           </div>
+
+          <div className="mobile-search">
+            <form className="d-flex" role="search">
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              ></input>
+            </form>
+            {searchTerm && (
+              <>
+                <div className="search-path-options">
+                  {searchTerm &&
+                    filteredOptions.map((option) => (
+                      <>
+                        <div
+                          className="search-path-wrapper"
+                          onClick={() => handleLabelClick(option.routes)}
+                        >
+                          <i className="fas fa-search search-path-icon"></i>
+                          <div
+                            className="search-path-labels"
+                            key={option.routes}
+                          >
+                            {option.label}
+                          </div>
+                        </div>
+                      </>
+                    ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
-        <div className="header-search-wrapper">
-          <div className="header-search-icon">
-            <i className="fas fa-search"></i>
-          </div>
-          <div className="header-search-input">
-            <input type="text" className="header-search-input-style" />
-          </div>
-        </div>
-        {/* <div className="responsive-box">
-          <input type="checkbox" id="search-check"></input>
-          <div className="responsive-search-box">
-            <input type="text" placeholder="Type here..."></input>
-            <label htmlFor="search-check" className="responsive-search-icon">
-              <i className="fas fa-search"></i>
-            </label>
-          </div>
-        </div> */}
       </div>
 
       <div className="header">

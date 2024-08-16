@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 
-const About = () => {
+const Career = () => {
   const navigate = useNavigate();
 
   const [aboutusList, setAboutusList] = useState([]);
@@ -19,7 +19,7 @@ const About = () => {
 
   const fetchContentByType = async () => {
     const formData = {
-      contentType: "About Us",
+      contentType: "Career",
     };
     await ApiHelper.post(API.fetchContentByType, formData)
       .then((resData) => {
@@ -40,7 +40,7 @@ const About = () => {
       <section style={{ marginTop: "64px" }}>
         <div className="popular-header">
           <div className="container">
-            <div className="header-title">About Us</div>
+            <div className="header-title">Career</div>
           </div>
         </div>
       </section>
@@ -101,4 +101,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Career;
