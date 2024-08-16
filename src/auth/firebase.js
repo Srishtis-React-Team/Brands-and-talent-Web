@@ -14,28 +14,36 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-const messaging = getMessaging(firebaseApp);
+console.log('firebaseApp:', firebaseApp);
 
-// Check if the browser supports notifications
-if ('Notification' in window && navigator.serviceWorker) {
+let messaging;
+
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  messaging = getMessaging(firebaseApp);
+
   navigator.serviceWorker.register('/firebase-messaging-sw.js')
     .then((registration) => {
-      messaging.useServiceWorker(registration);
+      console.log('Service Worker registered with scope:', registration.scope);
     })
     .catch((err) => {
-      console.error('Service Worker registration failed', err);
+      console.error('Service Worker registration failed:', err);
     });
+} else {
+  console.warn('Firebase Messaging is not supported in this environment.');
 }
 
 export const generateToken = async () => {
+  if (!messaging) {
+    console.warn('Messaging is not initialized due to lack of browser support.');
+    return null;
+  }
+
   try {
     const permission = await Notification.requestPermission();
-
     if (permission === "granted") {
       const token = await getToken(messaging, {
         vapidKey: "BOrRUsFr6qM_RnH76mGZmeCu3_zRjKrl9rshpQSB2QRRe38Q-NbFYEZ2Bm-VTapy9UgzUHw313RFfT1bu8slsp4",
       });
-
       if (token) {
         localStorage.setItem("fcmToken", token);
         console.log("FCM Token:", token);
@@ -47,14 +55,16 @@ export const generateToken = async () => {
       console.warn("Notification permission not granted.");
     }
   } catch (error) {
-    console.error("An error occurred while retrieving token.", error);
+    console.error("An error occurred while retrieving token:", error);
   }
 
   return null;
 };
 
 // Listen for incoming messages
-onMessage(messaging, (payload) => {
-  console.log('Message received. ', payload);
-  // Customize notification handling here
-});
+if (messaging) {
+  onMessage(messaging, (payload) => {
+    console.log('Message received:', payload);
+    // Customize notification handling here
+  });
+}
