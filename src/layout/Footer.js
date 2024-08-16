@@ -293,17 +293,17 @@ const Footer = (props) => {
                   </Link>
                 </li> */}
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/career" onClick={handleClick}>
                     Career
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/become-affliate" onClick={handleClick}>
                     Become an Affiliate
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={handleClick}>
+                  <Link to="/investors" onClick={handleClick}>
                     Investors
                   </Link>
                 </li>
@@ -510,23 +510,17 @@ const Footer = (props) => {
             </div>
           </div>
           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 available-places">
-            Cambodia | Thailand | US
+            Cambodia and the World
           </div>
         </div>
 
         <section>
           <div className="copyright-section">
             <p>
-              © Copyright 2024 Brands & Talent Management. All rights reserved.
-              |
-              <span
-                onClick={() =>
-                  handleIconClick("mailto:brandsntalent@gmail.com")
-                }
-                className="feedback"
-              >
-                Feedback & Reporting
-              </span>
+              © 2024 Brands & Talent Management | All Rights Reserved |
+              <Link onClick={handleClick} to="/feedback">
+                <span className="feedback"> Feedback & Reporting</span>
+              </Link>
             </p>
           </div>
         </section>

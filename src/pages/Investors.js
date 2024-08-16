@@ -2,7 +2,38 @@ import { useNavigate } from "react-router";
 import Header from "../layout/header";
 import Footer from "../layout/Footer";
 
+import "../assets/css/guidelines.css";
+
+import React, { useState, useEffect, useRef } from "react";
+import { ApiHelper } from "../helpers/ApiHelper";
+import { API } from "../config/api";
+
 const Investors = () => {
+  const navigate = useNavigate();
+
+  const [aboutusList, setAboutusList] = useState([]);
+
+  useEffect(() => {
+    fetchContentByType();
+  }, []);
+
+  const fetchContentByType = async () => {
+    const formData = {
+      contentType: "Investor",
+    };
+    await ApiHelper.post(API.fetchContentByType, formData)
+      .then((resData) => {
+        if (resData) {
+          setAboutusList(resData?.data?.data?.items);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(aboutusList, "aboutusList");
+  }, [aboutusList]);
+
   return (
     <>
       <Header />{" "}
@@ -19,47 +50,23 @@ const Investors = () => {
             <div className="text-center">
               <h2 className="maintitles">About Brands & Talent</h2>
               <div className="widthParg">
-                <p className="descp">
-                  Welcome to{" "}
-                  <strong>
-                    Brands & Talent (BT), where creators, influencers, and
-                    talent take center stage in a platform designed to amplify
-                    their voices and showcase their work to the world. Our
-                    journey began out of a deep understanding of the challenges
-                    faced by talented individuals like you in reaching global
-                    audiences and connecting directly with brands and clients.
-                  </strong>
-                </p>
+                <p
+                  className="descp"
+                  dangerouslySetInnerHTML={{
+                    __html: aboutusList[0]?.description,
+                  }}
+                ></p>
               </div>
             </div>
           </div>
           <div className="contSpc pt-3 pb-5">
             <div className="row textAlg mb-5">
-              <div className="col-md-6 descp">
-                At Brands & Talent, we recognized the need for a platform that
-                empowers creators with full independence and control over their
-                careers.{" "}
-                <strong>
-                  Unlike other existing platforms, we believe in giving you the
-                  autonomy to choose the tasks you want to take on, set your own
-                  rates, and decide how and when you want to work. With us, you
-                  keep 100% of your earnings—no middlemen, no commissions, and
-                  no hidden fees. It's your talent, your terms.
-                </strong>
-                <br />
-                <br />
-                Moreover, in a world where advanced technology poses a risk to
-                human creators, we stand firm in our commitment to putting real
-                human talent first.{" "}
-                <strong>
-                  While AI and other emerging technologies continue to evolve,
-                  we're dedicated to ensuring that creators are not replaced but
-                  rather amplified
-                </strong>
-                . Our platform serves as a sanctuary for human creativity, where
-                your work is celebrated and easily accessible to brands and
-                clients seeking your unique talents.
-              </div>
+              <div
+                className="col-md-6 descp"
+                dangerouslySetInnerHTML={{
+                  __html: aboutusList[1]?.description,
+                }}
+              ></div>
               <div className="col-md-6">
                 <img
                   className="img-fluid"
@@ -79,33 +86,12 @@ const Investors = () => {
                   }
                 ></img>
               </div>
-              <div className="col-md-6 descp">
-                We understand that{" "}
-                <strong>
-                  time is precious, which is why our platform is designed to
-                  streamline the hiring process for brands and clients. Say
-                  goodbye to endless searches for verified creators and
-                  influencers—Brands & Talent provides a hassle-free solution to
-                  connect you with the talent you need, instantly.
-                </strong>
-                <br />
-                <br />
-                As we embark on this journey together,{" "}
-                <strong>
-                  we pledge to continually innovate our processes and search
-                  engine technology, leveraging AI to the benefit of real human
-                  creators and influencers.
-                </strong>{" "}
-                Brands & Talent is more than just a platform; it's a community
-                built on the belief that every creator deserves to shine.
-                <br />
-                <br />
-                Join us at Brands & Talent and discover a world where your
-                creativity knows no bounds.{" "}
-                <strong>
-                  Welcome to a new era of empowerment and opportunity.
-                </strong>
-              </div>
+              <div
+                className="col-md-6 descp"
+                dangerouslySetInnerHTML={{
+                  __html: aboutusList[2]?.description,
+                }}
+              ></div>
             </div>
           </div>
         </div>

@@ -84,6 +84,10 @@ const AdultSocialMedias = lazy(() =>
 );
 const IndustryNews = lazy(() => import("../pages/IndustryNews"));
 const CommingSoon = lazy(() => import("../views/CommingSoon"));
+const Feedbackreporting = lazy(() => import("../pages/Feedbackreporting"));
+const BecomeAffliate = lazy(() => import("../pages/BecomeAffliate"));
+const Investors = lazy(() => import("../pages/Investors"));
+const Career = lazy(() => import("../pages/Career"));
 // const ErrorBoundary = lazy(() => import('../components/ErrorBoundary'));
 
 function Routing() {
@@ -226,6 +230,10 @@ function Routing() {
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/industry-news" element={<IndustryNews />} />
             <Route path="/get-booked" element={<GetBooked />} />
+            <Route path="/feedback" element={<Feedbackreporting />} />
+            <Route path="/become-affliate" element={<BecomeAffliate />} />
+            <Route path="/career" element={<Career />} />
+            <Route path="/investors" element={<Investors />} />
             <Route
               path="/brand-notifications"
               element={<BrandNotification />}

@@ -30,6 +30,8 @@ const ContactUs = () => {
   const [nameError, setNameError] = useState(false);
   const [enquiry, setEnquiry] = useState("");
   const [enquiryError, setEnquiryError] = useState(false);
+  const [subject, setSubject] = useState("");
+  const [subjectError, setSubjectError] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [mobile, setMobile] = useState("");
@@ -52,8 +54,9 @@ const ContactUs = () => {
     if (!name) setNameError(true);
     if (!email) setEmailError(true);
     if (!enquiry) setEnquiryError(true);
+    if (!subject) setSubjectError(true);
 
-    const formData = { name, phoneNo: mobile, enquiry, email };
+    const formData = { name, phoneNo: mobile, enquiry, email, subject };
     setIsLoading(true);
     try {
       const resData = await ApiHelper.post(`${API.postSupportMail}`, formData);
@@ -183,6 +186,28 @@ const ContactUs = () => {
               )}
               {mobileNumError && (
                 <div className="invalid-fields">Only Numbers Allowed</div>
+              )}
+            </div>
+            <div className="kids-form-section col-md-12 mb-3">
+              <label
+                htmlFor="exampleFormControlTextarea1"
+                className="form-label"
+              >
+                Subject<span className="mandatory">*</span>
+              </label>
+
+              <input
+                type="email"
+                className="form-control"
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                  setSubjectError(false);
+                }}
+                placeholder="Enter subject"
+                value={subject}
+              />
+              {subjectError && (
+                <div className="invalid-fields">Please enter Subject</div>
               )}
             </div>
             <div className="kids-form-section col-md-12 mb-3">
