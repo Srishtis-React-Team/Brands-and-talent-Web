@@ -3645,3 +3645,7 @@ input::placeholder {
   border: 1px solid #d3d3d3;
   border-radius: 2px;
 }
+
+.adult-signup-main .form-group .MuiFormControl-root.form-control {
+  height: 45px !important;
+}
