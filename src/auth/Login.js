@@ -10,6 +10,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import CurrentUser from "../CurrentUser";
 import { generateToken } from "./firebase";
+import "../assets/css/register.css";
 
 const Login = () => {
   const {

@@ -13,6 +13,8 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import Axios from "axios";
 import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
+import "../assets/css/register.css";
+
 const Register = () => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");

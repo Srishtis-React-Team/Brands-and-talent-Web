@@ -421,9 +421,7 @@
 .upload-info {
   text-align: center;
 }
-.address-textarea {
-  height: 140px !important;
-}
+
 .profession-section-cover {
   box-shadow: rgb(0 0 0 / 0.02) 0 1px 3px 0, rgb(27 31 35 / 0.15) 0 0 0 1px;
   padding: 15px;
@@ -1082,4 +1080,8 @@ textarea.contact-us-textarea.w-100 {
 
 .projects-completed::placeholder {
   font-size: 13px !important;
+}
+
+.address-textarea {
+  height: 140px !important;
 }

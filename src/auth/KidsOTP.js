@@ -4,6 +4,8 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
+import "../assets/css/register.css";
+
 const KidsOTP = () => {
   const navigate = useNavigate();
 

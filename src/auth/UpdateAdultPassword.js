@@ -6,6 +6,8 @@ import PopUp from "../components/PopUp";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { useLocation } from "react-router-dom";
+import "../assets/css/register.css";
+
 const UpdateAdultPassword = (props) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");

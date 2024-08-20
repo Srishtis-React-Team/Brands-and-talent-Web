@@ -3,6 +3,7 @@ import "../assets/css/forms/kidsformthree.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router";
+import "../assets/css/register.css";
 
 const KidsFormFour = ({ onDataFromChild, ...props }) => {
   const navigate = useNavigate();

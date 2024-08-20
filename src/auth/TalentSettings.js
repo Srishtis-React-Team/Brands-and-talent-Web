@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Modal from "react-modal";
+import "../assets/css/register.css";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;

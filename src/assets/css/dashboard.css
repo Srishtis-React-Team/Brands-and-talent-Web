@@ -114,6 +114,16 @@ body {
   background-color: #c2114b;
   border-color: #c2114b;
 }
+.address-textarea {
+  border-radius: 8px;
+  border: 1px solid #d3d3d3;
+  padding: 10px;
+  outline: none !important;
+}
+.bi-trash {
+  padding-left: 8px;
+  cursor: pointer;
+}
 .form-control,
 .form-select {
   height: 45px !important;
