@@ -2387,14 +2387,14 @@ input[type="radio"] {
     align-items: center;
     cursor: pointer;
   }
-  .upload-text {
+  /* .upload-text {
     color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     padding-left: 20px;
-  }
+  } */
   .import-wrapper {
     width: 320px;
     height: 55px;
@@ -2725,14 +2725,14 @@ head .profile-image-header {
     align-items: center;
     cursor: pointer;
   }
-  .upload-text {
+  /* .upload-text {
     color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     padding-left: 20px;
-  }
+  } */
   .import-wrapper {
     width: 350px;
     height: 55px;
@@ -3635,4 +3635,13 @@ li.nav-item.dropdown {
     height: fit-content;
     overflow-y: hidden;
   }
+}
+
+input::placeholder {
+  font-size: 13px !important;
+}
+
+.rdw-editor-wrapper {
+  border: 1px solid #d3d3d3;
+  border-radius: 2px;
 }

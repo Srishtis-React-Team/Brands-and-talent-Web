@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/css/brand-home.css";
+import "../../assets/css/PhotosCarousel.css";
 import BrandHeader from "./BrandHeader";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import { API } from "../../config/api";
@@ -107,7 +108,7 @@ const BrandHome = () => {
   useEffect(() => {}, [showSidebar]);
 
   const contactUs = () => {
-    navigate("/contact-us");
+    navigate("/support");
   };
 
   useEffect(() => {

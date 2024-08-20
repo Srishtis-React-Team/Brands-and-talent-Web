@@ -1121,7 +1121,7 @@ const TalentDashBoard = () => {
                           Top Brands / Client
                         </div>
                       </div>
-                      {topBrandsList.length && (
+                      {topBrandsList && topBrandsList.length > 0 && (
                         <div className="top-brands-main p-3">
                           <div className="row rowSpc">
                             {topBrandsList?.map((item, index) => {
@@ -1152,6 +1152,13 @@ const TalentDashBoard = () => {
                                 </>
                               );
                             })}
+                          </div>
+                        </div>
+                      )}
+                      {topBrandsList && topBrandsList.length === 0 && (
+                        <div className="top-brands-main p-3">
+                          <div className="row rowSpc p-3">
+                            No Brands Available
                           </div>
                         </div>
                       )}

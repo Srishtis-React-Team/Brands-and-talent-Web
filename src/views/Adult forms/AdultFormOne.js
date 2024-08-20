@@ -1091,7 +1091,7 @@ const AdultFormOne = () => {
                         ))}
                       </select>
                     </div>
-                    <div className="kids-form-section col-md-6 mb-3"> 
+                    <div className="kids-form-section col-md-6 mb-3">
                       <label className="form-label">Nationality</label>
 
                       <Select

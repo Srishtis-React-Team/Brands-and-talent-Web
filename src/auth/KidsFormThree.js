@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsformthree.css";
+import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/register.css";
+import "../assets/css/dashboard.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
 import Axios from "axios";
@@ -1108,7 +1111,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </div>
                   </div>
 
-                  <div className="verification-section">
+                  <div className="verification-section mb-5">
                     <div className="id-image">
                       <img src={idCard} alt="" />
                     </div>

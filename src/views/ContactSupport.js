@@ -22,6 +22,15 @@ import CurrentUser from "../CurrentUser";
 import BrandHeader from "../brand/pages/BrandHeader";
 import BrandSideMenu from "../brand/pages/BrandSideMenu";
 import Spinner from "../components/Spinner";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  parsePhoneNumber,
+  isValidPhoneNumber,
+  getNumberType,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
+import parseMax from "libphonenumber-js/max";
+
 const ContactSupport = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -104,14 +113,38 @@ const ContactSupport = () => {
       .catch((err) => {});
   };
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [subject, setSubject] = useState("");
+  const [subjectError, setSubjectError] = useState(false);
+  const [mobileValidationError, setMobileValidationError] = useState(false);
   const [mobileNumError, setMobileNumError] = useState();
+  const [mobileNumberError, setMobileNumberError] = useState("");
+  const [countryCode, setCountryCode] = useState("");
 
-  const handleMobileChange = (value, countryData) => {
-    // Update the parentMobile state with the new phone number
-
-    setMobile(value);
-    setMobileError(false);
+  const handleMobileChange = (value) => {
+    console.log(value, "handleMobileChange");
+    isValidPhoneNumber(value);
+    if (isValidPhoneNumber(value)) {
+      setMobileError(false);
+      setMobileValidationError(false);
+      setMobile(value);
+    } else {
+      setMobileValidationError(true);
+    }
   };
+
+  const handleNavigation = () => {
+    if (location.state && location.state.from) {
+      navigate(`/${location.state.from}`);
+    } else {
+      navigate(-1); // Equivalent to history.goBack() in v5
+    }
+  };
+
+  useEffect(() => {
+    console.log(countryCode, "countryCode");
+  }, []);
 
   return (
     <>
@@ -137,28 +170,27 @@ const ContactSupport = () => {
             within 1-2 business days
           </p>
 
-          <div className="update-password-main w-100 row">
-            <div className="kids-form-section col-md-6 mb-3">
+          <div className="update-password-main w-100">
+            <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">
-                Name <span className="mandatory">*</span>
+                Full Name <span className="mandatory">*</span>
               </label>
-              <div className="form-group has-search adult-password-wrapper">
-                <span className="fa fa-lock form-control-feedback"></span>
+              <div className="form-group adult-password-wrapper">
                 <input
                   type="text"
                   className="form-control adult-signup-inputs"
-                  placeholder="Enter Name"
+                  placeholder="Enter Full Name"
                   value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                ></input>
+                  onChange={(e) => setName(e.target.value)}
+                />
                 {nameError && (
-                  <div className="invalid-fields">Please enter Your Name</div>
+                  <div className="invalid-fields">
+                    Please enter Your Full Name
+                  </div>
                 )}
               </div>
             </div>
-            <div className="kids-form-section col-md-6 mb-3">
+            <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">
                 E-mail <span className="mandatory">*</span>
               </label>
@@ -180,33 +212,60 @@ const ContactSupport = () => {
                 <div className="invalid-fields">Please enter Email</div>
               )}
             </div>
-            <div className="kids-form-section col-md-6 mb-3">
-              <label className="form-label">
-                Mobile No <span className="optional">(Optional)</span>
-              </label>
-
+            <div className="kids-form-section col-md-12 mb-3">
+              <label className="form-label">Mobile Number</label>
               <MuiPhoneNumber
                 defaultCountry={"kh"}
                 className="form-control"
                 onChange={handleMobileChange}
                 value={mobile}
               />
+              {mobileNumberError && (
+                <div className="error">{mobileNumberError}</div>
+              )}
               {mobileError && (
                 <div className="invalid-fields">Please enter Mobile Number</div>
+              )}
+              {mobileValidationError && (
+                <div className="invalid-fields">
+                  Please enter correct Mobile Number
+                </div>
               )}
               {mobileNumError && (
                 <div className="invalid-fields">Only Numbers Allowed</div>
               )}
             </div>
-            <div className="kids-form-section col-md-6 mb-3">
+            <div className="kids-form-section col-md-12 mb-3">
               <label
                 htmlFor="exampleFormControlTextarea1"
                 className="form-label"
               >
-                Enquiry<span className="mandatory">*</span>
+                Subject<span className="mandatory">*</span>
+              </label>
+
+              <input
+                type="email"
+                className="form-control"
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                  setSubjectError(false);
+                }}
+                placeholder="Enter subject"
+                value={subject}
+              />
+              {subjectError && (
+                <div className="invalid-fields">Please enter Subject</div>
+              )}
+            </div>
+            <div className="kids-form-section col-md-12 mb-3">
+              <label
+                htmlFor="exampleFormControlTextarea1"
+                className="form-label"
+              >
+                Message<span className="mandatory">*</span>
               </label>
               <textarea
-                className="form-control address-textarea w-100"
+                className="contact-us-textarea w-100"
                 id="exampleFormControlTextarea1"
                 value={enquiry}
                 rows="3"
@@ -214,19 +273,25 @@ const ContactSupport = () => {
                   setEnquiry(e.target.value);
                   setEnquiryError(false);
                 }}
-              ></textarea>
+              />
               {enquiryError && (
-                <div className="invalid-fields">Please enter Enquiry</div>
+                <div className="invalid-fields">Please enter Message</div>
               )}
             </div>
-            <div className="add-portfoli-section">
-              <div className="add-portfolia-btn">
+            <div className="add-portfoli-section cn-btn">
+              <div className="add-portfolia-btn contactus-btn-wrapper">
+                <button
+                  className="edit-profile-navigation-btn bk-btn"
+                  onClick={handleNavigation}
+                >
+                  <i className="bi bi-arrow-left-circle-fill arrow-left-circle"></i>
+                  <span className="edit-profile-navigation-text">Back</span>
+                </button>
                 <Button
                   onClick={postSupportMail}
                   className="edit-profileimg-btn"
                   variant="text"
                   style={{ textTransform: "capitalize" }}
-                  disabled={!name || !enquiry || !email}
                 >
                   Submit
                 </Button>

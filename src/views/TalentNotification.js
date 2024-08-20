@@ -4,6 +4,7 @@ import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.css";
+import "../assets/css/forms/kidsform-one.css";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
 import { formatDistanceToNow, parseISO, setWeek } from "date-fns";

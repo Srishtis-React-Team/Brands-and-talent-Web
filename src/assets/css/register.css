@@ -1,1 +1,442 @@
-.gig-preview{margin:auto;display:flex;padding:18px 0;border-bottom:1px solid #bab4b4}.rdw-editor-wrapper{box-sizing:content-box;border-radius:8px;border:1px dashed #aaa}.gig-content{display:flex;flex-direction:column;justify-content:center}.gig-image{border-radius:10px;margin-right:20px;width:250px}.gig-name{color:#000;font-size:16px;font-style:normal;line-height:normal;font-weight:600}.gig-description{color:#000;font-size:14px;font-style:normal;font-weight:300;padding:30px 0}.gig-infos{display:flex;justify-content:space-between}.gig-followers{display:flex;padding-right:15px}.gig-logo{border-radius:50%;border:1px solid rgb(0 0 0 / .2);background:#ddd;width:40px;height:40px;display:flex;justify-content:center;align-items:center}.gig-logo>img{width:18px;height:18px}.followers-text{color:#000;font-size:14px;font-style:normal;font-weight:600;line-height:normal}.gig-counts{padding-left:12px}.followers-count{color:#c2114b;font-size:12px;font-style:normal;font-weight:600;line-height:normal;padding-top:5px}.brands-preview-modal{display:flex;justify-content:center;align-items:center}.company{width:650px}.company{display:flex;justify-content:space-between;padding:20px 0}.company-name{display:flex;align-items:center}.name-wrapper{width:27px;height:27px;flex-shrink:0;background-color:#c2114b;display:flex;justify-content:center;align-items:center;border-radius:50%}.name-wrapper{color:#fff;font-size:15px;font-style:normal;font-weight:300;line-height:normal}.company-text{color:#181818;font-size:15px;font-style:normal;font-weight:300;line-height:normal;padding-left:6px}.company-plan{color:#c2114b;font-size:15px;font-style:normal;font-weight:600;line-height:normal}.trial-page{display:flex;justify-content:space-between;padding:60px 0}.trial-title{color:#000;font-size:30px;font-style:normal;font-weight:600;line-height:normal}.inlcluded{color:#c2114b;font-size:15px;font-style:normal;font-weight:700;line-height:normal;letter-spacing:-.333px;text-decoration-line:underline;padding:30px 0}.included-content{display:flex}.included-line{display:flex;align-items:center}.include-text{padding-left:8px;color:#000;font-size:16px;font-style:normal;font-weight:500;letter-spacing:-.25px;padding:10px 0 10px 10px}.trialing>img{width:350px;height:350px;flex-shrink:0}.trial-model{display:flex;align-items:center}.include-wrapper{padding-left:30px}.gmail-wrapper{width:96%;border-radius:10px;background:#fff;box-shadow:1px 8px 24px 0 rgb(0 0 0 / .1);display:flex;justify-content:center;align-items:center;flex-direction:column;padding:50px 30px;margin-top:30px;height:90%}.gmail-tick>img{max-width:130px;width:auto;height:auto;flex-shrink:0}.done{color:#000;text-align:center;font-size:28px;font-style:normal;font-weight:600;line-height:normal;padding:10px 0;margin:0 0 15px}.gmail-info{color:#000;text-align:center;font-size:15px;font-style:normal;font-weight:300;padding-bottom:25px;width:50%}.open-gmail{display:flex;justify-content:space-evenly;align-items:center;cursor:pointer;min-width:150px;height:50px;border-radius:60px;border:5px solid #000;background:#000;padding:0 20px}.open-gmail img{margin-right:15px}.gmail-btn-text{color:#fff;text-align:center;font-size:16px;font-style:normal;font-weight:500}.gig-input{display:none}.image-preview{display:flex;justify-content:center;align-items:center;margin-bottom:30px}.image-preview>img{width:300px}.dialog-body{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;margin-top:70px;overflow:inherit}.brands-form-wrapper{width:640px;margin-top:100px}.has-search .form-control{padding-left:2.375rem}.form-group.has-search{position:relative}.has-search .form-control-feedback{position:absolute;display:block;width:2.375rem;text-align:center;pointer-events:none;color:#aaa;height:100%;line-height:48px}.adult-signup-main{width:450px;max-width:100%;border:1px solid #aaa;border-radius:20px;padding:15px 25px 25px;border-radius:20px}.adult-signup-main .step-title{padding:0;margin:10px 0}.adult-password-wrapper,.adult-confirm-password-wrapper{position:relative}.show-password-icon{position:absolute;top:18px;right:10px;color:#aaa;cursor:pointer}.show-confirm-password-icon{position:absolute;top:18px;right:10px;color:#aaa;cursor:pointer}.form-control,.form-select{outline:0!important;box-shadow:inherit!important}.login-main .form-label{margin:0}.adult-signup-inputs{height:50px;border:1px solid #B1A8A8}.signup-btn-section{padding:20px 0;width:100%;display:flex;justify-content:flex-end}.signup-btn-section .signup-btn{background-color:#c2114b;border-radius:14px;cursor:pointer;padding:6px 24px;color:#fff;display:flex;justify-content:center;align-items:center;border:none}@media (min-width:769px) and (max-width:1024px){.adult-signup-main{width:50%}.gmail-info{width:50%}}@media (min-width:481px) and (max-width:768px){.adult-signup-main{width:70%}.gmail-info{width:60%}}@media (min-width:320px) and (max-width:480px){.adult-signup-main{width:95%;padding:10px 20px}.gmail-info{width:80%}.gmail-wrapper{margin-top:0}.trial-page{display:flex;justify-content:space-between;padding:0 0;flex-direction:column;flex-direction:column-reverse}.trialing{display:flex;justify-content:center;margin-top:0}.trialing>img{width:250px;height:250px;flex-shrink:0}.trial-wrapper{padding:30px}}.password_strength_box{width:100%;display:flex;justify-content:space-between;place-items:center;align-items:center;margin:10px 0}.password_strength_box .password_strength{width:100%}.password_strength .text{font-size:13px;text-align:left;padding:0 0 6px 0;font-weight:500;color:red}.password_strength .line_box{background-color:#f2f2f2}.password_strength .line{width:10%;height:3px;border-radius:100px;background-color:red;transition:0.3s}.tool_tip_box{cursor:pointer;margin-left:10px;position:relative;margin-top:18px}.tool_tip_box span{display:inline-block}.tool_tip_box .tool_tip{position:absolute;width:200px;top:30px;right:-100px;background-color:#f6f6f6;padding:10px 30px;z-index:10;border-radius:12px;text-align:left;line-height:1.5;box-shadow:0 5px 10px -5px #000;pointer-events:none;opacity:0;transition:0.2s;transition-delay:0.5s}.tool_tip_box:hover .tool_tip{opacity:1}.tool_tip p{display:list-item}
+.gig-preview {
+  margin: auto;
+  display: flex;
+  padding: 18px 0;
+  border-bottom: 1px solid #bab4b4;
+}
+.rdw-editor-wrapper {
+  box-sizing: content-box;
+  border-radius: 8px;
+  border: 1px dashed #aaa;
+}
+.gig-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.gig-image {
+  border-radius: 10px;
+  margin-right: 20px;
+  width: 250px;
+}
+.gig-name {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  line-height: normal;
+  font-weight: 600;
+}
+.gig-description {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  padding: 30px 0;
+}
+.gig-infos {
+  display: flex;
+  justify-content: space-between;
+}
+.gig-followers {
+  display: flex;
+  padding-right: 15px;
+}
+.gig-logo {
+  border-radius: 50%;
+  border: 1px solid rgb(0 0 0 / 0.2);
+  background: #ddd;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.gig-logo > img {
+  width: 18px;
+  height: 18px;
+}
+.followers-text {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.gig-counts {
+  padding-left: 12px;
+}
+.followers-count {
+  color: #c2114b;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding-top: 5px;
+}
+.brands-preview-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.company {
+  width: 650px;
+}
+.company {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+.company-name {
+  display: flex;
+  align-items: center;
+}
+.name-wrapper {
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  background-color: #c2114b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.name-wrapper {
+  color: #fff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.company-text {
+  color: #181818;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  padding-left: 6px;
+}
+.company-plan {
+  color: #c2114b;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.trial-page {
+  display: flex;
+  justify-content: space-between;
+  padding: 60px 0;
+}
+.trial-title {
+  color: #000;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.inlcluded {
+  color: #c2114b;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.333px;
+  text-decoration-line: underline;
+  padding: 30px 0;
+}
+.included-content {
+  display: flex;
+}
+.included-line {
+  display: flex;
+  align-items: center;
+}
+.include-text {
+  padding-left: 8px;
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.25px;
+  padding: 10px 0 10px 10px;
+}
+.trialing > img {
+  width: 350px;
+  height: 350px;
+  flex-shrink: 0;
+}
+.trial-model {
+  display: flex;
+  align-items: center;
+}
+.include-wrapper {
+  padding-left: 30px;
+}
+.gmail-wrapper {
+  width: 96%;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 1px 8px 24px 0 rgb(0 0 0 / 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 50px 30px;
+  margin-top: 30px;
+  height: 90%;
+}
+.gmail-tick > img {
+  max-width: 130px;
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+}
+.done {
+  color: #000;
+  text-align: center;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 10px 0;
+  margin: 0 0 15px;
+}
+.gmail-info {
+  color: #000;
+  text-align: center;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  padding-bottom: 25px;
+  width: 50%;
+}
+.open-gmail {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+  min-width: 150px;
+  height: 50px;
+  border-radius: 60px;
+  border: 5px solid #000;
+  background: #000;
+  padding: 0 20px;
+}
+.open-gmail img {
+  margin-right: 15px;
+}
+.gmail-btn-text {
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+}
+.gig-input {
+  display: none;
+}
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.image-preview > img {
+  width: 300px;
+}
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 70px;
+  overflow: inherit;
+}
+.brands-form-wrapper {
+  width: 640px;
+  margin-top: 100px;
+}
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+.form-group.has-search {
+  position: relative;
+}
+.has-search .form-control-feedback {
+  position: absolute;
+  display: block;
+  width: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+  height: 100%;
+  line-height: 48px;
+}
+.adult-signup-main {
+  width: 40%;
+  max-width: 100%;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  padding: 15px 25px 25px;
+  border-radius: 20px;
+}
+.adult-signup-main .step-title {
+  padding: 0;
+  margin: 10px 0;
+}
+.adult-password-wrapper,
+.adult-confirm-password-wrapper {
+  position: relative;
+}
+.show-password-icon {
+  position: absolute;
+  top: 18px;
+  right: 10px;
+  color: #aaa;
+  cursor: pointer;
+}
+.show-confirm-password-icon {
+  position: absolute;
+  top: 18px;
+  right: 10px;
+  color: #aaa;
+  cursor: pointer;
+}
+.form-control,
+.form-select {
+  outline: 0 !important;
+  box-shadow: inherit !important;
+}
+.login-main .form-label {
+  margin: 0;
+}
+.adult-signup-inputs {
+  height: 50px;
+  border: 1px solid #b1a8a8;
+}
+.signup-btn-section {
+  padding: 20px 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.signup-btn-section .signup-btn {
+  background-color: #c2114b;
+  border-radius: 14px;
+  cursor: pointer;
+  padding: 6px 24px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .adult-signup-main {
+    width: 50%;
+  }
+  .gmail-info {
+    width: 50%;
+  }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .adult-signup-main {
+    width: 70%;
+  }
+  .gmail-info {
+    width: 60%;
+  }
+}
+@media (min-width: 320px) and (max-width: 480px) {
+  .adult-signup-main {
+    width: 95%;
+    padding: 10px 20px;
+  }
+  .gmail-info {
+    width: 80%;
+  }
+  .gmail-wrapper {
+    margin-top: 0;
+  }
+  .trial-page {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0;
+    flex-direction: column;
+    flex-direction: column-reverse;
+  }
+  .trialing {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .trialing > img {
+    width: 250px;
+    height: 250px;
+    flex-shrink: 0;
+  }
+  .trial-wrapper {
+    padding: 30px;
+  }
+}
+.password_strength_box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  place-items: center;
+  align-items: center;
+  margin: 10px 0;
+}
+.password_strength_box .password_strength {
+  width: 100%;
+}
+.password_strength .text {
+  font-size: 13px;
+  text-align: left;
+  padding: 0 0 6px 0;
+  font-weight: 500;
+  color: red;
+}
+.password_strength .line_box {
+  background-color: #f2f2f2;
+}
+.password_strength .line {
+  width: 10%;
+  height: 3px;
+  border-radius: 100px;
+  background-color: red;
+  transition: 0.3s;
+}
+.tool_tip_box {
+  cursor: pointer;
+  margin-left: 10px;
+  position: relative;
+  margin-top: 18px;
+}
+.tool_tip_box span {
+  display: inline-block;
+}
+.tool_tip_box .tool_tip {
+  position: absolute;
+  width: 200px;
+  top: 30px;
+  right: -100px;
+  background-color: #f6f6f6;
+  padding: 10px 30px;
+  z-index: 10;
+  border-radius: 12px;
+  text-align: left;
+  line-height: 1.5;
+  box-shadow: 0 5px 10px -5px #000;
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.2s;
+  transition-delay: 0.5s;
+}
+.tool_tip_box:hover .tool_tip {
+  opacity: 1;
+}
+.tool_tip p {
+  display: list-item;
+}

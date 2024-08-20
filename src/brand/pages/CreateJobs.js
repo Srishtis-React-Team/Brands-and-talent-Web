@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/forms/kidsform-one.css";
+import "../../assets/css/forms/kidsformthree.css";
+import "../../assets/css/kidsmain.scss";
+import "../../assets/css/talent-dashboard.css";
 import "../../assets/css/createjobs.css";
+import "../../assets/css/dashboard.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";

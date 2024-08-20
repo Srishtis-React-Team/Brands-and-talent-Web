@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/forms/login.css";
+import "../assets/css/register.css";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";

@@ -70,7 +70,7 @@ const TalentHome = () => {
           <div className="create-job-title">Welcome To Brands and Talent</div>
           <div className="home-cards mt-1 row pad8">
             <div className="col-md-4 col-lg-3 pad8">
-              <Link to="/edit-talent-profile">
+              <Link to="/edit-talent">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
                     <i className="bi bi-person icons home-card-icons"></i>

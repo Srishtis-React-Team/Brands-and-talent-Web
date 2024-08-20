@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/forms/login.css";
+import "../assets/css/dashboard.css";
+import "../assets/css/register.css";
 import Select from "react-select";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
@@ -826,12 +829,12 @@ const KidsformOne = () => {
           <div className="dialog-body">
             <div className="kidsform-one container">
               <div className="kids-wrapper row">
-                <div className="kids-img col-md-4 col-lg-3">
+                <div className="kids-img col-md-4 col-lg-3 col-xl-3">
                   <div className="fixImgs">
                     <img src={kidsImage} alt="" className="kids-image-sticky" />
                   </div>
                 </div>
-                <div className="kids-form col-md-8 col-lg-9">
+                <div className="kids-form col-md-8 col-lg-9 col-xl-9">
                   <div className="kids-title">
                     Welcome to Kids & Teen Talent ( 4-17 years ) Registration
                     Form
@@ -1153,7 +1156,7 @@ const KidsformOne = () => {
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-12 mb-3">
                           <label className="form-label pay-info">
-                            Profession / Skills (Choose any 5)
+                            Profession / Skills (Choose any 1 to 5)
                             <span className="mandatory">*</span>
                           </label>
                           <div>
@@ -1235,6 +1238,86 @@ const KidsformOne = () => {
                                 min="0"
                               ></input>
                             </div>
+
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label}
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input"
+                                value={profession.perMonthSalary || ""}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perMonthSalary",
+                                      value
+                                    );
+                                  }
+                                }}
+                                placeholder="$/month"
+                                min="0"
+                              ></input>
+                            </div>
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label}
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input"
+                                value={profession.perPostSalary || ""}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perPostSalary",
+                                      value
+                                    );
+                                  }
+                                }}
+                                placeholder="$/post"
+                                min="0"
+                              ></input>
+                            </div>
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label}
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input"
+                                value={profession.perImageSalary || ""}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perImageSalary",
+                                      value
+                                    );
+                                  }
+                                }}
+                                placeholder="$/image"
+                                min="0"
+                              ></input>
+                            </div>
+
                             <div className="offer-wrapper">
                               <input
                                 className="profession-checkbox"
@@ -1255,14 +1338,14 @@ const KidsformOne = () => {
                               >
                                 Negotiable
                               </label>
-                            </div>
-                            <div>
-                              <i
-                                onClick={(e) => {
-                                  deleteProfession(profession, index);
-                                }}
-                                className="bi bi-trash"
-                              ></i>
+                              <div>
+                                <i
+                                  onClick={(e) => {
+                                    deleteProfession(profession, index);
+                                  }}
+                                  className="bi bi-trash"
+                                ></i>
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -1540,7 +1623,7 @@ const KidsformOne = () => {
                         </label>
                         <input
                           type="number"
-                          className="form-control"
+                          className="form-control projects-completed"
                           value={completedJobs}
                           onChange={(e) => {
                             const value = e.target.value;

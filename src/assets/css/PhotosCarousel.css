@@ -1,1 +1,86 @@
-.talent-photos-section{width:100%}.talents-profile-slider-image{border-top-right-radius:8px;border-top-left-radius:8px}.photos-carousel-owl.owl-theme .owl-nav{display:none}.brand-home-main .photos-slider .item{height:auto;min-height:316px;width:100%}.photos-slider .item{height:316px;overflow:hidden;position:relative}.photos-slider .item .talents-profile-slider-image{cursor:pointer;width:316px!important;height:316px!important}.owl-item{width:316px!important}.carousel-talent-name{color:#000;font-size:14px;font-style:normal;font-weight:600;line-height:normal;background-color:#fff;border-bottom-right-radius:8px;border-bottom-left-radius:8px;padding:8px 16px;cursor:pointer;min-height:50px;display:flex;align-items:center}.heart-icon{width:24px!important;height:24px!important}@media only screen and (min-width:320px) and (max-width:768px){.talents-profile-slider-image{}}.talents-profile-slider-image{width:100%;height:auto;cursor:pointer}.item{display:inline-block;margin:10px}
+.talent-photos-section {
+  width: 100%;
+}
+
+.talents-profile-slider-image {
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.photos-carousel-owl {
+  /* height: 300px !important; */
+}
+.photos-carousel-owl.owl-theme .owl-dots {
+  /* display: none;  */
+}
+.photos-carousel-owl.owl-theme .owl-nav {
+  display: none; /* Hide the dots */
+}
+.brand-home-main .photos-slider .item {
+  height: auto;
+  min-height: 316px;
+  width: 100%;
+}
+.photos-slider .item {
+  height: 316px;
+  overflow: hidden;
+  position: relative;
+}
+.photos-slider .item .talents-profile-slider-image {
+  /* min-height: 230px; */
+  /* width: 100%; */
+  /* object-fit: cover; */
+  cursor: pointer;
+  width: 316px !important;
+  height: 316px !important;
+}
+
+.owl-item {
+  width: 316px !important;
+}
+
+.carousel-talent-name {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  background-color: #ffffff;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.heart-icon {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  .talents-profile-slider-image {
+    /* width: 140px !important;
+      margin-right: 20px !important; */
+  }
+}
+
+.talents-profile-slider-image {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+.item {
+  display: inline-block;
+  margin: 10px;
+}
+
+.owl-carousel .owl-stage {
+  position: relative;
+  touch-action: manipulation;
+  -moz-backface-visibility: hidden;
+  display: flex !important;
+}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/dashboard.css";
+import "../../assets/css/forms/kidsform-one.css";
 import "../../assets/css/register.css";
+import "../../assets/css/talent-dashboard.css";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { API } from "../../config/api";

@@ -313,7 +313,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -326,7 +330,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -351,7 +359,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -372,7 +384,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -385,7 +401,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -398,7 +418,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -411,7 +435,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -424,7 +452,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -437,7 +469,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -450,7 +486,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -476,7 +516,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -489,7 +533,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -502,7 +550,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -515,7 +567,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -528,7 +584,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -541,7 +601,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -554,7 +618,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -567,7 +635,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -580,7 +652,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -592,7 +668,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -604,7 +684,11 @@ const Header = ({ onData }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          navigate("/login");
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
         }, 1000);
       } else {
         navigate(route);
@@ -1057,12 +1141,12 @@ const Header = ({ onData }) => {
                 </div>
               )}
 
-              {!currentUserId && (
+              {/* {!currentUserId && (
                 <div className="signup" onClick={() => handleClick("post-job")}>
                   Sign up for free
                 </div>
-              )}
-              {/* {!currentUserId && (
+              )} */}
+              {!currentUserId && (
                 <div
                   className="signup"
                   data-bs-toggle="modal"
@@ -1070,7 +1154,7 @@ const Header = ({ onData }) => {
                 >
                   Sign up for free
                 </div>
-              )} */}
+              )}
 
               {/* <div className="gridLogo">
                 <img src={gridLogo} alt="" /> 

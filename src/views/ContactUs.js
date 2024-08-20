@@ -55,31 +55,42 @@ const ContactUs = () => {
     if (!email) setEmailError(true);
     if (!enquiry) setEnquiryError(true);
     if (!subject) setSubjectError(true);
-
-    const formData = { name, phoneNo: mobile, enquiry, email, subject };
-    setIsLoading(true);
-    try {
-      const resData = await ApiHelper.post(`${API.postSupportMail}`, formData);
-      if (resData.data.status) {
+    if (name && email && enquiry && subject) {
+      const formData = { name, phoneNo: mobile, enquiry, email, subject };
+      setIsLoading(true);
+      try {
+        const resData = await ApiHelper.post(
+          `${API.postSupportMail}`,
+          formData
+        );
+        if (resData.data.status) {
+          setIsLoading(false);
+          setMessage("Contact Form Submitted Successfully");
+          setOpenPopUp(true);
+          setTimeout(() => {
+            setOpenPopUp(false);
+            setName("");
+            setEmail("");
+            setMobile("");
+            setEnquiry("");
+            setSubject("");
+          }, 2000);
+        } else {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(() => setOpenPopUp(false), 2000);
+        }
+      } catch (err) {
         setIsLoading(false);
-        setMessage("Contact Form Submitted Successfully");
-        setOpenPopUp(true);
-        setTimeout(() => {
-          setOpenPopUp(false);
-          setName("");
-          setEmail("");
-          setMobile("");
-          setEnquiry("");
-        }, 2000);
-      } else {
-        setIsLoading(false);
-        setMessage(resData.data.message);
-        setOpenPopUp(true);
-        setTimeout(() => setOpenPopUp(false), 2000);
+        // Handle error
       }
-    } catch (err) {
-      setIsLoading(false);
-      // Handle error
+    } else {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
     }
   };
 
@@ -245,7 +256,6 @@ const ContactUs = () => {
                   className="edit-profileimg-btn"
                   variant="text"
                   style={{ textTransform: "capitalize" }}
-                  disabled={!name || !enquiry || !email}
                 >
                   Submit
                 </Button>
