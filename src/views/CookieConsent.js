@@ -32,7 +32,7 @@ const CookieConsent = () => {
       </p>
       <div style={styles.buttonsContainer}>
         <button onClick={handleAllowAllCookies} style={styles.buttonAllow}>Allow All Cookies</button>
-        {/* <button onClick={handleDecline} style={styles.buttonDecline}>Decline</button> */}
+        <button onClick={handleDecline} style={styles.buttonDecline}>Decline</button>
       </div>
     </div>
   );
