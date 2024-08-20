@@ -7,6 +7,7 @@ import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 import PopUp from "../components/PopUp";
 import { generateToken } from "../auth/firebase";
+import "../assets/css/register.css";
 
 const AdultSignup = () => {
   useEffect(() => {

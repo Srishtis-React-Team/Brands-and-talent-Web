@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsform-one.css";
 import Select from "react-select";
+import "../assets/css/register.css";
+
 import Axios from "axios";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
@@ -11,8 +13,8 @@ import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import TalentHeader from "../layout/TalentHeader"; 
-import TalentSideMenu from "../layout/TalentSideMenu"; 
+import TalentHeader from "../layout/TalentHeader";
+import TalentSideMenu from "../layout/TalentSideMenu";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -284,7 +286,6 @@ const EditTalent = () => {
     "Persian",
     "Other",
   ];
-
 
   const customStylesProfession = {
     control: (provided, state) => ({
@@ -2081,7 +2082,7 @@ const EditTalent = () => {
                       aria-label="Default select example"
                       onChange={selectGender}
                       style={{ fontSize: "14px" }}
-                      value={gender} 
+                      value={gender}
                     >
                       <option value="" disabled selected>
                         Select Gender

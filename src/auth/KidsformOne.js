@@ -15,6 +15,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import useFieldDatas from "../config/useFieldDatas";
 import { Tooltip } from "react-tooltip";
+import {
+  parsePhoneNumber,
+  isValidPhoneNumber,
+  getNumberType,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
 
 const KidsformOne = () => {
   const {
@@ -51,6 +57,8 @@ const KidsformOne = () => {
   const [parentEmailError, setparentEmailError] = useState(false);
   const [completedError, setJobsCompletedError] = useState(false);
   const [talentPasswordError, settalentPasswordError] = useState(false);
+  const [mobileValidationError, setMobileValidationError] = useState(false);
+
   const [talentConfirmPasswordError, settalentConfirmPasswordError] =
     useState(false);
   const [kidsLegalFirstNameError, setkidsLegalFirstNameError] = useState(false);
@@ -433,14 +441,16 @@ const KidsformOne = () => {
       country !== "" &&
       address !== "" &&
       selectedProfessions.length !== 0 &&
-      selectedCategories.length !== 0 &&
+      selectedCategories.length >= 3 &&
+      selectedCategories.length <= 6 &&
       kidsPreferedFirstName !== "" &&
       nationality !== "" &&
       ethnicity !== "" &&
       languages.length !== 0 &&
       dateOfBirth !== "" &&
       passwordMatch === true &&
-      completedJobs !== ""
+      completedJobs !== "" &&
+      !mobileValidationError
     ) {
       const formData = {
         parentFirstName: parentFirstName,
@@ -685,6 +695,18 @@ const KidsformOne = () => {
   const handleMobileChange = (value, countryData) => {
     setParentMobile(value);
     setParentMobileError(false);
+
+    isValidPhoneNumber(value);
+    console.log(value, "isValidPhoneNumber");
+    if (isValidPhoneNumber(value)) {
+      console.log(true, "isValidPhoneNumber");
+
+      setMobileValidationError(false);
+      setParentMobile(value);
+    } else {
+      setMobileValidationError(true);
+      console.log(false, "isValidPhoneNumber");
+    }
   };
 
   let line = document.querySelector(".line");
@@ -1110,6 +1132,12 @@ const KidsformOne = () => {
                           onChange={handleMobileChange}
                         />
 
+                        {mobileValidationError && (
+                          <div className="invalid-fields">
+                            Please enter correct Mobile Number
+                          </div>
+                        )}
+
                         {parentMobileError && (
                           <div className="invalid-fields">
                             Please enter Mobile Number
@@ -1131,8 +1159,8 @@ const KidsformOne = () => {
                           Address<span className="mandatory">*</span>
                         </label>
                         <textarea
-                          style={{ width: "100%" }}
-                          className="form-control address-textarea"
+                          style={{ width: "100%", height: "150px !important" }}
+                          className="address-textarea"
                           id="exampleFormControlTextarea1"
                           value={address}
                           rows="3"
@@ -1651,7 +1679,7 @@ const KidsformOne = () => {
                     </div>
                     <div className="kids-signup-terms-linetwo mb-5">
                       <span onClick={() => handleCondition("terms")}>
-                        Terms & Conditions
+                        Brdands & Talent (BT) Terms & Conditions
                       </span>{" "}
                       ,&nbsp;
                       <span onClick={() => handleCondition("privacy")}>

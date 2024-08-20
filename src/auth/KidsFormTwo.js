@@ -9,6 +9,7 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
+import "../assets/css/register.css";
 
 const KidsFormTwo = () => {
   const navigate = useNavigate();

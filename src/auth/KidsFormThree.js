@@ -3,6 +3,7 @@ import "../assets/css/forms/kidsformthree.css";
 import "../assets/css/forms/kidsform-one.css";
 import "../assets/css/register.css";
 import "../assets/css/dashboard.css";
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
 import Axios from "axios";
@@ -14,6 +15,24 @@ import CurrentUser from "../../src/CurrentUser";
 import RichTextEditor from "../views/RichTextEditor";
 import CreatableSelect from "react-select/creatable";
 import useFieldDatas from "../config/useFieldDatas";
+
+// Regular expressions for different video platforms
+const urlPatterns = {
+  youtube:
+    /^.*(youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([^"&?\/\s]{11})/,
+  vimeo: /^.*(vimeo\.com\/)(\d+)$/,
+  instagram: /^.*(instagram\.com\/p\/[^/?#&]+)\/?$/,
+  twitter: /^.*(twitter\.com\/.*\/status\/\d+)\/?$/,
+};
+
+const isValidUrl = (url) => {
+  return (
+    urlPatterns.youtube.test(url) ||
+    urlPatterns.vimeo.test(url) ||
+    urlPatterns.instagram.test(url) ||
+    urlPatterns.twitter.test(url)
+  );
+};
 
 const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const { featuresList } = useFieldDatas();
@@ -71,6 +90,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [tiktoksFollowers, setTiktoksFollowers] = useState("");
   const [youtubesFollowers, setYoutubesFollowers] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
+  const [checkVideoUrl, setCheckVideoUrl] = useState(false);
   const [urls, setUrls] = useState([]);
 
   const [idType, setIdType] = useState("");
@@ -161,16 +181,23 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     e.preventDefault();
   };
 
-  const handleUrlChange = (e) => {
-    setVideoUrl(e.target.value);
-  };
-
   const handleAddUrl = () => {
     if (videoUrl.trim() !== "") {
-      setUrls([...urls, videoUrl]);
-
-      setVideoUrl("");
+      if (isValidUrl(videoUrl)) {
+        setUrls([...urls, videoUrl]);
+        setVideoUrl("");
+        setCheckVideoUrl(false);
+      } else {
+        setCheckVideoUrl(true);
+      }
     }
+  };
+
+  const handleUrlChange = (e) => {
+    const url = e.target.value;
+    setVideoUrl(url);
+    // Validate URL in real-time
+    setCheckVideoUrl(!isValidUrl(url));
   };
 
   const handlePaste = (e) => {
@@ -178,6 +205,8 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       "text"
     );
     setVideoUrl(pastedText);
+    // Validate pasted URL
+    setCheckVideoUrl(!isValidUrl(pastedText));
   };
 
   const handleDeleteUrl = (index) => {
@@ -837,6 +866,14 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                           onClick={handleAddUrl}
                         ></i>
                       </div>
+                      {checkVideoUrl && (
+                        <>
+                          <div className="invalid-fields">
+                            Invalid video URL. Please enter a valid YouTube,
+                            Vimeo, Instagram, or Twitter URL.
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
 

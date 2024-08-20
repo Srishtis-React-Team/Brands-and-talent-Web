@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../assets/css/register.css";
 
 function SocialCount() {
   const [followers, setFollowers] = useState(0);

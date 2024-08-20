@@ -10,6 +10,7 @@ import "../assets/css/forms/kidsform-one.css";
 import PopUp from "../components/PopUp";
 import { v4 as uuidv4 } from "uuid";
 import RichTextEditor from "../views/RichTextEditor";
+import "../assets/css/register.css";
 
 const KidsServices = () => {
   const btLogo = require("../assets/images/LOGO.png");

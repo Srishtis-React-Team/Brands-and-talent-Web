@@ -6,6 +6,7 @@ import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
 import { useParams } from "react-router-dom";
+import "../assets/css/register.css";
 
 const ResetPassword = () => {
   const btLogo = require("../assets/images/LOGO.png");
@@ -63,91 +64,98 @@ const ResetPassword = () => {
   };
 
   const resetPassword = async (enteredOTP) => {
-    if (passwordMatch) {
-      if (userType == "brand") {
-        const formData = {
-          password: confirmPassword,
-          resetPasswordToken: token,
-        };
-        setIsLoading(true);
+    if (confirmPassword) {
+      if (passwordMatch) {
+        if (userType == "brand") {
+          const formData = {
+            password: confirmPassword,
+            resetPasswordToken: token,
+          };
+          setIsLoading(true);
+          await ApiHelper.post(API.brandsResetPassword, formData)
+            .then((resData) => {
+              if (resData.data.status === true) {
+                setIsLoading(false);
+                setMessage("Password Reset Successfull!");
+                setOpenPopUp(true);
+                setTimeout(function () {
+                  setOpenPopUp(false);
+                  navigate(`/success-password?${paramsValue}`);
+                }, 2000);
+              } else if (resData.data.status === false) {
+                setIsLoading(false);
+                setMessage(resData.data.message);
+                setOpenPopUp(true);
+                setTimeout(function () {
+                  setOpenPopUp(false);
+                }, 1000);
+              }
+            })
+            .catch((err) => {});
+        } else if (userType == "adult") {
+          const formData = {
+            password: confirmPassword,
+            resetPasswordToken: token,
+          };
+          setIsLoading(true);
 
-        await ApiHelper.post(API.brandsResetPassword, formData)
-          .then((resData) => {
-            if (resData.data.status === true) {
-              setIsLoading(false);
-              setMessage("Password Reset Successfull!");
-              setOpenPopUp(true);
-              setTimeout(function () {
-                setOpenPopUp(false);
-                navigate(`/success-password?${paramsValue}`);
-              }, 2000);
-            } else if (resData.data.status === false) {
-              setIsLoading(false);
-              setMessage(resData.data.message);
-              setOpenPopUp(true);
-              setTimeout(function () {
-                setOpenPopUp(false);
-              }, 1000);
-            }
-          })
-          .catch((err) => {});
-      } else if (userType == "adult") {
-        const formData = {
-          password: confirmPassword,
-          resetPasswordToken: token,
-        };
-        setIsLoading(true);
+          await ApiHelper.post(API.adultResetPassword, formData)
+            .then((resData) => {
+              if (resData.data.status === true) {
+                setIsLoading(false);
+                setMessage("Password Reset Successfull!");
+                setOpenPopUp(true);
+                setTimeout(function () {
+                  setOpenPopUp(false);
+                  navigate(`/success-password?${paramsValue}`);
+                }, 2000);
+              } else if (resData.data.status === false) {
+                setIsLoading(false);
+                setMessage(resData.data.message);
+                setOpenPopUp(true);
+                setTimeout(function () {
+                  setOpenPopUp(false);
+                }, 1000);
+              }
+            })
+            .catch((err) => {});
+        } else {
+          const formData = {
+            password: confirmPassword,
+            resetPasswordToken: paramsValue,
+          };
+          setIsLoading(true);
 
-        await ApiHelper.post(API.adultResetPassword, formData)
-          .then((resData) => {
-            if (resData.data.status === true) {
-              setIsLoading(false);
-              setMessage("Password Reset Successfull!");
-              setOpenPopUp(true);
-              setTimeout(function () {
-                setOpenPopUp(false);
-                navigate(`/success-password?${paramsValue}`);
-              }, 2000);
-            } else if (resData.data.status === false) {
-              setIsLoading(false);
-              setMessage(resData.data.message);
-              setOpenPopUp(true);
-              setTimeout(function () {
-                setOpenPopUp(false);
-              }, 1000);
-            }
-          })
-          .catch((err) => {});
+          await ApiHelper.post(API.resetPassword, formData)
+            .then((resData) => {
+              if (resData.data.status === true) {
+                setIsLoading(false);
+                setMessage("Password Reset Successfull!");
+                setOpenPopUp(true);
+                setTimeout(function () {
+                  setOpenPopUp(false);
+                  navigate(`/success-password?${paramsValue}`);
+                }, 2000);
+              } else if (resData.data.status === false) {
+                setIsLoading(false);
+                setMessage(resData.data.message);
+                setOpenPopUp(true);
+                setTimeout(function () {
+                  setOpenPopUp(false);
+                }, 1000);
+              }
+            })
+            .catch((err) => {});
+        }
       } else {
-        const formData = {
-          password: confirmPassword,
-          resetPasswordToken: paramsValue,
-        };
-        setIsLoading(true);
-
-        await ApiHelper.post(API.resetPassword, formData)
-          .then((resData) => {
-            if (resData.data.status === true) {
-              setIsLoading(false);
-              setMessage("Password Reset Successfull!");
-              setOpenPopUp(true);
-              setTimeout(function () {
-                setOpenPopUp(false);
-                navigate(`/success-password?${paramsValue}`);
-              }, 2000);
-            } else if (resData.data.status === false) {
-              setIsLoading(false);
-              setMessage(resData.data.message);
-              setOpenPopUp(true);
-              setTimeout(function () {
-                setOpenPopUp(false);
-              }, 1000);
-            }
-          })
-          .catch((err) => {});
+        setMessage("Password Does not match!");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 2000);
       }
     } else {
-      setMessage("Password Does not match!");
+      setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
