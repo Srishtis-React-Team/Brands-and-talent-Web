@@ -117,17 +117,17 @@
 
 .fixImgs .kids-image-sticky {
   position: fixed;
+  object-fit: cover;
+  width: 280px;
   max-width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  width: 19.5%;
 }
-
-@media only screen and (max-width: 1399px) {
+@media only screen and (max-width: 1400px) {
   .fixImgs .kids-image-sticky {
-    width: 19%;
+    width: 18%;
+    max-width: 100%;
   }
 }
+
 @media only screen and (max-width: 1199px) {
   .kids-form.col-md-8 {
     padding-left: 3%;

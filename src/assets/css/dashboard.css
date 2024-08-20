@@ -145,6 +145,10 @@ body {
   padding: 0 15px;
   font-size: 15px;
 }
+.adult-signup-main .form-group .MuiFormControl-root.form-control{
+  height: 45px !important;
+}
+
 .add-skill-wrapper .MuiInputBase-fullWidth {
   padding: 0;
   height: 45px;
