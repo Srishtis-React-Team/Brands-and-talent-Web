@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/forms/kidsformthree.css";
+import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/pricing.css";
+import "../assets/css/register.css";
+import "../assets/css/dashboard.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
@@ -229,7 +233,7 @@ const KidsFormTwo = () => {
                                   </>
                                 )}
                               </div>
-                              {/* <div
+                              <div
                                 className={
                                   index == 0
                                     ? "choose-btn free-btn"
@@ -242,7 +246,7 @@ const KidsFormTwo = () => {
                                 onClick={() => choosePlan()}
                               >
                                 Choose plan
-                              </div> */}
+                              </div>
                               <div className="include">What's Included</div>
                               <div className="included-things">
                                 {item.data.map((item) => {

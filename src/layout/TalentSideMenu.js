@@ -165,9 +165,9 @@ const TalentSideMenu = ({ myState }) => {
           </Link>
 
           <Link
-            to="/edit-talent-profile"
+            to="/edit-talent"
             className={
-              location.pathname === "/edit-talent-profile"
+              location.pathname === "/edit-talent"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }

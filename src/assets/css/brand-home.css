@@ -1,1 +1,638 @@
-.brand-home-one{background-color:#fff;box-shadow:rgb(0 0 0 / .11) 0 3px 3px;border-radius:10px;padding:20px}.recent-campaigns-wrapper{background-color:#fff;box-shadow:rgb(0 0 0 / .16) 0 1px 4px;border-radius:10px;padding:15px}.home-add-title-wrapper{padding-left:15px}.home-job-add{background-color:#eee;border-radius:16px;padding:20px;cursor:pointer;float:left;margin-right:20px}.home-add-title{color:#685f62;font-size:16px;font-style:normal;font-weight:600;line-height:normal}.home-add-description{color:#000;font-size:14px;font-style:normal;font-weight:400;line-height:normal;padding-top:5px}.my-plan-features.scroll{max-height:145px;overflow-y:auto}.myplan-features-text{color:#000;font-size:14px;font-style:normal;font-weight:500;line-height:normal;padding-left:10px}.btnSpace{justify-content:end;display:inline-grid;align-items:center}.kids-title{font-size:20px;font-weight:500;margin:10px 0}.home-job-start{display:inline-flex;justify-content:center;align-items:center;cursor:pointer;background-color:#000;min-height:40px;color:#fff;font-size:14px;font-style:normal;font-weight:500;line-height:normal;padding:8px 16px;border-radius:25px;width:auto;min-width:130px}.brand-home-title-flex{display:flex;justify-content:space-between;margin:20px 0 0;align-items:center}.view-all-text{color:#685f62;font-size:14px;font-style:normal;font-weight:500;line-height:normal;cursor:pointer}.campaign-features{display:block}.campaigns-content-wrapper.imgSpc{padding-left:0}.campaigns-wrapper-one{border-bottom:1px solid #bab4b4;padding-bottom:20px;width:100%}.campaign-features-wrapper{display:inline-flex;border:.5px solid silver;border-style:dashed;border-radius:8px;padding:10px;align-items:center;margin-right:10px;margin-bottom:5px}.campaign-icons-wrapper{background-color:#fff;border:1px solid #9d9696;border-radius:50%;display:flex;justify-content:center;align-items:center;width:30px;height:30px;margin-right:10px}.campaign-features-title{color:#000;font-size:16px;font-style:normal;font-weight:600;line-height:normal}.campaign-features-count{color:#c2114b;font-size:15px;font-style:normal;font-weight:600;line-height:normal}.campaigns-content-wrapper{padding-left:20px}.campaign-name{color:#c2114b;font-size:18px;font-style:normal;font-weight:600;line-height:normal;padding-left:0}.campaign-description{color:#000;font-size:14px;font-style:normal;font-weight:400;padding:10px 0 20px 0;line-height:normal;max-height:150px;padding-bottom:10px;overflow-y:auto;margin-bottom:20px;line-height:22px;margin-top:5px}.campaign-initial{background-color:#c2114b;width:40px;height:40px;color:#fff;font-size:15px;font-style:normal;font-weight:400;padding:10px 0;line-height:normal;display:flex;justify-content:center;align-items:center;border-radius:50%}.campaign-company-name{color:#000;font-size:14px;font-style:normal;font-weight:500;padding-left:8px;line-height:normal}.my-plan-contents{padding:20px}.my-plan{color:#000;font-size:18px;font-style:normal;font-weight:600;line-height:normal;margin:0 0 10px!important}.campaign-company-wrapper{display:flex;align-items:center}.campaign-company{display:flex;align-items:center;justify-content:space-between;margin-top:15px}.view-campaign{display:flex;justify-content:center;align-items:center;background-color:#000;padding:6px 12px;cursor:pointer;color:#fff;font-size:14px;font-style:normal;font-weight:400;border-radius:25px}.post-work-btn{display:flex;justify-content:center;align-items:center;background-color:green;padding:6px 12px;cursor:pointer;color:#fff;font-size:14px;font-style:normal;font-weight:500;border-radius:4px}.preview-work-btn{display:flex;justify-content:center;align-items:center;background-color:#ffc107;padding:6px 12px;cursor:pointer;color:#000;font-size:14px;font-style:normal;font-weight:500;border-radius:4px}.bi-eye-fill{font-size:14px}.view-campaign-text{color:#fff;font-size:14px;font-style:normal;font-weight:400;padding-left:8px;line-height:normal;cursor:pointer}.post-campaign-text{color:#fff;font-size:14px;font-style:normal;font-weight:500;line-height:normal;cursor:pointer}.post-work-icon{padding-right:8px;font-size:16px}.preview-campaign-text{color:#000;font-size:14px;font-style:normal;font-weight:500;line-height:normal;cursor:pointer}.brand-plan-section{background-color:#fff;box-shadow:rgb(0 0 0 / .24) 0 3px 8px;border-radius:10px;padding:0;margin-top:30px}.brand-plan-section .planImg{width:100%;border-top-right-radius:10px;border-top-left-radius:10px;height:130px;overflow:hidden}.brand-plan-section .planImg .plan-backdrop-image{height:130px;width:100%;-o-object-fit:cover;object-fit:cover}.remvSpace{padding:0!important;background-color:transparent!important;box-shadow:inherit!important}.rowSpc{padding:0 10px}.top-brands-wrapper.col-md-4{padding:0 3px}.contact-section-main{background-color:#fff;box-shadow:rgb(0 0 0 / .24) 0 3px 8px;border-radius:10px;padding:30px}.contact-section-main .contact-wrapper{display:flex;flex-direction:column;align-items:center}.contact-section-main .contact-wrapper .contact-logo{display:flex;justify-content:center;align-items:center;border:1px solid #c2114b;border-radius:50%;padding:25px}.contact-section-main .contact-wrapper .contact-q,.contact-section-main .contact-wrapper .contact-description{color:#000;font-size:20px;font-style:normal;font-weight:600;line-height:normal;padding:15px 0;margin-bottom:0}.contact-section-main .contact-wrapper .contact-description{font-size:14px;font-weight:400;line-height:23px;padding:0}.contact-section-main .top-brands-section .top-brands-title.py-1{font-size:16px;font-weight:700}.contact-section-main .top-brands-section{display:flex;justify-content:space-between;align-items:center}.contact-section-main .top-brands-section .top-brands-title,.contact-section-main .top-brands-section .view-all-brands{color:#000;font-size:20px;font-style:normal;font-weight:600;line-height:normal}.contact-section-main .top-brands-section .view-all-brands{cursor:pointer;color:gray;font-size:17px}.contact-section-main .top-brands-main{display:flex;flex-wrap:wrap}.contact-section-main .top-brands-main .top-brands-wrapper{cursor:pointer}.contact-section-main .top-brands-main .top-brands-wrapper .top-brand-img-wrapper .top-brand-img{width:100%;height:75px;-o-object-fit:cover;object-fit:cover}.contact-section-main .top-brands-main .top-brands-wrapper .top-brands-name{color:#000;font-size:12px;font-style:normal;font-weight:600;line-height:normal;word-break:break-all;text-align:center;padding:3px 0 18px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}.top-brand-img-wrapper{height:75px;border:1px solid #ddd;display:flex;align-items:center}.top-brand-img-wrapper div{font-size:10px;line-height:13px;text-align:center;margin:5px 0;color:rgb(102 102 102 / .4588235294)}.top-brands-section{font-size:16px;font-weight:700}.contact-section-main .top-brands-section .view-all-brands{color:gray;font-size:13px;font-weight:400;margin:5px 0}.myplan-wrapper{display:flex;align-items:center;padding:5px 0}.contact-btn{height:45px;width:100%;background-color:#fff;color:#000;cursor:pointer;font-size:15px;font-style:normal;font-weight:500;line-height:normal;border-radius:25px;display:flex;justify-content:center;align-items:center;margin-top:20px;border:1px solid #bab4b4}.campaign-paid-wrapper{display:flex;justify-content:space-between;padding:0 0 10px 0}.photos-slider .sliderImg{height:200px;width:100%;background-color:#fff;overflow:hidden}.photos-slider .sliderImg .talents-profile-slider-image{min-height:200px;-o-object-fit:cover;object-fit:cover;width:100%;border-radius:0}.owl-carousel .owl-item img{display:block;width:100%}@media (max-width:767px){.top-brands-wrapper.col-md-4{width:25%}}@media (max-width:480px){.top-brands-wrapper.col-md-4{width:33.2%}}@media only screen and (min-width:1025px) and (max-width:1200px){.brand-home-main{display:flex;flex-direction:column}.brand-home-left-container{width:100%}.brand-home-right-container{width:100%;margin-top:20px;display:flex}.brand-plan-section{width:100%;background-color:#fff;box-shadow:rgb(0 0 0 / .24) 0 3px 8px;border-radius:16px;padding:0;margin-left:20px;margin-top:0}}@media only screen and (min-width:320px) and (max-width:768px){.brand-menu-wrapper{margin-top:0px!important;margin-bottom:15px}.talent-profile{display:none}.brand-main-container{padding:20px 15px 15px;background-color:#eee}.sidemenu-active{margin-top:0px!important;margin-bottom:15px}.not-sidebar{display:none}.brand-home-main{display:block;justify-content:space-evenly}.brand-home-left-container{width:100%}.campaign-features{display:flex;justify-content:space-between;flex-wrap:wrap}.brand-content-main{padding:20px;float:left;width:100%;background-color:#fff;border-radius:10px}.brand-home-one{padding:10px}.home-job-add{border-radius:12px;padding:12px}.home-add-title{font-size:14px}.home-add-description{font-size:12px}.home-job-start{padding:8px 16px;border-radius:10px}.brand-home-right-container{width:100%;margin-top:20px}.campaign-company-name{font-size:13px}.campaign-paid-wrapper{display:flex;justify-content:space-between;padding:0 0 10px 0}.campaign-features-wrapper{display:flex;flex:1;margin-bottom:20px}.campaign-icons-wrapper{width:40px;height:40px;margin-right:15px}.campaign-company{display:flex;align-items:center;justify-content:space-between;margin:15px 0 0 0;flex-wrap:wrap}.campaign-company-wrapper{display:flex;align-items:center}}
+.brand-home-one {
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.11) 0px 3px 3px;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.recent-campaigns-wrapper {
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.home-add-title-wrapper {
+  padding-left: 15px;
+}
+
+.home-job-add {
+  background-color: #eeeeee;
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  float: left;
+  margin-right: 20px;
+}
+
+.home-add-title {
+  color: #685f62;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.home-add-description {
+  color: #000000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-top: 5px;
+}
+
+.my-plan-features.scroll {
+  max-height: 145px;
+  overflow-y: auto;
+}
+
+.myplan-features-text {
+  color: #000000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-left: 10px;
+}
+
+.btnSpace {
+  justify-content: end;
+  display: inline-grid;
+  align-items: center;
+}
+
+.kids-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 10px 0;
+}
+
+.home-job-start {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #000000;
+  min-height: 40px;
+  color: #ffffff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 8px 16px;
+  border-radius: 25px;
+  width: auto;
+  min-width: 130px;
+}
+
+.brand-home-title-flex {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px 0;
+  align-items: center;
+}
+
+.view-all-text {
+  color: #685f62;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.campaign-features {
+  display: block;
+}
+
+.campaigns-content-wrapper.imgSpc {
+  padding-left: 0;
+}
+
+.campaigns-wrapper-one {
+  border-bottom: 1px solid #bab4b4;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+.campaign-features-wrapper {
+  display: inline-flex;
+  border: 0.5px solid silver;
+  border-style: dashed;
+  border-radius: 8px;
+  padding: 10px;
+  align-items: center;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.campaign-icons-wrapper {
+  background-color: #ffffff;
+  border: 1px solid #9d9696;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.campaign-features-title {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.campaign-features-count {
+  color: #c2114b;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.campaigns-content-wrapper {
+  padding-left: 20px;
+}
+
+.campaign-name {
+  color: #c2114b;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding-left: 0px;
+}
+
+.campaign-description {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 10px 0px 20px 0px;
+  line-height: normal;
+  max-height: 150px;
+  padding-bottom: 10px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  line-height: 22px;
+  margin-top: 5px;
+}
+
+.campaign-initial {
+  background-color: #c2114b;
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 10px 0px;
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.campaign-company-name {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  padding-left: 8px;
+  line-height: normal;
+}
+
+.my-plan-contents {
+  padding: 20px;
+}
+
+.my-plan {
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0 0 10px !important;
+}
+
+.campaign-company-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.campaign-company {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.view-campaign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  border-radius: 25px;
+}
+
+.post-work-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.preview-work-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffc107;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.bi-eye-fill {
+  font-size: 14px;
+}
+
+.view-campaign-text {
+  color: #ffffff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  padding-left: 8px;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.post-campaign-text {
+  color: #ffffff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.post-work-icon {
+  padding-right: 8px;
+  font-size: 16px;
+}
+
+.preview-campaign-text {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.brand-plan-section {
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 0px;
+  margin-top: 30px;
+}
+
+.brand-plan-section .planImg {
+  width: 100%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  height: 130px;
+  overflow: hidden;
+}
+
+.brand-plan-section .planImg .plan-backdrop-image {
+  height: 130px;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.remvSpace {
+  padding: 0 !important;
+  background-color: transparent !important;
+  box-shadow: inherit !important;
+}
+
+.rowSpc {
+  padding: 0 10px;
+}
+
+.top-brands-wrapper.col-md-4 {
+  padding: 0 3px;
+}
+
+.contact-section-main {
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 30px;
+}
+.contact-section-main .contact-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contact-section-main .contact-wrapper .contact-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #c2114b;
+  border-radius: 50%;
+  padding: 25px;
+}
+.contact-section-main .contact-wrapper .contact-q,
+.contact-section-main .contact-wrapper .contact-description {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 15px 0px;
+  margin-bottom: 0px;
+}
+.contact-section-main .contact-wrapper .contact-description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 23px;
+  padding: 0;
+}
+.contact-section-main .top-brands-section .top-brands-title.py-1 {
+  font-size: 16px;
+  font-weight: 700;
+}
+.contact-section-main .top-brands-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.contact-section-main .top-brands-section .top-brands-title,
+.contact-section-main .top-brands-section .view-all-brands {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.contact-section-main .top-brands-section .view-all-brands {
+  cursor: pointer;
+  color: gray;
+  font-size: 17px;
+}
+.contact-section-main .top-brands-main {
+  display: flex;
+  flex-wrap: wrap;
+}
+.contact-section-main .top-brands-main .top-brands-wrapper {
+  cursor: pointer;
+}
+.contact-section-main
+  .top-brands-main
+  .top-brands-wrapper
+  .top-brand-img-wrapper
+  .top-brand-img {
+  width: 100%;
+  height: 75px;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+.contact-section-main .top-brands-main .top-brands-wrapper .top-brands-name {
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  word-break: break-all;
+  text-align: center;
+  padding: 3px 0 18px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.top-brand-img-wrapper {
+  height: 75px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+}
+
+.top-brand-img-wrapper div {
+  font-size: 10px;
+  line-height: 13px;
+  text-align: center;
+  margin: 5px 0;
+  color: rgba(102, 102, 102, 0.4588235294);
+}
+
+.top-brands-section {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.contact-section-main .top-brands-section .view-all-brands {
+  color: gray;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 5px 0;
+}
+
+.myplan-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 5px 0px;
+}
+
+.contact-btn {
+  height: 45px;
+  width: 100%;
+  background-color: #ffffff;
+  color: #000;
+  cursor: pointer;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border: 1px solid #bab4b4;
+}
+
+.campaign-paid-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 0px 10px 0px;
+}
+
+.photos-slider .sliderImg {
+  height: 200px;
+  width: 100%;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.photos-slider .sliderImg .talents-profile-slider-image {
+  min-height: 200px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 0;
+}
+
+.owl-carousel .owl-item img {
+  display: block;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .top-brands-wrapper.col-md-4 {
+    width: 25%;
+  }
+}
+@media (max-width: 480px) {
+  .top-brands-wrapper.col-md-4 {
+    width: 33.2%;
+  }
+}
+@media only screen and (min-width: 1025px) and (max-width: 1200px) {
+  .brand-home-main {
+    display: flex;
+    flex-direction: column;
+  }
+  .brand-home-left-container {
+    width: 100%;
+  }
+  .brand-home-right-container {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+  }
+  .brand-plan-section {
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 16px;
+    padding: 0px;
+    margin-left: 20px;
+    margin-top: 0px;
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  .brand-menu-wrapper {
+    margin-top: 0px !important;
+    margin-bottom: 15px;
+  }
+  .talent-profile {
+    display: none;
+  }
+  .brand-main-container {
+    padding: 20px 15px 15px;
+    background-color: #eeeeee;
+  }
+  .sidemenu-active {
+    margin-top: 0px !important;
+    margin-bottom: 15px;
+  }
+  .not-sidebar {
+    display: none;
+  }
+  .brand-home-main {
+    display: block;
+    justify-content: space-evenly;
+  }
+  .brand-home-left-container {
+    width: 100%;
+  }
+  .campaign-features {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .brand-content-main {
+    padding: 20px;
+    float: left;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+  }
+  .brand-home-one {
+    padding: 10px;
+  }
+  .home-job-add {
+    border-radius: 12px;
+    padding: 12px;
+  }
+  .home-add-title {
+    font-size: 14px;
+  }
+  .home-add-description {
+    font-size: 12px;
+  }
+  .home-job-start {
+    padding: 8px 16px;
+    border-radius: 10px;
+  }
+  .brand-home-right-container {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .campaign-company-name {
+    font-size: 13px;
+  }
+  .campaign-paid-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px 10px 0px;
+  }
+  .campaign-features-wrapper {
+    display: flex;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+  .campaign-icons-wrapper {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+  }
+  .campaign-company {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0px 0px 0px;
+    flex-wrap: wrap;
+  }
+  .campaign-company-wrapper {
+    display: flex;
+    align-items: center;
+  }
+} /*# sourceMappingURL=brand-home.css.map */

@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client"; // Import from 'react-dom/client'
 import { BrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { StyledEngineProvider } from "@mui/material";
@@ -13,15 +13,26 @@ import "./index.css";
 
 // basename=""
 
-ReactDOM.render(
+// ReactDOM.render(
+//   <BrowserRouter>
+//     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
+//       <StyledEngineProvider injectFirst>
+//         <App />
+//       </StyledEngineProvider>
+//     </GoogleOAuthProvider>
+//   </BrowserRouter>,
+//   document.getElementById("root")
+// );
+
+const root = ReactDOM.createRoot(document.getElementById("root")); // Create a root
+root.render(
   <BrowserRouter>
     <GoogleOAuthProvider clientId="301564582988-fei7hvri7467l3jkru3ggn7f7tvohg0j.apps.googleusercontent.com">
       <StyledEngineProvider injectFirst>
         <App />
       </StyledEngineProvider>
     </GoogleOAuthProvider>
-  </BrowserRouter>,
-  document.getElementById("root")
+  </BrowserRouter>
 );
 
 reportWebVitals();

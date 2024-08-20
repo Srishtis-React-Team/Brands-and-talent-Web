@@ -348,7 +348,7 @@ const BrandDetails = () => {
                   <div className="form-group">
                     <input
                       type="text"
-                      className="form-control adult-signup-inputs"
+                      className="form-control adult-signup-inputs adult-name-input"
                       placeholder="Enter your company name or your name if you’re an individual client"
                       onChange={(e) => {
                         handleBrandName(e);

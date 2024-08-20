@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/forms/kidsform-one.css";
+import "../../assets/css/kidsmain.scss";
+import "../../assets/css/brand-dashboard.css";
 import Select from "react-select";
 import Axios from "axios";
 import { API } from "../../config/api";
