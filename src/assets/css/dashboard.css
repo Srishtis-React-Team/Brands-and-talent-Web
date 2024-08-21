@@ -1030,7 +1030,7 @@ input[type="radio"] {
   text-decoration: none;
 }
 .dialog-body.spaceTops {
-  padding: 25px 0;
+  padding: 65px 0 25px;
   margin-bottom: 60px;
 }
 .adult-form-wrapper.ml-0.mr-0 {
@@ -3650,7 +3650,10 @@ li.nav-item.dropdown {
 input::placeholder {
   font-size: 13px !important;
 }
-
+.kids-form-section .form-group .MuiFormControl-root.form-control .MuiInputBase-input, .adult-signup-main .form-group .MuiFormControl-root.form-control .MuiInputBase-{
+  padding-left: 0;
+  padding-right: 0;
+}
 .rdw-editor-wrapper {
   border: 1px solid #d3d3d3;
   border-radius: 2px;
@@ -3658,4 +3661,9 @@ input::placeholder {
 
 .adult-signup-main .form-group .MuiFormControl-root.form-control {
   height: 45px !important;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.adult-signup-main .form-group .css-1eed5fa-MuiInputBase-root-MuiInput-root::before {
+  border-bottom: 0;
 }

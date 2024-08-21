@@ -272,7 +272,7 @@
   pointer-events: none;
   color: #aaa;
   height: 100%;
-  line-height: 48px;
+  line-height: 44px;
 }
 .adult-signup-main {
   width: 40%;
@@ -292,14 +292,14 @@
 }
 .show-password-icon {
   position: absolute;
-  top: 18px;
+  top: 15px;
   right: 10px;
   color: #aaa;
   cursor: pointer;
 }
 .show-confirm-password-icon {
   position: absolute;
-  top: 18px;
+  top: 15px;
   right: 10px;
   color: #aaa;
   cursor: pointer;
