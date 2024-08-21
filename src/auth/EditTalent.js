@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsform-one.css";
 import Select from "react-select";
 import "../assets/css/register.css";
+import "../assets/css/kidsmain.scss";
+import "../assets/css/createjobs.css";
+import "../assets/css/talent-profile.css";
 
 import Axios from "axios";
 import { API } from "../config/api";
@@ -58,6 +61,24 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
+
+// Regular expressions for different video platforms
+const urlPatterns = {
+  youtube:
+    /^.*(youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([^"&?\/\s]{11})/,
+  vimeo: /^.*(vimeo\.com\/)(\d+)$/,
+  instagram: /^.*(instagram\.com\/p\/[^/?#&]+)\/?$/,
+  twitter: /^.*(twitter\.com\/.*\/status\/\d+)\/?$/,
+};
+
+const isValidUrl = (url) => {
+  return (
+    urlPatterns.youtube.test(url) ||
+    urlPatterns.vimeo.test(url) ||
+    urlPatterns.instagram.test(url) ||
+    urlPatterns.twitter.test(url)
+  );
+};
 
 const EditTalent = () => {
   const {
@@ -194,6 +215,10 @@ const EditTalent = () => {
   const [publicUrl, setPublicUrl] = useState("");
   const [urls, setUrls] = useState([]);
   const [initialUrl, setInitialUrl] = useState("");
+  const [selectedNationalityOptions, setSelectedNationalityOptions] = useState(
+    []
+  );
+  const [checkVideoUrl, setCheckVideoUrl] = useState(false);
 
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
@@ -818,6 +843,7 @@ const EditTalent = () => {
   const [valueTabs, setValueTabs] = React.useState(0);
 
   const handleChange = (event, newValue) => {
+    console.log(newValue, "newValue");
     setValueTabs(newValue);
   };
 
@@ -836,6 +862,9 @@ const EditTalent = () => {
   useEffect(() => {}, [editProfileImage]);
 
   useEffect(() => {}, [features]);
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -1513,6 +1542,8 @@ const EditTalent = () => {
 
   const handleUrlChange = (e) => {
     setVideoUrl(e.target.value);
+    // Validate URL in real-time
+    setCheckVideoUrl(!isValidUrl(e.target.value));
   };
 
   const handleAddUrl = async () => {
@@ -1558,6 +1589,8 @@ const EditTalent = () => {
       "text"
     );
     setVideoUrl(pastedText);
+    // Validate pasted URL
+    setCheckVideoUrl(!isValidUrl(pastedText));
   };
 
   const submitVideoAudios = async () => {
@@ -1771,15 +1804,15 @@ const EditTalent = () => {
                   {...a11yProps(6)}
                   style={{ textTransform: "capitalize" }}
                 />
-                <Tab
+                {/* <Tab
                   label="Reviews"
                   {...a11yProps(7)}
                   style={{ textTransform: "capitalize" }}
-                />
+                /> */}
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
-              <div className="profile-image-edit-section edit-basicdetails-section-main">
+              <div className="profile-image-edit-section edit-basicdetails-section-main mt-5">
                 <div className="profileImg">
                   <img
                     className="profile-image-edit"
@@ -1815,7 +1848,6 @@ const EditTalent = () => {
                 <div className="kids-form-title kids-form-title">
                   <span>Personal Details</span>
                 </div>
-
                 {talentData?.type === "adults" && (
                   <>
                     <div className="row">
@@ -1993,22 +2025,20 @@ const EditTalent = () => {
                     <label className="form-label">
                       Nationality <span className="mandatory">*</span>
                     </label>
-                    <select
-                      className="form-select"
-                      aria-label="Default select example"
-                      onChange={selectNationality}
-                      value={nationality}
-                      style={{ fontSize: "14px" }}
-                    >
-                      <option value="" disabled selected>
-                        Select Nationality
-                      </option>
-                      {nationalitiesList.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
+                    <Select
+                      isMulti
+                      name="colors"
+                      options={nationalitiesList}
+                      valueField="value"
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      onChange={(value) => selectNationality(value)}
+                      styles={customStylesProfession}
+                      value={selectedNationalityOptions}
+                      menuPlacement="auto"
+                      menuPortalTarget={document.body}
+                      menuShouldScrollIntoView={false}
+                    />
                     {nationalityError && (
                       <div className="invalid-fields">
                         Please select Nationality
@@ -2021,18 +2051,6 @@ const EditTalent = () => {
                     <label className="form-label">
                       Date Of Birth <span className="mandatory">*</span>
                     </label>
-
-                    {/* <input
-                            type="date"
-                            className="form-control"
-                            value={dateOfBirth}
-                            onChange={(e) => {
-                              handleDateChange(e);
-                              setDobError(false);
-                            }}
-                            placeholder=""
-                          ></input> */}
-
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         value={dateOfBirth}
@@ -2117,26 +2135,10 @@ const EditTalent = () => {
                       </select>
                     </div>
                   )}
-                  {/* </div>
-
-                <div className="row"> */}
                   <div className="kids-form-section col-md-6 mb-3">
                     <label className="form-label">
                       Mobile No <span className="mandatory">*</span>
                     </label>
-
-                    {/* <input
-                            type="text"
-                            className="form-control"
-                            maxLength="15"
-                            pattern="[0-9]{10}"
-                            value={parentMobile}
-                            onChange={(e) => {
-                              handleMobileChange(e);
-                              setParentMobileError(false);
-                            }}
-                            placeholder=" Mobile No"
-                          ></input> */}
 
                     <MuiPhoneNumber
                       value={parentMobile}
@@ -2437,15 +2439,6 @@ const EditTalent = () => {
                         </Button>
                       )}
                     </div>
-
-                    {/* {preferedNameError && (
-                      <div className="invalid-fields">
-                        Please enter Preferred First Name
-                      </div>
-                    )}
-                    {kidsPrefferedFirstNameLetterError && (
-                      <div className="invalid-fields">Only Letters Allowed</div>
-                    )} */}
                   </div>
                 </div>
 
@@ -2566,6 +2559,98 @@ const EditTalent = () => {
               <div className="update-portfolio-section edit-basicdetails-section-main">
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Video & Audios</div>
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                      {/* <label className="form-label">Videos & Audios</label> */}
+                      <div className="videos-label">
+                        ( Upload your previous work samples videos/audios.)
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <input
+                          type="text"
+                          className="form-control mt-2 ml-3"
+                          value={videoUrl}
+                          onChange={(e) => {
+                            handleUrlChange(e);
+                          }}
+                          onPaste={handlePaste}
+                          placeholder="Paste Videos/Audios Url"
+                        ></input>
+                        <i
+                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
+                          onClick={handleAddUrl}
+                        ></i>
+                      </div>
+                      {checkVideoUrl && (
+                        <>
+                          <div className="invalid-fields">
+                            Invalid video URL. Please enter a valid YouTube,
+                            Vimeo, Instagram, or Twitter URL.
+                          </div>
+                        </>
+                      )}
+
+                      {urls && (
+                        <>
+                          {urls.map((url, index) => {
+                            return (
+                              <>
+                                <div key={index} className="url-file-wrapper">
+                                  <div className="file-section">
+                                    <a
+                                      href={url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="url-fileName"
+                                    >
+                                      {url}
+                                    </a>
+                                  </div>
+                                  <div className="file-options">
+                                    <div className="sucess-tick">
+                                      <img src={greenTickCircle} alt="" />
+                                    </div>
+                                    <div className="option-menu">
+                                      <div className="dropdown">
+                                        <img
+                                          onClick={() =>
+                                            setShowOptions(!showOptions)
+                                          }
+                                          src={elipsis}
+                                          alt=""
+                                          className="dropdown-toggle elipsis-icon"
+                                          type="button"
+                                          id="resumeDropdown"
+                                          data-bs-toggle="dropdown"
+                                          aria-expanded="false"
+                                        />
+                                        <ul
+                                          className="dropdown-menu"
+                                          aria-labelledby="resumeDropdown"
+                                        >
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              onClick={() =>
+                                                handleDeleteUrl(index)
+                                              }
+                                              id="delete"
+                                            >
+                                              Delete
+                                            </a>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })}
+                        </>
+                      )}
+                    </div>
+                  </div>
                   <div className="row">
                     <div className="col-md-6">
                       {talentData?.videoAudioUrls?.length === 0 && (
@@ -2642,90 +2727,6 @@ const EditTalent = () => {
                             </>
                           );
                         })}
-                    </div>
-                  </div>
-
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      {/* <label className="form-label">Videos & Audios</label> */}
-                      <div className="videos-label">
-                        ( Upload your previous work samples videos/audios.)
-                      </div>
-                      <div className="d-flex align-items-center">
-                        <input
-                          type="text"
-                          className="form-control mt-2 ml-3"
-                          value={videoUrl}
-                          onChange={(e) => {
-                            handleUrlChange(e);
-                          }}
-                          onPaste={handlePaste}
-                          placeholder="Paste Videos/Audios Url"
-                        ></input>
-                        <i
-                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
-                          onClick={handleAddUrl}
-                        ></i>
-                      </div>
-                      {urls && (
-                        <>
-                          {urls.map((url, index) => {
-                            return (
-                              <>
-                                <div key={index} className="url-file-wrapper">
-                                  <div className="file-section">
-                                    <a
-                                      href={url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="url-fileName"
-                                    >
-                                      {url}
-                                    </a>
-                                  </div>
-                                  <div className="file-options">
-                                    <div className="sucess-tick">
-                                      <img src={greenTickCircle} alt="" />
-                                    </div>
-                                    <div className="option-menu">
-                                      <div className="dropdown">
-                                        <img
-                                          onClick={() =>
-                                            setShowOptions(!showOptions)
-                                          }
-                                          src={elipsis}
-                                          alt=""
-                                          className="dropdown-toggle elipsis-icon"
-                                          type="button"
-                                          id="resumeDropdown"
-                                          data-bs-toggle="dropdown"
-                                          aria-expanded="false"
-                                        />
-                                        <ul
-                                          className="dropdown-menu"
-                                          aria-labelledby="resumeDropdown"
-                                        >
-                                          <li>
-                                            <a
-                                              className="dropdown-item"
-                                              onClick={() =>
-                                                handleDeleteUrl(index)
-                                              }
-                                              id="delete"
-                                            >
-                                              Delete
-                                            </a>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </>
-                            );
-                          })}
-                        </>
-                      )}
                     </div>
                   </div>
 
@@ -2914,7 +2915,7 @@ const EditTalent = () => {
                                   <span className="mandatory">*</span>
                                 </label>
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control"
                                   placeholder="service amount"
                                   value={eachService.serviceAmount}
@@ -3252,11 +3253,11 @@ const EditTalent = () => {
                 </>
               )}
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={7}>
+            {/* <CustomTabPanel value={valueTabs} index={7}>
               Reviews
-            </CustomTabPanel>
+            </CustomTabPanel> */}
 
-            <div className="edit-profile-navigations">
+            <div className="edit-profile-navigations mt-3 mb-3">
               {valueTabs >= 1 && (
                 <div
                   className="edit-profile-navigation-btn"

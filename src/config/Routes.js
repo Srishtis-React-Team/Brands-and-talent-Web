@@ -248,7 +248,8 @@ function Routing() {
             <Route path="/brand-firstGig" element={<BrandFirstGig />} />
             <Route path="/brand-details" element={<BrandDetails />} />
             <Route path="/brand-logo" element={<BrandLogo />} />
-            <Route path="/contactUs" element={<ContactUs />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/contact-support" element={<ContactSupport />} />
             <Route path="/brand-activated" element={<BrandActivation />} />
             <Route path="/list-jobs" element={<ListJobs />} />
             <Route path="/applied-jobs" element={<AppliedJobs />} />
@@ -262,7 +263,7 @@ function Routing() {
             <Route path="/message" element={<MessageTalents />} />
             <Route path="/preview-job-talent" element={<TalentPreviewJob />} />
             <Route path="/applicants" element={<Applicants />} />
-            <Route path="/edit-talent" element={<EditTalent />} />
+            <Route path="/edit-talent-profile" element={<EditTalent />} />
             <Route path="/edit-brand-profile" element={<EditBrands />} />
             <Route
               path="/talent-notification"

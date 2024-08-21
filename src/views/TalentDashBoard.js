@@ -6,6 +6,7 @@ import TalentHeader from "../layout/TalentHeader.js";
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.css";
+import "../assets/css/brand-home.css";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { styled } from "@mui/system";
 import Button from "@mui/material/Button";
@@ -457,7 +458,7 @@ const TalentDashBoard = () => {
   };
 
   const contactUs = () => {
-    navigate("/contact-us");
+    navigate("/contact-support");
   };
 
   return (

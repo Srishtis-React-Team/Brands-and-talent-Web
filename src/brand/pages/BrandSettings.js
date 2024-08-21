@@ -147,7 +147,7 @@ const BrandSettings = () => {
       })
       .catch((err) => {});
   };
-  const deActivateAccount = async () => {
+  const DeactivateAccount = async () => {
     const formData = {
       brandId: brandId,
       inActive: false,
@@ -541,7 +541,7 @@ const BrandSettings = () => {
                     &nbsp;:&nbsp;
                     <span className="talent-account-status-inactive">
                       {brandData?.inActive === true && "Active Account"}
-                      {brandData?.inActive === false && "DeActivated Account"}
+                      {brandData?.inActive === false && "Deactivated Account"}
                     </span>
                   </div>
                 </div>
@@ -555,7 +555,7 @@ const BrandSettings = () => {
                         status: true,
                         label:
                           brandData?.inActive === true
-                            ? "deActivate"
+                            ? "Deactivate"
                             : "Activate",
                       });
                     }}
@@ -567,7 +567,7 @@ const BrandSettings = () => {
                     variant="text"
                     style={{ textTransform: "capitalize" }}
                   >
-                    {brandData?.inActive === true && "DeActivate"}
+                    {brandData?.inActive === true && "Deactivate"}
                     {brandData?.inActive === false && "Activate"}
                   </Button>
                 </div>
@@ -589,9 +589,9 @@ const BrandSettings = () => {
                   <h5>Are you sure you want to Activate this Account? </h5>
                 </>
               )}
-              {alertpop?.label == "deActivate" && (
+              {alertpop?.label == "Deactivate" && (
                 <>
-                  <h5>Are you sure you want to DeActivate this Account? </h5>
+                  <h5>Are you sure you want to Deactivate this Account? </h5>
                 </>
               )}
             </div>
@@ -622,8 +622,8 @@ const BrandSettings = () => {
                 });
                 if (alertpop?.label === "Activate") {
                   activateAccount();
-                } else if (alertpop?.label === "deActivate") {
-                  deActivateAccount();
+                } else if (alertpop?.label === "Deactivate") {
+                  DeactivateAccount();
                 }
               }}
             >

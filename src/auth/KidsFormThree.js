@@ -3,6 +3,7 @@ import "../assets/css/forms/kidsformthree.css";
 import "../assets/css/forms/kidsform-one.css";
 import "../assets/css/register.css";
 import "../assets/css/dashboard.css";
+import "../assets/css/kidsmain.scss";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
@@ -493,11 +494,36 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     });
   };
 
+  const isValidNewOption = (inputValue) => {
+    return !isNaN(inputValue) && inputValue.trim() !== "";
+  };
+
+  const handleInputChange = (inputValue, actionMeta) => {
+    const numericValue = inputValue.replace(/[^0-9]/g, "");
+    return numericValue;
+  };
+
+  const handleKeyDown = (event) => {
+    const key = event.key;
+    const isNumberKey = /^[0-9]$/.test(key);
+    const isAllowedKey =
+      isNumberKey ||
+      key === "Backspace" ||
+      key === "Delete" ||
+      key === "ArrowLeft" ||
+      key === "ArrowRight" ||
+      key === "Tab";
+
+    if (!isAllowedKey) {
+      event.preventDefault();
+    }
+  };
+
   const handleFeaturesChange = (label, value) => {
+    console.log(label, "label", value, "value", "handleFeaturesChange");
     const updatedValues = [...features];
     const index = updatedValues.findIndex((item) => item.label === label);
     let finalValue = value;
-
     if (
       creatableInputOptions.includes(label) ||
       creatableOptions.includes(label)
@@ -1056,11 +1082,14 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                             <label className="form-label">{item.label}</label>
                             {creatableOptions.includes(item.label) ? (
                               <CreatableSelect
+                                onKeyDown={handleKeyDown}
                                 isClearable
                                 options={item.options.map((option) => ({
                                   value: option,
                                   label: option,
                                 }))}
+                                isValidNewOption={isValidNewOption}
+                                onInputChange={handleInputChange}
                                 onChange={(selectedOption) =>
                                   handleFeaturesChange(
                                     item.label,
@@ -1071,7 +1100,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                               />
                             ) : creatableInputOptions.includes(item.label) ? (
                               <input
-                                type="text"
+                                type="number"
                                 className="form-control features-select"
                                 onChange={(e) => {
                                   const value = e.target.value;
