@@ -28,10 +28,10 @@ const CookieConsent = () => {
   return (
     <div style={styles.popup}>
       <p style={styles.text}>
-        This website uses cookies to enhance the user experience. By continuing to use this site, you consent to our use of cookies.
+      We use cookies to give you the best experience. We respect and protect your privacy.
       </p>
       <div style={styles.buttonsContainer}>
-        <button onClick={handleAllowAllCookies} style={styles.buttonAllow}>Allow All Cookies</button>
+        <button onClick={handleAllowAllCookies} style={styles.buttonAllow}>Accept</button>
         <button onClick={handleDecline} style={styles.buttonDecline}>Decline</button>
       </div>
     </div>
