@@ -370,7 +370,7 @@ const TalentNotification = () => {
                         style={{ textTransform: "capitalize" }}
                       >
                         {talentData?.isSubscribed === false && "Subscribe"}
-                        {talentData?.isSubscribed === true && "UnSubscribe"}
+                        {talentData?.isSubscribed === true && "Unsubscribe"}
                       </Button>
                     </div>
                   </div>

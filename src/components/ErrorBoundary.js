@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, errorMessage: '' };
+    this.state = { hasError: false, errorMessage: "" };
   }
 
   static getDerivedStateFromError(error) {
@@ -21,13 +21,16 @@ class ErrorBoundary extends React.Component {
       // You can render any custom fallback UI
       return (
         <div>
-          <h1>Something went wrong. Please try again later, {this.state.errorMessage}</h1>
+          <h1>
+            Something went wrong. Please try again later,{" "}
+            {this.state.errorMessage}
+          </h1>
           <p>Error: {this.state.errorMessage}</p>
         </div>
       );
     }
 
-    return this.props.children; 
+    return this.props.children;
   }
 }
 

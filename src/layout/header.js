@@ -1268,7 +1268,7 @@ const Header = ({ onData }) => {
               </div>
               <div className="question-model">
                 {talent && "I am a talent/creator/influencer"}
-                {brand && "I am Looking for talent"}
+                {brand && "I am looking for talent"}
               </div>
               <div className="register-modal">
                 <div
