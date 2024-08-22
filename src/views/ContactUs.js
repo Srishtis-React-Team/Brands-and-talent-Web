@@ -180,7 +180,7 @@ const ContactUs = () => {
               <label className="form-label">Mobile Number</label>
               <MuiPhoneNumber
                 defaultCountry={"kh"}
-                className="form-control"
+                className="material-mobile-style"
                 onChange={handleMobileChange}
                 value={mobile}
               />

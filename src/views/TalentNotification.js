@@ -321,7 +321,7 @@ const TalentNotification = () => {
                   </>
                 )}
                 {notificationList?.length == 0 && (
-                  <div>No Notifications Available</div>
+                  <div className="py-2">No Notifications Available</div>
                 )}
               </div>
             </CustomTabPanel>

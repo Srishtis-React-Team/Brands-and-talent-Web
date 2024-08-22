@@ -1021,7 +1021,7 @@ const AdultFormOne = () => {
                         ></input> */}
                       <MuiPhoneNumber
                         defaultCountry={"kh"}
-                        className="form-control"
+                        className="material-mobile-style"
                         onChange={handleMobileChange}
                       />
                       {adultsPhoneError && (

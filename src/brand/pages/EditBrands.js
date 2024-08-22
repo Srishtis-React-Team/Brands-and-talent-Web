@@ -900,7 +900,7 @@ const EditBrands = () => {
                     <MuiPhoneNumber
                       value={brandPhone}
                       defaultCountry={"kh"}
-                      className="form-control"
+                      className="material-mobile-style"
                       onChange={handleMobileChange}
                     />
                     {brandPhoneError && (
