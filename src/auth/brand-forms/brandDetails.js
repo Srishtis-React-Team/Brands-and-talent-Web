@@ -432,7 +432,7 @@ const BrandDetails = () => {
                   <div className="form-group">
                     <MuiPhoneNumber
                       defaultCountry={"kh"}
-                      className="form-control"
+                      className="material-mobile-style"
                       onChange={handleMobileChange}
                     />
 

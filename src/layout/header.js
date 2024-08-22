@@ -741,15 +741,15 @@ const Header = ({ onData }) => {
               Login
             </div>
           )}
-          {!currentUserId && (
+          {/* {!currentUserId && (
             <div
               className="signup mobile-signup"
               onClick={() => handleClick("post-job")}
             >
               Sign up for free
             </div>
-          )}
-          {/* {!currentUserId && (
+          )} */}
+          {!currentUserId && (
             <div
               className="signup mobile-signup"
               data-bs-toggle="modal"
@@ -757,7 +757,7 @@ const Header = ({ onData }) => {
             >
               Sign up for free
             </div>
-          )} */}
+          )}
           <div
             onClick={() => {
               setMenuOpen(!menuOpen);

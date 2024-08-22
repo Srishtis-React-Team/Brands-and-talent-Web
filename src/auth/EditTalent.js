@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/forms/kidsformthree.css";
 import Select from "react-select";
 import "../assets/css/register.css";
 import "../assets/css/kidsmain.scss";
@@ -35,6 +36,7 @@ import { IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Tooltip } from "react-tooltip";
 import useFieldDatas from "../config/useFieldDatas";
+import EditFeatures from "../pages/EditFeatures";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -315,7 +317,7 @@ const EditTalent = () => {
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "55px",
+      minHeight: "45px",
     }),
     menu: (provided, state) => ({
       ...provided,
@@ -533,6 +535,11 @@ const EditTalent = () => {
         }
       })
       .catch((err) => {});
+  };
+
+  const handleEditFeatureChanges = (values) => {
+    setFeatures(values);
+    console.log("Updated Form Values handleEditFeatureChanges:", values);
   };
 
   const handleFeaturesChange = (label, value) => {
@@ -1741,6 +1748,15 @@ const EditTalent = () => {
   };
 
   useEffect(() => {}, [selectedProfessions]);
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+  useEffect(() => {
+    console.log(featuresList, "featuresList");
+  }, [featuresList]);
+  useEffect(() => {
+    console.log(features, "features");
+  }, [features]);
 
   return (
     <>
@@ -1845,7 +1861,7 @@ const EditTalent = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
               <div className="kids-main edit-basicdetails-section-main">
-                <div className="kids-form-title kids-form-title">
+                <div className="kids-form-title kids-form-title mb-3">
                   <span>Personal Details</span>
                 </div>
                 {talentData?.type === "adults" && (
@@ -2143,8 +2159,9 @@ const EditTalent = () => {
                     <MuiPhoneNumber
                       value={parentMobile}
                       defaultCountry={"kh"}
-                      className="form-control"
+                      className="material-mobile-style"
                       onChange={handleMobileChange}
+                      style={{ paddingTop: "7px" }}
                     />
 
                     {parentMobileError && (
@@ -2243,7 +2260,7 @@ const EditTalent = () => {
                       Address<span className="mandatory">*</span>
                     </label>
                     <textarea
-                      className="form-control address-textarea"
+                      className="contact-us-textarea w-100"
                       id="exampleFormControlTextarea1"
                       value={address}
                       rows="3"
@@ -2258,7 +2275,9 @@ const EditTalent = () => {
                   </div>
                 </div>
                 {talentData?.type === "kids" && (
-                  <div className="kids-form-title mb-3">Your Child Details</div>
+                  <div className="kids-form-title mb-3 ">
+                    Your Child Details
+                  </div>
                 )}
                 <div className="profession-section-cover">
                   <div className="row">
@@ -2295,40 +2314,136 @@ const EditTalent = () => {
                       <div key={index} className="dynamic-profession">
                         <div className="mb-3">
                           <label className="form-label">
-                            {profession.label} / day
+                            {profession.label}
                           </label>
                           <input
                             type="number"
                             className="form-control profession-input"
                             value={profession.perDaySalary || ""}
-                            onChange={(e) =>
-                              handleDetailChange(
-                                index,
-                                "perDaySalary",
-                                e.target.value
-                              )
-                            }
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              // Check if the value is a valid number and is non-negative
+                              if (
+                                /^\d*\.?\d*$/.test(value) &&
+                                (value >= 0 || value === "")
+                              ) {
+                                handleDetailChange(
+                                  index,
+                                  "perDaySalary",
+                                  value
+                                );
+                              }
+                            }}
                             placeholder="$/day"
+                            min="0"
                           ></input>
                         </div>
                         <div className="mb-3">
                           <label className="form-label">
-                            {profession.label} / hr
+                            {profession.label}
                           </label>
                           <input
                             type="number"
                             className="form-control profession-input"
                             value={profession.perHourSalary || ""}
-                            onChange={(e) =>
-                              handleDetailChange(
-                                index,
-                                "perHourSalary",
-                                e.target.value
-                              )
-                            }
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              // Check if the value is a valid number and is non-negative
+                              if (
+                                /^\d*\.?\d*$/.test(value) &&
+                                (value >= 0 || value === "")
+                              ) {
+                                handleDetailChange(
+                                  index,
+                                  "perHourSalary",
+                                  value
+                                );
+                              }
+                            }}
                             placeholder="$/hr"
+                            min="0"
                           ></input>
                         </div>
+
+                        <div className="mb-3">
+                          <label className="form-label">
+                            {profession.label}
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control profession-input"
+                            value={profession.perMonthSalary || ""}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              // Check if the value is a valid number and is non-negative
+                              if (
+                                /^\d*\.?\d*$/.test(value) &&
+                                (value >= 0 || value === "")
+                              ) {
+                                handleDetailChange(
+                                  index,
+                                  "perMonthSalary",
+                                  value
+                                );
+                              }
+                            }}
+                            placeholder="$/month"
+                            min="0"
+                          ></input>
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label">
+                            {profession.label}
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control profession-input"
+                            value={profession.perPostSalary || ""}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              // Check if the value is a valid number and is non-negative
+                              if (
+                                /^\d*\.?\d*$/.test(value) &&
+                                (value >= 0 || value === "")
+                              ) {
+                                handleDetailChange(
+                                  index,
+                                  "perPostSalary",
+                                  value
+                                );
+                              }
+                            }}
+                            placeholder="$/post"
+                            min="0"
+                          ></input>
+                        </div>
+                        <div className="mb-3">
+                          <label className="form-label">
+                            {profession.label}
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control profession-input"
+                            value={profession.perImageSalary || ""}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              // Check if the value is a valid number and is non-negative
+                              if (
+                                /^\d*\.?\d*$/.test(value) &&
+                                (value >= 0 || value === "")
+                              ) {
+                                handleDetailChange(
+                                  index,
+                                  "perImageSalary",
+                                  value
+                                );
+                              }
+                            }}
+                            placeholder="$/image"
+                            min="0"
+                          ></input>
+                        </div>
+
                         <div className="offer-wrapper">
                           <input
                             className="profession-checkbox"
@@ -2349,14 +2464,14 @@ const EditTalent = () => {
                           >
                             Negotiable
                           </label>
-                        </div>
-                        <div>
-                          <i
-                            onClick={(e) => {
-                              deleteProfession(profession, index);
-                            }}
-                            className="bi bi-trash"
-                          ></i>
+                          <div>
+                            <i
+                              onClick={(e) => {
+                                deleteProfession(profession, index);
+                              }}
+                              className="bi bi-trash"
+                            ></i>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -2721,8 +2836,6 @@ const EditTalent = () => {
                                     </div>
                                   </div>
                                 </div>
-
-                                <div className="update-portfolio-action"></div>
                               </div>
                             </>
                           );
@@ -2834,7 +2947,6 @@ const EditTalent = () => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="update-portfolio-action"></div>
                             </div>
                           </div>
                         </>
@@ -2915,6 +3027,7 @@ const EditTalent = () => {
                                   <span className="mandatory">*</span>
                                 </label>
                                 <input
+                                  min="0"
                                   type="number"
                                   className="form-control"
                                   placeholder="service amount"
@@ -2935,34 +3048,6 @@ const EditTalent = () => {
                                   Features
                                   <span className="mandatory">*</span>
                                 </label>
-                                {/* 
-                                  <Editor
-                                    editorStyle={{
-                                      overflow: "hidden",
-                                    }}
-                                    editorState={eachService?.editorState}
-                                    onEditorStateChange={(editorState) =>
-                                      handleEditorChange(
-                                        servicesIndex,
-                                        editorState
-                                      )
-                                    }
-                                    toolbar={{
-                                      options: [
-                                        "inline",
-                                        "blockType",
-                                        "fontSize",
-                                        "list",
-                                        "textAlign",
-                                        "history",
-                                      ],
-                                      inline: { inDropdown: true },
-                                      list: { inDropdown: true },
-                                      textAlign: { inDropdown: true },
-                                      link: { inDropdown: true },
-                                      history: { inDropdown: true },
-                                    }}
-                                  /> */}
                                 <RichTextEditor
                                   value={eachService?.editorState}
                                   onChange={(editorState) =>
@@ -3019,50 +3104,49 @@ const EditTalent = () => {
                                               <div className="update-portfolio-fileName">
                                                 {item.title}
                                               </div>
-                                              <div className="update-portfolio-action">
-                                                <i
-                                                  className="bi bi-three-dots-vertical"
-                                                  type="button"
-                                                  id="dropdownMenuButton1"
-                                                  data-bs-toggle="dropdown"
-                                                  aria-expanded="false"
-                                                ></i>
-                                                <ul
-                                                  className="dropdown-menu"
-                                                  aria-labelledby="dropdownMenuButton1"
+
+                                              <div className="ml-2">
+                                                <IconButton
+                                                  aria-label="more"
+                                                  aria-controls="dropdown-menu"
+                                                  aria-haspopup="true"
+                                                  onClick={handleClick}
                                                 >
-                                                  <li>
-                                                    <a
-                                                      className="dropdown-item"
-                                                      onClick={() =>
-                                                        viewUpdateFile(item)
-                                                      }
-                                                    >
-                                                      View
-                                                    </a>
-                                                  </li>
-                                                  <li>
-                                                    <a
-                                                      className="dropdown-item"
-                                                      onClick={(e) => {
-                                                        setAlertpop({
-                                                          status: true,
-                                                          item: item,
-                                                          label:
-                                                            "delete-service",
-                                                          eachService:
-                                                            eachService,
-                                                        });
-                                                      }}
-                                                    >
-                                                      Delete
-                                                    </a>
-                                                  </li>
-                                                </ul>
+                                                  <MoreVertIcon />
+                                                </IconButton>
+                                                <Menu
+                                                  id="dropdown-menu"
+                                                  anchorEl={anchorEl}
+                                                  open={Boolean(anchorEl)}
+                                                  onClose={handleClose}
+                                                >
+                                                  <MenuItem
+                                                    onClick={() => {
+                                                      handleClose();
+                                                      viewUpdateFile(item);
+                                                    }}
+                                                  >
+                                                    View
+                                                  </MenuItem>
+                                                  <MenuItem
+                                                    onClick={(e) => {
+                                                      dropDownClose();
+
+                                                      setAlertpop({
+                                                        status: true,
+                                                        item: item,
+                                                        label: "delete-service",
+                                                        eachService:
+                                                          eachService,
+                                                      });
+                                                    }}
+                                                  >
+                                                    Delete
+                                                  </MenuItem>
+                                                </Menu>
                                               </div>
                                             </div>
                                           </div>
-                                          <div className="update-portfolio-action"></div>
                                         </div>
                                       </>
                                     );
@@ -3122,7 +3206,7 @@ const EditTalent = () => {
             <CustomTabPanel value={valueTabs} index={6}>
               {talentData && talentData?.features?.length > 0 && (
                 <>
-                  <div className="selected-features update-portfolio-cards-wrapper mt-3 mb-5">
+                  {/* <div className="selected-features update-portfolio-cards-wrapper mt-3 mb-5">
                     {features && (
                       <>
                         <div className="table-container">
@@ -3138,9 +3222,9 @@ const EditTalent = () => {
                                           Math.ceil(features?.length / 2)
                                         )
                                         .map((feature, index) => (
-                                          <tr key={feature.label}>
-                                            <td>{feature.label}</td>
-                                            <td>{feature.value}</td>
+                                          <tr key={feature?.label}>
+                                            <td>{feature?.label}</td>
+                                            <td>{feature?.value}</td>
                                           </tr>
                                         ))}
                                     </tbody>
@@ -3152,9 +3236,9 @@ const EditTalent = () => {
                                       {features
                                         ?.slice(Math.ceil(features?.length / 2))
                                         .map((feature, index) => (
-                                          <tr key={feature.label}>
-                                            <td>{feature.label}</td>
-                                            <td>{feature.value}</td>
+                                          <tr key={feature?.label}>
+                                            <td>{feature?.label}</td>
+                                            <td>{feature?.value}</td>
                                           </tr>
                                         ))}
                                     </tbody>
@@ -3166,11 +3250,11 @@ const EditTalent = () => {
                         </div>
                       </>
                     )}
-                  </div>
+                  </div> */}
 
-                  <div className="features-section">
+                  <div className="features-section mt-4">
                     <div className="row">
-                      {featuresList && (
+                      {/* {featuresList && (
                         <>
                           {featuresList.map((item, index) => (
                             <div
@@ -3237,7 +3321,12 @@ const EditTalent = () => {
                             </div>
                           ))}
                         </>
-                      )}
+                      )} */}
+                      <EditFeatures
+                        featuresStructure={featuresList}
+                        featureValues={features}
+                        onValuesChange={handleEditFeatureChanges}
+                      />
                     </div>
                   </div>
                   <div className="add-service-btn-flex">

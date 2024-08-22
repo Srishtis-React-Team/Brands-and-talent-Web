@@ -253,6 +253,7 @@ const KidsformOne = () => {
   };
 
   const chooseCategory = (category) => {
+    console.log(category, "category selectedCategories");
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -269,7 +270,9 @@ const KidsformOne = () => {
         }, 2000);
       }
     }
-    if (selectedCategories.length < 3) {
+    console.log(selectedCategories.length, "selectedCategories");
+
+    if (selectedCategories.length < 4) {
       setCategoryError(true);
     } else {
       setCategoryError(false);
@@ -1128,7 +1131,7 @@ const KidsformOne = () => {
 
                         <MuiPhoneNumber
                           defaultCountry={"kh"}
-                          className="form-control"
+                          className="material-mobile-style"
                           onChange={handleMobileChange}
                         />
 
@@ -1674,19 +1677,15 @@ const KidsformOne = () => {
                       </div>
                     </div>
 
-                    <div className="kids-signup-terms">
-                      By registering you confirm that you accept the 
-                    </div>
-                    <div className="kids-signup-terms-linetwo mb-5">
-                      <span onClick={() => handleCondition("terms")}>
-                        Brdands & Talent (BT) Terms & Conditions
-                      </span>{" "}
-                      ,&nbsp;
-                      <span onClick={() => handleCondition("privacy")}>
-                        Privacy Policy
+                    <div className="kids-signup-terms mb-5">
+                      By registering you confirm that you accept the Brands &
+                      Talent (BT){" "}
+                      <span style={{ color: "#c2114b" }}>
+                        Terms & Conditions
                       </span>
-                       and 
-                      <span onClick={() => handleCondition("community")}>
+                      , <span style={{ color: "#c2114b" }}>Privacy Policy</span>{" "}
+                      and{" "}
+                      <span style={{ color: "#c2114b" }}>
                         Community Guidelines
                       </span>
                     </div>

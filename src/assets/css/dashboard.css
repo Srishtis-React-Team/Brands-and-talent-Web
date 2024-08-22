@@ -578,6 +578,7 @@ a:hover {
   width: 100%;
   margin: 0 auto;
   line-height: 23px;
+  text-align: center;
 }
 .kids-signup-terms-linetwo {
   color: #000;
@@ -588,6 +589,7 @@ a:hover {
   width: 100%;
   margin: 0 auto;
   line-height: 20px;
+  text-align: center;
 }
 .kids-signup-terms-linetwo > span {
   color: #c2114b;
@@ -3665,7 +3667,14 @@ li.nav-item.dropdown {
 input::placeholder {
   font-size: 13px !important;
 }
-.kids-form-section .form-group .MuiFormControl-root.form-control .MuiInputBase-input, .adult-signup-main .form-group .MuiFormControl-root.form-control .MuiInputBase-{
+.kids-form-section
+  .form-group
+  .MuiFormControl-root.form-control
+  .MuiInputBase-input,
+.adult-signup-main
+  .form-group
+  .MuiFormControl-root.form-control
+  .MuiInputBase- {
   padding-left: 0;
   padding-right: 0;
 }
@@ -3679,6 +3688,15 @@ input::placeholder {
   padding-top: 0;
   padding-bottom: 0;
 }
-.adult-signup-main .form-group .css-1eed5fa-MuiInputBase-root-MuiInput-root::before {
+.adult-signup-main
+  .form-group
+  .css-1eed5fa-MuiInputBase-root-MuiInput-root::before {
   border-bottom: 0;
+}
+
+.material-mobile-style {
+  border: 1px solid #d3d3d3;
+  border-radius: 3px;
+  height: 45px;
+  padding: 0px 0px 0px 10px;
 }
