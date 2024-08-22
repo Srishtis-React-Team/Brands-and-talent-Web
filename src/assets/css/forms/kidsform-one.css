@@ -306,6 +306,10 @@
   border: none;
 }
 @media (min-width: 320px) and (max-width: 480px) {
+  .kidsform-one .kids-wrapper .kids-form .profession-input {
+    max-width: 145px;
+    margin-right: 15px !important;
+  }
   .MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-colorPrimary.MuiInputBase-formControl.MuiInputBase-adornedStart.css-1eed5fa-MuiInputBase-root-MuiInput-root {
     height: 32px !important;
     align-items: center !important;
@@ -353,6 +357,10 @@
   }
 }
 @media (min-width: 481px) and (max-width: 768px) {
+  .kidsform-one .kids-wrapper .kids-form .profession-input {
+    max-width: 145px;
+    margin-right: 15px !important;
+  }
   .verification-section {
     display: flex;
     flex-direction: column;
@@ -368,6 +376,10 @@
   }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
+  .kidsform-one .kids-wrapper .kids-form .profession-input {
+    max-width: 145px;
+    margin-right: 15px !important;
+  }
   .kids-main {
     width: 100%;
   }
@@ -381,6 +393,10 @@
   }
 }
 @media (min-width: 1025px) and (max-width: 1200px) {
+  .kidsform-one .kids-wrapper .kids-form .profession-input {
+    max-width: 145px;
+    margin-right: 15px !important;
+  }
   .kids-main {
     width: 100%;
   }
@@ -394,6 +410,10 @@
   }
 }
 @media (max-width: 1200px) {
+  .kidsform-one .kids-wrapper .kids-form .profession-input {
+    max-width: 145px;
+    margin-right: 15px !important;
+  }
   .kidsform-one .kids-wrapper {
     margin: 25px 0;
     display: flex;
@@ -660,7 +680,7 @@
 }
 .dynamic-profession {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   max-width: 700px;
 }
@@ -818,6 +838,19 @@
     width: 37%;
     margin-left: 15px;
   }
+  .kidsform-one .kids-wrapper .kids-form .dynamic-profession {
+    justify-content: center;
+    flex-direction: column;
+  }
+  .kidsform-one .kids-wrapper .kids-form .dynamic-profession > .mb-3 {
+    width: 100%;
+    margin-bottom: 0.5rem !important;
+  }
+  .kidsform-one .kids-wrapper .kids-form .profession-input {
+    max-width: 100%;
+    margin-right: 0px !important;
+  }
+
 }
 .add-portfoli-section {
   display: flex;
@@ -1084,4 +1117,11 @@ textarea.contact-us-textarea.w-100 {
 
 .address-textarea {
   height: 140px !important;
+}
+
+.material-mobile-style {
+  border: 1px solid #d3d3d3;
+  border-radius: 3px;
+  height: 45px;
+  padding: 0px 0px 0px 10px;
 }

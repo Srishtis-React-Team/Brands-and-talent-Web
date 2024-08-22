@@ -1090,28 +1090,34 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                 }))}
                                 isValidNewOption={isValidNewOption}
                                 onInputChange={handleInputChange}
-                                onChange={(selectedOption) =>
-                                  handleFeaturesChange(
-                                    item.label,
-                                    selectedOption ? selectedOption.value : ""
-                                  )
-                                }
-                                placeholder={getPlaceholder(item.label)}
-                              />
-                            ) : creatableInputOptions.includes(item.label) ? (
-                              <input
-                                type="number"
-                                className="form-control features-select"
-                                onChange={(e) => {
-                                  const value = e.target.value;
+                                onChange={(selectedOption) => {
+                                  const value = selectedOption.value;
+                                  // Check if the value is a valid number and is non-negative
                                   if (
                                     /^\d*\.?\d*$/.test(value) &&
                                     (value >= 0 || value === "")
                                   ) {
                                     handleFeaturesChange(
                                       item.label,
-                                      e.target.value
+                                      selectedOption ? selectedOption.value : ""
                                     );
+                                  }
+                                }}
+                                placeholder={getPlaceholder(item.label)}
+                              />
+                            ) : creatableInputOptions.includes(item.label) ? (
+                              <input
+                                min="0"
+                                type="number"
+                                className="form-control features-select"
+                                onChange={(e) => {
+                                  const value = e.target.value;
+
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleFeaturesChange(item.label, value);
                                   }
                                 }}
                                 placeholder={getPlaceholder(item.label)}

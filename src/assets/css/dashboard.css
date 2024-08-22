@@ -578,6 +578,7 @@ a:hover {
   width: 100%;
   margin: 0 auto;
   line-height: 23px;
+  text-align: center;
 }
 .kids-signup-terms-linetwo {
   color: #000;
@@ -588,6 +589,7 @@ a:hover {
   width: 100%;
   margin: 0 auto;
   line-height: 20px;
+  text-align: center;
 }
 .kids-signup-terms-linetwo > span {
   color: #c2114b;
@@ -1753,6 +1755,11 @@ input[type="radio"] {
   }
 }
 @media (max-width: 767px) {
+
+  .step-back, .step-continue {  margin: 0 5px; }
+
+  .kidsform-one .kids-wrapper{ margin: 55px 0 45px; }
+
   .gallery-wrapper {
     width: 31%;
     float: left;
@@ -1858,7 +1865,7 @@ input[type="radio"] {
   }
   .storyCar .carousel-description {
     font-size: 16px;
-    line-height: 32px;
+    line-height: 28px;
     /* height: 100px; */
   }
 }
@@ -1884,7 +1891,8 @@ input[type="radio"] {
     display: block;
   }
   .kids-select-btn {
-    width: 45%;
+    width: 100%;
+    max-width: 160px;
     height: 40px;
     border-radius: 25px;
     border: 1px solid #fff;
@@ -1892,7 +1900,7 @@ input[type="radio"] {
     color: #fff;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     line-height: normal;
     cursor: pointer;
     display: flex;
@@ -2104,7 +2112,7 @@ input[type="radio"] {
     justify-content: space-evenly;
     flex-direction: column;
     padding-left: 20px;
-    width: 75%;
+    width: 100%;
   }
   .quote > img {
     width: 20px;
@@ -2190,6 +2198,8 @@ input[type="radio"] {
     padding: 30px 0;
     text-align: center;
   }
+  .signupModal .question-model{ padding-bottom: 0; }
+
   .register-modal {
     display: flex;
     justify-content: center;
@@ -2221,9 +2231,9 @@ input[type="radio"] {
   .location-wrapper {
     padding: 4px 0;
   }
-  .choose-register {
-    width: 172px;
-    height: 62px;
+  .choose-register, .selected-register {
+    min-width: 160px;
+    max-width: 100%;
     border-radius: 6px;
     border: 1px solid #000;
     background: #fff;
@@ -2232,28 +2242,18 @@ input[type="radio"] {
     align-items: center;
     color: #000;
     text-align: center;
-    font-size: 17px;
+    font-size: 16px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
+    line-height: 19px;
     cursor: pointer;
     padding: 4px;
-    margin-right: 25px;
+    margin: 0 5px;
   }
   .selected-register {
-    width: 172px;
-    height: 62px;
-    border-radius: 6px;
     border: 1px solid #c2114b;
     background: #c2114b;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 25px;
     color: #fff;
-    text-align: center;
-    font-size: 17px;
-    font-style: normal;
-    font-weight: 300;
     cursor: pointer;
   }
   .modal-buttons {
@@ -3331,6 +3331,10 @@ li.nav-item.dropdown {
   color: #c2114b;
 }
 @media (max-width: 767px) {
+
+  .signupModal .modal-body {
+    padding: 10px 15px;
+  }
   .mobile-search {
     margin-left: 4px !important;
   }
@@ -3343,6 +3347,14 @@ li.nav-item.dropdown {
   }
   .storyCar .carousel-next-control {
     right: 0;
+    top: 200px;
+    height: 0;
+  }
+  .carousel-section.storyCar .carousel-wrapper .box-content{ padding: 0; margin: 0; }
+  .storyCar .carousel-control-prev {
+    left: 0;
+    top: 200px;
+    height: 0;
   }
   .mobile-navbar .icon {
     /* overflow: hidden;
@@ -3418,7 +3430,7 @@ li.nav-item.dropdown {
     text-align: center;
   }
   .box-content .quote {
-    margin-bottom: 10px;
+    margin: 5px 0 10px;
     display: flex;
     justify-content: center;
   }
@@ -3463,9 +3475,7 @@ li.nav-item.dropdown {
   .profile-section {
     justify-content: center;
   }
-  .storyCar .carousel-control-prev {
-    left: 0;
-  }
+
   .quote > img {
     width: 30px;
     height: 30px;
@@ -3650,7 +3660,14 @@ li.nav-item.dropdown {
 input::placeholder {
   font-size: 13px !important;
 }
-.kids-form-section .form-group .MuiFormControl-root.form-control .MuiInputBase-input, .adult-signup-main .form-group .MuiFormControl-root.form-control .MuiInputBase-{
+.kids-form-section
+  .form-group
+  .MuiFormControl-root.form-control
+  .MuiInputBase-input,
+.adult-signup-main
+  .form-group
+  .MuiFormControl-root.form-control
+  .MuiInputBase- {
   padding-left: 0;
   padding-right: 0;
 }
@@ -3664,6 +3681,15 @@ input::placeholder {
   padding-top: 0;
   padding-bottom: 0;
 }
-.adult-signup-main .form-group .css-1eed5fa-MuiInputBase-root-MuiInput-root::before {
+.adult-signup-main
+  .form-group
+  .css-1eed5fa-MuiInputBase-root-MuiInput-root::before {
   border-bottom: 0;
+}
+
+.material-mobile-style {
+  border: 1px solid #d3d3d3;
+  border-radius: 3px;
+  height: 45px;
+  padding: 0px 0px 0px 10px;
 }

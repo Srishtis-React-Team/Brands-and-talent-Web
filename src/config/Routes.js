@@ -90,6 +90,7 @@ const Feedbackreporting = lazy(() => import("../pages/Feedbackreporting"));
 const BecomeAffliate = lazy(() => import("../pages/BecomeAffliate"));
 const Investors = lazy(() => import("../pages/Investors"));
 const Career = lazy(() => import("../pages/Career"));
+const EditFeatures = lazy(() => import("../pages/EditFeatures"));
 // const ErrorBoundary = lazy(() => import('../components/ErrorBoundary'));
 
 function Routing() {
@@ -275,6 +276,7 @@ function Routing() {
             <Route path="/brand-notification" element={<BrandNotification />} />
             <Route path="/get-booked" element={<GetBooked />} />
             <Route path="/industry-news" element={<IndustryNews />} />
+            <Route path="/edit-feature" element={<EditFeatures />} />
           </Routes>
         </Suspense>
         {openPopUp && (
