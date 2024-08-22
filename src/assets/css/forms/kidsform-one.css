@@ -838,6 +838,19 @@
     width: 37%;
     margin-left: 15px;
   }
+  .kidsform-one .kids-wrapper .kids-form .dynamic-profession {
+    justify-content: center;
+    flex-direction: column;
+  }
+  .kidsform-one .kids-wrapper .kids-form .dynamic-profession > .mb-3 {
+    width: 100%;
+    margin-bottom: 0.5rem !important;
+  }
+  .kidsform-one .kids-wrapper .kids-form .profession-input {
+    max-width: 100%;
+    margin-right: 0px !important;
+  }
+
 }
 .add-portfoli-section {
   display: flex;
