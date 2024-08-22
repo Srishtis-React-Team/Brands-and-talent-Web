@@ -333,6 +333,15 @@
   align-items: center;
   border: none;
 }
+
+@media (max-width: 767px) {
+  .dialog-body{
+    min-height: 100%;
+    margin: 70px 0 85px !important;
+  }
+  .dialog-body.spaceTops{ margin-top: 0; }
+
+}
 @media (min-width: 769px) and (max-width: 1024px) {
   .adult-signup-main {
     width: 50%;

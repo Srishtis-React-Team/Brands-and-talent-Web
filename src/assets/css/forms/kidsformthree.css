@@ -306,8 +306,14 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .plans-wrapper{ padding: 20px; }
+  .subscriptions-wrapper .plan-name {
+    min-height: auto;
+    margin: 0;
+    padding: 10px 0;
+  }
   .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
-    width: 37%;
+    width: 100%;
     margin-left: 15px;
   }
   .fixImgs {

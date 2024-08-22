@@ -1756,8 +1756,12 @@ input[type="radio"] {
 
   .step-back, .step-continue {  margin: 0 5px; }
 
-  .kidsform-one .kids-wrapper{ margin: 55px 0 45px; }
-
+  .kidsform-one .kids-wrapper{ margin: 0; }
+  #bmc-wbtn {
+    top: 55px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
   .gallery-wrapper {
     width: 31%;
     float: left;
@@ -2352,6 +2356,9 @@ input[type="radio"] {
     cursor: auto;
     width: 400px;
   }
+  .form-label {
+    margin-bottom: .1rem;
+  }
   .step-back {
     width: auto;
     height: 40px;
@@ -2364,7 +2371,7 @@ input[type="radio"] {
     font-size: 17px;
     font-style: normal;
     font-weight: 300;
-    line-height: 20px;
+    line-height: 18px;
   }
   .step-continue {
     width: 150px;
@@ -2377,7 +2384,7 @@ input[type="radio"] {
     font-size: 17px;
     font-style: normal;
     font-weight: 300;
-    line-height: normal;
+    line-height: 18px;
     cursor: pointer;
   }
   .upload-step {
@@ -3503,7 +3510,7 @@ li.nav-item.dropdown {
     height: 38px;
   }
   .login-container {
-    border: 0 solid #aaa !important;
+    border: 1px solid #aaa !important;
   }
   .card-wrapper {
     margin: 10px 0 10px;
@@ -3596,10 +3603,10 @@ li.nav-item.dropdown {
   .social-medias i {
     margin: 0 !important;
   }
-  .MuiFormControl-root.MuiTextField-root.form-control.css-1u3bzj6-MuiFormControl-root-MuiTextField-root
+  /* .MuiFormControl-root.MuiTextField-root.form-control.css-1u3bzj6-MuiFormControl-root-MuiTextField-root
     input {
     height: 30px !important;
-  }
+  } */
   .mobile-menu-items .navTxt:nth-child(3) {
     padding-right: 0px !important;
   }
