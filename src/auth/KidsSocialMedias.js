@@ -190,7 +190,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={instagram} alt="" />
+                          <div className="mediaIcon">
+                            <img src={instagram} alt="" />
+                          </div>
                           <div className="media-text">Instagram</div>
                         </div>
                         <div className="connect-btn">connect</div>
@@ -199,7 +201,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={fbLogo} alt="" />
+                          <div className="mediaIcon">
+                            <img src={fbLogo} alt="" />
+                          </div>
                           <div className="media-text">Facebook</div>
                         </div>
                         <div className="connect-btn">connect</div>
@@ -210,7 +214,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={tikTok} alt="" />
+                          <div className="mediaIcon">
+                            <img src={tikTok} alt="" />
+                          </div>
                           <div className="media-text">TikTok</div>
                         </div>
                         <div className="connect-btn">connect</div>
@@ -219,7 +225,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={linkdin} alt="" />
+                          <div className="mediaIcon">
+                            <img src={linkdin} alt="" />
+                          </div>
                           <div className="media-text">LinkedIn</div>
                         </div>
                         <div className="connect-btn">connect</div>
@@ -230,7 +238,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={xTwitter} alt="" />
+                          <div className="mediaIcon">
+                            <img src={xTwitter} alt="" />
+                          </div>
                           <div className="media-text">Twitter</div>
                         </div>
                         <div
@@ -246,7 +256,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
+                          <div className="mediaIcon">
+                            <img className="thread-fill" src={threads} alt="" />
+                          </div>
                           <div className="media-text">Threads</div>
                         </div>
                         <div className="connect-btn">connect</div>
@@ -257,7 +269,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img className="" src={youTube} alt="" />
+                          <div className="mediaIcon">
+                            <img className="" src={youTube} alt="" />
+                          </div>
                           <div className="media-text">Youtube</div>
                         </div>
                         <div className="connect-btn">connect</div>
@@ -271,7 +285,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={instagram} alt="" />
+                          <div className="mediaIcon">
+                            <img src={instagram} alt="" />
+                          </div>
                           <div className="media-text">
                             <input
                               disabled
@@ -289,7 +305,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={fbLogo} alt="" />
+                          <div className="mediaIcon">
+                            <img src={fbLogo} alt="" />
+                          </div>
                           <div className="media-text">
                             <input
                               disabled
@@ -309,7 +327,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={tikTok} alt="" />
+                          <div className="mediaIcon">
+                            <img src={tikTok} alt="" />
+                          </div>
                           <div className="media-text">
                             <input
                               disabled
@@ -327,7 +347,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={linkdin} alt="" />
+                          <div className="mediaIcon">
+                            <img src={linkdin} alt="" />
+                          </div>
                           <div className="media-text">
                             <input
                               disabled
@@ -347,7 +369,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={xTwitter} alt="" />
+                          <div className="mediaIcon">
+                            <img src={xTwitter} alt="" />
+                          </div>
                           <div className="media-text">
                             <input
                               disabled
@@ -366,7 +390,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
+                          <div className="mediaIcon">
+                            <img className="thread-fill" src={threads} alt="" />
+                          </div>
                           <div className="media-text">
                             <input
                               disabled
@@ -383,13 +409,14 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     </div>
                   </div>
                   <div
-                    className="kids-form-row row"
-                    style={{ marginBottom: "100px" }}
+                    className="kids-form-row row spcBtm"
                   >
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={youTube} alt="" />
+                          <div className="mediaIcon">
+                             <img src={youTube} alt="" />
+                          </div>
                           <div className="media-text">
                             <input
                               disabled

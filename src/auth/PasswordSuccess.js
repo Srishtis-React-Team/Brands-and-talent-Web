@@ -34,6 +34,9 @@ const PasswordSuccess = () => {
       <Header />
       <div className="login-main">
         <div className="login-container">
+          <div className="success-pass-logo">
+            <img className="btLogo" src={btLogo} alt="" />
+          </div>
           <div className="otp-title">
             <span className="success-text">Successfull</span>
           </div>
@@ -45,9 +48,7 @@ const PasswordSuccess = () => {
             Back To Login
           </div>
         </div>
-        <div className="success-pass-logo">
-          <img className="btLogo" src={btLogo} alt="" />
-        </div>
+      
       </div>
       {openPopUp && <PopUp message={message} />}
     </>

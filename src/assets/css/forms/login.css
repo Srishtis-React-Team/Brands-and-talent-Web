@@ -50,7 +50,7 @@
 .success-pass-logo {
   position: absolute;
   background-color: #fff;
-  top: 350px;
+  top: -20px;
   padding: 0 20px;
   font-size: 13px !important;
 }
@@ -156,6 +156,7 @@
 .success-info {
   padding: 30px 0;
   font-weight: 400;
+  text-align: center;
 }
 .signup-login {
   cursor: pointer;
@@ -207,23 +208,40 @@
   padding: 10px 0;
   justify-content: end;
 }
-@media (min-width: 769px) and (max-width: 1024px) {
-  .login-container {
-    width: 50%;
-  }
-}
-@media (min-width: 481px) and (max-width: 768px) {
-  .login-container {
-    width: 70%;
-  }
-}
-@media (max-width: 580px) {
-  .login-container {
-    width: 90%;
-    padding: 20px 15px 10px;
-  }
-}
 .haAclf {
   display: inline-block;
   width: 94% !important;
 }
+
+
+
+
+
+@media (max-width: 1024px) {
+  .login-container {
+    width: 50%;
+  }
+
+}
+@media  (max-width: 768px) {
+  .login-container {
+    width: 70%;
+  }
+
+}
+@media (max-width: 580px) {
+
+  .iam-brand, .iam-talent{ margin: 0 5px; }
+  .login-container {
+    width: 90%;
+    padding: 20px 15px 10px;
+  }
+  .success-info, .iam-brand, .iam-talent{ font-size: 14px; line-height: 19px; }
+
+  .login-forgot {  font-size: 12px; }
+  
+  .login-btn {  font-size: 14px; }
+
+
+}
+
