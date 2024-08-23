@@ -648,7 +648,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
             }}
           ></button>
         </div>
-        <div className="dialog-body">
+        <div className="dialog-body spaceTops">
           <div className="kidsform-one container">
             <div className="kids-wrapper row">
               <div className="kids-img col-md-4 col-lg-3">
@@ -1183,7 +1183,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     </div>
                   </div>
 
-                  <div className="verification-section mb-5">
+                  <div className="verification-section mb-2">
                     <div className="id-image">
                       <img src={idCard} alt="" />
                     </div>
@@ -1206,7 +1206,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                     <>
                       <div
                         className="uploaded-file-wrapper"
-                        style={{ marginBottom: "80px" }}
+                        style={{ marginBottom: "10px" }}
                       >
                         <div className="file-section">
                           {verificationID.type === "image" && (

@@ -510,7 +510,28 @@ input[type="radio"].premium-checkbox {
     font-size: 14px;
   }
 }
+@media (max-width: 767px) {
+  .subscriptions-wrapper .plan-name {
+    min-height: auto;
+    margin: 0;
+    padding: 10px 0;
+  }
+  .plan-value {
+    font-size: 36px;
+  }
+  .annual, .monthly, .per-value, .monthly-amount, .after-value {
+    font-size: 13px;
+  }
+  .plan-content-text {
+    font-size: 14px;
+  }
+
+
+}
 @media (max-width: 480px) {
+  .priceHeight {
+    min-height: auto;
+  }
   .select-pricing {
     width: 80%;
   }
@@ -519,6 +540,7 @@ input[type="radio"].premium-checkbox {
   }
   .plans-section {
     padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
   }
@@ -534,7 +556,7 @@ input[type="radio"].premium-checkbox {
     padding-bottom: 0;
   }
   .choose-btn {
-    width: 200px;
+    width: 100%;
     height: 40px;
     font-size: 15px;
     margin: 15px auto;
@@ -542,11 +564,11 @@ input[type="radio"].premium-checkbox {
   .include {
     font-size: 12px;
     font-weight: 600;
-    padding: 10px 0 0 20px;
+    padding: 10px 0 0;
     text-align: left;
   }
   .included-things {
-    padding: 14px;
+    padding: 14px 0;
   }
   .plan-content {
     display: flex;

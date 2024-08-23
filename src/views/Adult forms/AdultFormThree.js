@@ -1411,7 +1411,7 @@ const AdultFormThree = () => {
                     <>
                       <div
                         className="uploaded-file-wrapper"
-                        style={{ marginBottom: "80px" }}
+                        style={{ marginBottom: "0px" }}
                       >
                         <div className="file-section">
                           {verificationID[0].type === "image" && (

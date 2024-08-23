@@ -252,6 +252,7 @@
   }
   .fileName {
     padding-left: 10px;
+    font-size: 14px;
   }
   .url-fileName {
     padding-left: 0px;
@@ -383,14 +384,14 @@
 
 /* 320px — 480px: Mobile devices */
 
-@media (min-width: 320px) and (max-width: 480px) {
+@media (max-width: 480px) {
   .features-section {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     .features-input-wrapper {
-      margin-right: 10px;
-      width: 45%;
+      width: 100%;
+      margin-right: 0 !important;
     }
   }
 
@@ -418,7 +419,7 @@
     align-items: center;
     justify-content: space-around;
     width: 100%;
-    margin-bottom: 100px !important;
+    // margin-bottom: 100px !important;
     .id-text {
       padding: 26px 0px;
     }
@@ -951,9 +952,25 @@
 
 @media only screen and (max-width: 767px) {
   .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
-    width: 37%;
+    width: 100%;
     margin-left: 15px;
   }
+  .kids-form .kids-description {
+    padding: 10px 0 0;
+  }
+  .kids-main .cv-section {
+    margin: 10px 0px;
+    padding: 0 10px;
+  }
+  .kids-main .upload-backdrop{
+    padding: 10px;
+  }
+  .kids-main .fileName{ padding-right: 7px; }
+  .kids-main .upload-backdrop img {
+    width: 40px;
+  }
+  .kids-main .option-menu{ padding: 0; }
+
   .kids-title {
     margin-top: 25px !important;
     padding: 8px 0px;
@@ -964,7 +981,12 @@
     height: 45px;
     padding: 6px 0px 0px 10px;
   }
-}
+
+
+
+
+
+
 .add-portfoli-section {
   display: flex;
   justify-content: end;
@@ -1097,9 +1119,6 @@
   font-size: 13px;
   font-weight: 500;
   padding: 10px 0px;
-}
-
-.add-service-section {
 }
 
 .add-more-services-btn {

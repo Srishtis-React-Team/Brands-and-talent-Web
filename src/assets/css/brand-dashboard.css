@@ -116,11 +116,11 @@
   overflow: hidden;
 }
 .talent-profile .talent-data-wrapper .profImg .profile-img {
-  min-width: 45px;
+  min-width: 75px;
   max-width: 100%;
   width: auto;
   height: auto;
-  min-height: 45px;
+  min-height: 75px;
   margin: 0;
   padding: 0;
   -o-object-fit: cover;

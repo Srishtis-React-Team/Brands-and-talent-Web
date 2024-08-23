@@ -33,7 +33,7 @@
 }
 .kidsform-one .kids-wrapper .kids-form .kids-form-title {
   font-size: 22px;
-  padding-top: 15px 0 0 0;
+  padding: 15px 0 0 0;
 }
 .kidsform-one .kids-wrapper .kids-form .splitter {
   padding: 20px 0;
@@ -347,7 +347,7 @@
     align-items: center;
     justify-content: space-around;
     width: 100%;
-    margin-bottom: 100px !important;
+    /* margin-bottom: 100px !important; */
   }
   .verification-section .id-text {
     padding: 26px 0;
@@ -415,7 +415,7 @@
     margin-right: 15px !important;
   }
   .kidsform-one .kids-wrapper {
-    margin: 25px 0;
+    margin: 45px 0;
     display: flex;
   }
   .media-wrapper {
@@ -835,7 +835,7 @@
 }
 @media only screen and (max-width: 767px) {
   .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
-    width: 37%;
+    width: 100%;
     margin-left: 15px;
   }
   .kidsform-one .kids-wrapper .kids-form .dynamic-profession {
