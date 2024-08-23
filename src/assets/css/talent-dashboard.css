@@ -636,7 +636,7 @@
   background-color: #000;
   border-radius: 25px;
   cursor: pointer;
-  visibility: hidden;
+  /* visibility: hidden; */
   padding: 6px 14px;
   color: #fff;
   display: flex;
@@ -828,7 +828,10 @@
   }
   .upload-info {
     text-align: center;
-    padding: 15px;
+    padding: 10px 15px;
+  }
+  .uploaded-file-wrapper .elipsis-icon {
+      padding: 10px 0;
   }
   .recent-setone {
     display: flex;
@@ -841,6 +844,14 @@
   .talent-column-two {
     width: 100%;
   }
+  .fileType > img {
+    max-width: 20px;
+    height: 19px;
+  }
+  .fileName {
+    padding-left: 10px;
+    font-size: 13px;
+  } 
   .talent-popup-title {
     font-size: 17px;
   }
@@ -881,8 +892,20 @@
   .profession-input {
     margin-right: 0;
   }
+  .upload-text {
+    font-size: 13px;
+  }
+  .upload-backdrop {
+    padding: 10px;
+  }
+  .upload-backdrop > img{
+    width: 36px;
+  }
   .rich-editor {
     margin-bottom: 30px;
+  }
+  .rich-editor:last-child {
+    margin-bottom: 10px !important;
   }
   .profession-content-section {
     margin-bottom: 10px;

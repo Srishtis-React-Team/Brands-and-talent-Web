@@ -14,15 +14,21 @@
   width: 350px;
   margin: 15px 0;
 }
+.otp-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 15px 0;
+}
+
 .forgot-info,
 .resend-forgot {
   text-align: center;
   padding-bottom: 20px;
   color: #000;
-  font-size: 14px;
+  font-size: 13px;
   font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+  font-weight: 400;
+  line-height: 20px;
   text-align: center;
 }
 .resend-forgot {
@@ -211,9 +217,10 @@
     width: 70%;
   }
 }
-@media (min-width: 320px) and (max-width: 480px) {
+@media (max-width: 580px) {
   .login-container {
     width: 90%;
+    padding: 20px 15px 10px;
   }
 }
 .haAclf {

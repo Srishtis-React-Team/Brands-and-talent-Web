@@ -160,4 +160,6 @@ export const API = {
   //blogs
   getFeaturedArticles: BASEURL + "blog/getFeaturedArticles",
   fetchBlogByType: BASEURL + "blog/fetchBlogByType",
+  //blogs
+  twitterCount: BASEURL + "socialmedia/twitterCount",
 };
