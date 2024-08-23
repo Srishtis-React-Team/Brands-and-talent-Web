@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/forms/kidsform-one.css";
 import "../assets/css/forms/kidsformthree.css";
+import "../assets/css/forms/login.css";
+import "../assets/css/dashboard.css";
+import "../assets/css/register.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
@@ -11,7 +14,7 @@ import "../assets/css/register.css";
 const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
-
+  console.log(onDataFromChild, "onDataFromChild");
   const fbLogo = require("../assets/icons/social-media-icons/fbLogo.png");
   const instagram = require("../assets/icons/social-media-icons/instagram.png");
   const threads = require("../assets/icons/social-media-icons/thread-fill.png");
@@ -66,6 +69,80 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
         setIsLoading(false);
       });
   };
+
+  const handleTwitterUserNameChange = (e) => {
+    const value = e.target.value;
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (value.trim() === "") {
+      setTwitterUserNameError(false);
+      setTwitterUserName("");
+    } else if (!onlyLettersRegex.test(value)) {
+      setTwitterUserNameError(true);
+    } else {
+      setTwitterUserName(value);
+      setTwitterUserNameError(false);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Backspace") {
+      setTwitterUserNameError(false);
+    }
+  };
+
+  const [twitterFollowersCount, setTwitterFollowersCount] = useState(null);
+  const [modalData, setModalData] = useState(null);
+  const [twitterUserName, setTwitterUserName] = useState(null);
+  const [twitterUserNameError, setTwitterUserNameError] = useState(false);
+
+  const connectSocialMedia = (item) => {
+    setModalData(item);
+    const modalElement = document.getElementById("socialMediaModal");
+    const bootstrapModal = new window.bootstrap.Modal(modalElement);
+    bootstrapModal.show();
+  };
+
+  const handleCloseModal = async (talent) => {
+    const formData = {
+      username: twitterUserName,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${API.twitterCount}`, formData)
+      .then((resData) => {
+        console.log(resData, "resData");
+        if (resData?.data?.status === true) {
+          setTwitterFollowersCount(resData?.data?.followers_count);
+          setTwitterUserName("");
+          setIsLoading(false);
+          setMessage("Twitter Connected SuccessFully!");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            const modalElement = document.getElementById("socialMediaModal");
+            const bootstrapModal = new window.bootstrap.Modal(modalElement);
+            bootstrapModal.hide();
+          }, 2000);
+        } else if (resData?.data?.status === false) {
+          setTwitterUserName("");
+          setMessage(resData?.data?.data?.detail);
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            const modalElement = document.getElementById("socialMediaModal");
+            const bootstrapModal = new window.bootstrap.Modal(modalElement);
+            bootstrapModal.hide();
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        console.log(err, "err");
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    console.log(twitterFollowersCount, "twitterFollowersCount");
+  }, [twitterFollowersCount]);
 
   return (
     <>
@@ -156,7 +233,14 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <img src={xTwitter} alt="" />
                           <div className="media-text">Twitter</div>
                         </div>
-                        <div className="connect-btn">connect</div>
+                        <div
+                          className="connect-btn"
+                          onClick={(e) => {
+                            connectSocialMedia("twitter");
+                          }}
+                        >
+                          connect
+                        </div>
                       </div>
                     </div>
                     <div className="kids-form-section col-md-6">
@@ -183,19 +267,20 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
 
                   <div className="Or-seperator">Or</div>
 
-                  <div className="kids-form-row row">
+                  <div className="kids-form-row row mb-4">
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={instagram} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setInstagramFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
@@ -207,12 +292,13 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <img src={fbLogo} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setfacebookFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
@@ -226,12 +312,13 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <img src={tikTok} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setTiktoksFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
@@ -243,12 +330,13 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <img src={linkdin} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setlinkedinFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
@@ -262,12 +350,14 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <img src={xTwitter} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
+                              value={twitterFollowersCount}
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setXtwitterFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
@@ -279,31 +369,36 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <img className="thread-fill" src={threads} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setThreadsFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row row mb-4">
+                  <div
+                    className="kids-form-row row"
+                    style={{ marginBottom: "100px" }}
+                  >
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={youTube} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setYoutubesFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
@@ -335,6 +430,56 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
           >
             {isLoading ? "Loading..." : "Continue"}
           </button>
+        </div>
+      </div>
+
+      <div
+        className="modal fade"
+        id="socialMediaModal"
+        tabIndex="-1"
+        aria-labelledby="socialMediaModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog  modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="mb-3" style={{ textAlign: "left" }}>
+                <label className="form-label">Twitter user name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={twitterUserName}
+                  onChange={(e) => {
+                    handleTwitterUserNameChange(e);
+                    setTwitterUserNameError(false);
+                  }}
+                  onKeyDown={handleKeyPress}
+                  placeholder="Twitter user name"
+                ></input>
+                {twitterUserNameError && (
+                  <div className="invalid-fields">Please enter User Name</div>
+                )}
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                onClick={() => handleCloseModal(modalData)}
+                type="button"
+                className="btn submit-rating"
+                data-bs-dismiss="modal"
+              >
+                Connect
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

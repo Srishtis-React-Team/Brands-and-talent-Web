@@ -1109,10 +1109,10 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                               <input
                                 min="0"
                                 type="number"
+                                onKeyDown={handleKeyDown}
                                 className="form-control features-select"
                                 onChange={(e) => {
                                   const value = e.target.value;
-
                                   if (
                                     /^\d*\.?\d*$/.test(value) &&
                                     (value >= 0 || value === "")

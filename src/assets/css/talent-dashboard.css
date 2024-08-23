@@ -636,7 +636,7 @@
   background-color: #000;
   border-radius: 25px;
   cursor: pointer;
-  visibility: hidden;
+  /* visibility: hidden; */
   padding: 6px 14px;
   color: #fff;
   display: flex;

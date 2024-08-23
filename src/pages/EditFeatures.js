@@ -24,6 +24,22 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
     setFormValues(initialValues);
   }, [featuresStructure, featureValues]);
 
+  const handleKeyDown = (event) => {
+    const key = event.key;
+    const isNumberKey = /^[0-9]$/.test(key);
+    const isAllowedKey =
+      isNumberKey ||
+      key === "Backspace" ||
+      key === "Delete" ||
+      key === "ArrowLeft" ||
+      key === "ArrowRight" ||
+      key === "Tab";
+
+    if (!isAllowedKey) {
+      event.preventDefault();
+    }
+  };
+
   // Handle changes for input, select, and creatableSelect
   const handleChange = (name, value) => {
     const newValues = formValues.map((item) =>
@@ -49,10 +65,12 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
             <div key={index} className="features-seperator">
               <label htmlFor={label}>{label}</label>
               <input
+                min="0"
+                onKeyDown={handleKeyDown}
                 className="form-control"
                 id={label}
                 name={label}
-                type="text"
+                type="number"
                 value={value}
                 onChange={(e) => handleChange(label, e.target.value)}
                 placeholder={options[0] || ""}
@@ -87,12 +105,26 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
                 id={label}
                 name={label}
                 value={value ? { label: value, value } : null}
-                onChange={(selectedOption) =>
-                  handleChange(
-                    label,
-                    selectedOption ? selectedOption.value : ""
-                  )
-                }
+                // onChange={(selectedOption) =>
+                //   handleChange(
+                //     label,
+                //     selectedOption ? selectedOption.value : ""
+                //   )
+                // }
+                onKeyDown={handleKeyDown}
+                onChange={(selectedOption) => {
+                  const value = selectedOption.value;
+                  // Check if the value is a valid number and is non-negative
+                  if (
+                    /^\d*\.?\d*$/.test(value) &&
+                    (value >= 0 || value === "")
+                  ) {
+                    handleChange(
+                      label,
+                      selectedOption ? selectedOption.value : ""
+                    );
+                  }
+                }}
                 options={getOptions(options)}
                 isClearable
               />
