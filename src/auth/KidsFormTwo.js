@@ -102,7 +102,7 @@ const KidsFormTwo = () => {
           ></button>
         </div>
 
-        <div className="dialog-body">
+        <div className="dialog-body spaceTops">
           <div className="container">
             <div className="subscribe-form">
               <div className="subscriptions-wrapper">

@@ -208,7 +208,8 @@
   font-style: normal;
   font-weight: 300;
   padding-bottom: 25px;
-  width: 50%;
+  max-width: 50%;
+  width: 100%;
 }
 .open-gmail {
   display: flex;
@@ -275,8 +276,8 @@
   line-height: 44px;
 }
 .adult-signup-main {
-  width: 40%;
-  max-width: 100%;
+  width: 100%;
+  max-width: 40%;
   border: 1px solid #aaa;
   border-radius: 20px;
   padding: 15px 25px 25px;
@@ -462,6 +463,98 @@
   border-radius: 3px;
   height: 45px;
   padding: 5px 0px 0px 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 767px) {
+  .dialog-body{
+    min-height: 100%;
+    margin: 70px 0 85px !important;
+  }
+  .dialog-body.spaceTops{ margin-top: 0; padding: 0; }
+  .adult-signup-main, .gmail-info {
+    max-width: 70%;
+  }
+
+  .trial-page .included-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .trial-page .included-content .include-wrapper{ padding-left: 0; }
+  .home-add-title-wrapper {
+    padding-left: 0;
+    float: left;
+    width: calc(100% - 100px);
+  }
+ 
+
+}
+@media (max-width: 580px) {
+
+  .brand-home-one .btnSpace {
+    margin: 15px 0 0;
+  }
+
+}
+@media (max-width: 480px) {
+
+  .adult-signup-main,  .gmail-info  {
+    max-width: 90%;
+    padding: 10px 20px;
+  }
+
+  .gmail-wrapper {
+    margin-top: 0;
+  }
+  .trial-page {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0;
+    flex-direction: column;
+    flex-direction: column-reverse;
+  }
+  .trialing {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .trialing > img {
+    width: 250px;
+    height: 250px;
+    flex-shrink: 0;
+  }
+  .trial-wrapper {
+    padding: 30px;
+  }
+
+  .brand-home-one .btnSpace {
+    justify-content: center;
+    margin: 15px 0 0;
+  }
+
+}
+@media (max-width: 380px) {
+  
+  .home-add-title-wrapper {
+    padding: 10px 0 0;
+    float: left;
+    width: 100%;
+  }
+
+
+
+
 }
 /* .material-mobile-style {
   border: 1px solid #d3d3d3;
