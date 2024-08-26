@@ -16,6 +16,7 @@ import SearchHeaderComponent from "../../layout/SearchHeaderComponent";
 import CurrentUser from "../../CurrentUser";
 const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserType, avatarImage } = CurrentUser();
+  console.log(toggleMenu, "toggleMenu");
 
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
@@ -185,14 +186,14 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
             <div className="rightPart">
               <div className="talent-navbar-functions">
-                <div
+                {/* <div
                   onClick={() => {
                     setMenuOpen(!menuOpen);
                   }}
                   className="menu-icon"
                 >
                   <i className="fa-solid fa-bars"></i>
-                </div>
+                </div> */}
                 <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
                   <nav className="menu-items">
                     <div className="navTxt">

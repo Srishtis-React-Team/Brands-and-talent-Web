@@ -18,6 +18,7 @@ const BrandHome = () => {
   const [jobsList, setJobsList] = useState([]);
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
+  const [myState, setMyState] = useState(false);
 
   const headsetLogo = require("../../assets/icons/headset.png");
   const getTalentList = async () => {
@@ -49,6 +50,7 @@ const BrandHome = () => {
   };
 
   const toggleMenu = () => {
+    console.log("clicked");
     setShowSidebar(!showSidebar);
   };
 
@@ -144,18 +146,21 @@ const BrandHome = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(showSidebar, "showSidebar useEffect");
+    console.log(mobileSideBar, "mobileSideBar useEffect");
+  }, [showSidebar]);
 
   return (
     <>
-      <BrandHeader toggleMenu={toggleMenu} />
+      <BrandHeader toggleMenu={toggleMenu} myState={myState} />
       <div
         id="sidebarBrand"
         className={`brand-sidebar ${
-          showSidebar && mobileSideBar ? "show-sidebar" : "not-sidebar"
+          showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
         }`}
       >
-        <BrandSideMenu onChildClick={handleChildClick} />
+        <BrandSideMenu myState={myState} />
       </div>
       <main
         id="mainBrand"

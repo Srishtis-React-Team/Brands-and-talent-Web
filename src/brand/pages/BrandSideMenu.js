@@ -254,6 +254,18 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             <div className="brand-menu-text">Settings</div>
           </Link>
 
+          <Link
+            to="/pricing"
+            className={
+              location.pathname === "/pricing"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i class="bi bi-tags-fill icons"></i>
+            <div className="brand-menu-text">Pricing</div>
+          </Link>
+
           {/* <Link
               to="/brand-help"
               className={
