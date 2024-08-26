@@ -17,6 +17,7 @@ const BrandNotification = () => {
   const [mobileSideBar, setMobileSidebar] = useState(true);
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
+  const [myState, setMyState] = useState(false);
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
@@ -91,14 +92,14 @@ const BrandNotification = () => {
   return (
     <>
       <>
-        <BrandHeader toggleMenu={toggleMenu} />
+        <BrandHeader toggleMenu={toggleMenu} myState={myState} />
         <div
           id="sidebarBrand"
           className={`brand-sidebar ${
-            showSidebar && mobileSideBar ? "show-sidebar" : "not-sidebar"
+            showSidebar ? "show-sidebar" : "show-sidebar hide-sidebar"
           }`}
         >
-          <BrandSideMenu onChildClick={handleChildClick} />
+          <BrandSideMenu myState={myState} />
         </div>
         <main
           id="mainBrand"

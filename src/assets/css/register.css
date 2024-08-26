@@ -465,25 +465,17 @@
   padding: 5px 0px 0px 10px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 767px) {
-  .dialog-body{
+  .dialog-body {
     min-height: 100%;
-    margin: 70px 0 85px !important;
+    margin: 0px 0 0px !important;
   }
-  .dialog-body.spaceTops{ margin-top: 0; padding: 0; }
-  .adult-signup-main, .gmail-info {
+  .dialog-body.spaceTops {
+    margin-top: 0;
+    padding: 0;
+  }
+  .adult-signup-main,
+  .gmail-info {
     max-width: 70%;
   }
 
@@ -491,25 +483,23 @@
     display: flex;
     flex-direction: column;
   }
-  .trial-page .included-content .include-wrapper{ padding-left: 0; }
+  .trial-page .included-content .include-wrapper {
+    padding-left: 0;
+  }
   .home-add-title-wrapper {
     padding-left: 0;
     float: left;
     width: calc(100% - 100px);
   }
- 
-
 }
 @media (max-width: 580px) {
-
   .brand-home-one .btnSpace {
     margin: 15px 0 0;
   }
-
 }
 @media (max-width: 480px) {
-
-  .adult-signup-main,  .gmail-info  {
+  .adult-signup-main,
+  .gmail-info {
     max-width: 90%;
     padding: 10px 20px;
   }
@@ -542,19 +532,13 @@
     justify-content: center;
     margin: 15px 0 0;
   }
-
 }
 @media (max-width: 380px) {
-  
   .home-add-title-wrapper {
     padding: 10px 0 0;
     float: left;
     width: 100%;
   }
-
-
-
-
 }
 /* .material-mobile-style {
   border: 1px solid #d3d3d3;

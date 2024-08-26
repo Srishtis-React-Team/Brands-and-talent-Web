@@ -281,14 +281,14 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
             <div className="rightPart">
               <div className="talent-navbar-functions">
-                <div
+                {/* <div
                   onClick={() => {
                     setMenuOpen(!menuOpen);
                   }}
                   className="menu-icon"
                 >
                   <i className="fa-solid fa-bars"></i>
-                </div>
+                </div> */}
 
                 <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
                   <div className="navTxt">
