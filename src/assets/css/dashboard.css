@@ -3337,6 +3337,19 @@ li.nav-item.dropdown {
   cursor: pointer;
   color: #c2114b;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 767px) {
 
   .signupModal .modal-body {
@@ -3652,6 +3665,26 @@ li.nav-item.dropdown {
   .mobile-nav-content {
     justify-content: flex-start;
   }
+  .kidsform-one .kids-wrapper .kids-form .kids-title, .kidsform-one .kids-wrapper .kids-form .kids-form-title {
+    color: #000;
+    font-size: 22px;
+}
+.kidsform-one .kids-wrapper {
+  margin: 0px 0;
+}
+.kidsform-one .kids-wrapper .kids-form .dynamic-profession {
+  gap: 12px;
+}
+
+
+
+
+
+
+
+
+
+
 }
 
 @media (max-width: 420px) {
