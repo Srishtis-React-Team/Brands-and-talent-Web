@@ -7,6 +7,12 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import PopUp from "../../components/PopUp";
 import "../../assets/css/talent-dashboard.css";
 import "../../assets/css/forms/kidsform-one.css";
+
+import "../../assets/css/forms/login.css";
+import "../../assets/css/dashboard.css";
+import "../../assets/css/register.css";
+import "../../assets/css/kidsmain.scss";
+
 import MuiPhoneNumber from "material-ui-phone-number";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -345,7 +351,8 @@ const AdultFormOne = () => {
       adultsPreferedFirstName !== "" &&
       adultsPreferedLastName !== "" &&
       selectedProfessions.length !== 0 &&
-      (selectedCategories.length < 3 || selectedCategories.length <= 6) &&
+      selectedCategories.length >= 3 &&
+      selectedCategories.length <= 6 &&
       gender !== "" &&
       languages.length !== 0 &&
       dateOfBirth !== "" &&
@@ -459,7 +466,7 @@ const AdultFormOne = () => {
         }, 2000);
       }
     }
-    if (selectedCategories.length < 3) {
+    if (selectedCategories.length < 4) {
       setSelectedCategoriesError(true);
     } else {
       setSelectedCategoriesError(false);
@@ -684,7 +691,7 @@ const AdultFormOne = () => {
           <div className="dialog-body">
             <div className="kidsform-one container">
               <div className="adult-form-wrapper row ml-0 mr-0">
-                <div className="col-md-4 col-lg-3">
+                <div className="col-md-4 col-lg-3  mt-5">
                   <div className="fixImgs">
                     <img
                       src={adultsBanner}
@@ -694,7 +701,9 @@ const AdultFormOne = () => {
                   </div>
                 </div>
                 <div className="adult-main remvSpc col-md-8 col-lg-9">
-                  <div className="adults-form-title">Complete your Profile</div>{" "}
+                  <div className="adults-form-title mt-3">
+                    Complete your Profile
+                  </div>{" "}
                   <div className="profession-section-cover">
                     <div className="row">
                       <div className="kids-form-section col-md-12 mb-3">
@@ -702,8 +711,7 @@ const AdultFormOne = () => {
                           style={{ fontWeight: "bold", fontSize: "small" }}
                           className="adults-titles kids-form-title mb-2"
                         >
-                          Select 1 to 5 profession/skills that showcase your
-                          talents, experience, and passion{" "}
+                          Profession / Skills (Choose any 1 to 5)
                           <span className="mandatory">*</span>
                         </label>
 
@@ -733,11 +741,11 @@ const AdultFormOne = () => {
                           <div key={index} className="dynamic-profession">
                             <div className="mb-3">
                               <label className="form-label">
-                                {profession.label} / day
+                                {profession.label}
                               </label>
                               <input
                                 type="number"
-                                className="form-control profession-input-adult"
+                                className="form-control profession-input"
                                 value={profession.perDaySalary || ""}
                                 onChange={(e) => {
                                   const value = e.target.value;
@@ -754,15 +762,16 @@ const AdultFormOne = () => {
                                   }
                                 }}
                                 placeholder="$/day"
+                                min="0"
                               ></input>
                             </div>
                             <div className="mb-3">
                               <label className="form-label">
-                                {profession.label} / hour
+                                {profession.label}
                               </label>
                               <input
                                 type="number"
-                                className="form-control profession-input-adult"
+                                className="form-control profession-input"
                                 value={profession.perHourSalary || ""}
                                 onChange={(e) => {
                                   const value = e.target.value;
@@ -779,12 +788,92 @@ const AdultFormOne = () => {
                                   }
                                 }}
                                 placeholder="$/hr"
+                                min="0"
+                              ></input>
+                            </div>
+
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label}
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input"
+                                value={profession.perMonthSalary || ""}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perMonthSalary",
+                                      value
+                                    );
+                                  }
+                                }}
+                                placeholder="$/month"
+                                min="0"
+                              ></input>
+                            </div>
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label}
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input"
+                                value={profession.perPostSalary || ""}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perPostSalary",
+                                      value
+                                    );
+                                  }
+                                }}
+                                placeholder="$/post"
+                                min="0"
+                              ></input>
+                            </div>
+                            <div className="mb-3">
+                              <label className="form-label">
+                                {profession.label}
+                              </label>
+                              <input
+                                type="number"
+                                className="form-control profession-input"
+                                value={profession.perImageSalary || ""}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  // Check if the value is a valid number and is non-negative
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleDetailChange(
+                                      index,
+                                      "perImageSalary",
+                                      value
+                                    );
+                                  }
+                                }}
+                                placeholder="$/image"
+                                min="0"
                               ></input>
                             </div>
 
                             <div className="offer-wrapper">
                               <input
-                                className="profession-checkbox-adult"
+                                className="profession-checkbox"
                                 id={profession.label}
                                 type="checkbox"
                                 checked={profession.openToOffers || false}
@@ -802,14 +891,14 @@ const AdultFormOne = () => {
                               >
                                 Negotiable
                               </label>
-                            </div>
-                            <div>
-                              <i
-                                onClick={(e) => {
-                                  deleteProfession(profession, index);
-                                }}
-                                className="bi bi-trash"
-                              ></i>
+                              <div>
+                                <i
+                                  onClick={(e) => {
+                                    deleteProfession(profession, index);
+                                  }}
+                                  className="bi bi-trash"
+                                ></i>
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -850,8 +939,7 @@ const AdultFormOne = () => {
                     selectedCategories?.length > 6) &&
                     selectedCategoriesError && (
                       <div className="invalid-fields">
-                        Select 3 to 6 categories that best reflect your skills
-                        and interests for portfolio and job notifications
+                        Please select 3 to 6 categories relevant to your profile
                       </div>
                     )}
                   <div className="adults-titles kids-form-title mt-3">

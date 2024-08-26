@@ -962,14 +962,18 @@
     margin: 10px 0px;
     padding: 0 10px;
   }
-  .kids-main .upload-backdrop{
+  .kids-main .upload-backdrop {
     padding: 10px;
   }
-  .kids-main .fileName{ padding-right: 7px; }
+  .kids-main .fileName {
+    padding-right: 7px;
+  }
   .kids-main .upload-backdrop img {
     width: 40px;
   }
-  .kids-main .option-menu{ padding: 0; }
+  .kids-main .option-menu {
+    padding: 0;
+  }
 
   .kids-title {
     margin-top: 25px !important;
@@ -982,380 +986,376 @@
     padding: 6px 0px 0px 10px;
   }
 
-
-
-
-
-
-.add-portfoli-section {
-  display: flex;
-  justify-content: end;
-  .add-portfolia-btn {
+  .add-portfoli-section {
+    display: flex;
+    justify-content: end;
+    .add-portfolia-btn {
+    }
   }
-}
 
-.edit_talentprofile .update-portfolio-cards {
-  margin: 10px 0;
-  display: block;
-  width: 100%;
-}
-// .bi-three-dots-vertical {
-//   padding-right: 10px;
-//   padding-left: 10px;
-// }
-.edit_talentprofile .update-portfolio-cards {
-  position: relative;
-}
-.edit_talentprofile .update-portfolio-cards .update-portfolio-action {
-  position: absolute;
-  right: 0;
-}
-.edit_talentprofile .edit-profileimg-btn {
-  margin: 10px 0;
-}
-.edit_talentprofile .edit-basicdetails-section-main {
-  padding: 0px;
-}
-
-.edit_talentprofile .update-service-cards-wrapper,
-.edit_talentprofile .update-portfolio-cards-wrapper,
-.edit_talentprofile .profile-image-edit-section {
-  margin: 0;
-}
-
-.edit-basicdetails-section-main {
-  padding: 10px 30px;
-  background-color: #ffffff;
-  border-radius: 8px;
-}
-.edit-service-section-main {
-  background-color: #ffffff;
-}
-
-.edit-service-section-wrapper {
-  border-bottom: 1px solid #c2114b;
-  margin-bottom: 30px;
-  padding-bottom: 30px;
-}
-
-.no-data {
-  font-size: 14px;
-  color: #c2114b;
-  font-family: sans-serif;
-}
-
-.edit-profileimg-btn:hover {
-  background-color: #c2114b;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: right;
-}
-.pub-url-btn:hover {
-  background-color: #c2114b;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: right;
-}
-
-.update-password-main {
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  width: 50%;
-  margin: 0 auto;
-}
-.manage-account-main {
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  width: 50%;
-  margin: 0 auto;
-}
-
-.account-active-image {
-  width: 200px;
-  height: 200px;
-  border-radius: 100px;
-  object-fit: cover;
-}
-.talentSet .subtitles {
-  margin: 10px 0;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 0;
-}
-
-.talentSet .edit-basicdetails-section-main {
-  padding: 15px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  margin: 15px 0 25px;
-}
-
-.talent-name {
-  color: #000;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 10px 0px;
-}
-
-.talent-account-status-title {
-  color: #000;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 10px 0px;
-}
-.talent-account-status-active {
-  color: green;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 10px 0px;
-}
-.talent-account-status-inactive {
-  color: red;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 10px 0px;
-}
-
-.add-more-services-btn {
-  color: #c2114b;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: underline;
-  .bi-plus-circle-fill {
-    padding-right: 8px;
+  .edit_talentprofile .update-portfolio-cards {
+    margin: 10px 0;
+    display: block;
+    width: 100%;
   }
-}
+  // .bi-three-dots-vertical {
+  //   padding-right: 10px;
+  //   padding-left: 10px;
+  // }
+  .edit_talentprofile .update-portfolio-cards {
+    position: relative;
+  }
+  .edit_talentprofile .update-portfolio-cards .update-portfolio-action {
+    position: absolute;
+    right: 0;
+  }
+  .edit_talentprofile .edit-profileimg-btn {
+    margin: 10px 0;
+  }
+  .edit_talentprofile .edit-basicdetails-section-main {
+    padding: 0px;
+  }
 
-.add-more-files-btn {
-  display: flex;
-  align-items: center;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 500;
-  background-color: green;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 6px;
-  margin-left: 10px;
-  .bi-plus-circle-fill {
-    padding-right: 8px;
+  .edit_talentprofile .update-service-cards-wrapper,
+  .edit_talentprofile .update-portfolio-cards-wrapper,
+  .edit_talentprofile .profile-image-edit-section {
+    margin: 0;
+  }
+
+  .edit-basicdetails-section-main {
+    padding: 10px 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+  }
+  .edit-service-section-main {
+    background-color: #ffffff;
+  }
+
+  .edit-service-section-wrapper {
+    border-bottom: 1px solid #c2114b;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+  }
+
+  .no-data {
+    font-size: 14px;
+    color: #c2114b;
+    font-family: sans-serif;
+  }
+
+  .edit-profileimg-btn:hover {
+    background-color: #c2114b;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: right;
+  }
+  .pub-url-btn:hover {
+    background-color: #c2114b;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .update-password-main {
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    width: 50%;
+    margin: 0 auto;
+  }
+  .manage-account-main {
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  .account-active-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    object-fit: cover;
+  }
+  .talentSet .subtitles {
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0;
+  }
+
+  .talentSet .edit-basicdetails-section-main {
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin: 15px 0 25px;
+  }
+
+  .talent-name {
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 0px;
+  }
+
+  .talent-account-status-title {
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 0px;
+  }
+  .talent-account-status-active {
+    color: green;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 0px;
+  }
+  .talent-account-status-inactive {
+    color: red;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 0px;
+  }
+
+  .add-more-services-btn {
+    color: #c2114b;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+    .bi-plus-circle-fill {
+      padding-right: 8px;
+    }
+  }
+
+  .add-more-files-btn {
+    display: flex;
+    align-items: center;
     color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    background-color: green;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    margin-left: 10px;
+    .bi-plus-circle-fill {
+      padding-right: 8px;
+      color: #ffffff;
+    }
   }
-}
 
-.add-service-btn-flex {
-  display: flex;
-  justify-content: end;
-}
+  .add-service-btn-flex {
+    display: flex;
+    justify-content: end;
+  }
 
-.edit-profile-navigations {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 20px;
-}
+  .edit-profile-navigations {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+  }
 
-.bi-arrow-left-circle-fill,
-.bi-arrow-right-circle-fill {
-  font-size: 25px;
-  cursor: pointer;
-  color: #000;
-}
-
-.bi-arrow-right-circle-fill:hover {
-  color: #c2114b;
-}
-.bi-arrow-left-circle-fill:hover {
-  color: #c2114b;
-}
-.userName-n {
-  font-size: 20px;
-  padding: 10px 0 5px;
-}
-
-.edit-profile-navigation-text {
-  font-size: 12px;
-  font-weight: 400;
-  color: #000;
-  padding-left: 8px;
-  padding-right: 8px;
-  cursor: pointer;
-}
-
-.errorMessage {
-  font-family: sans-serif;
-  color: red;
-  font-size: 12px;
-  font-weight: 400;
-  padding: 8px 0px;
-  margin: 0;
-}
-
-.pub-url-btn {
-  margin-left: 10px;
-  cursor: pointer;
-  background-color: #c2114b;
-  border-radius: 4px;
-  color: #ffffff;
-  font-family: sans-serif;
-}
-
-.image-upload-label {
-  font-size: 12px;
-  font-weight: 400;
-  color: #000;
-  padding: 8px 0px;
-}
-
-.update-password-main .password_strength_box {
-  margin-top: 0;
-}
-
-.edit-profile-navigation-text:hover {
-  font-size: 12px;
-  font-weight: 500;
-  color: #c2114b;
-  cursor: pointer;
-}
-
-.edit-profile-navigation-btn {
-  display: flex;
-  align-items: center;
-}
-.edit-profile-navigation-btn:hover {
+  .bi-arrow-left-circle-fill,
   .bi-arrow-right-circle-fill {
+    font-size: 25px;
+    cursor: pointer;
+    color: #000;
+  }
+
+  .bi-arrow-right-circle-fill:hover {
     color: #c2114b;
   }
-  .bi-arrow-left-circle-fill {
+  .bi-arrow-left-circle-fill:hover {
     color: #c2114b;
   }
+  .userName-n {
+    font-size: 20px;
+    padding: 10px 0 5px;
+  }
+
   .edit-profile-navigation-text {
+    font-size: 12px;
+    font-weight: 400;
+    color: #000;
+    padding-left: 8px;
+    padding-right: 8px;
+    cursor: pointer;
+  }
+
+  .errorMessage {
+    font-family: sans-serif;
+    color: red;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 8px 0px;
+    margin: 0;
+  }
+
+  .pub-url-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: #c2114b;
+    border-radius: 4px;
+    color: #ffffff;
+    font-family: sans-serif;
+  }
+
+  .image-upload-label {
+    font-size: 12px;
+    font-weight: 400;
+    color: #000;
+    padding: 8px 0px;
+  }
+
+  .update-password-main .password_strength_box {
+    margin-top: 0;
+  }
+
+  .edit-profile-navigation-text:hover {
+    font-size: 12px;
+    font-weight: 500;
+    color: #c2114b;
+    cursor: pointer;
+  }
+
+  .edit-profile-navigation-btn {
+    display: flex;
+    align-items: center;
+  }
+  .edit-profile-navigation-btn:hover {
+    .bi-arrow-right-circle-fill {
+      color: #c2114b;
+    }
+    .bi-arrow-left-circle-fill {
+      color: #c2114b;
+    }
+    .edit-profile-navigation-text {
+      color: #c2114b;
+    }
+  }
+
+  .image-edit-icon {
+    background-color: #ffffff;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 0;
+    right: 8px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 18px;
+    border: 1px solid #c2114b;
+  }
+
+  .profile-edit-icon {
+    font-size: 20px;
+    color: #c2114b;
+    cursor: pointer;
+  }
+
+  .edit-profileimg-btn:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+
+  .edit-service-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bi-trash {
+    cursor: pointer;
+    font-size: 20px;
+  }
+  .bi-trash:hover {
+    cursor: pointer;
     color: #c2114b;
   }
-}
 
-.image-edit-icon {
-  background-color: #ffffff;
-  width: 25px;
-  height: 25px;
-  position: absolute;
-  top: 0;
-  right: 8px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  padding: 18px;
-  border: 1px solid #c2114b;
-}
+  .urls-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+  }
 
-.profile-edit-icon {
-  font-size: 20px;
-  color: #c2114b;
-  cursor: pointer;
-}
+  .uploaded-file-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 10px 15px;
+    width: 100%;
+  }
 
-.edit-profileimg-btn:disabled {
-  background-color: #cccccc;
-  color: #666666;
-  cursor: not-allowed;
-  opacity: 0.65;
-}
+  .file-section,
+  .file-options {
+    display: flex;
+    align-items: center !important;
+  }
+  .fileName {
+    padding-left: 10px;
+  }
+  .url-fileName {
+    padding-left: 0px;
+  }
+  .url-fileName:hover {
+    padding-left: 0px;
+    text-decoration: underline;
+  }
+  .uploaded-file-wrapper-main {
+    max-height: 450px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 
-.edit-service-header {
-  display: flex;
-  justify-content: space-between;
-}
+  .kids-form-section .MuiFormControl-root.MuiTextField-root.form-control {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 
-.bi-trash {
-  cursor: pointer;
-  font-size: 20px;
-}
-.bi-trash:hover {
-  cursor: pointer;
-  color: #c2114b;
-}
+  .public-url-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 8px;
+  }
 
-.urls-wrapper {
-  display: flex;
-  justify-content: space-evenly;
-}
+  .public-url-input {
+    margin-left: 0px;
+  }
 
-.uploaded-file-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  padding: 10px 15px;
-  width: 100%;
-}
+  .bi-pencil-square {
+    color: #c2114b;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 15px;
+  }
 
-.file-section,
-.file-options {
-  display: flex;
-  align-items: center !important;
-}
-.fileName {
-  padding-left: 10px;
-}
-.url-fileName {
-  padding-left: 0px;
-}
-.url-fileName:hover {
-  padding-left: 0px;
-  text-decoration: underline;
-}
-.uploaded-file-wrapper-main {
-  max-height: 450px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
+  .public-url-text {
+    // min-width: 100%;
+    width: 88%;
+  }
 
-.kids-form-section .MuiFormControl-root.MuiTextField-root.form-control {
-  padding-top: 0;
-  padding-bottom: 0;
-}
+  .contactus-btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
 
-.public-url-wrapper {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  border-radius: 8px;
-}
-
-.public-url-input {
-  margin-left: 0px;
-}
-
-.bi-pencil-square {
-  color: #c2114b;
-  font-size: 20px;
-  cursor: pointer;
-  margin-left: 15px;
-}
-
-.public-url-text {
-  // min-width: 100%;
-  width: 88%;
-}
-
-.contactus-btn-wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.contact-us-textarea {
-  border: 1px solid#d7d7d7;
-  border-radius: 6px;
+  .contact-us-textarea {
+    border: 1px solid#d7d7d7;
+    border-radius: 6px;
+  }
 }
 
 .edit-features-wrapper {
@@ -1367,4 +1367,47 @@
   width: 300px;
   margin-right: 20px;
   margin-bottom: 15px;
+}
+
+.upload-text {
+  padding: 16px 0px;
+  text-align: center;
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.uploaded-file-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 10px 15px;
+  width: 100%;
+}
+.url-file-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 10px 0px;
+  width: 100%;
+}
+.file-section,
+.file-options {
+  display: flex;
+}
+.fileName {
+  padding-left: 10px;
+  font-size: 14px;
+}
+.url-fileName {
+  padding-left: 0px;
+}
+.url-fileName:hover {
+  padding-left: 0px;
+  text-decoration: underline;
+}
+.option-menu {
+  padding: 0px 10px;
+  cursor: pointer;
 }

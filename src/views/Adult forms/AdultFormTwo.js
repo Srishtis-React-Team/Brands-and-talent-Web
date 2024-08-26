@@ -15,6 +15,10 @@ import PopUp from "../../components/PopUp";
 import { event } from "jquery";
 import RichTextEditor from "../RichTextEditor";
 import CurrentUser from "../../CurrentUser";
+import "../../assets/css/forms/login.css";
+import "../../assets/css/dashboard.css";
+import "../../assets/css/register.css";
+import "../../assets/css/kidsmain.scss";
 const AdultFormTwo = () => {
   const {
     currentUserId,
@@ -233,7 +237,7 @@ const AdultFormTwo = () => {
           <div className="dialog-body">
             <div className="kidsform-one container">
               <div className="adult-form-wrapper row ml-0 mr-0">
-                <div className="col-md-4 col-lg-3">
+                <div className="col-md-4 col-lg-3 mt-5">
                   <div className="fixImgs">
                     <img
                       src={adultsBanner}
@@ -242,7 +246,7 @@ const AdultFormTwo = () => {
                     />
                   </div>
                 </div>
-                <div className="adult-main remvSpc col-md-8 col-lg-9">
+                <div className="adult-main remvSpc col-md-8 col-lg-9 mt-5">
                   <div className="adults-form-title">Complete your Profile</div>
                   <div className="adults-titles">Services (Optional)</div>
                   <div>

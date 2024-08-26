@@ -2,6 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import "../assets/css/findcreators.css";
 import "../assets/css/talent-profile.css";
 import "../assets/css/dashboard.css";
+
+import "../assets/css/register.css";
+import "../assets/css/kidsmain.scss";
+import "../assets/css/createjobs.css";
+import "../assets/css/talent-profile.css";
+
 import { useLocation } from "react-router-dom";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
@@ -49,7 +55,7 @@ const TalentProfile = () => {
   const [test, setTest] = useState("");
   const [talentData, setTalentData] = useState([]);
   const [photosList, setPhotosList] = useState([]);
-  const [videoAudioList, setVideoAudioList] = useState([]);
+  const [audiosList, setAudiosList] = useState([]);
   const [urlsList, setURLList] = useState([]);
   const [videoAudioUrls, setVideoAudioUrls] = useState([]);
   const [featuresList, setFeaturesList] = useState([]);
@@ -121,7 +127,7 @@ const TalentProfile = () => {
     )
       .then((resData) => {
         if (resData.data.status === true) {
-          setVideoAudioList(resData.data.data);
+          setURLList(resData.data.videoList);
         }
       })
       .catch((err) => {});
@@ -134,7 +140,7 @@ const TalentProfile = () => {
     )
       .then((resData) => {
         if (resData.data.status === true) {
-          setURLList(resData.data.videoAudioUrls);
+          setAudiosList(resData.data.audioList);
         }
       })
       .catch((err) => {});
@@ -386,6 +392,9 @@ const TalentProfile = () => {
   };
 
   useEffect(() => {}, [isSliderOpen]);
+  useEffect(() => {
+    console.log(audiosList, "audiosList");
+  }, [audiosList]);
   const [currentIndex, setCurrentIndex] = useState(currentImageIndex);
 
   useEffect(() => {
@@ -626,9 +635,20 @@ const TalentProfile = () => {
                         </div>
                         <div className="contSect">
                           <span>
-                            {talentData?.childCity}, &nbsp;
-                            {talentData?.parentState}, &nbsp;
-                            {talentData?.parentCountry}
+                            {talentData?.childCity && (
+                              <>
+                                {talentData.childCity}
+                                {talentData.parentState && ", "}
+                              </>
+                            )}
+                            {talentData?.parentState && (
+                              <>
+                                {talentData.parentState}
+                                {talentData.parentCountry && ", "}
+                              </>
+                            )}
+                            {talentData?.parentCountry &&
+                              talentData.parentCountry}
                           </span>
                         </div>
                       </div>
@@ -882,22 +902,42 @@ const TalentProfile = () => {
                       {talentData &&
                         talentData.profession &&
                         talentData.profession.map((item, index) => (
-                          <>
-                            <div key={index}>
-                              <div className="talent-profession-name">
-                                {item?.value}{" "}
-                                {item?.openToOffers === true && (
-                                  <span>(Negotiable)</span>
-                                )}
-                              </div>
-                              <div className="talent-profession-value">
-                                $ {item?.perHourSalary} per hour{" "}
-                              </div>
-                              <div className="talent-profession-value">
-                                $ {item?.perDaySalary} per day
-                              </div>
+                          <div key={index}>
+                            <div className="talent-profession-name">
+                              {item?.value}
+                              {item?.openToOffers && <span> (Negotiable)</span>}
                             </div>
-                          </>
+
+                            {item?.perHourSalary && (
+                              <div className="talent-profession-value">
+                                $ {item.perHourSalary} per hour
+                              </div>
+                            )}
+
+                            {item?.perDaySalary && (
+                              <div className="talent-profession-value">
+                                $ {item.perDaySalary} per day
+                              </div>
+                            )}
+
+                            {item?.perMonthSalary && (
+                              <div className="talent-profession-value">
+                                $ {item.perMonthSalary} per month
+                              </div>
+                            )}
+
+                            {item?.perPostSalary && (
+                              <div className="talent-profession-value">
+                                $ {item.perPostSalary} per post
+                              </div>
+                            )}
+
+                            {item?.perImageSalary && (
+                              <div className="talent-profession-value">
+                                $ {item.perImageSalary} per image
+                              </div>
+                            )}
+                          </div>
                         ))}
                     </div>
                   </div>
@@ -1097,9 +1137,11 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
+                          <p>Videos</p>
+
                           <div className="service-list-main w-100">
                             <div className="row">
-                              {urlsList.map((url, index) => (
+                              {urlsList?.map((url, index) => (
                                 <div key={index} className="col-md-6 mb-4">
                                   <div className="media-item">
                                     {isYouTubeUrl(url) ? (
@@ -1162,14 +1204,63 @@ const TalentProfile = () => {
                                 </div>
                               ))}
 
-                              {urlsList.length === 0 &&
+                              {urlsList?.length === 0 &&
                                 talentData?.profileApprove === true && (
                                   <>
                                     <div>Data not added</div>
                                   </>
                                 )}
 
-                              {urlsList.length === 0 &&
+                              {urlsList?.length === 0 &&
+                                talentData?.profileApprove === false && (
+                                  <>
+                                    <div>
+                                      Data will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
+                            </div>
+                          </div>
+                          <p>Audios</p>
+
+                          <div className="service-list-main w-100">
+                            <div className="row">
+                              {audiosList && (
+                                <div>
+                                  {audiosList.map((url) => {
+                                    return (
+                                      <>
+                                        <>
+                                          <div className="cv-card" key={url}>
+                                            <div className="d-flex align-items-center">
+                                              <i className="fa-solid fa-file"></i>
+                                              <div className="fileName audio-url-style ">
+                                                {url}
+                                              </div>
+                                            </div>
+                                            <button
+                                              className="view-cv"
+                                              onClick={() => window.open(url)}
+                                            >
+                                              Play
+                                            </button>
+                                          </div>
+                                        </>
+                                      </>
+                                    );
+                                  })}
+                                </div>
+                              )}
+
+                              {audiosList?.length === 0 &&
+                                talentData?.profileApprove === true && (
+                                  <>
+                                    <div>Data not added</div>
+                                  </>
+                                )}
+
+                              {audiosList?.length === 0 &&
                                 talentData?.profileApprove === false && (
                                   <>
                                     <div>
@@ -1352,7 +1443,7 @@ const TalentProfile = () => {
                         <div className="models-photos videoWraper">
                           <div className="service-list-main w-100">
                             <div className="row">
-                              {urlsList.map((url, index) => (
+                              {urlsList?.map((url, index) => (
                                 <div key={index} className="col-md-6 mb-4">
                                   <div className="media-item">
                                     {isYouTubeUrl(url) ? (
@@ -1403,14 +1494,14 @@ const TalentProfile = () => {
                                 </div>
                               ))}
 
-                              {urlsList.length === 0 &&
+                              {urlsList?.length === 0 &&
                                 talentData?.profileApprove === true && (
                                   <>
                                     <div>Data not added</div>
                                   </>
                                 )}
 
-                              {urlsList.length === 0 &&
+                              {urlsList?.length === 0 &&
                                 talentData?.profileApprove === false && (
                                   <>
                                     <div>
@@ -1423,6 +1514,56 @@ const TalentProfile = () => {
                           </div>
                         </div>
                       )}
+
+                      <p>Audios</p>
+
+                      <div className="service-list-main w-100">
+                        <div className="row">
+                          {audiosList && (
+                            <div>
+                              {audiosList.map((url) => {
+                                return (
+                                  <>
+                                    <>
+                                      <div className="cv-card" key={url}>
+                                        <div className="d-flex align-items-center">
+                                          <i className="fa-solid fa-file"></i>
+                                          <div className="fileName audio-url-style ">
+                                            {url}
+                                          </div>
+                                        </div>
+                                        <button
+                                          className="view-cv"
+                                          onClick={() => window.open(url)}
+                                        >
+                                          Play
+                                        </button>
+                                      </div>
+                                    </>
+                                  </>
+                                );
+                              })}
+                            </div>
+                          )}
+
+                          {audiosList?.length === 0 &&
+                            talentData?.profileApprove === true && (
+                              <>
+                                <div>Data not added</div>
+                              </>
+                            )}
+
+                          {audiosList?.length === 0 &&
+                            talentData?.profileApprove === false && (
+                              <>
+                                <div>
+                                  Data will be visible only after admin approval
+                                </div>
+                              </>
+                            )}
+                        </div>
+                      </div>
+
                       {services && (
                         <>
                           <ServicesCarousel talentData={talentData} />

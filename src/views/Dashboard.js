@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/dashboard.css";
+import "../assets/css/talent-profile.css";
+import "../assets/css/talent-dashboard.css";
 import Header from "../layout/header";
 import Footer from "../layout/Footer";
 import { useNavigate } from "react-router";
@@ -272,6 +274,8 @@ const Dashboard = () => {
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
           getTalentList();
+          setStarCount(null);
+          setComments("");
         }, 2000);
       })
       .catch((err) => {});
@@ -358,7 +362,7 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* <div className="wraper">
+        <div className="wraper">
           <div className="container-fluid">
             <div className="tabs-section">
               <div className="title">Popular Talent</div>
@@ -505,7 +509,7 @@ const Dashboard = () => {
               </div>
             )}
           </div>
-        </div> */}
+        </div>
 
         <div className="productsWraper wraper secSpac">
           <div className="container">

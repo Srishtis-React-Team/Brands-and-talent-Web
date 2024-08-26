@@ -4,7 +4,9 @@ import "../assets/css/forms/kidsform-one.css";
 import "../assets/css/register.css";
 import "../assets/css/dashboard.css";
 import "../assets/css/kidsmain.scss";
-
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
 import Axios from "axios";
@@ -16,14 +18,17 @@ import CurrentUser from "../../src/CurrentUser";
 import RichTextEditor from "../views/RichTextEditor";
 import CreatableSelect from "react-select/creatable";
 import useFieldDatas from "../config/useFieldDatas";
+import { IconButton } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Tooltip } from "react-tooltip";
 
 // Regular expressions for different video platforms
 const urlPatterns = {
   youtube:
     /^.*(youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([^"&?\/\s]{11})/,
-  vimeo: /^.*(vimeo\.com\/)(\d+)$/,
-  instagram: /^.*(instagram\.com\/p\/[^/?#&]+)\/?$/,
-  twitter: /^.*(twitter\.com\/.*\/status\/\d+)\/?$/,
+  vimeo: /^.*(vimeo\.com\/)(\d+|[\w-]+\/[\w-]+)(?:\?.*)?$/,
+  instagram: /^.*(instagram\.com\/(p|reel|tv)\/[^/?#&]+)\/?(?:\?.*)?$/,
+  twitter: /^.*((twitter|x)\.com\/.*\/status\/\d+)\/?$/,
 };
 
 const isValidUrl = (url) => {
@@ -91,8 +96,11 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [tiktoksFollowers, setTiktoksFollowers] = useState("");
   const [youtubesFollowers, setYoutubesFollowers] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
   const [checkVideoUrl, setCheckVideoUrl] = useState(false);
+  const [checkAudioUrl, setCheckAudioUrl] = useState(false);
   const [urls, setUrls] = useState([]);
+  const [audioUrlsList, setAudioUrlsList] = useState([]);
 
   const [idType, setIdType] = useState("");
   const [verificationID, setVerificationID] = useState("");
@@ -194,11 +202,57 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     }
   };
 
+  const isNotKnownFormatUrl = (url) => {
+    return !(
+      urlPatterns.youtube.test(url) ||
+      urlPatterns.vimeo.test(url) ||
+      urlPatterns.instagram.test(url) ||
+      urlPatterns.twitter.test(url)
+    );
+  };
+
+  const handleAudioUrl = () => {
+    if (audioUrl.trim() !== "") {
+      if (isNotKnownFormatUrl(audioUrl)) {
+        setAudioUrlsList([...audioUrlsList, audioUrl]);
+        setAudioUrl("");
+        setCheckAudioUrl(false);
+      } else {
+        setCheckAudioUrl(true);
+      }
+    }
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const dropDownClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const handleFileClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleUrlChange = (e) => {
     const url = e.target.value;
     setVideoUrl(url);
     // Validate URL in real-time
     setCheckVideoUrl(!isValidUrl(url));
+  };
+
+  const handleAudioChange = (e) => {
+    const url = e.target.value;
+    setAudioUrl(url);
+    // Validate URL in real-time
+    setCheckAudioUrl(!isNotKnownFormatUrl(url));
   };
 
   const handlePaste = (e) => {
@@ -210,9 +264,23 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     setCheckVideoUrl(!isValidUrl(pastedText));
   };
 
+  const handleAudioPaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+    setAudioUrl(pastedText);
+    // Validate pasted URL
+    setCheckAudioUrl(!isNotKnownFormatUrl(pastedText));
+  };
+
   const handleDeleteUrl = (index) => {
     const newUrls = urls.filter((url, i) => i !== index);
     setUrls(newUrls);
+  };
+
+  const deleteAudioUrl = (index) => {
+    const newUrls = audioUrlsList.filter((url, i) => i !== index);
+    setAudioUrlsList(newUrls);
   };
 
   const profileUpload = (event) => {
@@ -576,7 +644,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       image: profileFile,
       cv: resumeFile,
       portfolio: portofolioFile,
-      videosAndAudios: urls,
       instaFollowers: instagramFollowers,
       tiktokFollowers: tiktoksFollowers,
       twitterFollowers: xtwitterFollowers,
@@ -588,8 +655,10 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       verificationId: verificationID,
       features: features,
       childAboutYou: aboutYou,
-      videoAudioUrls: urls,
+      videoList: urls,
+      audioList: audioUrlsList,
     };
+
     setIsLoading(true);
 
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
@@ -698,49 +767,39 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                           )}
                           <div className="fileName">{profileFile.title}</div>
                         </div>
-                        <div className="file-options">
-                          <div className="sucess-tick">
-                            <img src={greenTickCircle} alt="" />
-                          </div>
-                          <div className="option-menu">
-                            <div className="dropdown">
-                              <img
-                                onClick={() => setShowOptions(!showOptions)}
-                                src={elipsis}
-                                alt=""
-                                className="dropdown-toggle elipsis-icon"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              />
-                              <ul
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() => handleView(profileFile)}
-                                    id="view"
-                                  >
-                                    View
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() =>
-                                      handleProfileDelete(profileFile)
-                                    }
-                                    id="delete"
-                                  >
-                                    Delete
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
+
+                        <div className="update-portfolio-action">
+                          <IconButton
+                            aria-label="more"
+                            aria-controls="dropdown-menu"
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                          >
+                            <MoreVertIcon />
+                          </IconButton>
+                          <Menu
+                            id="dropdown-menu"
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                          >
+                            <MenuItem
+                              onClick={() => {
+                                handleClose();
+                                handleView(profileFile);
+                              }}
+                            >
+                              View
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                dropDownClose();
+                                handleProfileDelete(profileFile);
+                              }}
+                            >
+                              Delete
+                            </MenuItem>
+                          </Menu>
                         </div>
                       </div>
                     </>
@@ -817,51 +876,39 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                 )}
                                 <div className="fileName">{item.title}</div>
                               </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="dropdownMenuButton"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="dropdownMenuButton"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleView(item)}
-                                          id="view"
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() =>
-                                            handlePortofolioDelete(item)
-                                          }
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      handleClose();
+                                      handleView(item);
+                                    }}
+                                  >
+                                    View
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      handlePortofolioDelete(item);
+                                    }}
+                                  >
+                                    Delete
+                                  </MenuItem>
+                                </Menu>
                               </div>
                             </div>
                           </>
@@ -869,13 +916,13 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       })}
                     </>
                   )}
-
+                  <div className="videos-label">
+                    ( Upload your previous work samples Videos/Audios)
+                  </div>
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
-                      <label className="form-label">Videos & Audios</label>
-                      <div className="videos-label">
-                        ( Upload your previous work samples videos/audios.)
-                      </div>
+                      <label className="form-label">Videos</label>
+
                       <div className="d-flex align-items-center">
                         <input
                           type="text"
@@ -885,7 +932,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                             handleUrlChange(e);
                           }}
                           onPaste={handlePaste}
-                          placeholder="Paste Videos/Audios Url"
+                          placeholder="Paste Video Url"
                         ></input>
                         <i
                           className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
@@ -902,7 +949,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       )}
                     </div>
                   </div>
-
                   {urls && (
                     <>
                       {urls.map((url, index) => {
@@ -919,40 +965,111 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   {url}
                                 </a>
                               </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="resumeDropdown"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="resumeDropdown"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleDeleteUrl(index)}
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      handleDeleteUrl(index);
+                                    }}
+                                  >
+                                    Delete
+                                  </MenuItem>
+                                </Menu>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </>
+                  )}
+
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">Audios</label>
+                      {/* <div className="videos-label">
+                        ( Upload your previous work samples audios.)
+                      </div> */}
+                      <div className="d-flex align-items-center">
+                        <input
+                          type="text"
+                          className="form-control mt-2 ml-3"
+                          value={audioUrl}
+                          onChange={(e) => {
+                            handleAudioChange(e);
+                          }}
+                          onPaste={handleAudioPaste}
+                          placeholder="Paste Audio Url"
+                        ></input>
+                        <i
+                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
+                          onClick={handleAudioUrl}
+                        ></i>
+                      </div>
+                      {checkAudioUrl && (
+                        <>
+                          <div className="invalid-fields">
+                            Invalid Audio URL. Please enter a valid Audio URL .
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  {audioUrlsList && (
+                    <>
+                      {audioUrlsList.map((url, index) => {
+                        return (
+                          <>
+                            <div key={index} className="url-file-wrapper">
+                              <div className="file-section">
+                                <a
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="url-fileName"
+                                >
+                                  {url}
+                                </a>
+                              </div>
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      deleteAudioUrl(index);
+                                    }}
+                                  >
+                                    Delete
+                                  </MenuItem>
+                                </Menu>
                               </div>
                             </div>
                           </>
@@ -1014,51 +1131,39 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                 )}
                                 <div className="fileName">{item.title}</div>
                               </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="resumeDropdown"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="resumeDropdown"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleView(item)}
-                                          id="view"
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() =>
-                                            handleResumeDelete(item)
-                                          }
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      handleClose();
+                                      handleView(item);
+                                    }}
+                                  >
+                                    View
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      handleResumeDelete(item);
+                                    }}
+                                  >
+                                    Delete
+                                  </MenuItem>
+                                </Menu>
                               </div>
                             </div>
                           </>
@@ -1216,49 +1321,39 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                           )}
                           <div className="fileName">{verificationID.title}</div>
                         </div>
-                        <div className="file-options">
-                          <div className="sucess-tick">
-                            <img src={greenTickCircle} alt="" />
-                          </div>
-                          <div className="option-menu">
-                            <div className="dropdown">
-                              <img
-                                onClick={() => setShowOptions(!showOptions)}
-                                src={elipsis}
-                                alt=""
-                                className="dropdown-toggle elipsis-icon"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              />
-                              <ul
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() => handleView(verificationID)}
-                                    id="view"
-                                  >
-                                    View
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() =>
-                                      handleVerificationDelete(verificationID)
-                                    }
-                                    id="delete"
-                                  >
-                                    Delete
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
+
+                        <div className="update-portfolio-action">
+                          <IconButton
+                            aria-label="more"
+                            aria-controls="dropdown-menu"
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                          >
+                            <MoreVertIcon />
+                          </IconButton>
+                          <Menu
+                            id="dropdown-menu"
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                          >
+                            <MenuItem
+                              onClick={() => {
+                                handleClose();
+                                handleView(verificationID);
+                              }}
+                            >
+                              View
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                dropDownClose();
+                                handleVerificationDelete(verificationID);
+                              }}
+                            >
+                              Delete
+                            </MenuItem>
+                          </Menu>
                         </div>
                       </div>
                     </>

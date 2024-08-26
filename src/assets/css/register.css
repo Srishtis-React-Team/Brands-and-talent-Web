@@ -335,12 +335,19 @@
 }
 
 @media (max-width: 767px) {
-  .dialog-body{
+  .dialog-body {
     min-height: 100%;
     margin: 70px 0 85px !important;
   }
-  .dialog-body.spaceTops{ margin-top: 0; }
-
+  .dialog-body.spaceTops {
+    margin-top: 0;
+  }
+  .material-mobile-style {
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
+    height: 45px;
+    padding: 6px 0px 0px 10px !important;
+  }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
   .adult-signup-main {
@@ -454,5 +461,11 @@
   border: 1px solid #d3d3d3;
   border-radius: 3px;
   height: 45px;
-  padding: 0px 0px 0px 10px;
+  padding: 5px 0px 0px 10px;
 }
+/* .material-mobile-style {
+  border: 1px solid #d3d3d3;
+  border-radius: 3px;
+  height: 45px;
+  padding: 0px 0px 0px 10px;
+} */

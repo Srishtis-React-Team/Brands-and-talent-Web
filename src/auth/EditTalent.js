@@ -68,9 +68,9 @@ function a11yProps(index) {
 const urlPatterns = {
   youtube:
     /^.*(youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([^"&?\/\s]{11})/,
-  vimeo: /^.*(vimeo\.com\/)(\d+)$/,
-  instagram: /^.*(instagram\.com\/p\/[^/?#&]+)\/?$/,
-  twitter: /^.*(twitter\.com\/.*\/status\/\d+)\/?$/,
+  vimeo: /^.*(vimeo\.com\/)(\d+|[\w-]+\/[\w-]+)(?:\?.*)?$/,
+  instagram: /^.*(instagram\.com\/(p|reel|tv)\/[^/?#&]+)\/?(?:\?.*)?$/,
+  twitter: /^.*((twitter|x)\.com\/.*\/status\/\d+)\/?$/,
 };
 
 const isValidUrl = (url) => {
@@ -145,7 +145,6 @@ const EditTalent = () => {
   const [editProfileImage, setEditProfileImage] = useState("");
   const [editProfileImageObject, setEditProfileImageObject] = useState(null);
   const [portofolioFile, setPortofolioFile] = useState([]);
-  const [videoAUdioFile, setVideoAudioFile] = useState([]);
   const [resumeFile, setResumeFile] = useState([]);
   const paramsValues = window.location.search;
   const urlParams = new URLSearchParams(paramsValues);
@@ -213,15 +212,17 @@ const EditTalent = () => {
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [talentId, setTalentId] = useState(null);
   const [talentData, setTalentData] = useState();
-  const [videoUrl, setVideoUrl] = useState("");
   const [publicUrl, setPublicUrl] = useState("");
-  const [urls, setUrls] = useState([]);
-  const [initialUrl, setInitialUrl] = useState("");
   const [selectedNationalityOptions, setSelectedNationalityOptions] = useState(
     []
   );
+  const [videoUrl, setVideoUrl] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
   const [checkVideoUrl, setCheckVideoUrl] = useState(false);
-
+  const [checkAudioUrl, setCheckAudioUrl] = useState(false);
+  const [initialUrl, setInitialUrl] = useState("");
+  const [urls, setUrls] = useState([]);
+  const [audioUrlsList, setAudioUrlsList] = useState([]);
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -427,6 +428,8 @@ const EditTalent = () => {
             setState(resData?.data?.data?.parentState);
             getStates(resData?.data?.data?.parentCountry);
             setKidsCity(resData?.data?.data?.childCity);
+            setAudioUrlsList(resData?.data?.data?.audioList);
+            setUrls(resData?.data?.data?.videoList);
             getCities({
               countryName: resData?.data?.data?.parentCountry,
               stateName: resData?.data?.data?.parentState,
@@ -448,7 +451,6 @@ const EditTalent = () => {
             ]);
             setAboutYou(resData.data.data?.childAboutYou);
             setPortofolioFile(resData.data.data?.portfolio);
-            setVideoAudioFile(resData.data.data?.videosAndAudios);
             setResumeFile(resData.data.data?.cv);
             setAge(resData.data.data?.age);
             const selectedOptions = resData.data.data?.languages.map(
@@ -487,6 +489,8 @@ const EditTalent = () => {
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
             setDob(resData?.data?.data?.childDob);
+            setAudioUrlsList(resData?.data?.data?.audioList);
+            setUrls(resData?.data?.data?.videoList);
             setCountry(resData?.data?.data?.parentCountry);
             setState(resData?.data?.data?.parentState);
             setKidsCity(resData?.data?.data?.childCity);
@@ -508,7 +512,6 @@ const EditTalent = () => {
             ]);
             setAboutYou(resData.data.data?.childAboutYou);
             setPortofolioFile(resData.data.data?.portfolio);
-            setVideoAudioFile(resData.data.data?.videosAndAudios);
             setResumeFile(resData.data.data?.cv);
             setAge(resData.data.data?.age);
             const selectedOptions = resData.data.data?.languages.map(
@@ -889,14 +892,6 @@ const EditTalent = () => {
     }
   };
 
-  const newVideoUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-
-      uploadNewVideo(fileData);
-    }
-  };
-
   const serviceFileInputRefs = useRef([]);
 
   const serviceFile = (index) => {
@@ -1031,71 +1026,6 @@ const EditTalent = () => {
       });
   };
 
-  const uploadNewVideo = async (fileData) => {
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        if (resData?.data?.status === true) {
-          let fileObj = {
-            id: resData.data.data.fileId,
-            title: fileData.name,
-            fileData: resData.data.data.filename,
-            type: resData?.data?.data?.filetype,
-          };
-          updateVideoAPI(fileObj);
-        }
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
-
-  const updateVideoAPI = async (fileObj) => {
-    let portofolioArray = [...videoAUdioFile, fileObj];
-
-    let formData;
-    if (portofolioArray.length > 0) {
-      formData = {
-        videosAndAudios: portofolioArray,
-      };
-    }
-    let apiUrl;
-    if (talentData?.type == "kids") {
-      apiUrl = API.editKids;
-    } else if (talentData?.type == "adults") {
-      apiUrl = API.updateAdults;
-    }
-    await ApiHelper.post(`${apiUrl}${talentData?._id}`, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          setIsLoading(false);
-          setMessage("File Added Successfully");
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-            getKidsData();
-          }, 2000);
-        } else if (resData.data.status === false) {
-          setIsLoading(false);
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-          }, 2000);
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
-  };
   const uploadNewResume = async (fileData) => {
     setLoader(true);
     const params = new FormData();
@@ -1312,14 +1242,6 @@ const EditTalent = () => {
   const portfolioFile = () => {
     if (portfolioFileInputRef.current) {
       portfolioFileInputRef.current.click();
-    }
-  };
-
-  const videoFileInputRef = useRef(null);
-
-  const videoFile = () => {
-    if (videoFileInputRef.current) {
-      videoFileInputRef.current.click();
     }
   };
 
@@ -1547,50 +1469,6 @@ const EditTalent = () => {
       });
   };
 
-  const handleUrlChange = (e) => {
-    setVideoUrl(e.target.value);
-    // Validate URL in real-time
-    setCheckVideoUrl(!isValidUrl(e.target.value));
-  };
-
-  const handleAddUrl = async () => {
-    if (videoUrl.trim() !== "") {
-      setVideoUrl("");
-      const formData = {
-        videosAndAudios: [...talentData?.videoAudioUrls, videoUrl],
-        videoAudioUrls: [...talentData?.videoAudioUrls, videoUrl],
-      };
-
-      setIsLoading(true);
-
-      let apiUrl;
-
-      if (talentData?.type === "kids") {
-        apiUrl = `${API.editKids}`;
-      }
-      if (talentData?.type === "adults") {
-        apiUrl = `${API.updateAdults}`;
-      }
-
-      await ApiHelper.post(`${apiUrl}${talentId}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            setIsLoading(false);
-            setMessage("Updated SuccessFully");
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-              getKidsData();
-            }, 1000);
-          } else {
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
-        });
-    }
-  };
-
   const handlePaste = (e) => {
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
@@ -1598,30 +1476,6 @@ const EditTalent = () => {
     setVideoUrl(pastedText);
     // Validate pasted URL
     setCheckVideoUrl(!isValidUrl(pastedText));
-  };
-
-  const submitVideoAudios = async () => {
-    const formData = {
-      videosAndAudios: urls,
-      videoAudioUrls: urls,
-    };
-    setIsLoading(true);
-    await ApiHelper.post(`${API.editKids}${talentId}`, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          setIsLoading(false);
-          setMessage("Updated SuccessFully");
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-            getKidsData();
-          }, 1000);
-        } else {
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
   };
 
   const deleteVideoUrls = async (item, index) => {
@@ -1747,16 +1601,135 @@ const EditTalent = () => {
     }
   };
 
-  useEffect(() => {}, [selectedProfessions]);
+  const isNotKnownFormatUrl = (url) => {
+    return !(
+      urlPatterns.youtube.test(url) ||
+      urlPatterns.vimeo.test(url) ||
+      urlPatterns.instagram.test(url) ||
+      urlPatterns.twitter.test(url)
+    );
+  };
+
+  const handleAudioUrl = async () => {
+    console.log(audioUrlsList, "audioUrlsList audioUrl");
+    console.log(audioUrl, "audioUrl audioUrl");
+    if (audioUrl.trim() !== "") {
+      if (isNotKnownFormatUrl(audioUrl)) {
+        setAudioUrlsList([...audioUrlsList, audioUrl]);
+        setAudioUrl("");
+        setCheckAudioUrl(false);
+      } else {
+        setCheckAudioUrl(true);
+      }
+    }
+    postNewAudios();
+  };
+  const handleUrlChange = (e) => {
+    const url = e.target.value;
+    setVideoUrl(url);
+    // Validate URL in real-time
+    setCheckVideoUrl(!isValidUrl(url));
+  };
+
+  const handleAudioChange = (e) => {
+    const url = e.target.value;
+    setAudioUrl(url);
+    // Validate URL in real-time
+    setCheckAudioUrl(!isNotKnownFormatUrl(url));
+  };
+
+  const handleAudioPaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+    setAudioUrl(pastedText);
+    console.log(pastedText, "pastedText");
+    console.log(audioUrl, "audioUrl");
+    // Validate pasted URL
+    setCheckAudioUrl(!isNotKnownFormatUrl(pastedText));
+  };
+
+  const handleAddUrl = async () => {
+    if (videoUrl.trim() !== "") {
+      if (isValidUrl(videoUrl)) {
+        setUrls([...urls, videoUrl]);
+
+        setVideoUrl("");
+        setCheckVideoUrl(false);
+      } else {
+        setCheckVideoUrl(true);
+      }
+    }
+    postNewVideos();
+  };
+
+  const deleteAudioUrl = (index) => {
+    const newUrls = audioUrlsList.filter((url, i) => i !== index);
+    setAudioUrlsList(newUrls);
+  };
+
   useEffect(() => {
     console.log(talentData, "talentData");
   }, [talentData]);
   useEffect(() => {
-    console.log(featuresList, "featuresList");
-  }, [featuresList]);
-  useEffect(() => {
-    console.log(features, "features");
-  }, [features]);
+    console.log(audioUrl, "audioUrl");
+  }, [audioUrl]);
+  // useEffect(() => {
+  //   console.log(urls, "urls");
+  //   postNewVideos();
+  // }, [urls]);
+
+  // useEffect(() => {
+  //   console.log(audioUrlsList, "audioUrlsList");
+  //   postNewAudios();
+  // }, [audioUrlsList]);
+
+  const postNewVideos = async () => {
+    if (urls.length > 0) {
+      const formData = {
+        videoList: urls,
+      };
+      setIsLoading(true);
+      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Updated SuccessFully");
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+            }, 1000);
+          } else {
+          }
+        })
+        .catch((err) => {
+          setIsLoading(false);
+        });
+    }
+  };
+  const postNewAudios = async () => {
+    if (audioUrlsList.length > 0) {
+      const formData = {
+        audioList: audioUrlsList,
+      };
+      setIsLoading(true);
+      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+        .then((resData) => {
+          if (resData.data.status === true) {
+            setIsLoading(false);
+            setMessage("Updated SuccessFully");
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+            }, 1000);
+          } else {
+          }
+        })
+        .catch((err) => {
+          setIsLoading(false);
+        });
+    }
+  };
 
   return (
     <>
@@ -1784,6 +1757,8 @@ const EditTalent = () => {
                 value={valueTabs}
                 onChange={handleChange}
                 aria-label="basic tabs example"
+                variant="scrollable"
+                scrollButtons="auto"
               >
                 <Tab
                   label="Profile Image"
@@ -2202,7 +2177,7 @@ const EditTalent = () => {
                     </label>
                     <Select
                       placeholder="Search country..."
-                      options={countryList.map((country, index) => ({
+                      options={countryList?.map((country, index) => ({
                         value: country,
                         label: country,
                         key: index,
@@ -2224,7 +2199,7 @@ const EditTalent = () => {
                     </label>
                     <Select
                       placeholder="Select state..."
-                      options={stateList.map((state) => ({
+                      options={stateList?.map((state) => ({
                         value: state.stateId, // or whatever unique identifier you want to use
                         label: state.name,
                       }))}
@@ -2240,7 +2215,7 @@ const EditTalent = () => {
                     <label className="form-label">City</label>
                     <Select
                       placeholder="Select City..."
-                      options={cityList.map((city) => ({
+                      options={cityList?.map((city) => ({
                         value: city.cityId, // or whatever unique identifier you want to use
                         label: city.name,
                       }))}
@@ -2673,12 +2648,12 @@ const EditTalent = () => {
             <CustomTabPanel value={valueTabs} index={3}>
               <div className="update-portfolio-section edit-basicdetails-section-main">
                 <div className="update-portfolio-cards-wrapper">
-                  <div className="update-portfolio-title">Video & Audios</div>
+                  <div className="update-portfolio-title">Videos & Audios</div>
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
-                      {/* <label className="form-label">Videos & Audios</label> */}
+                      <label className="form-label">Videos</label>
                       <div className="videos-label">
-                        ( Upload your previous work samples videos/audios.)
+                        ( Upload your previous work samples videos.)
                       </div>
                       <div className="d-flex align-items-center">
                         <input
@@ -2689,7 +2664,7 @@ const EditTalent = () => {
                             handleUrlChange(e);
                           }}
                           onPaste={handlePaste}
-                          placeholder="Paste Videos/Audios Url"
+                          placeholder="Paste Video Url"
                         ></input>
                         <i
                           className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
@@ -2721,42 +2696,109 @@ const EditTalent = () => {
                                       {url}
                                     </a>
                                   </div>
-                                  <div className="file-options">
-                                    <div className="sucess-tick">
-                                      <img src={greenTickCircle} alt="" />
-                                    </div>
-                                    <div className="option-menu">
-                                      <div className="dropdown">
-                                        <img
-                                          onClick={() =>
-                                            setShowOptions(!showOptions)
-                                          }
-                                          src={elipsis}
-                                          alt=""
-                                          className="dropdown-toggle elipsis-icon"
-                                          type="button"
-                                          id="resumeDropdown"
-                                          data-bs-toggle="dropdown"
-                                          aria-expanded="false"
-                                        />
-                                        <ul
-                                          className="dropdown-menu"
-                                          aria-labelledby="resumeDropdown"
-                                        >
-                                          <li>
-                                            <a
-                                              className="dropdown-item"
-                                              onClick={() =>
-                                                handleDeleteUrl(index)
-                                              }
-                                              id="delete"
-                                            >
-                                              Delete
-                                            </a>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
+
+                                  <div className="update-portfolio-action">
+                                    <IconButton
+                                      aria-label="more"
+                                      aria-controls="dropdown-menu"
+                                      aria-haspopup="true"
+                                      onClick={handleClick}
+                                    >
+                                      <MoreVertIcon />
+                                    </IconButton>
+                                    <Menu
+                                      id="dropdown-menu"
+                                      anchorEl={anchorEl}
+                                      open={Boolean(anchorEl)}
+                                      onClose={handleClose}
+                                    >
+                                      <MenuItem
+                                        onClick={() => {
+                                          dropDownClose();
+                                          handleDeleteUrl(index);
+                                        }}
+                                      >
+                                        Delete
+                                      </MenuItem>
+                                    </Menu>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })}
+                        </>
+                      )}
+                    </div>
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">Audios</label>
+                      <div className="videos-label">
+                        ( Upload your previous work samples Audios.)
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <input
+                          type="text"
+                          className="form-control mt-2 ml-3"
+                          value={audioUrl}
+                          onChange={(e) => {
+                            handleAudioChange(e);
+                          }}
+                          onPaste={handleAudioPaste}
+                          placeholder="Paste Audio Url"
+                        ></input>
+                        <i
+                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
+                          onClick={handleAudioUrl}
+                        ></i>
+                      </div>
+                      {checkAudioUrl && (
+                        <>
+                          <div className="invalid-fields">
+                            Invalid Audio URL. Please enter a valid Audio URL .
+                          </div>
+                        </>
+                      )}
+
+                      {audioUrlsList && (
+                        <>
+                          {audioUrlsList.map((url, index) => {
+                            return (
+                              <>
+                                <div key={index} className="url-file-wrapper">
+                                  <div className="file-section">
+                                    <a
+                                      href={url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="url-fileName"
+                                    >
+                                      {url}
+                                    </a>
+                                  </div>
+
+                                  <div className="update-portfolio-action">
+                                    <IconButton
+                                      aria-label="more"
+                                      aria-controls="dropdown-menu"
+                                      aria-haspopup="true"
+                                      onClick={handleClick}
+                                    >
+                                      <MoreVertIcon />
+                                    </IconButton>
+                                    <Menu
+                                      id="dropdown-menu"
+                                      anchorEl={anchorEl}
+                                      open={Boolean(anchorEl)}
+                                      onClose={handleClose}
+                                    >
+                                      <MenuItem
+                                        onClick={() => {
+                                          dropDownClose();
+                                          deleteAudioUrl(index);
+                                        }}
+                                      >
+                                        Delete
+                                      </MenuItem>
+                                    </Menu>
                                   </div>
                                 </div>
                               </>

@@ -66,6 +66,7 @@ const AppliedJobs = lazy(() => import("../views/AppliedJobs"));
 const Applicants = lazy(() => import("../brand/pages/Applicants"));
 const OverallJobs = lazy(() => import("../brand/pages/OverallJobs"));
 const EditTalent = lazy(() => import("../auth/EditTalent"));
+const AdultSignup = lazy(() => import("../auth/AdultSignup"));
 const SavedJobs = lazy(() => import("../views/SavedJobs"));
 const TalentSettings = lazy(() => import("../auth/TalentSettings"));
 const TalentNotification = lazy(() => import("../views/TalentNotification"));
@@ -175,6 +176,7 @@ function Routing() {
             />
             <Route path="/resources" element={<Resources />} />
             <Route path="/signup" element={<Register />} />
+            <Route path="/adult-signup" element={<AdultSignup />} />
             <Route path="/otp" element={<OTPComponent />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/community-guidelines" element={<Guidelines />} />
