@@ -1169,7 +1169,7 @@ input[type="radio"] {
   border: 1px solid #c2114b;
 }
 .adults-select-btn {
-  padding:0 25px;
+  padding: 0 25px;
   min-width: 180px;
   max-width: 100%;
   height: 50px;
@@ -1655,7 +1655,6 @@ a.url-fileName {
   word-break: break-word;
 }
 
-
 head .profile-image-header {
   margin-left: 15px;
   padding: 0 !important;
@@ -1819,8 +1818,6 @@ head .profile-image-header {
   margin-left: 160px;
 }
 
-
-
 .ql-editor {
   height: 150px !important;
 }
@@ -1953,8 +1950,6 @@ li.nav-item.dropdown {
   color: #c2114b;
 }
 
-
-
 input::placeholder {
   font-size: 13px !important;
 }
@@ -2004,16 +1999,9 @@ input::placeholder {
   max-width: 20px;
   max-height: 20px;
 }
-.kids-form-row.row.spcBtm{ margin-bottom: 70px; }
-
-
-
-
-
-
-
-
-
+.kids-form-row.row.spcBtm {
+  margin-bottom: 70px;
+}
 
 @media (max-width: 1399px) {
   .menu-items > div.navTxt {
@@ -2121,9 +2109,7 @@ input::placeholder {
   .brand-main-container {
     width: 100% !important;
   }
-
 }
-
 
 @media (max-width: 767px) {
   .step-back,
@@ -2131,13 +2117,22 @@ input::placeholder {
     margin: 0 5px;
   }
 
+  .kids-form-row.row.spcBtm {
+    margin-bottom: 20px;
+  }
 
-  .kids-form-row.row.spcBtm{ margin-bottom: 20px; }
+  .explore-info {
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .step-back,
+  .step-continue {
+    margin: 0 5px;
+  }
 
-  .explore-info {  font-size: 14px; line-height: 21px; }
-  .step-back, .step-continue {  margin: 0 5px; }
-
-  .kidsform-one .kids-wrapper{ margin: 0; }
+  .kidsform-one .kids-wrapper {
+    margin: 0;
+  }
   .kidsform-one .kids-wrapper {
     margin: 0;
   }
@@ -2297,7 +2292,7 @@ input::placeholder {
     height: 40px;
     border-radius: 25px;
     border: 1px solid #fff;
-    background: #c2114b; 
+    background: #c2114b;
     color: #fff;
     font-size: 15px;
     font-style: normal;
@@ -2838,7 +2833,6 @@ input::placeholder {
   }
 }
 
-
 @media (max-width: 430px) {
   .gallery-wrapper {
     width: 47%;
@@ -2868,7 +2862,7 @@ input::placeholder {
   .nav-item.dropdown {
     list-style-type: inherit;
   }
- 
+
   .nav-link {
     color: #000;
     font-size: 14px;
@@ -2943,7 +2937,7 @@ input::placeholder {
     align-items: center;
   }
   .kids-select-btn {
-    padding:0 25px;
+    padding: 0 25px;
     min-width: 180px;
     max-width: 100%;
     height: 50px;
@@ -3232,10 +3226,10 @@ input::placeholder {
   .kids-form-row.row.mb-4 {
     margin-bottom: 0rem !important;
   }
-  .media-wrapper .media-info .mediaIcon{
+  .media-wrapper .media-info .mediaIcon {
     width: 45px;
   }
-  
+
   .signup-terms {
     font-size: 13px;
   }
@@ -3372,8 +3366,6 @@ input::placeholder {
   .kids-main .Or-seperator {
     padding: 10px 0;
   }
-
-
 }
 @media (min-width: 481px) and (max-width: 768px) {
   .case-warpper {
@@ -3437,7 +3429,6 @@ input::placeholder {
   }
 }
 @media (max-width: 580px) {
-
   .option-menu .dropdown-item {
     font-size: 14px;
   }
@@ -3475,44 +3466,44 @@ input::placeholder {
   }
 }
 
-
 @media (max-width: 767px) {
-  .dialog-body.spaceTops, .dialog-body{
+  .dialog-body.spaceTops,
+  .dialog-body {
     padding: 0;
     margin: 70px 0 85px !important;
   }
-.terms-and-conditions h1 span,
-.terms-and-conditions h2 span,
-.terms-and-conditions h3 span {
-  font-weight: inherit !important;
-  font-family: inherit !important;
-  font-size: inherit !important;
-}
-.terms-and-conditions h1,
-.terms-and-conditions h2,
-.terms-and-conditions h3 {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 20px 0px 10px 0px;
-}
-.terms-and-conditions h1 strong,
-.terms-and-conditions h2 strong,
-.terms-and-conditions h3 strong {
-  font-weight: bold;
-}
-li.nav-item.dropdown {
-  list-style-type: none;
-}
-.abtWraper .descp {
-  line-height: 22px;
-}
-.feedback:hover {
-  cursor: pointer;
-  color: #c2114b;
-}
-.kidsform-one .kids-wrapper .kids-form .dynamic-profession {
-  gap: 12px !important;
-}
+  .terms-and-conditions h1 span,
+  .terms-and-conditions h2 span,
+  .terms-and-conditions h3 span {
+    font-weight: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+  }
+  .terms-and-conditions h1,
+  .terms-and-conditions h2,
+  .terms-and-conditions h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0px 10px 0px;
+  }
+  .terms-and-conditions h1 strong,
+  .terms-and-conditions h2 strong,
+  .terms-and-conditions h3 strong {
+    font-weight: bold;
+  }
+  li.nav-item.dropdown {
+    list-style-type: none;
+  }
+  .abtWraper .descp {
+    line-height: 22px;
+  }
+  .feedback:hover {
+    cursor: pointer;
+    color: #c2114b;
+  }
+  .kidsform-one .kids-wrapper .kids-form .dynamic-profession {
+    gap: 12px !important;
+  }
 
   .signupModal .modal-body {
     padding: 10px 15px;
@@ -3802,14 +3793,14 @@ li.nav-item.dropdown {
   } */
 
   .url-file-wrapper .dropdown > .dropdown-menu {
-        position: absolute !important;
-        transform: unset !important;
-        right: 0px !important;
-        top: 35px !important;
-        left: inherit !important;
-        min-width: 6rem;
-        padding: 3px 0;
-        font-size: 14px;
+    position: absolute !important;
+    transform: unset !important;
+    right: 0px !important;
+    top: 35px !important;
+    left: inherit !important;
+    min-width: 6rem;
+    padding: 3px 0;
+    font-size: 14px;
   }
   button#dropdownMenuButton1 {
     background: none;
@@ -3897,25 +3888,27 @@ li.nav-item.dropdown {
     height: fit-content;
     overflow-y: hidden;
   }
-
-
-
 }
 @media (max-width: 380px) {
-  .ageverify-buttons{
+  .ageverify-buttons {
     flex-direction: column;
     padding-bottom: 20px;
   }
-  .adults-select-btn,.kids-select-btn{ width: 100%; margin: 5px 0; max-width: 100%; height: 45px; }
-  .ageverify-title{ padding-top: 0; }
+  .adults-select-btn,
+  .kids-select-btn {
+    width: 100%;
+    margin: 5px 0;
+    max-width: 100%;
+    height: 45px;
+  }
+  .ageverify-title {
+    padding-top: 0;
+  }
 
-
-
-.material-mobile-style {
-  border: 1px solid #d3d3d3;
-  border-radius: 3px;
-  height: 45px;
-  padding: 6px 0px 0px 10px;
+  .material-mobile-style {
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
+    height: 45px;
+    padding: 6px 0px 0px 10px;
+  }
 }
-
-
