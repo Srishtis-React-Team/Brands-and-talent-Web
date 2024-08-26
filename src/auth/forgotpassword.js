@@ -42,6 +42,7 @@ const ForgotPassword = () => {
     let typeData = {
       email: talentEmail,
     };
+    setIsLoading(true);
     await ApiHelper.post(API.typeChecking, typeData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -58,10 +59,13 @@ const ForgotPassword = () => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
+            setIsLoading(false);
           }, 2000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+      });
 
     if (userType) {
       if (userType == "brand") {
@@ -73,12 +77,11 @@ const ForgotPassword = () => {
         await ApiHelper.post(API.brandsForgotPassword, formData)
           .then((resData) => {
             if (resData.data.status === true) {
-              setIsLoading(false);
-
               setMessage("Open Your Gmail For Password Reset Link!");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
+                setIsLoading(false);
               }, 2000);
             } else if (resData.data.status === false) {
               setIsLoading(false);
@@ -86,10 +89,13 @@ const ForgotPassword = () => {
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
+                setIsLoading(false);
               }, 1000);
             }
           })
-          .catch((err) => {});
+          .catch((err) => {
+            setIsLoading(false);
+          });
       } else {
         let formdata = {
           email: talentEmail,

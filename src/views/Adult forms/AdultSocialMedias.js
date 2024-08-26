@@ -11,6 +11,10 @@ import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import PopUp from "../../components/PopUp";
 import "../../assets/css/talent-dashboard.css";
+import "../../assets/css/forms/login.css";
+import "../../assets/css/dashboard.css";
+import "../../assets/css/register.css";
+import "../../assets/css/kidsmain.scss";
 import CurrentUser from "../../CurrentUser";
 
 const AdultSocialMedias = () => {
@@ -41,6 +45,87 @@ const AdultSocialMedias = () => {
       })
       .catch((err) => {});
   };
+
+  const handleTwitterUserNameChange = (e) => {
+    const value = e.target.value;
+    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
+    if (value.trim() === "") {
+      setTwitterUserNameError(false);
+      setTwitterUserName("");
+    } else if (!onlyLettersRegex.test(value)) {
+      setTwitterUserNameError(true);
+    } else {
+      setTwitterUserName(value);
+      setTwitterUserNameError(false);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Backspace") {
+      setTwitterUserNameError(false);
+    }
+  };
+
+  const [twitterFollowersCount, setTwitterFollowersCount] = useState(null);
+  const [modalData, setModalData] = useState(null);
+  const [twitterUserName, setTwitterUserName] = useState(null);
+  const [twitterUserNameError, setTwitterUserNameError] = useState(false);
+
+  const connectSocialMedia = (item) => {
+    setModalData(item);
+    const modalElement = document.getElementById("adultSsocialMediaModal");
+    const bootstrapModal = new window.bootstrap.Modal(modalElement);
+    bootstrapModal.show();
+  };
+
+  const handleCloseModal = async (talent) => {
+    const formData = {
+      username: twitterUserName,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${API.twitterCount}`, formData)
+      .then((resData) => {
+        console.log(resData, "resData");
+        if (resData?.data?.status === true) {
+          setTwitterFollowersCount(resData?.data?.followers_count);
+          setTwitterUserName("");
+          setIsLoading(false);
+          setMessage("Twitter Connected SuccessFully!");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            const modalElement = document.getElementById(
+              "adultSsocialMediaModal"
+            );
+            const bootstrapModal = new window.bootstrap.Modal(modalElement);
+            bootstrapModal.hide();
+          }, 2000);
+        } else if (resData?.data?.status === false) {
+          setTwitterUserName("");
+          setMessage(resData?.data?.data);
+          setOpenPopUp(true);
+          setIsLoading(false);
+
+          setTimeout(function () {
+            setOpenPopUp(false);
+            const modalElement = document.getElementById(
+              "adultSsocialMediaModal"
+            );
+            const bootstrapModal = new window.bootstrap.Modal(modalElement);
+            bootstrapModal.hide();
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        console.log(err, "err");
+
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    console.log(twitterFollowersCount, "twitterFollowersCount");
+  }, [twitterFollowersCount]);
 
   useEffect(() => {}, [talentData]);
 
@@ -548,7 +633,7 @@ const AdultSocialMedias = () => {
           <div className="dialog-body">
             <div className="kidsform-one container">
               <div className="adult-form-wrapper row ml-0 mr-0">
-                <div className="col-md-4 col-lg-3">
+                <div className="col-md-4 col-lg-3 mt-5">
                   <div className="fixImgs">
                     <img
                       src={adultsBanner}
@@ -557,7 +642,7 @@ const AdultSocialMedias = () => {
                     />
                   </div>
                 </div>
-                <div className="adult-main remvSpc col-md-8 col-lg-9">
+                <div className="adult-main remvSpc col-md-8 col-lg-9 mt-5">
                   <div className="adults-titles">
                     Explore Your Social Media Presence
                   </div>
@@ -615,7 +700,14 @@ const AdultSocialMedias = () => {
                           <img src={xTwitter} alt="" />
                           <div className="media-text">Twitter</div>
                         </div>
-                        <div className="connect-btn">connect</div>
+                        <div
+                          className="connect-btn"
+                          onClick={(e) => {
+                            connectSocialMedia("twitter");
+                          }}
+                        >
+                          connect
+                        </div>
                       </div>
                     </div>
                     <div className="kids-form-section col-md-6 mb-3">
@@ -642,36 +734,38 @@ const AdultSocialMedias = () => {
 
                   <div className="Or-seperator">Or</div>
 
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
+                  <div className="kids-form-row row mb-4">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={instagram} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setInstagramFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section col-md-6 mb-3">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={fbLogo} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setfacebookFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
@@ -679,35 +773,37 @@ const AdultSocialMedias = () => {
                     </div>
                   </div>
                   <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={tikTok} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setTiktoksFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section col-md-6 mb-3">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={linkdin} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setlinkedinFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
@@ -715,54 +811,61 @@ const AdultSocialMedias = () => {
                     </div>
                   </div>
                   <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={xTwitter} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
+                              value={twitterFollowersCount}
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setXtwitterFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section col-md-6 mb-3">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img className="thread-fill" src={threads} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setThreadsFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row mb-5">
-                    <div className="kids-form-section col-md-6 mb-5">
+                  <div
+                    className="kids-form-row row"
+                    style={{ marginBottom: "100px" }}
+                  >
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <img src={youTube} alt="" />
                           <div className="media-text">
                             <input
+                              disabled
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setYoutubesFollowers(e.target.value);
                               }}
-                              placeholder="Enter Followers Count"
+                              placeholder="Followers Count"
                             ></input>
                           </div>
                         </div>
@@ -795,7 +898,55 @@ const AdultSocialMedias = () => {
           </div>
         </div>
       </>
-
+      <div
+        className="modal fade"
+        id="adultSsocialMediaModal"
+        tabIndex="-1"
+        aria-labelledby="adultSsocialMediaModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog  modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="mb-3" style={{ textAlign: "left" }}>
+                <label className="form-label">Twitter user name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={twitterUserName}
+                  onChange={(e) => {
+                    handleTwitterUserNameChange(e);
+                    setTwitterUserNameError(false);
+                  }}
+                  onKeyDown={handleKeyPress}
+                  placeholder="Twitter user name"
+                ></input>
+                {twitterUserNameError && (
+                  <div className="invalid-fields">Please enter User Name</div>
+                )}
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                onClick={() => handleCloseModal(modalData)}
+                type="button"
+                className="btn submit-rating"
+                data-bs-dismiss="modal"
+              >
+                Connect
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       {openPopUp && <PopUp message={message} />}
     </>
   );

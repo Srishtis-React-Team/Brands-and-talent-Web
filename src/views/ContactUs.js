@@ -77,7 +77,8 @@ const ContactUs = () => {
           }, 2000);
         } else {
           setIsLoading(false);
-          setMessage(resData.data.message);
+          setMessage("Please Update All Required Fields");
+
           setOpenPopUp(true);
           setTimeout(() => setOpenPopUp(false), 2000);
         }

@@ -15,6 +15,11 @@ import CurrentUser from "../../CurrentUser";
 import RichTextEditor from "../RichTextEditor";
 import CreatableSelect from "react-select/creatable";
 import useFieldDatas from "../../config/useFieldDatas";
+import "../../assets/css/forms/login.css";
+import "../../assets/css/dashboard.css";
+import "../../assets/css/register.css";
+import "../../assets/css/kidsmain.scss";
+import "../../assets/css/forms/kidsformthree.css";
 
 const AdultFormThree = () => {
   const {
@@ -105,6 +110,60 @@ const AdultFormThree = () => {
   useEffect(() => {}, [updateDisabled]);
   useEffect(() => {}, [featuresList]);
 
+  const onEditorSummary = (editorState) => {
+    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
+    setEditorState(editorState);
+  };
+  const isValidNewOption = (inputValue) => {
+    return !isNaN(inputValue) && inputValue.trim() !== "";
+  };
+
+  const handleInputChange = (inputValue, actionMeta) => {
+    const numericValue = inputValue.replace(/[^0-9]/g, "");
+    return numericValue;
+  };
+
+  const handleKeyDown = (event) => {
+    const key = event.key;
+    const isNumberKey = /^[0-9]$/.test(key);
+    const isAllowedKey =
+      isNumberKey ||
+      key === "Backspace" ||
+      key === "Delete" ||
+      key === "ArrowLeft" ||
+      key === "ArrowRight" ||
+      key === "Tab";
+
+    if (!isAllowedKey) {
+      event.preventDefault();
+    }
+  };
+
+  const handleFeaturesChange = (label, value) => {
+    console.log(label, "label", value, "value", "handleFeaturesChange");
+    const updatedValues = [...features];
+    const index = updatedValues.findIndex((item) => item.label === label);
+    let finalValue = value;
+    if (
+      creatableInputOptions.includes(label) ||
+      creatableOptions.includes(label)
+    ) {
+      if (/^\d+$/.test(value)) {
+        finalValue = `${value} cm`;
+      } else {
+        return;
+      }
+    }
+
+    if (index !== -1) {
+      updatedValues[index] = { label, value: finalValue };
+    } else {
+      updatedValues.push({ label, value: finalValue });
+    }
+
+    setFeature(updatedValues);
+  };
+
   const creatableOptions = ["Dress Size", "Shoe Size"];
 
   const creatableInputOptions = [
@@ -129,36 +188,6 @@ const AdultFormThree = () => {
       return "US or EU size only";
     }
     return label;
-  };
-
-  const onEditorSummary = (editorState) => {
-    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
-    setEditorState(editorState);
-  };
-
-  const handleFeaturesChange = (label, value) => {
-    const updatedValues = [...features];
-    const index = updatedValues.findIndex((item) => item.label === label);
-    let finalValue = value;
-
-    if (
-      creatableInputOptions.includes(label) ||
-      creatableOptions.includes(label)
-    ) {
-      if (/^\d+$/.test(value)) {
-        finalValue = `${value} cm`;
-      } else {
-        return; // Exit if the value is not a number
-      }
-    }
-
-    if (index !== -1) {
-      updatedValues[index] = { label, value: finalValue };
-    } else {
-      updatedValues.push({ label, value: finalValue });
-    }
-
-    setFeature(updatedValues);
   };
 
   const updateAdultSignup = async () => {
@@ -749,8 +778,8 @@ const AdultFormThree = () => {
           </div>
           <div className="dialog-body">
             <div className="kidsform-one container">
-              <div className="adult-form-wrapper row ml-0 mr-0">
-                <div className="col-md-4 col-lg-3">
+              <div className="adult-form-wrapper  row ml-0 mr-0">
+                <div className="col-md-4 col-lg-3 mt-5">
                   <div className="fixImgs">
                     <img
                       src={adultsBanner}
@@ -759,7 +788,7 @@ const AdultFormThree = () => {
                     />
                   </div>
                 </div>
-                <div className="adult-main remvSpc col-md-8 col-lg-9">
+                <div className="adult-main remvSpc col-md-8 col-lg-9 mt-5">
                   <div className="adults-form-title">Complete your Profile</div>
                   <div className="adults-titles kids-form-title">
                     <span>
@@ -1293,25 +1322,16 @@ const AdultFormThree = () => {
                             <label className="form-label">{item.label}</label>
                             {creatableOptions.includes(item.label) ? (
                               <CreatableSelect
+                                onKeyDown={handleKeyDown}
                                 isClearable
                                 options={item.options.map((option) => ({
                                   value: option,
                                   label: option,
                                 }))}
-                                onChange={(selectedOption) =>
-                                  handleFeaturesChange(
-                                    item.label,
-                                    selectedOption ? selectedOption.value : ""
-                                  )
-                                }
-                                placeholder={getPlaceholder(item.label)}
-                              />
-                            ) : creatableInputOptions.includes(item.label) ? (
-                              <input
-                                type="text"
-                                className="form-control features-select"
-                                onChange={(e) => {
-                                  const value = e.target.value;
+                                isValidNewOption={isValidNewOption}
+                                onInputChange={handleInputChange}
+                                onChange={(selectedOption) => {
+                                  const value = selectedOption.value;
                                   // Check if the value is a valid number and is non-negative
                                   if (
                                     /^\d*\.?\d*$/.test(value) &&
@@ -1319,8 +1339,25 @@ const AdultFormThree = () => {
                                   ) {
                                     handleFeaturesChange(
                                       item.label,
-                                      e.target.value
+                                      selectedOption ? selectedOption.value : ""
                                     );
+                                  }
+                                }}
+                                placeholder={getPlaceholder(item.label)}
+                              />
+                            ) : creatableInputOptions.includes(item.label) ? (
+                              <input
+                                min="0"
+                                type="number"
+                                onKeyDown={handleKeyDown}
+                                className="form-control features-select"
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  if (
+                                    /^\d*\.?\d*$/.test(value) &&
+                                    (value >= 0 || value === "")
+                                  ) {
+                                    handleFeaturesChange(item.label, value);
                                   }
                                 }}
                                 placeholder={getPlaceholder(item.label)}
@@ -1410,8 +1447,8 @@ const AdultFormThree = () => {
                   {verificationID && (
                     <>
                       <div
+                        style={{ marginBottom: "100px" }}
                         className="uploaded-file-wrapper"
-                        style={{ marginBottom: "0px" }}
                       >
                         <div className="file-section">
                           {verificationID[0].type === "image" && (
