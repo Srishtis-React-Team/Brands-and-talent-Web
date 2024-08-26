@@ -231,8 +231,9 @@
   width: 100%;
 }
 .kids-main .media-wrapper .media-info .media-text {
-  padding-left: 15px;
+  /* padding-left: 15px; */
   width: 100%;
+  font-size: 15px;
 }
 .kids-main .media-wrapper:hover .connect-btn {
   visibility: visible;
@@ -860,6 +861,11 @@
     max-width: 100%;
     margin-right: 0px !important;
   }
+  .kids-main .media-wrapper .connect-btn{ font-size: 14px; }
+  .kids-form.col-md-8 {
+    padding: 0 !important;
+  }
+
 }
 .add-portfoli-section {
   display: flex;
@@ -1092,7 +1098,7 @@
 }
 
 .MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-colorPrimary.MuiInputBase-formControl.MuiInputBase-adornedStart.css-1eed5fa-MuiInputBase-root-MuiInput-root {
-  height: 32px !important;
+  height: 100% !important;
   align-items: center !important;
 }
 
