@@ -72,45 +72,48 @@ const ContactSupport = () => {
   };
 
   const postSupportMail = async () => {
-    if (!name) {
-      setNameError(true);
-    }
-    if (!email) {
-      setEmailError(true);
-    }
-    if (!enquiry) {
-      setEnquiryError(true);
-    }
-    const formData = {
-      name: name,
-      phoneNo: mobile,
-      enquiry: enquiry,
-      email: email,
-    };
-    setIsLoading(true);
-    await ApiHelper.post(`${API.postSupportMail}`, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
+    if (!name) setNameError(true);
+    if (!email) setEmailError(true);
+    if (!enquiry) setEnquiryError(true);
+    if (!subject) setSubjectError(true);
+    if (name && email && enquiry && subject) {
+      const formData = { name, phoneNo: mobile, enquiry, email, subject };
+      setIsLoading(true);
+      try {
+        const resData = await ApiHelper.post(
+          `${API.postSupportMail}`,
+          formData
+        );
+        if (resData.data.status) {
           setIsLoading(false);
-          setMessage("Contact Form Submitted SuccessFully");
+          setMessage("Contact Form Submitted Successfully");
           setOpenPopUp(true);
-          setTimeout(function () {
+          setTimeout(() => {
             setOpenPopUp(false);
             setName("");
             setEmail("");
             setMobile("");
             setEnquiry("");
+            setSubject("");
           }, 2000);
-        } else if (resData.data.status === false) {
+        } else {
           setIsLoading(false);
-          setMessage(resData?.data?.message);
+          setMessage("Please Update All Required Fields");
+
           setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-          }, 2000);
+          setTimeout(() => setOpenPopUp(false), 2000);
         }
-      })
-      .catch((err) => {});
+      } catch (err) {
+        setIsLoading(false);
+        // Handle error
+      }
+    } else {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
+    }
   };
 
   const navigate = useNavigate();

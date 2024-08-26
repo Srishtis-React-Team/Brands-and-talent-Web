@@ -72,22 +72,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
 
   const handleTwitterUserNameChange = (e) => {
     const value = e.target.value;
-    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
-      setTwitterUserNameError(false);
-      setTwitterUserName("");
-    } else if (!onlyLettersRegex.test(value)) {
-      setTwitterUserNameError(true);
-    } else {
-      setTwitterUserName(value);
-      setTwitterUserNameError(false);
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Backspace") {
-      setTwitterUserNameError(false);
-    }
+    setTwitterUserNameError(false);
+    setTwitterUserName(value);
   };
 
   const [twitterFollowersCount, setTwitterFollowersCount] = useState(null);
@@ -124,8 +110,10 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
           }, 2000);
         } else if (resData?.data?.status === false) {
           setTwitterUserName("");
-          setMessage(resData?.data?.data?.detail);
+          setMessage(resData?.data?.data);
           setOpenPopUp(true);
+          setIsLoading(false);
+
           setTimeout(function () {
             setOpenPopUp(false);
             const modalElement = document.getElementById("socialMediaModal");
@@ -136,6 +124,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
       })
       .catch((err) => {
         console.log(err, "err");
+
         setIsLoading(false);
       });
   };
@@ -488,7 +477,6 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                     handleTwitterUserNameChange(e);
                     setTwitterUserNameError(false);
                   }}
-                  onKeyDown={handleKeyPress}
                   placeholder="Twitter user name"
                 ></input>
                 {twitterUserNameError && (

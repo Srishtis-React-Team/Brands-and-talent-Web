@@ -76,7 +76,7 @@ const ResetPassword = () => {
             .then((resData) => {
               if (resData.data.status === true) {
                 setIsLoading(false);
-                setMessage("Password Reset Successfull!");
+                setMessage("Password Reset Successful!");
                 setOpenPopUp(true);
                 setTimeout(function () {
                   setOpenPopUp(false);
@@ -103,7 +103,7 @@ const ResetPassword = () => {
             .then((resData) => {
               if (resData.data.status === true) {
                 setIsLoading(false);
-                setMessage("Password Reset Successfull!");
+                setMessage("Password Reset Successful!");
                 setOpenPopUp(true);
                 setTimeout(function () {
                   setOpenPopUp(false);
@@ -130,7 +130,7 @@ const ResetPassword = () => {
             .then((resData) => {
               if (resData.data.status === true) {
                 setIsLoading(false);
-                setMessage("Password Reset Successfull!");
+                setMessage("Password Reset Successful!");
                 setOpenPopUp(true);
                 setTimeout(function () {
                   setOpenPopUp(false);

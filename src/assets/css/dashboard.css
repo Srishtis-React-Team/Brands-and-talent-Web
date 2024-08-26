@@ -2126,6 +2126,10 @@ input::placeholder {
 
 
 @media (max-width: 767px) {
+  .step-back,
+  .step-continue {
+    margin: 0 5px;
+  }
 
 
   .kids-form-row.row.spcBtm{ margin-bottom: 20px; }
@@ -2134,6 +2138,9 @@ input::placeholder {
   .step-back, .step-continue {  margin: 0 5px; }
 
   .kidsform-one .kids-wrapper{ margin: 0; }
+  .kidsform-one .kids-wrapper {
+    margin: 0;
+  }
   #bmc-wbtn {
     top: 55px !important;
     width: 50px !important;
@@ -2577,7 +2584,9 @@ input::placeholder {
     padding: 30px 0;
     text-align: center;
   }
-  .signupModal .question-model{ padding-bottom: 0; }
+  .signupModal .question-model {
+    padding-bottom: 0;
+  }
 
   .register-modal {
     display: flex;
@@ -2610,7 +2619,8 @@ input::placeholder {
   .location-wrapper {
     padding: 4px 0;
   }
-  .choose-register, .selected-register {
+  .choose-register,
+  .selected-register {
     min-width: 160px;
     max-width: 100%;
     border-radius: 6px;
@@ -2737,7 +2747,7 @@ input::placeholder {
     width: 400px;
   }
   .form-label {
-    margin-bottom: .1rem;
+    margin-bottom: 0.1rem;
   }
   .step-back {
     width: auto;
@@ -3229,6 +3239,10 @@ input::placeholder {
   .signup-terms {
     font-size: 13px;
   }
+  .dialog-body.spaceTops {
+    padding: 0px 0 25px;
+    margin-bottom: 60px;
+  }
   .carousel-section.storyCar .carousel-wrapper .box-content {
     padding-left: 0;
   }
@@ -3467,6 +3481,39 @@ input::placeholder {
     padding: 0;
     margin: 70px 0 85px !important;
   }
+.terms-and-conditions h1 span,
+.terms-and-conditions h2 span,
+.terms-and-conditions h3 span {
+  font-weight: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+}
+.terms-and-conditions h1,
+.terms-and-conditions h2,
+.terms-and-conditions h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px 0px 10px 0px;
+}
+.terms-and-conditions h1 strong,
+.terms-and-conditions h2 strong,
+.terms-and-conditions h3 strong {
+  font-weight: bold;
+}
+li.nav-item.dropdown {
+  list-style-type: none;
+}
+.abtWraper .descp {
+  line-height: 22px;
+}
+.feedback:hover {
+  cursor: pointer;
+  color: #c2114b;
+}
+.kidsform-one .kids-wrapper .kids-form .dynamic-profession {
+  gap: 12px !important;
+}
+
   .signupModal .modal-body {
     padding: 10px 15px;
   }
@@ -3485,7 +3532,10 @@ input::placeholder {
     top: 200px;
     height: 0;
   }
-  .carousel-section.storyCar .carousel-wrapper .box-content{ padding: 0; margin: 0; }
+  .carousel-section.storyCar .carousel-wrapper .box-content {
+    padding: 0;
+    margin: 0;
+  }
   .storyCar .carousel-control-prev {
     left: 0;
     top: 200px;
@@ -3793,6 +3843,50 @@ input::placeholder {
   .mobile-nav-content {
     justify-content: flex-start;
   }
+  .kidsform-one .kids-wrapper .kids-form .kids-title,
+  .kidsform-one .kids-wrapper .kids-form .kids-form-title {
+    color: #000;
+    font-size: 22px;
+  }
+  .kidsform-one .kids-wrapper {
+    margin: 0px 0;
+  }
+  .dialog-body.spaceTops {
+    padding: 0px 0 25px;
+  }
+  .kids-form-title > span {
+    display: inline-block;
+    background-color: #fff;
+    padding: 5px 15px 5px 0;
+  }
+  .file-section a {
+    word-break: break-all;
+  }
+  .public-url-text {
+    word-break: break-all;
+  }
+  .individual-talent-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    /* flex-wrap: nowrap; */
+  }
+  .individual-talent-tab {
+    width: fit-content !important;
+  }
+  .individual-talent-tab-first {
+    max-width: fit-content !important;
+  }
+  .photos-gallery-image img {
+    width: 100%;
+  }
+  .talent-rates .pr-0,
+  .talent-rates .col-md-8.col-lg-9 {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin-bottom: 20px;
+  }
 }
 
 @media (max-width: 420px) {
@@ -3816,6 +3910,12 @@ input::placeholder {
   .ageverify-title{ padding-top: 0; }
 
 
+
+.material-mobile-style {
+  border: 1px solid #d3d3d3;
+  border-radius: 3px;
+  height: 45px;
+  padding: 6px 0px 0px 10px;
 }
 
 

@@ -832,7 +832,7 @@
     padding: 10px 15px;
   }
   .uploaded-file-wrapper .elipsis-icon {
-      padding: 10px 0;
+    padding: 10px 0;
   }
   .recent-setone {
     display: flex;
@@ -852,7 +852,7 @@
   .fileName {
     padding-left: 10px;
     font-size: 13px;
-  } 
+  }
   .talent-popup-title {
     font-size: 17px;
   }
@@ -899,7 +899,7 @@
   .upload-backdrop {
     padding: 10px;
   }
-  .upload-backdrop > img{
+  .upload-backdrop > img {
     width: 36px;
   }
   .rich-editor {
@@ -1045,10 +1045,7 @@
   color: #000;
   padding-left: 15px;
 }
-.model-job-icons {
-  font-size: 18px;
-  color: #c2114b;
-}
+
 .modal-job-workplace {
   padding: 2px 6px;
   border-radius: 8px;
@@ -1485,4 +1482,12 @@
   line-height: normal;
   padding: 15px 0;
   margin-bottom: 0;
+}
+.model-job-icons {
+  font-size: 18px;
+  color: #c2114b;
+}
+
+.location-icon {
+  margin-right: 10px;
 }

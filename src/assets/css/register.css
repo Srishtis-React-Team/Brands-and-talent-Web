@@ -335,6 +335,69 @@
   border: none;
 }
 
+@media (max-width: 767px) {
+  .dialog-body {
+    min-height: 100%;
+    margin: 70px 0 85px !important;
+  }
+  .dialog-body.spaceTops {
+    margin-top: 0;
+  }
+  .material-mobile-style {
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
+    height: 45px;
+    padding: 6px 0px 0px 10px !important;
+  }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .adult-signup-main {
+    width: 50%;
+  }
+  .gmail-info {
+    width: 50%;
+  }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .adult-signup-main {
+    width: 70%;
+  }
+  .gmail-info {
+    width: 60%;
+  }
+}
+@media (min-width: 320px) and (max-width: 480px) {
+  .adult-signup-main {
+    width: 95%;
+    padding: 10px 20px;
+  }
+  .gmail-info {
+    width: 80%;
+  }
+  .gmail-wrapper {
+    margin-top: 0;
+  }
+  .trial-page {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0;
+    flex-direction: column;
+    flex-direction: column-reverse;
+  }
+  .trialing {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .trialing > img {
+    width: 250px;
+    height: 250px;
+    flex-shrink: 0;
+  }
+  .trial-wrapper {
+    padding: 30px;
+  }
+}
 .password_strength_box {
   width: 100%;
   display: flex;
@@ -399,7 +462,7 @@
   border: 1px solid #d3d3d3;
   border-radius: 3px;
   height: 45px;
-  padding: 0px 0px 0px 10px;
+  padding: 5px 0px 0px 10px;
 }
 
 
@@ -493,3 +556,9 @@
 
 
 }
+/* .material-mobile-style {
+  border: 1px solid #d3d3d3;
+  border-radius: 3px;
+  height: 45px;
+  padding: 0px 0px 0px 10px;
+} */
