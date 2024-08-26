@@ -3348,6 +3348,10 @@ li.nav-item.dropdown {
   cursor: pointer;
   color: #c2114b;
 }
+.kidsform-one .kids-wrapper .kids-form .dynamic-profession {
+  gap: 12px !important;
+}
+
 @media (max-width: 767px) {
   .signupModal .modal-body {
     padding: 10px 15px;
@@ -3664,6 +3668,50 @@ li.nav-item.dropdown {
   }
   .mobile-nav-content {
     justify-content: flex-start;
+  }
+  .kidsform-one .kids-wrapper .kids-form .kids-title,
+  .kidsform-one .kids-wrapper .kids-form .kids-form-title {
+    color: #000;
+    font-size: 22px;
+  }
+  .kidsform-one .kids-wrapper {
+    margin: 0px 0;
+  }
+  .dialog-body.spaceTops {
+    padding: 0px 0 25px;
+  }
+  .kids-form-title > span {
+    display: inline-block;
+    background-color: #fff;
+    padding: 5px 15px 5px 0;
+  }
+  .file-section a {
+    word-break: break-all;
+  }
+  .public-url-text {
+    word-break: break-all;
+  }
+  .individual-talent-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    /* flex-wrap: nowrap; */
+  }
+  .individual-talent-tab {
+    width: fit-content !important;
+  }
+  .individual-talent-tab-first {
+    max-width: fit-content !important;
+  }
+  .photos-gallery-image img {
+    width: 100%;
+  }
+  .talent-rates .pr-0,
+  .talent-rates .col-md-8.col-lg-9 {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin-bottom: 20px;
   }
 }
 
