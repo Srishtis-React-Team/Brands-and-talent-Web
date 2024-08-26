@@ -693,6 +693,22 @@ const KidsformOne = () => {
     }
   };
 
+  const navigateTo = (option) => {
+    let url = "";
+
+    if (option === "terms") {
+      url = "/terms-conditions";
+    } else if (option === "community") {
+      url = "/community-guidelines";
+    } else if (option === "privacy") {
+      url = "/privacy-policy";
+    }
+
+    if (url) {
+      window.open(url, "_blank"); // Open in a new tab
+    }
+  };
+
   const [mobileNumError, setMobileNumError] = useState();
 
   const handleMobileChange = (value, countryData) => {
@@ -712,6 +728,7 @@ const KidsformOne = () => {
     }
   };
 
+  const [passwordStatus, setPasswordStatus] = useState(false);
   let line = document.querySelector(".line");
   let text = document.querySelector(".text");
   let password_strength_box = document.querySelector(".password_strength_box");
@@ -1674,12 +1691,24 @@ const KidsformOne = () => {
                     <div className="kids-signup-terms mb-5">
                       By registering you confirm that you accept the Brands &
                       Talent (BT){" "}
-                      <span style={{ color: "#c2114b" }}>
+                      <span
+                        onClick={() => navigateTo("terms")}
+                        style={{ color: "#c2114b", cursor: "pointer" }}
+                      >
                         Terms & Conditions
                       </span>
-                      , <span style={{ color: "#c2114b" }}>Privacy Policy</span>{" "}
+                      ,{" "}
+                      <span
+                        style={{ color: "#c2114b", cursor: "pointer" }}
+                        onClick={() => navigateTo("privacy")}
+                      >
+                        Privacy Policy
+                      </span>{" "}
                       and{" "}
-                      <span style={{ color: "#c2114b" }}>
+                      <span
+                        style={{ color: "#c2114b", cursor: "pointer" }}
+                        onClick={() => navigateTo("community")}
+                      >
                         Community Guidelines
                       </span>
                     </div>
