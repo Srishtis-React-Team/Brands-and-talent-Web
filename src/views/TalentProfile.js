@@ -1140,7 +1140,7 @@ const TalentProfile = () => {
                           <p>Videos</p>
 
                           <div className="service-list-main w-100">
-                            <div className="row">
+                            <div className="row w-100">
                               {urlsList?.map((url, index) => (
                                 <div key={index} className="col-md-6 mb-4">
                                   <div className="media-item">
@@ -1442,9 +1442,9 @@ const TalentProfile = () => {
                       {videos && (
                         <div className="models-photos videoWraper">
                           <div className="service-list-main w-100">
-                            <div className="row">
+                            <div className="row w-100">
                               {urlsList?.map((url, index) => (
-                                <div key={index} className="col-md-6 mb-4">
+                                <div key={index} className="col-md-6 mb-3">
                                   <div className="media-item">
                                     {isYouTubeUrl(url) ? (
                                       <iframe

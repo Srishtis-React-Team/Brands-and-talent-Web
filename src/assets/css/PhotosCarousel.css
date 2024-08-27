@@ -29,7 +29,7 @@
 .photos-slider .item .talents-profile-slider-image {
   /* min-height: 230px; */
   /* width: 100%; */
-  /* object-fit: cover; */
+  object-fit: cover;
   cursor: pointer;
   width: 316px !important;
   height: 316px !important;

@@ -1746,7 +1746,7 @@ const EditTalent = () => {
       <main
         style={allJobsList?.length === 0 ? {} : {}}
         id="mainBrand"
-        className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
+        className={`profileCont brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main boxBg edit_talentprofile">
           <div className="create-job-title">Edit Profile</div>
@@ -2136,7 +2136,7 @@ const EditTalent = () => {
                       defaultCountry={"kh"}
                       className="material-mobile-style"
                       onChange={handleMobileChange}
-                      style={{ paddingTop: "7px" }}
+                  
                     />
 
                     {parentMobileError && (
@@ -2286,139 +2286,140 @@ const EditTalent = () => {
                   </div>
                   <div className="profession-content-section">
                     {selectedProfessions.map((profession, index) => (
-                      <div key={index} className="dynamic-profession">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label}
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perDaySalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perDaySalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/day"
-                            min="0"
-                          ></input>
-                        </div>
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label}
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perHourSalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perHourSalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/hr"
-                            min="0"
-                          ></input>
-                        </div>
+                      <div key={index} className="dynamic-profession newAlign">
+                        <div className="algSepc"> <div className="row">
+                          <div className="mb-3 col-md-3 divSep">
+                            <label className="form-label">
+                              {profession.label}
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perDaySalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perDaySalary",
+                                    value
+                                  );
+                                }
+                              }}
+                              placeholder="$/day"
+                              min="0"
+                            ></input>
+                          </div>
+                          <div className="mb-3 col-md-3 divSep">
+                            <label className="form-label">
+                              {profession.label}
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perHourSalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perHourSalary",
+                                    value
+                                  );
+                                }
+                              }}
+                              placeholder="$/hr"
+                              min="0"
+                            ></input>
+                          </div>
 
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label}
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perMonthSalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perMonthSalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/month"
-                            min="0"
-                          ></input>
-                        </div>
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label}
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perPostSalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perPostSalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/post"
-                            min="0"
-                          ></input>
-                        </div>
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label}
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perImageSalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perImageSalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/image"
-                            min="0"
-                          ></input>
-                        </div>
-
+                          <div className="mb-3 col-md-2 divSep">
+                            <label className="form-label">
+                              {profession.label}
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perMonthSalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perMonthSalary",
+                                    value
+                                  );
+                                }
+                              }}
+                              placeholder="$/month"
+                              min="0"
+                            ></input>
+                          </div>
+                          <div className="mb-3 col-md-2 divSep">
+                            <label className="form-label">
+                              {profession.label}
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perPostSalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perPostSalary",
+                                    value
+                                  );
+                                }
+                              }}
+                              placeholder="$/post"
+                              min="0"
+                            ></input>
+                          </div>
+                          <div className="mb-3 col-md-2 divSep">
+                            <label className="form-label">
+                              {profession.label}
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perImageSalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perImageSalary",
+                                    value
+                                  );
+                                }
+                              }}
+                              placeholder="$/image"
+                              min="0"
+                            ></input>
+                          </div>
+                        </div> </div>
                         <div className="offer-wrapper">
                           <input
                             className="profession-checkbox"
@@ -2573,7 +2574,7 @@ const EditTalent = () => {
                                         <i className="bi bi-card-image"></i>
                                       </div>
                                     )}
-                                    <div className="update-portfolio-fileName">
+                                    <div className="update-portfolio-fileName pl-0">
                                       {item.title}
                                     </div>
                                     <div className="update-portfolio-action">
@@ -2685,7 +2686,7 @@ const EditTalent = () => {
                           {urls.map((url, index) => {
                             return (
                               <>
-                                <div key={index} className="url-file-wrapper">
+                                <div key={index} className="url-file-wrapper urlSect">
                                   <div className="file-section">
                                     <a
                                       href={url}
@@ -2839,7 +2840,7 @@ const EditTalent = () => {
                                     <div className="fileType">
                                       <i className="bi bi-play-circle-fill"></i>
                                     </div>
-                                    <div className="update-portfolio-fileName">
+                                    <div className="update-portfolio- pl-0">
                                       {item}
                                     </div>
 
@@ -2944,7 +2945,7 @@ const EditTalent = () => {
                                       <i className="bi bi-file-earmark-richtext"></i>
                                     </div>
                                   )}
-                                  <div className="update-portfolio-fileName">
+                                  <div className="update-portfolio- pl-0">
                                     {item.title}
                                   </div>
 
@@ -3119,107 +3120,114 @@ const EditTalent = () => {
                                 ></input>
                               </div>
                             </div>
-                            <div className="service-files-main">
-                              <div>
-                                {eachService?.files?.length > 0 &&
-                                  eachService?.files?.map((item) => {
-                                    return (
-                                      <>
-                                        <div className="update-portfolio-cards">
-                                          <div className="update-portfolio-icon">
-                                            <div className="file-section">
-                                              {item.type === "audio" && (
-                                                <div className="fileType">
-                                                  <i className="bi bi-mic-fill"></i>
-                                                </div>
-                                              )}
-                                              {item.type === "video" && (
-                                                <div className="fileType">
-                                                  <i className="bi bi-play-circle-fill"></i>
-                                                </div>
-                                              )}
-                                              {item.type === "document" && (
-                                                <div className="fileType">
-                                                  <i className="bi bi-file-earmark-richtext"></i>
-                                                </div>
-                                              )}
-                                              <div className="update-portfolio-fileName">
-                                                {item.title}
-                                              </div>
+                            <div className="service-files-main uplWraps">
+                              <div className="wraper"> <div className="row">
+                                <div className="col-md-6">
+                                  <div>
+                                    {eachService?.files?.length > 0 &&
+                                      eachService?.files?.map((item) => {
+                                        return (
+                                          <>
+                                            <div className="update-portfolio-cards">
+                                              <div className="update-portfolio-icon">
+                                                <div className="file-section">
+                                                  {item.type === "audio" && (
+                                                    <div className="fileType">
+                                                      <i className="bi bi-mic-fill"></i>
+                                                    </div>
+                                                  )}
+                                                  {item.type === "video" && (
+                                                    <div className="fileType">
+                                                      <i className="bi bi-play-circle-fill"></i>
+                                                    </div>
+                                                  )}
+                                                  {item.type === "document" && (
+                                                    <div className="fileType">
+                                                      <i className="bi bi-file-earmark-richtext"></i>
+                                                    </div>
+                                                  )}
+                                                  <div className="update-portfolio-fileName pl-0">
+                                                    {item.title}
+                                                  </div>
 
-                                              <div className="ml-2">
-                                                <IconButton
-                                                  aria-label="more"
-                                                  aria-controls="dropdown-menu"
-                                                  aria-haspopup="true"
-                                                  onClick={handleClick}
-                                                >
-                                                  <MoreVertIcon />
-                                                </IconButton>
-                                                <Menu
-                                                  id="dropdown-menu"
-                                                  anchorEl={anchorEl}
-                                                  open={Boolean(anchorEl)}
-                                                  onClose={handleClose}
-                                                >
-                                                  <MenuItem
-                                                    onClick={() => {
-                                                      handleClose();
-                                                      viewUpdateFile(item);
-                                                    }}
-                                                  >
-                                                    View
-                                                  </MenuItem>
-                                                  <MenuItem
-                                                    onClick={(e) => {
-                                                      dropDownClose();
+                                                  <div className="ml-2">
+                                                    <IconButton
+                                                      aria-label="more"
+                                                      aria-controls="dropdown-menu"
+                                                      aria-haspopup="true"
+                                                      onClick={handleClick}
+                                                    >
+                                                      <MoreVertIcon />
+                                                    </IconButton>
+                                                    <Menu
+                                                      id="dropdown-menu"
+                                                      anchorEl={anchorEl}
+                                                      open={Boolean(anchorEl)}
+                                                      onClose={handleClose}
+                                                    >
+                                                      <MenuItem
+                                                        onClick={() => {
+                                                          handleClose();
+                                                          viewUpdateFile(item);
+                                                        }}
+                                                      >
+                                                        View
+                                                      </MenuItem>
+                                                      <MenuItem
+                                                        onClick={(e) => {
+                                                          dropDownClose();
 
-                                                      setAlertpop({
-                                                        status: true,
-                                                        item: item,
-                                                        label: "delete-service",
-                                                        eachService:
-                                                          eachService,
-                                                      });
-                                                    }}
-                                                  >
-                                                    Delete
-                                                  </MenuItem>
-                                                </Menu>
+                                                          setAlertpop({
+                                                            status: true,
+                                                            item: item,
+                                                            label: "delete-service",
+                                                            eachService:
+                                                              eachService,
+                                                          });
+                                                        }}
+                                                      >
+                                                        Delete
+                                                      </MenuItem>
+                                                    </Menu>
+                                                  </div>
+                                                </div>
                                               </div>
                                             </div>
-                                          </div>
+                                          </>
+                                        );
+                                      })}
+                                  </div>
+
+                                  <div className="add-service-section">
+                                    <div className="add-portfolia-btn">
+                                      <input
+                                        type="file"
+                                        className="select-cv-input"
+                                        id={servicesIndex}
+                                        accept="image/*"
+                                        onChange={(e) =>
+                                          newServiceFileUpload(e, eachService)
+                                        }
+                                        ref={(el) =>
+                                          (serviceFileInputRefs.current[
+                                            servicesIndex
+                                          ] = el)
+                                        }
+                                      />
+                                      <div className="btnWraper">
+                                        <div
+                                          className="add-more-files-btn"
+                                          onClick={() => serviceFile(servicesIndex)}
+                                          variant="text"
+                                        >
+                                          <i className="bi bi-plus-circle-fill"></i>{" "}
+                                          Add Files
                                         </div>
-                                      </>
-                                    );
-                                  })}
-                              </div>
-                              <div className="add-service-section">
-                                <div className="add-portfolia-btn">
-                                  <input
-                                    type="file"
-                                    className="select-cv-input"
-                                    id={servicesIndex}
-                                    accept="image/*"
-                                    onChange={(e) =>
-                                      newServiceFileUpload(e, eachService)
-                                    }
-                                    ref={(el) =>
-                                      (serviceFileInputRefs.current[
-                                        servicesIndex
-                                      ] = el)
-                                    }
-                                  />
-                                  <div
-                                    className="add-more-files-btn"
-                                    onClick={() => serviceFile(servicesIndex)}
-                                    variant="text"
-                                  >
-                                    <i className="bi bi-plus-circle-fill"></i>{" "}
-                                    Add Files
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
+                              </div> </div>
                             </div>
                           </div>
                         </>
