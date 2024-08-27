@@ -47,7 +47,8 @@
       }
       .kids-form-title {
         font-size: 20px;
-        padding-top: 15px 0px 0px 0px;
+        padding: 15px 0px 0px 0px;
+        overflow: hidden;
       }
       .splitter {
         padding: 20px 0px;
@@ -923,6 +924,9 @@
 
 .update-portfolio-action {
   margin-left: 10px;
+  button.MuiIconButton-root{
+    padding: 0 3px;
+  }
 }
 
 .bi-three-dots-vertical,

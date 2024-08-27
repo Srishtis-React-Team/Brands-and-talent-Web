@@ -3923,6 +3923,9 @@ ul.MuiMenu-list li{
     height: fit-content;
     overflow-y: hidden;
   }
+  .kids-signup-terms.mb-5 { margin-bottom: 1rem !important; }
+
+
 }
 @media (max-width: 380px) {
   .ageverify-buttons {

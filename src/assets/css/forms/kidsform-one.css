@@ -42,11 +42,12 @@
   padding: 8px 16px;
   background-color: #dbdbdb;
   border-radius: 4px;
+  margin: 5px 5px 5px 0;
 }
 .kidsform-one .kids-wrapper .kids-form .selected-category {
   padding: 8px 16px;
   background-color: #c2114b;
-  margin: 8px 8px 8px 0;
+  margin: 5px 5px 5px 0;
   cursor: pointer;
   color: #fff;
   border-radius: 4px;
