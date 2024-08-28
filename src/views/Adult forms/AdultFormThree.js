@@ -856,10 +856,10 @@ const AdultFormThree = () => {
               }}
             ></button>
           </div>
-          <div className="dialog-body">
+          <div className="dialog-body spaceTops">
             <div className="kidsform-one container">
-              <div className="adult-form-wrapper  row ml-0 mr-0">
-                <div className="col-md-4 col-lg-3 mt-5">
+              <div className="adult-form-wrapper row ml-0 mr-0">
+                <div className="col-md-4 col-lg-3 mb-2">
                   <div className="fixImgs">
                     <img
                       src={adultsBanner}
@@ -868,7 +868,7 @@ const AdultFormThree = () => {
                     />
                   </div>
                 </div>
-                <div className="adult-main remvSpc col-md-8 col-lg-9 mt-5">
+                <div className="adult-main remvSpc col-md-8 col-lg-9">
                   <div className="adults-form-title">Complete your Profile</div>
                   <div className="adults-titles kids-form-title">
                     <span>
@@ -1340,13 +1340,13 @@ const AdultFormThree = () => {
 
                   <div className="adults-titles">Features (Optional)</div>
 
-                  <div className="features-section">
+                  <div className="features-section"> <div className="row">
                     {featuresList && (
                       <>
                         {featuresList.map((item, index) => (
                           <div
                             key={index}
-                            className="mb-3 mr-3 features-input-wrapper"
+                            className="mb-3 col-md-3 features-input-wrapper"
                           >
                             <label className="form-label">{item.label}</label>
                             {creatableOptions.includes(item.label) ? (
@@ -1417,7 +1417,7 @@ const AdultFormThree = () => {
                         ))}
                       </>
                     )}
-                  </div>
+                  </div> </div>
 
                   <div className="kids-form-title">
                     <span>ID Verification</span>
