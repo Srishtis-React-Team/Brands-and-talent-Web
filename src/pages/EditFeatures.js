@@ -12,6 +12,11 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
 
   // Initialize state with featureValues
   useEffect(() => {
+    // alert("ssdf");
+    console.log(featuresStructure, "featuresStructure");
+    console.log(featureValues, "featureValues");
+  }, [featuresStructure, featureValues]);
+  useEffect(() => {
     const initialValues = featuresStructure.map((feature) => {
       const existingValue = featureValues.find(
         (item) => item.label === feature.label

@@ -46,7 +46,11 @@ const TalentHome = () => {
     const data = {
       isJobAlert: true,
     };
-    navigate("/talent-notification", { state: data });
+    // navigate("/talent-notification", { state: data });
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
   };
 
   return (
@@ -82,7 +86,10 @@ const TalentHome = () => {
               </Link>
             </div>
             <div className="col-md-4 col-lg-3 pad8">
-              <Link to="/talent-dashboard ">
+              <Link
+                to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                target="_blank"
+              >
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
                     <i className="bi bi-search icons home-card-icons"></i>
@@ -90,6 +97,14 @@ const TalentHome = () => {
                   </div>
                 </div>
               </Link>
+              {/* <Link to="/talent-dashboard ">
+                <div className="home-cards-wrapper hovBx">
+                  <div className="home-card-content">
+                    <i className="bi bi-search icons home-card-icons"></i>
+                    <div className="home-cards-names">Browse Jobs</div>
+                  </div>
+                </div>
+              </Link> */}
             </div>
             <div className="col-md-4 col-lg-3 pad8">
               <Link to="/contact-us">

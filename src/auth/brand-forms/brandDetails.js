@@ -431,6 +431,7 @@ const BrandDetails = () => {
                   </label>
                   <div className="form-group">
                     <MuiPhoneNumber
+                      countryCodeEditable={false}
                       defaultCountry={"kh"}
                       className="material-mobile-style"
                       onChange={handleMobileChange}

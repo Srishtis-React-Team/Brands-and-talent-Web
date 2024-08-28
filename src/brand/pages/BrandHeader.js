@@ -157,6 +157,13 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     window.open("https://buymeacoffee.com/brandsandtalent", "_blank");
   };
 
+  const conditionalNavigate = () => {
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
+  };
+
   return (
     <>
       <div className="headerDashboard dashHeader">
@@ -202,15 +209,15 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                     <div className="navTxt">
                       <NavLink to="/create-jobs">Post a Job</NavLink>
                     </div>
-                    <div className="navTxt">
-                      <NavLink to="/find-talents">Find Talent</NavLink>
+                    <div className="navTxt" onClick={conditionalNavigate()}>
+                      <NavLink>Find Talent</NavLink>
                     </div>
                     <div className="navTxt">
                       <NavLink to="/how-it-works">How it works</NavLink>
                     </div>
-                    <div className="navTxt">
+                    {/* <div className="navTxt">
                       <NavLink to="/pricing">Pricing</NavLink>
-                    </div>
+                    </div> */}
                     <div className="navTxt">
                       <li className="nav-item dropdown">
                         <a

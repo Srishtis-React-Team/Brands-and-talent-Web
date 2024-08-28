@@ -144,7 +144,7 @@ function Routing() {
             />
             {/* <Route path="/find-creators" element={<FindCreators />} /> */}
 
-            <Route
+            {/* <Route
               path="/talent/:name"
               element={
                 currentUserId ? (
@@ -153,7 +153,9 @@ function Routing() {
                   <Navigate to="/login" replace />
                 )
               }
-            />
+            /> */}
+
+            <Route path="/talent/:name" element={<TalentProfile />} />
 
             {/* <Route
           path="/brand/:name"
