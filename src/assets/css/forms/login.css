@@ -63,7 +63,7 @@
   height: auto;
   justify-content: center;
   min-height: 96vh;
-  padding-top: 105px;
+  padding: 105px 0 50px;
 }
 .choose-who {
   display: flex;

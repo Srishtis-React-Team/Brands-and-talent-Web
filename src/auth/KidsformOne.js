@@ -1371,7 +1371,7 @@ const KidsformOne = () => {
                                       min="0"
                                     ></input>
                                   </div>
-                                  <div className="mb-3 col-md-2 divSepmb-3">
+                                  <div className="mb-3 col-md-2 divSep">
                                     <input
                                       type="number"
                                       className="form-control profession-input"

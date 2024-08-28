@@ -285,6 +285,14 @@
   width: 280px;
   max-width: 100%;
 }
+.url-file-wrapper {
+  display: flex;
+  align-items: baseline;
+  margin: 0 0 7px;
+}
+
+
+
 
 @media only screen and (max-width: 1399px) {
   .fixImgs .kids-image-sticky {
