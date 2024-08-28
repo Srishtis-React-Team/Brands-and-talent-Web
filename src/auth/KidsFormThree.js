@@ -242,20 +242,23 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleUrlChange = (e) => {
+    // alert("handleUrlChange");
     const url = e.target.value;
-    setVideoUrl(url);
+    // setVideoUrl(url);
     // Validate URL in real-time
     setCheckVideoUrl(!isValidUrl(url));
   };
 
   const handleAudioChange = (e) => {
     const url = e.target.value;
-    setAudioUrl(url);
+    // setAudioUrl(url);
     // Validate URL in real-time
     setCheckAudioUrl(!isNotKnownFormatUrl(url));
   };
 
   const handlePaste = (e) => {
+    // alert("handlePaste");
+
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
