@@ -42,11 +42,12 @@
   padding: 8px 16px;
   background-color: #dbdbdb;
   border-radius: 4px;
+  margin: 5px 5px 5px 0;
 }
 .kidsform-one .kids-wrapper .kids-form .selected-category {
   padding: 8px 16px;
   background-color: #c2114b;
-  margin: 8px 8px 8px 0;
+  margin: 5px 5px 5px 0;
   cursor: pointer;
   color: #fff;
   border-radius: 4px;
@@ -426,7 +427,7 @@
     margin-right: 15px !important;
   }
   .kidsform-one .kids-wrapper {
-    margin: 45px 0;
+    margin: 65px 0 30px;
     display: flex;
   }
   .media-wrapper {
@@ -823,26 +824,73 @@
 .bi-file-earmark-richtext {
   color: #c2114b;
 }
+
 .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
   box-shadow: rgb(50 50 93 / 0.25) 1px -1px 0 -2px,
     rgb(0 0 0 / 0.3) 0 0 3px -1px !important;
 }
+
+
+
+.dynamic-profession.newAlign .algSepc{
+  width: calc(100% - 170px);
+  float: left;
+}
+.dynamic-profession.newAlign .offer-wrapper{
+  width: 170px;
+  float: right;
+  padding-left: 15px;
+  justify-content: end;
+}
+
+.dynamic-profession.newAlign .algSepc .divSep{ width: calc(100% / 5); }
+
+.dynamic-profession.newAlign .algSepc .profession-input {
+  max-width: 100% !important;
+  margin-right: 0px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 1399px) {
   .fixImgs .kids-image-sticky {
     width: 18%;
     max-width: 100%;
   }
 }
+
 @media only screen and (max-width: 1199px) {
   .kids-form.col-md-8 {
     padding-left: 3%;
   }
+  .dynamic-profession.newAlign .algSepc .divSep{         
+    padding-right: 0;
+    margin-bottom: 0.4rem !important;
+  }
+  .dynamic-profession.newAlign{ flex-direction: column; margin-bottom: 10px; }
+  .dynamic-profession.newAlign .algSepc, .dynamic-profession.newAlign .offer-wrapper{ width: 100%; }
+  .dynamic-profession.newAlign .offer-wrapper {  float: left; padding: 0 0 5px; justify-content: left; }
 }
 @media only screen and (max-width: 1149px) {
   .kids-form.col-md-8 {
     padding-left: 10px;
     width: 100%;
   }
+
+
+
+
 }
 @media only screen and (max-width: 767px) {
   .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
@@ -861,6 +909,7 @@
     max-width: 100%;
     margin-right: 0px !important;
   }
+
   .kids-main .media-wrapper .connect-btn{ font-size: 14px; }
   .kids-form.col-md-8 {
     padding: 0 !important;
@@ -988,14 +1037,14 @@
   padding-right: 8px;
 }
 .add-more-files-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   color: #fff;
   font-size: 12px;
   font-weight: 500;
   background-color: green;
   cursor: pointer;
-  padding: 8px;
+  padding: 8px 15px;
   border-radius: 6px;
 }
 .add-more-files-btn .bi-plus-circle-fill {
@@ -1139,4 +1188,13 @@ textarea.contact-us-textarea.w-100 {
   border-radius: 3px;
   height: 45px;
   /* padding: 6px 0px 0px 10px !important; */
+}
+
+
+
+@media only screen and (max-width: 580px) {
+  .dynamic-profession.newAlign .algSepc .divSep {
+    width: 48%;
+  }
+  .edit-profileimg-btn{ width: 100%; }
 }

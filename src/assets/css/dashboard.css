@@ -2003,6 +2003,47 @@ input::placeholder {
   margin-bottom: 70px;
 }
 
+.update-portfolio-icon .file-section {
+  display: flex;
+  align-items: center;
+}
+ul.MuiMenu-list{ padding: 2px 0; }
+
+ul.MuiMenu-list li{ 
+  font-size: 13px;
+  padding: 5px 10px;
+  margin: 0;
+}
+.service-files-main.uplWraps {
+  flex-direction: column;
+  align-items: start;
+}
+.update-portfolio-fileName.pl-0 {
+  padding-left: 5px;
+}
+.url-file-wrapper.urlSect .file-section{ width: calc(100% - 45px); }
+
+.url-file-wrapper.urlSect .file-section .url-fileName { font-size: 12px; }
+
+.url-file-wrapper.urlSect .update-portfolio-action {  width: 45px; }
+
+.url-file-wrapper.urlSect {
+  display: flex;
+  align-items: baseline;
+  line-height: 17px;
+}
+.photos-slider .owl-carousel{ z-index: 0; }
+
+/* .base-Menu-root ul{  
+  position: absolute;
+  right: 0;
+  left: inherit; z-index: 999
+}  */
+
+
+
+
+
 @media (max-width: 1399px) {
   .menu-items > div.navTxt {
     padding-right: 18px;
@@ -2020,6 +2061,14 @@ input::placeholder {
   }
 }
 @media (max-width: 991px) {
+  .talent-all-details-wrapper .service-list-content .text-btm{     
+    justify-content: inherit;
+    align-items: baseline;
+    flex-direction: column;
+  }
+  .talent-all-details-wrapper .service-list-content .text-btm .enquire-btn {
+    margin: 10px 0;
+  }
   .brand-section {
     min-height: auto;
   }
@@ -2271,7 +2320,7 @@ input::placeholder {
   .gallery-wrapper:hover .gallery-content {
     display: block;
   }
-  .kids-select-btn {
+  .kids-select-btn,  .adults-select-btn {
     width: 100%;
     max-width: 160px;
     height: 40px;
@@ -2288,21 +2337,7 @@ input::placeholder {
     justify-content: center;
     align-items: center;
   }
-  .adults-select-btn {
-    height: 40px;
-    border-radius: 25px;
-    border: 1px solid #fff;
-    background: #c2114b;
-    color: #fff;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+ 
   .ageverify-buttons {
     padding-bottom: 40px;
     display: flex;
@@ -3962,6 +3997,7 @@ section.photos-gallery.w-100 > div {
     height: fit-content;
     overflow-y: hidden;
   }
+  .kids-signup-terms.mb-5 { margin-bottom: 1rem !important; }
   
 
 
