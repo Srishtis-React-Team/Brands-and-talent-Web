@@ -180,6 +180,7 @@ const ContactUs = () => {
             <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">Mobile Number</label>
               <MuiPhoneNumber
+                countryCodeEditable={false}
                 defaultCountry={"kh"}
                 className="material-mobile-style"
                 onChange={handleMobileChange}

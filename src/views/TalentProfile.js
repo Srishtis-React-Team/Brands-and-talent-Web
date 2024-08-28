@@ -77,6 +77,11 @@ const TalentProfile = () => {
 
   const location = useLocation();
   const selectedTalent = location.state && location.state.talentData;
+  console.log(selectedTalent, "selectedTalent");
+
+  if (!selectedTalent && !userId) {
+    navigate("/login");
+  }
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
@@ -293,28 +298,36 @@ const TalentProfile = () => {
   }, [showModal]);
 
   const handleOpenModal = () => {
-    if (currentUserType == "brand" && talentData?.planName === "Basic") {
-      setMessage("Purchase Pro or Premium Plan to unlock this feature");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 3000);
-    } else {
-      if (currentUserType == "talent") {
-        setMessage("Please log in as a Brand/Client and post a job first");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 3000);
-      } else if (currentUserType == "brand") {
-        setShowModal(true);
-      }
-    }
+    // if (currentUserType == "brand" && talentData?.planName === "Basic") {
+    //   setMessage("Purchase Pro or Premium Plan to unlock this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 3000);
+    // } else {
+    //   if (currentUserType == "talent") {
+    //     setMessage("Please log in as a Brand/Client and post a job first");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate("/login");
+    //     }, 3000);
+    //   } else if (currentUserType == "brand") {
+    //     setShowModal(true);
+    //   }
+    // }
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
   };
   const messageNow = () => {
-    navigate(`/message?${talentData?._id}`);
+    // navigate(`/message?${talentData?._id}`);
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
   };
 
   const inviteToApply = async () => {
@@ -996,7 +1009,7 @@ const TalentProfile = () => {
                         Videos & Audios
                       </div>
 
-                      <div
+                      {/* <div
                         className={
                           services
                             ? "active-tab individual-talent-tab"
@@ -1007,7 +1020,7 @@ const TalentProfile = () => {
                         }}
                       >
                         Services
-                      </div>
+                      </div> */}
 
                       <div
                         className={
@@ -1084,15 +1097,15 @@ const TalentProfile = () => {
                               )}
                           </div>
 
-                          <div className="portofolio-section">
+                          {/* <div className="portofolio-section">
                             <div className="portofolio-title mt-4">
                               Social Media Posts
                             </div>
                           </div>
-                          <p>No Social Media Posts Available</p>
+                          <p>No Social Media Posts Available</p> */}
                           {/* <CardCarousel /> */}
 
-                          <div className="portofolio-section">
+                          {/* <div className="portofolio-section">
                             <div className="portofolio-title">Reviews</div>
                             <div
                               className="view-all"
@@ -1102,9 +1115,9 @@ const TalentProfile = () => {
                             >
                               View All
                             </div>
-                          </div>
+                          </div> */}
 
-                          <div className="reviews-section">
+                          {/* <div className="reviews-section">
                             <div className="rating-talent">
                               <div className="num">
                                 {talentData?.averageStarRatings}
@@ -1121,7 +1134,7 @@ const TalentProfile = () => {
                                 was required and everything was effortless.
                               </div>
                             </div>
-                          </div>
+                          </div> */}
 
                           <div className="portofolio-section">
                             <div className="portofolio-title">
@@ -1137,7 +1150,7 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
-                          <p>Videos</p>
+                          <p className="pb-2">Videos</p>
 
                           <div className="service-list-main w-100">
                             <div className="row w-100">
@@ -1272,7 +1285,7 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
-                          {talentData && talentData?.services?.length > 0 && (
+                          {/* {talentData && talentData?.services?.length > 0 && (
                             <>
                               <div className="portofolio-section">
                                 <div className="portofolio-title">Services</div>
@@ -1303,7 +1316,7 @@ const TalentProfile = () => {
                                   </>
                                 )}
                             </>
-                          )}
+                          )} */}
 
                           {/* <div className="service-list-main">
                             {videoAudioList.map((item) => (
@@ -1440,68 +1453,125 @@ const TalentProfile = () => {
                       )}
 
                       {videos && (
-                        <div className="models-photos videoWraper">
-                          <div className="service-list-main w-100">
-                            <div className="row w-100">
-                              {urlsList?.map((url, index) => (
-                                <div key={index} className="col-md-6 mb-3">
-                                  <div className="media-item">
-                                    {isYouTubeUrl(url) ? (
-                                      <iframe
-                                        src={getYouTubeEmbedUrl(url)}
-                                        title={`youtube-video-${index}`}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                        className="video-frame w-100"
-                                        style={{ height: "300px" }}
-                                      ></iframe>
-                                    ) : isVimeoUrl(url) ? (
-                                      <iframe
-                                        src={getVimeoEmbedUrl(url)}
-                                        title={`vimeo-video-${index}`}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                        className="video-frame w-100"
-                                        style={{ height: "300px" }}
-                                      ></iframe>
-                                    ) : isVideoUrl(url) ? (
-                                      <video
-                                        controls
-                                        src={url}
-                                        className="video-frame w-100"
-                                        style={{ height: "300px" }}
-                                      >
-                                        Your browser does not support the video
-                                        tag.
-                                      </video>
-                                    ) : isAudioUrl(url) ? (
-                                      <audio
-                                        controls
-                                        src={url}
-                                        className="audio-player w-100"
-                                      >
-                                        Your browser does not support the audio
-                                        element.
-                                      </audio>
-                                    ) : (
-                                      <div className="unsupported-media">
-                                        Unsupported media type
-                                      </div>
-                                    )}
+                        <>
+                          <p className="pb-2">Videos</p>
+                          <div className="models-photos videoWraper">
+                            <div className="service-list-main w-100">
+                              <div className="row">
+                                {urlsList?.map((url, index) => (
+                                  <div key={index} className="col-md-6 mb-4">
+                                    <div className="media-item">
+                                      {isYouTubeUrl(url) ? (
+                                        <iframe
+                                          src={getYouTubeEmbedUrl(url)}
+                                          title={`youtube-video-${index}`}
+                                          frameBorder="0"
+                                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                          allowFullScreen
+                                          className="video-frame w-100"
+                                          style={{ height: "300px" }}
+                                        ></iframe>
+                                      ) : isVimeoUrl(url) ? (
+                                        <iframe
+                                          src={getVimeoEmbedUrl(url)}
+                                          title={`vimeo-video-${index}`}
+                                          frameBorder="0"
+                                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                          allowFullScreen
+                                          className="video-frame w-100"
+                                          style={{ height: "300px" }}
+                                        ></iframe>
+                                      ) : isVideoUrl(url) ? (
+                                        <video
+                                          controls
+                                          src={url}
+                                          className="video-frame w-100"
+                                          style={{ height: "300px" }}
+                                        >
+                                          Your browser does not support the
+                                          video tag.
+                                        </video>
+                                      ) : isAudioUrl(url) ? (
+                                        <audio
+                                          controls
+                                          src={url}
+                                          className="audio-player w-100"
+                                        >
+                                          Your browser does not support the
+                                          audio element.
+                                        </audio>
+                                      ) : (
+                                        <div className="unsupported-media">
+                                          Unsupported media type
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
 
-                              {urlsList?.length === 0 &&
+                                {urlsList?.length === 0 &&
+                                  talentData?.profileApprove === true && (
+                                    <>
+                                      <div>Data not added</div>
+                                    </>
+                                  )}
+
+                                {urlsList?.length === 0 &&
+                                  talentData?.profileApprove === false && (
+                                    <>
+                                      <div>
+                                        Data will be visible only after admin
+                                        approval
+                                      </div>
+                                    </>
+                                  )}
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
+
+                      {videos && (
+                        <>
+                          <p>Audios</p>
+
+                          <div className="service-list-main w-100">
+                            <div className="row">
+                              {audiosList && (
+                                <div>
+                                  {audiosList.map((url) => {
+                                    return (
+                                      <>
+                                        <>
+                                          <div className="cv-card" key={url}>
+                                            <div className="d-flex align-items-center">
+                                              <i className="fa-solid fa-file"></i>
+                                              <div className="fileName audio-url-style ">
+                                                {url}
+                                              </div>
+                                            </div>
+                                            <button
+                                              className="view-cv"
+                                              onClick={() => window.open(url)}
+                                            >
+                                              Play
+                                            </button>
+                                          </div>
+                                        </>
+                                      </>
+                                    );
+                                  })}
+                                </div>
+                              )}
+
+                              {audiosList?.length === 0 &&
                                 talentData?.profileApprove === true && (
                                   <>
                                     <div>Data not added</div>
                                   </>
                                 )}
 
-                              {urlsList?.length === 0 &&
+                              {audiosList?.length === 0 &&
                                 talentData?.profileApprove === false && (
                                   <>
                                     <div>
@@ -1512,68 +1582,19 @@ const TalentProfile = () => {
                                 )}
                             </div>
                           </div>
-                        </div>
+                        </>
                       )}
 
-                      <p>Audios</p>
-
-                      <div className="service-list-main w-100">
-                        <div className="row">
-                          {audiosList && (
-                            <div>
-                              {audiosList.map((url) => {
-                                return (
-                                  <>
-                                    <>
-                                      <div className="cv-card" key={url}>
-                                        <div className="d-flex align-items-center">
-                                          <i className="fa-solid fa-file"></i>
-                                          <div className="fileName audio-url-style ">
-                                            {url}
-                                          </div>
-                                        </div>
-                                        <button
-                                          className="view-cv"
-                                          onClick={() => window.open(url)}
-                                        >
-                                          Play
-                                        </button>
-                                      </div>
-                                    </>
-                                  </>
-                                );
-                              })}
-                            </div>
-                          )}
-
-                          {audiosList?.length === 0 &&
-                            talentData?.profileApprove === true && (
-                              <>
-                                <div>Data not added</div>
-                              </>
-                            )}
-
-                          {audiosList?.length === 0 &&
-                            talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Data will be visible only after admin approval
-                                </div>
-                              </>
-                            )}
-                        </div>
-                      </div>
-
-                      {services && (
+                      {/* {services && (
                         <>
                           <ServicesCarousel talentData={talentData} />
                         </>
-                      )}
-                      {socialMedia && (
+                      )} */}
+                      {/* {socialMedia && (
                         <>
                           <CardCarousel />
                         </>
-                      )}
+                      )} */}
                       {features && (
                         <>
                           {featuresList.length > 0 && (
