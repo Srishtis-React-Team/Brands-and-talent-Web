@@ -343,7 +343,7 @@ const TalentProfile = () => {
         if (resData) {
           if (resData?.data?.status === true) {
             setShowModal(false);
-            setMessage("Invitation Sent SuccessFully");
+            setMessage("Invitation Sent Successfully");
             setIsLoading(false);
             setOpenPopUp(true);
             setTimeout(function () {
@@ -392,7 +392,7 @@ const TalentProfile = () => {
     };
     await ApiHelper.post(API.reportReview, formData)
       .then((resData) => {
-        setMessage("Reported SuccessFully!");
+        setMessage("Reported Successfully!");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -484,10 +484,16 @@ const TalentProfile = () => {
     setAnchorEl(null);
   };
 
+  const [hideToglle, setHideToggle] = useState(true);
+
   return (
     <>
-      {currentUser_type == "brand" && <BrandHeader toggleMenu={toggleMenu} />}
-      {currentUser_type == "talent" && <TalentHeader toggleMenu={toggleMenu} />}
+      {currentUser_type == "brand" && (
+        <BrandHeader hideToggleButton={hideToglle} toggleMenu={toggleMenu} />
+      )}
+      {currentUser_type == "talent" && (
+        <TalentHeader hideToggleButton={hideToglle} toggleMenu={toggleMenu} />
+      )}
 
       <section>
         <div className="popular-header">

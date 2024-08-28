@@ -429,6 +429,7 @@ const EditTalent = () => {
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
+        console.log(resData, "resData");
         if (resData.data.status === true) {
           if (resData?.data?.data?.type === "kids") {
             setTalentData(resData.data.data, "resData.data.data");
@@ -480,6 +481,15 @@ const EditTalent = () => {
             );
             setSelectedLanguageOptions(selectedOptions);
 
+            const selectedNationalityOptions = resData.data.data?.languages.map(
+              (language) => {
+                return nationalitiesList.find(
+                  (option) => option.label === language
+                );
+              }
+            );
+            setSelectedNationalityOptions(selectedNationalityOptions);
+
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
@@ -494,7 +504,7 @@ const EditTalent = () => {
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
           } else if (resData?.data?.data?.type === "adults") {
-            setTalentData(resData.data.data, "resData.data.data");
+            setTalentData(resData.data.data);
             setEditProfileImage(resData.data.data?.image?.fileData);
             setKidsFillData(resData.data.data);
             setParentFirstName(resData?.data?.data?.adultLegalFirstName);
@@ -519,7 +529,20 @@ const EditTalent = () => {
               resData?.data?.data?.preferredChildLastName
             );
             setGender(resData?.data?.data?.childGender);
+
+            console.log(resData?.data?.data?.languages, "languages");
+
             setLanguages(resData?.data?.data?.languages);
+
+            const selectedOptions = resData?.data?.data?.languages.map(
+              (language) => {
+                return languagesList.find(
+                  (option) => option.label === language
+                );
+              }
+            );
+            setSelectedLanguageOptions(selectedOptions);
+
             setNationality(resData?.data?.data?.childNationality);
             setMaritalStatus(resData?.data?.data?.maritalStatus);
             setEthnicity(resData?.data?.data?.childEthnicity);
@@ -532,15 +555,17 @@ const EditTalent = () => {
             setPortofolioFile(resData.data.data?.portfolio);
             setResumeFile(resData.data.data?.cv);
             setAge(resData.data.data?.age);
-            const selectedOptions = resData.data.data?.languages.map(
+
+            const selectedNationalityOptions = resData.data.data?.languages.map(
               (language) => {
-                return languagesList.find(
+                return nationalitiesList.find(
                   (option) => option.label === language
                 );
               }
             );
-            setSelectedLanguageOptions(selectedOptions);
-
+            setSelectedNationalityOptions(selectedNationalityOptions);
+            // alert("sd");
+            console.log(selectedOptions, "selectedOptions");
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
@@ -549,7 +574,6 @@ const EditTalent = () => {
                 );
               }
             );
-
             setSelectedProfessions(resData.data.data?.profession);
             setFeatures(resData?.data?.data?.features);
           }
@@ -663,7 +687,7 @@ const EditTalent = () => {
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              setMessage("Updated SuccessFully!");
+              setMessage("Updated Successfully!");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -718,7 +742,7 @@ const EditTalent = () => {
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              setMessage("Updated SuccessFully!");
+              setMessage("Updated Successfully!");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -1221,7 +1245,7 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Profile image updated successfully");
+            setMessage("Profile image updated Successfully");
             setOpenPopUp(true);
             setTimeout(function () {
               setMyState(true);
@@ -1244,7 +1268,7 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Profile image updated successfully");
+            setMessage("Profile image updated Successfully");
             setOpenPopUp(true);
             setTimeout(function () {
               setMyState(true);
@@ -1522,9 +1546,9 @@ const EditTalent = () => {
     setIsLoading(true);
     await ApiHelper.post(`${API.deleteVideoUrls}`, formData)
       .then((resData) => {
-        if (resData.data.message === "URL deleted successfully") {
+        if (resData.data.message === "URL deleted Successfully") {
           setIsLoading(false);
-          setMessage("Deleted SuccessFully");
+          setMessage("Deleted Successfully");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1590,7 +1614,7 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Url updated successfully!");
+            setMessage("Url updated Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1617,7 +1641,7 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Url updated successfully!");
+            setMessage("Url updated Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1730,7 +1754,7 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Updated SuccessFully");
+            setMessage("Updated Successfully");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1753,7 +1777,7 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Updated SuccessFully");
+            setMessage("Updated Successfully");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -3311,52 +3335,6 @@ const EditTalent = () => {
             <CustomTabPanel value={valueTabs} index={5}>
               {talentData && (
                 <>
-                  {/* <div className="selected-features update-portfolio-cards-wrapper mt-3 mb-5">
-                    {features && (
-                      <>
-                        <div className="table-container">
-                          <table>
-                            <tbody>
-                              <tr>
-                                <td className="left-column">
-                                  <table>
-                                    <tbody>
-                                      {features
-                                        ?.slice(
-                                          0,
-                                          Math.ceil(features?.length / 2)
-                                        )
-                                        .map((feature, index) => (
-                                          <tr key={feature?.label}>
-                                            <td>{feature?.label}</td>
-                                            <td>{feature?.value}</td>
-                                          </tr>
-                                        ))}
-                                    </tbody>
-                                  </table>
-                                </td>
-                                <td className="right-column">
-                                  <table>
-                                    <tbody>
-                                      {features
-                                        ?.slice(Math.ceil(features?.length / 2))
-                                        .map((feature, index) => (
-                                          <tr key={feature?.label}>
-                                            <td>{feature?.label}</td>
-                                            <td>{feature?.value}</td>
-                                          </tr>
-                                        ))}
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </>
-                    )}
-                  </div> */}
-
                   <div className="features-section mt-4">
                     <div className="row">
                       <EditFeatures
@@ -3480,74 +3458,3 @@ const EditTalent = () => {
 };
 
 export default EditTalent;
-
-{
-  /* {featuresList && (
-                        <>
-                          {featuresList.map((item, index) => (
-                            <div
-                              key={index}
-                              className="col-md-2 mb-3 mr-3 features-input-wrapper"
-                            >
-                              <label className="form-label">{item.label}</label>
-                              {creatableOptions.includes(item.label) ? (
-                                <CreatableSelect
-                                  isClearable
-                                  options={item.options.map((option) => ({
-                                    value: option,
-                                    label: option,
-                                  }))}
-                                  onChange={(selectedOption) =>
-                                    handleFeaturesChange(
-                                      item.label,
-                                      selectedOption ? selectedOption.value : ""
-                                    )
-                                  }
-                                  placeholder={getPlaceholder(item.label)}
-                                />
-                              ) : creatableInputOptions.includes(item.label) ? (
-                                <input
-                                  type="text"
-                                  className="form-control features-select"
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      handleFeaturesChange(
-                                        item.label,
-                                        e.target.value
-                                      );
-                                    }
-                                  }}
-                                  placeholder={getPlaceholder(item.label)}
-                                />
-                              ) : (
-                                <select
-                                  className="form-select features-select"
-                                  aria-label="Default select example"
-                                  onChange={(e) =>
-                                    handleFeaturesChange(
-                                      item.label,
-                                      e.target.value
-                                    )
-                                  }
-                                  defaultValue=""
-                                >
-                                  <option value="" disabled>
-                                    {item.label}
-                                  </option>
-                                  {item.options.map((option, idx) => (
-                                    <option key={idx} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              )}
-                            </div>
-                          ))}
-                        </>
-                      )} */
-}

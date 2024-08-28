@@ -514,7 +514,7 @@ const KidsformOne = () => {
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              setMessage("Updated SuccessFully!");
+              setMessage("Updated Successfully!");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -783,7 +783,7 @@ const KidsformOne = () => {
         text.style.color = "red";
         text.innerHTML = "Weak";
         if (password.value.match(/[!@#$%^&*]/)) {
-          setPasswordStatus(true);
+          setPasswordStatus(false);
           password_strength_box.style.display = "flex";
           line.style.width = "45%";
           line.style.backgroundColor = "#e9ee30";
@@ -1271,9 +1271,13 @@ const KidsformOne = () => {
                                 {profession.label}
                               </label>
                             </div>
-                            <div key={index} className="dynamic-profession newAlign">
-
-                                <div className="algSepc"> <div className="row">
+                            <div
+                              key={index}
+                              className="dynamic-profession newAlign"
+                            >
+                              <div className="algSepc">
+                                {" "}
+                                <div className="row">
                                   <div className="mb-3 col-md-3 divSep">
                                     <input
                                       type="number"
@@ -1390,39 +1394,38 @@ const KidsformOne = () => {
                                       min="0"
                                     ></input>
                                   </div>
-                                </div> </div>
+                                </div>{" "}
+                              </div>
 
-                                <div className="offer-wrapper pt-0">
-                                  <input
-                                    className="profession-checkbox"
-                                    id={profession.label}
-                                    type="checkbox"
-                                    checked={profession.openToOffers || false}
-                                    onChange={(e) =>
-                                      handleDetailChange(
-                                        index,
-                                        "openToOffers",
-                                        e.target.checked
-                                      )
-                                    }
-                                  />
-                                  <label
-                                    className="form-label offer-label"
-                                    htmlFor={profession.label}
-                                  >
-                                    Negotiable
-                                  </label>
-                                  <div>
-                                    <i
-                                      onClick={(e) => {
-                                        deleteProfession(profession, index);
-                                      }}
-                                      className="bi bi-trash"
-                                    ></i>
-                                  </div>
+                              <div className="offer-wrapper pt-0">
+                                <input
+                                  className="profession-checkbox"
+                                  id={profession.label}
+                                  type="checkbox"
+                                  checked={profession.openToOffers || false}
+                                  onChange={(e) =>
+                                    handleDetailChange(
+                                      index,
+                                      "openToOffers",
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                                <label
+                                  className="form-label offer-label"
+                                  htmlFor={profession.label}
+                                >
+                                  Negotiable
+                                </label>
+                                <div>
+                                  <i
+                                    onClick={(e) => {
+                                      deleteProfession(profession, index);
+                                    }}
+                                    className="bi bi-trash"
+                                  ></i>
                                 </div>
-
-                              
+                              </div>
                             </div>
                           </>
                         ))}

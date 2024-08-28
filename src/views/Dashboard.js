@@ -266,7 +266,7 @@ const Dashboard = () => {
     };
     await ApiHelper.post(API.reviewsPosting, formData)
       .then((resData) => {
-        setMessage("Rating Submitted SuccessFully!");
+        setMessage("Rating Submitted Successfully!");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

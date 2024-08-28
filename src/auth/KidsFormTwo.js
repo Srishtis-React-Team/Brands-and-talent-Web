@@ -57,7 +57,7 @@ const KidsFormTwo = () => {
       await ApiHelper.post(`${API.subscriptionPlan}${userId}`, formData)
         .then((resData) => {
           if (resData) {
-            setMessage("Plan Selected SuccessFully!");
+            setMessage("Plan Selected Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);

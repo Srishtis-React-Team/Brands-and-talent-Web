@@ -54,7 +54,7 @@ const UpdateAdultPassword = (props) => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Password Updated SuccessFully!");
+            setMessage("Password Updated Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);

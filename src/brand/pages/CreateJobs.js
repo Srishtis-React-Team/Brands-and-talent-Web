@@ -1219,7 +1219,7 @@ const CreateJobs = () => {
         await ApiHelper.post(`${API.editDraft}${editData?.value}`, formData)
           .then((resData) => {
             if (resData.data.status === true) {
-              setMessage("Job Updated SuccessFully!");
+              setMessage("Job Updated Successfully!");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -1242,7 +1242,7 @@ const CreateJobs = () => {
         await ApiHelper.post(`${API.editJob}${editData?.value}`, formData)
           .then((resData) => {
             if (resData.data.status === true) {
-              setMessage("Job Updated SuccessFully!");
+              setMessage("Job Updated Successfully!");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -1354,7 +1354,7 @@ const CreateJobs = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Job Created SuccessFully!");
+            setMessage("Job Created Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);

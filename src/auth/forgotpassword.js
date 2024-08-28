@@ -73,7 +73,6 @@ const ForgotPassword = () => {
           brandEmail: talentEmail,
         };
         setIsLoading(true);
-
         await ApiHelper.post(API.brandsForgotPassword, formData)
           .then((resData) => {
             if (resData.data.status === true) {
@@ -96,7 +95,7 @@ const ForgotPassword = () => {
           .catch((err) => {
             setIsLoading(false);
           });
-      } else {
+      } else if (userType == "kids") {
         let formdata = {
           email: talentEmail,
           type: userType,
@@ -112,6 +111,8 @@ const ForgotPassword = () => {
             }
           })
           .catch((err) => {});
+      } else if (userType == "adult") {
+        adultForgotPassword();
       }
     }
   };
@@ -208,7 +209,7 @@ const ForgotPassword = () => {
             {isLoading ? "Loading..." : "Continue"}
           </div>
           <div className="resend-forgot" onClick={() => forgotPassword()}>
-            Didn’t received the OTP? <span>Resend</span>
+            Didn’t received the Email? <span>Resend</span>
           </div>
         </div>
       </div>

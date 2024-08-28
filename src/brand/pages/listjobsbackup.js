@@ -110,7 +110,7 @@ const ListJobs = () => {
     await ApiHelper.post(API.deleteJob, formdata)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Job Deleted SuccessFully");
+          setMessage("Job Deleted Successfully");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -150,7 +150,7 @@ const ListJobs = () => {
     await ApiHelper.post(`${API.postJobByDraft}${alertpop?.jobId}`)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Job Posted SuccessFully!");
+          setMessage("Job Posted Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

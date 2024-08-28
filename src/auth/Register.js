@@ -409,7 +409,7 @@ const Register = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setAdultSignupDisabled(true);
-          setMessage("Registered SuccessFully!");
+          setMessage("Registered Successfully!");
 
           setAdultParentData(resData?.data);
 

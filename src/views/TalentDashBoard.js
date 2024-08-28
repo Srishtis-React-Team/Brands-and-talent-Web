@@ -235,7 +235,7 @@ const TalentDashBoard = () => {
     };
     await ApiHelper.post(API.applyjobs, formData)
       .then((resData) => {
-        setMessage("Job applied successfully");
+        setMessage("Job applied Successfully");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -347,7 +347,7 @@ const TalentDashBoard = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setGigsList(resData.data.data);
-          setMessage("Filtered SuccessFully");
+          setMessage("Filtered Successfully");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -411,7 +411,7 @@ const TalentDashBoard = () => {
     await ApiHelper.post(API.updateFavouriteJobs, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Job Saved SuccessFully");
+          setMessage("Job Saved Successfully");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

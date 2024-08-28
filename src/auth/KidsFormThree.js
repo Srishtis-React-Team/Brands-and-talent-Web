@@ -665,7 +665,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Updated SuccessFully");
+          setMessage("Updated Successfully");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

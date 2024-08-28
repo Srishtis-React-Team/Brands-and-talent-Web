@@ -131,7 +131,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
-        setMessage("Logged out successfully");
+        setMessage("Logged out Successfully");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

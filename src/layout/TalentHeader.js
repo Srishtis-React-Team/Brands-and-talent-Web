@@ -19,6 +19,8 @@ import SearchHeaderComponent from "./SearchHeaderComponent";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import searchPathOptions from "../components/SearchPaths";
 const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
+  console.log(hideToggleButton, "hideToggleButton");
+  console.log(toggleMenu, "toggleMenu");
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
   const [talent, setTalent] = useState(true);
   const [signupCategory, setSignupCategory] = useState("talent");
@@ -147,7 +149,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
-        setMessage("Logged out successfully");
+        setMessage("Logged out Successfully");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -219,7 +221,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   //   await ApiHelper.post(API.searchJobs, formData)
   //     .then((resData) => {
   //       if (resData.data.status === true) {
-  //         setMessage("Filtered SuccessFully");
+  //         setMessage("Filtered Successfully");
   //         setOpenPopUp(true);
   //         setTimeout(function () {
   //           setOpenPopUp(false);
@@ -876,6 +878,68 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                         </div>
 
                         <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Browse Jobs
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Notification
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Messages
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink to="/edit-talent-profile">
+                            Edit Profile
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Saved Jobs
+                          </NavLink>
+                        </div>
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Applied Jobs
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Settings
+                          </NavLink>
+                        </div>
+                        {/* <div className="navTxt">
+                          <NavLink to="/talent-home">Dashboard</NavLink>
+                        </div>
+
+                        <div className="navTxt">
                           <NavLink to="/talent-dashboard">Browse Jobs</NavLink>
                         </div>
 
@@ -904,7 +968,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
                         <div className="navTxt">
                           <NavLink to="/talent-settings">Settings</NavLink>
-                        </div>
+                        </div> */}
                         {/* <div className="navTxt">
                           <NavLink to="/pricing">Pricing</NavLink>
                         </div> */}
@@ -1203,7 +1267,7 @@ const Listbox = styled("ul")(
   box-shadow: 0px 4px 30px ${
     theme.palette.mode === "dark" ? grey[900] : grey[200]
   };
-  z-index: 99999999999;
+  z-index: 9999999999999999999;
 
   .closed & {
     opacity: 0;

@@ -97,7 +97,7 @@ const Header = ({ onData }) => {
   const logout = () => {
     localStorage.clear();
     setcurrentUserId(null);
-    setMessage("Logged out successfully");
+    setMessage("Logged out Successfully");
     setOpenPopUp(true);
     setTimeout(function () {
       setOpenPopUp(false);

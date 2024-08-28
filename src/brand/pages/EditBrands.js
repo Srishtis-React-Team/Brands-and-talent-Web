@@ -438,7 +438,7 @@ const EditBrands = () => {
     await ApiHelper.post(`${API.editBrands}${brandId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Profile image updated successfully");
+          setMessage("Profile image updated Successfully");
           setOpenPopUp(true);
           setTimeout(function () {
             setMyState(true);
@@ -482,7 +482,7 @@ const EditBrands = () => {
     await ApiHelper.post(`${API.editBrands}${brandId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Updated SuccessFully!");
+          setMessage("Updated Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -506,7 +506,7 @@ const EditBrands = () => {
     await ApiHelper.post(`${API.editBrands}${brandId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Url updated successfully!");
+          setMessage("Url updated Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
