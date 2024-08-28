@@ -2287,6 +2287,7 @@ const EditTalent = () => {
                   <div className="profession-content-section">
                     {selectedProfessions.map((profession, index) => (
                       <div key={index} className="dynamic-profession newAlign">
+                        
                         <div className="algSepc"> <div className="row">
                           <div className="mb-3 col-md-3 divSep">
                             <label className="form-label">
