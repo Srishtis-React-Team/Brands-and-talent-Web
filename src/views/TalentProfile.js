@@ -1153,7 +1153,7 @@ const TalentProfile = () => {
                           <p className="pb-2">Videos</p>
 
                           <div className="service-list-main w-100">
-                            <div className="row">
+                            <div className="row w-100">
                               {urlsList?.map((url, index) => (
                                 <div key={index} className="col-md-6 mb-4">
                                   <div className="media-item">
