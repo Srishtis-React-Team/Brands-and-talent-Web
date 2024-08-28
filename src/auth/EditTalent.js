@@ -92,6 +92,8 @@ const EditTalent = () => {
     featuresList,
   } = useFieldDatas();
 
+  console.log(featuresList, "featuresList");
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -250,16 +252,32 @@ const EditTalent = () => {
     "Prefer Not to Say",
   ];
 
-  function chooseCategory(category) {
-    setCategoryError(false);
+  const chooseCategory = (category) => {
+    console.log(category, "category selectedCategories");
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
       );
     } else {
-      setSelectedCategories([...selectedCategories, category]);
+      if (selectedCategories.length < 6) {
+        setSelectedCategories([...selectedCategories, category]);
+        setCategoryError(false);
+      } else {
+        setMessage("you can only select 6 categories");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 2000);
+      }
     }
-  }
+    console.log(selectedCategories.length, "selectedCategories");
+
+    if (selectedCategories.length < 4) {
+      setCategoryError(true);
+    } else {
+      setCategoryError(false);
+    }
+  };
 
   const handleProfessionChange = (selectedOptions) => {
     if (selectedOptions.length > 5) {
@@ -616,98 +634,114 @@ const EditTalent = () => {
     setMyState(false);
 
     if (talentData?.type === "kids") {
-      const formData = {
-        parentFirstName: parentFirstName,
-        parentLastName: parentLastName,
-        parentEmail: parentEmail,
-        parentMobileNo: parentMobile,
-        parentCountry: country,
-        parentState: state,
-        parentAddress: address,
-        relevantCategories: selectedCategories,
-        childFirstName: kidsLegalFirstName,
-        childLastName: kidsLegalLastName,
-        preferredChildFirstname: kidsPreferedFirstName,
-        preferredChildLastName: kidsPreferedLastName,
-        childGender: gender,
-        childNationality: nationality,
-        childEthnicity: ethnicity,
-        languages: languages,
-        childDob: dateOfBirth,
-        childCity: kidsCity,
-        childAboutYou: aboutYou,
-        profession: selectedProfessions,
-        age: age,
-        publicUrl: publicUrl,
-      };
-      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
+      if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
+        const formData = {
+          parentFirstName: parentFirstName,
+          parentLastName: parentLastName,
+          parentEmail: parentEmail,
+          parentMobileNo: parentMobile,
+          parentCountry: country,
+          parentState: state,
+          parentAddress: address,
+          relevantCategories: selectedCategories,
+          childFirstName: kidsLegalFirstName,
+          childLastName: kidsLegalLastName,
+          preferredChildFirstname: kidsPreferedFirstName,
+          preferredChildLastName: kidsPreferedLastName,
+          childGender: gender,
+          childNationality: nationality,
+          childEthnicity: ethnicity,
+          languages: languages,
+          childDob: dateOfBirth,
+          childCity: kidsCity,
+          childAboutYou: aboutYou,
+          profession: selectedProfessions,
+          age: age,
+          publicUrl: publicUrl,
+        };
+        await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setIsLoading(false);
+              setMessage("Updated SuccessFully!");
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+                setMyState(true);
+              }, 1000);
+            } else if (resData.data.status === false) {
+              setIsLoading(false);
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {
             setIsLoading(false);
-            setMessage("Updated SuccessFully!");
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-              setMyState(true);
-            }, 1000);
-          } else if (resData.data.status === false) {
-            setIsLoading(false);
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
-        });
+          });
+      } else {
+        setMessage("Please Update All Required Fields");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 1000);
+      }
     }
     if (talentData?.type === "adults") {
-      let formData = {
-        adultLegalFirstName: parentFirstName,
-        adultLegalLastName: parentLastName,
-        preferredChildFirstname: kidsPreferedFirstName,
-        preferredChildLastName: kidsPreferedLastName,
-        profession: selectedProfessions,
-        relevantCategories: selectedCategories,
-        childGender: gender,
-        maritalStatus: maritalStatus,
-        childNationality: nationality,
-        childEthnicity: ethnicity,
-        languages: languages,
-        childDob: dateOfBirth,
-        childPhone: parentMobile,
-        contactEmail: parentEmail,
-        childLocation: address,
-        parentCountry: country,
-        parentState: state,
-        parentAddress: address,
-        childCity: kidsCity,
-        age: age,
-        publicUrl: publicUrl,
-      };
-      await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
+      if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
+        let formData = {
+          adultLegalFirstName: parentFirstName,
+          adultLegalLastName: parentLastName,
+          preferredChildFirstname: kidsPreferedFirstName,
+          preferredChildLastName: kidsPreferedLastName,
+          profession: selectedProfessions,
+          relevantCategories: selectedCategories,
+          childGender: gender,
+          maritalStatus: maritalStatus,
+          childNationality: nationality,
+          childEthnicity: ethnicity,
+          languages: languages,
+          childDob: dateOfBirth,
+          childPhone: parentMobile,
+          contactEmail: parentEmail,
+          childLocation: address,
+          parentCountry: country,
+          parentState: state,
+          parentAddress: address,
+          childCity: kidsCity,
+          age: age,
+          publicUrl: publicUrl,
+        };
+        await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setIsLoading(false);
+              setMessage("Updated SuccessFully!");
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+              }, 1000);
+            } else if (resData.data.status === false) {
+              setIsLoading(false);
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {
             setIsLoading(false);
-            setMessage("Updated SuccessFully!");
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-            }, 1000);
-          } else if (resData.data.status === false) {
-            setIsLoading(false);
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
-        });
+          });
+      } else {
+        setMessage("Please Update All Required Fields");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 1000);
+      }
     }
   };
 
@@ -871,7 +905,9 @@ const EditTalent = () => {
 
   useEffect(() => {}, [editProfileImage]);
 
-  useEffect(() => {}, [features]);
+  useEffect(() => {
+    console.log(features, "features");
+  }, [features]);
   useEffect(() => {
     console.log(talentData, "talentData");
   }, [talentData]);
@@ -1785,14 +1821,14 @@ const EditTalent = () => {
                   {...a11yProps(4)}
                   style={{ textTransform: "capitalize" }}
                 />
-                <Tab
+                {/* <Tab
                   label="Services"
                   {...a11yProps(5)}
                   style={{ textTransform: "capitalize" }}
-                />
+                /> */}
                 <Tab
                   label="Features"
-                  {...a11yProps(6)}
+                  {...a11yProps(5)}
                   style={{ textTransform: "capitalize" }}
                 />
                 {/* <Tab
@@ -2134,6 +2170,7 @@ const EditTalent = () => {
                     <MuiPhoneNumber
                       value={parentMobile}
                       defaultCountry={"kh"}
+                      countryCodeEditable={false}
                       className="material-mobile-style"
                       onChange={handleMobileChange}
                       style={{ paddingTop: "7px" }}
@@ -2285,170 +2322,171 @@ const EditTalent = () => {
                     </div>
                   </div>
                   <div className="profession-content-section">
+                    {selectedProfessions.length > 0 && (
+                      <>
+                        <p className="set-rates">
+                          *Set Your Rates in USD (Choose one or more rates for
+                          each selected skill)
+                        </p>
+                      </>
+                    )}
+
                     {selectedProfessions.map((profession, index) => (
-                      <div key={index} className="dynamic-profession">
-                        <div className="mb-3">
+                      <>
+                        <div>
                           <label className="form-label">
                             {profession.label}
                           </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perDaySalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perDaySalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/day"
-                            min="0"
-                          ></input>
                         </div>
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label}
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perHourSalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perHourSalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/hr"
-                            min="0"
-                          ></input>
-                        </div>
-
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label}
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perMonthSalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perMonthSalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/month"
-                            min="0"
-                          ></input>
-                        </div>
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label}
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perPostSalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perPostSalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/post"
-                            min="0"
-                          ></input>
-                        </div>
-                        <div className="mb-3">
-                          <label className="form-label">
-                            {profession.label}
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control profession-input"
-                            value={profession.perImageSalary || ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Check if the value is a valid number and is non-negative
-                              if (
-                                /^\d*\.?\d*$/.test(value) &&
-                                (value >= 0 || value === "")
-                              ) {
-                                handleDetailChange(
-                                  index,
-                                  "perImageSalary",
-                                  value
-                                );
-                              }
-                            }}
-                            placeholder="$/image"
-                            min="0"
-                          ></input>
-                        </div>
-
-                        <div className="offer-wrapper">
-                          <input
-                            className="profession-checkbox"
-                            id={profession.label}
-                            type="checkbox"
-                            checked={profession.openToOffers || false}
-                            onChange={(e) =>
-                              handleDetailChange(
-                                index,
-                                "openToOffers",
-                                e.target.checked
-                              )
-                            }
-                          />
-                          <label
-                            className="form-label offer-label"
-                            htmlFor={profession.label}
-                          >
-                            Negotiable
-                          </label>
-                          <div>
-                            <i
-                              onClick={(e) => {
-                                deleteProfession(profession, index);
+                        <div key={index} className="dynamic-profession">
+                          <div className="mb-3">
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perDaySalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perDaySalary",
+                                    value
+                                  );
+                                }
                               }}
-                              className="bi bi-trash"
-                            ></i>
+                              placeholder="$/day"
+                              min="0"
+                            ></input>
+                          </div>
+                          <div className="mb-3">
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perHourSalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perHourSalary",
+                                    value
+                                  );
+                                }
+                              }}
+                              placeholder="$/hr"
+                              min="0"
+                            ></input>
+                          </div>
+
+                          <div className="mb-3">
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perMonthSalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perMonthSalary",
+                                    value
+                                  );
+                                }
+                              }}
+                              placeholder="$/month"
+                              min="0"
+                            ></input>
+                          </div>
+                          <div className="mb-3">
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perPostSalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perPostSalary",
+                                    value
+                                  );
+                                }
+                              }}
+                              placeholder="$/post"
+                              min="0"
+                            ></input>
+                          </div>
+                          <div className="mb-3">
+                            <input
+                              type="number"
+                              className="form-control profession-input"
+                              value={profession.perImageSalary || ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Check if the value is a valid number and is non-negative
+                                if (
+                                  /^\d*\.?\d*$/.test(value) &&
+                                  (value >= 0 || value === "")
+                                ) {
+                                  handleDetailChange(
+                                    index,
+                                    "perImageSalary",
+                                    value
+                                  );
+                                }
+                              }}
+                              placeholder="$/image"
+                              min="0"
+                            ></input>
+                          </div>
+
+                          <div className="offer-wrapper">
+                            <input
+                              className="profession-checkbox"
+                              id={profession.label}
+                              type="checkbox"
+                              checked={profession.openToOffers || false}
+                              onChange={(e) =>
+                                handleDetailChange(
+                                  index,
+                                  "openToOffers",
+                                  e.target.checked
+                                )
+                              }
+                            />
+                            <label
+                              className="form-label offer-label"
+                              htmlFor={profession.label}
+                            >
+                              Negotiable
+                            </label>
+                            <div>
+                              <i
+                                onClick={(e) => {
+                                  deleteProfession(profession, index);
+                                }}
+                                className="bi bi-trash"
+                              ></i>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </>
                     ))}
                   </div>
                 </div>
@@ -2479,9 +2517,16 @@ const EditTalent = () => {
                     </div>
                   ))}
                 </div>
-                {categoryError && (
+                {/* {categoryError && (
                   <div className="invalid-fields">Please choose Categories</div>
-                )}
+                )} */}
+                {(selectedCategories?.length < 3 ||
+                  selectedCategories?.length > 6) &&
+                  categoryError && (
+                    <div className="invalid-fields">
+                      Please select 3 to 6 categories relevant to your profile
+                    </div>
+                  )}
                 <div className="row">
                   <div className="kids-form-section  col-md-9 mb-3 mt-3">
                     <label className="form-label">Public Url</label>
@@ -3018,7 +3063,7 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={5}>
+            {/* <CustomTabPanel value={valueTabs} index={5}>
               <div className="update-portfolio-section">
                 <div className="update-service-cards-wrapper edit-service-section-main">
                   {services &&
@@ -3244,9 +3289,9 @@ const EditTalent = () => {
                   </div>
                 </div>
               </div>
-            </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={6}>
-              {talentData && talentData?.features?.length > 0 && (
+            </CustomTabPanel> */}
+            <CustomTabPanel value={valueTabs} index={5}>
+              {talentData && (
                 <>
                   {/* <div className="selected-features update-portfolio-cards-wrapper mt-3 mb-5">
                     {features && (
@@ -3296,74 +3341,6 @@ const EditTalent = () => {
 
                   <div className="features-section mt-4">
                     <div className="row">
-                      {/* {featuresList && (
-                        <>
-                          {featuresList.map((item, index) => (
-                            <div
-                              key={index}
-                              className="col-md-2 mb-3 mr-3 features-input-wrapper"
-                            >
-                              <label className="form-label">{item.label}</label>
-                              {creatableOptions.includes(item.label) ? (
-                                <CreatableSelect
-                                  isClearable
-                                  options={item.options.map((option) => ({
-                                    value: option,
-                                    label: option,
-                                  }))}
-                                  onChange={(selectedOption) =>
-                                    handleFeaturesChange(
-                                      item.label,
-                                      selectedOption ? selectedOption.value : ""
-                                    )
-                                  }
-                                  placeholder={getPlaceholder(item.label)}
-                                />
-                              ) : creatableInputOptions.includes(item.label) ? (
-                                <input
-                                  type="text"
-                                  className="form-control features-select"
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      handleFeaturesChange(
-                                        item.label,
-                                        e.target.value
-                                      );
-                                    }
-                                  }}
-                                  placeholder={getPlaceholder(item.label)}
-                                />
-                              ) : (
-                                <select
-                                  className="form-select features-select"
-                                  aria-label="Default select example"
-                                  onChange={(e) =>
-                                    handleFeaturesChange(
-                                      item.label,
-                                      e.target.value
-                                    )
-                                  }
-                                  defaultValue=""
-                                >
-                                  <option value="" disabled>
-                                    {item.label}
-                                  </option>
-                                  {item.options.map((option, idx) => (
-                                    <option key={idx} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              )}
-                            </div>
-                          ))}
-                        </>
-                      )} */}
                       <EditFeatures
                         featuresStructure={featuresList}
                         featureValues={features}
@@ -3485,3 +3462,74 @@ const EditTalent = () => {
 };
 
 export default EditTalent;
+
+{
+  /* {featuresList && (
+                        <>
+                          {featuresList.map((item, index) => (
+                            <div
+                              key={index}
+                              className="col-md-2 mb-3 mr-3 features-input-wrapper"
+                            >
+                              <label className="form-label">{item.label}</label>
+                              {creatableOptions.includes(item.label) ? (
+                                <CreatableSelect
+                                  isClearable
+                                  options={item.options.map((option) => ({
+                                    value: option,
+                                    label: option,
+                                  }))}
+                                  onChange={(selectedOption) =>
+                                    handleFeaturesChange(
+                                      item.label,
+                                      selectedOption ? selectedOption.value : ""
+                                    )
+                                  }
+                                  placeholder={getPlaceholder(item.label)}
+                                />
+                              ) : creatableInputOptions.includes(item.label) ? (
+                                <input
+                                  type="text"
+                                  className="form-control features-select"
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleFeaturesChange(
+                                        item.label,
+                                        e.target.value
+                                      );
+                                    }
+                                  }}
+                                  placeholder={getPlaceholder(item.label)}
+                                />
+                              ) : (
+                                <select
+                                  className="form-select features-select"
+                                  aria-label="Default select example"
+                                  onChange={(e) =>
+                                    handleFeaturesChange(
+                                      item.label,
+                                      e.target.value
+                                    )
+                                  }
+                                  defaultValue=""
+                                >
+                                  <option value="" disabled>
+                                    {item.label}
+                                  </option>
+                                  {item.options.map((option, idx) => (
+                                    <option key={idx} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
+                            </div>
+                          ))}
+                        </>
+                      )} */
+}

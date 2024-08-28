@@ -1108,6 +1108,7 @@ const AdultFormOne = () => {
                           placeholder="Enter Phone number"
                         ></input> */}
                       <MuiPhoneNumber
+                        countryCodeEditable={false}
                         defaultCountry={"kh"}
                         className="material-mobile-style"
                         onChange={handleMobileChange}

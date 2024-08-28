@@ -453,7 +453,9 @@ const KidsformOne = () => {
       dateOfBirth !== "" &&
       passwordMatch === true &&
       completedJobs !== "" &&
-      !mobileValidationError
+      !mobileValidationError &&
+      passwordStatus &&
+      passwordMatch
     ) {
       const formData = {
         parentFirstName: parentFirstName,
@@ -543,6 +545,13 @@ const KidsformOne = () => {
 
     if (!passwordMatch) {
       setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
+    }
+    if (!passwordStatus) {
+      setMessage("Please strengthen your password");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -714,12 +723,10 @@ const KidsformOne = () => {
   const handleMobileChange = (value, countryData) => {
     setParentMobile(value);
     setParentMobileError(false);
-
     isValidPhoneNumber(value);
     console.log(value, "isValidPhoneNumber");
     if (isValidPhoneNumber(value)) {
       console.log(true, "isValidPhoneNumber");
-
       setMobileValidationError(false);
       setParentMobile(value);
     } else {
@@ -743,8 +750,8 @@ const KidsformOne = () => {
       if (password.value.length == 0) {
         password_strength_box.style.display = "none";
       }
-
       if (password.value.length >= 1) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "5%";
         line.style.backgroundColor = "red";
@@ -752,6 +759,7 @@ const KidsformOne = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 2) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "10%";
         line.style.backgroundColor = "red";
@@ -759,6 +767,7 @@ const KidsformOne = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 3) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "20%";
         line.style.backgroundColor = "red";
@@ -766,12 +775,15 @@ const KidsformOne = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 4) {
+        setPasswordStatus(false);
+
         password_strength_box.style.display = "flex";
         line.style.width = "35%";
         line.style.backgroundColor = "red";
         text.style.color = "red";
         text.innerHTML = "Weak";
         if (password.value.match(/[!@#$%^&*]/)) {
+          setPasswordStatus(true);
           password_strength_box.style.display = "flex";
           line.style.width = "45%";
           line.style.backgroundColor = "#e9ee30";
@@ -784,6 +796,8 @@ const KidsformOne = () => {
         password.value.match(/[A-Z]/) &&
         password.value.match(/[a-z]/)
       ) {
+        setPasswordStatus(false);
+
         password_strength_box.style.display = "flex";
         line.style.width = "50%";
         line.style.backgroundColor = "#e9ee30";
@@ -791,6 +805,8 @@ const KidsformOne = () => {
         text.innerHTML = "Medium";
       }
       if (password.value.length >= 6 && password.value.match(/[0-9]/)) {
+        setPasswordStatus(false);
+
         password_strength_box.style.display = "flex";
         line.style.width = "70%";
         line.style.backgroundColor = "#e9ee30";
@@ -803,6 +819,8 @@ const KidsformOne = () => {
         password.value.match(/[a-z]/) &&
         password.value.match(/[0-9]/)
       ) {
+        setPasswordStatus(false);
+
         password_strength_box.style.display = "flex";
         line.style.width = "80%";
         line.style.backgroundColor = "#e9ee30";
@@ -817,6 +835,8 @@ const KidsformOne = () => {
         password.value.match(/[0-9]/) &&
         password.value.match(/[!@#$%^&*]/)
       ) {
+        setPasswordStatus(true);
+
         password_strength_box.style.display = "flex";
         line.style.width = "100%";
         line.style.backgroundColor = "#2ccc2c";
@@ -1149,6 +1169,7 @@ const KidsformOne = () => {
                         </label>
 
                         <MuiPhoneNumber
+                          countryCodeEditable={false}
                           defaultCountry={"kh"}
                           className="material-mobile-style"
                           onChange={handleMobileChange}
@@ -1234,6 +1255,15 @@ const KidsformOne = () => {
                         </div>
                       </div>
                       <div className="profession-content-section">
+                        {selectedProfessions.length > 0 && (
+                          <>
+                            <p className="set-rates">
+                              *Set Your Rates in USD (Choose one or more rates
+                              for each selected skill)
+                            </p>
+                          </>
+                        )}
+
                         {selectedProfessions.map((profession, index) => (
                           <>
                             <div>

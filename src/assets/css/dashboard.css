@@ -1667,7 +1667,7 @@ head .profile-image-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 17px;
+  padding: 0 10px;
 }
 .fa-search {
   color: #000;
@@ -3477,12 +3477,10 @@ input::placeholder {
   margin-bottom: 1rem !important;
 }
 
-
-
-
-
-
 @media (max-width: 767px) {
+  .header-search-wrapper {
+    padding: 0 10px !important;
+  }
   .dialog-body.spaceTops,
   .dialog-body {
     padding: 0;
@@ -3898,60 +3896,51 @@ input::placeholder {
   .cv-card {
     width: 100% !important;
     flex-direction: column;
-}
-button.view-cv {
-  width: 100% !important;
-  height: inherit;
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0px;
-  margin-bottom: 0px;
-}
-.individual-talent-tabs .active-tab, .individual-talent-tab-first-active-tab.individual-talent-tab-first {
-  border-radius: 0px !important;
-  border-bottom: 2px solid #000;
-  background: none;
-  color: #000 !important;
-  font-weight: bold;
-}
-.photos-gallery .photos-gallery-image {
-  height: inherit;
-  margin-bottom: 20px;
-  margin-right: 0px !important;
-}
-section.photos-gallery.w-100 > div {
-  width: 100%;
-}
-.view-all {
-  min-width: inherit !important;
-  height: 28px !important;
-  flex-shrink: 0;
-  cursor: pointer;
-  padding: 5px 15px;
-  border-radius: 60px;
-  border: 1px solid #000;
-  background: rgba(3, 3, 3, 0);
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 500;
-  transition: 0.5s;
-  font-size: 12px;
-}
-.table-container table tbody > tr {
-  display: flex;
-  flex-direction: column;
-}
-
-
-
-
-
-
-
-
-
-
+  }
+  button.view-cv {
+    width: 100% !important;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+    margin-bottom: 0px;
+  }
+  .individual-talent-tabs .active-tab,
+  .individual-talent-tab-first-active-tab.individual-talent-tab-first {
+    border-radius: 0px !important;
+    border-bottom: 2px solid #000;
+    background: none;
+    color: #000 !important;
+    font-weight: bold;
+  }
+  .photos-gallery .photos-gallery-image {
+    height: inherit;
+    margin-bottom: 20px;
+    margin-right: 0px !important;
+  }
+  section.photos-gallery.w-100 > div {
+    width: 100%;
+  }
+  .view-all {
+    min-width: inherit !important;
+    height: 28px !important;
+    flex-shrink: 0;
+    cursor: pointer;
+    padding: 5px 15px;
+    border-radius: 60px;
+    border: 1px solid #000;
+    background: rgba(3, 3, 3, 0);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    transition: 0.5s;
+    font-size: 12px;
+  }
+  .table-container table tbody > tr {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 420px) {
@@ -3962,19 +3951,6 @@ section.photos-gallery.w-100 > div {
     height: fit-content;
     overflow-y: hidden;
   }
-  
-
-
-
-
-
-
-
-
-
-
-
-
 }
 @media (max-width: 380px) {
   .ageverify-buttons {
@@ -3999,3 +3975,7 @@ section.photos-gallery.w-100 > div {
     padding: 6px 0px 0px 10px;
   }
 }
+
+/* .navTxt {
+  margin: 14px 0 !important;
+} */

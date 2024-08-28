@@ -98,6 +98,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
         console.log(resData, "resData");
         if (resData?.data?.status === true) {
           setTwitterFollowersCount(resData?.data?.followers_count);
+          setXtwitterFollowers(resData?.data?.followers_count);
           setTwitterUserName("");
           setIsLoading(false);
           setMessage("Twitter Connected SuccessFully!");
@@ -113,7 +114,6 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
           setMessage(resData?.data?.data);
           setOpenPopUp(true);
           setIsLoading(false);
-
           setTimeout(function () {
             setOpenPopUp(false);
             const modalElement = document.getElementById("socialMediaModal");
@@ -124,7 +124,6 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
       })
       .catch((err) => {
         console.log(err, "err");
-
         setIsLoading(false);
       });
   };
@@ -397,14 +396,12 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
-                  <div
-                    className="kids-form-row row spcBtm"
-                  >
+                  <div className="kids-form-row row spcBtm">
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
                           <div className="mediaIcon">
-                             <img src={youTube} alt="" />
+                            <img src={youTube} alt="" />
                           </div>
                           <div className="media-text">
                             <input

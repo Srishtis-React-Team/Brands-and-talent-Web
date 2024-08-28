@@ -1411,17 +1411,6 @@
     border-radius: 6px;
   }
 
-  .edit-features-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .features-seperator {
-    width: 300px;
-    margin-right: 20px;
-    margin-bottom: 15px;
-  }
-
   .edit_talentprofile .update-service-cards-wrapper,
   .edit_talentprofile .update-portfolio-cards-wrapper,
   .edit_talentprofile .profile-image-edit-section {
@@ -1816,4 +1805,45 @@
     padding: 0px 10px;
     cursor: pointer;
   }
+}
+
+.public-url-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 8px;
+}
+
+.public-url-input {
+  margin-left: 0px;
+}
+
+.bi-pencil-square {
+  color: #c2114b;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.public-url-text {
+  // min-width: 100%;
+  width: 88%;
+}
+
+.edit-features-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.features-seperator {
+  width: 300px;
+  margin-right: 20px;
+  margin-bottom: 15px;
+}
+
+.file-section,
+.file-options {
+  display: flex;
 }
