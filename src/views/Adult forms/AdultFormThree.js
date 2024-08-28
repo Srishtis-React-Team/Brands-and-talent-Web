@@ -793,14 +793,14 @@ const AdultFormThree = () => {
 
   const handleUrlChange = (e) => {
     const url = e.target.value;
-    setVideoUrl(url);
+    // setVideoUrl(url);
     // Validate URL in real-time
     setCheckVideoUrl(!isValidUrl(url));
   };
 
   const handleAudioChange = (e) => {
     const url = e.target.value;
-    setAudioUrl(url);
+    // setAudioUrl(url);
     // Validate URL in real-time
     setCheckAudioUrl(!isNotKnownFormatUrl(url));
   };
