@@ -334,8 +334,37 @@
   align-items: center;
   border: none;
 }
+.adult-signup-main.widFull{
+  width: 100%;
+  max-width: 100%;
+}
+.login-main {
+  align-items: center;
+  display: flex;
+  height: auto;
+  justify-content: center;
+  min-height: 96vh;
+  padding: 75px 0 85px;
+}
 
+
+
+
+@media (max-width: 991px) {
+  .adult-signup-main {
+    width: 100%;
+    max-width: 60%;
+  }
+  .trial-page{ padding: 60px 20px;  width: 100%; }
+
+}
 @media (max-width: 767px) {
+
+  .trial-page {
+    width: 100%;
+    flex-direction: column;
+  }
+
   .dialog-body {
     min-height: 100%;
     margin: 70px 0 85px !important;
@@ -348,30 +377,21 @@
     border-radius: 3px;
     height: 45px;
   }
+  .login-main {
+    padding: 25px 0 20px;
+  }
+
+
 }
-@media (min-width: 769px) and (max-width: 1024px) {
-  .adult-signup-main {
-    width: 50%;
-  }
-  .gmail-info {
-    width: 50%;
-  }
-}
-@media (min-width: 481px) and (max-width: 768px) {
-  .adult-signup-main {
-    width: 70%;
-  }
-  .gmail-info {
-    width: 60%;
-  }
-}
-@media (min-width: 320px) and (max-width: 480px) {
+
+
+@media  (max-width: 480px) {
   .adult-signup-main {
     width: 95%;
     padding: 10px 20px;
   }
   .gmail-info {
-    width: 80%;
+    width: 95%;
   }
   .gmail-wrapper {
     margin-top: 0;
