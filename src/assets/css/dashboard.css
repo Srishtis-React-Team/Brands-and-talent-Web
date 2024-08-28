@@ -2050,6 +2050,20 @@ ul.MuiMenu-list li {
   left: inherit; z-index: 999
 }  */
 
+.dynamic-profession.newAlign .algSepc .form-label {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
 @media (max-width: 1399px) {
   .menu-items > div.navTxt {
     padding-right: 18px;
