@@ -104,7 +104,7 @@
     margin: 0px !important;
   }
   .desktop-search {
-    display: block;
+    display: block !important;
   }
   .mobile-search {
     display: none;
@@ -116,7 +116,7 @@
     margin: 0px !important;
   }
   .desktop-search {
-    display: none;
+    display: none !important;
   }
   .mobile-search {
     display: block;
@@ -232,7 +232,7 @@ p {
   border: 1px solid #c9c9c9;
   height: 40px;
   width: 40px;
-  padding: 0 9px;
+  padding: 8px 12px;
   border-radius: 50px;
   display: flex;
   justify-content: center;

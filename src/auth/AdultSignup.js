@@ -116,7 +116,8 @@ const AdultSignup = () => {
       adultEmail !== "" &&
       adultPassword !== "" &&
       adultConfirmPassword !== "" &&
-      passwordMatch === true
+      passwordMatch === true &&
+      passwordStatus
     ) {
       const formData = {
         adultEmail: adultEmail,
@@ -171,7 +172,15 @@ const AdultSignup = () => {
         setOpenPopUp(false);
       }, 1000);
     }
+    if (!passwordStatus) {
+      setMessage("Please strengthen your password");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
+    }
   };
+  const [passwordStatus, setPasswordStatus] = useState(false);
 
   let line = document.querySelector(".line");
   let text = document.querySelector(".text");
@@ -189,6 +198,7 @@ const AdultSignup = () => {
       }
 
       if (password.value.length >= 1) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "5%";
         line.style.backgroundColor = "red";
@@ -196,6 +206,7 @@ const AdultSignup = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 2) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "10%";
         line.style.backgroundColor = "red";
@@ -203,6 +214,7 @@ const AdultSignup = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 3) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "20%";
         line.style.backgroundColor = "red";
@@ -210,12 +222,14 @@ const AdultSignup = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 4) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "35%";
         line.style.backgroundColor = "red";
         text.style.color = "red";
         text.innerHTML = "Weak";
         if (password.value.match(/[!@#$%^&*]/)) {
+          setPasswordStatus(false);
           password_strength_box.style.display = "flex";
           line.style.width = "45%";
           line.style.backgroundColor = "#e9ee30";
@@ -228,6 +242,7 @@ const AdultSignup = () => {
         password.value.match(/[A-Z]/) &&
         password.value.match(/[a-z]/)
       ) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "50%";
         line.style.backgroundColor = "#e9ee30";
@@ -235,6 +250,7 @@ const AdultSignup = () => {
         text.innerHTML = "Medium";
       }
       if (password.value.length >= 6 && password.value.match(/[0-9]/)) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "70%";
         line.style.backgroundColor = "#e9ee30";
@@ -247,6 +263,7 @@ const AdultSignup = () => {
         password.value.match(/[a-z]/) &&
         password.value.match(/[0-9]/)
       ) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "80%";
         line.style.backgroundColor = "#e9ee30";
@@ -261,6 +278,7 @@ const AdultSignup = () => {
         password.value.match(/[0-9]/) &&
         password.value.match(/[!@#$%^&*]/)
       ) {
+        setPasswordStatus(true);
         password_strength_box.style.display = "flex";
         line.style.width = "100%";
         line.style.backgroundColor = "#2ccc2c";

@@ -54,7 +54,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Updated SuccessFully!");
+          setMessage("Updated Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -101,7 +101,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
           setXtwitterFollowers(resData?.data?.followers_count);
           setTwitterUserName("");
           setIsLoading(false);
-          setMessage("Twitter Connected SuccessFully!");
+          setMessage("Twitter Connected Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

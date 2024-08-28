@@ -125,7 +125,7 @@ const FindCreators = () => {
     await ApiHelper.post(`${API.deleteUserSearchKeyword}`, formData)
       .then((resData) => {
         if (resData) {
-          setMessage("Removed SuccessFully");
+          setMessage("Removed Successfully");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -514,7 +514,7 @@ const FindCreators = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Filtered SuccessFully");
+          setMessage("Filtered Successfully");
           setOpenPopUp(true);
           setTalentList(resData?.data?.data);
           setTimeout(function () {
@@ -591,7 +591,7 @@ const FindCreators = () => {
     };
     await ApiHelper.post(API.reviewsPosting, formData)
       .then((resData) => {
-        setMessage("Rating Submitted SuccessFully!");
+        setMessage("Rating Submitted Successfully!");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

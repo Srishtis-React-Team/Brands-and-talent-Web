@@ -41,7 +41,7 @@ const KidsServices = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Updated SuccessFully Login to Continue");
+          setMessage("Updated Successfully Login to Continue");
           setOpenPopUp(true);
           loginTemplate(resData?.data?.data?.email);
           setTimeout(function () {

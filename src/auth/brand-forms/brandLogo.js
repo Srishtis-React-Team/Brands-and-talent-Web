@@ -136,7 +136,7 @@ const BrandLogo = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setBrandsLocalStorage(resData.data.data);
-          setMessage("Registered SuccessFully!");
+          setMessage("Registered Successfully!");
           navigate("/brand-activated", {
             state: { data: receivedData },
           });

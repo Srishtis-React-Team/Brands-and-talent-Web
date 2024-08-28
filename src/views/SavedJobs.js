@@ -70,7 +70,7 @@ const SavedJobs = () => {
     await ApiHelper.post(API.updateFavouriteJobs, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Job Saved SuccessFully");
+          setMessage("Job Saved Successfully");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

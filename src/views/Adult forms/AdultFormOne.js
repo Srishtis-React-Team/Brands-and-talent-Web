@@ -21,7 +21,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import CurrentUser from "../../CurrentUser";
 import useFieldDatas from "../../config/useFieldDatas";
 import { Tooltip } from "react-tooltip";
-
+import { isValidPhoneNumber } from "libphonenumber-js";
 const AdultFormOne = () => {
   const {
     currentUserId,
@@ -360,7 +360,8 @@ const AdultFormOne = () => {
       country !== "" &&
       address !== "" &&
       age !== "" &&
-      completedJobs !== ""
+      completedJobs !== "" &&
+      !mobileValidationError
     ) {
       let formData = {
         adultLegalFirstName: adultsLegalFirstName,
@@ -392,7 +393,7 @@ const AdultFormOne = () => {
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              setMessage("Updated SuccessFully!");
+              setMessage("Updated Successfully!");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -523,12 +524,21 @@ const AdultFormOne = () => {
     setIsValidEmail(emailRegex.test(email));
     setKidsEmailError(false);
   };
+  const [mobileValidationError, setMobileValidationError] = useState(false);
 
   const handleMobileChange = (value, countryData) => {
-    // Update the parentMobile state with the new phone number
-
     setAdultsPhone(value);
     setAdultsPhoneError(false);
+    isValidPhoneNumber(value);
+    console.log(value, "isValidPhoneNumber");
+    if (isValidPhoneNumber(value)) {
+      console.log(true, "isValidPhoneNumber");
+      setMobileValidationError(false);
+      setAdultsPhone(value);
+    } else {
+      setMobileValidationError(true);
+      console.log(false, "isValidPhoneNumber");
+    }
   };
 
   const [adultsLegalFirstNameLetterError, setAdultsLegalFirstNameLetterError] =
@@ -1116,6 +1126,11 @@ const AdultFormOne = () => {
                       {adultsPhoneError && (
                         <div className="invalid-fields">
                           Please enter Phone Number
+                        </div>
+                      )}
+                      {mobileValidationError && (
+                        <div className="invalid-fields">
+                          Please enter correct Mobile Number
                         </div>
                       )}
                     </div>

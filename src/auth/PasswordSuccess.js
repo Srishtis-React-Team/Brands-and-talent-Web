@@ -48,7 +48,6 @@ const PasswordSuccess = () => {
             Back To Login
           </div>
         </div>
-      
       </div>
       {openPopUp && <PopUp message={message} />}
     </>

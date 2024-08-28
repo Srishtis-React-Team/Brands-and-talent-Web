@@ -119,7 +119,7 @@ const Login = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Logged in successfully!");
+            setMessage("Logged in Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -157,17 +157,20 @@ const Login = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Logged in successfully!");
+            setMessage("Logged in Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
               setIsLoading(false);
               setTalentLocalStorage(resData.data.data);
               if (resData.data.type === "adult") {
-                navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+                navigate(`/talent-home`);
+                // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
                 // window.location.reload();
               } else if (resData.data.type === "kids") {
-                navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+                navigate(`/talent-home`);
+
+                // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
                 // window.location.reload();
                 // navigate(`/otp?${resData?.data?.data?.email}`);
               }

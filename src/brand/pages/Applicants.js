@@ -69,7 +69,7 @@ const Applicants = () => {
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Candidate Shortlisted SuccessFully!");
+          setMessage("Candidate Shortlisted Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             handleForms("sortlisted-candidates");
@@ -88,7 +88,7 @@ const Applicants = () => {
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Candidate Booked SuccessFully!");
+          setMessage("Candidate Booked Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             handleForms("booked-candidates");
@@ -276,7 +276,7 @@ const Applicants = () => {
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Candidate Rejected SuccessFully");
+          setMessage("Candidate Rejected Successfully");
           setOpenPopUp(true);
           setTimeout(function () {
             handleForms("rejected-candidates");
