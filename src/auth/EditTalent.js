@@ -2423,6 +2423,7 @@ const EditTalent = () => {
                             </div>
                           </div>
                         </div>
+
                         <div className="offer-wrapper">
                           <input
                             className="profession-checkbox"
@@ -2452,6 +2453,7 @@ const EditTalent = () => {
                             ></i>
                           </div>
                         </div>
+                        
                       </div>
                     ))}
                   </div>
