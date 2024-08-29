@@ -329,7 +329,7 @@ const AdultSignup = () => {
           }}
         >
 
-          <div className="login-main">
+          <div className="login-main regPage">
             <div className="adult-signup-main widFull">
               <div className="step-title">Sign up</div>
 
