@@ -70,38 +70,70 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
       });
   };
 
-  const handleTwitterUserNameChange = (e) => {
-    const value = e.target.value;
-    setTwitterUserNameError(false);
-    setTwitterUserName(value);
-  };
-
   const [twitterFollowersCount, setTwitterFollowersCount] = useState(null);
   const [modalData, setModalData] = useState(null);
   const [twitterUserName, setTwitterUserName] = useState(null);
   const [twitterUserNameError, setTwitterUserNameError] = useState(false);
+  const [youtubeChannelID, setYoutubeChannelID] = useState(null);
+  const [youtubeIdError, setYoutubeIdError] = useState(false);
+
+  const [isTwitter, setIsTwitter] = useState(false);
+  const [isYoutube, setIsYoutube] = useState(false);
 
   const connectSocialMedia = (item) => {
-    setModalData(item);
+    if (item == "twitter") {
+      setIsTwitter(true);
+      setIsYoutube(false);
+    } else if (item == "youtube") {
+      setIsYoutube(true);
+      setIsTwitter(false);
+    }
     const modalElement = document.getElementById("socialMediaModal");
     const bootstrapModal = new window.bootstrap.Modal(modalElement);
     bootstrapModal.show();
   };
 
+  const handleTwitterUserNameChange = (e) => {
+    const value = e.target.value;
+    if (isTwitter) {
+      setTwitterUserNameError(false);
+      setTwitterUserName(value);
+    } else if (isYoutube) {
+      setYoutubeIdError(false);
+      setYoutubeChannelID(value);
+    }
+  };
+
   const handleCloseModal = async (talent) => {
-    const formData = {
-      username: twitterUserName,
-    };
+    let formData;
+    let apiName;
+    if (isTwitter) {
+      formData = {
+        username: twitterUserName,
+      };
+      apiName = `${API.twitterCount}`;
+    } else if (isYoutube) {
+      formData = {
+        channelId: youtubeChannelID,
+      };
+      apiName = `${API.youtubeCount}`;
+    }
     setIsLoading(true);
-    await ApiHelper.post(`${API.twitterCount}`, formData)
+    await ApiHelper.post(apiName, formData)
       .then((resData) => {
         console.log(resData, "resData");
         if (resData?.data?.status === true) {
-          setTwitterFollowersCount(resData?.data?.followers_count);
-          setXtwitterFollowers(resData?.data?.followers_count);
-          setTwitterUserName("");
           setIsLoading(false);
-          setMessage("Twitter Connected Successfully!");
+          if (isTwitter) {
+            setTwitterFollowersCount(resData?.data?.followers_count);
+            setXtwitterFollowers(resData?.data?.followers_count);
+            setTwitterUserName("");
+            setMessage("Twitter Connected Successfully!");
+          } else if (isYoutube) {
+            setYoutubesFollowers(resData?.data?.data?.subscriberCount);
+            setYoutubeChannelID("");
+            setMessage("YouTube Connected Successfully!");
+          }
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -131,6 +163,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
   useEffect(() => {
     console.log(twitterFollowersCount, "twitterFollowersCount");
   }, [twitterFollowersCount]);
+  useEffect(() => {
+    console.log(youtubesFollowers, "youtubesFollowers");
+  }, [youtubesFollowers]);
 
   return (
     <>
@@ -262,7 +297,14 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           </div>
                           <div className="media-text">Youtube</div>
                         </div>
-                        <div className="connect-btn">connect</div>
+                        <div
+                          className="connect-btn"
+                          onClick={(e) => {
+                            connectSocialMedia("youtube");
+                          }}
+                        >
+                          connect
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -407,6 +449,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                             <input
                               disabled
                               type="number"
+                              value={youtubesFollowers}
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setYoutubesFollowers(e.target.value);
@@ -465,19 +508,37 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
             </div>
             <div className="modal-body">
               <div className="mb-3" style={{ textAlign: "left" }}>
-                <label className="form-label">Twitter user name</label>
+                <label className="form-label">
+                  {isTwitter && <>Twitter user name</>}
+                  {isYoutube && <>YouTube Channel ID</>}
+                </label>
                 <input
                   type="text"
                   className="form-control"
-                  value={twitterUserName}
+                  value={
+                    isTwitter
+                      ? twitterUserName
+                      : isYoutube
+                      ? youtubeChannelID
+                      : ""
+                  }
                   onChange={(e) => {
                     handleTwitterUserNameChange(e);
                     setTwitterUserNameError(false);
                   }}
-                  placeholder="Twitter user name"
+                  placeholder={
+                    isTwitter
+                      ? "Twitter user name"
+                      : isYoutube
+                      ? "YouTube Channel ID"
+                      : ""
+                  }
                 ></input>
                 {twitterUserNameError && (
                   <div className="invalid-fields">Please enter User Name</div>
+                )}
+                {youtubeIdError && (
+                  <div className="invalid-fields">Please enter Channel ID</div>
                 )}
               </div>
             </div>

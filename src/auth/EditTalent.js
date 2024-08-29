@@ -83,6 +83,11 @@ const isValidUrl = (url) => {
 };
 
 const EditTalent = () => {
+  const [languages, setLanguages] = useState([]);
+  const [nationality, setNationality] = useState("");
+
+  const [listOfLanguages, setListOfLanguages] = useState([]);
+  const [listOfNationalities, setListOfNationalities] = useState([]);
   const {
     categoryList,
     professionList,
@@ -92,7 +97,51 @@ const EditTalent = () => {
     featuresList,
   } = useFieldDatas();
 
-  console.log(featuresList, "featuresList");
+  useEffect(() => {
+    if (languagesList.length > 0) {
+      console.log(languagesList, "languagesList");
+      setListOfLanguages(languagesList);
+      getKidsData();
+    }
+  }, [languagesList]);
+  useEffect(() => {
+    if (nationalitiesList.length > 0) {
+      console.log(nationalitiesList, "nationalitiesList");
+      setListOfNationalities(nationalitiesList);
+      getKidsData();
+    }
+  }, [nationalitiesList]);
+
+  useEffect(() => {
+    console.log(listOfLanguages, "LANGUAGES_GET listOfLanguages");
+    let selectedOptions;
+    if (listOfLanguages && listOfLanguages.length > 0) {
+      selectedOptions = languages.map((language) => {
+        return listOfLanguages.find((option) => option.label === language);
+      });
+    }
+    console.log(
+      selectedOptions,
+      "LANGUAGES_GET listOfLanguages selectedOptions"
+    );
+    setSelectedLanguageOptions(selectedOptions);
+  }, [languagesList, languages]);
+
+  useEffect(() => {
+    let selectedOptions;
+    if (listOfNationalities && listOfNationalities.length > 0) {
+      selectedOptions = nationality.map((nationality) => {
+        return listOfNationalities.find(
+          (option) => option.label === nationality
+        );
+      });
+    }
+    console.log(
+      selectedOptions,
+      "LANGUAGES_GET listOfLanguages selectedOptions"
+    );
+    setSelectedNationalityOptions(selectedOptions);
+  }, [nationalitiesList, nationality]);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -194,9 +243,7 @@ const EditTalent = () => {
   const [kidsCity, setKidsCity] = useState("");
   const [gender, setGender] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
-  const [nationality, setNationality] = useState("");
   const [ethnicity, setEthnicity] = useState("");
-  const [languages, setLanguages] = useState([]);
   const [dateOfBirth, setDob] = useState("");
   const [aboutYou, setAboutYou] = useState([]);
   const [countryList, setCountryList] = useState([]);
@@ -384,23 +431,29 @@ const EditTalent = () => {
   };
 
   const selectLanguage = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions");
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       setLanguages([]);
       setSelectedLanguageOptions([]);
-
       return;
     }
     const selectedLanguages = selectedOptions.map((option) => option.value);
-
     setLanguages(selectedLanguages);
-
     setSelectedLanguageOptions(selectedOptions);
   };
 
-  const selectNationality = (event) => {
-    setNationality(event.target.value);
+  const selectNationality = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions");
     setNationalityError(false);
+    if (!selectedOptions || selectedOptions.length === 0) {
+      setNationality([]);
+      setSelectedNationalityOptions([]);
+      return;
+    }
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    setNationality(selectedLanguages);
+    setSelectedNationalityOptions(selectedOptions);
   };
   const selectMaritalStatus = (event) => {
     setMaritalStatus(event.target.value);
@@ -429,9 +482,11 @@ const EditTalent = () => {
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
-        console.log(resData, "resData");
+        console.log(resData, "KIDS_DATA");
         if (resData.data.status === true) {
           if (resData?.data?.data?.type === "kids") {
+            setLanguages(resData?.data?.data?.languages);
+
             setTalentData(resData.data.data, "resData.data.data");
             setEditProfileImage(resData.data.data?.image?.fileData);
             setKidsFillData(resData.data.data);
@@ -460,26 +515,18 @@ const EditTalent = () => {
               resData?.data?.data?.preferredChildLastName
             );
             setGender(resData?.data?.data?.childGender);
-            setLanguages(resData?.data?.data?.languages);
             setNationality(resData?.data?.data?.childNationality);
             setMaritalStatus(resData?.data?.data?.maritalStatus);
             setEthnicity(resData?.data?.data?.childEthnicity);
-            setSelectedCategories([
-              ...selectedCategories,
-              ...resData.data.data?.relevantCategories,
-            ]);
+            // setSelectedCategories([
+            //   ...selectedCategories,
+            //   ...resData.data.data?.relevantCategories,
+            // ]);
+            setSelectedCategories(resData.data.data?.relevantCategories);
             setAboutYou(resData.data.data?.childAboutYou);
             setPortofolioFile(resData.data.data?.portfolio);
             setResumeFile(resData.data.data?.cv);
             setAge(resData.data.data?.age);
-            const selectedOptions = resData.data.data?.languages.map(
-              (language) => {
-                return languagesList.find(
-                  (option) => option.label === language
-                );
-              }
-            );
-            setSelectedLanguageOptions(selectedOptions);
 
             const selectedNationalityOptions = resData.data.data?.languages.map(
               (language) => {
@@ -536,7 +583,7 @@ const EditTalent = () => {
 
             const selectedOptions = resData?.data?.data?.languages.map(
               (language) => {
-                return languagesList.find(
+                return listOfLanguages.find(
                   (option) => option.label === language
                 );
               }
@@ -547,10 +594,11 @@ const EditTalent = () => {
             setMaritalStatus(resData?.data?.data?.maritalStatus);
             setEthnicity(resData?.data?.data?.childEthnicity);
             setKidsCity(resData?.data?.data?.childCity);
-            setSelectedCategories([
-              ...selectedCategories,
-              ...resData.data.data?.relevantCategories,
-            ]);
+            setSelectedCategories(resData.data.data?.relevantCategories);
+            // setSelectedCategories([
+            //   ...selectedCategories,
+            //   ...resData.data.data?.relevantCategories,
+            // ]);
             setAboutYou(resData.data.data?.childAboutYou);
             setPortofolioFile(resData.data.data?.portfolio);
             setResumeFile(resData.data.data?.cv);
@@ -656,7 +704,6 @@ const EditTalent = () => {
 
   const basicDetailsUpdate = async () => {
     setMyState(false);
-
     if (talentData?.type === "kids") {
       if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
         const formData = {
@@ -935,6 +982,12 @@ const EditTalent = () => {
   useEffect(() => {
     console.log(talentData, "talentData");
   }, [talentData]);
+  useEffect(() => {
+    console.log(selectedLanguageOptions, "selectedLanguageOptions");
+  }, [selectedLanguageOptions]);
+  useEffect(() => {
+    console.log(selectedCategories, "selectedCategories");
+  }, [selectedCategories]);
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -2128,7 +2181,7 @@ const EditTalent = () => {
                     <Select
                       isMulti
                       name="colors"
-                      options={languagesList}
+                      options={listOfLanguages}
                       valueField="value"
                       className="basic-multi-select"
                       classNamePrefix="select"
@@ -2764,7 +2817,7 @@ const EditTalent = () => {
                               <>
                                 <div
                                   key={index}
-                                  className="url-file-wrapper urlSect"
+                                  className="url-file-wrapper urlSect mt-2"
                                 >
                                   <div className="file-section">
                                     <a
@@ -2843,7 +2896,10 @@ const EditTalent = () => {
                           {audioUrlsList.map((url, index) => {
                             return (
                               <>
-                                <div key={index} className="url-file-wrapper">
+                                <div
+                                  key={index}
+                                  className="url-file-wrapper mt-2"
+                                >
                                   <div className="file-section">
                                     <a
                                       href={url}

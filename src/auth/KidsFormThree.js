@@ -968,7 +968,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   {url}
                                 </a>
                               </div>
-
                               <div className="update-portfolio-action">
                                 <IconButton
                                   aria-label="more"
@@ -984,6 +983,15 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   open={Boolean(anchorEl)}
                                   onClose={handleClose}
                                 >
+                                  <MenuItem
+                                    onClick={() => {
+                                      handleClose();
+                                      console.log(url, "url"); // Debugging: Log the URL to ensure it's correct
+                                      window.open(url, "_blank"); // Open the YouTube video in a new tab
+                                    }}
+                                  >
+                                    Play
+                                  </MenuItem>
                                   <MenuItem
                                     onClick={() => {
                                       dropDownClose();
@@ -1064,6 +1072,15 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   open={Boolean(anchorEl)}
                                   onClose={handleClose}
                                 >
+                                  <MenuItem
+                                    onClick={() => {
+                                      handleClose();
+                                      console.log(url, "url"); // Debugging: Log the URL to ensure it's correct
+                                      window.open(url, "_blank"); // Open the YouTube video in a new tab
+                                    }}
+                                  >
+                                    View
+                                  </MenuItem>
                                   <MenuItem
                                     onClick={() => {
                                       dropDownClose();

@@ -162,4 +162,5 @@ export const API = {
   fetchBlogByType: BASEURL + "blog/fetchBlogByType",
   //blogs
   twitterCount: BASEURL + "socialmedia/twitterCount",
+  youtubeCount: BASEURL + "socialmedia/youtubeCount",
 };

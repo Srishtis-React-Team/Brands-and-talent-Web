@@ -55,6 +55,7 @@ const ForgotPassword = () => {
           }
         }
         if (resData.data.status === false) {
+          setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
           setTimeout(function () {
@@ -66,7 +67,6 @@ const ForgotPassword = () => {
       .catch((err) => {
         setIsLoading(false);
       });
-
     if (userType) {
       if (userType == "brand") {
         const formData = {
@@ -76,6 +76,8 @@ const ForgotPassword = () => {
         await ApiHelper.post(API.brandsForgotPassword, formData)
           .then((resData) => {
             if (resData.data.status === true) {
+              setIsLoading(false);
+
               setMessage("Open Your Gmail For Password Reset Link!");
               setOpenPopUp(true);
               setTimeout(function () {
@@ -95,14 +97,17 @@ const ForgotPassword = () => {
           .catch((err) => {
             setIsLoading(false);
           });
-      } else if (userType == "kids") {
+      } else if (userType == "Kids") {
         let formdata = {
           email: talentEmail,
           type: userType,
         };
         await ApiHelper.post(API.forgotPassword, formdata)
           .then((resData) => {
+            console.log(resData, "resData");
             if (resData.data.status === true) {
+              setIsLoading(false);
+
               setMessage("Open Your Gmail For Password Reset Link!");
               setOpenPopUp(true);
               setTimeout(function () {
@@ -110,9 +115,12 @@ const ForgotPassword = () => {
               }, 2000);
             }
           })
-          .catch((err) => {});
+          .catch((err) => {
+            setIsLoading(false);
+          });
       } else if (userType == "adult") {
         adultForgotPassword();
+        setIsLoading(false);
       }
     }
   };
@@ -121,6 +129,8 @@ const ForgotPassword = () => {
     const formData = {
       adultEmail: talentEmail,
     };
+    setIsLoading(true);
+
     await ApiHelper.post(API.adultForgotPassword, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -141,7 +151,9 @@ const ForgotPassword = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
 
   const kidsForgotPassword = async (enteredOTP) => {
