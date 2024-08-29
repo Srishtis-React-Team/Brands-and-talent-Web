@@ -338,13 +338,13 @@
   width: 100%;
   max-width: 100%;
 }
-.login-main {
+.login-main.regPage {
   align-items: center;
   display: flex;
   height: auto;
   justify-content: center;
   min-height: 96vh;
-  padding: 75px 0 85px;
+  padding: 55px 0;
 }
 
 
@@ -364,7 +364,9 @@
     width: 100%;
     flex-direction: column;
   }
-
+  .login-main.regPage {
+    padding: 25px 0;
+  }
   .dialog-body {
     min-height: 100%;
     margin: 70px 0 85px !important;
@@ -377,9 +379,7 @@
     border-radius: 3px;
     height: 45px;
   }
-  .login-main {
-    padding: 25px 0 20px;
-  }
+
 
 
 }
