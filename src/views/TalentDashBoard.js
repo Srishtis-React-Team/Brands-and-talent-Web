@@ -498,7 +498,7 @@ const TalentDashBoard = () => {
                 <div className="doitnow-main row">
                   <div className="doit-one col-md-8">
                     <div className="talent-popup-title">
-                      Welcome To Brands / Client And Talent
+                      Welcome To Brands & Talent
                     </div>
                     <div className="talent-popup-enter">
                       Complete Your{" "}

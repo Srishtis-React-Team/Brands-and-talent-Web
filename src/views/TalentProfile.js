@@ -672,141 +672,212 @@ const TalentProfile = () => {
                         </div>
                       </div>
                     </div>
+
                     {(talentData?.instaFollowers ||
                       talentData?.facebookFollowers ||
                       talentData?.tiktokFollowers ||
                       talentData?.linkedinFollowers ||
                       talentData?.twitterFollowers ||
                       talentData?.threadsFollowers ||
-                      talentData?.youtubeFollowers) && (
+                      talentData?.youtubeFollowers ||
+                      talentData?.instagramUrl ||
+                      talentData?.tikTokUrl ||
+                      talentData?.youTubeUrl ||
+                      talentData?.linkedinUrl ||
+                      talentData?.threadsUrl ||
+                      talentData?.facebookUrl ||
+                      talentData?.twitterUrl) && (
                       <>
                         <div className="talents-social-wrapper mt-4">
                           <div className="row">
-                            {talentData?.instaFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={instaLogo}></img>
-                                </div>
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.instaFollowers
-                                      ? talentData?.instaFollowers
-                                      : "N/A"}
+                            {talentData?.instaFollowers ||
+                              (talentData?.instagramUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.instagramUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={instaLogo}
+                                    ></img>
                                   </div>
-                                  <div className="followers-text">
-                                    Followers
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                            {talentData?.facebookFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={fbIcon}></img>
-                                </div>
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.facebookFollowers
-                                      ? talentData.facebookFollowers
-                                      : "N/A"}
-                                  </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData?.instaFollowers
+                                        ? talentData?.instaFollowers
+                                        : "N/A"}
+                                    </div>
+                                    <div className="followers-text">
+                                      Followers
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )}
-                            {talentData?.tiktokFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={tiktok}></img>
-                                </div>
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.tiktokFollowers
-                                      ? talentData.tiktokFollowers
-                                      : "N/A"}
+                              ))}
+                            {talentData?.facebookFollowers ||
+                              (talentData?.facebookUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.facebookUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={fbIcon}
+                                    ></img>
                                   </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData?.facebookFollowers
+                                        ? talentData.facebookFollowers
+                                        : "N/A"}
+                                    </div>
+                                    <div className="followers-text">
+                                      Followers
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )}
+                              ))}
+                            {talentData?.tiktokFollowers ||
+                              (talentData?.tikTokUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.tikTokUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={tiktok}
+                                    ></img>
+                                  </div>
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData?.tiktokFollowers
+                                        ? talentData.tiktokFollowers
+                                        : "N/A"}
+                                    </div>
+                                    <div className="followers-text">
+                                      Followers
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
 
-                            {talentData?.linkedinFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={linkdin}></img>
-                                </div>
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.linkedinFollowers
-                                      ? talentData.linkedinFollowers
-                                      : "N/A"}
+                            {talentData?.linkedinFollowers ||
+                              (talentData?.linkedinUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.linkedinUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={linkdin}
+                                    ></img>
                                   </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData?.linkedinFollowers
+                                        ? talentData.linkedinFollowers
+                                        : "N/A"}
+                                    </div>
+                                    <div className="followers-text">
+                                      Followers
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )}
+                              ))}
 
-                            {talentData?.twitterFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={twitterLogo}></img>
-                                </div>
+                            {talentData?.twitterFollowers ||
+                              (talentData?.twitterUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.twitterUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={twitterLogo}
+                                    ></img>
+                                  </div>
 
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.twitterFollowers
-                                      ? talentData.twitterFollowers
-                                      : "N/A"}
-                                  </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData?.twitterFollowers
+                                        ? talentData.twitterFollowers
+                                        : "N/A"}
+                                    </div>
+                                    <div className="followers-text">
+                                      Followers
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )}
-                            {talentData?.threadsFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={threadLogo}></img>
-                                </div>
+                              ))}
+                            {talentData?.threadsFollowers ||
+                              (talentData?.threadsUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.threadsUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={threadLogo}
+                                    ></img>
+                                  </div>
 
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.threadsFollowers
-                                      ? talentData.threadsFollowers
-                                      : "N/A"}
-                                  </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData?.threadsFollowers
+                                        ? talentData.threadsFollowers
+                                        : "N/A"}
+                                    </div>
+                                    <div className="followers-text">
+                                      Followers
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )}
+                              ))}
 
-                            {talentData?.youtubeFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={youtubeLogo}></img>
-                                </div>
+                            {talentData?.youtubeFollowers ||
+                              (talentData?.youTubeUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.youTubeUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={youtubeLogo}
+                                    ></img>
+                                  </div>
 
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.youtubeFollowers
-                                      ? talentData.youtubeFollowers
-                                      : "N/A"}
-                                  </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData?.youtubeFollowers
+                                        ? talentData.youtubeFollowers
+                                        : "N/A"}
+                                    </div>
+                                    <div className="followers-text">
+                                      Followers
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )}
+                              ))}
                           </div>
                         </div>
                       </>
@@ -1092,7 +1163,12 @@ const TalentProfile = () => {
                                   <div>Data not added</div>
                                 </>
                               )}
-                            {photosList.length === 0 &&
+                            {photosList && photosList.length === 0 && (
+                              <>
+                                <div>No Photos Available</div>
+                              </>
+                            )}
+                            {/* {photosList.length === 0 &&
                               talentData?.profileApprove === false && (
                                 <>
                                   <div>
@@ -1100,7 +1176,7 @@ const TalentProfile = () => {
                                     approval
                                   </div>
                                 </>
-                              )}
+                              )} */}
                           </div>
 
                           {/* <div className="portofolio-section">
@@ -1230,7 +1306,12 @@ const TalentProfile = () => {
                                   </>
                                 )}
 
-                              {urlsList?.length === 0 &&
+                              {urlsList && urlsList?.length === 0 && (
+                                <>
+                                  <div>No Videos Available</div>
+                                </>
+                              )}
+                              {/* {urlsList?.length === 0 &&
                                 talentData?.profileApprove === false && (
                                   <>
                                     <div>
@@ -1238,7 +1319,7 @@ const TalentProfile = () => {
                                       approval
                                     </div>
                                   </>
-                                )}
+                                )} */}
                             </div>
                           </div>
                           <p>Audios</p>
@@ -1272,7 +1353,13 @@ const TalentProfile = () => {
                                 </div>
                               )}
 
-                              {audiosList?.length === 0 &&
+                              {audiosList && audiosList?.length === 0 && (
+                                <>
+                                  <div>No Audios Available</div>
+                                </>
+                              )}
+
+                              {/* {audiosList?.length === 0 &&
                                 talentData?.profileApprove === true && (
                                   <>
                                     <div>Data not added</div>
@@ -1287,7 +1374,7 @@ const TalentProfile = () => {
                                       approval
                                     </div>
                                   </>
-                                )}
+                                )} */}
                             </div>
                           </div>
 
@@ -1389,8 +1476,13 @@ const TalentProfile = () => {
                                 </>
                               );
                             })}
+                            {cvList && cvList.length === 0 && (
+                              <>
+                                <div>No Resumes Available</div>
+                              </>
+                            )}
 
-                            {cvList.length === 0 &&
+                            {/* {cvList.length === 0 &&
                               talentData?.profileApprove === true && (
                                 <>
                                   <div>Data not added</div>
@@ -1405,7 +1497,7 @@ const TalentProfile = () => {
                                     approval
                                   </div>
                                 </>
-                              )}
+                              )} */}
                           </div>
                         </>
                       )}
@@ -1438,7 +1530,12 @@ const TalentProfile = () => {
                                 );
                               })}
 
-                            {photosList.length === 0 &&
+                            {photosList && photosList.length === 0 && (
+                              <>
+                                <div>No Photos Available</div>
+                              </>
+                            )}
+                            {/* {photosList.length === 0 &&
                               talentData?.profileApprove === true && (
                                 <>
                                   <div>Data not added</div>
@@ -1453,7 +1550,7 @@ const TalentProfile = () => {
                                     approval
                                   </div>
                                 </>
-                              )}
+                              )} */}
                           </section>
                         </div>
                       )}
@@ -1515,7 +1612,12 @@ const TalentProfile = () => {
                                   </div>
                                 ))}
 
-                                {urlsList?.length === 0 &&
+                                {urlsList && urlsList?.length === 0 && (
+                                  <>
+                                    <div>No Videos Available</div>
+                                  </>
+                                )}
+                                {/* {urlsList?.length === 0 &&
                                   talentData?.profileApprove === true && (
                                     <>
                                       <div>Data not added</div>
@@ -1530,7 +1632,7 @@ const TalentProfile = () => {
                                         approval
                                       </div>
                                     </>
-                                  )}
+                                  )} */}
                               </div>
                             </div>
                           </div>
@@ -1570,6 +1672,13 @@ const TalentProfile = () => {
                                 </div>
                               )}
 
+                              {audiosList && audiosList?.length === 0 && (
+                                <>
+                                  <div>No Audios Available</div>
+                                </>
+                              )}
+
+                              {/* 
                               {audiosList?.length === 0 &&
                                 talentData?.profileApprove === true && (
                                   <>
@@ -1585,7 +1694,7 @@ const TalentProfile = () => {
                                       approval
                                     </div>
                                   </>
-                                )}
+                                )} */}
                             </div>
                           </div>
                         </>
@@ -1653,7 +1762,13 @@ const TalentProfile = () => {
                             </>
                           )}
 
-                          {featuresList.length === 0 &&
+                          {featuresList && featuresList.length === 0 && (
+                            <>
+                              <div>No Features Available</div>
+                            </>
+                          )}
+
+                          {/* {featuresList.length === 0 &&
                             talentData?.profileApprove === true && (
                               <>
                                 <div>Data not added</div>
@@ -1667,7 +1782,7 @@ const TalentProfile = () => {
                                   Data will be visible only after admin approval
                                 </div>
                               </>
-                            )}
+                            )} */}
                         </>
                       )}
 
@@ -1696,7 +1811,13 @@ const TalentProfile = () => {
                             );
                           })}
 
-                          {cvList.length === 0 &&
+                          {cvList && cvList.length === 0 && (
+                            <>
+                              <div>No Resumes Available</div>
+                            </>
+                          )}
+
+                          {/* {cvList.length === 0 &&
                             talentData?.profileApprove === true && (
                               <>
                                 <div>Data not added</div>
@@ -1710,7 +1831,7 @@ const TalentProfile = () => {
                                   Data will be visible only after admin approval
                                 </div>
                               </>
-                            )}
+                            )} */}
                         </div>
                       )}
 
@@ -1795,7 +1916,13 @@ const TalentProfile = () => {
                             </div>
                           )}
 
-                          {reviewsList.length === 0 &&
+                          {reviewsList && reviewsList.length === 0 && (
+                            <>
+                              <div>No Reviews Available</div>
+                            </>
+                          )}
+
+                          {/* {reviewsList.length === 0 &&
                             talentData?.profileApprove === true && (
                               <>
                                 <div>Data not added</div>
@@ -1809,7 +1936,7 @@ const TalentProfile = () => {
                                   Data will be visible only after admin approval
                                 </div>
                               </>
-                            )}
+                            )} */}
                         </>
                       )}
                     </div>

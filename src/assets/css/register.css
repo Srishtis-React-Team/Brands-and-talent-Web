@@ -334,7 +334,7 @@
   align-items: center;
   border: none;
 }
-.adult-signup-main.widFull{
+.adult-signup-main.widFull {
   width: 100%;
   max-width: 100%;
 }
@@ -347,19 +347,17 @@
   padding: 55px 0;
 }
 
-
-
-
 @media (max-width: 991px) {
   .adult-signup-main {
     width: 100%;
     max-width: 60%;
   }
-  .trial-page{ padding: 60px 20px;  width: 100%; }
-
+  .trial-page {
+    padding: 60px 20px;
+    width: 100%;
+  }
 }
 @media (max-width: 767px) {
-
   .trial-page {
     width: 100%;
     flex-direction: column;
@@ -379,13 +377,9 @@
     border-radius: 3px;
     height: 45px;
   }
-
-
-
 }
 
-
-@media  (max-width: 480px) {
+@media (max-width: 480px) {
   .adult-signup-main {
     width: 95%;
     padding: 10px 20px;
@@ -434,6 +428,7 @@
   padding: 0 0 6px 0;
   font-weight: 500;
   color: red;
+  margin-bottom: 0px;
 }
 .password_strength .line_box {
   background-color: #f2f2f2;
@@ -485,7 +480,6 @@
 }
 
 @media (max-width: 767px) {
-
   .dialog-body.spaceTops {
     margin-top: 0;
     padding: 0;

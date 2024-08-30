@@ -592,7 +592,7 @@
   font-weight: 600;
   line-height: normal;
 }
-.talent-profile-main .col-md-4.col-lg-3.pr-0{
+.talent-profile-main .col-md-4.col-lg-3.pr-0 {
   padding-right: 10px;
   margin-bottom: 15px;
 }
@@ -1060,10 +1060,6 @@
   .table-container table .right-column {
     border: none; /* Remove borders for small screens */
   }
-
-
-
-
 }
 
 .cv-card {
@@ -1220,7 +1216,6 @@
     flex-wrap: wrap;
     border-bottom: 1px solid rgb(189, 189, 189);
     padding: 5px 5px;
-
   }
   .individual-talent-tab {
     height: 40px;
@@ -1253,7 +1248,7 @@
     height: 75px;
     margin: 10px 0;
     width: 100% !important;
-    height:inherit !important;
+    height: inherit !important;
     margin: 0 !important;
     margin-bottom: 20px !important;
   }
@@ -1333,4 +1328,8 @@
 .audio-url-style {
   width: 200px;
   overflow: hidden;
+}
+
+.logoSocial > img {
+  cursor: pointer;
 }

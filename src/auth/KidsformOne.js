@@ -514,7 +514,7 @@ const KidsformOne = () => {
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              setMessage("Updated Successfully!");
+              setMessage("Successfully Registered");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -551,7 +551,7 @@ const KidsformOne = () => {
       }, 1000);
     }
     if (!passwordStatus) {
-      setMessage("Please strengthen your password");
+      setMessage("Please Please enter the required fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -1077,31 +1077,6 @@ const KidsformOne = () => {
                               settalentPasswordError(false);
                             }}
                           ></input>
-                          <div className="password_strength_box">
-                            <div className="password_strength">
-                              <p className="text">Weak</p>
-                              <div className="line_box">
-                                <div className="line"></div>
-                              </div>
-                            </div>
-                            <div className="tool_tip_box">
-                              <span>
-                                <i className="bi bi-question-circle"></i>
-                              </span>
-                              <div className="tool_tip">
-                                <p style={{ listStyleType: "none" }}>
-                                  <b>Password must be:</b>
-                                </p>
-                                <p>At least 8 character long</p>
-                                <p>At least 1 uppercase letter</p>
-                                <p>At least 1 lowercase letter</p>
-                                <p>At least 1 number</p>
-                                <p>
-                                  At least 1 special character from !@#$%^&*
-                                </p>
-                              </div>
-                            </div>
-                          </div>
                           {showPassword ? (
                             <span
                               className="fa fa-eye show-password-icon"
@@ -1116,6 +1091,14 @@ const KidsformOne = () => {
                           {talentPasswordError && (
                             <div className="invalid-fields">
                               Please enter Password
+                            </div>
+                          )}
+                          {talentPassword && !passwordStatus && (
+                            <div className="invalid-fields password-error-box">
+                              ( The minimum password length is 8 characters and
+                              must contain at least 1 capital letter, 1
+                              lowercase letter, 1 number and 1 special
+                              character. )
                             </div>
                           )}
                         </div>
@@ -1157,7 +1140,7 @@ const KidsformOne = () => {
                           talentConfirmPassword &&
                           talentConfirmPassword.length && (
                             <p className="password-wrong">
-                              Passwords does not match.
+                              Password does not match.
                             </p>
                           )}
                       </div>
