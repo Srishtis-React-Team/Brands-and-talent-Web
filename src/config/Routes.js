@@ -284,6 +284,7 @@ function Routing() {
             <Route path="/Career" element={<Career />} />
             <Route path="/become-affliate" element={<BecomeAffliate />} />
             <Route path="/investors" element={<Investors />} />
+            <Route path="/feedback" element={<Feedbackreporting />} />
           </Routes>
         </Suspense>
         {openPopUp && (

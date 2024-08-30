@@ -173,7 +173,7 @@ const AdultSignup = () => {
       }, 1000);
     }
     if (!passwordStatus) {
-      setMessage("Please strengthen your password");
+      setMessage("Please Please enter the required fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -328,7 +328,6 @@ const AdultSignup = () => {
             height: "unset",
           }}
         >
-
           <div className="login-main regPage">
             <div className="adult-signup-main widFull">
               <div className="step-title">Sign up</div>
@@ -389,33 +388,13 @@ const AdultSignup = () => {
                       setAdultPassword(e.target.value);
                     }}
                   ></input>
-
-                  {adultPassword && (
-                    <div className="password_strength_box">
-                      <div className="password_strength">
-                        <p className="text">Weak</p>
-                        <div className="line_box">
-                          <div className="line"></div>
-                        </div>
-                      </div>
-                      <div className="tool_tip_box">
-                        <span>
-                          <i className="bi bi-question-circle"></i>
-                        </span>
-                        <div className="tool_tip">
-                          <p style={{ listStyleType: "none" }}>
-                            <b>Password must be:</b>
-                          </p>
-                          <p>At least 8 character long</p>
-                          <p>At least 1 uppercase letter</p>
-                          <p>At least 1 lowercase letter</p>
-                          <p>At least 1 number</p>
-                          <p>At least 1 special character from !@#$%^&*</p>
-                        </div>
-                      </div>
+                  {adultPassword && !passwordStatus && (
+                    <div className="invalid-fields password-error-box">
+                      ( The minimum password length is 8 characters and must
+                      contain at least 1 capital letter, 1 lowercase letter, 1
+                      number and 1 special character. )
                     </div>
                   )}
-
                   {passwordError && (
                     <div className="invalid-fields">Please enter Password</div>
                   )}
@@ -467,7 +446,7 @@ const AdultSignup = () => {
                   {!passwordMatch &&
                     adultConfirmPassword &&
                     adultConfirmPassword.length && (
-                      <p className="password-wrong">Passwords does not match.</p>
+                      <p className="password-wrong">Password does not match.</p>
                     )}
                 </div>
               </div>
@@ -525,7 +504,6 @@ const AdultSignup = () => {
               </div>
             </div>
           </div>
-
         </div>
         <div className="dialog-footer">
           <button

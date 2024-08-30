@@ -1583,6 +1583,7 @@ const EditTalent = () => {
   };
 
   const handlePaste = (e) => {
+    e.preventDefault();
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
@@ -1738,6 +1739,7 @@ const EditTalent = () => {
     postNewAudios();
   };
   const handleUrlChange = (e) => {
+    if (e.inputType === "insertFromPaste") return;
     const url = e.target.value;
     setVideoUrl(url);
     // Validate URL in real-time
@@ -1745,6 +1747,7 @@ const EditTalent = () => {
   };
 
   const handleAudioChange = (e) => {
+    if (e.inputType === "insertFromPaste") return;
     const url = e.target.value;
     setAudioUrl(url);
     // Validate URL in real-time
@@ -1752,6 +1755,7 @@ const EditTalent = () => {
   };
 
   const handleAudioPaste = (e) => {
+    e.preventDefault();
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
@@ -2619,7 +2623,7 @@ const EditTalent = () => {
                       {!publicUrlEdit && (
                         <>
                           <div className="public-url-text">
-                            {`https://brandsandtalent.com/backend/uploads/${publicUrl}`}
+                            {`https://brandsandtalent.com/talent/${publicUrl}`}
                             <i
                               onClick={(e) => {
                                 setPublicUrlEdit(true);

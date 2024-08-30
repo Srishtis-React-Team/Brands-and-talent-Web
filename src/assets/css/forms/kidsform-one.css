@@ -208,7 +208,7 @@
 .kids-main .media-wrapper {
   cursor: pointer;
   border: 1px solid #d3d3d3;
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   margin: 10px 0;
   align-items: center;
@@ -518,6 +518,7 @@
   padding: 0 0 6px 0;
   font-weight: 500;
   color: red;
+  margin-bottom: 0px;
 }
 .password_strength .line_box {
   background-color: #f2f2f2;
@@ -1201,4 +1202,16 @@ textarea.contact-us-textarea.w-100 {
   .edit-profileimg-btn {
     width: 100%;
   }
+}
+
+.social-chain-icon {
+  color: #c2114b;
+  font-size: 26px;
+}
+
+.password-error-box {
+  border-bottom: 2px solid red;
+  padding: 8px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }

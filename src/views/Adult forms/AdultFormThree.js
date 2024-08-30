@@ -792,20 +792,24 @@ const AdultFormThree = () => {
   };
 
   const handleUrlChange = (e) => {
+    if (e.inputType === "insertFromPaste") return;
     const url = e.target.value;
-    // setVideoUrl(url);
+
+    setVideoUrl(url);
     // Validate URL in real-time
     setCheckVideoUrl(!isValidUrl(url));
   };
 
   const handleAudioChange = (e) => {
+    if (e.inputType === "insertFromPaste") return;
     const url = e.target.value;
-    // setAudioUrl(url);
+    setAudioUrl(url);
     // Validate URL in real-time
     setCheckAudioUrl(!isNotKnownFormatUrl(url));
   };
 
   const handlePaste = (e) => {
+    e.preventDefault();
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
@@ -815,6 +819,7 @@ const AdultFormThree = () => {
   };
 
   const handleAudioPaste = (e) => {
+    e.preventDefault();
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
@@ -1340,84 +1345,89 @@ const AdultFormThree = () => {
 
                   <div className="adults-titles">Features (Optional)</div>
 
-                  <div className="features-section"> <div className="row">
-                    {featuresList && (
-                      <>
-                        {featuresList.map((item, index) => (
-                          <div
-                            key={index}
-                            className="mb-3 col-md-3 features-input-wrapper"
-                          >
-                            <label className="form-label">{item.label}</label>
-                            {creatableOptions.includes(item.label) ? (
-                              <CreatableSelect
-                                onKeyDown={handleKeyDown}
-                                isClearable
-                                options={item.options.map((option) => ({
-                                  value: option,
-                                  label: option,
-                                }))}
-                                isValidNewOption={isValidNewOption}
-                                onInputChange={handleInputChange}
-                                onChange={(selectedOption) => {
-                                  const value = selectedOption.value;
-                                  // Check if the value is a valid number and is non-negative
-                                  if (
-                                    /^\d*\.?\d*$/.test(value) &&
-                                    (value >= 0 || value === "")
-                                  ) {
+                  <div className="features-section">
+                    {" "}
+                    <div className="row">
+                      {featuresList && (
+                        <>
+                          {featuresList.map((item, index) => (
+                            <div
+                              key={index}
+                              className="mb-3 col-md-3 features-input-wrapper"
+                            >
+                              <label className="form-label">{item.label}</label>
+                              {creatableOptions.includes(item.label) ? (
+                                <CreatableSelect
+                                  onKeyDown={handleKeyDown}
+                                  isClearable
+                                  options={item.options.map((option) => ({
+                                    value: option,
+                                    label: option,
+                                  }))}
+                                  isValidNewOption={isValidNewOption}
+                                  onInputChange={handleInputChange}
+                                  onChange={(selectedOption) => {
+                                    const value = selectedOption.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleFeaturesChange(
+                                        item.label,
+                                        selectedOption
+                                          ? selectedOption.value
+                                          : ""
+                                      );
+                                    }
+                                  }}
+                                  placeholder={getPlaceholder(item.label)}
+                                />
+                              ) : creatableInputOptions.includes(item.label) ? (
+                                <input
+                                  min="0"
+                                  type="number"
+                                  onKeyDown={handleKeyDown}
+                                  className="form-control features-select"
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleFeaturesChange(item.label, value);
+                                    }
+                                  }}
+                                  placeholder={getPlaceholder(item.label)}
+                                />
+                              ) : (
+                                <select
+                                  className="form-select features-select"
+                                  aria-label="Default select example"
+                                  onChange={(e) =>
                                     handleFeaturesChange(
                                       item.label,
-                                      selectedOption ? selectedOption.value : ""
-                                    );
+                                      e.target.value
+                                    )
                                   }
-                                }}
-                                placeholder={getPlaceholder(item.label)}
-                              />
-                            ) : creatableInputOptions.includes(item.label) ? (
-                              <input
-                                min="0"
-                                type="number"
-                                onKeyDown={handleKeyDown}
-                                className="form-control features-select"
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  if (
-                                    /^\d*\.?\d*$/.test(value) &&
-                                    (value >= 0 || value === "")
-                                  ) {
-                                    handleFeaturesChange(item.label, value);
-                                  }
-                                }}
-                                placeholder={getPlaceholder(item.label)}
-                              />
-                            ) : (
-                              <select
-                                className="form-select features-select"
-                                aria-label="Default select example"
-                                onChange={(e) =>
-                                  handleFeaturesChange(
-                                    item.label,
-                                    e.target.value
-                                  )
-                                }
-                                defaultValue=""
-                              >
-                                <option value="" disabled>
-                                  {item.label}
-                                </option>
-                                {item.options.map((option, idx) => (
-                                  <option key={idx} value={option}>
-                                    {option}
+                                  defaultValue=""
+                                >
+                                  <option value="" disabled>
+                                    {item.label}
                                   </option>
-                                ))}
-                              </select>
-                            )}
-                          </div>
-                        ))}
-                      </>
-                    )}
-                  </div> </div>
+                                  {item.options.map((option, idx) => (
+                                    <option key={idx} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
+                            </div>
+                          ))}
+                        </>
+                      )}
+                    </div>{" "}
+                  </div>
 
                   <div className="kids-form-title">
                     <span>ID Verification</span>

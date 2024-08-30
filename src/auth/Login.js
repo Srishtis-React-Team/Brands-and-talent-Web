@@ -198,7 +198,6 @@ const Login = () => {
     localStorage.setItem("emailID", data?.email);
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
-
     localStorage.setItem("currentUserType", data?.user?.userType);
     localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
     localStorage.setItem(

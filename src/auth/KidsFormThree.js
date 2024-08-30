@@ -242,22 +242,26 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleUrlChange = (e) => {
+    // Avoid handling change if it was triggered by a paste event
+    if (e.inputType === "insertFromPaste") return;
     // alert("handleUrlChange");
     const url = e.target.value;
-    // setVideoUrl(url);
+    setVideoUrl(url);
     // Validate URL in real-time
     setCheckVideoUrl(!isValidUrl(url));
   };
 
   const handleAudioChange = (e) => {
+    if (e.inputType === "insertFromPaste") return;
     const url = e.target.value;
-    // setAudioUrl(url);
+    setAudioUrl(url);
     // Validate URL in real-time
     setCheckAudioUrl(!isNotKnownFormatUrl(url));
   };
 
   const handlePaste = (e) => {
     // alert("handlePaste");
+    e.preventDefault(); // Prevent the default paste behavior to avoid double handling
 
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
@@ -268,6 +272,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleAudioPaste = (e) => {
+    e.preventDefault();
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
@@ -683,6 +688,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
             } else {
               navigate(`/talent-signup-service-details?${userId}`);
             }
+            // navigate(`/talent-home`);
           }, 1000);
         } else {
         }

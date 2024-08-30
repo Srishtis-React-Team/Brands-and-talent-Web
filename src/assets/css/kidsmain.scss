@@ -280,7 +280,7 @@
   .media-wrapper {
     cursor: pointer;
     border: 1px solid rgb(211, 211, 211);
-    display: flex;
+    // display: flex;
     justify-content: space-between;
     margin: 10px 0px;
     align-items: center;
@@ -590,6 +590,7 @@
   padding: 0px 0px 6px 0px;
   font-weight: 500;
   color: red;
+  margin-bottom: 0px;
 }
 .password_strength .line_box {
   background-color: #f2f2f2;
