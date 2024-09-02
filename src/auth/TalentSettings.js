@@ -431,7 +431,9 @@ const TalentSettings = () => {
                         settalentPasswordError(false);
                       }}
                     ></input>
-
+                    <div className="password_strength_box">
+                      <div className="password_strength"></div>
+                    </div>
                     {talentPassword && !passwordStatus && (
                       <div className="invalid-fields password-error-box">
                         ( The minimum password length is 8 characters and must
@@ -620,7 +622,7 @@ const TalentSettings = () => {
                 }
               }}
             >
-              Ok
+              Yes
             </button>
           </div>
         </div>

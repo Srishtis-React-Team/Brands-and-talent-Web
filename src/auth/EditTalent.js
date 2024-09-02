@@ -64,6 +64,10 @@ function a11yProps(index) {
   };
 }
 
+const scrollToTop = () => {
+  window.scrollTo(0, 0); // Scroll to top on link click
+};
+
 // Regular expressions for different video platforms
 const urlPatterns = {
   youtube:
@@ -502,8 +506,17 @@ const EditTalent = () => {
             setState(resData?.data?.data?.parentState);
             getStates(resData?.data?.data?.parentCountry);
             setKidsCity(resData?.data?.data?.childCity);
-            setAudioUrlsList(resData?.data?.data?.audioList);
-            setUrls(resData?.data?.data?.videoList);
+            setAudioUrlsList(
+              Array.isArray(resData?.data?.data?.audioList)
+                ? resData.data.data.audioList
+                : []
+            );
+            setUrls(
+              Array.isArray(resData?.data?.data?.videoList)
+                ? resData.data.data.videoList
+                : []
+            );
+
             getCities({
               countryName: resData?.data?.data?.parentCountry,
               stateName: resData?.data?.data?.parentState,
@@ -564,8 +577,18 @@ const EditTalent = () => {
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
             setDob(resData?.data?.data?.childDob);
-            setAudioUrlsList(resData?.data?.data?.audioList);
-            setUrls(resData?.data?.data?.videoList);
+            setAudioUrlsList(
+              Array.isArray(resData?.data?.data?.audioList)
+                ? resData.data.data.audioList
+                : []
+            );
+
+            setUrls(
+              Array.isArray(resData?.data?.data?.videoList)
+                ? resData.data.data.videoList
+                : []
+            );
+
             setCountry(resData?.data?.data?.parentCountry);
             setState(resData?.data?.data?.parentState);
             setKidsCity(resData?.data?.data?.childCity);
@@ -612,7 +635,6 @@ const EditTalent = () => {
               }
             );
             setSelectedNationalityOptions(selectedNationalityOptions);
-            // alert("sd");
             console.log(selectedOptions, "selectedOptions");
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
@@ -735,6 +757,7 @@ const EditTalent = () => {
             if (resData.data.status === true) {
               setIsLoading(false);
               setMessage("Updated Successfully!");
+              scrollToTop();
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -790,6 +813,8 @@ const EditTalent = () => {
             if (resData.data.status === true) {
               setIsLoading(false);
               setMessage("Updated Successfully!");
+              scrollToTop();
+
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -1065,6 +1090,7 @@ const EditTalent = () => {
 
           setEditProfileImage(fileObj?.fileData);
           setEditProfileImageObject(fileObj);
+          scrollToTop();
         }
       })
       .catch((err) => {
@@ -1093,6 +1119,7 @@ const EditTalent = () => {
           };
 
           updatePortfolioAPI(fileObj);
+          scrollToTop();
         }
       })
       .catch((err) => {
@@ -1120,6 +1147,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Portfolio Added Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1159,6 +1188,7 @@ const EditTalent = () => {
             type: resData?.data?.data?.filetype,
           };
           updateResumeAPI(fileObj);
+          scrollToTop();
         }
       })
       .catch((err) => {
@@ -1190,6 +1220,7 @@ const EditTalent = () => {
           setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
+            scrollToTop();
           }, 2000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -1225,6 +1256,7 @@ const EditTalent = () => {
             type: resData?.data?.data?.filetype,
           };
           updateServiceFileAPI(fileObj, serviceData);
+          scrollToTop();
         }
       })
       .catch((err) => {
@@ -1271,6 +1303,7 @@ const EditTalent = () => {
           setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
+            scrollToTop();
           }, 2000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -1299,6 +1332,8 @@ const EditTalent = () => {
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Profile image updated Successfully");
+            scrollToTop();
+
             setOpenPopUp(true);
             setTimeout(function () {
               setMyState(true);
@@ -1322,6 +1357,8 @@ const EditTalent = () => {
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Profile image updated Successfully");
+            scrollToTop();
+
             setOpenPopUp(true);
             setTimeout(function () {
               setMyState(true);
@@ -1409,6 +1446,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("File Deleted Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1439,6 +1478,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("File Deleted Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1487,6 +1528,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Services Updated Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1519,6 +1562,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Features Updated Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1563,6 +1608,8 @@ const EditTalent = () => {
         if (resData) {
           setIsLoading(false);
           setMessage("Service Removed Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1583,13 +1630,13 @@ const EditTalent = () => {
   };
 
   const handlePaste = (e) => {
-    e.preventDefault();
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
     setVideoUrl(pastedText);
     // Validate pasted URL
     setCheckVideoUrl(!isValidUrl(pastedText));
+    e.preventDefault();
   };
 
   const deleteVideoUrls = async (item, index) => {
@@ -1603,6 +1650,8 @@ const EditTalent = () => {
         if (resData.data.message === "URL deleted Successfully") {
           setIsLoading(false);
           setMessage("Deleted Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1669,6 +1718,7 @@ const EditTalent = () => {
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Url updated Successfully!");
+            setPublicUrlEdit(false);
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1736,7 +1786,7 @@ const EditTalent = () => {
         setCheckAudioUrl(true);
       }
     }
-    postNewAudios();
+    postNewAudios([...audioUrlsList, audioUrl]);
   };
   const handleUrlChange = (e) => {
     if (e.inputType === "insertFromPaste") return;
@@ -1767,17 +1817,24 @@ const EditTalent = () => {
   };
 
   const handleAddUrl = async () => {
+    console.log(videoUrl, "videoUrl");
+    console.log(urls, "urls");
     if (videoUrl.trim() !== "") {
       if (isValidUrl(videoUrl)) {
+        if (!Array.isArray(urls)) {
+          console.error("urls is not an array:", urls);
+          return;
+        }
         setUrls([...urls, videoUrl]);
-
+        console.log(urls, "urlsAdd");
         setVideoUrl("");
         setCheckVideoUrl(false);
       } else {
         setCheckVideoUrl(true);
       }
     }
-    postNewVideos();
+
+    postNewVideos([...urls, videoUrl]);
   };
 
   const deleteAudioUrl = (index) => {
@@ -1801,10 +1858,10 @@ const EditTalent = () => {
   //   postNewAudios();
   // }, [audioUrlsList]);
 
-  const postNewVideos = async () => {
-    if (urls.length > 0) {
+  const postNewVideos = async (urlsData) => {
+    if (urlsData.length > 0) {
       const formData = {
-        videoList: urls,
+        videoList: urlsData,
       };
       setIsLoading(true);
       await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
@@ -1812,6 +1869,8 @@ const EditTalent = () => {
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Updated Successfully");
+            scrollToTop();
+
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1824,10 +1883,10 @@ const EditTalent = () => {
         });
     }
   };
-  const postNewAudios = async () => {
-    if (audioUrlsList.length > 0) {
+  const postNewAudios = async (urlsData) => {
+    if (urlsData.length > 0) {
       const formData = {
-        audioList: audioUrlsList,
+        audioList: urlsData,
       };
       setIsLoading(true);
       await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
@@ -1835,6 +1894,8 @@ const EditTalent = () => {
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Updated Successfully");
+            scrollToTop();
+
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1848,6 +1909,9 @@ const EditTalent = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(urls, "urls");
+  }, []);
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} myState={myState} />

@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/dashboard.css";
 import "../assets/css/register.css";
+
+import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/forms/login.css";
+
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { API } from "../config/api";
@@ -173,7 +177,7 @@ const AdultSignup = () => {
       }, 1000);
     }
     if (!passwordStatus) {
-      setMessage("Please Please enter the required fields");
+      setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -331,7 +335,6 @@ const AdultSignup = () => {
           <div className="login-main regPage">
             <div className="adult-signup-main widFull">
               <div className="step-title">Sign up</div>
-
               <div className="mb-3">
                 <label className="form-label">
                   Email<span className="mandatory">*</span>
@@ -388,6 +391,30 @@ const AdultSignup = () => {
                       setAdultPassword(e.target.value);
                     }}
                   ></input>
+                  <div className="password_strength_box">
+                    <div className="password_strength">
+                      <p className="text">Weak</p>
+                      <div className="line_box">
+                        <div className="line"></div>
+                      </div>
+                    </div>
+                    <div className="tool_tip_box">
+                      <span>
+                        <i className="bi bi-question-circle"></i>
+                      </span>
+                      <div className="tool_tip">
+                        <p style={{ listStyleType: "none" }}>
+                          <b>Password must be:</b>
+                        </p>
+                        <p>At least 8 character long</p>
+                        <p>At least 1 uppercase letter</p>
+                        <p>At least 1 lowercase letter</p>
+                        <p>At least 1 number</p>
+                        <p>At least 1 special character from !@#$%^&*</p>
+                      </div>
+                    </div>
+                  </div>
+
                   {adultPassword && !passwordStatus && (
                     <div className="invalid-fields password-error-box">
                       ( The minimum password length is 8 characters and must

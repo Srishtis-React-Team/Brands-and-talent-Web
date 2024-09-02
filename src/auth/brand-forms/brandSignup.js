@@ -399,7 +399,9 @@ const BrandSignup = React.memo((props) => {
                     setAdultPassword(e.target.value);
                   }}
                 ></input>
-
+                <div className="password_strength_box">
+                  <div className="password_strength"></div>
+                </div>
                 {adultPassword && !passwordStatus && (
                   <div className="invalid-fields password-error-box">
                     ( The minimum password length is 8 characters and must

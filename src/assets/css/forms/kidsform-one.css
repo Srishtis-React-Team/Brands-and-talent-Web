@@ -459,6 +459,7 @@
   padding: 15px;
   border-radius: 6px;
   background-color: #f8f8f8;
+  margin-top: 5px;
 }
 .fixImgs {
   position: relative;
@@ -507,7 +508,9 @@
   justify-content: space-between;
   place-items: center;
   align-items: center;
-  margin: 10px 0;
+  margin: 0px 0;
+  display: none !important;
+  opacity: 0;
 }
 .password_strength_box .password_strength {
   width: 100%;

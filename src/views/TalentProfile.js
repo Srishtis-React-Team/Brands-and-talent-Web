@@ -706,13 +706,32 @@ const TalentProfile = () => {
                                   </div>
                                   <div className="social-followers-count-section">
                                     <div className="social-count">
-                                      {talentData?.instaFollowers
-                                        ? talentData?.instaFollowers
-                                        : "N/A"}
+                                      {talentData.instaFollowers && (
+                                        <>{talentData?.instaFollowers}</>
+                                      )}
+                                      {!talentData.instaFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.instagramUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
                                     </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                    {talentData?.instaFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -732,13 +751,32 @@ const TalentProfile = () => {
                                   </div>
                                   <div className="social-followers-count-section">
                                     <div className="social-count">
-                                      {talentData?.facebookFollowers
-                                        ? talentData.facebookFollowers
-                                        : "N/A"}
+                                      {talentData.facebookFollowers && (
+                                        <>{talentData?.facebookFollowers}</>
+                                      )}
+                                      {!talentData.facebookFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.facebookUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
                                     </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                    {talentData?.facebookFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -758,13 +796,32 @@ const TalentProfile = () => {
                                   </div>
                                   <div className="social-followers-count-section">
                                     <div className="social-count">
-                                      {talentData?.tiktokFollowers
-                                        ? talentData.tiktokFollowers
-                                        : "N/A"}
+                                      {talentData.tiktokFollowers && (
+                                        <>{talentData?.tiktokFollowers}</>
+                                      )}
+                                      {!talentData.tiktokFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.tikTokUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
                                     </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                    {talentData?.tiktokFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -785,13 +842,32 @@ const TalentProfile = () => {
                                   </div>
                                   <div className="social-followers-count-section">
                                     <div className="social-count">
-                                      {talentData?.linkedinFollowers
-                                        ? talentData.linkedinFollowers
-                                        : "N/A"}
+                                      {talentData.linkedinFollowers && (
+                                        <>{talentData?.linkedinFollowers}</>
+                                      )}
+                                      {!talentData.linkedinFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.linkedinUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
                                     </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                    {talentData?.linkedinFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -813,13 +889,32 @@ const TalentProfile = () => {
 
                                   <div className="social-followers-count-section">
                                     <div className="social-count">
-                                      {talentData?.twitterFollowers
-                                        ? talentData.twitterFollowers
-                                        : "N/A"}
+                                      {talentData.twitterFollowers && (
+                                        <>{talentData?.twitterFollowers}</>
+                                      )}
+                                      {!talentData.twitterFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.twitterUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
                                     </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                    {talentData?.twitterFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -840,13 +935,32 @@ const TalentProfile = () => {
 
                                   <div className="social-followers-count-section">
                                     <div className="social-count">
-                                      {talentData?.threadsFollowers
-                                        ? talentData.threadsFollowers
-                                        : "N/A"}
+                                      {talentData.threadsFollowers && (
+                                        <>{talentData?.threadsFollowers}</>
+                                      )}
+                                      {!talentData.threadsFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.threadsUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
                                     </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                    {talentData?.threadsFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -868,13 +982,32 @@ const TalentProfile = () => {
 
                                   <div className="social-followers-count-section">
                                     <div className="social-count">
-                                      {talentData?.youtubeFollowers
-                                        ? talentData.youtubeFollowers
-                                        : "N/A"}
+                                      {talentData.youtubeFollowers && (
+                                        <>{talentData?.youtubeFollowers}</>
+                                      )}
+                                      {!talentData.youtubeFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.youTubeUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
                                     </div>
-                                    <div className="followers-text">
-                                      Followers
-                                    </div>
+                                    {talentData?.youtubeFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               ))}
@@ -1163,11 +1296,24 @@ const TalentProfile = () => {
                                   <div>Data not added</div>
                                 </>
                               )}
-                            {photosList && photosList.length === 0 && (
+                            {talentData?.profileApprove === false && (
                               <>
-                                <div>No Photos Available</div>
+                                <div>
+                                  Photos will be visible only after admin
+                                  approval
+                                </div>
                               </>
                             )}
+                            {talentData?.profileApprove === true &&
+                              photosList &&
+                              photosList.length === 0 && (
+                                <>
+                                  <div>
+                                    Photos will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                             {/* {photosList.length === 0 &&
                               talentData?.profileApprove === false && (
                                 <>
@@ -1299,27 +1445,21 @@ const TalentProfile = () => {
                                 </div>
                               ))}
 
-                              {urlsList?.length === 0 &&
-                                talentData?.profileApprove === true && (
-                                  <>
-                                    <div>Data not added</div>
-                                  </>
-                                )}
-
-                              {urlsList && urlsList?.length === 0 && (
+                              {talentData?.profileApprove === false && (
                                 <>
-                                  <div>No Videos Available</div>
+                                  <div>
+                                    Videos will be visible only after admin
+                                    approval
+                                  </div>
                                 </>
                               )}
-                              {/* {urlsList?.length === 0 &&
-                                talentData?.profileApprove === false && (
+
+                              {talentData?.profileApprove === true &&
+                                urlsList?.length === 0 && (
                                   <>
-                                    <div>
-                                      Data will be visible only after admin
-                                      approval
-                                    </div>
+                                    <div>No Videos Available</div>
                                   </>
-                                )} */}
+                                )}
                             </div>
                           </div>
                           <p>Audios</p>
@@ -1353,28 +1493,21 @@ const TalentProfile = () => {
                                 </div>
                               )}
 
-                              {audiosList && audiosList?.length === 0 && (
-                                <>
-                                  <div>No Audios Available</div>
-                                </>
-                              )}
-
-                              {/* {audiosList?.length === 0 &&
-                                talentData?.profileApprove === true && (
+                              {talentData?.profileApprove === true &&
+                                audiosList &&
+                                audiosList?.length === 0 && (
                                   <>
-                                    <div>Data not added</div>
+                                    <div>No Audios Available</div>
                                   </>
                                 )}
-
-                              {audiosList?.length === 0 &&
-                                talentData?.profileApprove === false && (
-                                  <>
-                                    <div>
-                                      Data will be visible only after admin
-                                      approval
-                                    </div>
-                                  </>
-                                )} */}
+                              {talentData?.profileApprove === false && (
+                                <>
+                                  <div>
+                                    Audios will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                             </div>
                           </div>
 
@@ -1476,28 +1609,20 @@ const TalentProfile = () => {
                                 </>
                               );
                             })}
-                            {cvList && cvList.length === 0 && (
-                              <>
-                                <div>No Resumes Available</div>
-                              </>
-                            )}
-
-                            {/* {cvList.length === 0 &&
-                              talentData?.profileApprove === true && (
+                            {talentData?.profileApprove === true &&
+                              cvList.length === 0 && (
                                 <>
-                                  <div>Data not added</div>
+                                  <div>No Resumes Available</div>
                                 </>
                               )}
-
-                            {cvList.length === 0 &&
-                              talentData?.profileApprove === false && (
-                                <>
-                                  <div>
-                                    Data will be visible only after admin
-                                    approval
-                                  </div>
-                                </>
-                              )} */}
+                            {talentData?.profileApprove === false && (
+                              <>
+                                <div>
+                                  Resumes will be visible only after admin
+                                  approval
+                                </div>
+                              </>
+                            )}
                           </div>
                         </>
                       )}
@@ -1530,27 +1655,21 @@ const TalentProfile = () => {
                                 );
                               })}
 
-                            {photosList && photosList.length === 0 && (
-                              <>
-                                <div>No Photos Available</div>
-                              </>
-                            )}
-                            {/* {photosList.length === 0 &&
-                              talentData?.profileApprove === true && (
+                            {talentData?.profileApprove === true &&
+                              photosList.length === 0 && (
                                 <>
-                                  <div>Data not added</div>
+                                  <div>No Photos Available</div>
                                 </>
                               )}
-
-                            {photosList.length === 0 &&
-                              talentData?.profileApprove === false && (
-                                <>
-                                  <div>
-                                    Data will be visible only after admin
-                                    approval
-                                  </div>
-                                </>
-                              )} */}
+                            {talentData?.profileApprove === false && (
+                              <>
+                                <div>
+                                  {" "}
+                                  Photos will be visible only after admin
+                                  approval
+                                </div>
+                              </>
+                            )}
                           </section>
                         </div>
                       )}
@@ -1612,27 +1731,21 @@ const TalentProfile = () => {
                                   </div>
                                 ))}
 
-                                {urlsList && urlsList?.length === 0 && (
-                                  <>
-                                    <div>No Videos Available</div>
-                                  </>
-                                )}
-                                {/* {urlsList?.length === 0 &&
-                                  talentData?.profileApprove === true && (
+                                {talentData?.profileApprove === true &&
+                                  urlsList?.length === 0 && (
                                     <>
-                                      <div>Data not added</div>
+                                      <div>No Videos Available</div>
                                     </>
                                   )}
-
-                                {urlsList?.length === 0 &&
-                                  talentData?.profileApprove === false && (
-                                    <>
-                                      <div>
-                                        Data will be visible only after admin
-                                        approval
-                                      </div>
-                                    </>
-                                  )} */}
+                                {talentData?.profileApprove === false && (
+                                  <>
+                                    <div>
+                                      {" "}
+                                      Videos will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -1672,29 +1785,20 @@ const TalentProfile = () => {
                                 </div>
                               )}
 
-                              {audiosList && audiosList?.length === 0 && (
-                                <>
-                                  <div>No Audios Available</div>
-                                </>
-                              )}
-
-                              {/* 
-                              {audiosList?.length === 0 &&
-                                talentData?.profileApprove === true && (
+                              {talentData?.profileApprove === true &&
+                                audiosList?.length === 0 && (
                                   <>
-                                    <div>Data not added</div>
+                                    <div>No Audios Available</div>
                                   </>
                                 )}
-
-                              {audiosList?.length === 0 &&
-                                talentData?.profileApprove === false && (
-                                  <>
-                                    <div>
-                                      Data will be visible only after admin
-                                      approval
-                                    </div>
-                                  </>
-                                )} */}
+                              {talentData?.profileApprove === false && (
+                                <>
+                                  <div>
+                                    Audios will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                             </div>
                           </div>
                         </>
@@ -1762,27 +1866,20 @@ const TalentProfile = () => {
                             </>
                           )}
 
-                          {featuresList && featuresList.length === 0 && (
-                            <>
-                              <div>No Features Available</div>
-                            </>
-                          )}
-
-                          {/* {featuresList.length === 0 &&
-                            talentData?.profileApprove === true && (
+                          {talentData?.profileApprove === true &&
+                            featuresList.length === 0 && (
                               <>
-                                <div>Data not added</div>
+                                <div>No Features Available</div>
                               </>
                             )}
-
-                          {featuresList.length === 0 &&
-                            talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Data will be visible only after admin approval
-                                </div>
-                              </>
-                            )} */}
+                          {talentData?.profileApprove === false && (
+                            <>
+                              <div>
+                                Features will be visible only after admin
+                                approval
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
 
@@ -1811,27 +1908,21 @@ const TalentProfile = () => {
                             );
                           })}
 
-                          {cvList && cvList.length === 0 && (
-                            <>
-                              <div>No Resumes Available</div>
-                            </>
-                          )}
-
-                          {/* {cvList.length === 0 &&
-                            talentData?.profileApprove === true && (
+                          {talentData?.profileApprove === true &&
+                            cvList.length === 0 && (
                               <>
-                                <div>Data not added</div>
+                                <div>No Resumes Available</div>
                               </>
                             )}
-
-                          {cvList.length === 0 &&
-                            talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Data will be visible only after admin approval
-                                </div>
-                              </>
-                            )} */}
+                          {talentData?.profileApprove === false && (
+                            <>
+                              <div>
+                                {" "}
+                                Resumes will be visible only after admin
+                                approval
+                              </div>
+                            </>
+                          )}
                         </div>
                       )}
 
@@ -1916,27 +2007,20 @@ const TalentProfile = () => {
                             </div>
                           )}
 
-                          {reviewsList && reviewsList.length === 0 && (
-                            <>
-                              <div>No Reviews Available</div>
-                            </>
-                          )}
-
-                          {/* {reviewsList.length === 0 &&
-                            talentData?.profileApprove === true && (
+                          {talentData?.profileApprove === true &&
+                            reviewsList.length === 0 && (
                               <>
-                                <div>Data not added</div>
+                                <div>No Reviews Available</div>
                               </>
                             )}
-
-                          {reviewsList.length === 0 &&
-                            talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Data will be visible only after admin approval
-                                </div>
-                              </>
-                            )} */}
+                          {talentData?.profileApprove === false && (
+                            <>
+                              <div>
+                                Reviews will be visible only after admin
+                                approval
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
                     </div>

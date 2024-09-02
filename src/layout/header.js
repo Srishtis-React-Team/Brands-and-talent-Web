@@ -174,16 +174,16 @@ const Header = ({ onData }) => {
     }
     if (data == "post-job") {
       if (!currentUserId) {
-        window.open(
-          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          "_blank"
-        );
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function () {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+        // window.open(
+        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        //   "_blank"
+        // );
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/create-jobs");
       }
@@ -191,16 +191,16 @@ const Header = ({ onData }) => {
 
     if (data == "find-talent") {
       if (!currentUserId) {
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function () {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
-        window.open(
-          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          "_blank"
-        );
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
+        // window.open(
+        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        //   "_blank"
+        // );
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/find-creators");
       } else if (
@@ -376,11 +376,11 @@ const Header = ({ onData }) => {
     } else if (route === "/how-it-works") {
       navigate(route);
     } else if (route === "/login") {
-      // navigate(route);
-      window.open(
-        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        "_blank"
-      );
+      navigate(route);
+      // window.open(
+      //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      //   "_blank"
+      // );
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();

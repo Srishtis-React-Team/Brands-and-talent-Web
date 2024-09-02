@@ -156,7 +156,7 @@ const ResetPassword = () => {
         }, 2000);
       }
     } else if (!passwordStatus) {
-      setMessage("Please Please enter the required fields");
+      setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -305,7 +305,9 @@ const ResetPassword = () => {
                   handlePasswordChange(e);
                 }}
               ></input>
-
+              <div className="password_strength_box">
+                <div className="password_strength"></div>
+              </div>
               {password && !passwordStatus && (
                 <div className="invalid-fields password-error-box">
                   ( The minimum password length is 8 characters and must contain
