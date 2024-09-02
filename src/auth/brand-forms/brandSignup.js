@@ -334,9 +334,9 @@ const BrandSignup = React.memo((props) => {
           ></button>
         </div>
         <div
-          className="dialog-body"
+          className="dialog-body spaceTops"
           style={{
-            height: "unset",
+            height: "unset", marginTop: "10px"
           }}
         >
           <div className="adult-signup-main">
