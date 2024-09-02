@@ -2056,7 +2056,10 @@ ul.MuiMenu-list li {
   font-weight: 500;
 }
 
-
+.invalid-fields {
+  font-size: 12px;
+  color: red;
+}
 
 
 
@@ -2381,6 +2384,7 @@ ul.MuiMenu-list li {
     padding: 0;
     margin: 30px 0 15px;
   }
+  .get-discover.title{  font-size: 20px; }
   .tabs {
     display: flex;
     justify-content: center;
@@ -3287,7 +3291,7 @@ ul.MuiMenu-list li {
   }
 
   .signup-terms {
-    font-size: 13px;
+    font-size: 12px;
   }
   .dialog-body.spaceTops {
     padding: 0px 0 25px;
@@ -3297,10 +3301,10 @@ ul.MuiMenu-list li {
     padding-left: 0;
   }
   .signup-terms-linetwo {
-    font-size: 13px;
+    font-size: 12px;
   }
   .signup-terms-linetwo > span {
-    font-size: 13px;
+    font-size: 12px;
   }
   .case-warpper {
     width: 80%;
@@ -3335,12 +3339,12 @@ ul.MuiMenu-list li {
   }
   .brand-section > .brand-title {
     font-size: 30px !important;
+    text-align: center !important;
   }
   .brand-section > .brand-description {
     color: #fff;
     font-size: 16px;
-    font-family: sans-serif;
-    text-align: center;
+    text-align: center !important;
   }
   .section-description {
     padding-top: 15px;
@@ -3624,6 +3628,8 @@ ul.MuiMenu-list li {
   }
   section.section-1.bannerImg.wraper {
     background-position: inherit !important;
+    padding-left: 8px;
+    padding-right: 8px;
   }
   .bannerImg::after {
     background: linear-gradient(180deg, rgb(0 0 0 / 66%) 47.11%, #c2124b 100%);
@@ -3728,20 +3734,22 @@ ul.MuiMenu-list li {
     padding: 10px;
   }
   .title {
-    font-size: 24px;
+    font-size: 26px;
   }
   .main-footer-wrapper .form-fields {
-    padding: 15px;
+    padding: 15px 0;
   }
   section.main-footer-form {
-    padding: 5px;
+    padding: 10px 15px 5px;
   }
   .main-footer-wrapper .form-fields .form-group {
     margin-bottom: 5px;
+    padding: 0;
   }
   .get-discover-description {
     width: 100%;
-    margin-top: 20px !important;
+    padding: 0 5px;
+    margin-top: 10px !important;
   }
   .mobile-signup {
     height: 38px;

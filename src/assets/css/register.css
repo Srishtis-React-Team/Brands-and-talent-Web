@@ -253,7 +253,7 @@
   width: 100%;
   overflow: inherit;
   margin: 15px 0 0 0px;
-  min-height: 94vh;
+  min-height: 90vh;
 }
 .brands-form-wrapper {
   width: 640px;
@@ -344,7 +344,7 @@
   height: auto;
   justify-content: center;
   min-height: 96vh;
-  padding: 55px 0;
+  padding: 60px 0 70px;
 }
 
 @media (max-width: 991px) {
@@ -363,7 +363,7 @@
     flex-direction: column;
   }
   .login-main.regPage {
-    padding: 25px 0;
+    padding: 25px 15px;
   }
   .dialog-body {
     min-height: 100%;
