@@ -491,7 +491,7 @@ const KidsformOne = () => {
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              setMessage("Registered Successfully");
+              setMessage("Successfully Registered");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -551,7 +551,7 @@ const KidsformOne = () => {
       }, 1000);
     }
     if (!passwordStatus) {
-      setMessage("Please Please enter the required fields");
+      setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -1077,6 +1077,33 @@ const KidsformOne = () => {
                               settalentPasswordError(false);
                             }}
                           ></input>
+
+                          <div className="password_strength_box">
+                            <div className="password_strength">
+                              <p className="text">Weak</p>
+                              <div className="line_box">
+                                <div className="line"></div>
+                              </div>
+                            </div>
+                            <div className="tool_tip_box">
+                              <span>
+                                <i className="bi bi-question-circle"></i>
+                              </span>
+                              <div className="tool_tip">
+                                <p style={{ listStyleType: "none" }}>
+                                  <b>Password must be:</b>
+                                </p>
+                                <p>At least 8 character long</p>
+                                <p>At least 1 uppercase letter</p>
+                                <p>At least 1 lowercase letter</p>
+                                <p>At least 1 number</p>
+                                <p>
+                                  At least 1 special character from !@#$%^&*
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
                           {showPassword ? (
                             <span
                               className="fa fa-eye show-password-icon"

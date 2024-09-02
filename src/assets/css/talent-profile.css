@@ -1333,3 +1333,11 @@
 .logoSocial > img {
   cursor: pointer;
 }
+
+.click-url {
+  font-size: 13px;
+  font-family: sans-serif;
+  color: #000;
+  cursor: pointer;
+  text-decoration: underline;
+}

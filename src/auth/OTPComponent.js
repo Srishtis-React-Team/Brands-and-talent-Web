@@ -60,7 +60,7 @@ const OTPComponent = () => {
     await ApiHelper.post(API.otpVerificationAdult, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Verification Successful Login to continue");
+          setMessage("Successfully Verified");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

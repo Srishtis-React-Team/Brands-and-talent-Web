@@ -40,7 +40,7 @@ const BecomeAffliate = () => {
       <section style={{ marginTop: "64px" }}>
         <div className="popular-header">
           <div className="container">
-            <div className="header-title">Become an affliate</div>
+            <div className="header-title">Become an Affiliate</div>
           </div>
         </div>
       </section>

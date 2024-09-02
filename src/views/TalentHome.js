@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import TalentHeader from "../layout/TalentHeader.js";
@@ -14,6 +14,9 @@ const TalentHome = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
+  const [modalData, setModalData] = useState(null);
+  const doitnow = require("../assets/images/doitnow.png");
+  const [isFilled, setIsFilled] = useState(true);
 
   useEffect(() => {
     setTimeout(function () {
@@ -51,6 +54,46 @@ const TalentHome = () => {
       "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
       "_blank"
     );
+  };
+  const url = window.location.href;
+
+  const [userId, setUserId] = useState(null);
+  const queryString = url.split("?")[1];
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    setUserId(storedUserId);
+    if (userId) {
+      checkProfileStatus();
+    }
+  }, [userId]);
+
+  const checkProfileStatus = async () => {
+    await ApiHelper.post(`${API.checkProfileStatus}${queryString}`)
+      .then((resData) => {
+        if (resData.data.profileStatus === false) {
+          openDoItNowModal();
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const doItNowRef = useRef(null);
+  const openDoItNowModal = () => {
+    const modal = new window.bootstrap.Modal(doItNowRef.current);
+    modal.show();
+  };
+
+  const closeDoItNowModal = () => {
+    const modal = new window.bootstrap.Modal(doItNowRef.current);
+    modal.hide();
+  };
+
+  const openSignup = () => {
+    closeDoItNowModal();
+    setTimeout(() => {
+      navigate(`/adult-signup-basic-details`);
+    }, 800);
   };
 
   return (
@@ -132,6 +175,79 @@ const TalentHome = () => {
           </div>
         </div>
       </main>
+
+      <div
+        ref={doItNowRef}
+        className="modal fade"
+        id="verify_age"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body talent-popup-body pt-1">
+              <div className="doitnow-main row">
+                <div className="doit-one col-md-8">
+                  <div className="talent-popup-title">
+                    Welcome To Brands & Talent
+                  </div>
+                  <div className="talent-popup-enter">
+                    Complete Your{" "}
+                    <span className="talent-popup-span">Profile</span>
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        border: "1px solid #ccc",
+                        borderRadius: "5px",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: isFilled ? "20%" : "0%",
+                          backgroundColor: "#c2114b",
+                          height: "8px",
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                  <div className="talent-popup-description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
+                    repellat corporis corrupti aliquid laboriosam neque ratione
+                    fuga. <br></br>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </div>
+                </div>
+                <div className="doit-two col-md-4 text-center">
+                  <img className="img-fluid" src={doitnow} alt="" />
+                </div>
+              </div>
+            </div>
+            <div className="doitnow">
+              <button
+                className="doit-btn"
+                onClick={() => {
+                  openSignup();
+                }}
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                Update Profile Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {openPopUp && <PopUp message={message} />}
     </>

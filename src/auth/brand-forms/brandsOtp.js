@@ -57,7 +57,7 @@ const BrandsOtp = React.memo((props) => {
     await ApiHelper.post(API.otpVerificationBrands, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Verification Successful");
+          setMessage("Successfully Verified");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

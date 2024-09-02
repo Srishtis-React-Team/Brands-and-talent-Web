@@ -44,7 +44,7 @@ const KidsOTP = () => {
     await ApiHelper.post(API.otpVerification, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Verification Successful");
+          setMessage("Successfully Verified");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

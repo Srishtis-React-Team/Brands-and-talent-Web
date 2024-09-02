@@ -164,11 +164,11 @@ const Login = () => {
               setIsLoading(false);
               setTalentLocalStorage(resData.data.data);
               if (resData.data.type === "adult") {
-                navigate(`/talent-home`);
+                navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
                 // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
                 // window.location.reload();
               } else if (resData.data.type === "kids") {
-                navigate(`/talent-home`);
+                navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
 
                 // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
                 // window.location.reload();

@@ -103,7 +103,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [audioUrlsList, setAudioUrlsList] = useState([]);
 
   const [idType, setIdType] = useState("");
-  const [verificationID, setVerificationID] = useState("");
+  const [verificationID, setVerificationID] = useState([]);
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -521,7 +521,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           fileData: resData.data.data.filename,
           type: getFileType(fileData.type),
         };
-        setVerificationID(fileObj);
+        // setVerificationID(fileObj);
+        setVerificationID((prevFiles) => [...prevFiles, fileObj]);
+
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -702,7 +704,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     navigate(`/talent-signup-plan-details?userId=${userId}`);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(verificationID, "verificationID");
+  }, []);
 
   return (
     <>
@@ -1335,53 +1339,76 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
                   {verificationID && (
                     <>
-                      <div
-                        className="uploaded-file-wrapper"
-                        style={{ marginBottom: "10px" }}
-                      >
-                        <div className="file-section">
-                          {verificationID.type === "image" && (
-                            <div className="fileType">
-                              <img src={imageType} alt="" />
-                            </div>
-                          )}
-                          <div className="fileName">{verificationID.title}</div>
-                        </div>
+                      {verificationID.map((item, index) => {
+                        return (
+                          <>
+                            <div key={index} className="uploaded-file-wrapper">
+                              <div className="file-section">
+                                {item.type === "image" && (
+                                  <div className="fileType">
+                                    <img src={imageType} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "audio" && (
+                                  <div className="fileType">
+                                    <img src={audiotype} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "video" && (
+                                  <div className="fileType">
+                                    <img src={videoType} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "document" && (
+                                  <div className="fileType">
+                                    <img src={docsIcon} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "pdf" && (
+                                  <div className="fileType">
+                                    <img src={docsIcon} alt="" />
+                                  </div>
+                                )}
+                                <div className="fileName">{item.title}</div>
+                              </div>
 
-                        <div className="update-portfolio-action">
-                          <IconButton
-                            aria-label="more"
-                            aria-controls="dropdown-menu"
-                            aria-haspopup="true"
-                            onClick={handleClick}
-                          >
-                            <MoreVertIcon />
-                          </IconButton>
-                          <Menu
-                            id="dropdown-menu"
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                          >
-                            <MenuItem
-                              onClick={() => {
-                                handleClose();
-                                handleView(verificationID);
-                              }}
-                            >
-                              View
-                            </MenuItem>
-                            <MenuItem
-                              onClick={() => {
-                                dropDownClose();
-                                handleVerificationDelete(verificationID);
-                              }}
-                            >
-                              Delete
-                            </MenuItem>
-                          </Menu>
-                        </div>
-                      </div>
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      handleClose();
+                                      handleView(item);
+                                    }}
+                                  >
+                                    View
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      handleVerificationDelete(item);
+                                    }}
+                                  >
+                                    Delete
+                                  </MenuItem>
+                                </Menu>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
                     </>
                   )}
                 </div>
