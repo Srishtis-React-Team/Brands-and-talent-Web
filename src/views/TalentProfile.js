@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "../assets/css/findcreators.css";
 import "../assets/css/talent-profile.css";
 import "../assets/css/dashboard.css";
+import { useParams } from "react-router-dom";
 
 import "../assets/css/register.css";
 import "../assets/css/kidsmain.scss";
@@ -71,20 +72,64 @@ const TalentProfile = () => {
   const [selectedJob, setSelectedJob] = useState("");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
+  const location = useLocation();
+  const [talentName, setTalentName] = useState("");
+  const [urlTalentData, setUrlTalentData] = useState("");
   useEffect(() => {
     setCurrentUserType(localStorage.getItem("currentUserType"));
   }, []);
 
-  const location = useLocation();
-  const selectedTalent = location.state && location.state.talentData;
-  console.log(selectedTalent, "selectedTalent");
+  useEffect(() => {
+    // Extract the last part of the URL (i.e., 'peter')
+    const pathParts = location.pathname.split("/");
+    const name = pathParts[pathParts.length - 1];
+    console.log(name, "name");
+    setTalentName(name);
+    getDataByPublicUrl(name);
+  }, [location]);
 
-  if (!selectedTalent && !userId) {
-    navigate("/login");
-  }
+  const getDataByPublicUrl = async (name) => {
+    const formData = {
+      publicUrl: name,
+    };
+    await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
+      .then((resData) => {
+        console.log(resData?.data?.data?._id, "getDataByPublicUrl");
+        setUrlTalentData(resData?.data?.data);
+        // checkUser(resData?.data?.data?._id, resData?.data?.data);
+        setTalentData(resData?.data?.data);
+      })
+      .catch((err) => {});
+  };
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
+  console.log(queryString, "queryString");
+
+  // console.log(userId, "userId IDS");
+  // console.log(urlTalentData?._id, "urlTalentData?._id IDS");
+
+  // const selectedTalent = location.state && location.state.talentData;
+  // console.log(selectedTalent, "selectedTalent");
+
+  // const checkUser = (id, data) => {
+  //   const localID = localStorage.getItem("userId");
+  //   console.log(localID, "localID IDS");
+  //   console.log(id, "urlTalentData?._id IDS");
+
+  //   if (localID && id) {
+  //     if (localID !== id) {
+  //       // navigate("/login");
+  //       setTalentData(data);
+  //     } else if (localID == id) {
+
+  //     }
+  //   }
+  // };
+
+  if (!talentData && !userId) {
+    navigate("/login");
+  }
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -94,8 +139,8 @@ const TalentProfile = () => {
       "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3",
     ]);
     setUserId(storedUserId);
-    if (selectedTalent?._id) {
-      getTalentById(selectedTalent?._id);
+    if (talentData?._id) {
+      // getTalentById(talentData?._id);
       fetchPhotos();
       fetchVideoAudios();
       fetchFeatures();
@@ -103,16 +148,29 @@ const TalentProfile = () => {
       fetchReviews();
       fetchURLS();
     } else if (storedUserId) {
-      getTalentById(storedUserId);
+      // getTalentById(storedUserId);
     } else if (queryString) {
-      getTalentById(queryString);
+      // getTalentById(queryString);
     }
-  }, [selectedTalent]);
+    // if (selectedTalent?._id) {
+    //   getTalentById(selectedTalent?._id);
+    //   fetchPhotos();
+    //   fetchVideoAudios();
+    //   fetchFeatures();
+    //   fetchCV();
+    //   fetchReviews();
+    //   fetchURLS();
+    // } else if (storedUserId) {
+    //   getTalentById(storedUserId);
+    // } else if (queryString) {
+    //   getTalentById(queryString);
+    // }
+  }, [talentData]);
 
   const fetchPhotos = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/1`
     )
       .then((resData) => {
@@ -124,10 +182,11 @@ const TalentProfile = () => {
       })
       .catch((err) => {});
   };
+
   const fetchVideoAudios = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/2`
     )
       .then((resData) => {
@@ -140,7 +199,7 @@ const TalentProfile = () => {
   const fetchURLS = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/8`
     )
       .then((resData) => {
@@ -153,7 +212,7 @@ const TalentProfile = () => {
   const fetchFeatures = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/4`
     )
       .then((resData) => {
@@ -166,7 +225,7 @@ const TalentProfile = () => {
   const fetchCV = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/3`
     )
       .then((resData) => {
@@ -179,7 +238,7 @@ const TalentProfile = () => {
   const fetchReviews = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/7`
     )
       .then((resData) => {
@@ -190,15 +249,15 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
 
-  const getTalentById = async (talent_id) => {
-    await ApiHelper.post(`${API.getTalentById}${talent_id}`)
-      .then((resData) => {
-        if (resData) {
-          setTalentData(resData.data.data);
-        }
-      })
-      .catch((err) => {});
-  };
+  // const getTalentById = async (talent_id) => {
+  //   await ApiHelper.post(`${API.getTalentById}${talent_id}`)
+  //     .then((resData) => {
+  //       if (resData) {
+  //         setTalentData(resData.data.data);
+  //       }
+  //     })
+  //     .catch((err) => {});
+  // };
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));

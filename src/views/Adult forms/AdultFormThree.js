@@ -19,11 +19,11 @@ import "../../assets/css/forms/login.css";
 import "../../assets/css/dashboard.css";
 import "../../assets/css/register.css";
 import "../../assets/css/kidsmain.scss";
-import "../../assets/css/forms/kidsformthree.css";
 import { IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import "../../assets/css/forms/kidsformthree.css";
 
 // Regular expressions for different video platforms
 const urlPatterns = {
@@ -112,7 +112,7 @@ const AdultFormThree = () => {
   const [idType, setIdType] = useState("");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [aboutYou, setAboutYou] = useState([]);
-  const [verificationID, setVerificationID] = useState("");
+  const [verificationID, setVerificationID] = useState([]);
   const url = window.location.href;
   let queryString = url.split("?")[1];
 
@@ -728,8 +728,14 @@ const AdultFormThree = () => {
     });
   };
 
-  const handleVerificationDelete = () => {
-    setVerificationID(null);
+  const handleVerificationDelete = (index) => {
+    setVerificationID((prevIds) => {
+      // Create a copy of the previous state
+      const ids = [...prevIds];
+      // Remove the image at the specified index
+      ids.splice(index, 1);
+      return ids;
+    });
   };
 
   const handleVideoDelete = (index) => {
@@ -1485,70 +1491,76 @@ const AdultFormThree = () => {
 
                   {verificationID && (
                     <>
-                      <div
-                        style={{ marginBottom: "100px" }}
-                        className="uploaded-file-wrapper"
-                      >
-                        <div className="file-section">
-                          {verificationID[0].type === "image" && (
-                            <div className="fileType">
-                              <img src={imageType} alt="" />
-                            </div>
-                          )}
-                          {verificationID[0].type === "document" && (
-                            <div className="fileType">
-                              <img src={docsIcon} alt="" />
-                            </div>
-                          )}
-                          <div className="fileName">
-                            {verificationID[0].title}
-                          </div>
-                        </div>
-                        <div className="file-options">
-                          <div className="sucess-tick">
-                            <img src={greenTickCircle} alt="" />
-                          </div>
-                          <div className="option-menu">
-                            <div className="dropdown">
-                              <img
-                                onClick={() => setShowOptions(!showOptions)}
-                                src={elipsis}
-                                alt=""
-                                className="dropdown-toggle elipsis-icon"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              />
-                              <ul
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() => handleView(verificationID)}
-                                    id="view"
+                      {verificationID.map((item, index) => {
+                        return (
+                          <>
+                            <div key={index} className="uploaded-file-wrapper">
+                              <div className="file-section">
+                                {item.type === "image" && (
+                                  <div className="fileType">
+                                    <img src={imageType} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "audio" && (
+                                  <div className="fileType">
+                                    <img src={audiotype} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "video" && (
+                                  <div className="fileType">
+                                    <img src={videoType} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "document" && (
+                                  <div className="fileType">
+                                    <img src={docsIcon} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "pdf" && (
+                                  <div className="fileType">
+                                    <img src={docsIcon} alt="" />
+                                  </div>
+                                )}
+                                <div className="fileName">{item.title}</div>
+                              </div>
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      handleClose();
+                                      handleView(item);
+                                    }}
                                   >
                                     View
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() =>
-                                      handleVerificationDelete(verificationID)
-                                    }
-                                    id="delete"
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      handleVerificationDelete(item, index);
+                                    }}
                                   >
                                     Delete
-                                  </a>
-                                </li>
-                              </ul>
+                                  </MenuItem>
+                                </Menu>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
+                          </>
+                        );
+                      })}
                     </>
                   )}
 

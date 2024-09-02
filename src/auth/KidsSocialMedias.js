@@ -425,7 +425,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
 
   const validateYouTubeUrl = (url) => {
     const youTubeUrlPattern =
-      /^(https?:\/\/)?(www\.)?(youtube\.com\/(channel\/[A-Za-z0-9_-]+|c\/[A-Za-z0-9_-]+|@([A-Za-z0-9_-]+))|youtu\.be\/[A-Za-z0-9_-]+)(\?[A-Za-z0-9=&_%-]+)?$/;
+      /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|shorts\/|embed\/|v\/|c\/|channel\/|@)[A-Za-z0-9_-]+|youtu\.be\/[A-Za-z0-9_-]+)(\?.*)?$/;
     return youTubeUrlPattern.test(url);
   };
 
@@ -678,7 +678,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                             ></input>
                           </div>
                         </div>
-                        <div className="media-info">
+                        {/* <div className="media-info">
                           <div className="mediaIcon">
                             <i class="bi bi-link-45deg social-chain-icon"></i>
                           </div>
@@ -697,7 +697,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                               </div>
                             )}
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                     <div className="kids-form-section col-md-6">

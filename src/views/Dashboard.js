@@ -362,7 +362,7 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* <div className="wraper">
+        <div className="wraper">
           <div className="container-fluid">
             <div className="tabs-section">
               <div className="title">Popular Talent</div>
@@ -509,7 +509,7 @@ const Dashboard = () => {
               </div>
             )}
           </div>
-        </div> */}
+        </div>
 
         <div className="productsWraper wraper secSpac">
           <div className="container">

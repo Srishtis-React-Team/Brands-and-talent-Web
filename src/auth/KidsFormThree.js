@@ -224,22 +224,21 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null); // Track the selected item
 
-  const handleClick = (event) => {
+  // Single function to handle menu open
+  const handleClick = (event, item) => {
     setAnchorEl(event.currentTarget);
+    setSelectedItem(item); // Set the selected item
   };
 
-  const dropDownClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const handleFileClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
   const handleClose = () => {
     setAnchorEl(null);
+    setSelectedItem(null); // Reset the selected item when closing the menu
   };
+
+  // Determine if the menu is open
+  const open = Boolean(anchorEl);
 
   const handleUrlChange = (e) => {
     // Avoid handling change if it was triggered by a paste event
@@ -544,16 +543,23 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     setShowOptions(false);
   };
 
-  const handleView = (imageUrl) => {
-    let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
+  const handleView = (item) => {
+    console.log(item, "imageUrl");
+    let viewImage = `${API.userFilePath}${item.fileData}`;
     window.open(viewImage, "_blank");
   };
 
   const handleProfileDelete = () => {
     setProfileFile(null);
   };
-  const handleVerificationDelete = () => {
-    setVerificationID(null);
+  const handleVerificationDelete = (index) => {
+    setVerificationID((prevIds) => {
+      // Create a copy of the previous state
+      const ids = [...prevIds];
+      // Remove the image at the specified index
+      ids.splice(index, 1);
+      return ids;
+    });
   };
 
   const handlePortofolioDelete = (index) => {
@@ -707,6 +713,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   useEffect(() => {
     console.log(verificationID, "verificationID");
   }, []);
+  useEffect(() => {
+    console.log(portofolioFile, "portofolioFile");
+  }, [portofolioFile]);
 
   return (
     <>
@@ -806,7 +815,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                             </MenuItem>
                             <MenuItem
                               onClick={() => {
-                                dropDownClose();
+                                handleClose();
                                 handleProfileDelete(profileFile);
                               }}
                             >
@@ -859,76 +868,71 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       Drag and drop your photos/work samples here.
                     </div>
                   </div>
-
                   {portofolioFile && (
                     <>
-                      {portofolioFile.map((item, index) => {
-                        return (
-                          <>
-                            <div key={index} className="uploaded-file-wrapper">
-                              <div className="file-section">
-                                {item.type === "image" && (
-                                  <div className="fileType">
-                                    <img src={imageType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "audio" && (
-                                  <div className="fileType">
-                                    <img src={audiotype} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "video" && (
-                                  <div className="fileType">
-                                    <img src={videoType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "document" && (
-                                  <div className="fileType">
-                                    <img src={docsIcon} alt="" />
-                                  </div>
-                                )}
-                                <div className="fileName">{item.title}</div>
+                      {portofolioFile.map((item, index) => (
+                        <div key={index} className="uploaded-file-wrapper">
+                          <div className="file-section">
+                            {item.type === "image" && (
+                              <div className="fileType">
+                                <img src={imageType} alt="" />
                               </div>
-
-                              <div className="update-portfolio-action">
-                                <IconButton
-                                  aria-label="more"
-                                  aria-controls="dropdown-menu"
-                                  aria-haspopup="true"
-                                  onClick={handleClick}
-                                >
-                                  <MoreVertIcon />
-                                </IconButton>
-                                <Menu
-                                  id="dropdown-menu"
-                                  anchorEl={anchorEl}
-                                  open={Boolean(anchorEl)}
-                                  onClose={handleClose}
-                                >
-                                  <MenuItem
-                                    onClick={() => {
-                                      handleClose();
-                                      handleView(item);
-                                    }}
-                                  >
-                                    View
-                                  </MenuItem>
-                                  <MenuItem
-                                    onClick={() => {
-                                      dropDownClose();
-                                      handlePortofolioDelete(item);
-                                    }}
-                                  >
-                                    Delete
-                                  </MenuItem>
-                                </Menu>
+                            )}
+                            {item.type === "audio" && (
+                              <div className="fileType">
+                                <img src={audiotype} alt="" />
                               </div>
-                            </div>
-                          </>
-                        );
-                      })}
+                            )}
+                            {item.type === "video" && (
+                              <div className="fileType">
+                                <img src={videoType} alt="" />
+                              </div>
+                            )}
+                            {item.type === "document" && (
+                              <div className="fileType">
+                                <img src={docsIcon} alt="" />
+                              </div>
+                            )}
+                            <div className="fileName">{item.title}</div>
+                          </div>
+                          <div className="update-portfolio-action">
+                            <IconButton
+                              aria-label="more"
+                              aria-controls="dropdown-menu"
+                              aria-haspopup="true"
+                              onClick={(event) => handleClick(event, item)}
+                            >
+                              <MoreVertIcon />
+                            </IconButton>
+                            <Menu
+                              id="dropdown-menu"
+                              anchorEl={anchorEl}
+                              open={open}
+                              onClose={handleClose}
+                            >
+                              <MenuItem
+                                onClick={() => {
+                                  handleClose();
+                                  handleView(selectedItem); // Use selected item
+                                }}
+                              >
+                                View
+                              </MenuItem>
+                              <MenuItem
+                                onClick={() => {
+                                  handleClose();
+                                  handlePortofolioDelete(selectedItem); // Use selected item
+                                }}
+                              >
+                                Delete
+                              </MenuItem>
+                            </Menu>
+                          </div>
+                        </div>
+                      ))}
                     </>
                   )}
+
                   <div className="videos-label">
                     ( Upload your previous work samples Videos/Audios)
                   </div>
@@ -983,29 +987,29 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   aria-label="more"
                                   aria-controls="dropdown-menu"
                                   aria-haspopup="true"
-                                  onClick={handleClick}
+                                  onClick={(event) => handleClick(event, url)}
                                 >
                                   <MoreVertIcon />
                                 </IconButton>
                                 <Menu
                                   id="dropdown-menu"
                                   anchorEl={anchorEl}
-                                  open={Boolean(anchorEl)}
+                                  open={open}
                                   onClose={handleClose}
                                 >
                                   <MenuItem
                                     onClick={() => {
-                                      handleClose();
+                                      handleClose(); // Close the menu
                                       console.log(url, "url"); // Debugging: Log the URL to ensure it's correct
-                                      window.open(url, "_blank"); // Open the YouTube video in a new tab
+                                      window.open(url, "_blank"); // Open the URL in a new tab
                                     }}
                                   >
                                     Play
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
-                                      dropDownClose();
-                                      handleDeleteUrl(index);
+                                      handleClose();
+                                      handleDeleteUrl(selectedItem); // Use selected item
                                     }}
                                   >
                                     Delete
@@ -1093,7 +1097,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
-                                      dropDownClose();
+                                      handleClose();
                                       deleteAudioUrl(index);
                                     }}
                                   >
@@ -1187,7 +1191,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
-                                      dropDownClose();
+                                      handleClose();
                                       handleResumeDelete(item);
                                     }}
                                   >
@@ -1397,7 +1401,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
-                                      dropDownClose();
+                                      handleClose();
                                       handleVerificationDelete(item);
                                     }}
                                   >

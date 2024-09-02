@@ -1746,6 +1746,8 @@ const EditTalent = () => {
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Url updated Successfully!");
+            setPublicUrlEdit(false);
+
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1786,8 +1788,11 @@ const EditTalent = () => {
         setCheckAudioUrl(true);
       }
     }
-    postNewAudios([...audioUrlsList, audioUrl]);
+    if (audioUrl && audioUrlsList.length > 0) {
+      postNewAudios([...audioUrlsList, audioUrl]);
+    }
   };
+
   const handleUrlChange = (e) => {
     if (e.inputType === "insertFromPaste") return;
     const url = e.target.value;
@@ -1833,8 +1838,9 @@ const EditTalent = () => {
         setCheckVideoUrl(true);
       }
     }
-
-    postNewVideos([...urls, videoUrl]);
+    if (videoUrl && urls.length > 0) {
+      postNewVideos([...urls, videoUrl]);
+    }
   };
 
   const deleteAudioUrl = (index) => {
@@ -2704,15 +2710,17 @@ const EditTalent = () => {
                       )}
 
                       {publicUrlEdit && (
-                        <input
-                          type="text"
-                          className="form-control public-url-input"
-                          value={publicUrl}
-                          onChange={(e) => {
-                            publicUrlChange(e);
-                          }}
-                          placeholder="Edit url"
-                        ></input>
+                        <>
+                          <input
+                            type="text"
+                            className="form-control public-url-input"
+                            value={publicUrl}
+                            onChange={(e) => {
+                              publicUrlChange(e);
+                            }}
+                            placeholder="Edit url"
+                          ></input>
+                        </>
                       )}
 
                       {publicUrlEdit && (
@@ -2727,6 +2735,9 @@ const EditTalent = () => {
                         </Button>
                       )}
                     </div>
+                    {errorMessage && (
+                      <div className="invalid-fields pt-2">{errorMessage}</div>
+                    )}
                   </div>
                 </div>
 
@@ -3571,7 +3582,7 @@ const EditTalent = () => {
                 }
               }}
             >
-              Ok
+              Yes
             </button>
           </div>
         </div>

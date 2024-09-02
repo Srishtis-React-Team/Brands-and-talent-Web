@@ -11,6 +11,7 @@ import { jwtDecode } from "jwt-decode";
 import CurrentUser from "../CurrentUser";
 import { generateToken } from "./firebase";
 import "../assets/css/register.css";
+import Spinner from "../components/Spinner";
 
 const Login = () => {
   const {
@@ -379,6 +380,7 @@ const Login = () => {
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}
+      {isLoading && <Spinner />}
     </>
   );
 };
