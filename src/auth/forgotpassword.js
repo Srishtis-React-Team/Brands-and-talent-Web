@@ -6,6 +6,7 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
+import Spinner from "../components/Spinner";
 const ForgotPassword = () => {
   const btLogo = require("../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -120,7 +121,6 @@ const ForgotPassword = () => {
           });
       } else if (userType == "adult") {
         adultForgotPassword();
-        setIsLoading(false);
       }
     }
   };
@@ -130,12 +130,10 @@ const ForgotPassword = () => {
       adultEmail: talentEmail,
     };
     setIsLoading(true);
-
     await ApiHelper.post(API.adultForgotPassword, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-
           setMessage("Open Your Gmail For Password Reset Link!");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -226,6 +224,7 @@ const ForgotPassword = () => {
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}
+      {isLoading && <Spinner />}
     </>
   );
 };

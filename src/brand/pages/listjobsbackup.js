@@ -837,7 +837,7 @@ const ListJobs = () => {
                 }
               }}
             >
-              Ok
+              Yes
             </button>
           </div>
         </div>

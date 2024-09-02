@@ -174,16 +174,16 @@ const Header = ({ onData }) => {
     }
     if (data == "post-job") {
       if (!currentUserId) {
-        // window.open(
-        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        //   "_blank"
-        // );
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
+        // setMessage("You must be logged in");
+        // setOpenPopUp(true);
+        // setTimeout(function () {
+        //   setOpenPopUp(false);
+        //   navigate("/login");
+        // }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/create-jobs");
       }
@@ -191,16 +191,16 @@ const Header = ({ onData }) => {
 
     if (data == "find-talent") {
       if (!currentUserId) {
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 1000);
-        // window.open(
-        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        //   "_blank"
-        // );
+        // setMessage("You must be logged in");
+        // setOpenPopUp(true);
+        // setTimeout(function () {
+        //   setOpenPopUp(false);
+        //   navigate("/login");
+        // }, 1000);
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/find-creators");
       } else if (
@@ -309,17 +309,18 @@ const Header = ({ onData }) => {
   const handleLabelClick = (route) => {
     if (route === "/find-creators") {
       if (!currentUserId || currentUser_type != "brand") {
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
         handleClose();
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
+        //   setMessage("You must be logged in");
+        //   setOpenPopUp(true);
+        //   setTimeout(function () {
+        //     setOpenPopUp(false);
+        //     navigate("/logi n");
+
+        //   }, 1000);
       } else {
         navigate(route);
       }
@@ -347,7 +348,8 @@ const Header = ({ onData }) => {
       );
       // navigate(route);
     } else if (route === "/resources") {
-      navigate(route);
+      // navigate(route);
+      navigate("/about-us");
     } else if (route === "/signup") {
       navigate(route);
     } else if (route === "/about-us") {
@@ -359,17 +361,17 @@ const Header = ({ onData }) => {
     } else if (route === "/post-job") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
+        // setMessage("You must be logged in");
+        // setOpenPopUp(true);
+        // setTimeout(function () {
+        //   setOpenPopUp(false);
+        //   navigate("/login");
 
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
+        // }, 1000);
       } else {
         navigate(route);
       }
@@ -401,7 +403,6 @@ const Header = ({ onData }) => {
     } else if (route === "/brand") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-
         setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function () {
@@ -486,17 +487,17 @@ const Header = ({ onData }) => {
     } else if (route === "/find-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
+        // setMessage("You must be logged in");
+        // setOpenPopUp(true);
+        // setTimeout(function () {
+        //   setOpenPopUp(false);
+        //   navigate("/login");
 
-        setMessage("You must be logged in");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
-        }, 1000);
+        // }, 1000);
       } else {
         navigate(route);
       }

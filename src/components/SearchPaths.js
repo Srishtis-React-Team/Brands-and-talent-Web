@@ -2,7 +2,7 @@ const searchPathOptions = [
   { routes: "/find-creators", label: "Find Creators" },
   { routes: "/talent", label: "Talent Profile" },
   { routes: "/pricing", label: "Pricing" },
-  { routes: "/resources", label: "Resources" },
+  // { routes: "/resources", label: "Resources" },
   { routes: "/talent-signup", label: "Talent Sign Up" },
   { routes: "/brand-firstGig", label: "Brand Sign Up" },
   { routes: "/about-us", label: "About" },
