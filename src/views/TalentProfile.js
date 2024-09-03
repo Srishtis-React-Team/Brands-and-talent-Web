@@ -564,7 +564,7 @@ const TalentProfile = () => {
         <div className="container">
           <div className="talent-profile-main">
             <div className="row">
-              <div className="col-md-4 col-lg-3 pr-0">
+              <div className="col-md-12 col-lg-3 pr-0">
                 <div className="talent-wrapper">
                   <div className="talent-backdrop">
                     <div className="profImg">
@@ -1225,7 +1225,7 @@ const TalentProfile = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-8 col-lg-9">
+              <div className="col-md-12 col-lg-9">
                 <div className="talent-info-section">
                   <div className="talent-info-wrapper">
                     <div className="bio-wrapper">
@@ -1357,7 +1357,7 @@ const TalentProfile = () => {
                               )}
                             {talentData?.profileApprove === false && (
                               <>
-                                <div>
+                                <div className="msgs">
                                   Photos will be visible only after admin
                                   approval
                                 </div>
@@ -1367,7 +1367,7 @@ const TalentProfile = () => {
                               photosList &&
                               photosList.length === 0 && (
                                 <>
-                                  <div>
+                                  <div className="msgs">
                                     Photos will be visible only after admin
                                     approval
                                   </div>
@@ -1440,7 +1440,7 @@ const TalentProfile = () => {
                           <p className="pb-2">Videos</p>
 
                           <div className="service-list-main w-100">
-                            <div className="row w-100">
+                            <div className="row">
                               {urlsList?.map((url, index) => (
                                 <div key={index} className="col-md-6 mb-4">
                                   <div className="media-item">
@@ -1452,7 +1452,7 @@ const TalentProfile = () => {
                                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen
                                         className="video-frame w-100"
-                                        style={{ height: "300px" }}
+                                        style={{ minHeight: "300px", backgroundColor: '#000' }}
                                       ></iframe>
                                     ) : isVimeoUrl(url) ? (
                                       <iframe
@@ -1462,7 +1462,7 @@ const TalentProfile = () => {
                                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen
                                         className="video-frame w-100"
-                                        style={{ height: "300px" }}
+                                        style={{ minHeight: "300px", backgroundColor: '#000' }}
                                       ></iframe>
                                     ) : isVideoUrl(url) ? (
                                       <video
@@ -1523,50 +1523,52 @@ const TalentProfile = () => {
                           </div>
                           <p>Audios</p>
 
-                          <div className="service-list-main w-100">
-                            <div className="row">
-                              {audiosList && (
-                                <div>
-                                  {audiosList.map((url) => {
-                                    return (
-                                      <>
+                          <div className="service-list-main w-100 cvAdjust">
+                            <div className="cvlist-wrapper d-block wraper">
+                              <div className="row">
+                                {audiosList && (
+                                  <div className="col-md-4">
+                                    {audiosList.map((url) => {
+                                      return (
                                         <>
-                                          <div className="cv-card" key={url}>
-                                            <div className="d-flex align-items-center">
-                                              <i className="fa-solid fa-file"></i>
-                                              <div className="fileName audio-url-style ">
-                                                {url}
+                                          <>
+                                            <div className="cv-card" key={url}>
+                                              <div className="d-flex align-items-center">
+                                                <i className="fa-solid fa-file"></i>
+                                                <div className="fileName audio-url-style ">
+                                                  {url}
+                                                </div>
                                               </div>
+                                              <button
+                                                className="view-cv"
+                                                onClick={() => window.open(url)}
+                                              >
+                                                Play
+                                              </button>
                                             </div>
-                                            <button
-                                              className="view-cv"
-                                              onClick={() => window.open(url)}
-                                            >
-                                              Play
-                                            </button>
-                                          </div>
+                                          </>
                                         </>
-                                      </>
-                                    );
-                                  })}
-                                </div>
-                              )}
+                                      );
+                                    })}
+                                  </div>
+                                )}
 
-                              {talentData?.profileApprove === true &&
-                                audiosList &&
-                                audiosList?.length === 0 && (
+                                {talentData?.profileApprove === true &&
+                                  audiosList &&
+                                  audiosList?.length === 0 && (
+                                    <>
+                                      <div className="msgs">No Audios Available</div>
+                                    </>
+                                  )}
+                                {talentData?.profileApprove === false && (
                                   <>
-                                    <div>No Audios Available</div>
+                                    <div className="msgs">
+                                      Audios will be visible only after admin
+                                      approval
+                                    </div>
                                   </>
                                 )}
-                              {talentData?.profileApprove === false && (
-                                <>
-                                  <div>
-                                    Audios will be visible only after admin
-                                    approval
-                                  </div>
-                                </>
-                              )}
+                              </div>
                             </div>
                           </div>
 
@@ -1645,44 +1647,49 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
-                          <div className="cvlist-wrapper">
-                            {cvList.map((pdf) => {
-                              return (
-                                <>
+                          <div className="wraper cvAdjust"> 
+                            <div className="cvlist-wrapper d-block wraper ">
+                              <div className="row">
+                                  {cvList.map((pdf) => {
+                                    return (
+                                      <>
+                                        <>
+                                          <div className="col-md-4">
+                                            <div className="cv-card" key={pdf.title}>
+                                              <div className="d-flex align-items-center">
+                                                <i className="fa-solid fa-file"></i>
+                                                <div className="fileName">
+                                                  {pdf.title}
+                                                </div>
+                                              </div>
+                                              <button
+                                                className="view-cv"
+                                                onClick={() => handleView(pdf)}
+                                              >
+                                                View
+                                              </button>
+                                            </div>
+                                          </div>
+                                        </>
+                                      </>
+                                    );
+                                  })}
+                              </div> </div>
+                              {talentData?.profileApprove === true &&
+                                cvList.length === 0 && (
                                   <>
-                                    <div className="cv-card" key={pdf.title}>
-                                      <div className="d-flex align-items-center">
-                                        <i className="fa-solid fa-file"></i>
-                                        <div className="fileName">
-                                          {pdf.title}
-                                        </div>
-                                      </div>
-                                      <button
-                                        className="view-cv"
-                                        onClick={() => handleView(pdf)}
-                                      >
-                                        View
-                                      </button>
-                                    </div>
+                                    <div className="msgs">No Resumes Available</div>
                                   </>
-                                </>
-                              );
-                            })}
-                            {talentData?.profileApprove === true &&
-                              cvList.length === 0 && (
+                                )}
+                              {talentData?.profileApprove === false && (
                                 <>
-                                  <div>No Resumes Available</div>
+                                  <div className="msgs">
+                                    Resumes will be visible only after admin
+                                    approval
+                                  </div>
                                 </>
                               )}
-                            {talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Resumes will be visible only after admin
-                                  approval
-                                </div>
-                              </>
-                            )}
-                          </div>
+                          </div> 
                         </>
                       )}
 

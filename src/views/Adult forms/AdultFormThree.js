@@ -1098,162 +1098,170 @@ const AdultFormThree = () => {
                   </div>
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
-                      <label className="form-label">Videos</label>
+                      <div className="wraper">
+                        <label className="form-label">Videos</label>
 
-                      <div className="d-flex align-items-center">
-                        <input
-                          type="text"
-                          className="form-control mt-2 ml-3"
-                          value={videoUrl}
-                          onChange={(e) => {
-                            handleUrlChange(e);
-                          }}
-                          onPaste={handlePaste}
-                          placeholder="Paste Video Url"
-                        ></input>
-                        <i
-                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
-                          onClick={handleAddUrl}
-                        ></i>
+                        <div className="d-flex align-items-center">
+                          <input
+                            type="text"
+                            className="form-control mt-2 ml-3"
+                            value={videoUrl}
+                            onChange={(e) => {
+                              handleUrlChange(e);
+                            }}
+                            onPaste={handlePaste}
+                            placeholder="Paste Video Url"
+                          ></input>
+                          <i
+                            className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
+                            onClick={handleAddUrl}
+                          ></i>
+                        </div>
+                          {checkVideoUrl && (
+                            <>
+                              <div className="invalid-fields">
+                                Invalid video URL. Please enter a valid YouTube,
+                                Vimeo, Instagram, or Twitter URL.
+                              </div>
+                            </>
+                          )}
                       </div>
-                      {checkVideoUrl && (
-                        <>
-                          <div className="invalid-fields">
-                            Invalid video URL. Please enter a valid YouTube,
-                            Vimeo, Instagram, or Twitter URL.
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  {urls && (
-                    <>
-                      {urls.map((url, index) => {
-                        return (
+                      <div className="wraper">
+                        {urls && (
                           <>
-                            <div key={index} className="url-file-wrapper">
-                              <div className="file-section">
-                                <a
-                                  href={url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="url-fileName"
-                                >
-                                  {url}
-                                </a>
-                              </div>
+                            {urls.map((url, index) => {
+                              return (
+                                <>
+                                  <div key={index} className="url-file-wrapper">
+                                    <div className="file-section">
+                                      <a
+                                        href={url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="url-fileName"
+                                      >
+                                        {url}
+                                      </a>
+                                    </div>
 
-                              <div className="update-portfolio-action">
-                                <IconButton
-                                  aria-label="more"
-                                  aria-controls="dropdown-menu"
-                                  aria-haspopup="true"
-                                  onClick={handleClick}
-                                >
-                                  <MoreVertIcon />
-                                </IconButton>
-                                <Menu
-                                  id="dropdown-menu"
-                                  anchorEl={anchorEl}
-                                  open={Boolean(anchorEl)}
-                                  onClose={handleClose}
-                                >
-                                  <MenuItem
-                                    onClick={() => {
-                                      dropDownClose();
-                                      handleDeleteUrl(index);
-                                    }}
-                                  >
-                                    Delete
-                                  </MenuItem>
-                                </Menu>
-                              </div>
-                            </div>
+                                    <div className="update-portfolio-action">
+                                      <IconButton
+                                        aria-label="more"
+                                        aria-controls="dropdown-menu"
+                                        aria-haspopup="true"
+                                        onClick={handleClick}
+                                      >
+                                        <MoreVertIcon />
+                                      </IconButton>
+                                      <Menu
+                                        id="dropdown-menu"
+                                        anchorEl={anchorEl}
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                      >
+                                        <MenuItem
+                                          onClick={() => {
+                                            dropDownClose();
+                                            handleDeleteUrl(index);
+                                          }}
+                                        >
+                                          Delete
+                                        </MenuItem>
+                                      </Menu>
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })}
                           </>
-                        );
-                      })}
-                    </>
-                  )}
+                        )}
+                      </div>
+                    </div>
 
-                  <div className="kids-form-row row">
+                    
+                
                     <div className="kids-form-section col-md-6 mb-3">
-                      <label className="form-label">Audios</label>
-                      {/* <div className="videos-label">
-                        ( Upload your previous work samples audios.)
-                      </div> */}
-                      <div className="d-flex align-items-center">
-                        <input
-                          type="text"
-                          className="form-control mt-2 ml-3"
-                          value={audioUrl}
-                          onChange={(e) => {
-                            handleAudioChange(e);
-                          }}
-                          onPaste={handleAudioPaste}
-                          placeholder="Paste Audio Url"
-                        ></input>
-                        <i
-                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
-                          onClick={handleAudioUrl}
-                        ></i>
+                      <div className="wraper">
+                        <label className="form-label">Audios</label>
+                        {/* <div className="videos-label">
+                          ( Upload your previous work samples audios.)
+                        </div> */}
+                        <div className="d-flex align-items-center">
+                          <input
+                            type="text"
+                            className="form-control mt-2 ml-3"
+                            value={audioUrl}
+                            onChange={(e) => {
+                              handleAudioChange(e);
+                            }}
+                            onPaste={handleAudioPaste}
+                            placeholder="Paste Audio Url"
+                          ></input>
+                          <i
+                            className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
+                            onClick={handleAudioUrl}
+                          ></i>
+                        </div>
+                          {checkAudioUrl && (
+                            <>
+                              <div className="invalid-fields">
+                                Invalid Audio URL. Please enter a valid Audio URL .
+                              </div>
+                            </>
+                          )}
                       </div>
-                      {checkAudioUrl && (
-                        <>
-                          <div className="invalid-fields">
-                            Invalid Audio URL. Please enter a valid Audio URL .
-                          </div>
-                        </>
-                      )}
+                    
+                 
+                        {audioUrlsList && (
+                          <>
+                            {audioUrlsList.map((url, index) => {
+                              return (
+                                <>
+                                  <div key={index} className="url-file-wrapper">
+                                    <div className="file-section">
+                                      <a
+                                        href={url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="url-fileName"
+                                      >
+                                        {url}
+                                      </a>
+                                    </div>
+
+                                    <div className="update-portfolio-action">
+                                      <IconButton
+                                        aria-label="more"
+                                        aria-controls="dropdown-menu"
+                                        aria-haspopup="true"
+                                        onClick={handleClick}
+                                      >
+                                        <MoreVertIcon />
+                                      </IconButton>
+                                      <Menu
+                                        id="dropdown-menu"
+                                        anchorEl={anchorEl}
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                      >
+                                        <MenuItem
+                                          onClick={() => {
+                                            dropDownClose();
+                                            deleteAudioUrl(index);
+                                          }}
+                                        >
+                                          Delete
+                                        </MenuItem>
+                                      </Menu>
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })}
+                          </>
+                        )}
                     </div>
                   </div>
-                  {audioUrlsList && (
-                    <>
-                      {audioUrlsList.map((url, index) => {
-                        return (
-                          <>
-                            <div key={index} className="url-file-wrapper">
-                              <div className="file-section">
-                                <a
-                                  href={url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="url-fileName"
-                                >
-                                  {url}
-                                </a>
-                              </div>
-
-                              <div className="update-portfolio-action">
-                                <IconButton
-                                  aria-label="more"
-                                  aria-controls="dropdown-menu"
-                                  aria-haspopup="true"
-                                  onClick={handleClick}
-                                >
-                                  <MoreVertIcon />
-                                </IconButton>
-                                <Menu
-                                  id="dropdown-menu"
-                                  anchorEl={anchorEl}
-                                  open={Boolean(anchorEl)}
-                                  onClose={handleClose}
-                                >
-                                  <MenuItem
-                                    onClick={() => {
-                                      dropDownClose();
-                                      deleteAudioUrl(index);
-                                    }}
-                                  >
-                                    Delete
-                                  </MenuItem>
-                                </Menu>
-                              </div>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </>
-                  )}
 
                   <div className="adults-titles kids-form-title">
                     <span>CV</span>
