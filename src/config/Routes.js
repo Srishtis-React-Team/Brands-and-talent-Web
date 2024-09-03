@@ -144,7 +144,7 @@ function Routing() {
             />
             {/* <Route path="/find-creators" element={<FindCreators />} /> */}
 
-            <Route
+            {/* <Route
               path="/talent/:name"
               element={
                 currentUserId ? (
@@ -153,7 +153,9 @@ function Routing() {
                   <Navigate to="/login" replace />
                 )
               }
-            />
+            /> */}
+
+            <Route path="/talent/:name" element={<TalentProfile />} />
 
             {/* <Route
           path="/brand/:name"
@@ -279,6 +281,10 @@ function Routing() {
             <Route path="/get-booked" element={<GetBooked />} />
             <Route path="/industry-news" element={<IndustryNews />} />
             <Route path="/edit-feature" element={<EditFeatures />} />
+            <Route path="/Career" element={<Career />} />
+            <Route path="/become-affliate" element={<BecomeAffliate />} />
+            <Route path="/investors" element={<Investors />} />
+            <Route path="/feedback" element={<Feedbackreporting />} />
           </Routes>
         </Suspense>
         {openPopUp && (

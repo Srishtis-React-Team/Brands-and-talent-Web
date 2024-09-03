@@ -70,7 +70,10 @@ const useFieldDatas = () => {
         const formdata = { type: "language" };
         const resData = await ApiHelper.post(API.getFieldDatas, formdata);
         if (resData) {
-          console.log(resData?.data?.data[0]?.features, "resData");
+          console.log(
+            resData?.data?.data[0]?.features,
+            "resData LANGUAGE_MAIN_GET"
+          );
           setLanguagesList(resData?.data?.data[0]?.features);
         }
       } catch (err) {

@@ -11,6 +11,7 @@ import { jwtDecode } from "jwt-decode";
 import CurrentUser from "../CurrentUser";
 import { generateToken } from "./firebase";
 import "../assets/css/register.css";
+import Spinner from "../components/Spinner";
 
 const Login = () => {
   const {
@@ -119,7 +120,7 @@ const Login = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Logged in successfully!");
+            setMessage("Logged in Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -157,17 +158,20 @@ const Login = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Logged in successfully!");
+            setMessage("Logged in Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
               setIsLoading(false);
               setTalentLocalStorage(resData.data.data);
               if (resData.data.type === "adult") {
-                navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+                navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
+                // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
                 // window.location.reload();
               } else if (resData.data.type === "kids") {
-                navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
+                navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
+
+                // navigate(`/talent-dashboard?${resData?.data?.data?.user?._id}`);
                 // window.location.reload();
                 // navigate(`/otp?${resData?.data?.data?.email}`);
               }
@@ -195,7 +199,6 @@ const Login = () => {
     localStorage.setItem("emailID", data?.email);
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
-
     localStorage.setItem("currentUserType", data?.user?.userType);
     localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
     localStorage.setItem(
@@ -377,6 +380,7 @@ const Login = () => {
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}
+      {isLoading && <Spinner />}
     </>
   );
 };

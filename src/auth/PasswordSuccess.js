@@ -38,7 +38,7 @@ const PasswordSuccess = () => {
             <img className="btLogo" src={btLogo} alt="" />
           </div>
           <div className="otp-title">
-            <span className="success-text">Successfull</span>
+            <span className="success-text">Successful</span>
           </div>
           <div className="success-info">
             Your Password Has Been Successfully Changed. For Any Assistance
@@ -48,7 +48,6 @@ const PasswordSuccess = () => {
             Back To Login
           </div>
         </div>
-      
       </div>
       {openPopUp && <PopUp message={message} />}
     </>

@@ -1667,7 +1667,7 @@ head .profile-image-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 17px;
+  padding: 0 10px;
 }
 .fa-search {
   color: #000;
@@ -2007,9 +2007,11 @@ input::placeholder {
   display: flex;
   align-items: center;
 }
-ul.MuiMenu-list{ padding: 2px 0; }
+ul.MuiMenu-list {
+  padding: 2px 0;
+}
 
-ul.MuiMenu-list li{ 
+ul.MuiMenu-list li {
   font-size: 13px;
   padding: 5px 10px;
   margin: 0;
@@ -2021,24 +2023,45 @@ ul.MuiMenu-list li{
 .update-portfolio-fileName.pl-0 {
   padding-left: 5px;
 }
-.url-file-wrapper.urlSect .file-section{ width: calc(100% - 45px); }
+.url-file-wrapper.urlSect .file-section {
+  width: calc(100% - 45px);
+}
 
-.url-file-wrapper.urlSect .file-section .url-fileName { font-size: 12px; }
+.url-file-wrapper.urlSect .file-section .url-fileName {
+  font-size: 12px;
+}
 
-.url-file-wrapper.urlSect .update-portfolio-action {  width: 45px; }
+.url-file-wrapper.urlSect .update-portfolio-action {
+  width: 45px;
+}
 
 .url-file-wrapper.urlSect {
   display: flex;
   align-items: baseline;
   line-height: 17px;
 }
-.photos-slider .owl-carousel{ z-index: 0; }
+.photos-slider .owl-carousel {
+  z-index: 0;
+}
 
 /* .base-Menu-root ul{  
   position: absolute;
   right: 0;
   left: inherit; z-index: 999
 }  */
+
+.dynamic-profession.newAlign .algSepc .form-label {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.invalid-fields {
+  font-size: 12px;
+  color: red;
+}
+
+
 
 
 
@@ -2061,7 +2084,7 @@ ul.MuiMenu-list li{
   }
 }
 @media (max-width: 991px) {
-  .talent-all-details-wrapper .service-list-content .text-btm{     
+  .talent-all-details-wrapper .service-list-content .text-btm {
     justify-content: inherit;
     align-items: baseline;
     flex-direction: column;
@@ -2320,7 +2343,8 @@ ul.MuiMenu-list li{
   .gallery-wrapper:hover .gallery-content {
     display: block;
   }
-  .kids-select-btn,  .adults-select-btn {
+  .kids-select-btn,
+  .adults-select-btn {
     width: 100%;
     max-width: 160px;
     height: 40px;
@@ -2337,7 +2361,7 @@ ul.MuiMenu-list li{
     justify-content: center;
     align-items: center;
   }
- 
+
   .ageverify-buttons {
     padding-bottom: 40px;
     display: flex;
@@ -2360,6 +2384,7 @@ ul.MuiMenu-list li{
     padding: 0;
     margin: 30px 0 15px;
   }
+  .get-discover.title{  font-size: 20px; }
   .tabs {
     display: flex;
     justify-content: center;
@@ -3266,7 +3291,7 @@ ul.MuiMenu-list li{
   }
 
   .signup-terms {
-    font-size: 13px;
+    font-size: 12px;
   }
   .dialog-body.spaceTops {
     padding: 0px 0 25px;
@@ -3276,10 +3301,10 @@ ul.MuiMenu-list li{
     padding-left: 0;
   }
   .signup-terms-linetwo {
-    font-size: 13px;
+    font-size: 12px;
   }
   .signup-terms-linetwo > span {
-    font-size: 13px;
+    font-size: 12px;
   }
   .case-warpper {
     width: 80%;
@@ -3314,12 +3339,12 @@ ul.MuiMenu-list li{
   }
   .brand-section > .brand-title {
     font-size: 30px !important;
+    text-align: center !important;
   }
   .brand-section > .brand-description {
     color: #fff;
     font-size: 16px;
-    font-family: sans-serif;
-    text-align: center;
+    text-align: center !important;
   }
   .section-description {
     padding-top: 15px;
@@ -3500,8 +3525,22 @@ ul.MuiMenu-list li{
     padding: 10px 0;
   }
 }
+.kidsform-one .kids-wrapper .kids-form .dynamic-profession {
+  gap: 12px;
+}
+.profession-checkbox {
+  width: 15px;
+  height: 15px;
+}
+.offer-wrapper {
+  padding-top: 0px;
+  margin-bottom: 1rem !important;
+}
 
 @media (max-width: 767px) {
+  .header-search-wrapper {
+    padding: 0 10px !important;
+  }
   .dialog-body.spaceTops,
   .dialog-body {
     padding: 0;
@@ -3589,6 +3628,8 @@ ul.MuiMenu-list li{
   }
   section.section-1.bannerImg.wraper {
     background-position: inherit !important;
+    padding-left: 8px;
+    padding-right: 8px;
   }
   .bannerImg::after {
     background: linear-gradient(180deg, rgb(0 0 0 / 66%) 47.11%, #c2124b 100%);
@@ -3693,20 +3734,22 @@ ul.MuiMenu-list li{
     padding: 10px;
   }
   .title {
-    font-size: 24px;
+    font-size: 26px;
   }
   .main-footer-wrapper .form-fields {
-    padding: 15px;
+    padding: 15px 0;
   }
   section.main-footer-form {
-    padding: 5px;
+    padding: 10px 15px 5px;
   }
   .main-footer-wrapper .form-fields .form-group {
     margin-bottom: 5px;
+    padding: 0;
   }
   .get-discover-description {
     width: 100%;
-    margin-top: 20px !important;
+    padding: 0 5px;
+    margin-top: 10px !important;
   }
   .mobile-signup {
     height: 38px;
@@ -3905,13 +3948,62 @@ ul.MuiMenu-list li{
     max-width: fit-content !important;
   }
   .photos-gallery-image img {
-    width: 100%;
+    width: 100% !important;
   }
   .talent-rates .pr-0,
   .talent-rates .col-md-8.col-lg-9 {
     padding-right: 0 !important;
     padding-left: 0 !important;
     margin-bottom: 20px;
+  }
+
+  .cv-card {
+    width: 100% !important;
+    flex-direction: column;
+  }
+  button.view-cv {
+    width: 100% !important;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+    margin-bottom: 0px;
+  }
+  .individual-talent-tabs .active-tab,
+  .individual-talent-tab-first-active-tab.individual-talent-tab-first {
+    border-radius: 0px !important;
+    border-bottom: 2px solid #000;
+    background: none;
+    color: #000 !important;
+    font-weight: bold;
+  }
+  .photos-gallery .photos-gallery-image {
+    height: inherit;
+    margin-bottom: 20px;
+    margin-right: 0px !important;
+  }
+  section.photos-gallery.w-100 > div {
+    width: 100%;
+  }
+  .view-all {
+    min-width: inherit !important;
+    height: 28px !important;
+    flex-shrink: 0;
+    cursor: pointer;
+    padding: 5px 15px;
+    border-radius: 60px;
+    border: 1px solid #000;
+    background: rgba(3, 3, 3, 0);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    transition: 0.5s;
+    font-size: 12px;
+  }
+  .table-container table tbody > tr {
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -3923,9 +4015,9 @@ ul.MuiMenu-list li{
     height: fit-content;
     overflow-y: hidden;
   }
-  .kids-signup-terms.mb-5 { margin-bottom: 1rem !important; }
-
-
+  .kids-signup-terms.mb-5 {
+    margin-bottom: 1rem !important;
+  }
 }
 @media (max-width: 380px) {
   .ageverify-buttons {
@@ -3950,3 +4042,7 @@ ul.MuiMenu-list li{
     padding: 6px 0px 0px 10px;
   }
 }
+
+/* .navTxt {
+  margin: 14px 0 !important;
+} */

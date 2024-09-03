@@ -36,6 +36,7 @@ export const API = {
   socialSignup: BASEURL + "users/socialSignup",
   adultFetch: BASEURL + "users/adultFetch/",
   typeChecking: BASEURL + "users/typeChecking",
+  getDataByPublicUrl: BASEURL + "users/getDataByPublicUrl",
 
   //passwords
   brandsForgotPassword: BASEURL + "brands/brandsForgotPassword",
@@ -162,4 +163,5 @@ export const API = {
   fetchBlogByType: BASEURL + "blog/fetchBlogByType",
   //blogs
   twitterCount: BASEURL + "socialmedia/twitterCount",
+  youtubeCount: BASEURL + "socialmedia/youtubeCount",
 };

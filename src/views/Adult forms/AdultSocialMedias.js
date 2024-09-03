@@ -1,102 +1,163 @@
-import React, { useState, useEffect } from "react";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { convertToRaw } from "draft-js";
-import Select from "react-select";
-import Axios from "axios";
-import { useNavigate } from "react-router";
-import { API } from "../../config/api";
-import { ApiHelper } from "../../helpers/ApiHelper";
-import PopUp from "../../components/PopUp";
-import "../../assets/css/talent-dashboard.css";
+import React, { useState, useEffect, useRef } from "react";
+import "../../assets/css/forms/kidsform-one.css";
+import "../../assets/css/forms/kidsformthree.css";
 import "../../assets/css/forms/login.css";
 import "../../assets/css/dashboard.css";
 import "../../assets/css/register.css";
-import "../../assets/css/kidsmain.scss";
-import CurrentUser from "../../CurrentUser";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { API } from "../../config/api";
+import PopUp from "../../components/PopUp";
+import { ApiHelper } from "../../helpers/ApiHelper";
+import { useNavigate } from "react-router";
+import "../../assets/css/register.css";
 
-const AdultSocialMedias = () => {
-  const {
-    currentUserId,
-    currentUserImage,
-    currentUserType,
-    avatarImage,
-    fcmToken,
-  } = CurrentUser();
+const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
+  const navigate = useNavigate();
+  const btLogo = require("../../assets/images/LOGO.png");
+  console.log(onDataFromChild, "onDataFromChild");
+  const fbLogo = require("../../assets/icons/social-media-icons/fbLogo.png");
+  const instagram = require("../../assets/icons/social-media-icons/instagram.png");
+  const threads = require("../../assets/icons/social-media-icons/thread-fill.png");
+  const tikTok = require("../../assets/icons/social-media-icons/tikTok.png");
+  const xTwitter = require("../../assets/icons/social-media-icons/xTwitter.png");
+  const youTube = require("../../assets/icons/social-media-icons/youTube.png");
+  const linkdin = require("../../assets/icons/social-media-icons/linkdin.png");
 
-  const [talentData, setTalentData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [instagramFollowers, setInstagramFollowers] = useState("");
+  const [facebookFollowers, setfacebookFollowers] = useState("");
+  const [xtwitterFollowers, setXtwitterFollowers] = useState("");
+  const [linkedinFollowers, setlinkedinFollowers] = useState("");
+  const [threadsFollowers, setThreadsFollowers] = useState("");
+  const [tiktoksFollowers, setTiktoksFollowers] = useState("");
+  const [youtubesFollowers, setYoutubesFollowers] = useState("");
+  const [instagramUrl, setInstagramUrl] = useState("");
+  const [tikTokUrl, setTikTokUrl] = useState("");
+  const [youTubeUrl, setYouTubeUrl] = useState("");
+  const [linkedinUrl, setLinkedinUrl] = useState("");
+  const [twitterUrl, setTwitterUrl] = useState("");
+  const [facebookUrl, setFacebookUrl] = useState("");
+  const [threadsUrl, setThreadsUrl] = useState("");
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
+  const adultsBanner = require("../../assets/images/adultsBanner.png");
+  const paramsValues = window.location.search;
+  const [updateDisabled, setUpdateDisabled] = useState(false);
+  const url = window.location.href;
+  const queryString = url.split("?")[1];
 
-  useEffect(() => {
-    if (currentUserId) {
-      getTalentById();
-    }
-  }, [currentUserId]);
+  const [instagramError, setInstagramError] = useState("");
+  const [tikTokError, setTikTokError] = useState("");
+  const [youTubeError, setYouTubeError] = useState("");
+  const [linkedinError, setLinkedinError] = useState("");
+  const [twitterError, setTwitterError] = useState("");
+  const [facebookError, setFacebookError] = useState("");
+  const [threadsError, setThreadsError] = useState("");
 
-  const getTalentById = async () => {
-    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
+  const editKids = async () => {
+    const formData = {
+      instaFollowers: instagramFollowers,
+      tiktokFollowers: tiktoksFollowers,
+      twitterFollowers: xtwitterFollowers,
+      youtubeFollowers: youtubesFollowers,
+      facebookFollowers: facebookFollowers,
+      linkedinFollowers: linkedinFollowers,
+      threadsFollowers: threadsFollowers,
+      instagramUrl: instagramUrl,
+      tikTokUrl: tikTokUrl,
+      youTubeUrl: youTubeUrl,
+      linkedinUrl: linkedinUrl,
+      facebookUrl: facebookUrl,
+      threadsUrl: threadsUrl,
+      twitterUrl: twitterUrl,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          if (resData.data.data) {
-            setTalentData(resData.data.data, "resData.data.data");
-          }
+          setIsLoading(false);
+          setMessage("Updated Successfully!");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            navigate(`/adult-signup-files-details?${queryString}`);
+          }, 1000);
+        } else {
         }
       })
-      .catch((err) => {});
-  };
-
-  const handleTwitterUserNameChange = (e) => {
-    const value = e.target.value;
-    const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
-      setTwitterUserNameError(false);
-      setTwitterUserName("");
-    } else if (!onlyLettersRegex.test(value)) {
-      setTwitterUserNameError(true);
-    } else {
-      setTwitterUserName(value);
-      setTwitterUserNameError(false);
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Backspace") {
-      setTwitterUserNameError(false);
-    }
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
 
   const [twitterFollowersCount, setTwitterFollowersCount] = useState(null);
   const [modalData, setModalData] = useState(null);
   const [twitterUserName, setTwitterUserName] = useState(null);
   const [twitterUserNameError, setTwitterUserNameError] = useState(false);
+  const [youtubeChannelID, setYoutubeChannelID] = useState(null);
+  const [youtubeIdError, setYoutubeIdError] = useState(false);
+
+  const [isTwitter, setIsTwitter] = useState(false);
+  const [isYoutube, setIsYoutube] = useState(false);
 
   const connectSocialMedia = (item) => {
-    setModalData(item);
-    const modalElement = document.getElementById("adultSsocialMediaModal");
+    if (item == "twitter") {
+      setIsTwitter(true);
+      setIsYoutube(false);
+    } else if (item == "youtube") {
+      setIsYoutube(true);
+      setIsTwitter(false);
+    }
+    const modalElement = document.getElementById("socialMediaModal");
     const bootstrapModal = new window.bootstrap.Modal(modalElement);
     bootstrapModal.show();
   };
 
+  const handleTwitterUserNameChange = (e) => {
+    const value = e.target.value;
+    if (isTwitter) {
+      setTwitterUserNameError(false);
+      setTwitterUserName(value);
+    } else if (isYoutube) {
+      setYoutubeIdError(false);
+      setYoutubeChannelID(value);
+    }
+  };
+
   const handleCloseModal = async (talent) => {
-    const formData = {
-      username: twitterUserName,
-    };
+    let formData;
+    let apiName;
+    if (isTwitter) {
+      formData = {
+        username: twitterUserName,
+      };
+      apiName = `${API.twitterCount}`;
+    } else if (isYoutube) {
+      formData = {
+        channelId: youtubeChannelID,
+      };
+      apiName = `${API.youtubeCount}`;
+    }
     setIsLoading(true);
-    await ApiHelper.post(`${API.twitterCount}`, formData)
+    await ApiHelper.post(apiName, formData)
       .then((resData) => {
         console.log(resData, "resData");
         if (resData?.data?.status === true) {
-          setTwitterFollowersCount(resData?.data?.followers_count);
-          setTwitterUserName("");
           setIsLoading(false);
-          setMessage("Twitter Connected SuccessFully!");
+          if (isTwitter) {
+            setTwitterFollowersCount(resData?.data?.followers_count);
+            setXtwitterFollowers(resData?.data?.followers_count);
+            setTwitterUserName("");
+            setMessage("Twitter Connected Successfully!");
+          } else if (isYoutube) {
+            setYoutubesFollowers(resData?.data?.data?.subscriberCount);
+            setYoutubeChannelID("");
+            setMessage("YouTube Connected Successfully!");
+          }
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-            const modalElement = document.getElementById(
-              "adultSsocialMediaModal"
-            );
+            const modalElement = document.getElementById("socialMediaModal");
             const bootstrapModal = new window.bootstrap.Modal(modalElement);
             bootstrapModal.hide();
           }, 2000);
@@ -105,12 +166,9 @@ const AdultSocialMedias = () => {
           setMessage(resData?.data?.data);
           setOpenPopUp(true);
           setIsLoading(false);
-
           setTimeout(function () {
             setOpenPopUp(false);
-            const modalElement = document.getElementById(
-              "adultSsocialMediaModal"
-            );
+            const modalElement = document.getElementById("socialMediaModal");
             const bootstrapModal = new window.bootstrap.Modal(modalElement);
             bootstrapModal.hide();
           }, 2000);
@@ -118,7 +176,6 @@ const AdultSocialMedias = () => {
       })
       .catch((err) => {
         console.log(err, "err");
-
         setIsLoading(false);
       });
   };
@@ -126,547 +183,627 @@ const AdultSocialMedias = () => {
   useEffect(() => {
     console.log(twitterFollowersCount, "twitterFollowersCount");
   }, [twitterFollowersCount]);
-
-  useEffect(() => {}, [talentData]);
-
-  const [profileFile, setProfileFile] = useState(null);
-  const btLogo = require("../../assets/images/LOGO.png");
-  const [loader, setLoader] = useState(false);
-  const [openPopUp, setOpenPopUp] = useState(false);
-  const [message, setMessage] = useState("");
-  const adultsBanner = require("../../assets/images/adultsBanner.png");
-  const uploadIcon = require("../../assets/icons/uploadIcon.png");
-  const imageType = require("../../assets/icons/imageType.png");
-  const videoType = require("../../assets/icons/videoType.png");
-  const audiotype = require("../../assets/icons/audiotype.png");
-  const idCard = require("../../assets/icons/id-card.png");
-  const elipsis = require("../../assets/icons/elipsis.png");
-  const greenTickCircle = require("../../assets/icons/small-green-tick.png");
-  const fbLogo = require("../../assets/icons/social-media-icons/fbLogo.png");
-  const instagram = require("../../assets/icons/social-media-icons/instagram.png");
-  const threads = require("../../assets/icons/social-media-icons/thread-fill.png");
-  const tikTok = require("../../assets/icons/social-media-icons/tikTok.png");
-  const xTwitter = require("../../assets/icons/social-media-icons/xTwitter.png");
-  const youTube = require("../../assets/icons/social-media-icons/youTube.png");
-  const linkdin = require("../../assets/icons/social-media-icons/linkdin.png");
-  const docsIcon = require("../../assets/icons/docsIcon.png");
-  const [featuresList, setFeaturesList] = useState([]);
-  const [features, setFeature] = useState([]);
-  const [portofolioFile, setPortofolioFile] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [resumeFile, setResumeFile] = useState([]);
-  const [videoAUdioFile, setVideoAudioFile] = useState([]);
-  const [showOptions, setShowOptions] = useState(false);
-  const [instagramFollowers, setInstagramFollowers] = useState("");
-  const [facebookFollowers, setfacebookFollowers] = useState("");
-  const [xtwitterFollowers, setXtwitterFollowers] = useState("");
-  const [linkedinFollowers, setlinkedinFollowers] = useState("");
-  const [threadsFollowers, setThreadsFollowers] = useState("");
-  const [tiktoksFollowers, setTiktoksFollowers] = useState("");
-  const [youtubesFollowers, setYoutubesFollowers] = useState("");
-  const [idType, setIdType] = useState("");
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [aboutYou, setAboutYou] = useState([]);
-  const [verificationID, setVerificationID] = useState("");
-  const url = window.location.href;
-  let queryString = url.split("?")[1];
-
-  const navigate = useNavigate();
-  const [videoUrl, setVideoUrl] = useState("");
-  const [urls, setUrls] = useState([]);
   useEffect(() => {
-    getFeatures();
-  }, []);
+    console.log(youtubesFollowers, "youtubesFollowers");
+  }, [youtubesFollowers]);
 
-  const getFeatures = async () => {
-    await ApiHelper.get(API.getFeatures)
-      .then((resData) => {
-        if (resData) {
-          setFeaturesList(resData.data.data[0].features);
-        }
-      })
-      .catch((err) => {});
+  const validateInstagramUrl = (url) => {
+    const instagramUrlPattern =
+      /^(https?:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9._%-]+\/?(\?[^#]+)?$/;
+    return instagramUrlPattern.test(url);
   };
 
-  const onEditorSummary = (editorState) => {
-    setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
-    setEditorState(editorState);
-  };
-
-  const handleFeaturesChange = (label, value) => {
-    const updatedValues = [...features];
-    const index = updatedValues.findIndex((item) => item.label === label);
-    if (index !== -1) {
-      updatedValues[index] = { label, value };
+  const handleInstagramUrlChange = (e) => {
+    const url = e.target.value;
+    setInstagramUrl(url);
+    if (url === "" || validateInstagramUrl(url)) {
+      setInstagramError(""); // Clear the error if the URL is valid or input is empty
     } else {
-      updatedValues.push({ label, value });
-    }
-    setFeature(updatedValues);
-    // Call your API here with the updated selectedValues array
-    // Example:
-    // callYourApi(selectedValues);
-  };
-
-  const updateAdultSignup = async () => {
-    let formData = {
-      instaFollowers: instagramFollowers,
-      tiktokFollowers: tiktoksFollowers,
-      twitterFollowers: xtwitterFollowers,
-      youtubeFollowers: youtubesFollowers,
-      facebookFollowers: facebookFollowers,
-      linkedinFollowers: linkedinFollowers,
-      threadsFollowers: threadsFollowers,
-    };
-    await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          setIsLoading(false);
-          setMessage("Updated SuccessFully!");
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-            navigate(`/adult-signup-files-details?${queryString}`);
-          }, 1000);
-        } else if (resData.data.status === false) {
-          setIsLoading(false);
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
-  };
-
-  const handleProfileDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-
-    uploadFile(droppedFiles[0]);
-    // setFiles(droppedFiles);
-  };
-
-  const handleProfileDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  // Function to handle deleting image
-  const handleProfileDelete = () => {
-    setProfileFile(null);
-  };
-
-  const handlePortofolioDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-
-    uploadFile(droppedFiles[0]);
-    // setFiles(droppedFiles);
-  };
-
-  const handlePortofolioDragOver = (e) => {
-    e.preventDefault();
-  };
-  const handleVideoDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-
-    uploadVideoudio(droppedFiles[0]);
-    // setFiles(droppedFiles);
-  };
-
-  const handleVideoDragOver = (e) => {
-    e.preventDefault();
-  };
-  const handleResumeDrop = (e) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-
-    uploadResume(droppedFiles[0]);
-    // setFiles(droppedFiles);
-  };
-
-  const handleResumeDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const portofolioUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-
-      uploadFile(fileData);
-    }
-  };
-  const videoAudioUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      uploadVideoudio(fileData);
-    }
-  };
-  const resumeUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-
-      uploadResume(fileData);
+      setInstagramError("Please enter a valid Instagram URL."); // Set an error message if the URL is invalid
     }
   };
 
-  const verificationUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-      uploadVerificationID(fileData);
-    }
-  };
-
-  // const uploadedFiles = Array.from(event.target.files);
-  // const updatedFiles = uploadedFiles.map((file, index) => ({
-  //   id: index + 1,
-  //   title: file.name,
-  //   apiresponse: null, // Placeholder for API response
-  // }));
-  // setPortofolioFiles([...portofolioFiles, ...updatedFiles]);
-
-  const getFileType = (fileType) => {
-    // Extract main category from MIME type
-    if (fileType.startsWith("image/")) {
-      return "image";
-    } else if (fileType.startsWith("video/")) {
-      return "video";
-    } else if (fileType.startsWith("audio/")) {
-      return "audio";
-    } else if (fileType === "application/pdf") {
-      return "pdf";
-    } else {
-      return "other";
-    }
-  };
-
-  const profileUpload = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let fileData = event.target.files[0];
-
-      uploadProfile(fileData);
-    }
-  };
-
-  const uploadProfile = async (fileData) => {
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        setMessage(resData.data.message);
-        let fileObj = {
-          id: resData.data.data.fileId,
-          title: fileData.name,
-          fileData: resData.data.data.filename,
-          type: resData?.data?.data?.filetype,
-        };
-
-        setProfileFile(fileObj);
-
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
-
-  const uploadFile = async (fileData) => {
-    const planLimits = {
-      Basic: 5,
-      Pro: 15,
-      Premium: Infinity, // Unlimited photos
-    };
-
-    const userPlan = talentData?.planName;
-    const maxPhotos = planLimits[userPlan] || 0;
-
-    if (portofolioFile.length >= maxPhotos) {
-      setMessage(
-        `You can only upload up to ${maxPhotos} photos as a ${userPlan} member.`
-      );
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-      }, 3000);
-
-      return;
-    }
-
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        setMessage(resData.data.message);
-        let fileObj = {
-          id: resData.data.data.fileId,
-          title: fileData.name,
-          fileData: resData.data.data.filename,
-          type: resData?.data?.data?.filetype,
-        };
-        setPortofolioFile((prevFiles) => [...prevFiles, fileObj]);
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
-  const uploadVideoudio = async (fileData) => {
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        setMessage(resData.data.message);
-        let fileObj = {
-          id: resData.data.data.fileId,
-          title: fileData.name,
-          fileData: resData.data.data.filename,
-          type: resData?.data?.data?.filetype,
-        };
-        setVideoAudioFile((prevFiles) => [...prevFiles, fileObj]);
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
-  const uploadResume = async (fileData) => {
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        setMessage(resData.data.message);
-        let fileObj = {
-          id: resData.data.data.fileId,
-          title: fileData.name,
-          fileData: resData.data.data.filename,
-          type: resData?.data?.data?.filetype,
-        };
-        setResumeFile((prevFiles) => [...prevFiles, fileObj]);
-
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
-  const uploadVerificationID = async (fileData) => {
-    setLoader(true);
-    const params = new FormData();
-    params.append("file", fileData);
-    params.append("fileName", fileData.name);
-    params.append("fileType", getFileType(fileData.type));
-    /* await ApiHelper.post(API.uploadFile, params) */
-    await Axios.post(API.uploadFile, params, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((resData) => {
-        setMessage(resData.data.message);
-        let fileObj = {
-          id: resData.data.data.fileId,
-          title: fileData.name,
-          fileData: resData.data.data.filename,
-          type: getFileType(fileData.type),
-        };
-        setVerificationID((prevFiles) => [...prevFiles, fileObj]);
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        setLoader(false);
-      });
-  };
-
-  const handleView = (imageUrl) => {
-    let viewImage = `${API.userFilePath}${imageUrl?.fileData}`;
-    window.open(viewImage, "_blank");
-  };
-
-  // Function to handle deleting image
-  const handlePortofolioDelete = (index) => {
-    setPortofolioFile((prevImages) => {
-      // Create a copy of the previous state
-      const updatedImages = [...prevImages];
-      // Remove the image at the specified index
-      updatedImages.splice(index, 1);
-      return updatedImages;
-    });
-  };
-
-  const handleVideoDelete = (index) => {
-    setVideoAudioFile((prevImages) => {
-      // Create a copy of the previous state
-      const updatedImages = [...prevImages];
-      // Remove the image at the specified index
-      updatedImages.splice(index, 1);
-      return updatedImages;
-    });
-  };
-
-  const handleResumeDelete = (index) => {
-    setResumeFile((prevImages) => {
-      // Create a copy of the previous state
-      const updatedImages = [...prevImages];
-      // Remove the image at the specified index
-      updatedImages.splice(index, 1);
-      return updatedImages;
-    });
-  };
-
-  const handleUrlChange = (e) => {
-    setVideoUrl(e.target.value);
-  };
-
-  const handleAddUrl = () => {
-    const planLimits = {
-      Basic: 2,
-      Pro: 5,
-      Premium: Infinity, // Unlimited URLs
-    };
-
-    const userPlan = talentData?.planName;
-    const maxUrls = planLimits[userPlan] || 0;
-
-    if (urls.length >= maxUrls) {
-      setMessage(
-        `You can only add up to ${maxUrls} URLs as a ${userPlan} member.`
-      );
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-      }, 3000);
-      return;
-    }
-
-    if (videoUrl.trim() !== "") {
-      setUrls([...urls, videoUrl]);
-
-      setVideoUrl("");
-    }
-  };
-
-  const handlePaste = (e) => {
+  const handleInstagramPaste = (e) => {
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
-    setVideoUrl(pastedText);
+    setInstagramUrl(pastedText);
+    if (validateInstagramUrl(pastedText)) {
+      setInstagramError("");
+    } else {
+      setInstagramError("Please paste a valid Instagram URL.");
+    }
+    e.preventDefault();
   };
 
-  const handleDeleteUrl = (index) => {
-    const newUrls = urls.filter((url, i) => i !== index);
-    setUrls(newUrls);
+  const validateFacebookUrl = (url) => {
+    const facebookUrlPattern =
+      /^(https?:\/\/)?(www\.)?facebook\.com\/[A-Za-z0-9.\/_-]+(\?[A-Za-z0-9&=_-]+)?$/;
+    return facebookUrlPattern.test(url);
+  };
+
+  // Function to handle changes in the input field
+  const handleFacebookUrlChange = (e) => {
+    const url = e.target.value;
+
+    // Allow the input to be updated regardless of validation state
+    setFacebookUrl(url);
+
+    // Validate the URL and set an error message if it's invalid
+    if (url === "" || validateFacebookUrl(url)) {
+      setFacebookError(""); // Clear the error if the URL is valid or input is empty
+    } else {
+      setFacebookError("Please enter a valid Facebook URL."); // Set an error message if the URL is invalid
+    }
+  };
+
+  // Function to handle pasted URLs
+  const handleFacebookPaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+
+    // Set the pasted text directly and validate it
+    setFacebookUrl(pastedText);
+
+    if (validateFacebookUrl(pastedText)) {
+      setFacebookError(""); // Clear the error if the URL is valid
+    } else {
+      setFacebookError("Please paste a valid Facebook URL."); // Set an error message if the URL is invalid
+    }
+
+    e.preventDefault(); // Prevent the default paste action to avoid triggering the onChange event
+  };
+
+  // Function to validate TikTok URLs
+  const validateTikTokUrl = (url) => {
+    const tikTokUrlPattern =
+      /^(https?:\/\/)?(www\.)?tiktok\.com\/@[A-Za-z0-9._%-]+(\/video\/[0-9]+)?$/;
+    return tikTokUrlPattern.test(url);
+  };
+
+  // Function to handle changes in the input field
+  const handleTikTokUrlChange = (e) => {
+    const url = e.target.value;
+
+    // Allow the input to be updated regardless of validation state
+    setTikTokUrl(url);
+
+    // Validate the URL and set an error message if it's invalid
+    if (url === "" || validateTikTokUrl(url)) {
+      setTikTokError(""); // Clear the error if the URL is valid or input is empty
+    } else {
+      setTikTokError("Please enter a valid TikTok URL."); // Set an error message if the URL is invalid
+    }
+  };
+
+  // Function to handle pasted URLs
+  const handleTikTokPaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+
+    // Set the pasted text directly and validate it
+    setTikTokUrl(pastedText);
+
+    if (validateTikTokUrl(pastedText)) {
+      setTikTokError(""); // Clear the error if the URL is valid
+    } else {
+      setTikTokError("Please paste a valid TikTok URL."); // Set an error message if the URL is invalid
+    }
+
+    e.preventDefault(); // Prevent the default paste action to avoid triggering the onChange event
+  };
+
+  // Function to validate LinkedIn URLs
+  const validateLinkedInUrl = (url) => {
+    const linkedinUrlPattern =
+      /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company)\/[A-Za-z0-9_-]+(\/)?(\?[A-Za-z0-9=&_%-]+)?$/;
+    return linkedinUrlPattern.test(url);
+  };
+
+  // Function to handle changes in the input field
+  const handleLinkedInUrlChange = (e) => {
+    const url = e.target.value;
+
+    // Allow the input to be updated regardless of validation state
+    setLinkedinUrl(url);
+
+    // Validate the URL and set an error message if it's invalid
+    if (url === "" || validateLinkedInUrl(url)) {
+      setLinkedinError(""); // Clear the error if the URL is valid or input is empty
+    } else {
+      setLinkedinError("Please enter a valid LinkedIn URL."); // Set an error message if the URL is invalid
+    }
+  };
+
+  // Function to handle pasted URLs
+  const handleLinkedInPaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+
+    // Set the pasted text directly and validate it
+    setLinkedinUrl(pastedText);
+
+    if (validateLinkedInUrl(pastedText)) {
+      setLinkedinError(""); // Clear the error if the URL is valid
+    } else {
+      setLinkedinError("Please paste a valid LinkedIn URL."); // Set an error message if the URL is invalid
+    }
+
+    e.preventDefault(); // Prevent the default paste action to avoid triggering the onChange event
+  };
+
+  // Function to validate X (formerly Twitter) URLs
+  const validateTwitterUrl = (url) => {
+    const twitterUrlPattern =
+      /^(https?:\/\/)?(www\.)?(x\.com|twitter\.com)\/[A-Za-z0-9_]+(\/status\/[0-9]+)?$/;
+    return twitterUrlPattern.test(url);
+  };
+
+  // Function to handle changes in the input field
+  const handleTwitterUrlChange = (e) => {
+    const url = e.target.value;
+
+    // Allow the input to be updated regardless of validation state
+    setTwitterUrl(url);
+
+    // Validate the URL and set an error message if it's invalid
+    if (url === "" || validateTwitterUrl(url)) {
+      setTwitterError(""); // Clear the error if the URL is valid or input is empty
+    } else {
+      setTwitterError("Please enter a valid X (formerly Twitter) URL."); // Set an error message if the URL is invalid
+    }
+  };
+
+  // Function to handle pasted URLs
+  const handleTwitterPaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+
+    // Set the pasted text directly and validate it
+    setTwitterUrl(pastedText);
+
+    if (validateTwitterUrl(pastedText)) {
+      setTwitterError(""); // Clear the error if the URL is valid
+    } else {
+      setTwitterError("Please paste a valid X (formerly Twitter) URL."); // Set an error message if the URL is invalid
+    }
+
+    e.preventDefault(); // Prevent the default paste action to avoid triggering the onChange event
+  };
+
+  // Function to validate Threads URLs
+  const validateThreadsUrl = (url) => {
+    // This pattern matches:
+    // - Optional `http` or `https` protocol
+    // - Optional `www.`
+    // - `threads.net` domain
+    // - `/@` followed by the username (alphanumeric or underscore)
+    // - Optional query parameters after `?`, which can include various special characters
+    const threadsUrlPattern =
+      /^https:\/\/(www\.)?threads\.net\/@[A-Za-z0-9_]+(?:\?[A-Za-z0-9=&_%-]+)?$/;
+    return threadsUrlPattern.test(url);
+  };
+
+  // Function to handle changes in the input field
+  const handleThreadsUrlChange = (e) => {
+    const url = e.target.value;
+
+    // Allow the input to be updated regardless of validation state
+    setThreadsUrl(url);
+
+    // Validate the URL and set an error message if it's invalid
+    if (url === "" || validateThreadsUrl(url)) {
+      setThreadsError(""); // Clear the error if the URL is valid or input is empty
+    } else {
+      setThreadsError("Please enter a valid Threads URL."); // Set an error message if the URL is invalid
+    }
+  };
+
+  // Function to handle pasted URLs
+  const handleThreadsPaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+
+    // Set the pasted text directly and validate it
+    setThreadsUrl(pastedText);
+
+    if (validateThreadsUrl(pastedText)) {
+      setThreadsError(""); // Clear the error if the URL is valid
+    } else {
+      setThreadsError("Please paste a valid Threads URL."); // Set an error message if the URL is invalid
+    }
+
+    e.preventDefault(); // Prevent the default paste action to avoid triggering the onChange event
+  };
+  const validateYouTubeUrl = (url) => {
+    const youTubeUrlPattern =
+      /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|shorts\/|embed\/|v\/|c\/|channel\/|@)[A-Za-z0-9_-]+|youtu\.be\/[A-Za-z0-9_-]+)(\?.*)?$/;
+    return youTubeUrlPattern.test(url);
+  };
+
+  const handleYouTubeUrlChange = (e) => {
+    const url = e.target.value;
+
+    setYouTubeUrl(url);
+
+    if (url === "" || validateYouTubeUrl(url)) {
+      setYouTubeError(""); // Clear the error if the URL is valid or input is empty
+    } else {
+      setYouTubeError("Please enter a valid YouTube URL."); // Set an error message if the URL is invalid
+    }
+  };
+
+  const handleYouTubePaste = (e) => {
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+
+    setYouTubeUrl(pastedText);
+
+    if (validateYouTubeUrl(pastedText)) {
+      setYouTubeError(""); // Clear the error if the URL is valid
+    } else {
+      setYouTubeError("Please paste a valid YouTube URL."); // Set an error message if the URL is invalid
+    }
+
+    e.preventDefault(); // Prevent the default paste action to avoid triggering the onChange event
   };
 
   return (
     <>
-      <>
-        <div className="form-dialog">
-          <div className="header-wrapper">
-            <div className="step-wrapper">
-              <img
-                className="modal-logo"
-                onClick={() => {
-                  navigate("/");
-                }}
-                src={btLogo}
-              ></img>
-              <div className="step-text">Step 2 of 4</div>
-            </div>
-            <button
-              type="button"
-              className="btn-close"
+      <div className="form-dialog">
+        <div className="header-wrapper">
+          <div className="step-wrapper">
+            <img
+              className="modal-logo"
               onClick={() => {
                 navigate("/");
               }}
-            ></button>
+              src={btLogo}
+            ></img>
+            <div className="step-text">Step 3 of 6</div>
           </div>
-          <div className="dialog-body">
-            <div className="kidsform-one container">
-              <div className="adult-form-wrapper row ml-0 mr-0">
-                <div className="col-md-4 col-lg-3 mt-5">
-                  <div className="fixImgs">
-                    <img
-                      src={adultsBanner}
-                      className="kids-image-sticky "
-                      alt="img"
-                    />
-                  </div>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => {
+              navigate("/");
+            }}
+          ></button>
+        </div>
+        <div className="dialog-body mt-5">
+          <div className="kidsform-one container">
+            <div className="kids-wrapper row">
+              <div className="kids-img col-md-4 col-lg-3">
+                <div className="fixImgs">
+                  <img
+                    src={adultsBanner}
+                    alt=""
+                    className="kids-image-sticky"
+                  />
                 </div>
-                <div className="adult-main remvSpc col-md-8 col-lg-9 mt-5">
-                  <div className="adults-titles">
-                    Explore Your Social Media Presence
-                  </div>
+              </div>
 
+              <div className="kids-form col-md-8 col-lg-9">
+                <div className="kids-main">
+                  <div className="kids-form-title">
+                    <span>Explore Your Social Media Presence</span>
+                  </div>
                   <div className="explore-info">
                     If you want to display your actual follower count, please
                     connect with your social media. Otherwise, manually enter
                     your followers count
                   </div>
 
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
+                  <div className="kids-form-row row mb-4">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
+                        <div className="media-info mb-2">
+                          <div className="mediaIcon">
+                            <img src={instagram} alt="" />
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="number"
+                              className="form-control followers-count-input"
+                              onChange={(e) => {
+                                setInstagramFollowers(e.target.value);
+                              }}
+                              placeholder="Followers Count"
+                            ></input>
+                          </div>
+                        </div>
                         <div className="media-info">
-                          <img src={instagram} alt="" />
+                          <div className="mediaIcon">
+                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="text"
+                              value={instagramUrl}
+                              className="form-control followers-count-input"
+                              onChange={handleInstagramUrlChange}
+                              onPaste={handleInstagramPaste}
+                              placeholder="Instagram URL"
+                            />
+                            {instagramError && (
+                              <div className="invalid-fields">
+                                {instagramError}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper">
+                        <div className="media-info mb-2">
+                          <div className="mediaIcon">
+                            <img src={fbLogo} alt="" />
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="number"
+                              className="form-control followers-count-input"
+                              onChange={(e) => {
+                                setfacebookFollowers(e.target.value);
+                              }}
+                              placeholder="Followers Count"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="media-info">
+                          <div className="mediaIcon">
+                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                          </div>
+                          <div className="media-text">
+                            <input
+                              value={facebookUrl}
+                              type="text"
+                              className="form-control followers-count-input"
+                              onChange={handleFacebookUrlChange}
+                              onPaste={handleFacebookPaste}
+                              placeholder="Facebook Url"
+                            ></input>
+                            {facebookError && (
+                              <div className="invalid-fields">
+                                {facebookError}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper">
+                        <div className="media-info mb-2">
+                          <div className="mediaIcon">
+                            <img src={tikTok} alt="" />
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="number"
+                              className="form-control followers-count-input"
+                              onChange={(e) => {
+                                setTiktoksFollowers(e.target.value);
+                              }}
+                              placeholder="Followers Count"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="media-info">
+                          <div className="mediaIcon">
+                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="text"
+                              value={tikTokUrl}
+                              className="form-control followers-count-input"
+                              onChange={handleTikTokUrlChange}
+                              onPaste={handleTikTokPaste}
+                              placeholder="TikTok Url"
+                            ></input>
+                            {tikTokError && (
+                              <div className="invalid-fields">
+                                {tikTokError}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper">
+                        <div className="media-info mb-2">
+                          <div className="mediaIcon">
+                            <img src={linkdin} alt="" />
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="number"
+                              className="form-control followers-count-input"
+                              onChange={(e) => {
+                                setlinkedinFollowers(e.target.value);
+                              }}
+                              placeholder="Followers Count"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="media-info">
+                          <div className="mediaIcon">
+                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="text"
+                              value={linkedinUrl}
+                              className="form-control followers-count-input"
+                              onChange={handleLinkedInUrlChange}
+                              onPaste={handleLinkedInPaste}
+                              placeholder="Linkedin Url"
+                            ></input>
+                            {linkedinError && (
+                              <div className="invalid-fields">
+                                {linkedinError}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper">
+                        <div className="media-info mb-2">
+                          <div className="mediaIcon">
+                            <img src={xTwitter} alt="" />
+                          </div>
+                          <div className="media-text">
+                            <input
+                              value={twitterFollowersCount}
+                              type="number"
+                              className="form-control followers-count-input"
+                              onChange={(e) => {
+                                setXtwitterFollowers(e.target.value);
+                              }}
+                              placeholder="Followers Count"
+                            ></input>
+                          </div>
+                        </div>
+                        {/* <div className="media-info">
+                          <div className="mediaIcon">
+                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="text"
+                              value={twitterUrl}
+                              className="form-control followers-count-input"
+                              onChange={handleTwitterUrlChange}
+                              onPaste={handleTwitterPaste}
+                              placeholder="X (formerly Twitter) URL"
+                            ></input>
+                            {twitterError && (
+                              <div className="invalid-fields">
+                                {twitterError}
+                              </div>
+                            )}
+                          </div>
+                        </div> */}
+                      </div>
+                    </div>
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper">
+                        <div className="media-info mb-2">
+                          <div className="mediaIcon">
+                            <img className="thread-fill" src={threads} alt="" />
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="number"
+                              className="form-control followers-count-input"
+                              onChange={(e) => {
+                                setThreadsFollowers(e.target.value);
+                              }}
+                              placeholder="Followers Count"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="media-info">
+                          <div className="mediaIcon">
+                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="text"
+                              value={threadsUrl}
+                              className="form-control followers-count-input"
+                              onChange={handleThreadsUrlChange}
+                              onPaste={handleThreadsPaste}
+                              placeholder="Threads Url"
+                            ></input>
+                            {threadsError && (
+                              <div className="invalid-fields">
+                                {threadsError}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="kids-form-row row ">
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper">
+                        <div className="media-info mb-2">
+                          <div className="mediaIcon">
+                            <img src={youTube} alt="" />
+                          </div>
+                          <div className="media-text">
+                            <input
+                              type="number"
+                              value={youtubesFollowers}
+                              className="form-control followers-count-input"
+                              onChange={(e) => {
+                                setYoutubesFollowers(e.target.value);
+                              }}
+                              placeholder="Followers Count"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="media-info">
+                          <div className="mediaIcon">
+                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                          </div>
+                          <div className="media-text">
+                            <input
+                              value={youTubeUrl}
+                              type="text"
+                              className="form-control followers-count-input"
+                              onChange={handleYouTubeUrlChange}
+                              onPaste={handleYouTubePaste}
+                              placeholder="YouTube Url"
+                            ></input>
+                            {youTubeError && (
+                              <div className="invalid-fields">
+                                {youTubeError}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="Or-seperator">Or</div>
+
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper d-flex">
+                        <div className="media-info">
+                          <div className="mediaIcon">
+                            <img src={instagram} alt="" />
+                          </div>
                           <div className="media-text">Instagram</div>
                         </div>
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper d-flex">
                         <div className="media-info">
-                          <img src={fbLogo} alt="" />
+                          <div className="mediaIcon">
+                            <img src={fbLogo} alt="" />
+                          </div>
                           <div className="media-text">Facebook</div>
                         </div>
                         <div className="connect-btn">connect</div>
@@ -674,30 +811,36 @@ const AdultSocialMedias = () => {
                     </div>
                   </div>
                   <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper d-flex">
                         <div className="media-info">
-                          <img src={tikTok} alt="" />
+                          <div className="mediaIcon">
+                            <img src={tikTok} alt="" />
+                          </div>
                           <div className="media-text">TikTok</div>
                         </div>
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper d-flex">
                         <div className="media-info">
-                          <img src={linkdin} alt="" />
+                          <div className="mediaIcon">
+                            <img src={linkdin} alt="" />
+                          </div>
                           <div className="media-text">LinkedIn</div>
                         </div>
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
                   </div>
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
+                  {/* <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img src={xTwitter} alt="" />
+                          <div className="mediaIcon">
+                            <img src={xTwitter} alt="" />
+                          </div>
                           <div className="media-text">Twitter</div>
                         </div>
                         <div
@@ -710,164 +853,34 @@ const AdultSocialMedias = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section col-md-6 mb-3">
+                    <div className="kids-form-section col-md-6 ">
                       <div className="media-wrapper">
                         <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
+                          <div className="mediaIcon">
+                            <img className="thread-fill" src={threads} alt="" />
+                          </div>
                           <div className="media-text">Threads</div>
                         </div>
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                  </div>
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6 mb-3">
-                      <div className="media-wrapper">
+                  </div> */}
+                  <div className="kids-form-row row spcBtm">
+                    <div className="kids-form-section col-md-6">
+                      <div className="media-wrapper d-flex">
                         <div className="media-info">
-                          <img className="thread-fill" src={youTube} alt="" />
+                          <div className="mediaIcon">
+                            <img className="" src={youTube} alt="" />
+                          </div>
                           <div className="media-text">Youtube</div>
                         </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="Or-seperator">Or</div>
-
-                  <div className="kids-form-row row mb-4">
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={instagram} alt="" />
-                          <div className="media-text">
-                            <input
-                              disabled
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setInstagramFollowers(e.target.value);
-                              }}
-                              placeholder="Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={fbLogo} alt="" />
-                          <div className="media-text">
-                            <input
-                              disabled
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setfacebookFollowers(e.target.value);
-                              }}
-                              placeholder="Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={tikTok} alt="" />
-                          <div className="media-text">
-                            <input
-                              disabled
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setTiktoksFollowers(e.target.value);
-                              }}
-                              placeholder="Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={linkdin} alt="" />
-                          <div className="media-text">
-                            <input
-                              disabled
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setlinkedinFollowers(e.target.value);
-                              }}
-                              placeholder="Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="kids-form-row row">
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={xTwitter} alt="" />
-                          <div className="media-text">
-                            <input
-                              disabled
-                              value={twitterFollowersCount}
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setXtwitterFollowers(e.target.value);
-                              }}
-                              placeholder="Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img className="thread-fill" src={threads} alt="" />
-                          <div className="media-text">
-                            <input
-                              disabled
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setThreadsFollowers(e.target.value);
-                              }}
-                              placeholder="Followers Count"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="kids-form-row row"
-                    style={{ marginBottom: "100px" }}
-                  >
-                    <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <img src={youTube} alt="" />
-                          <div className="media-text">
-                            <input
-                              disabled
-                              type="number"
-                              className="form-control followers-count-input"
-                              onChange={(e) => {
-                                setYoutubesFollowers(e.target.value);
-                              }}
-                              placeholder="Followers Count"
-                            ></input>
-                          </div>
+                        <div
+                          className="connect-btn"
+                          onClick={(e) => {
+                            connectSocialMedia("youtube");
+                          }}
+                        >
+                          connect
                         </div>
                       </div>
                     </div>
@@ -876,33 +889,35 @@ const AdultSocialMedias = () => {
               </div>
             </div>
           </div>
-          <div className="dialog-footer">
-            <button
-              type="button"
-              onClick={(e) => {
-                navigate(`/adult-signup-basic-details?${talentData?._id}`);
-              }}
-              className="step-back"
-            >
-              Back
-            </button>
-
-            <button
-              className="step-continue"
-              onClick={(e) => {
-                updateAdultSignup();
-              }}
-            >
-              {isLoading ? "Loading..." : "Continue"}
-            </button>
-          </div>
         </div>
-      </>
+        <div className="dialog-footer">
+          {/* <button
+            type="button"
+            onClick={(e) => {
+              goBack();
+            }}
+            className="step-back"
+          >
+            Back
+          </button> */}
+
+          <button
+            type="button"
+            className="step-continue"
+            onClick={(e) => {
+              editKids();
+            }}
+          >
+            {isLoading ? "Loading..." : "Continue"}
+          </button>
+        </div>
+      </div>
+
       <div
         className="modal fade"
-        id="adultSsocialMediaModal"
+        id="socialMediaModal"
         tabIndex="-1"
-        aria-labelledby="adultSsocialMediaModalLabel"
+        aria-labelledby="socialMediaModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog  modal-dialog-centered">
@@ -917,20 +932,37 @@ const AdultSocialMedias = () => {
             </div>
             <div className="modal-body">
               <div className="mb-3" style={{ textAlign: "left" }}>
-                <label className="form-label">Twitter user name</label>
+                <label className="form-label">
+                  {isTwitter && <>Twitter user name</>}
+                  {isYoutube && <>YouTube Channel ID</>}
+                </label>
                 <input
                   type="text"
                   className="form-control"
-                  value={twitterUserName}
+                  value={
+                    isTwitter
+                      ? twitterUserName
+                      : isYoutube
+                      ? youtubeChannelID
+                      : ""
+                  }
                   onChange={(e) => {
                     handleTwitterUserNameChange(e);
                     setTwitterUserNameError(false);
                   }}
-                  onKeyDown={handleKeyPress}
-                  placeholder="Twitter user name"
+                  placeholder={
+                    isTwitter
+                      ? "Twitter user name"
+                      : isYoutube
+                      ? "YouTube Channel ID"
+                      : ""
+                  }
                 ></input>
                 {twitterUserNameError && (
                   <div className="invalid-fields">Please enter User Name</div>
+                )}
+                {youtubeIdError && (
+                  <div className="invalid-fields">Please enter Channel ID</div>
                 )}
               </div>
             </div>
@@ -947,6 +979,7 @@ const AdultSocialMedias = () => {
           </div>
         </div>
       </div>
+
       {openPopUp && <PopUp message={message} />}
     </>
   );

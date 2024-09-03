@@ -280,7 +280,7 @@
   .media-wrapper {
     cursor: pointer;
     border: 1px solid rgb(211, 211, 211);
-    display: flex;
+    // display: flex;
     justify-content: space-between;
     margin: 10px 0px;
     align-items: center;
@@ -521,6 +521,7 @@
   padding: 15px;
   border-radius: 6px;
   background-color: #f8f8f8;
+  margin-top: 5px;
 }
 .fixImgs {
   position: relative;
@@ -580,6 +581,8 @@
   place-items: center;
   align-items: center;
   margin: 10px 0;
+  opacity: 0;
+  display: none !important;
 }
 .password_strength_box .password_strength {
   width: 100%;
@@ -590,6 +593,7 @@
   padding: 0px 0px 6px 0px;
   font-weight: 500;
   color: red;
+  margin-bottom: 0px;
 }
 .password_strength .line_box {
   background-color: #f2f2f2;
@@ -887,7 +891,9 @@
   width: 100%;
   margin: 15px;
 }
-.public-url-text  i{  margin-left: 10px; }
+.public-url-text i {
+  margin-left: 10px;
+}
 
 .update-portfolio-fileName {
   color: #6e6e6e;
@@ -924,7 +930,7 @@
 
 .update-portfolio-action {
   margin-left: 10px;
-  button.MuiIconButton-root{
+  button.MuiIconButton-root {
     padding: 0 3px;
   }
 }
@@ -946,34 +952,26 @@
 // box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 // }
 
-.dynamic-profession.newAlign .algSepc{
+.dynamic-profession.newAlign .algSepc {
   width: calc(100% - 170px);
   float: left;
 }
-.dynamic-profession.newAlign .offer-wrapper{
+.dynamic-profession.newAlign .offer-wrapper {
   width: 170px;
   float: right;
   padding-left: 15px;
   justify-content: end;
 }
 
-.dynamic-profession.newAlign .algSepc .divSep{ width: calc(100% / 5); }
+.dynamic-profession.newAlign .algSepc .divSep {
+  width: calc(100% / 5);
+  padding-right: 0;
+}
 
 .dynamic-profession .divSep .profession-input {
   max-width: 100% !important;
   margin-right: 0px !important;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 @media only screen and (max-width: 1399px) {
   .fixImgs .kids-image-sticky {
@@ -981,15 +979,23 @@
   }
 }
 @media only screen and (max-width: 1180px) {
-
-  .dynamic-profession.newAlign .algSepc .divSep{         
+  .dynamic-profession.newAlign .algSepc .divSep {
     padding-right: 0;
     margin-bottom: 0.4rem !important;
   }
-  .dynamic-profession.newAlign{ flex-direction: column; margin-bottom: 10px; }
-  .dynamic-profession.newAlign .algSepc, .dynamic-profession.newAlign .offer-wrapper{ width: 100%; }
-  .dynamic-profession.newAlign .offer-wrapper {  float: left; padding: 0 0 5px; justify-content: left; }
-
+  .dynamic-profession.newAlign {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  .dynamic-profession.newAlign .algSepc,
+  .dynamic-profession.newAlign .offer-wrapper {
+    width: 100%;
+  }
+  .dynamic-profession.newAlign .offer-wrapper {
+    float: left;
+    padding: 0 0 5px;
+    justify-content: left;
+  }
 }
 @media only screen and (max-width: 1199px) {
   .kids-form.col-md-8 {
@@ -1001,10 +1007,9 @@
     padding-left: 10px;
     width: 100%;
   }
-  .dynamic-profession.newAlign .algSepc .divSep{         
-    width: 33%; 
+  .dynamic-profession.newAlign .algSepc .divSep {
+    width: 33%;
   }
-
 }
 
 @media only screen and (max-width: 767px) {
@@ -1466,17 +1471,6 @@
     border-radius: 6px;
   }
 
-  .edit-features-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .features-seperator {
-    width: 300px;
-    margin-right: 20px;
-    margin-bottom: 15px;
-  }
-
   .edit_talentprofile .update-service-cards-wrapper,
   .edit_talentprofile .update-portfolio-cards-wrapper,
   .edit_talentprofile .profile-image-edit-section {
@@ -1875,14 +1869,54 @@
     padding: 0;
     border-radius: 0;
   }
-
-
 }
 
+.public-url-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 8px;
+}
+
+.public-url-input {
+  margin-left: 0px;
+}
+
+.bi-pencil-square {
+  color: #c2114b;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.public-url-text {
+  // min-width: 100%;
+  width: 88%;
+}
+
+.edit-features-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.features-seperator {
+  width: 300px;
+  margin-right: 20px;
+  margin-bottom: 15px;
+}
+
+.file-section,
+.file-options {
+  display: flex;
+}
 
 @media only screen and (max-width: 580px) {
   .dynamic-profession.newAlign .algSepc .divSep {
     width: 48%;
   }
-  .edit-profileimg-btn{ width: 100%; }
+  .edit-profileimg-btn {
+    width: 100%;
+  }
 }

@@ -71,7 +71,7 @@ const TalentPreviewJob = (props) => {
     await ApiHelper.post(`${API.postJobByDraft}${jobId ? jobId : queryString}`)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Job Posted SuccessFully!");
+          setMessage("Job Posted Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -129,7 +129,7 @@ const TalentPreviewJob = (props) => {
     };
     await ApiHelper.post(API.applyjobs, formData)
       .then((resData) => {
-        setMessage("Job applied successfully");
+        setMessage("Job applied Successfully");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

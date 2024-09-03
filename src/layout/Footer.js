@@ -72,7 +72,7 @@ const Footer = (props) => {
     //     .then((resData) => {
     //
     //       if (resData.data.status === true) {
-    //         setMessage("Subscribed successfully! Kindly check your inbox");
+    //         setMessage("Subscribed Successfully! Kindly check your inbox");
     //         setOpenPopUp(true);
     //         setTimeout(function() {
     //           setOpenPopUp(false);

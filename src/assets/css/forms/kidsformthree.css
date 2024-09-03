@@ -255,13 +255,6 @@
   cursor: unset !important ;
 }
 
-.add-vidoe-icon {
-  color: #c2114b;
-  font-size: 25px;
-  cursor: pointer;
-  padding-left: 15px;
-}
-
 .videos-label {
   color: #000;
   text-align: left;
@@ -285,6 +278,11 @@
   width: 280px;
   max-width: 100%;
 }
+.url-file-wrapper {
+  display: flex;
+  align-items: baseline;
+  margin: 0 0 7px;
+}
 
 @media only screen and (max-width: 1399px) {
   .fixImgs .kids-image-sticky {
@@ -306,7 +304,9 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .plans-wrapper{ padding: 20px; }
+  .plans-wrapper {
+    padding: 20px;
+  }
   .subscriptions-wrapper .plan-name {
     min-height: auto;
     margin: 0;
@@ -340,4 +340,11 @@
   border-radius: 3px;
   height: 45px;
   padding: 0px 0px 0px 10px;
+}
+
+.add-vidoe-icon {
+  color: #c2114b;
+  font-size: 25px;
+  cursor: pointer;
+  padding-left: 15px;
 }

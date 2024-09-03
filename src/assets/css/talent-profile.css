@@ -592,7 +592,7 @@
   font-weight: 600;
   line-height: normal;
 }
-.talent-profile-main .col-md-4.col-lg-3.pr-0{
+.talent-profile-main .col-md-4.col-lg-3.pr-0 {
   padding-right: 10px;
   margin-bottom: 15px;
 }
@@ -913,7 +913,7 @@
   .cv-card {
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
       rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-    width: 60% !important;
+    width: 100% !important;
     height: 160px;
     border-radius: 8px;
     display: flex;
@@ -1060,10 +1060,6 @@
   .table-container table .right-column {
     border: none; /* Remove borders for small screens */
   }
-
-
-
-
 }
 
 .cv-card {
@@ -1220,7 +1216,6 @@
     flex-wrap: wrap;
     border-bottom: 1px solid rgb(189, 189, 189);
     padding: 5px 5px;
-
   }
   .individual-talent-tab {
     height: 40px;
@@ -1252,6 +1247,10 @@
     width: 75% !important;
     height: 75px;
     margin: 10px 0;
+    width: 100% !important;
+    height: inherit !important;
+    margin: 0 !important;
+    margin-bottom: 20px !important;
   }
 }
 
@@ -1329,4 +1328,16 @@
 .audio-url-style {
   width: 200px;
   overflow: hidden;
+}
+
+.logoSocial > img {
+  cursor: pointer;
+}
+
+.click-url {
+  font-size: 13px;
+  font-family: sans-serif;
+  color: #000;
+  cursor: pointer;
+  text-decoration: underline;
 }

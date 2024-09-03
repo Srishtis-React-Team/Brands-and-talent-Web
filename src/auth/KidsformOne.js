@@ -453,7 +453,9 @@ const KidsformOne = () => {
       dateOfBirth !== "" &&
       passwordMatch === true &&
       completedJobs !== "" &&
-      !mobileValidationError
+      !mobileValidationError &&
+      passwordStatus &&
+      passwordMatch
     ) {
       const formData = {
         parentFirstName: parentFirstName,
@@ -489,7 +491,7 @@ const KidsformOne = () => {
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              setMessage("Registered Successfully");
+              setMessage("Successfully Registered");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -512,7 +514,7 @@ const KidsformOne = () => {
           .then((resData) => {
             if (resData.data.status === true) {
               setIsLoading(false);
-              setMessage("Updated SuccessFully!");
+              setMessage("Successfully Registered");
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
@@ -542,6 +544,13 @@ const KidsformOne = () => {
     }
 
     if (!passwordMatch) {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
+    }
+    if (!passwordStatus) {
       setMessage("Please Update All Required Fields");
       setOpenPopUp(true);
       setTimeout(function () {
@@ -693,17 +702,31 @@ const KidsformOne = () => {
     }
   };
 
+  const navigateTo = (option) => {
+    let url = "";
+
+    if (option === "terms") {
+      url = "/terms-conditions";
+    } else if (option === "community") {
+      url = "/community-guidelines";
+    } else if (option === "privacy") {
+      url = "/privacy-policy";
+    }
+
+    if (url) {
+      window.open(url, "_blank"); // Open in a new tab
+    }
+  };
+
   const [mobileNumError, setMobileNumError] = useState();
 
   const handleMobileChange = (value, countryData) => {
     setParentMobile(value);
     setParentMobileError(false);
-
     isValidPhoneNumber(value);
     console.log(value, "isValidPhoneNumber");
     if (isValidPhoneNumber(value)) {
       console.log(true, "isValidPhoneNumber");
-
       setMobileValidationError(false);
       setParentMobile(value);
     } else {
@@ -712,6 +735,7 @@ const KidsformOne = () => {
     }
   };
 
+  const [passwordStatus, setPasswordStatus] = useState(false);
   let line = document.querySelector(".line");
   let text = document.querySelector(".text");
   let password_strength_box = document.querySelector(".password_strength_box");
@@ -726,8 +750,8 @@ const KidsformOne = () => {
       if (password.value.length == 0) {
         password_strength_box.style.display = "none";
       }
-
       if (password.value.length >= 1) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "5%";
         line.style.backgroundColor = "red";
@@ -735,6 +759,7 @@ const KidsformOne = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 2) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "10%";
         line.style.backgroundColor = "red";
@@ -742,6 +767,7 @@ const KidsformOne = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 3) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "20%";
         line.style.backgroundColor = "red";
@@ -749,12 +775,15 @@ const KidsformOne = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 4) {
+        setPasswordStatus(false);
+
         password_strength_box.style.display = "flex";
         line.style.width = "35%";
         line.style.backgroundColor = "red";
         text.style.color = "red";
         text.innerHTML = "Weak";
         if (password.value.match(/[!@#$%^&*]/)) {
+          setPasswordStatus(false);
           password_strength_box.style.display = "flex";
           line.style.width = "45%";
           line.style.backgroundColor = "#e9ee30";
@@ -767,6 +796,8 @@ const KidsformOne = () => {
         password.value.match(/[A-Z]/) &&
         password.value.match(/[a-z]/)
       ) {
+        setPasswordStatus(false);
+
         password_strength_box.style.display = "flex";
         line.style.width = "50%";
         line.style.backgroundColor = "#e9ee30";
@@ -774,6 +805,8 @@ const KidsformOne = () => {
         text.innerHTML = "Medium";
       }
       if (password.value.length >= 6 && password.value.match(/[0-9]/)) {
+        setPasswordStatus(false);
+
         password_strength_box.style.display = "flex";
         line.style.width = "70%";
         line.style.backgroundColor = "#e9ee30";
@@ -786,6 +819,8 @@ const KidsformOne = () => {
         password.value.match(/[a-z]/) &&
         password.value.match(/[0-9]/)
       ) {
+        setPasswordStatus(false);
+
         password_strength_box.style.display = "flex";
         line.style.width = "80%";
         line.style.backgroundColor = "#e9ee30";
@@ -800,6 +835,8 @@ const KidsformOne = () => {
         password.value.match(/[0-9]/) &&
         password.value.match(/[!@#$%^&*]/)
       ) {
+        setPasswordStatus(true);
+
         password_strength_box.style.display = "flex";
         line.style.width = "100%";
         line.style.backgroundColor = "#2ccc2c";
@@ -1040,6 +1077,7 @@ const KidsformOne = () => {
                               settalentPasswordError(false);
                             }}
                           ></input>
+
                           <div className="password_strength_box">
                             <div className="password_strength">
                               <p className="text">Weak</p>
@@ -1065,6 +1103,7 @@ const KidsformOne = () => {
                               </div>
                             </div>
                           </div>
+
                           {showPassword ? (
                             <span
                               className="fa fa-eye show-password-icon"
@@ -1079,6 +1118,14 @@ const KidsformOne = () => {
                           {talentPasswordError && (
                             <div className="invalid-fields">
                               Please enter Password
+                            </div>
+                          )}
+                          {talentPassword && !passwordStatus && (
+                            <div className="invalid-fields password-error-box">
+                              ( The minimum password length is 8 characters and
+                              must contain at least 1 capital letter, 1
+                              lowercase letter, 1 number and 1 special
+                              character. )
                             </div>
                           )}
                         </div>
@@ -1120,7 +1167,7 @@ const KidsformOne = () => {
                           talentConfirmPassword &&
                           talentConfirmPassword.length && (
                             <p className="password-wrong">
-                              Passwords does not match.
+                              Password does not match.
                             </p>
                           )}
                       </div>
@@ -1132,6 +1179,7 @@ const KidsformOne = () => {
                         </label>
 
                         <MuiPhoneNumber
+                          countryCodeEditable={false}
                           defaultCountry={"kh"}
                           className="material-mobile-style"
                           onChange={handleMobileChange}
@@ -1217,6 +1265,15 @@ const KidsformOne = () => {
                         </div>
                       </div>
                       <div className="profession-content-section">
+                        {selectedProfessions.length > 0 && (
+                          <>
+                            <p className="set-rates">
+                              *Set Your Rates in USD (Choose one or more rates
+                              for each selected skill)
+                            </p>
+                          </>
+                        )}
+
                         {selectedProfessions.map((profession, index) => (
                           <>
                             <div>
@@ -1224,9 +1281,13 @@ const KidsformOne = () => {
                                 {profession.label}
                               </label>
                             </div>
-                            <div key={index} className="dynamic-profession newAlign">
-
-                                <div className="algSepc"> <div className="row">
+                            <div
+                              key={index}
+                              className="dynamic-profession newAlign"
+                            >
+                              <div className="algSepc">
+                                {" "}
+                                <div className="row">
                                   <div className="mb-3 col-md-3 divSep">
                                     <input
                                       type="number"
@@ -1320,7 +1381,7 @@ const KidsformOne = () => {
                                       min="0"
                                     ></input>
                                   </div>
-                                  <div className="mb-3 col-md-2 divSepmb-3">
+                                  <div className="mb-3 col-md-2 divSep">
                                     <input
                                       type="number"
                                       className="form-control profession-input"
@@ -1343,39 +1404,38 @@ const KidsformOne = () => {
                                       min="0"
                                     ></input>
                                   </div>
-                                </div> </div>
+                                </div>{" "}
+                              </div>
 
-                                <div className="offer-wrapper pt-0">
-                                  <input
-                                    className="profession-checkbox"
-                                    id={profession.label}
-                                    type="checkbox"
-                                    checked={profession.openToOffers || false}
-                                    onChange={(e) =>
-                                      handleDetailChange(
-                                        index,
-                                        "openToOffers",
-                                        e.target.checked
-                                      )
-                                    }
-                                  />
-                                  <label
-                                    className="form-label offer-label"
-                                    htmlFor={profession.label}
-                                  >
-                                    Negotiable
-                                  </label>
-                                  <div>
-                                    <i
-                                      onClick={(e) => {
-                                        deleteProfession(profession, index);
-                                      }}
-                                      className="bi bi-trash"
-                                    ></i>
-                                  </div>
+                              <div className="offer-wrapper pt-0">
+                                <input
+                                  className="profession-checkbox"
+                                  id={profession.label}
+                                  type="checkbox"
+                                  checked={profession.openToOffers || false}
+                                  onChange={(e) =>
+                                    handleDetailChange(
+                                      index,
+                                      "openToOffers",
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                                <label
+                                  className="form-label offer-label"
+                                  htmlFor={profession.label}
+                                >
+                                  Negotiable
+                                </label>
+                                <div>
+                                  <i
+                                    onClick={(e) => {
+                                      deleteProfession(profession, index);
+                                    }}
+                                    className="bi bi-trash"
+                                  ></i>
                                 </div>
-
-                              
+                              </div>
                             </div>
                           </>
                         ))}
@@ -1679,12 +1739,24 @@ const KidsformOne = () => {
                     <div className="kids-signup-terms mb-5">
                       By registering you confirm that you accept the Brands &
                       Talent (BT){" "}
-                      <span style={{ color: "#c2114b" }}>
+                      <span
+                        onClick={() => navigateTo("terms")}
+                        style={{ color: "#c2114b", cursor: "pointer" }}
+                      >
                         Terms & Conditions
                       </span>
-                      , <span style={{ color: "#c2114b" }}>Privacy Policy</span>{" "}
+                      ,{" "}
+                      <span
+                        style={{ color: "#c2114b", cursor: "pointer" }}
+                        onClick={() => navigateTo("privacy")}
+                      >
+                        Privacy Policy
+                      </span>{" "}
                       and{" "}
-                      <span style={{ color: "#c2114b" }}>
+                      <span
+                        style={{ color: "#c2114b", cursor: "pointer" }}
+                        onClick={() => navigateTo("community")}
+                      >
                         Community Guidelines
                       </span>
                     </div>

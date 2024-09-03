@@ -64,6 +64,10 @@ function a11yProps(index) {
   };
 }
 
+const scrollToTop = () => {
+  window.scrollTo(0, 0); // Scroll to top on link click
+};
+
 // Regular expressions for different video platforms
 const urlPatterns = {
   youtube:
@@ -83,6 +87,11 @@ const isValidUrl = (url) => {
 };
 
 const EditTalent = () => {
+  const [languages, setLanguages] = useState([]);
+  const [nationality, setNationality] = useState("");
+
+  const [listOfLanguages, setListOfLanguages] = useState([]);
+  const [listOfNationalities, setListOfNationalities] = useState([]);
   const {
     categoryList,
     professionList,
@@ -91,6 +100,52 @@ const EditTalent = () => {
     nationalitiesList,
     featuresList,
   } = useFieldDatas();
+
+  useEffect(() => {
+    if (languagesList.length > 0) {
+      console.log(languagesList, "languagesList");
+      setListOfLanguages(languagesList);
+      getKidsData();
+    }
+  }, [languagesList]);
+  useEffect(() => {
+    if (nationalitiesList.length > 0) {
+      console.log(nationalitiesList, "nationalitiesList");
+      setListOfNationalities(nationalitiesList);
+      getKidsData();
+    }
+  }, [nationalitiesList]);
+
+  useEffect(() => {
+    console.log(listOfLanguages, "LANGUAGES_GET listOfLanguages");
+    let selectedOptions;
+    if (listOfLanguages && listOfLanguages.length > 0) {
+      selectedOptions = languages.map((language) => {
+        return listOfLanguages.find((option) => option.label === language);
+      });
+    }
+    console.log(
+      selectedOptions,
+      "LANGUAGES_GET listOfLanguages selectedOptions"
+    );
+    setSelectedLanguageOptions(selectedOptions);
+  }, [languagesList, languages]);
+
+  useEffect(() => {
+    let selectedOptions;
+    if (listOfNationalities && listOfNationalities.length > 0) {
+      selectedOptions = nationality.map((nationality) => {
+        return listOfNationalities.find(
+          (option) => option.label === nationality
+        );
+      });
+    }
+    console.log(
+      selectedOptions,
+      "LANGUAGES_GET listOfLanguages selectedOptions"
+    );
+    setSelectedNationalityOptions(selectedOptions);
+  }, [nationalitiesList, nationality]);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -192,9 +247,7 @@ const EditTalent = () => {
   const [kidsCity, setKidsCity] = useState("");
   const [gender, setGender] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
-  const [nationality, setNationality] = useState("");
   const [ethnicity, setEthnicity] = useState("");
-  const [languages, setLanguages] = useState([]);
   const [dateOfBirth, setDob] = useState("");
   const [aboutYou, setAboutYou] = useState([]);
   const [countryList, setCountryList] = useState([]);
@@ -250,16 +303,32 @@ const EditTalent = () => {
     "Prefer Not to Say",
   ];
 
-  function chooseCategory(category) {
-    setCategoryError(false);
+  const chooseCategory = (category) => {
+    console.log(category, "category selectedCategories");
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
       );
     } else {
-      setSelectedCategories([...selectedCategories, category]);
+      if (selectedCategories.length < 6) {
+        setSelectedCategories([...selectedCategories, category]);
+        setCategoryError(false);
+      } else {
+        setMessage("you can only select 6 categories");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 2000);
+      }
     }
-  }
+    console.log(selectedCategories.length, "selectedCategories");
+
+    if (selectedCategories.length < 4) {
+      setCategoryError(true);
+    } else {
+      setCategoryError(false);
+    }
+  };
 
   const handleProfessionChange = (selectedOptions) => {
     if (selectedOptions.length > 5) {
@@ -366,23 +435,29 @@ const EditTalent = () => {
   };
 
   const selectLanguage = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions");
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       setLanguages([]);
       setSelectedLanguageOptions([]);
-
       return;
     }
     const selectedLanguages = selectedOptions.map((option) => option.value);
-
     setLanguages(selectedLanguages);
-
     setSelectedLanguageOptions(selectedOptions);
   };
 
-  const selectNationality = (event) => {
-    setNationality(event.target.value);
+  const selectNationality = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions");
     setNationalityError(false);
+    if (!selectedOptions || selectedOptions.length === 0) {
+      setNationality([]);
+      setSelectedNationalityOptions([]);
+      return;
+    }
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+    setNationality(selectedLanguages);
+    setSelectedNationalityOptions(selectedOptions);
   };
   const selectMaritalStatus = (event) => {
     setMaritalStatus(event.target.value);
@@ -411,8 +486,11 @@ const EditTalent = () => {
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
+        console.log(resData, "KIDS_DATA");
         if (resData.data.status === true) {
           if (resData?.data?.data?.type === "kids") {
+            setLanguages(resData?.data?.data?.languages);
+
             setTalentData(resData.data.data, "resData.data.data");
             setEditProfileImage(resData.data.data?.image?.fileData);
             setKidsFillData(resData.data.data);
@@ -428,8 +506,17 @@ const EditTalent = () => {
             setState(resData?.data?.data?.parentState);
             getStates(resData?.data?.data?.parentCountry);
             setKidsCity(resData?.data?.data?.childCity);
-            setAudioUrlsList(resData?.data?.data?.audioList);
-            setUrls(resData?.data?.data?.videoList);
+            setAudioUrlsList(
+              Array.isArray(resData?.data?.data?.audioList)
+                ? resData.data.data.audioList
+                : []
+            );
+            setUrls(
+              Array.isArray(resData?.data?.data?.videoList)
+                ? resData.data.data.videoList
+                : []
+            );
+
             getCities({
               countryName: resData?.data?.data?.parentCountry,
               stateName: resData?.data?.data?.parentState,
@@ -441,26 +528,27 @@ const EditTalent = () => {
               resData?.data?.data?.preferredChildLastName
             );
             setGender(resData?.data?.data?.childGender);
-            setLanguages(resData?.data?.data?.languages);
             setNationality(resData?.data?.data?.childNationality);
             setMaritalStatus(resData?.data?.data?.maritalStatus);
             setEthnicity(resData?.data?.data?.childEthnicity);
-            setSelectedCategories([
-              ...selectedCategories,
-              ...resData.data.data?.relevantCategories,
-            ]);
+            // setSelectedCategories([
+            //   ...selectedCategories,
+            //   ...resData.data.data?.relevantCategories,
+            // ]);
+            setSelectedCategories(resData.data.data?.relevantCategories);
             setAboutYou(resData.data.data?.childAboutYou);
             setPortofolioFile(resData.data.data?.portfolio);
             setResumeFile(resData.data.data?.cv);
             setAge(resData.data.data?.age);
-            const selectedOptions = resData.data.data?.languages.map(
+
+            const selectedNationalityOptions = resData.data.data?.languages.map(
               (language) => {
-                return languagesList.find(
+                return nationalitiesList.find(
                   (option) => option.label === language
                 );
               }
             );
-            setSelectedLanguageOptions(selectedOptions);
+            setSelectedNationalityOptions(selectedNationalityOptions);
 
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
@@ -476,7 +564,7 @@ const EditTalent = () => {
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
           } else if (resData?.data?.data?.type === "adults") {
-            setTalentData(resData.data.data, "resData.data.data");
+            setTalentData(resData.data.data);
             setEditProfileImage(resData.data.data?.image?.fileData);
             setKidsFillData(resData.data.data);
             setParentFirstName(resData?.data?.data?.adultLegalFirstName);
@@ -489,8 +577,18 @@ const EditTalent = () => {
             setPublicUrl(`${resData?.data?.data?.publicUrl}`);
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
             setDob(resData?.data?.data?.childDob);
-            setAudioUrlsList(resData?.data?.data?.audioList);
-            setUrls(resData?.data?.data?.videoList);
+            setAudioUrlsList(
+              Array.isArray(resData?.data?.data?.audioList)
+                ? resData.data.data.audioList
+                : []
+            );
+
+            setUrls(
+              Array.isArray(resData?.data?.data?.videoList)
+                ? resData.data.data.videoList
+                : []
+            );
+
             setCountry(resData?.data?.data?.parentCountry);
             setState(resData?.data?.data?.parentState);
             setKidsCity(resData?.data?.data?.childCity);
@@ -501,28 +599,43 @@ const EditTalent = () => {
               resData?.data?.data?.preferredChildLastName
             );
             setGender(resData?.data?.data?.childGender);
+
+            console.log(resData?.data?.data?.languages, "languages");
+
             setLanguages(resData?.data?.data?.languages);
-            setNationality(resData?.data?.data?.childNationality);
-            setMaritalStatus(resData?.data?.data?.maritalStatus);
-            setEthnicity(resData?.data?.data?.childEthnicity);
-            setKidsCity(resData?.data?.data?.childCity);
-            setSelectedCategories([
-              ...selectedCategories,
-              ...resData.data.data?.relevantCategories,
-            ]);
-            setAboutYou(resData.data.data?.childAboutYou);
-            setPortofolioFile(resData.data.data?.portfolio);
-            setResumeFile(resData.data.data?.cv);
-            setAge(resData.data.data?.age);
-            const selectedOptions = resData.data.data?.languages.map(
+
+            const selectedOptions = resData?.data?.data?.languages.map(
               (language) => {
-                return languagesList.find(
+                return listOfLanguages.find(
                   (option) => option.label === language
                 );
               }
             );
             setSelectedLanguageOptions(selectedOptions);
 
+            setNationality(resData?.data?.data?.childNationality);
+            setMaritalStatus(resData?.data?.data?.maritalStatus);
+            setEthnicity(resData?.data?.data?.childEthnicity);
+            setKidsCity(resData?.data?.data?.childCity);
+            setSelectedCategories(resData.data.data?.relevantCategories);
+            // setSelectedCategories([
+            //   ...selectedCategories,
+            //   ...resData.data.data?.relevantCategories,
+            // ]);
+            setAboutYou(resData.data.data?.childAboutYou);
+            setPortofolioFile(resData.data.data?.portfolio);
+            setResumeFile(resData.data.data?.cv);
+            setAge(resData.data.data?.age);
+
+            const selectedNationalityOptions = resData.data.data?.languages.map(
+              (language) => {
+                return nationalitiesList.find(
+                  (option) => option.label === language
+                );
+              }
+            );
+            setSelectedNationalityOptions(selectedNationalityOptions);
+            console.log(selectedOptions, "selectedOptions");
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
@@ -531,7 +644,6 @@ const EditTalent = () => {
                 );
               }
             );
-
             setSelectedProfessions(resData.data.data?.profession);
             setFeatures(resData?.data?.data?.features);
           }
@@ -614,100 +726,118 @@ const EditTalent = () => {
 
   const basicDetailsUpdate = async () => {
     setMyState(false);
-
     if (talentData?.type === "kids") {
-      const formData = {
-        parentFirstName: parentFirstName,
-        parentLastName: parentLastName,
-        parentEmail: parentEmail,
-        parentMobileNo: parentMobile,
-        parentCountry: country,
-        parentState: state,
-        parentAddress: address,
-        relevantCategories: selectedCategories,
-        childFirstName: kidsLegalFirstName,
-        childLastName: kidsLegalLastName,
-        preferredChildFirstname: kidsPreferedFirstName,
-        preferredChildLastName: kidsPreferedLastName,
-        childGender: gender,
-        childNationality: nationality,
-        childEthnicity: ethnicity,
-        languages: languages,
-        childDob: dateOfBirth,
-        childCity: kidsCity,
-        childAboutYou: aboutYou,
-        profession: selectedProfessions,
-        age: age,
-        publicUrl: publicUrl,
-      };
-      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
+      if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
+        const formData = {
+          parentFirstName: parentFirstName,
+          parentLastName: parentLastName,
+          parentEmail: parentEmail,
+          parentMobileNo: parentMobile,
+          parentCountry: country,
+          parentState: state,
+          parentAddress: address,
+          relevantCategories: selectedCategories,
+          childFirstName: kidsLegalFirstName,
+          childLastName: kidsLegalLastName,
+          preferredChildFirstname: kidsPreferedFirstName,
+          preferredChildLastName: kidsPreferedLastName,
+          childGender: gender,
+          childNationality: nationality,
+          childEthnicity: ethnicity,
+          languages: languages,
+          childDob: dateOfBirth,
+          childCity: kidsCity,
+          childAboutYou: aboutYou,
+          profession: selectedProfessions,
+          age: age,
+          publicUrl: publicUrl,
+        };
+        await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setIsLoading(false);
+              setMessage("Updated Successfully!");
+              scrollToTop();
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+                setMyState(true);
+              }, 1000);
+            } else if (resData.data.status === false) {
+              setIsLoading(false);
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {
             setIsLoading(false);
-            setMessage("Updated SuccessFully!");
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-              setMyState(true);
-            }, 1000);
-          } else if (resData.data.status === false) {
-            setIsLoading(false);
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
-        });
+          });
+      } else {
+        setMessage("Please Update All Required Fields");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 1000);
+      }
     }
     if (talentData?.type === "adults") {
-      let formData = {
-        adultLegalFirstName: parentFirstName,
-        adultLegalLastName: parentLastName,
-        preferredChildFirstname: kidsPreferedFirstName,
-        preferredChildLastName: kidsPreferedLastName,
-        profession: selectedProfessions,
-        relevantCategories: selectedCategories,
-        childGender: gender,
-        maritalStatus: maritalStatus,
-        childNationality: nationality,
-        childEthnicity: ethnicity,
-        languages: languages,
-        childDob: dateOfBirth,
-        childPhone: parentMobile,
-        contactEmail: parentEmail,
-        childLocation: address,
-        parentCountry: country,
-        parentState: state,
-        parentAddress: address,
-        childCity: kidsCity,
-        age: age,
-        publicUrl: publicUrl,
-      };
-      await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
+      if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
+        let formData = {
+          adultLegalFirstName: parentFirstName,
+          adultLegalLastName: parentLastName,
+          preferredChildFirstname: kidsPreferedFirstName,
+          preferredChildLastName: kidsPreferedLastName,
+          profession: selectedProfessions,
+          relevantCategories: selectedCategories,
+          childGender: gender,
+          maritalStatus: maritalStatus,
+          childNationality: nationality,
+          childEthnicity: ethnicity,
+          languages: languages,
+          childDob: dateOfBirth,
+          childPhone: parentMobile,
+          contactEmail: parentEmail,
+          childLocation: address,
+          parentCountry: country,
+          parentState: state,
+          parentAddress: address,
+          childCity: kidsCity,
+          age: age,
+          publicUrl: publicUrl,
+        };
+        await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
+          .then((resData) => {
+            if (resData.data.status === true) {
+              setIsLoading(false);
+              setMessage("Updated Successfully!");
+              scrollToTop();
+
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+              }, 1000);
+            } else if (resData.data.status === false) {
+              setIsLoading(false);
+              setMessage(resData.data.message);
+              setOpenPopUp(true);
+              setTimeout(function () {
+                setOpenPopUp(false);
+              }, 1000);
+            }
+          })
+          .catch((err) => {
             setIsLoading(false);
-            setMessage("Updated SuccessFully!");
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-            }, 1000);
-          } else if (resData.data.status === false) {
-            setIsLoading(false);
-            setMessage(resData.data.message);
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
-        });
+          });
+      } else {
+        setMessage("Please Update All Required Fields");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 1000);
+      }
     }
   };
 
@@ -871,10 +1001,18 @@ const EditTalent = () => {
 
   useEffect(() => {}, [editProfileImage]);
 
-  useEffect(() => {}, [features]);
+  useEffect(() => {
+    console.log(features, "features");
+  }, [features]);
   useEffect(() => {
     console.log(talentData, "talentData");
   }, [talentData]);
+  useEffect(() => {
+    console.log(selectedLanguageOptions, "selectedLanguageOptions");
+  }, [selectedLanguageOptions]);
+  useEffect(() => {
+    console.log(selectedCategories, "selectedCategories");
+  }, [selectedCategories]);
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -952,6 +1090,7 @@ const EditTalent = () => {
 
           setEditProfileImage(fileObj?.fileData);
           setEditProfileImageObject(fileObj);
+          scrollToTop();
         }
       })
       .catch((err) => {
@@ -980,6 +1119,7 @@ const EditTalent = () => {
           };
 
           updatePortfolioAPI(fileObj);
+          scrollToTop();
         }
       })
       .catch((err) => {
@@ -1007,6 +1147,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Portfolio Added Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1046,6 +1188,7 @@ const EditTalent = () => {
             type: resData?.data?.data?.filetype,
           };
           updateResumeAPI(fileObj);
+          scrollToTop();
         }
       })
       .catch((err) => {
@@ -1077,6 +1220,7 @@ const EditTalent = () => {
           setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
+            scrollToTop();
           }, 2000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -1112,6 +1256,7 @@ const EditTalent = () => {
             type: resData?.data?.data?.filetype,
           };
           updateServiceFileAPI(fileObj, serviceData);
+          scrollToTop();
         }
       })
       .catch((err) => {
@@ -1158,6 +1303,7 @@ const EditTalent = () => {
           setTimeout(function () {
             setOpenPopUp(false);
             getKidsData();
+            scrollToTop();
           }, 2000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -1185,7 +1331,9 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Profile image updated successfully");
+            setMessage("Profile image updated Successfully");
+            scrollToTop();
+
             setOpenPopUp(true);
             setTimeout(function () {
               setMyState(true);
@@ -1208,7 +1356,9 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Profile image updated successfully");
+            setMessage("Profile image updated Successfully");
+            scrollToTop();
+
             setOpenPopUp(true);
             setTimeout(function () {
               setMyState(true);
@@ -1296,6 +1446,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("File Deleted Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1326,6 +1478,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("File Deleted Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1374,6 +1528,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Services Updated Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1406,6 +1562,8 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Features Updated Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1450,6 +1608,8 @@ const EditTalent = () => {
         if (resData) {
           setIsLoading(false);
           setMessage("Service Removed Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1476,6 +1636,7 @@ const EditTalent = () => {
     setVideoUrl(pastedText);
     // Validate pasted URL
     setCheckVideoUrl(!isValidUrl(pastedText));
+    e.preventDefault();
   };
 
   const deleteVideoUrls = async (item, index) => {
@@ -1486,9 +1647,11 @@ const EditTalent = () => {
     setIsLoading(true);
     await ApiHelper.post(`${API.deleteVideoUrls}`, formData)
       .then((resData) => {
-        if (resData.data.message === "URL deleted successfully") {
+        if (resData.data.message === "URL deleted Successfully") {
           setIsLoading(false);
-          setMessage("Deleted SuccessFully");
+          setMessage("Deleted Successfully");
+          scrollToTop();
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -1554,7 +1717,8 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Url updated successfully!");
+            setMessage("Url updated Successfully!");
+            setPublicUrlEdit(false);
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1581,7 +1745,9 @@ const EditTalent = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Url updated successfully!");
+            setMessage("Url updated Successfully!");
+            setPublicUrlEdit(false);
+
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1622,9 +1788,13 @@ const EditTalent = () => {
         setCheckAudioUrl(true);
       }
     }
-    postNewAudios();
+    if (audioUrl && audioUrlsList.length > 0) {
+      postNewAudios([...audioUrlsList, audioUrl]);
+    }
   };
+
   const handleUrlChange = (e) => {
+    if (e.inputType === "insertFromPaste") return;
     const url = e.target.value;
     setVideoUrl(url);
     // Validate URL in real-time
@@ -1632,6 +1802,7 @@ const EditTalent = () => {
   };
 
   const handleAudioChange = (e) => {
+    if (e.inputType === "insertFromPaste") return;
     const url = e.target.value;
     setAudioUrl(url);
     // Validate URL in real-time
@@ -1639,6 +1810,7 @@ const EditTalent = () => {
   };
 
   const handleAudioPaste = (e) => {
+    e.preventDefault();
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
@@ -1650,17 +1822,25 @@ const EditTalent = () => {
   };
 
   const handleAddUrl = async () => {
+    console.log(videoUrl, "videoUrl");
+    console.log(urls, "urls");
     if (videoUrl.trim() !== "") {
       if (isValidUrl(videoUrl)) {
+        if (!Array.isArray(urls)) {
+          console.error("urls is not an array:", urls);
+          return;
+        }
         setUrls([...urls, videoUrl]);
-
+        console.log(urls, "urlsAdd");
         setVideoUrl("");
         setCheckVideoUrl(false);
       } else {
         setCheckVideoUrl(true);
       }
     }
-    postNewVideos();
+    if (videoUrl && urls.length > 0) {
+      postNewVideos([...urls, videoUrl]);
+    }
   };
 
   const deleteAudioUrl = (index) => {
@@ -1684,17 +1864,19 @@ const EditTalent = () => {
   //   postNewAudios();
   // }, [audioUrlsList]);
 
-  const postNewVideos = async () => {
-    if (urls.length > 0) {
+  const postNewVideos = async (urlsData) => {
+    if (urlsData.length > 0) {
       const formData = {
-        videoList: urls,
+        videoList: urlsData,
       };
       setIsLoading(true);
       await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Updated SuccessFully");
+            setMessage("Updated Successfully");
+            scrollToTop();
+
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1707,17 +1889,19 @@ const EditTalent = () => {
         });
     }
   };
-  const postNewAudios = async () => {
-    if (audioUrlsList.length > 0) {
+  const postNewAudios = async (urlsData) => {
+    if (urlsData.length > 0) {
       const formData = {
-        audioList: audioUrlsList,
+        audioList: urlsData,
       };
       setIsLoading(true);
       await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
-            setMessage("Updated SuccessFully");
+            setMessage("Updated Successfully");
+            scrollToTop();
+
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -1731,6 +1915,9 @@ const EditTalent = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(urls, "urls");
+  }, []);
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} myState={myState} />
@@ -1746,7 +1933,9 @@ const EditTalent = () => {
       <main
         style={allJobsList?.length === 0 ? {} : {}}
         id="mainBrand"
-        className={`profileCont brand-main-container ${showSidebar ? "" : "main-pd"}`}
+        className={`profileCont brand-main-container ${
+          showSidebar ? "" : "main-pd"
+        }`}
       >
         <div className="brand-content-main boxBg edit_talentprofile">
           <div className="create-job-title">Edit Profile</div>
@@ -1785,14 +1974,14 @@ const EditTalent = () => {
                   {...a11yProps(4)}
                   style={{ textTransform: "capitalize" }}
                 />
-                <Tab
+                {/* <Tab
                   label="Services"
                   {...a11yProps(5)}
                   style={{ textTransform: "capitalize" }}
-                />
+                /> */}
                 <Tab
                   label="Features"
-                  {...a11yProps(6)}
+                  {...a11yProps(5)}
                   style={{ textTransform: "capitalize" }}
                 />
                 {/* <Tab
@@ -2066,7 +2255,7 @@ const EditTalent = () => {
                     <Select
                       isMulti
                       name="colors"
-                      options={languagesList}
+                      options={listOfLanguages}
                       valueField="value"
                       className="basic-multi-select"
                       classNamePrefix="select"
@@ -2134,9 +2323,9 @@ const EditTalent = () => {
                     <MuiPhoneNumber
                       value={parentMobile}
                       defaultCountry={"kh"}
+                      countryCodeEditable={false}
                       className="material-mobile-style"
                       onChange={handleMobileChange}
-                  
                     />
 
                     {parentMobileError && (
@@ -2285,171 +2474,178 @@ const EditTalent = () => {
                     </div>
                   </div>
                   <div className="profession-content-section">
+                    {selectedProfessions.length > 0 && (
+                      <>
+                        <p className="set-rates">
+                          *Set Your Rates in USD (Choose one or more rates for
+                          each selected skill)
+                        </p>
+                      </>
+                    )}
+
                     {selectedProfessions.map((profession, index) => (
-                      <div key={index} className="dynamic-profession newAlign">
-                        <div className="algSepc"> <div className="row">
-                          <div className="mb-3 col-md-3 divSep">
-                            <label className="form-label">
-                              {profession.label}
-                            </label>
-                            <input
-                              type="number"
-                              className="form-control profession-input"
-                              value={profession.perDaySalary || ""}
-                              onChange={(e) => {
-                                const value = e.target.value;
-                                // Check if the value is a valid number and is non-negative
-                                if (
-                                  /^\d*\.?\d*$/.test(value) &&
-                                  (value >= 0 || value === "")
-                                ) {
-                                  handleDetailChange(
-                                    index,
-                                    "perDaySalary",
-                                    value
-                                  );
-                                }
-                              }}
-                              placeholder="$/day"
-                              min="0"
-                            ></input>
-                          </div>
-                          <div className="mb-3 col-md-3 divSep">
-                            <label className="form-label">
-                              {profession.label}
-                            </label>
-                            <input
-                              type="number"
-                              className="form-control profession-input"
-                              value={profession.perHourSalary || ""}
-                              onChange={(e) => {
-                                const value = e.target.value;
-                                // Check if the value is a valid number and is non-negative
-                                if (
-                                  /^\d*\.?\d*$/.test(value) &&
-                                  (value >= 0 || value === "")
-                                ) {
-                                  handleDetailChange(
-                                    index,
-                                    "perHourSalary",
-                                    value
-                                  );
-                                }
-                              }}
-                              placeholder="$/hr"
-                              min="0"
-                            ></input>
+                      <>
+                        <div>
+                          <label className="form-label">
+                            {profession.label}
+                          </label>
+                        </div>
+                        <div
+                          key={index}
+                          className="dynamic-profession newAlign"
+                        >
+                          <div className="algSepc">
+                            <div className="row">
+                              <div className="mb-3 col-md-3 divSep">
+                                <input
+                                  type="number"
+                                  className="form-control profession-input"
+                                  value={profession.perDaySalary || ""}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleDetailChange(
+                                        index,
+                                        "perDaySalary",
+                                        value
+                                      );
+                                    }
+                                  }}
+                                  placeholder="$/day"
+                                  min="0"
+                                ></input>
+                              </div>
+                              <div className="mb-3 col-md-3 divSep">
+                                <input
+                                  type="number"
+                                  className="form-control profession-input"
+                                  value={profession.perHourSalary || ""}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleDetailChange(
+                                        index,
+                                        "perHourSalary",
+                                        value
+                                      );
+                                    }
+                                  }}
+                                  placeholder="$/hr"
+                                  min="0"
+                                ></input>
+                              </div>
+
+                              <div className="mb-3 col-md-2 divSep">
+                                <input
+                                  type="number"
+                                  className="form-control profession-input"
+                                  value={profession.perMonthSalary || ""}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleDetailChange(
+                                        index,
+                                        "perMonthSalary",
+                                        value
+                                      );
+                                    }
+                                  }}
+                                  placeholder="$/month"
+                                  min="0"
+                                ></input>
+                              </div>
+                              <div className="mb-3 col-md-2 divSep">
+                                <input
+                                  type="number"
+                                  className="form-control profession-input"
+                                  value={profession.perPostSalary || ""}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleDetailChange(
+                                        index,
+                                        "perPostSalary",
+                                        value
+                                      );
+                                    }
+                                  }}
+                                  placeholder="$/post"
+                                  min="0"
+                                ></input>
+                              </div>
+                              <div className="mb-3 col-md-2 divSep">
+                                <input
+                                  type="number"
+                                  className="form-control profession-input"
+                                  value={profession.perImageSalary || ""}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleDetailChange(
+                                        index,
+                                        "perImageSalary",
+                                        value
+                                      );
+                                    }
+                                  }}
+                                  placeholder="$/image"
+                                  min="0"
+                                ></input>
+                              </div>
+                            </div>
                           </div>
 
-                          <div className="mb-3 col-md-2 divSep">
-                            <label className="form-label">
-                              {profession.label}
-                            </label>
+                          <div className="offer-wrapper">
                             <input
-                              type="number"
-                              className="form-control profession-input"
-                              value={profession.perMonthSalary || ""}
-                              onChange={(e) => {
-                                const value = e.target.value;
-                                // Check if the value is a valid number and is non-negative
-                                if (
-                                  /^\d*\.?\d*$/.test(value) &&
-                                  (value >= 0 || value === "")
-                                ) {
-                                  handleDetailChange(
-                                    index,
-                                    "perMonthSalary",
-                                    value
-                                  );
-                                }
-                              }}
-                              placeholder="$/month"
-                              min="0"
-                            ></input>
-                          </div>
-                          <div className="mb-3 col-md-2 divSep">
-                            <label className="form-label">
-                              {profession.label}
+                              className="profession-checkbox"
+                              id={profession.label}
+                              type="checkbox"
+                              checked={profession.openToOffers || false}
+                              onChange={(e) =>
+                                handleDetailChange(
+                                  index,
+                                  "openToOffers",
+                                  e.target.checked
+                                )
+                              }
+                            />
+                            <label
+                              className="form-label offer-label"
+                              htmlFor={profession.label}
+                            >
+                              Negotiable
                             </label>
-                            <input
-                              type="number"
-                              className="form-control profession-input"
-                              value={profession.perPostSalary || ""}
-                              onChange={(e) => {
-                                const value = e.target.value;
-                                // Check if the value is a valid number and is non-negative
-                                if (
-                                  /^\d*\.?\d*$/.test(value) &&
-                                  (value >= 0 || value === "")
-                                ) {
-                                  handleDetailChange(
-                                    index,
-                                    "perPostSalary",
-                                    value
-                                  );
-                                }
-                              }}
-                              placeholder="$/post"
-                              min="0"
-                            ></input>
-                          </div>
-                          <div className="mb-3 col-md-2 divSep">
-                            <label className="form-label">
-                              {profession.label}
-                            </label>
-                            <input
-                              type="number"
-                              className="form-control profession-input"
-                              value={profession.perImageSalary || ""}
-                              onChange={(e) => {
-                                const value = e.target.value;
-                                // Check if the value is a valid number and is non-negative
-                                if (
-                                  /^\d*\.?\d*$/.test(value) &&
-                                  (value >= 0 || value === "")
-                                ) {
-                                  handleDetailChange(
-                                    index,
-                                    "perImageSalary",
-                                    value
-                                  );
-                                }
-                              }}
-                              placeholder="$/image"
-                              min="0"
-                            ></input>
-                          </div>
-                        </div> </div>
-                        <div className="offer-wrapper">
-                          <input
-                            className="profession-checkbox"
-                            id={profession.label}
-                            type="checkbox"
-                            checked={profession.openToOffers || false}
-                            onChange={(e) =>
-                              handleDetailChange(
-                                index,
-                                "openToOffers",
-                                e.target.checked
-                              )
-                            }
-                          />
-                          <label
-                            className="form-label offer-label"
-                            htmlFor={profession.label}
-                          >
-                            Negotiable
-                          </label>
-                          <div>
-                            <i
-                              onClick={(e) => {
-                                deleteProfession(profession, index);
-                              }}
-                              className="bi bi-trash"
-                            ></i>
+                            <div>
+                              <i
+                                onClick={(e) => {
+                                  deleteProfession(profession, index);
+                                }}
+                                className="bi bi-trash"
+                              ></i>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </>
                     ))}
                   </div>
                 </div>
@@ -2480,9 +2676,16 @@ const EditTalent = () => {
                     </div>
                   ))}
                 </div>
-                {categoryError && (
+                {/* {categoryError && (
                   <div className="invalid-fields">Please choose Categories</div>
-                )}
+                )} */}
+                {(selectedCategories?.length < 3 ||
+                  selectedCategories?.length > 6) &&
+                  categoryError && (
+                    <div className="invalid-fields">
+                      Please select 3 to 6 categories relevant to your profile
+                    </div>
+                  )}
                 <div className="row">
                   <div className="kids-form-section  col-md-9 mb-3 mt-3">
                     <label className="form-label">Public Url</label>
@@ -2490,7 +2693,7 @@ const EditTalent = () => {
                       {!publicUrlEdit && (
                         <>
                           <div className="public-url-text">
-                            {`https://brandsandtalent.com/backend/uploads/${publicUrl}`}
+                            {`https://brandsandtalent.com/talent/${publicUrl}`}
                             <i
                               onClick={(e) => {
                                 setPublicUrlEdit(true);
@@ -2507,15 +2710,17 @@ const EditTalent = () => {
                       )}
 
                       {publicUrlEdit && (
-                        <input
-                          type="text"
-                          className="form-control public-url-input"
-                          value={publicUrl}
-                          onChange={(e) => {
-                            publicUrlChange(e);
-                          }}
-                          placeholder="Edit url"
-                        ></input>
+                        <>
+                          <input
+                            type="text"
+                            className="form-control public-url-input"
+                            value={publicUrl}
+                            onChange={(e) => {
+                              publicUrlChange(e);
+                            }}
+                            placeholder="Edit url"
+                          ></input>
+                        </>
                       )}
 
                       {publicUrlEdit && (
@@ -2530,6 +2735,9 @@ const EditTalent = () => {
                         </Button>
                       )}
                     </div>
+                    {errorMessage && (
+                      <div className="invalid-fields pt-2">{errorMessage}</div>
+                    )}
                   </div>
                 </div>
 
@@ -2686,7 +2894,10 @@ const EditTalent = () => {
                           {urls.map((url, index) => {
                             return (
                               <>
-                                <div key={index} className="url-file-wrapper urlSect">
+                                <div
+                                  key={index}
+                                  className="url-file-wrapper urlSect mt-2"
+                                >
                                   <div className="file-section">
                                     <a
                                       href={url}
@@ -2764,7 +2975,10 @@ const EditTalent = () => {
                           {audioUrlsList.map((url, index) => {
                             return (
                               <>
-                                <div key={index} className="url-file-wrapper">
+                                <div
+                                  key={index}
+                                  className="url-file-wrapper mt-2"
+                                >
                                   <div className="file-section">
                                     <a
                                       href={url}
@@ -3019,7 +3233,7 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={5}>
+            {/* <CustomTabPanel value={valueTabs} index={5}>
               <div className="update-portfolio-section">
                 <div className="update-service-cards-wrapper edit-service-section-main">
                   {services &&
@@ -3252,126 +3466,12 @@ const EditTalent = () => {
                   </div>
                 </div>
               </div>
-            </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={6}>
-              {talentData && talentData?.features?.length > 0 && (
+            </CustomTabPanel> */}
+            <CustomTabPanel value={valueTabs} index={5}>
+              {talentData && (
                 <>
-                  {/* <div className="selected-features update-portfolio-cards-wrapper mt-3 mb-5">
-                    {features && (
-                      <>
-                        <div className="table-container">
-                          <table>
-                            <tbody>
-                              <tr>
-                                <td className="left-column">
-                                  <table>
-                                    <tbody>
-                                      {features
-                                        ?.slice(
-                                          0,
-                                          Math.ceil(features?.length / 2)
-                                        )
-                                        .map((feature, index) => (
-                                          <tr key={feature?.label}>
-                                            <td>{feature?.label}</td>
-                                            <td>{feature?.value}</td>
-                                          </tr>
-                                        ))}
-                                    </tbody>
-                                  </table>
-                                </td>
-                                <td className="right-column">
-                                  <table>
-                                    <tbody>
-                                      {features
-                                        ?.slice(Math.ceil(features?.length / 2))
-                                        .map((feature, index) => (
-                                          <tr key={feature?.label}>
-                                            <td>{feature?.label}</td>
-                                            <td>{feature?.value}</td>
-                                          </tr>
-                                        ))}
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </>
-                    )}
-                  </div> */}
-
                   <div className="features-section mt-4">
                     <div className="row">
-                      {/* {featuresList && (
-                        <>
-                          {featuresList.map((item, index) => (
-                            <div
-                              key={index}
-                              className="col-md-2 mb-3 mr-3 features-input-wrapper"
-                            >
-                              <label className="form-label">{item.label}</label>
-                              {creatableOptions.includes(item.label) ? (
-                                <CreatableSelect
-                                  isClearable
-                                  options={item.options.map((option) => ({
-                                    value: option,
-                                    label: option,
-                                  }))}
-                                  onChange={(selectedOption) =>
-                                    handleFeaturesChange(
-                                      item.label,
-                                      selectedOption ? selectedOption.value : ""
-                                    )
-                                  }
-                                  placeholder={getPlaceholder(item.label)}
-                                />
-                              ) : creatableInputOptions.includes(item.label) ? (
-                                <input
-                                  type="text"
-                                  className="form-control features-select"
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      handleFeaturesChange(
-                                        item.label,
-                                        e.target.value
-                                      );
-                                    }
-                                  }}
-                                  placeholder={getPlaceholder(item.label)}
-                                />
-                              ) : (
-                                <select
-                                  className="form-select features-select"
-                                  aria-label="Default select example"
-                                  onChange={(e) =>
-                                    handleFeaturesChange(
-                                      item.label,
-                                      e.target.value
-                                    )
-                                  }
-                                  defaultValue=""
-                                >
-                                  <option value="" disabled>
-                                    {item.label}
-                                  </option>
-                                  {item.options.map((option, idx) => (
-                                    <option key={idx} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              )}
-                            </div>
-                          ))}
-                        </>
-                      )} */}
                       <EditFeatures
                         featuresStructure={featuresList}
                         featureValues={features}
@@ -3482,7 +3582,7 @@ const EditTalent = () => {
                 }
               }}
             >
-              Ok
+              Yes
             </button>
           </div>
         </div>

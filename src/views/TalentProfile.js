@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "../assets/css/findcreators.css";
 import "../assets/css/talent-profile.css";
 import "../assets/css/dashboard.css";
+import { useParams } from "react-router-dom";
 
 import "../assets/css/register.css";
 import "../assets/css/kidsmain.scss";
@@ -71,15 +72,64 @@ const TalentProfile = () => {
   const [selectedJob, setSelectedJob] = useState("");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
+  const location = useLocation();
+  const [talentName, setTalentName] = useState("");
+  const [urlTalentData, setUrlTalentData] = useState("");
   useEffect(() => {
     setCurrentUserType(localStorage.getItem("currentUserType"));
   }, []);
 
-  const location = useLocation();
-  const selectedTalent = location.state && location.state.talentData;
+  useEffect(() => {
+    // Extract the last part of the URL (i.e., 'peter')
+    const pathParts = location.pathname.split("/");
+    const name = pathParts[pathParts.length - 1];
+    console.log(name, "name");
+    setTalentName(name);
+    getDataByPublicUrl(name);
+  }, [location]);
+
+  const getDataByPublicUrl = async (name) => {
+    const formData = {
+      publicUrl: name,
+    };
+    await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
+      .then((resData) => {
+        console.log(resData?.data?.data?._id, "getDataByPublicUrl");
+        setUrlTalentData(resData?.data?.data);
+        // checkUser(resData?.data?.data?._id, resData?.data?.data);
+        setTalentData(resData?.data?.data);
+      })
+      .catch((err) => {});
+  };
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
+  console.log(queryString, "queryString");
+
+  // console.log(userId, "userId IDS");
+  // console.log(urlTalentData?._id, "urlTalentData?._id IDS");
+
+  // const selectedTalent = location.state && location.state.talentData;
+  // console.log(selectedTalent, "selectedTalent");
+
+  // const checkUser = (id, data) => {
+  //   const localID = localStorage.getItem("userId");
+  //   console.log(localID, "localID IDS");
+  //   console.log(id, "urlTalentData?._id IDS");
+
+  //   if (localID && id) {
+  //     if (localID !== id) {
+  //       // navigate("/login");
+  //       setTalentData(data);
+  //     } else if (localID == id) {
+
+  //     }
+  //   }
+  // };
+
+  if (!talentData && !userId) {
+    navigate("/login");
+  }
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -89,8 +139,8 @@ const TalentProfile = () => {
       "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3",
     ]);
     setUserId(storedUserId);
-    if (selectedTalent?._id) {
-      getTalentById(selectedTalent?._id);
+    if (talentData?._id) {
+      // getTalentById(talentData?._id);
       fetchPhotos();
       fetchVideoAudios();
       fetchFeatures();
@@ -98,16 +148,29 @@ const TalentProfile = () => {
       fetchReviews();
       fetchURLS();
     } else if (storedUserId) {
-      getTalentById(storedUserId);
+      // getTalentById(storedUserId);
     } else if (queryString) {
-      getTalentById(queryString);
+      // getTalentById(queryString);
     }
-  }, [selectedTalent]);
+    // if (selectedTalent?._id) {
+    //   getTalentById(selectedTalent?._id);
+    //   fetchPhotos();
+    //   fetchVideoAudios();
+    //   fetchFeatures();
+    //   fetchCV();
+    //   fetchReviews();
+    //   fetchURLS();
+    // } else if (storedUserId) {
+    //   getTalentById(storedUserId);
+    // } else if (queryString) {
+    //   getTalentById(queryString);
+    // }
+  }, [talentData]);
 
   const fetchPhotos = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/1`
     )
       .then((resData) => {
@@ -119,10 +182,11 @@ const TalentProfile = () => {
       })
       .catch((err) => {});
   };
+
   const fetchVideoAudios = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/2`
     )
       .then((resData) => {
@@ -135,7 +199,7 @@ const TalentProfile = () => {
   const fetchURLS = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/8`
     )
       .then((resData) => {
@@ -148,7 +212,7 @@ const TalentProfile = () => {
   const fetchFeatures = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/4`
     )
       .then((resData) => {
@@ -161,7 +225,7 @@ const TalentProfile = () => {
   const fetchCV = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/3`
     )
       .then((resData) => {
@@ -174,7 +238,7 @@ const TalentProfile = () => {
   const fetchReviews = async () => {
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
-        selectedTalent?._id ? selectedTalent?._id : queryString
+        talentData?._id ? talentData?._id : queryString
       }/7`
     )
       .then((resData) => {
@@ -185,15 +249,15 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
 
-  const getTalentById = async (talent_id) => {
-    await ApiHelper.post(`${API.getTalentById}${talent_id}`)
-      .then((resData) => {
-        if (resData) {
-          setTalentData(resData.data.data);
-        }
-      })
-      .catch((err) => {});
-  };
+  // const getTalentById = async (talent_id) => {
+  //   await ApiHelper.post(`${API.getTalentById}${talent_id}`)
+  //     .then((resData) => {
+  //       if (resData) {
+  //         setTalentData(resData.data.data);
+  //       }
+  //     })
+  //     .catch((err) => {});
+  // };
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
@@ -293,28 +357,36 @@ const TalentProfile = () => {
   }, [showModal]);
 
   const handleOpenModal = () => {
-    if (currentUserType == "brand" && talentData?.planName === "Basic") {
-      setMessage("Purchase Pro or Premium Plan to unlock this feature");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 3000);
-    } else {
-      if (currentUserType == "talent") {
-        setMessage("Please log in as a Brand/Client and post a job first");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/login");
-        }, 3000);
-      } else if (currentUserType == "brand") {
-        setShowModal(true);
-      }
-    }
+    // if (currentUserType == "brand" && talentData?.planName === "Basic") {
+    //   setMessage("Purchase Pro or Premium Plan to unlock this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 3000);
+    // } else {
+    //   if (currentUserType == "talent") {
+    //     setMessage("Please log in as a Brand/Client and post a job first");
+    //     setOpenPopUp(true);
+    //     setTimeout(function () {
+    //       setOpenPopUp(false);
+    //       navigate("/login");
+    //     }, 3000);
+    //   } else if (currentUserType == "brand") {
+    //     setShowModal(true);
+    //   }
+    // }
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
   };
   const messageNow = () => {
-    navigate(`/message?${talentData?._id}`);
+    // navigate(`/message?${talentData?._id}`);
+    window.open(
+      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      "_blank"
+    );
   };
 
   const inviteToApply = async () => {
@@ -330,7 +402,7 @@ const TalentProfile = () => {
         if (resData) {
           if (resData?.data?.status === true) {
             setShowModal(false);
-            setMessage("Invitation Sent SuccessFully");
+            setMessage("Invitation Sent Successfully");
             setIsLoading(false);
             setOpenPopUp(true);
             setTimeout(function () {
@@ -379,7 +451,7 @@ const TalentProfile = () => {
     };
     await ApiHelper.post(API.reportReview, formData)
       .then((resData) => {
-        setMessage("Reported SuccessFully!");
+        setMessage("Reported Successfully!");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -471,10 +543,16 @@ const TalentProfile = () => {
     setAnchorEl(null);
   };
 
+  const [hideToglle, setHideToggle] = useState(true);
+
   return (
     <>
-      {currentUser_type == "brand" && <BrandHeader toggleMenu={toggleMenu} />}
-      {currentUser_type == "talent" && <TalentHeader toggleMenu={toggleMenu} />}
+      {currentUser_type == "brand" && (
+        <BrandHeader hideToggleButton={hideToglle} toggleMenu={toggleMenu} />
+      )}
+      {currentUser_type == "talent" && (
+        <TalentHeader hideToggleButton={hideToglle} toggleMenu={toggleMenu} />
+      )}
 
       <section>
         <div className="popular-header">
@@ -653,141 +731,345 @@ const TalentProfile = () => {
                         </div>
                       </div>
                     </div>
+
                     {(talentData?.instaFollowers ||
                       talentData?.facebookFollowers ||
                       talentData?.tiktokFollowers ||
                       talentData?.linkedinFollowers ||
                       talentData?.twitterFollowers ||
                       talentData?.threadsFollowers ||
-                      talentData?.youtubeFollowers) && (
+                      talentData?.youtubeFollowers ||
+                      talentData?.instagramUrl ||
+                      talentData?.tikTokUrl ||
+                      talentData?.youTubeUrl ||
+                      talentData?.linkedinUrl ||
+                      talentData?.threadsUrl ||
+                      talentData?.facebookUrl ||
+                      talentData?.twitterUrl) && (
                       <>
                         <div className="talents-social-wrapper mt-4">
                           <div className="row">
-                            {talentData?.instaFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={instaLogo}></img>
-                                </div>
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.instaFollowers
-                                      ? talentData?.instaFollowers
-                                      : "N/A"}
+                            {talentData?.instaFollowers ||
+                              (talentData?.instagramUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.instagramUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={instaLogo}
+                                    ></img>
                                   </div>
-                                  <div className="followers-text">
-                                    Followers
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                            {talentData?.facebookFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={fbIcon}></img>
-                                </div>
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.facebookFollowers
-                                      ? talentData.facebookFollowers
-                                      : "N/A"}
-                                  </div>
-                                  <div className="followers-text">
-                                    Followers
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                            {talentData?.tiktokFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={tiktok}></img>
-                                </div>
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.tiktokFollowers
-                                      ? talentData.tiktokFollowers
-                                      : "N/A"}
-                                  </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData.instaFollowers && (
+                                        <>{talentData?.instaFollowers}</>
+                                      )}
+                                      {!talentData.instaFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.instagramUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
+                                    {talentData?.instaFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
-                              </div>
-                            )}
+                              ))}
+                            {talentData?.facebookFollowers ||
+                              (talentData?.facebookUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.facebookUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={fbIcon}
+                                    ></img>
+                                  </div>
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData.facebookFollowers && (
+                                        <>{talentData?.facebookFollowers}</>
+                                      )}
+                                      {!talentData.facebookFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.facebookUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
+                                    {talentData?.facebookFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
+                            {talentData?.tiktokFollowers ||
+                              (talentData?.tikTokUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.tikTokUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={tiktok}
+                                    ></img>
+                                  </div>
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData.tiktokFollowers && (
+                                        <>{talentData?.tiktokFollowers}</>
+                                      )}
+                                      {!talentData.tiktokFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.tikTokUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
+                                    {talentData?.tiktokFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
 
-                            {talentData?.linkedinFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={linkdin}></img>
-                                </div>
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.linkedinFollowers
-                                      ? talentData.linkedinFollowers
-                                      : "N/A"}
+                            {talentData?.linkedinFollowers ||
+                              (talentData?.linkedinUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.linkedinUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={linkdin}
+                                    ></img>
                                   </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData.linkedinFollowers && (
+                                        <>{talentData?.linkedinFollowers}</>
+                                      )}
+                                      {!talentData.linkedinFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.linkedinUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
+                                    {talentData?.linkedinFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
-                              </div>
-                            )}
+                              ))}
 
-                            {talentData?.twitterFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={twitterLogo}></img>
-                                </div>
+                            {talentData?.twitterFollowers ||
+                              (talentData?.twitterUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.twitterUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={twitterLogo}
+                                    ></img>
+                                  </div>
 
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.twitterFollowers
-                                      ? talentData.twitterFollowers
-                                      : "N/A"}
-                                  </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData.twitterFollowers && (
+                                        <>{talentData?.twitterFollowers}</>
+                                      )}
+                                      {!talentData.twitterFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.twitterUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
+                                    {talentData?.twitterFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
-                              </div>
-                            )}
-                            {talentData?.threadsFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={threadLogo}></img>
-                                </div>
+                              ))}
+                            {talentData?.threadsFollowers ||
+                              (talentData?.threadsUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.threadsUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={threadLogo}
+                                    ></img>
+                                  </div>
 
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.threadsFollowers
-                                      ? talentData.threadsFollowers
-                                      : "N/A"}
-                                  </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData.threadsFollowers && (
+                                        <>{talentData?.threadsFollowers}</>
+                                      )}
+                                      {!talentData.threadsFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.threadsUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
+                                    {talentData?.threadsFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
-                              </div>
-                            )}
+                              ))}
 
-                            {talentData?.youtubeFollowers && (
-                              <div className="talents-social col-md-6">
-                                <div className="logoSocial">
-                                  <img src={youtubeLogo}></img>
-                                </div>
+                            {talentData?.youtubeFollowers ||
+                              (talentData?.youTubeUrl && (
+                                <div className="talents-social col-md-6">
+                                  <div className="logoSocial">
+                                    <img
+                                      onClick={() =>
+                                        window.open(
+                                          `${talentData?.youTubeUrl}`,
+                                          "_blank"
+                                        )
+                                      }
+                                      src={youtubeLogo}
+                                    ></img>
+                                  </div>
 
-                                <div className="social-followers-count-section">
-                                  <div className="social-count">
-                                    {talentData?.youtubeFollowers
-                                      ? talentData.youtubeFollowers
-                                      : "N/A"}
-                                  </div>
-                                  <div className="followers-text">
-                                    Followers
+                                  <div className="social-followers-count-section">
+                                    <div className="social-count">
+                                      {talentData.youtubeFollowers && (
+                                        <>{talentData?.youtubeFollowers}</>
+                                      )}
+                                      {!talentData.youtubeFollowers && (
+                                        <>
+                                          <div
+                                            onClick={() =>
+                                              window.open(
+                                                `${talentData?.youTubeUrl}`,
+                                                "_blank"
+                                              )
+                                            }
+                                            className="click-url"
+                                          >
+                                            Click here
+                                          </div>
+                                        </>
+                                      )}
+                                    </div>
+                                    {talentData?.youtubeFollowers && (
+                                      <>
+                                        <div className="followers-text">
+                                          Followers
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
-                              </div>
-                            )}
+                              ))}
                           </div>
                         </div>
                       </>
@@ -996,7 +1278,7 @@ const TalentProfile = () => {
                         Videos & Audios
                       </div>
 
-                      <div
+                      {/* <div
                         className={
                           services
                             ? "active-tab individual-talent-tab"
@@ -1007,7 +1289,7 @@ const TalentProfile = () => {
                         }}
                       >
                         Services
-                      </div>
+                      </div> */}
 
                       <div
                         className={
@@ -1073,7 +1355,25 @@ const TalentProfile = () => {
                                   <div>Data not added</div>
                                 </>
                               )}
-                            {photosList.length === 0 &&
+                            {talentData?.profileApprove === false && (
+                              <>
+                                <div>
+                                  Photos will be visible only after admin
+                                  approval
+                                </div>
+                              </>
+                            )}
+                            {talentData?.profileApprove === true &&
+                              photosList &&
+                              photosList.length === 0 && (
+                                <>
+                                  <div>
+                                    Photos will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
+                            {/* {photosList.length === 0 &&
                               talentData?.profileApprove === false && (
                                 <>
                                   <div>
@@ -1081,18 +1381,18 @@ const TalentProfile = () => {
                                     approval
                                   </div>
                                 </>
-                              )}
+                              )} */}
                           </div>
 
-                          <div className="portofolio-section">
+                          {/* <div className="portofolio-section">
                             <div className="portofolio-title mt-4">
                               Social Media Posts
                             </div>
                           </div>
-                          <p>No Social Media Posts Available</p>
+                          <p>No Social Media Posts Available</p> */}
                           {/* <CardCarousel /> */}
 
-                          <div className="portofolio-section">
+                          {/* <div className="portofolio-section">
                             <div className="portofolio-title">Reviews</div>
                             <div
                               className="view-all"
@@ -1102,9 +1402,9 @@ const TalentProfile = () => {
                             >
                               View All
                             </div>
-                          </div>
+                          </div> */}
 
-                          <div className="reviews-section">
+                          {/* <div className="reviews-section">
                             <div className="rating-talent">
                               <div className="num">
                                 {talentData?.averageStarRatings}
@@ -1121,7 +1421,7 @@ const TalentProfile = () => {
                                 was required and everything was effortless.
                               </div>
                             </div>
-                          </div>
+                          </div> */}
 
                           <div className="portofolio-section">
                             <div className="portofolio-title">
@@ -1137,7 +1437,7 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
-                          <p>Videos</p>
+                          <p className="pb-2">Videos</p>
 
                           <div className="service-list-main w-100">
                             <div className="row w-100">
@@ -1204,20 +1504,19 @@ const TalentProfile = () => {
                                 </div>
                               ))}
 
-                              {urlsList?.length === 0 &&
-                                talentData?.profileApprove === true && (
-                                  <>
-                                    <div>Data not added</div>
-                                  </>
-                                )}
+                              {talentData?.profileApprove === false && (
+                                <>
+                                  <div>
+                                    Videos will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
 
-                              {urlsList?.length === 0 &&
-                                talentData?.profileApprove === false && (
+                              {talentData?.profileApprove === true &&
+                                urlsList?.length === 0 && (
                                   <>
-                                    <div>
-                                      Data will be visible only after admin
-                                      approval
-                                    </div>
+                                    <div>No Videos Available</div>
                                   </>
                                 )}
                             </div>
@@ -1253,26 +1552,25 @@ const TalentProfile = () => {
                                 </div>
                               )}
 
-                              {audiosList?.length === 0 &&
-                                talentData?.profileApprove === true && (
+                              {talentData?.profileApprove === true &&
+                                audiosList &&
+                                audiosList?.length === 0 && (
                                   <>
-                                    <div>Data not added</div>
+                                    <div>No Audios Available</div>
                                   </>
                                 )}
-
-                              {audiosList?.length === 0 &&
-                                talentData?.profileApprove === false && (
-                                  <>
-                                    <div>
-                                      Data will be visible only after admin
-                                      approval
-                                    </div>
-                                  </>
-                                )}
+                              {talentData?.profileApprove === false && (
+                                <>
+                                  <div>
+                                    Audios will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                             </div>
                           </div>
 
-                          {talentData && talentData?.services?.length > 0 && (
+                          {/* {talentData && talentData?.services?.length > 0 && (
                             <>
                               <div className="portofolio-section">
                                 <div className="portofolio-title">Services</div>
@@ -1303,7 +1601,7 @@ const TalentProfile = () => {
                                   </>
                                 )}
                             </>
-                          )}
+                          )} */}
 
                           {/* <div className="service-list-main">
                             {videoAudioList.map((item) => (
@@ -1370,23 +1668,20 @@ const TalentProfile = () => {
                                 </>
                               );
                             })}
-
-                            {cvList.length === 0 &&
-                              talentData?.profileApprove === true && (
+                            {talentData?.profileApprove === true &&
+                              cvList.length === 0 && (
                                 <>
-                                  <div>Data not added</div>
+                                  <div>No Resumes Available</div>
                                 </>
                               )}
-
-                            {cvList.length === 0 &&
-                              talentData?.profileApprove === false && (
-                                <>
-                                  <div>
-                                    Data will be visible only after admin
-                                    approval
-                                  </div>
-                                </>
-                              )}
+                            {talentData?.profileApprove === false && (
+                              <>
+                                <div>
+                                  Resumes will be visible only after admin
+                                  approval
+                                </div>
+                              </>
+                            )}
                           </div>
                         </>
                       )}
@@ -1419,161 +1714,165 @@ const TalentProfile = () => {
                                 );
                               })}
 
-                            {photosList.length === 0 &&
-                              talentData?.profileApprove === true && (
+                            {talentData?.profileApprove === true &&
+                              photosList.length === 0 && (
                                 <>
-                                  <div>Data not added</div>
+                                  <div>No Photos Available</div>
                                 </>
                               )}
-
-                            {photosList.length === 0 &&
-                              talentData?.profileApprove === false && (
-                                <>
-                                  <div>
-                                    Data will be visible only after admin
-                                    approval
-                                  </div>
-                                </>
-                              )}
+                            {talentData?.profileApprove === false && (
+                              <>
+                                <div>
+                                  {" "}
+                                  Photos will be visible only after admin
+                                  approval
+                                </div>
+                              </>
+                            )}
                           </section>
                         </div>
                       )}
 
                       {videos && (
-                        <div className="models-photos videoWraper">
-                          <div className="service-list-main w-100">
-                            <div className="row w-100">
-                              {urlsList?.map((url, index) => (
-                                <div key={index} className="col-md-6 mb-3">
-                                  <div className="media-item">
-                                    {isYouTubeUrl(url) ? (
-                                      <iframe
-                                        src={getYouTubeEmbedUrl(url)}
-                                        title={`youtube-video-${index}`}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                        className="video-frame w-100"
-                                        style={{ height: "300px" }}
-                                      ></iframe>
-                                    ) : isVimeoUrl(url) ? (
-                                      <iframe
-                                        src={getVimeoEmbedUrl(url)}
-                                        title={`vimeo-video-${index}`}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                        className="video-frame w-100"
-                                        style={{ height: "300px" }}
-                                      ></iframe>
-                                    ) : isVideoUrl(url) ? (
-                                      <video
-                                        controls
-                                        src={url}
-                                        className="video-frame w-100"
-                                        style={{ height: "300px" }}
-                                      >
-                                        Your browser does not support the video
-                                        tag.
-                                      </video>
-                                    ) : isAudioUrl(url) ? (
-                                      <audio
-                                        controls
-                                        src={url}
-                                        className="audio-player w-100"
-                                      >
-                                        Your browser does not support the audio
-                                        element.
-                                      </audio>
-                                    ) : (
-                                      <div className="unsupported-media">
-                                        Unsupported media type
-                                      </div>
-                                    )}
+                        <>
+                          <p className="pb-2">Videos</p>
+                          <div className="models-photos videoWraper">
+                            <div className="service-list-main w-100">
+                              <div className="row">
+                                {urlsList?.map((url, index) => (
+                                  <div key={index} className="col-md-6 mb-4">
+                                    <div className="media-item">
+                                      {isYouTubeUrl(url) ? (
+                                        <iframe
+                                          src={getYouTubeEmbedUrl(url)}
+                                          title={`youtube-video-${index}`}
+                                          frameBorder="0"
+                                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                          allowFullScreen
+                                          className="video-frame w-100"
+                                          style={{ height: "300px" }}
+                                        ></iframe>
+                                      ) : isVimeoUrl(url) ? (
+                                        <iframe
+                                          src={getVimeoEmbedUrl(url)}
+                                          title={`vimeo-video-${index}`}
+                                          frameBorder="0"
+                                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                          allowFullScreen
+                                          className="video-frame w-100"
+                                          style={{ height: "300px" }}
+                                        ></iframe>
+                                      ) : isVideoUrl(url) ? (
+                                        <video
+                                          controls
+                                          src={url}
+                                          className="video-frame w-100"
+                                          style={{ height: "300px" }}
+                                        >
+                                          Your browser does not support the
+                                          video tag.
+                                        </video>
+                                      ) : isAudioUrl(url) ? (
+                                        <audio
+                                          controls
+                                          src={url}
+                                          className="audio-player w-100"
+                                        >
+                                          Your browser does not support the
+                                          audio element.
+                                        </audio>
+                                      ) : (
+                                        <div className="unsupported-media">
+                                          Unsupported media type
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
 
-                              {urlsList?.length === 0 &&
-                                talentData?.profileApprove === true && (
-                                  <>
-                                    <div>Data not added</div>
-                                  </>
-                                )}
-
-                              {urlsList?.length === 0 &&
-                                talentData?.profileApprove === false && (
+                                {talentData?.profileApprove === true &&
+                                  urlsList?.length === 0 && (
+                                    <>
+                                      <div>No Videos Available</div>
+                                    </>
+                                  )}
+                                {talentData?.profileApprove === false && (
                                   <>
                                     <div>
-                                      Data will be visible only after admin
+                                      {" "}
+                                      Videos will be visible only after admin
                                       approval
                                     </div>
                                   </>
                                 )}
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        </>
                       )}
 
-                      <p>Audios</p>
+                      {videos && (
+                        <>
+                          <p>Audios</p>
 
-                      <div className="service-list-main w-100">
-                        <div className="row">
-                          {audiosList && (
-                            <div>
-                              {audiosList.map((url) => {
-                                return (
-                                  <>
-                                    <>
-                                      <div className="cv-card" key={url}>
-                                        <div className="d-flex align-items-center">
-                                          <i className="fa-solid fa-file"></i>
-                                          <div className="fileName audio-url-style ">
-                                            {url}
-                                          </div>
-                                        </div>
-                                        <button
-                                          className="view-cv"
-                                          onClick={() => window.open(url)}
-                                        >
-                                          Play
-                                        </button>
-                                      </div>
-                                    </>
-                                  </>
-                                );
-                              })}
-                            </div>
-                          )}
-
-                          {audiosList?.length === 0 &&
-                            talentData?.profileApprove === true && (
-                              <>
-                                <div>Data not added</div>
-                              </>
-                            )}
-
-                          {audiosList?.length === 0 &&
-                            talentData?.profileApprove === false && (
-                              <>
+                          <div className="service-list-main w-100">
+                            <div className="row">
+                              {audiosList && (
                                 <div>
-                                  Data will be visible only after admin approval
+                                  {audiosList.map((url) => {
+                                    return (
+                                      <>
+                                        <>
+                                          <div className="cv-card" key={url}>
+                                            <div className="d-flex align-items-center">
+                                              <i className="fa-solid fa-file"></i>
+                                              <div className="fileName audio-url-style ">
+                                                {url}
+                                              </div>
+                                            </div>
+                                            <button
+                                              className="view-cv"
+                                              onClick={() => window.open(url)}
+                                            >
+                                              Play
+                                            </button>
+                                          </div>
+                                        </>
+                                      </>
+                                    );
+                                  })}
                                 </div>
-                              </>
-                            )}
-                        </div>
-                      </div>
+                              )}
 
-                      {services && (
+                              {talentData?.profileApprove === true &&
+                                audiosList?.length === 0 && (
+                                  <>
+                                    <div>No Audios Available</div>
+                                  </>
+                                )}
+                              {talentData?.profileApprove === false && (
+                                <>
+                                  <div>
+                                    Audios will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
+
+                      {/* {services && (
                         <>
                           <ServicesCarousel talentData={talentData} />
                         </>
-                      )}
-                      {socialMedia && (
+                      )} */}
+                      {/* {socialMedia && (
                         <>
                           <CardCarousel />
                         </>
-                      )}
+                      )} */}
                       {features && (
                         <>
                           {featuresList.length > 0 && (
@@ -1626,21 +1925,20 @@ const TalentProfile = () => {
                             </>
                           )}
 
-                          {featuresList.length === 0 &&
-                            talentData?.profileApprove === true && (
+                          {talentData?.profileApprove === true &&
+                            featuresList.length === 0 && (
                               <>
-                                <div>Data not added</div>
+                                <div>No Features Available</div>
                               </>
                             )}
-
-                          {featuresList.length === 0 &&
-                            talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Data will be visible only after admin approval
-                                </div>
-                              </>
-                            )}
+                          {talentData?.profileApprove === false && (
+                            <>
+                              <div>
+                                Features will be visible only after admin
+                                approval
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
 
@@ -1669,21 +1967,21 @@ const TalentProfile = () => {
                             );
                           })}
 
-                          {cvList.length === 0 &&
-                            talentData?.profileApprove === true && (
+                          {talentData?.profileApprove === true &&
+                            cvList.length === 0 && (
                               <>
-                                <div>Data not added</div>
+                                <div>No Resumes Available</div>
                               </>
                             )}
-
-                          {cvList.length === 0 &&
-                            talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Data will be visible only after admin approval
-                                </div>
-                              </>
-                            )}
+                          {talentData?.profileApprove === false && (
+                            <>
+                              <div>
+                                {" "}
+                                Resumes will be visible only after admin
+                                approval
+                              </div>
+                            </>
+                          )}
                         </div>
                       )}
 
@@ -1768,21 +2066,20 @@ const TalentProfile = () => {
                             </div>
                           )}
 
-                          {reviewsList.length === 0 &&
-                            talentData?.profileApprove === true && (
+                          {talentData?.profileApprove === true &&
+                            reviewsList.length === 0 && (
                               <>
-                                <div>Data not added</div>
+                                <div>No Reviews Available</div>
                               </>
                             )}
-
-                          {reviewsList.length === 0 &&
-                            talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Data will be visible only after admin approval
-                                </div>
-                              </>
-                            )}
+                          {talentData?.profileApprove === false && (
+                            <>
+                              <div>
+                                Reviews will be visible only after admin
+                                approval
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
                     </div>

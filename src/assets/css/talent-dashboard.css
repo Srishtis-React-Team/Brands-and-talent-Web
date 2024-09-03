@@ -509,8 +509,6 @@
   margin-right: 15px;
 }
 
-
-
 .offer-wrapper {
   display: flex;
   align-items: center;
@@ -630,7 +628,7 @@
 .media-wrapper {
   cursor: pointer;
   border: 1px solid #b3b3b3;
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   margin: 10px 0;
   align-items: center;
@@ -782,7 +780,7 @@
 .talent-dashboard-main {
   background-color: #eee;
 }
-@media  (max-width: 480px) {
+@media (max-width: 480px) {
   .container-fluid .row .talent-column-one {
     margin-right: 0;
     padding: 10px 20px;
@@ -826,7 +824,6 @@
   }
   .cv-section {
     margin: 15px 0;
-
   }
   .rich-editor {
     margin-bottom: 30px !important;
@@ -1305,9 +1302,13 @@
   }
 }
 @media (max-width: 767px) {
-
-  .cv-section {  padding: 10px; min-height: 210px; }
-  .upload-info {  font-size: 13px; }
+  .cv-section {
+    padding: 10px;
+    min-height: 210px;
+  }
+  .upload-info {
+    font-size: 13px;
+  }
   .container-fluid
     .row
     .talent-column-one

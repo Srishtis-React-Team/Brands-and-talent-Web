@@ -13,13 +13,20 @@ const OTPComponent = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
-  const inputRefs = [useRef(), useRef(), useRef(), useRef()];
+  const inputRefs = useRef([]);
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(null);
   const [emailID, setEmailID] = useState(null);
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
+
+  useEffect(() => {
+    // Initialize inputRefs with the correct number of refs
+    inputRefs.current = otp.map(
+      (_, i) => inputRefs.current[i] ?? React.createRef()
+    );
+  }, [otp]);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -37,8 +44,22 @@ const OTPComponent = () => {
     newOtp[index] = value;
     setOtp(newOtp);
 
-    if (value !== "" && index < otp.length - 1) {
-      inputRefs[index + 1].current.focus();
+    // Move to the next input if typing
+    if (
+      value !== "" &&
+      index < otp.length - 1 &&
+      inputRefs.current[index + 1]?.current
+    ) {
+      inputRefs.current[index + 1].current.focus();
+    }
+  };
+
+  const handleKeyDown = (index, event) => {
+    // Handle backspace navigation
+    if (event.key === "Backspace" && otp[index] === "" && index > 0) {
+      if (inputRefs.current[index - 1]?.current) {
+        inputRefs.current[index - 1].current.focus();
+      }
     }
   };
 
@@ -60,7 +81,7 @@ const OTPComponent = () => {
     await ApiHelper.post(API.otpVerificationAdult, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Verification Successful Login to continue");
+          setMessage("Successfully Verified");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

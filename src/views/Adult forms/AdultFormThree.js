@@ -19,7 +19,29 @@ import "../../assets/css/forms/login.css";
 import "../../assets/css/dashboard.css";
 import "../../assets/css/register.css";
 import "../../assets/css/kidsmain.scss";
+import { IconButton } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import "../../assets/css/forms/kidsformthree.css";
+
+// Regular expressions for different video platforms
+const urlPatterns = {
+  youtube:
+    /^.*(youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([^"&?\/\s]{11})/,
+  vimeo: /^.*(vimeo\.com\/)(\d+|[\w-]+\/[\w-]+)(?:\?.*)?$/,
+  instagram: /^.*(instagram\.com\/(p|reel|tv)\/[^/?#&]+)\/?(?:\?.*)?$/,
+  twitter: /^.*((twitter|x)\.com\/.*\/status\/\d+)\/?$/,
+};
+
+const isValidUrl = (url) => {
+  return (
+    urlPatterns.youtube.test(url) ||
+    urlPatterns.vimeo.test(url) ||
+    urlPatterns.instagram.test(url) ||
+    urlPatterns.twitter.test(url)
+  );
+};
 
 const AdultFormThree = () => {
   const {
@@ -90,14 +112,19 @@ const AdultFormThree = () => {
   const [idType, setIdType] = useState("");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [aboutYou, setAboutYou] = useState([]);
-  const [verificationID, setVerificationID] = useState("");
+  const [verificationID, setVerificationID] = useState([]);
   const url = window.location.href;
   let queryString = url.split("?")[1];
 
+  const [videoUrl, setVideoUrl] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
+  const [checkVideoUrl, setCheckVideoUrl] = useState(false);
+  const [checkAudioUrl, setCheckAudioUrl] = useState(false);
+  const [urls, setUrls] = useState([]);
+  const [audioUrlsList, setAudioUrlsList] = useState([]);
+
   const navigate = useNavigate();
   const [updateDisabled, setUpdateDisabled] = useState(false);
-  const [videoUrl, setVideoUrl] = useState("");
-  const [urls, setUrls] = useState([]);
 
   useEffect(() => {
     if (profileFile === null || portofolioFile.length === 0) {
@@ -114,6 +141,25 @@ const AdultFormThree = () => {
     setAboutYou([draftToHtml(convertToRaw(editorState.getCurrentContent()))]);
     setEditorState(editorState);
   };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const dropDownClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const handleFileClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const isValidNewOption = (inputValue) => {
     return !isNaN(inputValue) && inputValue.trim() !== "";
   };
@@ -199,13 +245,14 @@ const AdultFormThree = () => {
       verificationId: verificationID,
       childAboutYou: aboutYou,
       features: features,
-      videoAudioUrls: urls,
+      videoList: urls,
+      audioList: audioUrlsList,
     };
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Updated SuccessFully!");
+          setMessage("Updated Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -681,8 +728,14 @@ const AdultFormThree = () => {
     });
   };
 
-  const handleVerificationDelete = () => {
-    setVerificationID(null);
+  const handleVerificationDelete = (index) => {
+    setVerificationID((prevIds) => {
+      // Create a copy of the previous state
+      const ids = [...prevIds];
+      // Remove the image at the specified index
+      ids.splice(index, 1);
+      return ids;
+    });
   };
 
   const handleVideoDelete = (index) => {
@@ -705,41 +758,80 @@ const AdultFormThree = () => {
     });
   };
 
-  const handleUrlChange = (e) => {
-    setVideoUrl(e.target.value);
+  const handleEditorStateChange = (editorState) => {
+    setAboutYou(editorState);
   };
 
+  useEffect(() => {}, [verificationID]);
+
   const handleAddUrl = () => {
-    const planLimits = {
-      Basic: 2,
-      Pro: 5,
-      Premium: Infinity, // Unlimited URLs
-    };
-    const userPlan = talentData?.planName;
-    const maxUrls = planLimits[userPlan] || 0;
-    if (urls.length >= maxUrls) {
-      setMessage(
-        `You can only add up to ${maxUrls} URLs as a ${userPlan} member.`
-      );
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-      }, 3000);
-      return;
-    }
-
     if (videoUrl.trim() !== "") {
-      setUrls([...urls, videoUrl]);
-
-      setVideoUrl("");
+      if (isValidUrl(videoUrl)) {
+        setUrls([...urls, videoUrl]);
+        setVideoUrl("");
+        setCheckVideoUrl(false);
+      } else {
+        setCheckVideoUrl(true);
+      }
     }
+  };
+
+  const isNotKnownFormatUrl = (url) => {
+    return !(
+      urlPatterns.youtube.test(url) ||
+      urlPatterns.vimeo.test(url) ||
+      urlPatterns.instagram.test(url) ||
+      urlPatterns.twitter.test(url)
+    );
+  };
+
+  const handleAudioUrl = () => {
+    if (audioUrl.trim() !== "") {
+      if (isNotKnownFormatUrl(audioUrl)) {
+        setAudioUrlsList([...audioUrlsList, audioUrl]);
+        setAudioUrl("");
+        setCheckAudioUrl(false);
+      } else {
+        setCheckAudioUrl(true);
+      }
+    }
+  };
+
+  const handleUrlChange = (e) => {
+    if (e.inputType === "insertFromPaste") return;
+    const url = e.target.value;
+
+    setVideoUrl(url);
+    // Validate URL in real-time
+    setCheckVideoUrl(!isValidUrl(url));
+  };
+
+  const handleAudioChange = (e) => {
+    if (e.inputType === "insertFromPaste") return;
+    const url = e.target.value;
+    setAudioUrl(url);
+    // Validate URL in real-time
+    setCheckAudioUrl(!isNotKnownFormatUrl(url));
   };
 
   const handlePaste = (e) => {
+    e.preventDefault();
     const pastedText = (e.clipboardData || window.clipboardData).getData(
       "text"
     );
     setVideoUrl(pastedText);
+    // Validate pasted URL
+    setCheckVideoUrl(!isValidUrl(pastedText));
+  };
+
+  const handleAudioPaste = (e) => {
+    e.preventDefault();
+    const pastedText = (e.clipboardData || window.clipboardData).getData(
+      "text"
+    );
+    setAudioUrl(pastedText);
+    // Validate pasted URL
+    setCheckAudioUrl(!isNotKnownFormatUrl(pastedText));
   };
 
   const handleDeleteUrl = (index) => {
@@ -747,11 +839,10 @@ const AdultFormThree = () => {
     setUrls(newUrls);
   };
 
-  const handleEditorStateChange = (editorState) => {
-    setAboutYou(editorState);
+  const deleteAudioUrl = (index) => {
+    const newUrls = audioUrlsList.filter((url, i) => i !== index);
+    setAudioUrlsList(newUrls);
   };
-
-  useEffect(() => {}, [verificationID]);
 
   return (
     <>
@@ -776,10 +867,10 @@ const AdultFormThree = () => {
               }}
             ></button>
           </div>
-          <div className="dialog-body">
+          <div className="dialog-body spaceTops">
             <div className="kidsform-one container">
-              <div className="adult-form-wrapper  row ml-0 mr-0">
-                <div className="col-md-4 col-lg-3 mt-5">
+              <div className="adult-form-wrapper row ml-0 mr-0">
+                <div className="col-md-4 col-lg-3 mb-2">
                   <div className="fixImgs">
                     <img
                       src={adultsBanner}
@@ -788,7 +879,7 @@ const AdultFormThree = () => {
                     />
                   </div>
                 </div>
-                <div className="adult-main remvSpc col-md-8 col-lg-9 mt-5">
+                <div className="adult-main remvSpc col-md-8 col-lg-9">
                   <div className="adults-form-title">Complete your Profile</div>
                   <div className="adults-titles kids-form-title">
                     <span>
@@ -827,49 +918,39 @@ const AdultFormThree = () => {
                           )}
                           <div className="fileName">{profileFile.title}</div>
                         </div>
-                        <div className="file-options">
-                          <div className="sucess-tick">
-                            <img src={greenTickCircle} alt="" />
-                          </div>
-                          <div className="option-menu">
-                            <div className="dropdown">
-                              <img
-                                onClick={() => setShowOptions(!showOptions)}
-                                src={elipsis}
-                                alt=""
-                                className="dropdown-toggle elipsis-icon"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              />
-                              <ul
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() => handleView(profileFile)}
-                                    id="view"
-                                  >
-                                    View
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() =>
-                                      handleProfileDelete(profileFile)
-                                    }
-                                    id="delete"
-                                  >
-                                    Delete
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
+
+                        <div className="update-portfolio-action">
+                          <IconButton
+                            aria-label="more"
+                            aria-controls="dropdown-menu"
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                          >
+                            <MoreVertIcon />
+                          </IconButton>
+                          <Menu
+                            id="dropdown-menu"
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                          >
+                            <MenuItem
+                              onClick={() => {
+                                handleClose();
+                                handleView(profileFile);
+                              }}
+                            >
+                              View
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                dropDownClose();
+                                handleProfileDelete(profileFile);
+                              }}
+                            >
+                              Delete
+                            </MenuItem>
+                          </Menu>
                         </div>
                       </div>
                     </>
@@ -970,51 +1051,39 @@ const AdultFormThree = () => {
                                   )}
                                   <div className="fileName">{item.title}</div>
                                 </div>
-                                <div className="file-options">
-                                  <div className="sucess-tick">
-                                    <img src={greenTickCircle} alt="" />
-                                  </div>
-                                  <div className="option-menu">
-                                    <div className="dropdown">
-                                      <img
-                                        onClick={() =>
-                                          setShowOptions(!showOptions)
-                                        }
-                                        src={elipsis}
-                                        alt=""
-                                        className="dropdown-toggle elipsis-icon"
-                                        type="button"
-                                        id="dropdownMenuButton"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                      />
-                                      <ul
-                                        className="dropdown-menu"
-                                        aria-labelledby="dropdownMenuButton"
-                                      >
-                                        <li>
-                                          <a
-                                            className="dropdown-item"
-                                            onClick={() => handleView(item)}
-                                            id="view"
-                                          >
-                                            View
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a
-                                            className="dropdown-item"
-                                            onClick={() =>
-                                              handlePortofolioDelete(item)
-                                            }
-                                            id="delete"
-                                          >
-                                            Delete
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
+
+                                <div className="update-portfolio-action">
+                                  <IconButton
+                                    aria-label="more"
+                                    aria-controls="dropdown-menu"
+                                    aria-haspopup="true"
+                                    onClick={handleClick}
+                                  >
+                                    <MoreVertIcon />
+                                  </IconButton>
+                                  <Menu
+                                    id="dropdown-menu"
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                  >
+                                    <MenuItem
+                                      onClick={() => {
+                                        handleClose();
+                                        handleView(item);
+                                      }}
+                                    >
+                                      View
+                                    </MenuItem>
+                                    <MenuItem
+                                      onClick={() => {
+                                        dropDownClose();
+                                        handlePortofolioDelete(item);
+                                      }}
+                                    >
+                                      Delete
+                                    </MenuItem>
+                                  </Menu>
                                 </div>
                               </div>
                             </>
@@ -1024,12 +1093,13 @@ const AdultFormThree = () => {
                     )}
                   </div>
 
+                  <div className="videos-label">
+                    ( Upload your previous work samples Videos/Audios)
+                  </div>
                   <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6 mb-3">
-                      <label className="form-label">Videos & Audios</label>
-                      <div className="videos-label">
-                        ( Upload your previous work samples videos/audios.)
-                      </div>
+                      <label className="form-label">Videos</label>
+
                       <div className="d-flex align-items-center">
                         <input
                           type="text"
@@ -1039,16 +1109,23 @@ const AdultFormThree = () => {
                             handleUrlChange(e);
                           }}
                           onPaste={handlePaste}
-                          placeholder="Paste Videos/Audios Url"
+                          placeholder="Paste Video Url"
                         ></input>
                         <i
                           className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
                           onClick={handleAddUrl}
                         ></i>
                       </div>
+                      {checkVideoUrl && (
+                        <>
+                          <div className="invalid-fields">
+                            Invalid video URL. Please enter a valid YouTube,
+                            Vimeo, Instagram, or Twitter URL.
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
-
                   {urls && (
                     <>
                       {urls.map((url, index) => {
@@ -1065,40 +1142,31 @@ const AdultFormThree = () => {
                                   {url}
                                 </a>
                               </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="resumeDropdown"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="resumeDropdown"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleDeleteUrl(index)}
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      handleDeleteUrl(index);
+                                    }}
+                                  >
+                                    Delete
+                                  </MenuItem>
+                                </Menu>
                               </div>
                             </div>
                           </>
@@ -1107,95 +1175,78 @@ const AdultFormThree = () => {
                     </>
                   )}
 
-                  {/* <div
-                    className="cv-section"
-                    onDrop={handleVideoDrop}
-                    onDragOver={handleVideoDragOver}
-                  >
-                    <label className="upload-backdrop" htmlFor="video-audio">
-                      <img src={uploadIcon} alt="" />
-                    </label>
-                    <input
-                      type="file"
-                      className="select-cv-input"
-                      id="video-audio"
-                      accept="audio/*,video/*"
-                      multiple
-                      onChange={videoAudioUpload}
-                    />
-                    <div className="upload-text">Videos & Audios</div>
-                    <div className="upload-info">
-                      Upload your previous work samples videos/audios.
+                  <div className="kids-form-row row">
+                    <div className="kids-form-section col-md-6 mb-3">
+                      <label className="form-label">Audios</label>
+                      {/* <div className="videos-label">
+                        ( Upload your previous work samples audios.)
+                      </div> */}
+                      <div className="d-flex align-items-center">
+                        <input
+                          type="text"
+                          className="form-control mt-2 ml-3"
+                          value={audioUrl}
+                          onChange={(e) => {
+                            handleAudioChange(e);
+                          }}
+                          onPaste={handleAudioPaste}
+                          placeholder="Paste Audio Url"
+                        ></input>
+                        <i
+                          className="bi bi-plus-circle-fill pl-4 add-vidoe-icon"
+                          onClick={handleAudioUrl}
+                        ></i>
+                      </div>
+                      {checkAudioUrl && (
+                        <>
+                          <div className="invalid-fields">
+                            Invalid Audio URL. Please enter a valid Audio URL .
+                          </div>
+                        </>
+                      )}
                     </div>
-                  </div> */}
-                  {videoAUdioFile && (
+                  </div>
+                  {audioUrlsList && (
                     <>
-                      {videoAUdioFile.map((item, index) => {
+                      {audioUrlsList.map((url, index) => {
                         return (
                           <>
-                            <div key={index} className="uploaded-file-wrapper">
+                            <div key={index} className="url-file-wrapper">
                               <div className="file-section">
-                                {item.type === "image" && (
-                                  <div className="fileType">
-                                    <img src={imageType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "audio" && (
-                                  <div className="fileType">
-                                    <img src={audiotype} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "video" && (
-                                  <div className="fileType">
-                                    <img src={videoType} alt="" />
-                                  </div>
-                                )}
-                                {item.type === "document" && (
-                                  <div className="fileType">
-                                    <img src={docsIcon} alt="" />
-                                  </div>
-                                )}
-
-                                <div className="fileName">{item.title}</div>
+                                <a
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="url-fileName"
+                                >
+                                  {url}
+                                </a>
                               </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <img
-                                    className="dropdown-toggle elipsis-icon"
-                                    type="button"
-                                    id="videoDropdown"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    src={elipsis}
-                                    alt=""
-                                  />
-                                  <ul
-                                    className="dropdown-menu"
-                                    aria-labelledby="videoDropdown"
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      deleteAudioUrl(index);
+                                    }}
                                   >
-                                    <li>
-                                      <a
-                                        className="dropdown-item"
-                                        onClick={() => handleView(item)}
-                                        id="view"
-                                      >
-                                        View
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        className="dropdown-item"
-                                        onClick={() => handleVideoDelete(item)}
-                                        id="delete"
-                                      >
-                                        Delete
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
+                                    Delete
+                                  </MenuItem>
+                                </Menu>
                               </div>
                             </div>
                           </>
@@ -1203,6 +1254,7 @@ const AdultFormThree = () => {
                       })}
                     </>
                   )}
+
                   <div className="adults-titles kids-form-title">
                     <span>CV</span>
                   </div>
@@ -1256,51 +1308,39 @@ const AdultFormThree = () => {
                                 )}
                                 <div className="fileName">{item.title}</div>
                               </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="resumeDropdown"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="resumeDropdown"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleView(item)}
-                                          id="view"
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() =>
-                                            handleResumeDelete(item)
-                                          }
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      handleClose();
+                                      handleView(item);
+                                    }}
+                                  >
+                                    View
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      handleResumeDelete(item);
+                                    }}
+                                  >
+                                    Delete
+                                  </MenuItem>
+                                </Menu>
                               </div>
                             </div>
                           </>
@@ -1312,82 +1352,87 @@ const AdultFormThree = () => {
                   <div className="adults-titles">Features (Optional)</div>
 
                   <div className="features-section">
-                    {featuresList && (
-                      <>
-                        {featuresList.map((item, index) => (
-                          <div
-                            key={index}
-                            className="mb-3 mr-3 features-input-wrapper"
-                          >
-                            <label className="form-label">{item.label}</label>
-                            {creatableOptions.includes(item.label) ? (
-                              <CreatableSelect
-                                onKeyDown={handleKeyDown}
-                                isClearable
-                                options={item.options.map((option) => ({
-                                  value: option,
-                                  label: option,
-                                }))}
-                                isValidNewOption={isValidNewOption}
-                                onInputChange={handleInputChange}
-                                onChange={(selectedOption) => {
-                                  const value = selectedOption.value;
-                                  // Check if the value is a valid number and is non-negative
-                                  if (
-                                    /^\d*\.?\d*$/.test(value) &&
-                                    (value >= 0 || value === "")
-                                  ) {
+                    {" "}
+                    <div className="row">
+                      {featuresList && (
+                        <>
+                          {featuresList.map((item, index) => (
+                            <div
+                              key={index}
+                              className="mb-3 col-md-3 features-input-wrapper"
+                            >
+                              <label className="form-label">{item.label}</label>
+                              {creatableOptions.includes(item.label) ? (
+                                <CreatableSelect
+                                  onKeyDown={handleKeyDown}
+                                  isClearable
+                                  options={item.options.map((option) => ({
+                                    value: option,
+                                    label: option,
+                                  }))}
+                                  isValidNewOption={isValidNewOption}
+                                  onInputChange={handleInputChange}
+                                  onChange={(selectedOption) => {
+                                    const value = selectedOption.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleFeaturesChange(
+                                        item.label,
+                                        selectedOption
+                                          ? selectedOption.value
+                                          : ""
+                                      );
+                                    }
+                                  }}
+                                  placeholder={getPlaceholder(item.label)}
+                                />
+                              ) : creatableInputOptions.includes(item.label) ? (
+                                <input
+                                  min="0"
+                                  type="number"
+                                  onKeyDown={handleKeyDown}
+                                  className="form-control features-select"
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      handleFeaturesChange(item.label, value);
+                                    }
+                                  }}
+                                  placeholder={getPlaceholder(item.label)}
+                                />
+                              ) : (
+                                <select
+                                  className="form-select features-select"
+                                  aria-label="Default select example"
+                                  onChange={(e) =>
                                     handleFeaturesChange(
                                       item.label,
-                                      selectedOption ? selectedOption.value : ""
-                                    );
+                                      e.target.value
+                                    )
                                   }
-                                }}
-                                placeholder={getPlaceholder(item.label)}
-                              />
-                            ) : creatableInputOptions.includes(item.label) ? (
-                              <input
-                                min="0"
-                                type="number"
-                                onKeyDown={handleKeyDown}
-                                className="form-control features-select"
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  if (
-                                    /^\d*\.?\d*$/.test(value) &&
-                                    (value >= 0 || value === "")
-                                  ) {
-                                    handleFeaturesChange(item.label, value);
-                                  }
-                                }}
-                                placeholder={getPlaceholder(item.label)}
-                              />
-                            ) : (
-                              <select
-                                className="form-select features-select"
-                                aria-label="Default select example"
-                                onChange={(e) =>
-                                  handleFeaturesChange(
-                                    item.label,
-                                    e.target.value
-                                  )
-                                }
-                                defaultValue=""
-                              >
-                                <option value="" disabled>
-                                  {item.label}
-                                </option>
-                                {item.options.map((option, idx) => (
-                                  <option key={idx} value={option}>
-                                    {option}
+                                  defaultValue=""
+                                >
+                                  <option value="" disabled>
+                                    {item.label}
                                   </option>
-                                ))}
-                              </select>
-                            )}
-                          </div>
-                        ))}
-                      </>
-                    )}
+                                  {item.options.map((option, idx) => (
+                                    <option key={idx} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </select>
+                              )}
+                            </div>
+                          ))}
+                        </>
+                      )}
+                    </div>{" "}
                   </div>
 
                   <div className="kids-form-title">
@@ -1446,70 +1491,76 @@ const AdultFormThree = () => {
 
                   {verificationID && (
                     <>
-                      <div
-                        style={{ marginBottom: "100px" }}
-                        className="uploaded-file-wrapper"
-                      >
-                        <div className="file-section">
-                          {verificationID[0].type === "image" && (
-                            <div className="fileType">
-                              <img src={imageType} alt="" />
-                            </div>
-                          )}
-                          {verificationID[0].type === "document" && (
-                            <div className="fileType">
-                              <img src={docsIcon} alt="" />
-                            </div>
-                          )}
-                          <div className="fileName">
-                            {verificationID[0].title}
-                          </div>
-                        </div>
-                        <div className="file-options">
-                          <div className="sucess-tick">
-                            <img src={greenTickCircle} alt="" />
-                          </div>
-                          <div className="option-menu">
-                            <div className="dropdown">
-                              <img
-                                onClick={() => setShowOptions(!showOptions)}
-                                src={elipsis}
-                                alt=""
-                                className="dropdown-toggle elipsis-icon"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              />
-                              <ul
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() => handleView(verificationID)}
-                                    id="view"
+                      {verificationID.map((item, index) => {
+                        return (
+                          <>
+                            <div key={index} className="uploaded-file-wrapper">
+                              <div className="file-section">
+                                {item.type === "image" && (
+                                  <div className="fileType">
+                                    <img src={imageType} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "audio" && (
+                                  <div className="fileType">
+                                    <img src={audiotype} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "video" && (
+                                  <div className="fileType">
+                                    <img src={videoType} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "document" && (
+                                  <div className="fileType">
+                                    <img src={docsIcon} alt="" />
+                                  </div>
+                                )}
+                                {item.type === "pdf" && (
+                                  <div className="fileType">
+                                    <img src={docsIcon} alt="" />
+                                  </div>
+                                )}
+                                <div className="fileName">{item.title}</div>
+                              </div>
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls="dropdown-menu"
+                                  aria-haspopup="true"
+                                  onClick={handleClick}
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id="dropdown-menu"
+                                  anchorEl={anchorEl}
+                                  open={Boolean(anchorEl)}
+                                  onClose={handleClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      handleClose();
+                                      handleView(item);
+                                    }}
                                   >
                                     View
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    className="dropdown-item"
-                                    onClick={() =>
-                                      handleVerificationDelete(verificationID)
-                                    }
-                                    id="delete"
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() => {
+                                      dropDownClose();
+                                      handleVerificationDelete(item, index);
+                                    }}
                                   >
                                     Delete
-                                  </a>
-                                </li>
-                              </ul>
+                                  </MenuItem>
+                                </Menu>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
+                          </>
+                        );
+                      })}
                     </>
                   )}
 

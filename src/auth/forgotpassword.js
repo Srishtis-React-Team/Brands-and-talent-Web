@@ -6,6 +6,7 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import Header from "../layout/header";
+import Spinner from "../components/Spinner";
 const ForgotPassword = () => {
   const btLogo = require("../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -55,6 +56,7 @@ const ForgotPassword = () => {
           }
         }
         if (resData.data.status === false) {
+          setIsLoading(false);
           setMessage(resData.data.message);
           setOpenPopUp(true);
           setTimeout(function () {
@@ -66,17 +68,17 @@ const ForgotPassword = () => {
       .catch((err) => {
         setIsLoading(false);
       });
-
     if (userType) {
       if (userType == "brand") {
         const formData = {
           brandEmail: talentEmail,
         };
         setIsLoading(true);
-
         await ApiHelper.post(API.brandsForgotPassword, formData)
           .then((resData) => {
             if (resData.data.status === true) {
+              setIsLoading(false);
+
               setMessage("Open Your Gmail For Password Reset Link!");
               setOpenPopUp(true);
               setTimeout(function () {
@@ -96,14 +98,17 @@ const ForgotPassword = () => {
           .catch((err) => {
             setIsLoading(false);
           });
-      } else {
+      } else if (userType == "Kids") {
         let formdata = {
           email: talentEmail,
           type: userType,
         };
         await ApiHelper.post(API.forgotPassword, formdata)
           .then((resData) => {
+            console.log(resData, "resData");
             if (resData.data.status === true) {
+              setIsLoading(false);
+
               setMessage("Open Your Gmail For Password Reset Link!");
               setOpenPopUp(true);
               setTimeout(function () {
@@ -111,7 +116,11 @@ const ForgotPassword = () => {
               }, 2000);
             }
           })
-          .catch((err) => {});
+          .catch((err) => {
+            setIsLoading(false);
+          });
+      } else if (userType == "adult") {
+        adultForgotPassword();
       }
     }
   };
@@ -120,11 +129,11 @@ const ForgotPassword = () => {
     const formData = {
       adultEmail: talentEmail,
     };
+    setIsLoading(true);
     await ApiHelper.post(API.adultForgotPassword, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-
           setMessage("Open Your Gmail For Password Reset Link!");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -140,7 +149,9 @@ const ForgotPassword = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
 
   const kidsForgotPassword = async (enteredOTP) => {
@@ -208,11 +219,12 @@ const ForgotPassword = () => {
             {isLoading ? "Loading..." : "Continue"}
           </div>
           <div className="resend-forgot" onClick={() => forgotPassword()}>
-            Didn’t received the OTP? <span>Resend</span>
+            Didn’t received the Email? <span>Resend</span>
           </div>
         </div>
       </div>
       {openPopUp && <PopUp message={message} />}
+      {isLoading && <Spinner />}
     </>
   );
 };

@@ -176,7 +176,7 @@ const BrandDetails = () => {
       )
         .then((resData) => {
           if (resData.data.status === true) {
-            setMessage("Registered SuccessFully!");
+            setMessage("Registered Successfully!");
             setTalentLocalStorage(resData.data.data);
             navigate("/brand-logo", {
               state: { data: resData.data.data },
@@ -431,6 +431,7 @@ const BrandDetails = () => {
                   </label>
                   <div className="form-group">
                     <MuiPhoneNumber
+                      countryCodeEditable={false}
                       defaultCountry={"kh"}
                       className="material-mobile-style"
                       onChange={handleMobileChange}

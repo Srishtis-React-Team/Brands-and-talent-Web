@@ -208,7 +208,7 @@
 .kids-main .media-wrapper {
   cursor: pointer;
   border: 1px solid #d3d3d3;
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   margin: 10px 0;
   align-items: center;
@@ -459,6 +459,7 @@
   padding: 15px;
   border-radius: 6px;
   background-color: #f8f8f8;
+  margin-top: 5px;
 }
 .fixImgs {
   position: relative;
@@ -507,7 +508,9 @@
   justify-content: space-between;
   place-items: center;
   align-items: center;
-  margin: 10px 0;
+  margin: 0px 0;
+  display: none !important;
+  opacity: 0;
 }
 .password_strength_box .password_strength {
   width: 100%;
@@ -518,6 +521,7 @@
   padding: 0 0 6px 0;
   font-weight: 500;
   color: red;
+  margin-bottom: 0px;
 }
 .password_strength .line_box {
   background-color: #f2f2f2;
@@ -830,38 +834,25 @@
     rgb(0 0 0 / 0.3) 0 0 3px -1px !important;
 }
 
-
-
-.dynamic-profession.newAlign .algSepc{
+.dynamic-profession.newAlign .algSepc {
   width: calc(100% - 170px);
   float: left;
 }
-.dynamic-profession.newAlign .offer-wrapper{
+.dynamic-profession.newAlign .offer-wrapper {
   width: 170px;
   float: right;
   padding-left: 15px;
   justify-content: end;
 }
 
-.dynamic-profession.newAlign .algSepc .divSep{ width: calc(100% / 5); }
+.dynamic-profession.newAlign .algSepc .divSep {
+  width: calc(100% / 5);
+}
 
 .dynamic-profession.newAlign .algSepc .profession-input {
   max-width: 100% !important;
   margin-right: 0px !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media only screen and (max-width: 1399px) {
   .fixImgs .kids-image-sticky {
@@ -874,23 +865,29 @@
   .kids-form.col-md-8 {
     padding-left: 3%;
   }
-  .dynamic-profession.newAlign .algSepc .divSep{         
+  .dynamic-profession.newAlign .algSepc .divSep {
     padding-right: 0;
     margin-bottom: 0.4rem !important;
   }
-  .dynamic-profession.newAlign{ flex-direction: column; margin-bottom: 10px; }
-  .dynamic-profession.newAlign .algSepc, .dynamic-profession.newAlign .offer-wrapper{ width: 100%; }
-  .dynamic-profession.newAlign .offer-wrapper {  float: left; padding: 0 0 5px; justify-content: left; }
+  .dynamic-profession.newAlign {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  .dynamic-profession.newAlign .algSepc,
+  .dynamic-profession.newAlign .offer-wrapper {
+    width: 100%;
+  }
+  .dynamic-profession.newAlign .offer-wrapper {
+    float: left;
+    padding: 0 0 5px;
+    justify-content: left;
+  }
 }
 @media only screen and (max-width: 1149px) {
   .kids-form.col-md-8 {
     padding-left: 10px;
     width: 100%;
   }
-
-
-
-
 }
 @media only screen and (max-width: 767px) {
   .kidsform-one .kids-wrapper .kids-form .kids-form-title::after {
@@ -910,12 +907,18 @@
     margin-right: 0px !important;
   }
 
-  .kids-main .media-wrapper .connect-btn{ font-size: 14px; }
+  .kids-main .media-wrapper .connect-btn {
+    font-size: 14px;
+  }
   .kids-form.col-md-8 {
     padding: 0 !important;
   }
-
 }
+
+.kids-main .media-wrapper .connect-btn {
+  font-size: 14px;
+}
+
 .add-portfoli-section {
   display: flex;
   justify-content: end;
@@ -1189,12 +1192,29 @@ textarea.contact-us-textarea.w-100 {
   height: 45px;
   /* padding: 6px 0px 0px 10px !important; */
 }
-
-
+.set-rates {
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #666;
+}
 
 @media only screen and (max-width: 580px) {
   .dynamic-profession.newAlign .algSepc .divSep {
     width: 48%;
   }
-  .edit-profileimg-btn{ width: 100%; }
+  .edit-profileimg-btn {
+    width: 100%;
+  }
+}
+
+.social-chain-icon {
+  color: #c2114b;
+  font-size: 26px;
+}
+
+.password-error-box {
+  border-bottom: 2px solid red;
+  padding: 8px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }

@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/dashboard.css";
 import "../assets/css/register.css";
+
+import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/forms/login.css";
+
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { API } from "../config/api";
@@ -116,7 +120,8 @@ const AdultSignup = () => {
       adultEmail !== "" &&
       adultPassword !== "" &&
       adultConfirmPassword !== "" &&
-      passwordMatch === true
+      passwordMatch === true &&
+      passwordStatus
     ) {
       const formData = {
         adultEmail: adultEmail,
@@ -171,7 +176,15 @@ const AdultSignup = () => {
         setOpenPopUp(false);
       }, 1000);
     }
+    if (!passwordStatus) {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
+    }
   };
+  const [passwordStatus, setPasswordStatus] = useState(false);
 
   let line = document.querySelector(".line");
   let text = document.querySelector(".text");
@@ -189,6 +202,7 @@ const AdultSignup = () => {
       }
 
       if (password.value.length >= 1) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "5%";
         line.style.backgroundColor = "red";
@@ -196,6 +210,7 @@ const AdultSignup = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 2) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "10%";
         line.style.backgroundColor = "red";
@@ -203,6 +218,7 @@ const AdultSignup = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 3) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "20%";
         line.style.backgroundColor = "red";
@@ -210,12 +226,14 @@ const AdultSignup = () => {
         text.innerHTML = "Weak";
       }
       if (password.value.length >= 4) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "35%";
         line.style.backgroundColor = "red";
         text.style.color = "red";
         text.innerHTML = "Weak";
         if (password.value.match(/[!@#$%^&*]/)) {
+          setPasswordStatus(false);
           password_strength_box.style.display = "flex";
           line.style.width = "45%";
           line.style.backgroundColor = "#e9ee30";
@@ -228,6 +246,7 @@ const AdultSignup = () => {
         password.value.match(/[A-Z]/) &&
         password.value.match(/[a-z]/)
       ) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "50%";
         line.style.backgroundColor = "#e9ee30";
@@ -235,6 +254,7 @@ const AdultSignup = () => {
         text.innerHTML = "Medium";
       }
       if (password.value.length >= 6 && password.value.match(/[0-9]/)) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "70%";
         line.style.backgroundColor = "#e9ee30";
@@ -247,6 +267,7 @@ const AdultSignup = () => {
         password.value.match(/[a-z]/) &&
         password.value.match(/[0-9]/)
       ) {
+        setPasswordStatus(false);
         password_strength_box.style.display = "flex";
         line.style.width = "80%";
         line.style.backgroundColor = "#e9ee30";
@@ -261,6 +282,7 @@ const AdultSignup = () => {
         password.value.match(/[0-9]/) &&
         password.value.match(/[!@#$%^&*]/)
       ) {
+        setPasswordStatus(true);
         password_strength_box.style.display = "flex";
         line.style.width = "100%";
         line.style.backgroundColor = "#2ccc2c";
@@ -310,67 +332,65 @@ const AdultSignup = () => {
             height: "unset",
           }}
         >
-          <div className="adult-signup-main">
-            <div className="step-title">Sign up</div>
-
-            <div className="mb-3">
-              <label className="form-label">
-                Email<span className="mandatory">*</span>
-              </label>
-              <div className="form-group has-search">
-                <span className="fa fa-envelope form-control-feedback"></span>
-                <input
-                  type="text"
-                  className="form-control adult-signup-inputs"
-                  placeholder="Email "
-                  onChange={(e) => {
-                    setAdultEmail(e.target.value);
-                    setEmailError(false);
-                  }}
-                  value={googleUser?.email}
-                ></input>
-                {emailError && (
-                  <div className="invalid-fields">Please enter Email</div>
-                )}
+          <div className="login-main regPage">
+            <div className="adult-signup-main widFull">
+              <div className="step-title">Sign up</div>
+              <div className="mb-3">
+                <label className="form-label">
+                  Email<span className="mandatory">*</span>
+                </label>
+                <div className="form-group has-search">
+                  <span className="fa fa-envelope form-control-feedback"></span>
+                  <input
+                    type="text"
+                    className="form-control adult-signup-inputs"
+                    placeholder="Email "
+                    onChange={(e) => {
+                      setAdultEmail(e.target.value);
+                      setEmailError(false);
+                    }}
+                    value={googleUser?.email}
+                  ></input>
+                  {emailError && (
+                    <div className="invalid-fields">Please enter Email</div>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <div className="mb-3">
-              <label className="form-label">
-                Name<span className="mandatory">*</span>
-              </label>
-              <div className="form-group has-search">
-                <span className="fa fa-user form-control-feedback"></span>
-                <input
-                  type="text"
-                  className="form-control adult-signup-inputs"
-                  placeholder="Your Name "
-                  onChange={(e) => {
-                    setAdultName(e.target.value);
-                    setNameError(false);
-                  }}
-                ></input>
-                {nameError && <div className="invalid-fields"> Name</div>}
+              <div className="mb-3">
+                <label className="form-label">
+                  Name<span className="mandatory">*</span>
+                </label>
+                <div className="form-group has-search">
+                  <span className="fa fa-user form-control-feedback"></span>
+                  <input
+                    type="text"
+                    className="form-control adult-signup-inputs"
+                    placeholder="Your Name "
+                    onChange={(e) => {
+                      setAdultName(e.target.value);
+                      setNameError(false);
+                    }}
+                  ></input>
+                  {nameError && <div className="invalid-fields"> Name</div>}
+                </div>
               </div>
-            </div>
 
-            <div className="mb-3">
-              <label className="form-label">
-                Password<span className="mandatory">*</span>
-              </label>
-              <div className="form-group has-search adult-password-wrapper">
-                <span className="fa fa-lock form-control-feedback"></span>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  className="form-control password adult-signup-inputs"
-                  placeholder="Password"
-                  onChange={(e) => {
-                    handlePasswordChange(e);
-                    setAdultPassword(e.target.value);
-                  }}
-                ></input>
-
-                {adultPassword && (
+              <div className="mb-3">
+                <label className="form-label">
+                  Password<span className="mandatory">*</span>
+                </label>
+                <div className="form-group has-search adult-password-wrapper">
+                  <span className="fa fa-lock form-control-feedback"></span>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="form-control password adult-signup-inputs"
+                    placeholder="Password"
+                    onChange={(e) => {
+                      handlePasswordChange(e);
+                      setAdultPassword(e.target.value);
+                    }}
+                  ></input>
                   <div className="password_strength_box">
                     <div className="password_strength">
                       <p className="text">Weak</p>
@@ -394,114 +414,124 @@ const AdultSignup = () => {
                       </div>
                     </div>
                   </div>
-                )}
 
-                {passwordError && (
-                  <div className="invalid-fields">Please enter Password</div>
-                )}
-                {showPassword ? (
-                  <span
-                    className="fa fa-eye show-password-icon"
-                    onClick={togglePasswordVisibility}
-                  ></span>
-                ) : (
-                  <span
-                    className="fa fa-eye-slash show-password-icon"
-                    onClick={togglePasswordVisibility}
-                  ></span>
-                )}
-              </div>
-            </div>
-            <div className="mb-1">
-              <label className="form-label">
-                Confirm Password<span className="mandatory">*</span>
-              </label>
-              <div className="form-group has-search adult-confirm-password-wrapper">
-                <span className="fa fa-lock form-control-feedback"></span>
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  className="form-control adult-signup-inputs"
-                  placeholder="Confirm Password"
-                  onChange={(e) => {
-                    handleConfirmPasswordChange(e);
-                    setAdultConfirmPassword(e.target.value);
-                    setConfirmPasswordError(false);
-                  }}
-                ></input>
-                {confirmPasswordError && (
-                  <div className="invalid-fields">
-                    Please enter Confirm Password
-                  </div>
-                )}
-                {showConfirmPassword ? (
-                  <span
-                    className="fa fa-eye show-confirm-password-icon"
-                    onClick={toggleConfirmPasswordVisibility}
-                  ></span>
-                ) : (
-                  <span
-                    className="fa fa-eye-slash show-confirm-password-icon"
-                    onClick={toggleConfirmPasswordVisibility}
-                  ></span>
-                )}
-                {!passwordMatch &&
-                  adultConfirmPassword &&
-                  adultConfirmPassword.length && (
-                    <p className="password-wrong">Passwords does not match.</p>
+                  {adultPassword && !passwordStatus && (
+                    <div
+                      className="invalid-fields password-error-box"
+                      style={{ width: "360px" }}
+                    >
+                      ( The minimum password length is 8 characters and must
+                      contain at least 1 capital letter, 1 lowercase letter, 1
+                      number and 1 special character. )
+                    </div>
                   )}
+                  {passwordError && (
+                    <div className="invalid-fields">Please enter Password</div>
+                  )}
+                  {showPassword ? (
+                    <span
+                      className="fa fa-eye show-password-icon"
+                      onClick={togglePasswordVisibility}
+                    ></span>
+                  ) : (
+                    <span
+                      className="fa fa-eye-slash show-password-icon"
+                      onClick={togglePasswordVisibility}
+                    ></span>
+                  )}
+                </div>
               </div>
-            </div>
+              <div className="mb-1">
+                <label className="form-label">
+                  Confirm Password<span className="mandatory">*</span>
+                </label>
+                <div className="form-group has-search adult-confirm-password-wrapper">
+                  <span className="fa fa-lock form-control-feedback"></span>
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    className="form-control adult-signup-inputs"
+                    placeholder="Confirm Password"
+                    onChange={(e) => {
+                      handleConfirmPasswordChange(e);
+                      setAdultConfirmPassword(e.target.value);
+                      setConfirmPasswordError(false);
+                    }}
+                  ></input>
+                  {confirmPasswordError && (
+                    <div className="invalid-fields">
+                      Please enter Confirm Password
+                    </div>
+                  )}
+                  {showConfirmPassword ? (
+                    <span
+                      className="fa fa-eye show-confirm-password-icon"
+                      onClick={toggleConfirmPasswordVisibility}
+                    ></span>
+                  ) : (
+                    <span
+                      className="fa fa-eye-slash show-confirm-password-icon"
+                      onClick={toggleConfirmPasswordVisibility}
+                    ></span>
+                  )}
+                  {!passwordMatch &&
+                    adultConfirmPassword &&
+                    adultConfirmPassword.length && (
+                      <p className="password-wrong">Password does not match.</p>
+                    )}
+                </div>
+              </div>
 
-            <div className="stroke-wrapper">
-              <div className="stroke-div"></div>
-              {/* <div className="or-signup">Or Signup with</div> */}
-              <div className="stroke-div"></div>
-            </div>
-            <div className="signup-options">
-              {/* <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  socialSignup(
-                    jwtDecode(credentialResponse?.credential),
-                    "google"
-                  );
-                }}
-                onError={() => {
-                }}
-              /> */}
-              {/* <LoginSocialFacebook>
-                <FacebookLoginButton></FacebookLoginButton>
-              </LoginSocialFacebook> */}
-              {/* <LoginSocialFacebook
-                appId="7401795359899121"
-                onResolve={(response) => {
-                  socialSignup(response, "facebook");
-                }}
-                onReject={(error) => {
-                }}
-              >
-                <MyFacebookLoginButton />
-              </LoginSocialFacebook> */}
+              <div className="stroke-wrapper">
+                <div className="stroke-div"></div>
+                {/* <div className="or-signup">Or Signup with</div> */}
+                <div className="stroke-div"></div>
+              </div>
+              <div className="signup-options">
+                {/* <GoogleLogin
+                  onSuccess={(credentialResponse) => {
+                    socialSignup(
+                      jwtDecode(credentialResponse?.credential),
+                      "google"
+                    );
+                  }}
+                  onError={() => {
+                  }}
+                /> */}
+                {/* <LoginSocialFacebook>
+                  <FacebookLoginButton></FacebookLoginButton>
+                </LoginSocialFacebook> */}
+                {/* <LoginSocialFacebook
+                  appId="7401795359899121"
+                  onResolve={(response) => {
+                    socialSignup(response, "facebook");
+                  }}
+                  onReject={(error) => {
+                  }}
+                >
+                  <MyFacebookLoginButton />
+                </LoginSocialFacebook> */}
 
-              {/* <div className="google-media">
-                <img src={googleLogo} alt="" />
-                <div className="media-text">Google</div>
-              </div> */}
-            </div>
-            <div className="signup-terms">
-              By registering you confirm that you accept the 
-            </div>
-            <div className="signup-terms-linetwo">
-              <span onClick={() => handleCondition("terms")}>
-                Terms & Conditions
-              </span>{" "}
-              ,&nbsp;
-              <span onClick={() => handleCondition("privacy")}>
-                Privacy Policy
-              </span>
-               and 
-              <span onClick={() => handleCondition("community")}>
-                Community Guidelines
-              </span>
+                {/* <div className="google-media">
+                  <img src={googleLogo} alt="" />
+                  <div className="media-text">Google</div>
+                </div> */}
+              </div>
+              <div className="signup-terms">
+                By registering you confirm that you accept the 
+              </div>
+              <div className="signup-terms-linetwo">
+                <span onClick={() => handleCondition("terms")}>
+                  Terms & Conditions
+                </span>{" "}
+                ,&nbsp;
+                <span onClick={() => handleCondition("privacy")}>
+                  Privacy Policy
+                </span>
+                 and 
+                <span onClick={() => handleCondition("community")}>
+                  Community Guidelines
+                </span>
+              </div>
             </div>
           </div>
         </div>

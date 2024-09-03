@@ -90,7 +90,7 @@ const AdultFormTwo = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Updated SuccessFully!");
+          setMessage("Updated Successfully!");
           setOpenPopUp(true);
           updateProfileStatus();
           setTimeout(function () {

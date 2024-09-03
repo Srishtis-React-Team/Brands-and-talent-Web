@@ -94,7 +94,7 @@ const AppliedJobs = () => {
     await ApiHelper.post(`${API.postJobByDraft}${jobId}`)
       .then((resData) => {
         if (resData.data.status === true) {
-          setMessage("Job Posted SuccessFully!");
+          setMessage("Job Posted Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

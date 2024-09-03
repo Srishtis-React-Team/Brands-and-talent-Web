@@ -16,14 +16,19 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import CurrentUser from "../CurrentUser";
 import SearchHeaderComponent from "./SearchHeaderComponent";
-import { useLocation } from "react-router-dom";
-
+import { Link, useLocation, useHistory } from "react-router-dom";
+import searchPathOptions from "../components/SearchPaths";
 const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
+  console.log(hideToggleButton, "hideToggleButton");
+  console.log(toggleMenu, "toggleMenu");
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
+  const [talent, setTalent] = useState(true);
+  const [signupCategory, setSignupCategory] = useState("talent");
 
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
   const cofeeIcon = require("../assets/icons/cofeeIcon.png");
+  const [brand, setBrand] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [talentId, setTalentId] = useState(null);
@@ -34,6 +39,8 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [currentUser_type, setCurrentUserType] = useState("");
+  const [brandData, setBrandData] = useState(null);
 
   const location = useLocation();
   const currentPathname = location.pathname;
@@ -142,7 +149,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
-        setMessage("Logged out successfully");
+        setMessage("Logged out Successfully");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -152,17 +159,22 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         navigate(`${"/talent-home"}`);
       } else if (menuItem === "edit") {
         navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+      } else if (menuItem == "find-talent") {
+        window.open(
+          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          "_blank"
+        );
       }
-      if (menuItem == "find-talent" && talentData?.planName == "Basic") {
-        setMessage("Purchase Pro or Premium Plan to unlock this feature");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-          navigate("/pricing");
-        }, 3000);
-      } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
-        navigate("/find-creators");
-      }
+      // if (menuItem == "find-talent" && talentData?.planName == "Basic") {
+      //   setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      //   setOpenPopUp(true);
+      //   setTimeout(function () {
+      //     setOpenPopUp(false);
+      //     navigate("/pricing");
+      //   }, 3000);
+      // } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
+      //   navigate("/find-creators");
+      // }
     };
   };
 
@@ -175,56 +187,61 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     },
   }));
 
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = async () => {
-    let job_name;
-    let job_location;
-    let job_age;
-    let job_full_name;
+  // const handleClose = async () => {
+  //   let job_name;
+  //   let job_location;
+  //   let job_age;
+  //   let job_full_name;
 
-    if (jobNameRef.current) {
-      job_name = jobNameRef.current.value;
-    }
-    if (jobLocationRef.current) {
-      job_location = jobLocationRef.current.value;
-    }
-    if (jobAgeRef.current) {
-      job_age = jobAgeRef.current.value;
-    }
-    if (jobFullNameRef.current) {
-      job_full_name = jobFullNameRef.current.value;
-    }
+  //   if (jobNameRef.current) {
+  //     job_name = jobNameRef.current.value;
+  //   }
+  //   if (jobLocationRef.current) {
+  //     job_location = jobLocationRef.current.value;
+  //   }
+  //   if (jobAgeRef.current) {
+  //     job_age = jobAgeRef.current.value;
+  //   }
+  //   if (jobFullNameRef.current) {
+  //     job_full_name = jobFullNameRef.current.value;
+  //   }
 
-    const formData = {
-      jobTitle: job_name,
-      jobLocation: job_location,
-      age: job_age,
-    };
+  //   const formData = {
+  //     jobTitle: job_name,
+  //     jobLocation: job_location,
+  //     age: job_age,
+  //   };
 
-    setIsLoading(true);
-    await ApiHelper.post(API.searchJobs, formData)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          setMessage("Filtered SuccessFully");
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-          }, 1000);
-        } else if (resData.data.status === false) {
-          setMessage("No Matching Users Found");
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {});
+  //   setIsLoading(true);
+  //   await ApiHelper.post(API.searchJobs, formData)
+  //     .then((resData) => {
+  //       if (resData.data.status === true) {
+  //         setMessage("Filtered Successfully");
+  //         setOpenPopUp(true);
+  //         setTimeout(function () {
+  //           setOpenPopUp(false);
+  //         }, 1000);
+  //       } else if (resData.data.status === false) {
+  //         setMessage("No Matching Users Found");
+  //         setOpenPopUp(true);
+  //         setTimeout(function () {
+  //           setOpenPopUp(false);
+  //         }, 1000);
+  //       }
+  //     })
+  //     .catch((err) => {});
 
-    setOpen(false);
+  //   setOpen(false);
+  // };
+  const modalRef = useRef(null);
+  const openModal = () => {
+    const modal = new window.bootstrap.Modal(modalRef.current);
+    modal.show();
   };
 
   const jobNameRef = useRef(null);
@@ -252,6 +269,466 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
     setOpen(false);
   };
+  const isMobile = window.innerWidth <= 480;
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const searchModalStyle = {
+    position: "absolute",
+    top: "10%", // Adjust this value to move the modal further up or down
+    left: "50%",
+    transform: "translate(-50%, 0%)", // Remove the vertical centering transform
+    width: 600,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleLabelClick = (route) => {
+    if (route === "/find-creators") {
+      if (!currentUserId || currentUser_type != "brand") {
+        handleClose();
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/talent") {
+      if (!currentUserId || currentUser_type == "brand") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/pricing") {
+      // navigate(route);
+      window.open(
+        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        "_blank"
+      );
+    } else if (route === "/resources") {
+      navigate(route);
+    } else if (route === "/signup") {
+      navigate(route);
+    } else if (route === "/about-us") {
+      navigate(route);
+    } else if (route === "/community-guidelines") {
+      navigate(route);
+    } else if (route === "/blogs") {
+      navigate(route);
+    } else if (route === "/post-job") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/how-it-works") {
+      navigate(route);
+    } else if (route === "/login") {
+      // navigate(route);
+      window.open(
+        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        "_blank"
+      );
+    } else if (route === "/talent-dashboard") {
+      if (!currentUserId || currentUser_type == "brand") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/brand") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/list-jobs") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/applied-jobs") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/saved-jobs") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/create-jobs") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/find-talents") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/favorite-talents") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        //   setMessage("You must be logged in");
+        //   setOpenPopUp(true);
+        //   setTimeout(function() {
+        //     setOpenPopUp(false);
+        //     navigate("/login");
+        //   }, 1000);
+        // } else {
+        //   navigate(route);
+      }
+    } else if (route === "/brand-help") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/applicants") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/edit-talent-profile") {
+      if (!currentUserId || currentUser_type == "brand") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/edit-brand-profile") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/talent-notification") {
+      if (!currentUserId || currentUser_type == "brand") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/talent-settings") {
+      if (!currentUserId || currentUser_type == "brand") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/brand-settings") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/talent-home") {
+      if (!currentUserId || currentUser_type == "brand") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/talent-help") {
+      if (!currentUserId || currentUser_type == "brand") {
+        handleClose();
+
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/brand-notification") {
+      if (!currentUserId || currentUser_type == "talent") {
+        handleClose();
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    } else if (route === "/get-booked") {
+      if (!currentUserId || currentUser_type == "brand") {
+        handleClose();
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          // navigate("/login");
+          window.open(
+            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+            "_blank"
+          );
+        }, 1000);
+      } else {
+        navigate(route);
+      }
+    }
+    if (route == "/talent-signup") {
+      handleClose();
+      handleRegister();
+    }
+    if (route == "/brand-firstGig") {
+      navigate(route);
+    }
+  };
+
+  const handleRegister = () => {
+    if (brand === true) {
+      navigate("/signup", {
+        state: { signupCategory: signupCategory },
+      });
+    } else if (talent === true) {
+      setTimeout(() => {
+        // sendMessageToParent("open-kids-form");
+        openModal();
+      }, 800);
+    }
+  };
+
+  const conditionalNavigate = () => {
+    // window.open(
+    //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+    //   "_blank"
+    // );
+  };
+
+  const filteredOptions = Array.from(
+    new Set(
+      searchPathOptions
+        .filter((option) =>
+          option.label.toLowerCase().startsWith(searchTerm.toLowerCase())
+        )
+        .map((option) => option.label)
+    )
+  ).map((label) => searchPathOptions.find((option) => option.label === label));
+
+  useEffect(() => {}, [talentData, brandData]);
+  const isLoginPage = location.pathname.includes("/login");
+
   return (
     <>
       <div className="headerDashboard dashHeader">
@@ -281,21 +758,27 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
             <div className="rightPart">
               <div className="talent-navbar-functions">
-                {/* <div
+                <div
                   onClick={() => {
                     setMenuOpen(!menuOpen);
                   }}
                   className="menu-icon"
                 >
                   <i className="fa-solid fa-bars"></i>
-                </div> */}
+                </div>
 
                 <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
                   <div className="navTxt">
                     <NavLink to="/">Home</NavLink>
                   </div>
                   <div className="navTxt">
-                    <NavLink to="/talent-dashboard"> Get Booked</NavLink>
+                    <NavLink
+                      to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                      target="_blank"
+                    >
+                      {" "}
+                      Get Booked
+                    </NavLink>
                   </div>
                   <div
                     className="navTxt"
@@ -307,9 +790,9 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                   <div className="navTxt">
                     <NavLink to="/how-it-works">How it works</NavLink>
                   </div>
-                  <div className="navTxt">
+                  {/* <div className="navTxt">
                     <NavLink to="/pricing">Pricing</NavLink>
-                  </div>
+                  </div> */}
                   <div className="navTxt">
                     <li className="nav-item dropdown">
                       <a
@@ -387,149 +870,168 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                     <img src={cofeeIcon} alt="" className="cofeeIcon-img" />
                   </div>
 
+                  <>
+                    {isMobile ? (
+                      <>
+                        <div className="navTxt">
+                          <NavLink to="/talent-home">Dashboard</NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Browse Jobs
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Notification
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Messages
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink to="/edit-talent-profile">
+                            Edit Profile
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Saved Jobs
+                          </NavLink>
+                        </div>
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Applied Jobs
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink
+                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
+                            target="_blank"
+                          >
+                            Settings
+                          </NavLink>
+                        </div>
+                        {/* <div className="navTxt">
+                          <NavLink to="/talent-home">Dashboard</NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink to="/talent-dashboard">Browse Jobs</NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink to="/talent-notification">
+                            Notification
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink to="/message">Messages</NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink to="/edit-talent-profile">
+                            Edit Profile
+                          </NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink to="/saved-jobs">Saved Jobs</NavLink>
+                        </div>
+                        <div className="navTxt">
+                          <NavLink to="/applied-jobs">Applied Jobs</NavLink>
+                        </div>
+
+                        <div className="navTxt">
+                          <NavLink to="/talent-settings">Settings</NavLink>
+                        </div> */}
+                        {/* <div className="navTxt">
+                          <NavLink to="/pricing">Pricing</NavLink>
+                        </div> */}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+
+                  {/* <Link
+            to="/message"
+            className={
+              location.pathname === "/message"
+                ? "sidemenu-active mt-2"
+                : "brand-menu-wrapper mt-2"
+            }
+          >
+            <i className="bi bi-chat-dots icons"></i>
+            <div className="brand-menu-text">Messages</div>
+          </Link> */}
+
                   <React.Fragment>
-                    <div className="header-search-wrapper">
+                    <div className="header-search-wrapper desktop-search">
                       <SearchHeaderComponent />
                     </div>
-                    {/* <div className="header-search-wrapper">
-                      <div className="header-search-icon">
-                        <i className="fas fa-search"></i>
-                      </div>
-                      <div className="header-search-input">
-                        <input
-                          type="text"
-                          className="header-search-input-style"
-                        />
-                      </div>
-                      <div
-                        className="header-filter-icon"
-                        onClick={handleClickOpen}
-                      >
-                        <img className="filter-icon" src={sliderIcon} alt="" />
-                      </div>
-                    </div> */}
-                    {/* <BootstrapDialog
-                      onClose={handleClose}
-                      aria-labelledby="customized-dialog-title"
-                      open={open}
-                      PaperProps={{
-                        sx: {
-                          marginTop: "10vh", // Adjust this value to suit your needs
-                          position: "absolute",
-                          top: 0,
-                          maxHeight: "90vh", // Optional: Limit the height of the dialog
-                        },
-                      }}
-                    >
-                      <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                        Filter Jobs
-                      </DialogTitle>
-                      <IconButton
-                        aria-label="close"
-                        onClick={handleClose}
-                        sx={{
-                          position: "absolute",
-                          right: 8,
-                          top: 8,
-                          color: (theme) => theme.palette.grey[500],
-                        }}
-                      >
-                        <CloseIcon />
-                      </IconButton>
-                      <DialogContent dividers>
-                        <div className="search-filter-section">
-                          <div className="search-labels">Keywords</div>
-                          <div>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Enter Keyword"
-                              ref={jobNameRef}
-                            ></input>
-                          </div>
-
-                          <div className="kids-form-row mt-3">
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
-                                <label className="form-label">Location</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Location"
-                                  ref={jobLocationRef}
-                                ></input>
-                              </div>
-                            </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3">
-                                <label className="form-label">Age</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Age"
-                                  ref={jobAgeRef}
-                                ></input>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="kids-form-section">
-                            <div className="mb-3">
-                              <label className="form-label">Skills</label>
-                              <Select
-                                isMulti
-                                name="colors"
-                                options={skillsList}
-                                valueField="value"
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                onChange={(value) => selectSkills(value)}
-                                styles={customStyles}
-                              />
-                            </div>
-                          </div>
-                          <div className="kids-form-row mt-3">
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
-                                <label className="form-label">Job Name</label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Location"
-                                  ref={jobFullNameRef}
-                                ></input>
-                              </div>
-                            </div>
-                            <div className="kids-form-section">
-                              <div className="mb-3 ">
-                                <label className="form-label">Job Type</label>
-                                <select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  onChange={selectjobType}
-                                  value={jobType}
-                                  style={{ fontSize: "14px" }}
-                                >
-                                  <option value="" disabled selected>
-                                    Select Job Type
-                                  </option>
-                                  {jobTypeOptions.map((option, index) => (
-                                    <option key={index} value={option}>
-                                      {option}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button className="search-popup-btn" onClick={handleClose}>
-                          Filter
-                        </Button>
-                      </DialogActions>
-                    </BootstrapDialog> */}
                   </React.Fragment>
+                  <div className="mobile-search">
+                    <form className="d-flex" role="search">
+                      <input
+                        className="form-control me-2"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                      ></input>
+                    </form>
+                    {searchTerm && (
+                      <>
+                        <div className="search-path-options">
+                          {searchTerm &&
+                            filteredOptions.map((option) => (
+                              <>
+                                <div
+                                  className="search-path-wrapper"
+                                  onClick={() =>
+                                    handleLabelClick(option.routes)
+                                  }
+                                >
+                                  <i className="fas fa-search search-path-icon"></i>
+                                  <div
+                                    className="search-path-labels"
+                                    key={option.routes}
+                                  >
+                                    {option.label}
+                                  </div>
+                                </div>
+                              </>
+                            ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
                 {/* <div
                         className="offcanvas offcanvas-top search-canvas-top"
@@ -765,7 +1267,7 @@ const Listbox = styled("ul")(
   box-shadow: 0px 4px 30px ${
     theme.palette.mode === "dark" ? grey[900] : grey[200]
   };
-  z-index: 1;
+  z-index: 9999999999999999999;
 
   .closed & {
     opacity: 0;
