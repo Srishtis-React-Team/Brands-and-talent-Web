@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/dashboard.css";
 import "../../assets/css/register.css";
+import "../../assets/css/forms/kidsform-one.css";
+
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { API } from "../../config/api";
@@ -336,7 +338,8 @@ const BrandSignup = React.memo((props) => {
         <div
           className="dialog-body spaceTops"
           style={{
-            height: "unset", marginTop: "10px"
+            height: "unset",
+            marginTop: "10px",
           }}
         >
           <div className="adult-signup-main">

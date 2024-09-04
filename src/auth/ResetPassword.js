@@ -354,9 +354,7 @@ const ResetPassword = () => {
               <span className="fa fa-lock form-control-feedback"></span>
               <input
                 type={showConfirmPassword ? "text" : "password"}
-                className={`form-control  adult-signup-inputs ${
-                  passwordMatch ? "" : "is-invalid"
-                }`}
+                className="form-control adult-signup-inputs"
                 placeholder="Confirm Password"
                 onChange={(e) => {
                   handleConfirmPasswordChange(e);
