@@ -509,6 +509,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <div className="media-text">
                             <input
                               type="number"
+                              min="0"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setInstagramFollowers(e.target.value);
@@ -548,6 +549,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <div className="media-text">
                             <input
                               type="number"
+                              min="0"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setfacebookFollowers(e.target.value);
@@ -589,6 +591,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <div className="media-text">
                             <input
                               type="number"
+                              min="0"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setTiktoksFollowers(e.target.value);
@@ -628,6 +631,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <div className="media-text">
                             <input
                               type="number"
+                              min="0"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setlinkedinFollowers(e.target.value);
@@ -670,6 +674,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                             <input
                               value={twitterFollowersCount}
                               type="number"
+                              min="0"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setXtwitterFollowers(e.target.value);
@@ -709,6 +714,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <div className="media-text">
                             <input
                               type="number"
+                              min="0"
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setThreadsFollowers(e.target.value);
@@ -750,6 +756,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                           <div className="media-text">
                             <input
                               type="number"
+                              min="0"
                               value={youtubesFollowers}
                               className="form-control followers-count-input"
                               onChange={(e) => {

@@ -4,14 +4,18 @@ import { ApiHelper } from "../../helpers/ApiHelper";
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { useNavigate } from "react-router-dom";
+import "../../assets/css/register.css";
+import "../../assets/css/forms/kidsform-one.css";
+import "../../assets/css/forms/login.css";
+import "../../assets/css/dashboard.css";
 
 const BrandsOtp = React.memo((props) => {
+  const [otp, setOtp] = useState(["", "", "", ""]);
+  const inputRefs = useRef([]);
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [otp, setOtp] = useState(["", "", "", ""]);
-  const inputRefs = useRef([]);
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(null);
   const [emailID, setEmailID] = useState(null);
@@ -30,43 +34,38 @@ const BrandsOtp = React.memo((props) => {
     }
   }, []);
 
-  useEffect(() => {
-    // Initialize inputRefs with the correct number of refs
-    inputRefs.current = otp.map(
-      (_, i) => inputRefs.current[i] ?? React.createRef()
-    );
-  }, [otp]);
-
-  const handleChange = (index, value) => {
+  const handleChange = (value, index) => {
     const newOtp = [...otp];
     newOtp[index] = value;
-    setOtp(newOtp);
 
-    // Move to the next input if typing
-    if (
-      value !== "" &&
-      index < otp.length - 1 &&
-      inputRefs.current[index + 1]?.current
-    ) {
-      inputRefs.current[index + 1].current.focus();
+    if (value && index < 3) {
+      inputRefs.current[index + 1].focus();
+    }
+
+    setOtp(newOtp);
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && otp[index] === "") {
+      if (index > 0) {
+        inputRefs.current[index - 1].focus();
+      }
     }
   };
 
-  const handleKeyDown = (index, event) => {
-    // Handle backspace navigation
-    if (event.key === "Backspace" && otp[index] === "" && index > 0) {
-      if (inputRefs.current[index - 1]?.current) {
-        inputRefs.current[index - 1].current.focus();
-      }
+  const handlePaste = (e) => {
+    const pastedData = e.clipboardData.getData("Text").split("");
+    if (pastedData.length === 4) {
+      setOtp(pastedData);
+      inputRefs.current[3].focus();
     }
   };
 
   const handleVerify = () => {
     const newOTP = otp.join("");
-
     otpVerification(newOTP);
     setOtp(["", "", "", ""]);
-    inputRefs[0].current.focus();
+    inputRefs.current[0].focus();
   };
 
   const otpVerification = async (newOTP) => {
@@ -166,19 +165,27 @@ const BrandsOtp = React.memo((props) => {
           <div className="otp-enter">Please enter the OTP we just sent to</div>
           <div className="otp-mail">{queryString}</div>
           <div className="otp-boxes">
-            <form action="" className="mt-4 otp-form">
-              {otp.map((digit, index) => (
+            <div onPaste={handlePaste}>
+              {otp.map((value, index) => (
                 <input
                   key={index}
-                  className="otp"
                   type="text"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleChange(index, e.target.value)}
-                  ref={inputRefs[index]}
+                  className="otp"
+                  maxLength="1"
+                  value={value}
+                  onChange={(e) => handleChange(e.target.value, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    fontSize: "24px",
+                    textAlign: "center",
+                    marginRight: "10px",
+                  }}
                 />
               ))}
-            </form>
+            </div>
           </div>
           <div className="verify-otp" onClick={handleVerify}>
             {isLoading ? "Loading..." : "Verify Now"}

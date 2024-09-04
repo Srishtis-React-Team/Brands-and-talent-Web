@@ -1651,7 +1651,7 @@ input[type="radio"] {
 }
 
 a.url-fileName {
-  font-size: 14px;
+  font-size: 13px;
   word-break: break-word;
 }
 
@@ -2051,8 +2051,8 @@ ul.MuiMenu-list li {
 }  */
 
 .dynamic-profession.newAlign .algSepc .form-label {
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 12px;
+  line-height: 15px;
   font-weight: 500;
 }
 
@@ -2209,7 +2209,6 @@ ul.MuiMenu-list li {
     margin: 0;
   }
   #bmc-wbtn {
-    top: 55px !important;
     width: 50px !important;
     height: 50px !important;
   }

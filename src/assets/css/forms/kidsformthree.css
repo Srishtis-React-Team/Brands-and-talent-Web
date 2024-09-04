@@ -281,7 +281,8 @@
 .url-file-wrapper {
   display: flex;
   align-items: baseline;
-  margin: 0 0 7px;
+  margin: 5px 0px;
+  padding: 0;
 }
 
 @media only screen and (max-width: 1399px) {

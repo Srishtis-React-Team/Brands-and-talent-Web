@@ -763,23 +763,7 @@
     .overlay.active {
       display: block;
     } */
-@media only screen and (max-width: 420px) {
-  /* .slider {
-        padding: 0;
-      }
-      .slide {
-        padding: 16px 10px;
-      }
-      .slide img {
-        margin: 0;
-      }
-      .control-prev-btn {
-        top: 37%;
-      } 
-      .control-next-btn {
-        top: 37%;
-      } */
-}
+
 
 .talent-rates {
   padding: 20px 0px;
@@ -909,117 +893,6 @@
   padding: 10px 15px;
 }
 
-@media (max-width: 480px) {
-  .cv-card {
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-      rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-    width: 100% !important;
-    height: 160px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px;
-  }
-  .model-name {
-    color: #000;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    padding-right: 15px;
-    word-break: break-all;
-    text-align: center;
-  }
-
-  .talent-img-backdrop {
-    opacity: 0.4;
-    width: 100%;
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-  }
-  .individual-talent-name {
-    display: block;
-    /* justify-content: center;
-      align-items: center;
-      padding: 20px 0px 0px 0px;
-      flex-direction: column; */
-  }
-  .talent-verified {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 0px;
-  }
-  .talent-details-wrapper {
-    display: flex;
-    align-items: center;
-    padding: 10px 0px;
-  }
-  .talent-status {
-    left: 39%;
-    top: 125%;
-    width: 22%;
-  }
-  .talent-backdrop {
-    position: relative;
-  }
-  .talent-img {
-    width: 50%;
-    height: 90%;
-    top: 50%;
-    left: 25%;
-  }
-  .reviews-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-    margin: 10px 0px;
-  }
-  .reviews-section > .rating-talent {
-    width: 30%;
-    height: 82px;
-    border-radius: 10px;
-    background: #c2114b;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 15px 0px;
-  }
-  .reviews-section > .content > .title {
-    padding: 15px 0px;
-  }
-  .model-details {
-    padding-left: 0px;
-    width: 100%;
-  }
-  .reviews-section > .content {
-    padding: 0px;
-  }
-  .reviews-section > .content > .description {
-    padding: 15px 0px;
-  }
-  .models-options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: unset;
-  }
-  .models-options > div {
-    margin: 10px 10px 0px 0px;
-  }
-  .models-social-counts {
-    width: 390px;
-  }
-
-  .model-picture {
-    width: 180px;
-    height: 125px;
-    border-radius: 10px;
-    margin: 10px;
-  }
-}
-
 /* CSS */
 .table-container {
   overflow-x: auto;
@@ -1050,33 +923,6 @@
   font-weight: bold;
 }
 
-/* Media queries for responsiveness */
-@media screen and (max-width: 768px) {
-  .table-container table td {
-    padding: 5px; /* Reduce padding for small screens */
-  }
-
-  .table-container table .left-column,
-  .table-container table .right-column {
-    border: none; /* Remove borders for small screens */
-  }
-}
-
-.cv-card {
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-  width: 350px;
-  padding: 8px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 10px;
-  .fa-file {
-    padding: 5px 10px;
-    font-size: 25px;
-  }
-}
 
 .view-cv {
   width: auto;
@@ -1197,63 +1043,6 @@
   display: flex;
 }
 
-@media (max-width: 480px) {
-  .individual-talent-tab-first-active-tab {
-    height: 35px;
-    border-radius: 140px;
-    background: #000;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff !important;
-    max-width: auto;
-    padding: 0px;
-    width: 100%;
-  }
-  .individual-talent-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    border-bottom: 1px solid rgb(189, 189, 189);
-    padding: 5px 5px;
-  }
-  .individual-talent-tab {
-    height: 40px;
-    min-width: 80px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 10px;
-    width: 100%;
-    font-size: 14px;
-  }
-  .individual-talent-tab-first {
-    height: 40px;
-    cursor: pointer;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 10px;
-    width: 100%;
-  }
-  .list-jobs-wrapper {
-    display: flex;
-    flex-wrap: unset;
-    flex-direction: column;
-  }
-  .cv-card {
-    width: 75% !important;
-    height: 75px;
-    margin: 10px 0;
-    width: 100% !important;
-    height: inherit !important;
-    margin: 0 !important;
-    margin-bottom: 20px !important;
-  }
-}
-
 .photo-gallery-ind-image {
   cursor: pointer;
 }
@@ -1341,3 +1130,272 @@
   cursor: pointer;
   text-decoration: underline;
 }
+.cv-card {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  width: 350px;
+  max-width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px;
+}
+.cv-card .fa-file {
+    padding: 5px 10px;
+    font-size: 25px;
+}
+.msgs {
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+.cvAdjust .cvlist-wrapper .cv-card{
+  width: 100% !important;
+  margin: 0 0 10px !important;
+}
+
+.cvAdjust .cvlist-wrapper .cv-card .fa-file {
+  padding: 5px 10px 5px 5px;
+}
+.cvAdjust .cvlist-wrapper .fileName {
+  padding: 0 8px 0 0;
+  font-size: 12px;
+  line-height: 15px;
+
+  max-width: 23ch;
+  overflow: hidden;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+
+}
+.cvAdjust .cvlist-wrapper .view-cv { min-width: 75px; }
+
+
+
+
+
+/* Media queries for responsiveness */
+@media (max-width: 1400px) {
+  .cvAdjust .cvlist-wrapper .fileName { max-width: 16ch; }
+
+}
+@media (max-width: 1200px) {
+  .cvAdjust .cvlist-wrapper .fileName { max-width: 10ch; }
+
+}
+@media (max-width: 991px) {
+  .col-md-12.col-lg-3.pr-0{ padding-right: calc(var(--bs-gutter-x) * .5); margin-bottom: 15px; }
+
+}
+
+@media screen and (max-width: 767px) {
+  .table-container table td {
+    padding: 5px; 
+  }
+
+  .table-container table .left-column,
+  .table-container table .right-column {
+    border: none; 
+  }
+  .cvAdjust .cvlist-wrapper .cv-card .align-items-center { width: 100%; }
+  .cvAdjust .cvlist-wrapper .fileName {  max-width: 23ch;  padding: 0; }
+  .talent-all-details-wrapper, .bio-wrapper {  padding: 20px 15px; }
+  .cvAdjust .cvlist-wrapper .view-cv {
+    min-width: 75px;
+    width: auto !important;
+  }
+  .cvAdjust .cvlist-wrapper .cv-card{
+    width: 100% !important;
+    flex-direction: row;
+    margin: 0 0 10px !important;
+  }
+  .photos-slider .item{ margin: 0; }
+  .individual-talents-details {  padding: 0px 15px; }
+
+
+
+}
+@media (max-width: 480px) {
+
+  .cvAdjust .cvlist-wrapper .fileName {  max-width: 15ch; }
+  .cv-card {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+      rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    width: 100% !important;
+    /* min-height: 160px; */
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+  }
+  .model-name {
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding-right: 15px;
+    word-break: break-all;
+    text-align: center;
+  }
+
+  .talent-img-backdrop {
+    opacity: 0.4;
+    width: 100%;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+  }
+  .individual-talent-name {
+    display: block;
+    /* justify-content: center;
+      align-items: center;
+      padding: 20px 0px 0px 0px;
+      flex-direction: column; */
+  }
+  .talent-verified {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0px;
+  }
+  .talent-details-wrapper {
+    display: flex;
+    align-items: baseline;
+    padding: 10px 0px;
+  }
+  .talent-status {
+    left: 39%;
+    top: 125%;
+    width: 22%;
+  }
+  .talent-backdrop {
+    position: relative;
+  }
+  .talent-img {
+    width: 50%;
+    height: 90%;
+    top: 50%;
+    left: 25%;
+  }
+  .reviews-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin: 10px 0px;
+  }
+  .reviews-section > .rating-talent {
+    width: 30%;
+    height: 82px;
+    border-radius: 10px;
+    background: #c2114b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0px;
+  }
+  .reviews-section > .content > .title {
+    padding: 15px 0px;
+  }
+  .model-details {
+    padding-left: 0px;
+    width: 100%;
+  }
+  .reviews-section > .content {
+    padding: 0px;
+  }
+  .reviews-section > .content > .description {
+    padding: 15px 0px;
+  }
+  .models-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: unset;
+  }
+  .models-options > div {
+    margin: 10px 10px 0px 0px;
+  }
+  .models-social-counts {
+    width: 390px;
+  }
+
+  .model-picture {
+    width: 180px;
+    height: 125px;
+    border-radius: 10px;
+    margin: 10px;
+  }
+  .individual-talent-tab-first-active-tab {
+    height: 35px;
+    border-radius: 140px;
+    background: #000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff !important;
+    max-width: auto;
+    padding: 0px;
+    width: 100%;
+  }
+  .individual-talent-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgb(189, 189, 189);
+    padding: 5px 5px;
+  }
+  .individual-talent-tab {
+    height: 40px;
+    min-width: 80px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    width: 100%;
+    font-size: 14px;
+  }
+  .individual-talent-tab-first {
+    height: 40px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    width: 100%;
+  }
+  .list-jobs-wrapper {
+    display: flex;
+    flex-wrap: unset;
+    flex-direction: column;
+  }
+  .cv-card {
+    width: 75% !important;
+    height: 75px;
+    margin: 10px 0;
+    width: 100% !important;
+    height: inherit !important;
+    margin: 0 !important;
+    margin-bottom: 20px !important;
+  }
+  .media-item iframe{ min-height: 150px !important; }
+  .bio-wrapper p { font-size: 14px; }
+
+
+}
+@media (max-width: 380px) {
+  .cvAdjust .cvlist-wrapper .cv-card {  flex-direction: column; }
+  .cvAdjust .cvlist-wrapper .fileName {  max-width: 82%; }
+  .cvAdjust .cvlist-wrapper .view-cv { width: 100% !important; }
+
+
+}
+
+
+
