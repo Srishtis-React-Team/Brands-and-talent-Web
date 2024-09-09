@@ -67,6 +67,11 @@ export const API = {
   getPricingList: BASEURL + "pricing/pricingList",
   brandsPricingList: BASEURL + "pricing/brandsPricingList",
   subscriptionPlan: BASEURL + "users/subscriptionPlan/",
+  createPayment : BASEURL + 'pricing/create-payment',
+  checktransaction: BASEURL + 'pricing/check-transaction',
+  giftSubCreation: BASEURL + 'giftsub/giftSubCreation',
+  
+  // /api/pricing/create-payment
 
   //common
   getFeatures: BASEURL + "features/getFeatures",
@@ -164,4 +169,10 @@ export const API = {
   //blogs
   twitterCount: BASEURL + "socialmedia/twitterCount",
   youtubeCount: BASEURL + "socialmedia/youtubeCount",
+
+
+  //ABA payway
+
+  abaTestingUrl : BASEURL + 'https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase',
+  abaProductionUrl : BASEURL + 'https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase'
 };

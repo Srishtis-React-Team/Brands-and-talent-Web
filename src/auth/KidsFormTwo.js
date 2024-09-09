@@ -10,6 +10,8 @@ import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 import "../assets/css/register.css";
+import CheckoutComponent from "../views/CheckoutComponent.js";
+
 
 const KidsFormTwo = () => {
   const navigate = useNavigate();
@@ -24,6 +26,10 @@ const KidsFormTwo = () => {
   const urlParams = new URLSearchParams(paramsValues);
   const userId = urlParams.get("userId");
   const userEmail = urlParams.get("userEmail");
+  const [responseurl,setResponseUrl] = useState('')
+  const [checkout,setCheckout] = useState(false)
+
+
 
   useEffect(() => {
     getPricingList();
@@ -67,12 +73,51 @@ const KidsFormTwo = () => {
         .catch((err) => {});
     }
   };
-  const choosePlan = async (index) => {
-    navigate(`/talent-signup-files-details?userId=${userId}`);
+  const choosePlan = async (index, item) => {
+    console.log('item',item)
+    console.log('selectedPlan',`annual-${selectedPlan}`)
+    const selectedPlanItem = item.plan_type_annual.find(plan => `annual-${item._id}` === selectedPlan) || 
+                             item.plan_type_monthly.find(plan => `monthly-${item._id}` === selectedPlan);
+    console.log('selectedPlanItem',selectedPlanItem)
+    const currency = selectedPlanItem ? selectedPlanItem.currency : 'Unknown';
+    const price = selectedPlanItem ? selectedPlanItem.amount : 'N/A';
+    console.log('price',price)
+    const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
+    const match = price.match(regex);
+    if (match) {
+      const currency = match[1].toUpperCase(); // "USD"
+      const amount = parseFloat(match[2]);     // 29.99
+      const duration = match[3];               // "month"
+    
+      console.log(`Currency: ${currency}`);
+      console.log(`Chosen plan index: ${index}`);
+      console.log(`Amount: ${amount}`);
+      console.log(`Duration: ${duration}`);
+      const type = `https://www.brandsandtalent.com/talent-signup-files-details?userId=${userId}`
+      handlePayment(amount, currency, type)
+      // /api/pricing/create-payment
+      // /check-transaction
+      // handlePayment(amount, currency)
+    } else {
+      console.error("Price string format is incorrect");
+    }
   };
 
-  const handleRadioChange = (event, plan, type) => {
-    setPlan(type);
+  const handlePayment = async (amount, currency, type) => {
+    try {
+      const response =  await ApiHelper.post(API.createPayment, { amount, currency, type })
+        // await axios.post('/api/pricing/create-payment', { amount, currency, type });
+        console.log('Payment Response:', response);
+        setResponseUrl(response.data.url)
+      setCheckout(true)
+        // Handle the response and update UI
+    } catch (error) {
+        console.error('Error during payment:', error);
+    }
+};
+
+  const handleRadioChange = (event) => {
+    setPlan(event.target.id);
   };
 
   const goBack = () => {
@@ -158,10 +203,12 @@ const KidsFormTwo = () => {
                                       <div className="annual-wrapper">
                                         <input
                                           type="radio"
-                                          name="click"
+                                          name={`annual-${item._id}`}
+                                          id={`annual-${item._id}`}
+                                          checked={selectedPlan === `annual-${item._id}`}
                                           value="save"
+                                          onChange={handleRadioChange}
                                           CHECKED
-                                          id={item.planname}
                                           className={
                                             item.planname == "Pro (Popular)"
                                               ? "pro-checkbox"
@@ -204,10 +251,11 @@ const KidsFormTwo = () => {
                                       <div>
                                         <input
                                           type="radio"
-                                          name="click"
-                                          value="save"
+                                          name={`monthly-${item._id}`}
+                                          id={`monthly-${item._id}`}
+                                          checked={selectedPlan === `monthly-${item._id}`}
+                                          onChange={handleRadioChange}
                                           CHECKED
-                                          id={item._id}
                                           className={
                                             item.planname == "Pro (Popular)"
                                               ? "pro-checkbox"
@@ -244,7 +292,7 @@ const KidsFormTwo = () => {
                                     ? "choose-btn premium-btn"
                                     : ""
                                 }
-                                onClick={() => choosePlan()}
+                                onClick={() => choosePlan(index, item)}
                               >
                                 Choose plan
                               </div>
@@ -306,6 +354,7 @@ const KidsFormTwo = () => {
         </div>
       </div>
 
+      {checkout && <CheckoutComponent responseUrl={responseurl} setCheckout={setCheckout}/>}
       {openPopUp && <PopUp message={message} />}
     </>
   );

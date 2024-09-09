@@ -748,6 +748,20 @@ const TalentProfile = () => {
                       talentData?.twitterUrl) && (
                       <>
                         <div className="talents-social-wrapper mt-4">
+                          {console.log('talentData?.instaFollowers',talentData?.instaFollowers)}
+                          {console.log('talentData?.facebookFollowers',talentData?.facebookFollowers)}
+                          {console.log('talentData?.tiktokFollowers',talentData?.tiktokFollowers)}
+                          {console.log('talentData?.linkedinFollowers',talentData?.linkedinFollowers)}
+                          {console.log('talentData?.twitterFollowers',talentData?.twitterFollowers)}
+                          {console.log('talentData?.threadsFollowers',talentData?.threadsFollowers)}
+                          {console.log('talentData?.youtubeFollowers',talentData?.youtubeFollowers)}
+                          {console.log('talentData?.instagramUrl',talentData?.instagramUrl)}
+                          {console.log('talentData?.tikTokUrl',talentData?.tikTokUrl)}
+                          {console.log('talentData?.youTubeUrl',talentData?.youTubeUrl)}
+                          {console.log('talentData?.linkedinUrl',talentData?.linkedinUrl)}
+                          {console.log('talentData?.threadsUrl',talentData?.threadsUrl)}
+                          {console.log('talentData?.facebookUrl',talentData?.facebookUrl)}
+                          {console.log('talentData?.twitterUrl',talentData?.twitterUrl)}
                           <div className="row">
                             {talentData?.instaFollowers ||
                               (talentData?.instagramUrl && (
