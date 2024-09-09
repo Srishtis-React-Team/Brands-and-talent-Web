@@ -55,6 +55,7 @@ export const API = {
   getBrandById: BASEURL + "brands/getBrandById/",
   updateBrandPassword: BASEURL + "brands/updateBrandPassword/",
   postSupportMail: BASEURL + "brands/postSupportMail",
+  otpResendBrands: BASEURL + "brands/otpResendBrands",
 
   //login
   talentLogin: BASEURL + "users/talentLogin",
@@ -67,10 +68,10 @@ export const API = {
   getPricingList: BASEURL + "pricing/pricingList",
   brandsPricingList: BASEURL + "pricing/brandsPricingList",
   subscriptionPlan: BASEURL + "users/subscriptionPlan/",
-  createPayment : BASEURL + 'pricing/create-payment',
-  checktransaction: BASEURL + 'pricing/check-transaction',
-  giftSubCreation: BASEURL + 'giftsub/giftSubCreation',
-  
+  createPayment: BASEURL + "pricing/create-payment",
+  checktransaction: BASEURL + "pricing/check-transaction",
+  giftSubCreation: BASEURL + "giftsub/giftSubCreation",
+
   // /api/pricing/create-payment
 
   //common
@@ -170,9 +171,12 @@ export const API = {
   twitterCount: BASEURL + "socialmedia/twitterCount",
   youtubeCount: BASEURL + "socialmedia/youtubeCount",
 
-
   //ABA payway
 
-  abaTestingUrl : BASEURL + 'https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase',
-  abaProductionUrl : BASEURL + 'https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase'
+  abaTestingUrl:
+    BASEURL +
+    "https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase",
+  abaProductionUrl:
+    BASEURL +
+    "https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase",
 };

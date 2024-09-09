@@ -7,6 +7,7 @@ import { API } from "../../config/api";
 import Talentscarousel from "../../views/Talentscarousel.js";
 import BrandSideMenu from "./BrandSideMenu.js";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const BrandHome = () => {
   const navigate = useNavigate();
@@ -48,6 +49,29 @@ const BrandHome = () => {
       })
       .catch((err) => {});
   };
+  const location = useLocation();
+
+  useEffect(() => {
+    // Extract the last part of the URL (i.e., 'peter')
+    const pathParts = location.pathname.split("/");
+    const name = pathParts[pathParts.length - 1];
+    console.log(name, "name");
+    getDataByPublicUrl(name);
+  }, [location]);
+
+  const getDataByPublicUrl = async (name) => {
+    const formData = {
+      publicUrl: name,
+    };
+    await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
+      .then((resData) => {
+        console.log(resData?.data?.data?._id, "getDataByPublicUrl");
+        // setUrlTalentData(resData?.data?.data);
+        // checkUser(resData?.data?.data?._id, resData?.data?.data);
+        setBrandData(resData?.data?.data);
+      })
+      .catch((err) => {});
+  };
 
   const toggleMenu = () => {
     console.log("clicked");
@@ -71,7 +95,6 @@ const BrandHome = () => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
-
     if (brandId) {
       getAllJobs();
     }

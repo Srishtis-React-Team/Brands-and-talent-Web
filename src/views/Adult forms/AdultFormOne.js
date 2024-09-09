@@ -816,86 +816,63 @@ const AdultFormOne = () => {
                                   ></input>
                                 </div>
 
-                                <div className="mb-3 col-md-2 divSep">
-                                  <label className="form-label">
-                                    {profession.label}
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control profession-input"
-                                    value={profession.perMonthSalary || ""}
-                                    onChange={(e) => {
-                                      const value = e.target.value;
-                                      // Check if the value is a valid number and is non-negative
-                                      if (
-                                        /^\d*\.?\d*$/.test(value) &&
-                                        (value >= 0 || value === "")
-                                      ) {
-                                        handleDetailChange(
-                                          index,
-                                          "perMonthSalary",
-                                          value
-                                        );
-                                      }
-                                    }}
-                                    placeholder="$/month"
-                                    min="0"
-                                  ></input>
-                                </div>
+                                {profession?.value == "Creator" && (
+                                  <>
+                                    <div className="mb-3 col-md-2 divSep">
+                                      <label className="form-label">
+                                        {profession.label}
+                                      </label>
+                                      <input
+                                        type="number"
+                                        className="form-control profession-input"
+                                        value={profession.perPostSalary || ""}
+                                        onChange={(e) => {
+                                          const value = e.target.value;
+                                          // Check if the value is a valid number and is non-negative
+                                          if (
+                                            /^\d*\.?\d*$/.test(value) &&
+                                            (value >= 0 || value === "")
+                                          ) {
+                                            handleDetailChange(
+                                              index,
+                                              "perPostSalary",
+                                              value
+                                            );
+                                          }
+                                        }}
+                                        placeholder="$/post"
+                                        min="0"
+                                      ></input>
+                                    </div>
 
-                                <div className="mb-3 col-md-2 divSep">
-                                  <label className="form-label">
-                                    {profession.label}
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control profession-input"
-                                    value={profession.perPostSalary || ""}
-                                    onChange={(e) => {
-                                      const value = e.target.value;
-                                      // Check if the value is a valid number and is non-negative
-                                      if (
-                                        /^\d*\.?\d*$/.test(value) &&
-                                        (value >= 0 || value === "")
-                                      ) {
-                                        handleDetailChange(
-                                          index,
-                                          "perPostSalary",
-                                          value
-                                        );
-                                      }
-                                    }}
-                                    placeholder="$/post"
-                                    min="0"
-                                  ></input>
-                                </div>
-
-                                <div className="mb-3 col-md-2 divSep">
-                                  <label className="form-label">
-                                    {profession.label}
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control profession-input"
-                                    value={profession.perImageSalary || ""}
-                                    onChange={(e) => {
-                                      const value = e.target.value;
-                                      // Check if the value is a valid number and is non-negative
-                                      if (
-                                        /^\d*\.?\d*$/.test(value) &&
-                                        (value >= 0 || value === "")
-                                      ) {
-                                        handleDetailChange(
-                                          index,
-                                          "perImageSalary",
-                                          value
-                                        );
-                                      }
-                                    }}
-                                    placeholder="$/image"
-                                    min="0"
-                                  ></input>
-                                </div>
+                                    <div className="mb-3 col-md-2 divSep">
+                                      <label className="form-label">
+                                        {profession.label}
+                                      </label>
+                                      <input
+                                        type="number"
+                                        className="form-control profession-input"
+                                        value={profession.perImageSalary || ""}
+                                        onChange={(e) => {
+                                          const value = e.target.value;
+                                          // Check if the value is a valid number and is non-negative
+                                          if (
+                                            /^\d*\.?\d*$/.test(value) &&
+                                            (value >= 0 || value === "")
+                                          ) {
+                                            handleDetailChange(
+                                              index,
+                                              "perImageSalary",
+                                              value
+                                            );
+                                          }
+                                        }}
+                                        placeholder="$/image"
+                                        min="0"
+                                      ></input>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             </div>
 

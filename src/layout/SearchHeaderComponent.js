@@ -40,14 +40,6 @@ const SearchHeaderComponent = ({ onData }) => {
   }, [currentUserId]);
   useEffect(() => {}, [currentUser_type]);
 
-  const login = () => {
-    // navigate("/login");
-    window.open(
-      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-      "_blank"
-    );
-  };
-
   const logout = () => {
     localStorage.clear();
     setcurrentUserId(null);
@@ -269,10 +261,10 @@ const SearchHeaderComponent = ({ onData }) => {
       navigate(route);
     } else if (route === "/login") {
       // navigate(route);
-      window.open(
-        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        "_blank"
-      );
+      // window.open(
+      //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      //   "_blank"
+      // );
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();

@@ -104,15 +104,15 @@ const BrandsOtp = React.memo((props) => {
 
     resendOtp(newOTP);
     setOtp(["", "", "", ""]);
-    inputRefs[0].current.focus();
+    inputRefs[0]?.current?.focus();
   };
 
   const resendOtp = async (newOTP) => {
     const formData = {
-      parentEmail: queryString,
+      brandEmail: queryString,
     };
     setIsLoading(true);
-    await ApiHelper.post(API.otpResend, formData)
+    await ApiHelper.post(API.otpResendBrands, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage(resData.data.message);
