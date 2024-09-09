@@ -500,10 +500,11 @@ const TalentProfile = () => {
   };
 
   const getYouTubeEmbedUrl = (url) => {
-    const match = url.match(
-      /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
-    );
-    return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+    // Extract video ID and format for embedding
+    const videoId = url.match(
+      /(?:youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/\s]{11})/
+    )[1];
+    return `https://www.youtube.com/embed/${videoId}`;
   };
 
   const getVimeoEmbedUrl = (url) => {
@@ -1369,14 +1370,15 @@ const TalentProfile = () => {
                                   <div>Data not added</div>
                                 </>
                               )}
-                            {talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Photos will be visible only after admin
-                                  approval
-                                </div>
-                              </>
-                            )}
+                            {talentData?.profileApprove === false &&
+                              photosList.length === 0 && (
+                                <>
+                                  <div>
+                                    Photos will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                             {talentData?.profileApprove === true &&
                               photosList &&
                               photosList.length === 0 && (
@@ -1518,19 +1520,22 @@ const TalentProfile = () => {
                                 </div>
                               ))}
 
-                              {talentData?.profileApprove === false && (
-                                <>
-                                  <div>
-                                    Videos will be visible only after admin
-                                    approval
-                                  </div>
-                                </>
-                              )}
+                              {talentData?.profileApprove === false &&
+                                urlsList?.length === 0 && (
+                                  <>
+                                    <div className="msgs">
+                                      Videos will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
 
                               {talentData?.profileApprove === true &&
                                 urlsList?.length === 0 && (
                                   <>
-                                    <div>No Videos Available</div>
+                                    <div className="msgs">
+                                      No Videos Available
+                                    </div>
                                   </>
                                 )}
                             </div>
@@ -1570,17 +1575,20 @@ const TalentProfile = () => {
                                 audiosList &&
                                 audiosList?.length === 0 && (
                                   <>
-                                    <div>No Audios Available</div>
+                                    <div className="msgs">
+                                      No Audios Available
+                                    </div>
                                   </>
                                 )}
-                              {talentData?.profileApprove === false && (
-                                <>
-                                  <div>
-                                    Audios will be visible only after admin
-                                    approval
-                                  </div>
-                                </>
-                              )}
+                              {talentData?.profileApprove === false &&
+                                audiosList?.length === 0 && (
+                                  <>
+                                    <div className="msgs">
+                                      Audios will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
                             </div>
                           </div>
 
@@ -1685,17 +1693,20 @@ const TalentProfile = () => {
                             {talentData?.profileApprove === true &&
                               cvList.length === 0 && (
                                 <>
-                                  <div>No Resumes Available</div>
+                                  <div className="msgs">
+                                    No Resumes Available
+                                  </div>
                                 </>
                               )}
-                            {talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  Resumes will be visible only after admin
-                                  approval
-                                </div>
-                              </>
-                            )}
+                            {talentData?.profileApprove === false &&
+                              cvList.length === 0 && (
+                                <>
+                                  <div className="msgs">
+                                    Resumes will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                           </div>
                         </>
                       )}
@@ -1731,18 +1742,21 @@ const TalentProfile = () => {
                             {talentData?.profileApprove === true &&
                               photosList.length === 0 && (
                                 <>
-                                  <div>No Photos Available</div>
+                                  <div className="msgs">
+                                    No Photos Available
+                                  </div>
                                 </>
                               )}
-                            {talentData?.profileApprove === false && (
-                              <>
-                                <div>
-                                  {" "}
-                                  Photos will be visible only after admin
-                                  approval
-                                </div>
-                              </>
-                            )}
+                            {talentData?.profileApprove === false &&
+                              photosList.length === 0 && (
+                                <>
+                                  <div className="msgs">
+                                    {" "}
+                                    Photos will be visible only after admin
+                                    approval
+                                  </div>
+                                </>
+                              )}
                           </section>
                         </div>
                       )}
@@ -1807,18 +1821,21 @@ const TalentProfile = () => {
                                 {talentData?.profileApprove === true &&
                                   urlsList?.length === 0 && (
                                     <>
-                                      <div>No Videos Available</div>
+                                      <div className="msgs">
+                                        No Videos Available
+                                      </div>
                                     </>
                                   )}
-                                {talentData?.profileApprove === false && (
-                                  <>
-                                    <div>
-                                      {" "}
-                                      Videos will be visible only after admin
-                                      approval
-                                    </div>
-                                  </>
-                                )}
+                                {talentData?.profileApprove === false &&
+                                  urlsList?.length === 0 && (
+                                    <>
+                                      <div className="msgs">
+                                        {" "}
+                                        Videos will be visible only after admin
+                                        approval
+                                      </div>
+                                    </>
+                                  )}
                               </div>
                             </div>
                           </div>
@@ -1861,17 +1878,20 @@ const TalentProfile = () => {
                               {talentData?.profileApprove === true &&
                                 audiosList?.length === 0 && (
                                   <>
-                                    <div>No Audios Available</div>
+                                    <div className="msgs">
+                                      No Audios Available
+                                    </div>
                                   </>
                                 )}
-                              {talentData?.profileApprove === false && (
-                                <>
-                                  <div>
-                                    Audios will be visible only after admin
-                                    approval
-                                  </div>
-                                </>
-                              )}
+                              {talentData?.profileApprove === false &&
+                                audiosList?.length === 0 && (
+                                  <>
+                                    <div className="msgs">
+                                      Audios will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
                             </div>
                           </div>
                         </>
@@ -1942,17 +1962,20 @@ const TalentProfile = () => {
                           {talentData?.profileApprove === true &&
                             featuresList.length === 0 && (
                               <>
-                                <div>No Features Available</div>
+                                <div className="msgs">
+                                  No Features Available
+                                </div>
                               </>
                             )}
-                          {talentData?.profileApprove === false && (
-                            <>
-                              <div>
-                                Features will be visible only after admin
-                                approval
-                              </div>
-                            </>
-                          )}
+                          {talentData?.profileApprove === false &&
+                            featuresList.length === 0 && (
+                              <>
+                                <div className="msgs">
+                                  Features will be visible only after admin
+                                  approval
+                                </div>
+                              </>
+                            )}
                         </>
                       )}
 
@@ -1984,18 +2007,19 @@ const TalentProfile = () => {
                           {talentData?.profileApprove === true &&
                             cvList.length === 0 && (
                               <>
-                                <div>No Resumes Available</div>
+                                <div className="msgs">No Resumes Available</div>
                               </>
                             )}
-                          {talentData?.profileApprove === false && (
-                            <>
-                              <div>
-                                {" "}
-                                Resumes will be visible only after admin
-                                approval
-                              </div>
-                            </>
-                          )}
+                          {talentData?.profileApprove === false &&
+                            cvList.length === 0 && (
+                              <>
+                                <div className="msgs">
+                                  {" "}
+                                  Resumes will be visible only after admin
+                                  approval
+                                </div>
+                              </>
+                            )}
                         </div>
                       )}
 
@@ -2083,17 +2107,18 @@ const TalentProfile = () => {
                           {talentData?.profileApprove === true &&
                             reviewsList.length === 0 && (
                               <>
-                                <div>No Reviews Available</div>
+                                <div className="msgs">No Reviews Available</div>
                               </>
                             )}
-                          {talentData?.profileApprove === false && (
-                            <>
-                              <div>
-                                Reviews will be visible only after admin
-                                approval
-                              </div>
-                            </>
-                          )}
+                          {talentData?.profileApprove === false &&
+                            reviewsList.length === 0 && (
+                              <>
+                                <div className="msgs">
+                                  Reviews will be visible only after admin
+                                  approval
+                                </div>
+                              </>
+                            )}
                         </>
                       )}
                     </div>

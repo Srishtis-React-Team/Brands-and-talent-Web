@@ -71,7 +71,7 @@ const scrollToTop = () => {
 // Regular expressions for different video platforms
 const urlPatterns = {
   youtube:
-    /^.*(youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([^"&?\/\s]{11})/,
+    /^.*(youtube\.com\/(?:embed\/|watch\?v=|shorts\/)|youtu\.be\/)([^"&?\/\s]{11})/,
   vimeo: /^.*(vimeo\.com\/)(\d+|[\w-]+\/[\w-]+)(?:\?.*)?$/,
   instagram: /^.*(instagram\.com\/(p|reel|tv)\/[^/?#&]+)\/?(?:\?.*)?$/,
   twitter: /^.*((twitter|x)\.com\/.*\/status\/\d+)\/?$/,

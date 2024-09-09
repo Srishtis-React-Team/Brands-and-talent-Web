@@ -5,56 +5,54 @@ import { API } from "../config/api";
 import PopUp from "../components/PopUp";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/register.css";
+import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/forms/login.css";
+import "../assets/css/dashboard.css";
 
 const KidsOTP = () => {
+  const [otp, setOtp] = useState(["", "", "", ""]);
+  const inputsRef = useRef([]);
   const navigate = useNavigate();
 
   const btLogo = require("../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
-  const [otp, setOtp] = useState(["", "", "", ""]);
-  const inputRefs = useRef([]);
   const [isLoading, setIsLoading] = useState(false);
   const url = window.location.href;
   const queryString = url.split("?")[1];
 
-  useEffect(() => {
-    // Initialize inputRefs with the correct number of refs
-    inputRefs.current = otp.map(
-      (_, i) => inputRefs.current[i] ?? React.createRef()
-    );
-  }, [otp]);
-
-  const handleChange = (index, value) => {
+  const handleChange = (value, index) => {
     const newOtp = [...otp];
     newOtp[index] = value;
-    setOtp(newOtp);
 
-    // Move to the next input if typing
-    if (
-      value !== "" &&
-      index < otp.length - 1 &&
-      inputRefs.current[index + 1]?.current
-    ) {
-      inputRefs.current[index + 1].current.focus();
+    if (value && index < 3) {
+      inputsRef.current[index + 1].focus();
+    }
+
+    setOtp(newOtp);
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && otp[index] === "") {
+      if (index > 0) {
+        inputsRef.current[index - 1].focus();
+      }
     }
   };
 
-  const handleKeyDown = (index, event) => {
-    // Handle backspace navigation
-    if (event.key === "Backspace" && otp[index] === "" && index > 0) {
-      if (inputRefs.current[index - 1]?.current) {
-        inputRefs.current[index - 1].current.focus();
-      }
+  const handlePaste = (e) => {
+    const pastedData = e.clipboardData.getData("Text").split("");
+    if (pastedData.length === 4) {
+      setOtp(pastedData);
+      inputsRef.current[3].focus();
     }
   };
 
   const handleVerify = () => {
     const newOTP = otp.join("");
-
     otpVerification(newOTP);
     setOtp(["", "", "", ""]);
-    inputRefs[0].current.focus();
+    inputsRef.current[0].focus();
   };
 
   const otpVerification = async (newOTP) => {
@@ -93,7 +91,7 @@ const KidsOTP = () => {
 
     resendOtp(newOTP);
     setOtp(["", "", "", ""]);
-    inputRefs[0].current.focus();
+    inputsRef[0].current.focus();
   };
 
   const resendOtp = async (newOTP) => {
@@ -156,19 +154,27 @@ const KidsOTP = () => {
           <div className="otp-enter">Please enter the OTP we just sent to</div>
           <div className="otp-mail">{queryString}</div>
           <div className="otp-boxes">
-            <form action="" className="mt-4 otp-form">
-              {otp.map((digit, index) => (
+            <div onPaste={handlePaste}>
+              {otp.map((value, index) => (
                 <input
                   key={index}
-                  className="otp"
                   type="text"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleChange(index, e.target.value)}
-                  ref={inputRefs[index]}
+                  maxLength="1"
+                  value={value}
+                  className="otp"
+                  onChange={(e) => handleChange(e.target.value, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  ref={(el) => (inputsRef.current[index] = el)}
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    fontSize: "24px",
+                    textAlign: "center",
+                    marginRight: "10px",
+                  }}
                 />
               ))}
-            </form>
+            </div>
           </div>
           <div className="verify-otp" onClick={handleVerify}>
             Verify Now
@@ -177,12 +183,6 @@ const KidsOTP = () => {
             Didn’t received the OTP?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
           </div>
-          {/* <div
-            className="otp-back"
-            onClick={() => navigate(`/talent-signup-basic-details`)}
-          >
-            Back
-          </div> */}
           <div
             className="otp-logo"
             style={{
