@@ -93,7 +93,8 @@ const KidsFormTwo = () => {
       console.log(`Chosen plan index: ${index}`);
       console.log(`Amount: ${amount}`);
       console.log(`Duration: ${duration}`);
-      const type = `https://www.brandsandtalent.com/talent-signup-files-details?userId=${userId}`
+      
+      const type = `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`
       handlePayment(amount, currency, type)
       // /api/pricing/create-payment
       // /check-transaction
