@@ -402,8 +402,29 @@ const BrandSignup = React.memo((props) => {
                     setAdultPassword(e.target.value);
                   }}
                 ></input>
+
                 <div className="password_strength_box">
-                  <div className="password_strength"></div>
+                  <div className="password_strength">
+                    <p className="text">Weak</p>
+                    <div className="line_box">
+                      <div className="line"></div>
+                    </div>
+                  </div>
+                  <div className="tool_tip_box">
+                    <span>
+                      <i className="bi bi-question-circle"></i>
+                    </span>
+                    <div className="tool_tip">
+                      <p style={{ listStyleType: "none" }}>
+                        <b>Password must be:</b>
+                      </p>
+                      <p>At least 8 character long</p>
+                      <p>At least 1 uppercase letter</p>
+                      <p>At least 1 lowercase letter</p>
+                      <p>At least 1 number</p>
+                      <p>At least 1 special character from !@#$%^&*</p>
+                    </div>
+                  </div>
                 </div>
                 {adultPassword && !passwordStatus && (
                   <div className="invalid-fields password-error-box">

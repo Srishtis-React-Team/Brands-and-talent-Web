@@ -9,6 +9,12 @@ import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
 import MuiPhoneNumber from "material-ui-phone-number";
 import Select from "react-select";
+import {
+  parsePhoneNumber,
+  isValidPhoneNumber,
+  getNumberType,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
 const BrandDetails = () => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
@@ -150,7 +156,8 @@ const BrandDetails = () => {
       brandName !== "" &&
       phoneNumber !== "" &&
       zipCode !== "" &&
-      yourName !== ""
+      yourName !== "" &&
+      !mobileValidationError
     ) {
       const formData = {
         brandName: brandName,
@@ -201,6 +208,12 @@ const BrandDetails = () => {
             setOpenPopUp(false);
           }, 1000);
         });
+    } else {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
     }
   };
 
@@ -308,9 +321,21 @@ const BrandDetails = () => {
   };
   const [mobileValidation, setMobileValidation] = useState(false);
 
+  const [mobileValidationError, setMobileValidationError] = useState(false);
+
   const handleMobileChange = (value, countryData) => {
     setPhoneNumber(value);
     setPhoneNumberError(false);
+    isValidPhoneNumber(value);
+    console.log(value, "isValidPhoneNumber");
+    if (isValidPhoneNumber(value)) {
+      console.log(true, "isValidPhoneNumber");
+      setMobileValidationError(false);
+      setPhoneNumber(value);
+    } else {
+      setMobileValidationError(true);
+      console.log(false, "isValidPhoneNumber");
+    }
   };
 
   return (
@@ -436,6 +461,11 @@ const BrandDetails = () => {
                       className="material-mobile-style"
                       onChange={handleMobileChange}
                     />
+                    {mobileValidationError && (
+                      <div className="invalid-fields">
+                        Please enter correct Mobile Number
+                      </div>
+                    )}
 
                     {phoneNumberError && (
                       <div className="invalid-fields">
@@ -509,15 +539,24 @@ const BrandDetails = () => {
                   </label>
                   <div className="form-group">
                     <input
-                      type="text"
-                      className="form-control adult-signup-inputs"
-                      placeholder="Zip Code "
+                      type="number"
+                      className="form-control projects-completed"
+                      value={zipCode}
                       onChange={(e) => {
-                        handleZipCodeChange(e);
-                        setZipCodeError(false);
+                        const value = e.target.value;
+                        if (
+                          /^\d*\.?\d*$/.test(value) &&
+                          (value >= 0 || value === "")
+                        ) {
+                          handleZipCodeChange(e);
+                          setZipCodeError(false);
+                        }
                       }}
                       onKeyDown={handleZipCodeKeyPress}
+                      min="0"
+                      placeholder="Zip Code"
                     ></input>
+
                     {zipCodeError && (
                       <div className="invalid-fields">
                         Please enter Zip Code

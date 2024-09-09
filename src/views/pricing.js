@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../assets/css/pricing.css";
 import "../assets/css/forms/kidsformthree.css";
+import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/forms/login.css";
+import "../assets/css/dashboard.css";
+import "../assets/css/register.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 import { ApiHelper } from "../helpers/ApiHelper.js";
@@ -17,6 +21,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
 import { useNavigate } from "react-router-dom";
+import CheckoutComponent from "./CheckoutComponent.js";
+// import { createPayment, checkTransactionStatus } from '../config/paymentGateway.js';
 
 const Pricing = () => {
   const [open, setOpen] = React.useState(false);
@@ -52,10 +58,41 @@ const Pricing = () => {
   const [recieverEmailError, setRecieverEmailError] = useState(false);
   const [senderNameLetterError, setSenderNameLetterError] = useState(false);
   const [recieverNameLetterError, setRecieverNameLetterError] = useState(false);
+  const [selectedRadio, setSelectedRadio] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedType, setSelectedType] = useState("annual");
+  const [checkout, setCheckout] = useState(false);
+  const [responseurl, setResponseUrl] = useState("");
 
   const [message, setMessage] = useState("");
   const greenTick = require("../assets/icons/greenTick.png");
   const [pricing, setPricing] = useState("");
+  const [isBillingForm, setIsBillingForm] = useState(true);
+  const [formData, setFormData] = useState({
+    billingFirstName: "",
+    billingLastName: "",
+    organization: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    country: "",
+    email: "",
+    retypeEmail: "",
+    recipientFirstName: "",
+    recipientLastName: "",
+    recipientAddress1: "",
+    recipientAddress2: "",
+    recipientCity: "",
+    recipientState: "",
+    recipientZipcode: "",
+    recipientCountry: "",
+    recipientEmail: "",
+    confirmRecipientEmail: "",
+    comment: "",
+    // Add other states as needed
+  });
 
   useEffect(() => {
     getBrandsPricingList();
@@ -71,6 +108,38 @@ const Pricing = () => {
       .catch((err) => {});
   };
 
+  useEffect(() => {
+    // checktransaction
+    console.log("inside the checktrasaction useEffect");
+    checkTransaction();
+  }, []);
+
+  const checkTransaction = async () => {
+    const obj = { tranId: 20 };
+    console.log("Request Object:", obj);
+
+    try {
+      const resData = await ApiHelper.post(API.checktransaction, obj);
+      console.log("Response Data:", resData);
+
+      if (resData) {
+        // Uncomment and handle data as needed
+        // setPricingList(resData.data.data);
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
+  const handlePlanTypeChange = (type) => {
+    setSelectedType(type);
+  };
+
+  const handleNext = () => {
+    // Handle form submission or transition to next form
+    setIsBillingForm(false);
+  };
+
   const getBrandsPricingList = async () => {
     await ApiHelper.get(API.brandsPricingList)
       .then((resData) => {
@@ -81,24 +150,104 @@ const Pricing = () => {
       .catch((err) => {});
   };
 
-  const choosePlan = async (event) => {
-    // setPricing(event.target.value);
+  const choosePlan = async (index, item) => {
+    console.log("selectedPlan", selectedPlan);
+    const selectedPlanItem =
+      item.plan_type_annual.find(
+        (plan) => `annual-${item._id}` === selectedPlan
+      ) ||
+      item.plan_type_monthly.find(
+        (plan) => `monthly-${item._id}` === selectedPlan
+      );
+    console.log("selectedPlanItem", selectedPlanItem);
+    const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
+    const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
+    const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
+    const match = price.match(regex);
+    if (match) {
+      const currency = match[1].toUpperCase(); // "USD"
+      const amount = parseFloat(match[2]); // 29.99
+      const duration = match[3]; // "month"
+
+      console.log(`Currency: ${currency}`);
+      console.log(`Chosen plan index: ${index}`);
+      console.log(`Amount: ${amount}`);
+      console.log(`Duration: ${duration}`);
+      const type = "https://www.brandsandtalent.com/talent-home";
+      handlePayment(amount, currency, type);
+      // /api/pricing/create-payment
+      // /check-transaction
+      // handlePayment(amount, currency)
+    } else {
+      console.error("Price string format is incorrect");
+    }
+  };
+
+  const handleSubmit = async () => {
     setIsLoading(true);
-    await ApiHelper.post(API.payment)
-      .then((resData) => {
-        setIsLoading(false);
+    // setError(null);
 
-        // alert("sfsf");
-        let stateObj = resData?.data?.data;
-        // navigate("https://checkout-sandbox.payway.com.kh/api");
-        window.location.href = "https://checkout-sandbox.payway.com.kh/api";
-      })
-      .catch((err) => {
-        setIsLoading(false);
+    try {
+      const payload = {
+        name: formData.billingFirstName,
+        lastName: formData.billingLastName,
+        company: formData.organization,
+        address: formData.address1,
+        additionalAddrees: formData.address2,
+        city: formData.city,
+        state: formData.state,
+        country: formData.country,
+        zipcode: formData.zipcode,
+        email: formData.email,
+        user_id: "", // Provide actual user_id if needed
+        gift: [
+          {
+            name: formData.recipientFirstName,
+            lastName: formData.recipientLastName,
+            company: formData.organization,
+            address: formData.recipientAddress1,
+            additionalAddrees: formData.recipientAddress2,
+            city: formData.recipientCity,
+            state: formData.recipientState,
+            country: formData.recipientCountry,
+            zipcode: formData.recipientZipcode,
+            email: formData.recipientEmail,
+            message: formData.comment,
+          },
+        ],
+      };
+      console.log("payload", payload);
+      const resultData = await ApiHelper.post(API.giftSubCreation, payload);
+      // Handle successful submission,
+      console.log("Form submitted successfully", resultData);
+      handleClose(); // Close the dialog
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      // setError('There was an error submitting the form. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePayment = async (amount, currency, type) => {
+    try {
+      const response = await ApiHelper.post(API.createPayment, {
+        amount,
+        currency,
+        type,
       });
+      // await axios.post('/api/pricing/create-payment', { amount, currency, type });
+      console.log("Payment Response:", response.data.url);
+      setResponseUrl(response.data.url);
+      setCheckout(true);
+      // Handle the response and update UI
+    } catch (error) {
+      console.error("Error during payment:", error);
+    }
+  };
 
-    // window.location.href =
-    //   "https://buymeacoffee.com/brandsandtalent";
+  const handleRadioChange = (event) => {
+    setSelectedPlan(event.target.id);
   };
 
   function handleForms(e) {
@@ -131,7 +280,6 @@ const Pricing = () => {
 
   const handleSenderNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setSenderNameLetterError(false);
@@ -146,15 +294,20 @@ const Pricing = () => {
   };
 
   const handleSenderNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setSenderNameLetterError(false);
     }
   };
 
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const handleRecieverNameChange = (e) => {
     const value = e.target.value;
-    // Regular expression to allow only letters
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
     if (value.trim() === "") {
       setRecieverNameLetterError(false);
@@ -168,7 +321,6 @@ const Pricing = () => {
   };
 
   const handleRecieverNameKeyPress = (e) => {
-    // If the Backspace key is pressed and the input value is empty, clear the error
     if (e.key === "Backspace") {
       setRecieverNameLetterError(false);
     }
@@ -256,15 +408,9 @@ const Pricing = () => {
         <div className="popular-header">
           <div className="container">
             <div className="header-title">Pricing</div>
-            {/* <div className="header-menu">
-              <div>Home</div>
-              <div>Talent</div>
-            </div> */}
           </div>
         </div>
       </section>
-      {/* className={artists ? "active-tab" : null} */}
-
       <div className="select-plan-main">
         <div className="select-pricing container text-center">
           <label className="toggleSwitch nolabel">
@@ -277,180 +423,161 @@ const Pricing = () => {
           </label>
         </div>
       </div>
-
       <div className="plan-main">
         <div className="container">
-          {pricingList.length && (
+          {pricingList.length > 0 && (
             <div className="plans-section">
               <div className="row">
-                {pricingList.map((item, index) => {
-                  return (
-                    <div className="col-md-4">
+                {pricingList.map((item, index) => (
+                  <div key={item._id} className="col-md-4">
+                    <div
+                      className={
+                        index === 0
+                          ? "plans-wrapper free-plans"
+                          : index === 1
+                          ? "plans-wrapper pro-plans"
+                          : index === 2
+                          ? "plans-wrapper premium-plans"
+                          : ""
+                      }
+                    >
+                      <div className="priceHeight">
+                        <div className="plan-name">
+                          {item.planname}
+                          <div
+                            className={
+                              index === 1
+                                ? "pro-gift giftSize"
+                                : index === 2
+                                ? "premium-gift giftSize"
+                                : ""
+                            }
+                            onClick={handleClickOpen}
+                          >
+                            {item.gift}
+                          </div>
+                        </div>
+
+                        {item.planname === "Basic" && (
+                          <>
+                            <div className="plan-value">Free</div>
+                            <div className="plan-validity">Forever</div>
+                          </>
+                        )}
+                        {item.planname === "Free For ever" && (
+                          <>
+                            <div className="plan-value">Free</div>
+                            <div className="plan-validity">Forever</div>
+                          </>
+                        )}
+
+                        {item.plan_type_annual.length >= 1 && (
+                          <>
+                            <div className="annual-main-wrapper">
+                              <div className="annual-wrapper">
+                                <input
+                                  type="radio"
+                                  name={`annual-${item._id}`}
+                                  id={`annual-${item._id}`}
+                                  checked={
+                                    selectedPlan === `annual-${item._id}`
+                                  }
+                                  onChange={handleRadioChange}
+                                  className={
+                                    item.planname === "Pro (Popular)"
+                                      ? "pro-checkbox"
+                                      : "premium-checkbox"
+                                  }
+                                />
+                                <label
+                                  htmlFor={`annual-${item._id}`}
+                                  className="annual"
+                                >
+                                  {item.period}
+                                </label>
+                              </div>
+                              <div className="per-value">
+                                {item.annualTotalAmount}
+                              </div>
+                            </div>
+
+                            {item.plan_type_annual.map((plan, index) => (
+                              <div key={index} className="plan-amounts">
+                                <div className="value-wrapper">
+                                  <div className="after-value">
+                                    {plan.afterDiscount}
+                                  </div>
+                                </div>
+                                <div className="border-bottom"></div>
+                              </div>
+                            ))}
+
+                            <div className="monthly-wrapper pt-3">
+                              <div>
+                                <input
+                                  type="radio"
+                                  name={`monthly-${item._id}`}
+                                  id={`monthly-${item._id}`}
+                                  checked={
+                                    selectedPlan === `monthly-${item._id}`
+                                  }
+                                  onChange={handleRadioChange}
+                                  className={
+                                    item.planname === "Pro (Popular)"
+                                      ? "pro-checkbox"
+                                      : "premium-checkbox"
+                                  }
+                                />
+                                <label
+                                  htmlFor={`monthly-${item._id}`}
+                                  className="monthly"
+                                >
+                                  Monthly
+                                </label>
+                              </div>
+                              {item.plan_type_monthly.map((plan, index) => (
+                                <div key={index} className="monthly-amount">
+                                  {plan.amount}
+                                </div>
+                              ))}
+                            </div>
+                          </>
+                        )}
+                      </div>
                       <div
                         className={
-                          index == 0
-                            ? "plans-wrapper free-plans"
-                            : "" || index == 1
-                            ? "plans-wrapper pro-plans"
-                            : "" || index == 2
-                            ? "plans-wrapper premium-plans"
+                          index === 0
+                            ? "choose-btn free-btn"
+                            : index === 1
+                            ? "choose-btn pro-btn"
+                            : index === 2
+                            ? "choose-btn premium-btn"
                             : ""
                         }
+                        onClick={() => choosePlan(index, item)}
                       >
-                        <div className="priceHeight">
-                          <div className="plan-name">
-                            {item.planname}
-                            <div
-                              className={
-                                index == 1
-                                  ? "pro-gift giftSize"
-                                  : "" || index == 2
-                                  ? "premium-gift giftSize"
-                                  : ""
-                              }
-                              onClick={handleClickOpen}
-                            >
-                              {item.gift}
+                        Choose plan
+                      </div>
+                      <div className="include">What's Included</div>
+                      <div className="included-things">
+                        {item.data.map((content, index) => (
+                          <div key={index} className="plan-content">
+                            <div className="icPrice">
+                              <i className="bi bi-check-circle-fill"></i>
                             </div>
+                            <div className="plan-content-text">{content}</div>
                           </div>
-
-                          {item.planname == "Basic" && (
-                            <>
-                              <div className="plan-value">Free</div>
-                              <div className="plan-validity">Forever</div>
-                            </>
-                          )}
-                          {item.planname == "Free For ever" && (
-                            <>
-                              <div className="plan-value">Free</div>
-                              <div className="plan-validity">Forever</div>
-                            </>
-                          )}
-
-                          {item.plan_type_annual.length >= 1 && (
-                            <>
-                              <div className="annual-main-wrapper">
-                                <div className="annual-wrapper">
-                                  <input
-                                    type="radio"
-                                    name="click"
-                                    value="save"
-                                    CHECKED
-                                    id={item.planname}
-                                    className={
-                                      item.planname == "Pro (Popular)"
-                                        ? "pro-checkbox"
-                                        : "premium-checkbox"
-                                    }
-                                  ></input>
-                                  <label for={item.planname} className="annual">
-                                    {item.period}
-                                  </label>
-                                </div>
-                                <div className="per-value">
-                                  {item.annualTotalAmount}
-                                </div>
-                              </div>
-
-                              {item.plan_type_annual.map((item) => {
-                                return (
-                                  <>
-                                    <div className="plan-amounts">
-                                      <div className="value-wrapper">
-                                        {/* <div className="previous-value">
-                                          {item.beforeValue}
-                                        </div> */}
-                                        <div className="after-value">
-                                          {item.afterDiscount}
-                                        </div>
-                                      </div>
-                                      {/* <div className="per-value">
-                                        {item.amount}
-                                      </div> */}
-                                    </div>
-                                    <div className="border-bottom"></div>
-                                  </>
-                                );
-                              })}
-                              <div className="monthly-wrapper pt-3">
-                                <div>
-                                  <input
-                                    type="radio"
-                                    name="click"
-                                    value="save"
-                                    CHECKED
-                                    id={item._id}
-                                    className={
-                                      item.planname == "Pro (Popular)"
-                                        ? "pro-checkbox"
-                                        : "premium-checkbox"
-                                    }
-                                  ></input>
-                                  <label for={item._id} className="monthly">
-                                    Monthly
-                                  </label>
-                                </div>
-                                {item.plan_type_monthly.map((item) => {
-                                  return (
-                                    <>
-                                      <div className="monthly-amount">
-                                        {item.amount}
-                                      </div>
-                                    </>
-                                  );
-                                })}
-                              </div>
-                            </>
-                          )}
-                        </div>
-                        {/* <div
-                          className={
-                            index == 0
-                              ? "choose-btn free-btn"
-                              : "" || index == 1
-                              ? "choose-btn pro-btn"
-                              : "" || index == 2
-                              ? "choose-btn premium-btn"
-                              : ""
-                          }
-                          onClick={() => choosePlan()}
-                        >
-                          Choose plan
-                        </div> */}
-                        <div className="include">What's Included</div>
-                        <div className="included-things">
-                          {item.data.map((item) => {
-                            return (
-                              <>
-                                <div className="plan-content">
-                                  <div className="icPrice">
-                                    <i className="bi bi-check-circle-fill"></i>
-                                  </div>
-                                  {/* <img
-                                      className="listIc"
-                                      src={greenTick}
-                                      alt=""
-                                    /> */}
-                                  <div className="plan-content-text">
-                                    {item}
-                                  </div>
-                                </div>
-                              </>
-                            );
-                          })}
-                        </div>
-                        {/* <div className="learn-btn">Learn More</div> */}
+                        ))}
                       </div>
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
             </div>
           )}
         </div>
       </div>
       <Footer />
-
       <React.Fragment>
         <Dialog
           open={open}
@@ -459,256 +586,212 @@ const Pricing = () => {
             component: "form",
             onSubmit: (event) => {
               event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              const formJson = Object.fromEntries(formData.entries());
-              const email = formJson.email;
-
-              handleClose();
+              if (isBillingForm) {
+                handleNext();
+              } else {
+                handleSubmit();
+              }
             },
           }}
         >
           <div className="gift-dialog-header">
-            <DialogTitle>Gift Subscription</DialogTitle>
+            <DialogTitle>
+              {isBillingForm
+                ? "Your Billing Address"
+                : "Gift Recipient Information"}
+            </DialogTitle>
             <i className="bi bi-x-lg close-gift" onClick={handleClose}></i>
           </div>
           <DialogContent>
-            {/* <DialogContentText>
-              To subscribe to this website, please enter your email address
-              here. We will send updates occasionally.
-            </DialogContentText> */}
             <div className="search-filter-section">
-              <div className="kids-form-row row ">
-                <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">
-                    Your full name <span className="mandatory">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Your full name"
-                    onChange={(e) => {
-                      handleSenderNameChange(e);
-                      setSenderNameError(false);
-                    }}
-                    onKeyDown={handleSenderNameKeyPress}
-                    value={senderName}
-                  ></input>
-                  {senderNameError && (
-                    <div className="invalid-fields">
-                      Please enter Your full name
+              {isBillingForm ? (
+                <div className="billing-form">
+                  <div className="kids-form-row row">
+                    {/* Billing Information Fields */}
+                    {[
+                      "First Name",
+                      "Last Name",
+                      "Organization",
+                      "Address 1",
+                      "Address 2",
+                      "City",
+                      "State",
+                      "Zipcode",
+                      "Country",
+                    ].map((field) => (
+                      <div
+                        className="kids-form-section col-md-12 mb-3"
+                        key={field}
+                      >
+                        <label className="form-label">
+                          {field} <span className="mandatory">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          name={`billing${field.replace(" ", "")}`}
+                          className="form-control"
+                          placeholder={field}
+                          onChange={handleInputChange}
+                          value={formData[`billing${field.replace(" ", "")}`]}
+                        />
+                      </div>
+                    ))}
+                    <div className="kids-form-section col-md-12 mb-3">
+                      <label className="form-label">
+                        Email <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        className={`form-control ${
+                          formData.email === formData.retypeEmail
+                            ? ""
+                            : "is-invalid"
+                        }`}
+                        placeholder="Enter E-mail"
+                        onChange={handleInputChange}
+                        value={formData.email}
+                      />
                     </div>
-                  )}
-                </div>
-                <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">
-                    Email <span className="mandatory">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    className={`form-control ${
-                      !isValidEmail ? "is-invalid" : "form-control"
-                    }`}
-                    onChange={handleSenderEmailChange}
-                    placeholder="Enter E-mail"
-                    value={senderEmail}
-                  />
-                  {!isValidEmail && (
-                    <div className="invalid-feedback">
-                      Please enter a valid E-mail address.
+                    <div className="kids-form-section col-md-12 mb-3">
+                      <label className="form-label">
+                        Re-type Email <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="retypeEmail"
+                        className={`form-control ${
+                          formData.email === formData.retypeEmail
+                            ? ""
+                            : "is-invalid"
+                        }`}
+                        placeholder="Re-type E-mail"
+                        onChange={handleInputChange}
+                        value={formData.retypeEmail}
+                      />
                     </div>
-                  )}
-                  {senderEmailError && (
-                    <div className="invalid-fields">Please enter E-mail</div>
-                  )}
+                  </div>
                 </div>
-                <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">
-                    Gift receiver’s full name{" "}
-                    <span className="mandatory">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Gift receiver’s full name"
-                    onChange={(e) => {
-                      handleRecieverNameChange(e);
-                      setGiftRecieverNameError(false);
-                    }}
-                    onKeyDown={handleRecieverNameKeyPress}
-                    value={giftRecieverName}
-                  ></input>
-                  {giftRecieverNameError && (
-                    <div className="invalid-fields">
-                      Please enter Gift receiver’s full name
+              ) : (
+                <div className="recipient-form">
+                  {/* Recipient Information Fields */}
+                  {[
+                    "First Name",
+                    "Last Name",
+                    "Address 1",
+                    "Address 2",
+                    "City",
+                    "State",
+                    "Zipcode",
+                    "Country",
+                  ].map((field) => (
+                    <div
+                      className="kids-form-section col-md-12 mb-3"
+                      key={field}
+                    >
+                      <label className="form-label">
+                        {field} <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name={`recipient${field.replace(" ", "")}`}
+                        className="form-control"
+                        placeholder={field}
+                        onChange={handleInputChange}
+                        value={formData[`recipient${field.replace(" ", "")}`]}
+                      />
                     </div>
-                  )}
-                </div>
-                <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">
-                    Gift receiver’s email <span className="mandatory">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    className={`form-control ${
-                      !isValidRecieverEmail ? "is-invalid" : "form-control"
-                    }`}
-                    onChange={handleRecieverEmailChange}
-                    placeholder="Gift receiver’s email"
-                    value={recieverEmail}
-                  />
-                  {!isValidRecieverEmail && (
-                    <div className="invalid-feedback">
-                      Please enter a valid E-mail address.
+                  ))}
+                  <div className="kids-form-section col-md-12 mb-3">
+                    <label className="form-label">
+                      Email Address <span className="mandatory">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="recipientEmail"
+                      className={`form-control ${
+                        formData.recipientEmail ===
+                        formData.confirmRecipientEmail
+                          ? ""
+                          : "is-invalid"
+                      }`}
+                      placeholder="Email Address"
+                      onChange={handleInputChange}
+                      value={formData.recipientEmail}
+                    />
+                  </div>
+                  <div className="kids-form-section col-md-12 mb-3">
+                    <label className="form-label">
+                      Confirm Email Address <span className="mandatory">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="confirmRecipientEmail"
+                      className={`form-control ${
+                        formData.recipientEmail ===
+                        formData.confirmRecipientEmail
+                          ? ""
+                          : "is-invalid"
+                      }`}
+                      placeholder="Confirm Email Address"
+                      onChange={handleInputChange}
+                      value={formData.confirmRecipientEmail}
+                    />
+                  </div>
+                  <div className="kids-form-section col-md-12 mb-3">
+                    <label className="form-label">
+                      Announce Your Gift With A Personalized Message (Hide)
+                      <span className="mandatory">*</span>
+                    </label>
+                    <textarea
+                      name="comment"
+                      style={{ width: "100%" }}
+                      className="form-control address-textarea"
+                      placeholder="Enter message here"
+                      rows="3"
+                      onChange={handleInputChange}
+                      value={formData.comment}
+                    ></textarea>
+                    <div className="character-count">
+                      Count (250 maximum characters): {formData.comment.length}
                     </div>
-                  )}
-                  {giftRecieverEmailError && (
-                    <div className="invalid-fields">
-                      Please enter Gift receiver’s email
-                    </div>
-                  )}
+                  </div>
+                  <div className="kids-form-section col-md-12 mb-3">
+                    <label className="form-label">Total Due</label>
+                    <input
+                      type="text"
+                      name="totalDue"
+                      className="form-control"
+                      placeholder="Total Due"
+                      onChange={handleInputChange}
+                      value={formData.totalDue}
+                    />
+                  </div>
+                  <button type="button" className="btn add-another-gift-btn">
+                    Add Another Gift
+                  </button>
                 </div>
-
-                <div className="kids-form-section col-md-12 mb-3">
-                  <label
-                    htmlFor="exampleFormControlTextarea1"
-                    className="form-label"
-                  >
-                    Comment<span className="mandatory">*</span>
-                  </label>
-                  <textarea
-                    style={{ width: "100%" }}
-                    className="form-control address-textarea"
-                    id="exampleFormControlTextarea1"
-                    value={comment}
-                    rows="3"
-                    onChange={(e) => {
-                      setComment(e.target.value);
-                      setCommentError(false);
-                    }}
-                  ></textarea>
-                  {commentError && (
-                    <div className="invalid-fields">Please enter Comment</div>
-                  )}
-                </div>
-              </div>
+              )}
             </div>
           </DialogContent>
           <DialogActions>
-            {/* <Button onClick={handleClose}>Cancel</Button> */}
             <button
               type="button"
               className="btn gift-payment-btn"
-              onClick={sendGiftSubscription}
+              onClick={isBillingForm ? handleNext : handleSubmit}
             >
-              {isLoading ? "Loading..." : "Next"}
+              {isLoading ? "Loading..." : isBillingForm ? "Next" : "Submit"}
             </button>
           </DialogActions>
         </Dialog>
       </React.Fragment>
 
-      {/* <div
-        ref={modalRef}
-        className="modal fade"
-        id="giftSendModal"
-        tabIndex="-1"
-        aria-labelledby="giftSendModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered modal-lg signupModal">
-          <div className="modal-content ">
-            <div className="modal-header">
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <div className="search-filter-section">
-                <div className="kids-form-row row mt-3">
-                  <div className="kids-form-section col-md-12 mb-3">
-                    <label className="form-label">Full name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Full name"
-                      onChange={(e) => {
-                        handleSenderNameChange(e);
-                      }}
-                      onKeyDown={handleSenderNameKeyPress}
-                      value={senderName}
-                    ></input>
-                  </div>
-                  <div className="kids-form-section col-md-12 mb-3">
-                    <label className="form-label">Email</label>
-                    <input
-                      type="email"
-                      className={`form-control ${
-                        !isValidEmail ? "is-invalid" : "form-control"
-                      }`}
-                      onChange={handleSenderEmailChange}
-                      placeholder="Enter E-mail"
-                      value={senderEmail}
-                    />
-                    {!isValidEmail && (
-                      <div className="invalid-feedback">
-                        Please enter a valid E-mail address.
-                      </div>
-                    )}
-                    {senderEmailError && (
-                      <div className="invalid-fields">Please enter E-mail</div>
-                    )}
-                  </div>
-                  <div className="kids-form-section col-md-12 mb-3">
-                    <label className="form-label">Gift receiver’s name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Gift receiver’s name"
-                      onChange={(e) => {
-                        handleRecieverNameChange(e);
-                      }}
-                      onKeyDown={handleRecieverNameKeyPress}
-                      value={giftRecieverName}
-                    ></input>
-                  </div>
-                  <div className="kids-form-section col-md-12 mb-3">
-                    <label className="form-label">Gift receiver’s email</label>
-                    <input
-                      type="email"
-                      className={`form-control ${
-                        !isValidRecieverEmail ? "is-invalid" : "form-control"
-                      }`}
-                      onChange={handleRecieverEmailChange}
-                      placeholder="Gift receiver’s email"
-                      value={recieverEmail}
-                    />
-                    {!isValidRecieverEmail && (
-                      <div className="invalid-feedback">
-                        Please enter a valid E-mail address.
-                      </div>
-                    )}
-                    {recieverEmailError && (
-                      <div className="invalid-fields">Please enter E-mail</div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn gift-payment-btn"
-                onClick={sendGiftSubscription}
-              >
-                {isLoading ? "Loading..." : "Payment"}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
+      {checkout && (
+        <CheckoutComponent
+          responseUrl={responseurl}
+          setCheckout={setCheckout}
+        />
+      )}
       {openPopUp && <PopUp message={message} />}
     </>
   );
