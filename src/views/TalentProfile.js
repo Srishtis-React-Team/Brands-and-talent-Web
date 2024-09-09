@@ -3,11 +3,11 @@ import "../assets/css/findcreators.css";
 import "../assets/css/talent-profile.css";
 import "../assets/css/dashboard.css";
 import { useParams } from "react-router-dom";
-
 import "../assets/css/register.css";
 import "../assets/css/kidsmain.scss";
 import "../assets/css/createjobs.css";
 import "../assets/css/talent-profile.css";
+import "../assets/css/talent-dashboard.css";
 
 import { useLocation } from "react-router-dom";
 import { ApiHelper } from "../helpers/ApiHelper.js";
@@ -749,342 +749,325 @@ const TalentProfile = () => {
                       talentData?.twitterUrl) && (
                       <>
                         <div className="talents-social-wrapper mt-4">
-                          {console.log('talentData?.instaFollowers',talentData?.instaFollowers)}
-                          {console.log('talentData?.facebookFollowers',talentData?.facebookFollowers)}
-                          {console.log('talentData?.tiktokFollowers',talentData?.tiktokFollowers)}
-                          {console.log('talentData?.linkedinFollowers',talentData?.linkedinFollowers)}
-                          {console.log('talentData?.twitterFollowers',talentData?.twitterFollowers)}
-                          {console.log('talentData?.threadsFollowers',talentData?.threadsFollowers)}
-                          {console.log('talentData?.youtubeFollowers',talentData?.youtubeFollowers)}
-                          {console.log('talentData?.instagramUrl',talentData?.instagramUrl)}
-                          {console.log('talentData?.tikTokUrl',talentData?.tikTokUrl)}
-                          {console.log('talentData?.youTubeUrl',talentData?.youTubeUrl)}
-                          {console.log('talentData?.linkedinUrl',talentData?.linkedinUrl)}
-                          {console.log('talentData?.threadsUrl',talentData?.threadsUrl)}
-                          {console.log('talentData?.facebookUrl',talentData?.facebookUrl)}
-                          {console.log('talentData?.twitterUrl',talentData?.twitterUrl)}
                           <div className="row">
-                            {talentData?.instaFollowers ||
-                              (talentData?.instagramUrl && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img
-                                      onClick={() =>
-                                        window.open(
-                                          `${talentData?.instagramUrl}`,
-                                          "_blank"
-                                        )
-                                      }
-                                      src={instaLogo}
-                                    ></img>
-                                  </div>
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData.instaFollowers && (
-                                        <>{talentData?.instaFollowers}</>
-                                      )}
-                                      {!talentData.instaFollowers && (
-                                        <>
-                                          <div
-                                            onClick={() =>
-                                              window.open(
-                                                `${talentData?.instagramUrl}`,
-                                                "_blank"
-                                              )
-                                            }
-                                            className="click-url"
-                                          >
-                                            Click here
-                                          </div>
-                                        </>
-                                      )}
-                                    </div>
-                                    {talentData?.instaFollowers && (
-                                      <>
-                                        <div className="followers-text">
-                                          Followers
-                                        </div>
-                                      </>
+                            {(talentData?.instaFollowers ||
+                              talentData?.instagramUrl) && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img
+                                    onClick={() =>
+                                      window.open(
+                                        talentData?.instagramUrl,
+                                        "_blank"
+                                      )
+                                    }
+                                    src={instaLogo}
+                                    alt="Instagram"
+                                  />
+                                </div>
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData?.instaFollowers ? (
+                                      <p>{talentData.instaFollowers}</p>
+                                    ) : (
+                                      <div
+                                        onClick={() =>
+                                          window.open(
+                                            talentData?.instagramUrl,
+                                            "_blank"
+                                          )
+                                        }
+                                        className="click-url"
+                                      >
+                                        Click here
+                                      </div>
                                     )}
                                   </div>
-                                </div>
-                              ))}
-                            {talentData?.facebookFollowers ||
-                              (talentData?.facebookUrl && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img
-                                      onClick={() =>
-                                        window.open(
-                                          `${talentData?.facebookUrl}`,
-                                          "_blank"
-                                        )
-                                      }
-                                      src={fbIcon}
-                                    ></img>
-                                  </div>
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData.facebookFollowers && (
-                                        <>{talentData?.facebookFollowers}</>
-                                      )}
-                                      {!talentData.facebookFollowers && (
-                                        <>
-                                          <div
-                                            onClick={() =>
-                                              window.open(
-                                                `${talentData?.facebookUrl}`,
-                                                "_blank"
-                                              )
-                                            }
-                                            className="click-url"
-                                          >
-                                            Click here
-                                          </div>
-                                        </>
-                                      )}
+                                  {talentData?.instaFollowers && (
+                                    <div className="followers-text">
+                                      Followers
                                     </div>
-                                    {talentData?.facebookFollowers && (
-                                      <>
-                                        <div className="followers-text">
-                                          Followers
-                                        </div>
-                                      </>
-                                    )}
-                                  </div>
+                                  )}
                                 </div>
-                              ))}
-                            {talentData?.tiktokFollowers ||
-                              (talentData?.tikTokUrl && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img
-                                      onClick={() =>
-                                        window.open(
-                                          `${talentData?.tikTokUrl}`,
-                                          "_blank"
-                                        )
-                                      }
-                                      src={tiktok}
-                                    ></img>
-                                  </div>
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData.tiktokFollowers && (
-                                        <>{talentData?.tiktokFollowers}</>
-                                      )}
-                                      {!talentData.tiktokFollowers && (
-                                        <>
-                                          <div
-                                            onClick={() =>
-                                              window.open(
-                                                `${talentData?.tikTokUrl}`,
-                                                "_blank"
-                                              )
-                                            }
-                                            className="click-url"
-                                          >
-                                            Click here
-                                          </div>
-                                        </>
-                                      )}
-                                    </div>
-                                    {talentData?.tiktokFollowers && (
-                                      <>
-                                        <div className="followers-text">
-                                          Followers
-                                        </div>
-                                      </>
-                                    )}
-                                  </div>
-                                </div>
-                              ))}
+                              </div>
+                            )}
 
-                            {talentData?.linkedinFollowers ||
-                              (talentData?.linkedinUrl && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img
-                                      onClick={() =>
-                                        window.open(
-                                          `${talentData?.linkedinUrl}`,
-                                          "_blank"
-                                        )
-                                      }
-                                      src={linkdin}
-                                    ></img>
-                                  </div>
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData.linkedinFollowers && (
-                                        <>{talentData?.linkedinFollowers}</>
-                                      )}
-                                      {!talentData.linkedinFollowers && (
-                                        <>
-                                          <div
-                                            onClick={() =>
-                                              window.open(
-                                                `${talentData?.linkedinUrl}`,
-                                                "_blank"
-                                              )
-                                            }
-                                            className="click-url"
-                                          >
-                                            Click here
-                                          </div>
-                                        </>
-                                      )}
-                                    </div>
-                                    {talentData?.linkedinFollowers && (
+                            {(talentData?.facebookFollowers ||
+                              talentData?.facebookUrl) && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.facebookUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                    src={fbIcon}
+                                  ></img>
+                                </div>
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData.facebookFollowers && (
+                                      <>{talentData?.facebookFollowers}</>
+                                    )}
+                                    {!talentData.facebookFollowers && (
                                       <>
-                                        <div className="followers-text">
-                                          Followers
+                                        <div
+                                          onClick={() =>
+                                            window.open(
+                                              `${talentData?.facebookUrl}`,
+                                              "_blank"
+                                            )
+                                          }
+                                          className="click-url"
+                                        >
+                                          Click here
                                         </div>
                                       </>
                                     )}
                                   </div>
+                                  {talentData?.facebookFollowers && (
+                                    <>
+                                      <div className="followers-text">
+                                        Followers
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
-                              ))}
-
-                            {talentData?.twitterFollowers ||
-                              (talentData?.twitterUrl && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img
-                                      onClick={() =>
-                                        window.open(
-                                          `${talentData?.twitterUrl}`,
-                                          "_blank"
-                                        )
-                                      }
-                                      src={twitterLogo}
-                                    ></img>
-                                  </div>
-
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData.twitterFollowers && (
-                                        <>{talentData?.twitterFollowers}</>
-                                      )}
-                                      {!talentData.twitterFollowers && (
-                                        <>
-                                          <div
-                                            onClick={() =>
-                                              window.open(
-                                                `${talentData?.twitterUrl}`,
-                                                "_blank"
-                                              )
-                                            }
-                                            className="click-url"
-                                          >
-                                            Click here
-                                          </div>
-                                        </>
-                                      )}
-                                    </div>
-                                    {talentData?.twitterFollowers && (
+                              </div>
+                            )}
+                            {(talentData?.tiktokFollowers ||
+                              talentData?.tikTokUrl) && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.tikTokUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                    src={tiktok}
+                                  ></img>
+                                </div>
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData.tiktokFollowers && (
+                                      <>{talentData?.tiktokFollowers}</>
+                                    )}
+                                    {!talentData.tiktokFollowers && (
                                       <>
-                                        <div className="followers-text">
-                                          Followers
+                                        <div
+                                          onClick={() =>
+                                            window.open(
+                                              `${talentData?.tikTokUrl}`,
+                                              "_blank"
+                                            )
+                                          }
+                                          className="click-url"
+                                        >
+                                          Click here
                                         </div>
                                       </>
                                     )}
                                   </div>
+                                  {talentData?.tiktokFollowers && (
+                                    <>
+                                      <div className="followers-text">
+                                        Followers
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
-                              ))}
-                            {talentData?.threadsFollowers ||
-                              (talentData?.threadsUrl && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img
-                                      onClick={() =>
-                                        window.open(
-                                          `${talentData?.threadsUrl}`,
-                                          "_blank"
-                                        )
-                                      }
-                                      src={threadLogo}
-                                    ></img>
-                                  </div>
+                              </div>
+                            )}
 
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData.threadsFollowers && (
-                                        <>{talentData?.threadsFollowers}</>
-                                      )}
-                                      {!talentData.threadsFollowers && (
-                                        <>
-                                          <div
-                                            onClick={() =>
-                                              window.open(
-                                                `${talentData?.threadsUrl}`,
-                                                "_blank"
-                                              )
-                                            }
-                                            className="click-url"
-                                          >
-                                            Click here
-                                          </div>
-                                        </>
-                                      )}
-                                    </div>
-                                    {talentData?.threadsFollowers && (
+                            {(talentData?.linkedinFollowers ||
+                              talentData?.linkedinUrl) && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.linkedinUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                    src={linkdin}
+                                  ></img>
+                                </div>
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData.linkedinFollowers && (
+                                      <>{talentData?.linkedinFollowers}</>
+                                    )}
+                                    {!talentData.linkedinFollowers && (
                                       <>
-                                        <div className="followers-text">
-                                          Followers
+                                        <div
+                                          onClick={() =>
+                                            window.open(
+                                              `${talentData?.linkedinUrl}`,
+                                              "_blank"
+                                            )
+                                          }
+                                          className="click-url"
+                                        >
+                                          Click here
                                         </div>
                                       </>
                                     )}
                                   </div>
+                                  {talentData?.linkedinFollowers && (
+                                    <>
+                                      <div className="followers-text">
+                                        Followers
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
-                              ))}
+                              </div>
+                            )}
 
-                            {talentData?.youtubeFollowers ||
-                              (talentData?.youTubeUrl && (
-                                <div className="talents-social col-md-6">
-                                  <div className="logoSocial">
-                                    <img
-                                      onClick={() =>
-                                        window.open(
-                                          `${talentData?.youTubeUrl}`,
-                                          "_blank"
-                                        )
-                                      }
-                                      src={youtubeLogo}
-                                    ></img>
-                                  </div>
+                            {(talentData?.twitterFollowers ||
+                              talentData?.twitterUrl) && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.twitterUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                    src={twitterLogo}
+                                  ></img>
+                                </div>
 
-                                  <div className="social-followers-count-section">
-                                    <div className="social-count">
-                                      {talentData.youtubeFollowers && (
-                                        <>{talentData?.youtubeFollowers}</>
-                                      )}
-                                      {!talentData.youtubeFollowers && (
-                                        <>
-                                          <div
-                                            onClick={() =>
-                                              window.open(
-                                                `${talentData?.youTubeUrl}`,
-                                                "_blank"
-                                              )
-                                            }
-                                            className="click-url"
-                                          >
-                                            Click here
-                                          </div>
-                                        </>
-                                      )}
-                                    </div>
-                                    {talentData?.youtubeFollowers && (
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData.twitterFollowers && (
+                                      <>{talentData?.twitterFollowers}</>
+                                    )}
+                                    {!talentData.twitterFollowers && (
                                       <>
-                                        <div className="followers-text">
-                                          Followers
+                                        <div
+                                          onClick={() =>
+                                            window.open(
+                                              `${talentData?.twitterUrl}`,
+                                              "_blank"
+                                            )
+                                          }
+                                          className="click-url"
+                                        >
+                                          Click here
                                         </div>
                                       </>
                                     )}
                                   </div>
+                                  {talentData?.twitterFollowers && (
+                                    <>
+                                      <div className="followers-text">
+                                        Followers
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
-                              ))}
+                              </div>
+                            )}
+                            {(talentData?.threadsFollowers ||
+                              talentData?.threadsUrl) && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.threadsUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                    src={threadLogo}
+                                  ></img>
+                                </div>
+
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData.threadsFollowers && (
+                                      <>{talentData?.threadsFollowers}</>
+                                    )}
+                                    {!talentData.threadsFollowers && (
+                                      <>
+                                        <div
+                                          onClick={() =>
+                                            window.open(
+                                              `${talentData?.threadsUrl}`,
+                                              "_blank"
+                                            )
+                                          }
+                                          className="click-url"
+                                        >
+                                          Click here
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+                                  {talentData?.threadsFollowers && (
+                                    <>
+                                      <div className="followers-text">
+                                        Followers
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+
+                            {(talentData?.youtubeFollowers ||
+                              talentData?.youTubeUrl) && (
+                              <div className="talents-social col-md-6">
+                                <div className="logoSocial">
+                                  <img
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.youTubeUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                    src={youtubeLogo}
+                                  ></img>
+                                </div>
+
+                                <div className="social-followers-count-section">
+                                  <div className="social-count">
+                                    {talentData.youtubeFollowers && (
+                                      <>{talentData?.youtubeFollowers}</>
+                                    )}
+                                    {!talentData.youtubeFollowers && (
+                                      <>
+                                        <div
+                                          onClick={() =>
+                                            window.open(
+                                              `${talentData?.youTubeUrl}`,
+                                              "_blank"
+                                            )
+                                          }
+                                          className="click-url"
+                                        >
+                                          Click here
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+                                  {talentData?.youtubeFollowers && (
+                                    <>
+                                      <div className="followers-text">
+                                        Followers
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </>
@@ -1453,8 +1436,11 @@ const TalentProfile = () => {
                             </div>
                           </div>
 
-                          <p className="pb-2">Videos</p>
-
+                          {urlsList.length > 0 && (
+                            <>
+                              <p className="pb-2">Videos</p>
+                            </>
+                          )}
                           <div className="service-list-main w-100">
                             <div className="row w-100">
                               {urlsList?.map((url, index) => (
@@ -1763,7 +1749,11 @@ const TalentProfile = () => {
 
                       {videos && (
                         <>
-                          <p className="pb-2">Videos</p>
+                          {urlsList.length > 0 && (
+                            <>
+                              <p className="pb-2">Videos</p>
+                            </>
+                          )}
                           <div className="models-photos videoWraper">
                             <div className="service-list-main w-100">
                               <div className="row">
@@ -1844,8 +1834,11 @@ const TalentProfile = () => {
 
                       {videos && (
                         <>
-                          <p>Audios</p>
-
+                          {audiosList.length > 0 && (
+                            <>
+                              <p>Audios</p>
+                            </>
+                          )}
                           <div className="service-list-main w-100">
                             <div className="row">
                               {audiosList && (

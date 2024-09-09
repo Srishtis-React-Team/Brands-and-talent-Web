@@ -683,7 +683,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                             ></input>
                           </div>
                         </div>
-                        {/* <div className="media-info">
+                        <div className="media-info">
                           <div className="mediaIcon">
                             <i class="bi bi-link-45deg social-chain-icon"></i>
                           </div>
@@ -702,7 +702,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                               </div>
                             )}
                           </div>
-                        </div> */}
+                        </div>
                       </div>
                     </div>
                     <div className="kids-form-section col-md-6">
@@ -792,7 +792,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
 
                   <div className="Or-seperator">Or</div>
 
-                  <div className="kids-form-row row">
+                  {/* <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper d-flex">
                         <div className="media-info">
@@ -815,8 +815,8 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                  </div>
-                  <div className="kids-form-row row">
+                  </div> */}
+                  {/* <div className="kids-form-row row">
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper d-flex">
                         <div className="media-info">
@@ -839,10 +839,10 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                         <div className="connect-btn">connect</div>
                       </div>
                     </div>
-                  </div>
-                  {/* <div className="kids-form-row row">
+                  </div> */}
+                  <div className="kids-form-row row spcBtm">
                     <div className="kids-form-section col-md-6">
-                      <div className="media-wrapper">
+                      <div className="media-wrapper  d-flex">
                         <div className="media-info">
                           <div className="mediaIcon">
                             <img src={xTwitter} alt="" />
@@ -859,19 +859,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="kids-form-section col-md-6 ">
-                      <div className="media-wrapper">
-                        <div className="media-info">
-                          <div className="mediaIcon">
-                            <img className="thread-fill" src={threads} alt="" />
-                          </div>
-                          <div className="media-text">Threads</div>
-                        </div>
-                        <div className="connect-btn">connect</div>
-                      </div>
-                    </div>
-                  </div> */}
-                  <div className="kids-form-row row spcBtm">
+
                     <div className="kids-form-section col-md-6">
                       <div className="media-wrapper d-flex">
                         <div className="media-info">
@@ -891,6 +879,21 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                       </div>
                     </div>
                   </div>
+                  {/* <div className="kids-form-row row spcBtm">
+
+                  <div className="kids-form-section col-md-6 ">
+                      <div className="media-wrapper  d-flex">
+                        <div className="media-info">
+                          <div className="mediaIcon">
+                            <img className="thread-fill" src={threads} alt="" />
+                          </div>
+                          <div className="media-text">Threads</div>
+                        </div>
+                        <div className="connect-btn">connect</div>
+                      </div>
+                    </div>
+
+                  </div> */}
                 </div>
               </div>
             </div>

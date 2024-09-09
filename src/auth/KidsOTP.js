@@ -91,7 +91,7 @@ const KidsOTP = () => {
 
     resendOtp(newOTP);
     setOtp(["", "", "", ""]);
-    inputsRef[0].current.focus();
+    inputsRef[0]?.current?.focus();
   };
 
   const resendOtp = async (newOTP) => {

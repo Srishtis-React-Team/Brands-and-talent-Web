@@ -14,6 +14,8 @@ import { PopupContext } from "@mui/base/Unstable_Popup";
 import PopUp from "../../components/PopUp";
 import SearchHeaderComponent from "../../layout/SearchHeaderComponent";
 import CurrentUser from "../../CurrentUser";
+import { useLocation } from "react-router-dom";
+
 const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const { currentUserType, avatarImage } = CurrentUser();
   console.log(toggleMenu, "toggleMenu");
@@ -81,6 +83,30 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       .catch((err) => {});
   };
 
+  const location = useLocation();
+
+  useEffect(() => {
+    // Extract the last part of the URL (i.e., 'peter')
+    const pathParts = location.pathname.split("/");
+    const name = pathParts[pathParts.length - 1];
+    console.log(name, "name");
+    getDataByPublicUrl(name);
+  }, [location]);
+
+  const getDataByPublicUrl = async (name) => {
+    const formData = {
+      publicUrl: name,
+    };
+    await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
+      .then((resData) => {
+        console.log(resData?.data?.data?._id, "getDataByPublicUrl");
+        // setUrlTalentData(resData?.data?.data);
+        // checkUser(resData?.data?.data?._id, resData?.data?.data);
+        setBrandData(resData?.data?.data);
+      })
+      .catch((err) => {});
+  };
+
   useEffect(() => {}, [brandData]);
 
   const gotomessage = (item) => {
@@ -126,11 +152,11 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
   const createHandleMenuClick = (menuItem) => {
     return () => {
-    console.log('inside function')
+      console.log("inside function");
 
       if (menuItem === "profile") {
-        console.log('inside profile')
-        console.log('brandData?.publicUrl',brandData?.publicUrl)
+        console.log("inside profile");
+        console.log("brandData?.publicUrl", brandData?.publicUrl);
         navigate(`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`);
       } else if (menuItem === "logout") {
         localStorage.clear();
@@ -161,12 +187,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     window.open("https://buymeacoffee.com/brandsandtalent", "_blank");
   };
 
-  const conditionalNavigate = () => {
-    window.open(
-      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-      "_blank"
-    );
-  };
+  const conditionalNavigate = () => {};
 
   return (
     <>
@@ -213,9 +234,15 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                     <div className="navTxt">
                       <NavLink to="/create-jobs">Post a Job</NavLink>
                     </div>
-                    <div className="navTxt" onClick={conditionalNavigate()}>
+                    {/* <div
+                      className="navTxt"
+                      onClick={window.open(
+                        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+                        "_blank"
+                      )}
+                    >
                       <NavLink>Find Talent</NavLink>
-                    </div>
+                    </div> */}
                     <div className="navTxt">
                       <NavLink to="/how-it-works">How it works</NavLink>
                     </div>

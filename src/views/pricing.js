@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../assets/css/pricing.css";
 import "../assets/css/forms/kidsformthree.css";
+import "../assets/css/forms/kidsform-one.css";
+import "../assets/css/forms/login.css";
+import "../assets/css/dashboard.css";
+import "../assets/css/register.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 import { ApiHelper } from "../helpers/ApiHelper.js";
@@ -56,37 +60,37 @@ const Pricing = () => {
   const [recieverNameLetterError, setRecieverNameLetterError] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [selectedType, setSelectedType] = useState('annual');
-  const [checkout,setCheckout] = useState(false)
-  const [responseurl,setResponseUrl] = useState('')
+  const [selectedType, setSelectedType] = useState("annual");
+  const [checkout, setCheckout] = useState(false);
+  const [responseurl, setResponseUrl] = useState("");
 
   const [message, setMessage] = useState("");
   const greenTick = require("../assets/icons/greenTick.png");
   const [pricing, setPricing] = useState("");
   const [isBillingForm, setIsBillingForm] = useState(true);
   const [formData, setFormData] = useState({
-    billingFirstName: '',
-    billingLastName: '',
-    organization: '',
-    address1: '',
-    address2: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    country: '',
-    email: '',
-    retypeEmail: '',
-    recipientFirstName: '',
-    recipientLastName: '',
-    recipientAddress1: '',
-    recipientAddress2: '',
-    recipientCity: '',
-    recipientState: '',
-    recipientZipcode: '',
-    recipientCountry: '',
-    recipientEmail: '',
-    confirmRecipientEmail: '',
-    comment: '',
+    billingFirstName: "",
+    billingLastName: "",
+    organization: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    country: "",
+    email: "",
+    retypeEmail: "",
+    recipientFirstName: "",
+    recipientLastName: "",
+    recipientAddress1: "",
+    recipientAddress2: "",
+    recipientCity: "",
+    recipientState: "",
+    recipientZipcode: "",
+    recipientCountry: "",
+    recipientEmail: "",
+    confirmRecipientEmail: "",
+    comment: "",
     // Add other states as needed
   });
 
@@ -106,35 +110,35 @@ const Pricing = () => {
 
   useEffect(() => {
     // checktransaction
-    console.log('inside the checktrasaction useEffect')
-    checkTransaction()
-  },[])
+    console.log("inside the checktrasaction useEffect");
+    checkTransaction();
+  }, []);
 
   const checkTransaction = async () => {
     const obj = { tranId: 20 };
-    console.log('Request Object:', obj);
-    
+    console.log("Request Object:", obj);
+
     try {
       const resData = await ApiHelper.post(API.checktransaction, obj);
-      console.log('Response Data:', resData);
-      
+      console.log("Response Data:", resData);
+
       if (resData) {
         // Uncomment and handle data as needed
         // setPricingList(resData.data.data);
       }
     } catch (err) {
-      console.error('Error:', err);
+      console.error("Error:", err);
     }
   };
 
-const handlePlanTypeChange = (type) => {
-  setSelectedType(type);
-};
+  const handlePlanTypeChange = (type) => {
+    setSelectedType(type);
+  };
 
-const handleNext = () => {
-  // Handle form submission or transition to next form
-  setIsBillingForm(false);
-};
+  const handleNext = () => {
+    // Handle form submission or transition to next form
+    setIsBillingForm(false);
+  };
 
   const getBrandsPricingList = async () => {
     await ApiHelper.get(API.brandsPricingList)
@@ -147,19 +151,24 @@ const handleNext = () => {
   };
 
   const choosePlan = async (index, item) => {
-    console.log('selectedPlan',selectedPlan)
-    const selectedPlanItem = item.plan_type_annual.find(plan => `annual-${item._id}` === selectedPlan) || 
-                             item.plan_type_monthly.find(plan => `monthly-${item._id}` === selectedPlan);
-    console.log('selectedPlanItem',selectedPlanItem)
-    const currency = selectedPlanItem ? selectedPlanItem.currency : 'Unknown';
-    const price = selectedPlanItem ? selectedPlanItem.amount : 'N/A';
+    console.log("selectedPlan", selectedPlan);
+    const selectedPlanItem =
+      item.plan_type_annual.find(
+        (plan) => `annual-${item._id}` === selectedPlan
+      ) ||
+      item.plan_type_monthly.find(
+        (plan) => `monthly-${item._id}` === selectedPlan
+      );
+    console.log("selectedPlanItem", selectedPlanItem);
+    const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
+    const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
     const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
     const match = price.match(regex);
     if (match) {
       const currency = match[1].toUpperCase(); // "USD"
-      const amount = parseFloat(match[2]);     // 29.99
-      const duration = match[3];               // "month"
-    
+      const amount = parseFloat(match[2]); // 29.99
+      const duration = match[3]; // "month"
+
       console.log(`Currency: ${currency}`);
       console.log(`Chosen plan index: ${index}`);
       console.log(`Amount: ${amount}`);
@@ -190,7 +199,7 @@ const handleNext = () => {
         country: formData.country,
         zipcode: formData.zipcode,
         email: formData.email,
-        user_id: '', // Provide actual user_id if needed
+        user_id: "", // Provide actual user_id if needed
         gift: [
           {
             name: formData.recipientFirstName,
@@ -203,17 +212,17 @@ const handleNext = () => {
             country: formData.recipientCountry,
             zipcode: formData.recipientZipcode,
             email: formData.recipientEmail,
-            message: formData.comment
-          }
-        ]
+            message: formData.comment,
+          },
+        ],
       };
-      console.log('payload',payload)
+      console.log("payload", payload);
       const resultData = await ApiHelper.post(API.giftSubCreation, payload);
       // Handle successful submission,
-      console.log('Form submitted successfully',resultData);
+      console.log("Form submitted successfully", resultData);
       handleClose(); // Close the dialog
     } catch (err) {
-      console.error('Error submitting form:', err);
+      console.error("Error submitting form:", err);
       // setError('There was an error submitting the form. Please try again.');
     } finally {
       setIsLoading(false);
@@ -222,16 +231,20 @@ const handleNext = () => {
 
   const handlePayment = async (amount, currency, type) => {
     try {
-      const response =  await ApiHelper.post(API.createPayment, { amount, currency, type })
-        // await axios.post('/api/pricing/create-payment', { amount, currency, type });
-        console.log('Payment Response:', response.data.url);
-        setResponseUrl(response.data.url)
-      setCheckout(true)
-        // Handle the response and update UI
+      const response = await ApiHelper.post(API.createPayment, {
+        amount,
+        currency,
+        type,
+      });
+      // await axios.post('/api/pricing/create-payment', { amount, currency, type });
+      console.log("Payment Response:", response.data.url);
+      setResponseUrl(response.data.url);
+      setCheckout(true);
+      // Handle the response and update UI
     } catch (error) {
-        console.error('Error during payment:', error);
+      console.error("Error during payment:", error);
     }
-};
+  };
 
   const handleRadioChange = (event) => {
     setSelectedPlan(event.target.id);
@@ -411,314 +424,374 @@ const handleNext = () => {
         </div>
       </div>
       <div className="plan-main">
-      <div className="container">
-        {pricingList.length > 0 && (
-          <div className="plans-section">
-            <div className="row">
-              {pricingList.map((item, index) => (
-                <div key={item._id} className="col-md-4">
-                  <div
-                    className={
-                      index === 0
-                        ? "plans-wrapper free-plans"
-                        : index === 1
-                        ? "plans-wrapper pro-plans"
-                        : index === 2
-                        ? "plans-wrapper premium-plans"
-                        : ""
-                    }
-                  >
-                    <div className="priceHeight">
-                      <div className="plan-name">
-                        {item.planname}
-                        <div
-                          className={
-                            index === 1
-                              ? "pro-gift giftSize"
-                              : index === 2
-                              ? "premium-gift giftSize"
-                              : ""
-                          }
-                          onClick={handleClickOpen}
-                        >
-                          {item.gift}
-                        </div>
-                      </div>
-
-                      {item.planname === "Basic" && (
-                        <>
-                          <div className="plan-value">Free</div>
-                          <div className="plan-validity">Forever</div>
-                        </>
-                      )}
-                      {item.planname === "Free For ever" && (
-                        <>
-                          <div className="plan-value">Free</div>
-                          <div className="plan-validity">Forever</div>
-                        </>
-                      )}
-
-                      {item.plan_type_annual.length >= 1 && (
-                        <>
-                          <div className="annual-main-wrapper">
-                            <div className="annual-wrapper">
-                              <input
-                                type="radio"
-                                name={`annual-${item._id}`}
-                                id={`annual-${item._id}`}
-                                checked={selectedPlan === `annual-${item._id}`}
-                                onChange={handleRadioChange}
-                                className={
-                                  item.planname === "Pro (Popular)"
-                                    ? "pro-checkbox"
-                                    : "premium-checkbox"
-                                }
-                              />
-                              <label htmlFor={`annual-${item._id}`} className="annual">
-                                {item.period}
-                              </label>
-                            </div>
-                            <div className="per-value">
-                              {item.annualTotalAmount}
-                            </div>
-                          </div>
-
-                          {item.plan_type_annual.map((plan, index) => (
-                            <div key={index} className="plan-amounts">
-                              <div className="value-wrapper">
-                                <div className="after-value">
-                                  {plan.afterDiscount}
-                                </div>
-                              </div>
-                              <div className="border-bottom"></div>
-                            </div>
-                          ))}
-
-                          <div className="monthly-wrapper pt-3">
-                            <div>
-                              <input
-                                type="radio"
-                                name={`monthly-${item._id}`}
-                                id={`monthly-${item._id}`}
-                                checked={selectedPlan === `monthly-${item._id}`}
-                                onChange={handleRadioChange}
-                                className={
-                                  item.planname === "Pro (Popular)"
-                                    ? "pro-checkbox"
-                                    : "premium-checkbox"
-                                }
-                              />
-                              <label htmlFor={`monthly-${item._id}`} className="monthly">
-                                Monthly
-                              </label>
-                            </div>
-                            {item.plan_type_monthly.map((plan, index) => (
-                              <div key={index} className="monthly-amount">
-                                {plan.amount}
-                              </div>
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </div>
+        <div className="container">
+          {pricingList.length > 0 && (
+            <div className="plans-section">
+              <div className="row">
+                {pricingList.map((item, index) => (
+                  <div key={item._id} className="col-md-4">
                     <div
                       className={
                         index === 0
-                          ? "choose-btn free-btn"
+                          ? "plans-wrapper free-plans"
                           : index === 1
-                          ? "choose-btn pro-btn"
+                          ? "plans-wrapper pro-plans"
                           : index === 2
-                          ? "choose-btn premium-btn"
+                          ? "plans-wrapper premium-plans"
                           : ""
                       }
-                      onClick={() => choosePlan(index, item)}
                     >
-                      Choose plan
-                    </div>
-                    <div className="include">What's Included</div>
-                    <div className="included-things">
-                      {item.data.map((content, index) => (
-                        <div key={index} className="plan-content">
-                          <div className="icPrice">
-                            <i className="bi bi-check-circle-fill"></i>
-                          </div>
-                          <div className="plan-content-text">
-                            {content}
+                      <div className="priceHeight">
+                        <div className="plan-name">
+                          {item.planname}
+                          <div
+                            className={
+                              index === 1
+                                ? "pro-gift giftSize"
+                                : index === 2
+                                ? "premium-gift giftSize"
+                                : ""
+                            }
+                            onClick={handleClickOpen}
+                          >
+                            {item.gift}
                           </div>
                         </div>
-                      ))}
+
+                        {item.planname === "Basic" && (
+                          <>
+                            <div className="plan-value">Free</div>
+                            <div className="plan-validity">Forever</div>
+                          </>
+                        )}
+                        {item.planname === "Free For ever" && (
+                          <>
+                            <div className="plan-value">Free</div>
+                            <div className="plan-validity">Forever</div>
+                          </>
+                        )}
+
+                        {item.plan_type_annual.length >= 1 && (
+                          <>
+                            <div className="annual-main-wrapper">
+                              <div className="annual-wrapper">
+                                <input
+                                  type="radio"
+                                  name={`annual-${item._id}`}
+                                  id={`annual-${item._id}`}
+                                  checked={
+                                    selectedPlan === `annual-${item._id}`
+                                  }
+                                  onChange={handleRadioChange}
+                                  className={
+                                    item.planname === "Pro (Popular)"
+                                      ? "pro-checkbox"
+                                      : "premium-checkbox"
+                                  }
+                                />
+                                <label
+                                  htmlFor={`annual-${item._id}`}
+                                  className="annual"
+                                >
+                                  {item.period}
+                                </label>
+                              </div>
+                              <div className="per-value">
+                                {item.annualTotalAmount}
+                              </div>
+                            </div>
+
+                            {item.plan_type_annual.map((plan, index) => (
+                              <div key={index} className="plan-amounts">
+                                <div className="value-wrapper">
+                                  <div className="after-value">
+                                    {plan.afterDiscount}
+                                  </div>
+                                </div>
+                                <div className="border-bottom"></div>
+                              </div>
+                            ))}
+
+                            <div className="monthly-wrapper pt-3">
+                              <div>
+                                <input
+                                  type="radio"
+                                  name={`monthly-${item._id}`}
+                                  id={`monthly-${item._id}`}
+                                  checked={
+                                    selectedPlan === `monthly-${item._id}`
+                                  }
+                                  onChange={handleRadioChange}
+                                  className={
+                                    item.planname === "Pro (Popular)"
+                                      ? "pro-checkbox"
+                                      : "premium-checkbox"
+                                  }
+                                />
+                                <label
+                                  htmlFor={`monthly-${item._id}`}
+                                  className="monthly"
+                                >
+                                  Monthly
+                                </label>
+                              </div>
+                              {item.plan_type_monthly.map((plan, index) => (
+                                <div key={index} className="monthly-amount">
+                                  {plan.amount}
+                                </div>
+                              ))}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <div
+                        className={
+                          index === 0
+                            ? "choose-btn free-btn"
+                            : index === 1
+                            ? "choose-btn pro-btn"
+                            : index === 2
+                            ? "choose-btn premium-btn"
+                            : ""
+                        }
+                        onClick={() => choosePlan(index, item)}
+                      >
+                        Choose plan
+                      </div>
+                      <div className="include">What's Included</div>
+                      <div className="included-things">
+                        {item.data.map((content, index) => (
+                          <div key={index} className="plan-content">
+                            <div className="icPrice">
+                              <i className="bi bi-check-circle-fill"></i>
+                            </div>
+                            <div className="plan-content-text">{content}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      <Footer />
+      <React.Fragment>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            component: "form",
+            onSubmit: (event) => {
+              event.preventDefault();
+              if (isBillingForm) {
+                handleNext();
+              } else {
+                handleSubmit();
+              }
+            },
+          }}
+        >
+          <div className="gift-dialog-header">
+            <DialogTitle>
+              {isBillingForm
+                ? "Your Billing Address"
+                : "Gift Recipient Information"}
+            </DialogTitle>
+            <i className="bi bi-x-lg close-gift" onClick={handleClose}></i>
+          </div>
+          <DialogContent>
+            <div className="search-filter-section">
+              {isBillingForm ? (
+                <div className="billing-form">
+                  <div className="kids-form-row row">
+                    {/* Billing Information Fields */}
+                    {[
+                      "First Name",
+                      "Last Name",
+                      "Organization",
+                      "Address 1",
+                      "Address 2",
+                      "City",
+                      "State",
+                      "Zipcode",
+                      "Country",
+                    ].map((field) => (
+                      <div
+                        className="kids-form-section col-md-12 mb-3"
+                        key={field}
+                      >
+                        <label className="form-label">
+                          {field} <span className="mandatory">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          name={`billing${field.replace(" ", "")}`}
+                          className="form-control"
+                          placeholder={field}
+                          onChange={handleInputChange}
+                          value={formData[`billing${field.replace(" ", "")}`]}
+                        />
+                      </div>
+                    ))}
+                    <div className="kids-form-section col-md-12 mb-3">
+                      <label className="form-label">
+                        Email <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        className={`form-control ${
+                          formData.email === formData.retypeEmail
+                            ? ""
+                            : "is-invalid"
+                        }`}
+                        placeholder="Enter E-mail"
+                        onChange={handleInputChange}
+                        value={formData.email}
+                      />
+                    </div>
+                    <div className="kids-form-section col-md-12 mb-3">
+                      <label className="form-label">
+                        Re-type Email <span className="mandatory">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="retypeEmail"
+                        className={`form-control ${
+                          formData.email === formData.retypeEmail
+                            ? ""
+                            : "is-invalid"
+                        }`}
+                        placeholder="Re-type E-mail"
+                        onChange={handleInputChange}
+                        value={formData.retypeEmail}
+                      />
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-      <Footer />
-      <React.Fragment>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            if (isBillingForm) {
-              handleNext();
-            } else {
-              handleSubmit();
-            }
-          },
-        }}
-      >
-        <div className="gift-dialog-header">
-          <DialogTitle>{isBillingForm ? "Your Billing Address" : "Gift Recipient Information"}</DialogTitle>
-          <i className="bi bi-x-lg close-gift" onClick={handleClose}></i>
-        </div>
-        <DialogContent>
-          <div className="search-filter-section">
-            {isBillingForm ? (
-              <div className="billing-form">
-                <div className="kids-form-row row">
-                  {/* Billing Information Fields */}
-                  {['First Name', 'Last Name', 'Organization', 'Address 1', 'Address 2', 'City', 'State', 'Zipcode', 'Country'].map((field) => (
-                    <div className="kids-form-section col-md-12 mb-3" key={field}>
+              ) : (
+                <div className="recipient-form">
+                  {/* Recipient Information Fields */}
+                  {[
+                    "First Name",
+                    "Last Name",
+                    "Address 1",
+                    "Address 2",
+                    "City",
+                    "State",
+                    "Zipcode",
+                    "Country",
+                  ].map((field) => (
+                    <div
+                      className="kids-form-section col-md-12 mb-3"
+                      key={field}
+                    >
                       <label className="form-label">
                         {field} <span className="mandatory">*</span>
                       </label>
                       <input
                         type="text"
-                        name={`billing${field.replace(' ', '')}`}
+                        name={`recipient${field.replace(" ", "")}`}
                         className="form-control"
                         placeholder={field}
                         onChange={handleInputChange}
-                        value={formData[`billing${field.replace(' ', '')}`]}
+                        value={formData[`recipient${field.replace(" ", "")}`]}
                       />
                     </div>
                   ))}
                   <div className="kids-form-section col-md-12 mb-3">
                     <label className="form-label">
-                      Email <span className="mandatory">*</span>
+                      Email Address <span className="mandatory">*</span>
                     </label>
                     <input
                       type="email"
-                      name="email"
-                      className={`form-control ${formData.email === formData.retypeEmail ? "" : "is-invalid"}`}
-                      placeholder="Enter E-mail"
+                      name="recipientEmail"
+                      className={`form-control ${
+                        formData.recipientEmail ===
+                        formData.confirmRecipientEmail
+                          ? ""
+                          : "is-invalid"
+                      }`}
+                      placeholder="Email Address"
                       onChange={handleInputChange}
-                      value={formData.email}
+                      value={formData.recipientEmail}
                     />
                   </div>
                   <div className="kids-form-section col-md-12 mb-3">
                     <label className="form-label">
-                      Re-type Email <span className="mandatory">*</span>
+                      Confirm Email Address <span className="mandatory">*</span>
                     </label>
                     <input
                       type="email"
-                      name="retypeEmail"
-                      className={`form-control ${formData.email === formData.retypeEmail ? "" : "is-invalid"}`}
-                      placeholder="Re-type E-mail"
+                      name="confirmRecipientEmail"
+                      className={`form-control ${
+                        formData.recipientEmail ===
+                        formData.confirmRecipientEmail
+                          ? ""
+                          : "is-invalid"
+                      }`}
+                      placeholder="Confirm Email Address"
                       onChange={handleInputChange}
-                      value={formData.retypeEmail}
+                      value={formData.confirmRecipientEmail}
                     />
                   </div>
-                </div>
-              </div>
-            ) : (
-              <div className="recipient-form">
-                {/* Recipient Information Fields */}
-                {['First Name', 'Last Name', 'Address 1', 'Address 2', 'City', 'State', 'Zipcode', 'Country'].map((field) => (
-                  <div className="kids-form-section col-md-12 mb-3" key={field}>
+                  <div className="kids-form-section col-md-12 mb-3">
                     <label className="form-label">
-                      {field} <span className="mandatory">*</span>
+                      Announce Your Gift With A Personalized Message (Hide)
+                      <span className="mandatory">*</span>
                     </label>
+                    <textarea
+                      name="comment"
+                      style={{ width: "100%" }}
+                      className="form-control address-textarea"
+                      placeholder="Enter message here"
+                      rows="3"
+                      onChange={handleInputChange}
+                      value={formData.comment}
+                    ></textarea>
+                    <div className="character-count">
+                      Count (250 maximum characters): {formData.comment.length}
+                    </div>
+                  </div>
+                  <div className="kids-form-section col-md-12 mb-3">
+                    <label className="form-label">Total Due</label>
                     <input
                       type="text"
-                      name={`recipient${field.replace(' ', '')}`}
+                      name="totalDue"
                       className="form-control"
-                      placeholder={field}
+                      placeholder="Total Due"
                       onChange={handleInputChange}
-                      value={formData[`recipient${field.replace(' ', '')}`]}
+                      value={formData.totalDue}
                     />
                   </div>
-                ))}
-                <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">
-                    Email Address <span className="mandatory">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    name="recipientEmail"
-                    className={`form-control ${formData.recipientEmail === formData.confirmRecipientEmail ? "" : "is-invalid"}`}
-                    placeholder="Email Address"
-                    onChange={handleInputChange}
-                    value={formData.recipientEmail}
-                  />
+                  <button type="button" className="btn add-another-gift-btn">
+                    Add Another Gift
+                  </button>
                 </div>
-                <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">
-                    Confirm Email Address <span className="mandatory">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    name="confirmRecipientEmail"
-                    className={`form-control ${formData.recipientEmail === formData.confirmRecipientEmail ? "" : "is-invalid"}`}
-                    placeholder="Confirm Email Address"
-                    onChange={handleInputChange}
-                    value={formData.confirmRecipientEmail}
-                  />
-                </div>
-                <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">
-                    Announce Your Gift With A Personalized Message (Hide)
-                    <span className="mandatory">*</span>
-                  </label>
-                  <textarea
-                    name="comment"
-                    style={{ width: "100%" }}
-                    className="form-control address-textarea"
-                    placeholder="Enter message here"
-                    rows="3"
-                    onChange={handleInputChange}
-                    value={formData.comment}
-                  ></textarea>
-                  <div className="character-count">
-                    Count (250 maximum characters): {formData.comment.length}
-                  </div>
-                </div>
-                <div className="kids-form-section col-md-12 mb-3">
-                  <label className="form-label">Total Due</label>
-                  <input
-                    type="text"
-                    name="totalDue"
-                    className="form-control"
-                    placeholder="Total Due"
-                    onChange={handleInputChange}
-                    value={formData.totalDue}
-                  />
-                </div>
-                <button type="button" className="btn add-another-gift-btn">
-                  Add Another Gift
-                </button>
-              </div>
-            )}
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <button
-            type="button"
-            className="btn gift-payment-btn"
-            onClick={isBillingForm ? handleNext : handleSubmit}
-          >
-            {isLoading ? "Loading..." : isBillingForm ? "Next" : "Submit"}
-          </button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-      
-      {checkout && <CheckoutComponent responseUrl={responseurl} setCheckout={setCheckout}/>}
+              )}
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <button
+              type="button"
+              className="btn gift-payment-btn"
+              onClick={isBillingForm ? handleNext : handleSubmit}
+            >
+              {isLoading ? "Loading..." : isBillingForm ? "Next" : "Submit"}
+            </button>
+          </DialogActions>
+        </Dialog>
+      </React.Fragment>
+
+      {checkout && (
+        <CheckoutComponent
+          responseUrl={responseurl}
+          setCheckout={setCheckout}
+        />
+      )}
       {openPopUp && <PopUp message={message} />}
     </>
   );

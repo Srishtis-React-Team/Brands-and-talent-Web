@@ -126,7 +126,6 @@ const Login = () => {
               setOpenPopUp(false);
               setIsLoading(false);
               setBrandsLocalStorage(resData.data);
-
               navigate(
                 `/brand/${resData?.data?.data?.publicUrl.replace(/\s+/g, "")}`
               );

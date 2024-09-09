@@ -141,7 +141,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   };
 
   const createHandleMenuClick = (menuItem) => {
-    console.log('here is the function')
+    console.log("here is the function");
     return () => {
       if (menuItem === "profile") {
         navigate(`/talent/${talentData.publicUrl}`, {
@@ -161,7 +161,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       } else if (menuItem === "edit") {
         navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
       } else if (menuItem == "find-talent") {
-        console.log('here---')
+        console.log("here---");
         // window.open(
         //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
         //   "_blank"
@@ -794,7 +794,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                   </div>
                   <div className="navTxt">
                     <NavLink to="/pricing">Pricing</NavLink>
-                  </div> 
+                  </div>
                   <div className="navTxt">
                     <li className="nav-item dropdown">
                       <a
