@@ -169,11 +169,11 @@ function Routing() {
             <Route
               path="/pricing"
               element={
-                currentUserId || brandID ? (
+                // currentUserId || brandID ? (
                   <Pricing />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
+                // ) : (
+                //   <Navigate to="/login" replace />
+                // )
               }
             />
             <Route path="/resources" element={<Resources />} />
