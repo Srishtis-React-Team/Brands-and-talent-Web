@@ -22,6 +22,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
 import { useNavigate } from "react-router-dom";
 import CheckoutComponent from "./CheckoutComponent.js";
+import PaymentOptions from './PaymentOptions.js'
 // import { createPayment, checkTransactionStatus } from '../config/paymentGateway.js';
 
 const Pricing = () => {
@@ -63,6 +64,12 @@ const Pricing = () => {
   const [selectedType, setSelectedType] = useState("annual");
   const [checkout, setCheckout] = useState(false);
   const [responseurl, setResponseUrl] = useState("");
+  const [paymentOptions, setPaymentOption] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('')
+  const [selectedAmount, setSelectedAmount] = useState('')
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState('')
+  const [selectedPaymentPlan, setSelectedPaymentPlan] = useState('')
+  const [selectedPaymentPeriod,setSelectedPaymentPeriod] = useState('')
 
   const [message, setMessage] = useState("");
   const greenTick = require("../assets/icons/greenTick.png");
@@ -109,22 +116,32 @@ const Pricing = () => {
   };
 
   useEffect(() => {
-    // checktransaction
-    console.log("inside the checktrasaction useEffect");
     checkTransaction();
   }, []);
 
   const checkTransaction = async () => {
-    const obj = { tranId: 20 };
-    console.log("Request Object:", obj);
+    const paymenttrans_id = localStorage.getItem("paymenttrans_id")
+    const obj = { tranId: paymenttrans_id };
 
     try {
-      const resData = await ApiHelper.post(API.checktransaction, obj);
-      console.log("Response Data:", resData);
+      const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
 
       if (resData) {
-        // Uncomment and handle data as needed
-        // setPricingList(resData.data.data);
+        if(resData.data.status.message == "Success!"){
+        const paymentData = resData.data.data;
+        if(paymentData.payment_status == "APPROVED"){
+          localStorage.setItem("paymentData", JSON.stringify(paymentData));
+          // alert('payment successfully completed')
+          const userId = localStorage.getItem("userId")
+          const userData = {
+              "subscriptionPlan":selectedPaymentPeriod,
+              "planName":selectedPaymentPlan,
+              "user_id":userId
+          } 
+          const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
+          console.log('responseSubscription',responseSubscription)
+        }
+        }
       }
     } catch (err) {
       console.error("Error:", err);
@@ -151,7 +168,6 @@ const Pricing = () => {
   };
 
   const choosePlan = async (index, item) => {
-    console.log("selectedPlan", selectedPlan);
     const selectedPlanItem =
       item.plan_type_annual.find(
         (plan) => `annual-${item._id}` === selectedPlan
@@ -159,7 +175,6 @@ const Pricing = () => {
       item.plan_type_monthly.find(
         (plan) => `monthly-${item._id}` === selectedPlan
       );
-    console.log("selectedPlanItem", selectedPlanItem);
     const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
     const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
     const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
@@ -168,16 +183,12 @@ const Pricing = () => {
       const currency = match[1].toUpperCase(); // "USD"
       const amount = parseFloat(match[2]); // 29.99
       const duration = match[3]; // "month"
-
-      console.log(`Currency: ${currency}`);
-      console.log(`Chosen plan index: ${index}`);
-      console.log(`Amount: ${amount}`);
-      console.log(`Duration: ${duration}`);
-      const type = 'https://dev.brandsandtalent.com/create-jobs'
-      handlePayment(amount, currency, type)
-      // /api/pricing/create-payment
-      // /check-transaction
-      // handlePayment(amount, currency)
+      setSelectedCurrency(currency);
+      setSelectedAmount(amount);
+      // const type = 'https://dev.brandsandtalent.com/create-jobs'
+      localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
+      localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
+      setPaymentOption(true)
     } else {
       console.error("Price string format is incorrect");
     }
@@ -216,10 +227,8 @@ const Pricing = () => {
           },
         ],
       };
-      console.log("payload", payload);
       const resultData = await ApiHelper.post(API.giftSubCreation, payload);
       // Handle successful submission,
-      console.log("Form submitted successfully", resultData);
       handleClose(); // Close the dialog
     } catch (err) {
       console.error("Error submitting form:", err);
@@ -229,25 +238,26 @@ const Pricing = () => {
     }
   };
 
-  const handlePayment = async (amount, currency, type) => {
+  const handlePayment = async (amount, currency, type, paymentOption) => {
     try {
-      const response = await ApiHelper.post(API.createPayment, {
+      let apiUrl = paymentOption == 'card' ? API.createPayment : API.createqrpayment;
+      const response = await ApiHelper.post(apiUrl, {
         amount,
         currency,
         type,
       });
-      // await axios.post('/api/pricing/create-payment', { amount, currency, type });
-      console.log("Payment Response:", response.data.url);
       setResponseUrl(response.data.url);
+      localStorage.setItem("paymenttrans_id", response.data.trans_id);
       setCheckout(true);
-      // Handle the response and update UI
     } catch (error) {
       console.error("Error during payment:", error);
     }
   };
 
-  const handleRadioChange = (event) => {
-    setSelectedPlan(event.target.id);
+  const handleRadioChange = (type, id, planname) => (event) => {
+    setSelectedPlan(id);
+    setSelectedPaymentPlan(planname);
+    setSelectedPaymentPeriod(type);
   };
 
   function handleForms(e) {
@@ -340,6 +350,14 @@ const Pricing = () => {
     setRecieverEmail(e.target.value);
     setIsValidRecieverEmail(emailRegex.test(email));
   };
+
+  useEffect(()=>{
+    if(selectedPaymentOption == 'qr'){
+      handlePayment(selectedAmount, selectedCurrency, 'https://dev.brandsandtalent.com/create-jobs','qr')
+    }else if(selectedPaymentOption == 'card'){
+      handlePayment(selectedAmount, selectedCurrency, 'https://dev.brandsandtalent.com/create-jobs','card')
+    }
+  },[selectedPaymentOption])
 
   const modalRef = useRef(null);
 
@@ -482,7 +500,7 @@ const Pricing = () => {
                                   checked={
                                     selectedPlan === `annual-${item._id}`
                                   }
-                                  onChange={handleRadioChange}
+                                  onChange={handleRadioChange("annual",`annual-${item._id}`,item.planname)}
                                   className={
                                     item.planname === "Pro (Popular)"
                                       ? "pro-checkbox"
@@ -521,7 +539,7 @@ const Pricing = () => {
                                   checked={
                                     selectedPlan === `monthly-${item._id}`
                                   }
-                                  onChange={handleRadioChange}
+                                  onChange={handleRadioChange("monthly",`monthly-${item._id}`,item.planname)}
                                   className={
                                     item.planname === "Pro (Popular)"
                                       ? "pro-checkbox"
@@ -785,6 +803,15 @@ const Pricing = () => {
           </DialogActions>
         </Dialog>
       </React.Fragment>
+      {paymentOptions && (
+        <PaymentOptions 
+          selectedCurrency = {selectedCurrency}
+          selectedAmount = {selectedAmount}
+          setSelectedPaymentOption = {setSelectedPaymentOption}
+          setPaymentOption = {setPaymentOption}
+          selectedPaymentPlan = {selectedPaymentPlan}
+      />
+      )}
 
       {checkout && (
         <CheckoutComponent

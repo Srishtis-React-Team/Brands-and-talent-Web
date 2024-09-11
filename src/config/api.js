@@ -67,9 +67,10 @@ export const API = {
   //pricing
   getPricingList: BASEURL + "pricing/pricingList",
   brandsPricingList: BASEURL + "pricing/brandsPricingList",
-  subscriptionPlan: BASEURL + "users/subscriptionPlan/",
+  subscriptionPlan: BASEURL + "users/subscriptionPlan",
   createPayment: BASEURL + "pricing/create-payment",
   checktransaction: BASEURL + "pricing/check-transaction",
+  createqrpayment: BASEURL + 'pricing/createqrpayment',
   giftSubCreation: BASEURL + "giftsub/giftSubCreation",
 
   // /api/pricing/create-payment
