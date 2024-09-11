@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/forms/kidsform-one.css";
 import "../../assets/css/createjobs.css";
 import "../../assets/css/talent-profile.css";
+import "../../assets/css/brand-home.css";
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
@@ -326,9 +328,13 @@ const ListJobs = () => {
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company_dtls">
                                       <i className="bi bi-geo-alt-fill location-icon"></i>
-                                      {job?.state}
-                                      {job?.state && <>,</>}
-                                      {job?.country}
+                                      {job?.state && <span>{job.state}</span>}
+                                      {job?.state && job?.country && (
+                                        <span>, </span>
+                                      )}
+                                      {job?.country && (
+                                        <span>{job.country}</span>
+                                      )}
                                     </span>
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
@@ -393,16 +399,17 @@ const ListJobs = () => {
                               </div>
                               <div className="campaigns-wrapper-two">
                                 <div className="campaign-company">
-                                  <div className="campaign-company-wrapper">
-                                    <div className="campaign-initial">
-                                      {" "}
-                                      {job?.hiringCompany &&
-                                        job.hiringCompany.charAt(0)}
+                                  {job?.hiringCompany && (
+                                    <div className="campaign-company-wrapper">
+                                      <div className="campaign-initial">
+                                        {job.hiringCompany.charAt(0)}
+                                      </div>
+                                      <div className="campaign-company-name">
+                                        {job.hiringCompany}
+                                      </div>
                                     </div>
-                                    <div className="campaign-company-name">
-                                      {job?.hiringCompany}
-                                    </div>
-                                  </div>
+                                  )}
+
                                   <div className="job-card-buttons">
                                     <div className="manage-dropdown">
                                       <div className="dropdown">

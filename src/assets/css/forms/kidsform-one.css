@@ -1224,3 +1224,8 @@ textarea.contact-us-textarea.w-100 {
   font-family: sans-serif;
   font-weight: 400;
 }
+
+.question-input-wrapper {
+  display: flex;
+  align-items: center;
+}

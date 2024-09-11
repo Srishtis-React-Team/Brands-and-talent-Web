@@ -173,8 +173,8 @@ const Pricing = () => {
       console.log(`Chosen plan index: ${index}`);
       console.log(`Amount: ${amount}`);
       console.log(`Duration: ${duration}`);
-      const type = 'https://dev.brandsandtalent.com/create-jobs'
-      handlePayment(amount, currency, type)
+      const type = "https://dev.brandsandtalent.com/create-jobs";
+      handlePayment(amount, currency, type);
       // /api/pricing/create-payment
       // /check-transaction
       // handlePayment(amount, currency)

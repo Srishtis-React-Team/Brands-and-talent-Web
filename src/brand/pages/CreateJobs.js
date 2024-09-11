@@ -4,6 +4,7 @@ import "../../assets/css/forms/kidsformthree.css";
 import "../../assets/css/kidsmain.scss";
 import "../../assets/css/talent-dashboard.css";
 import "../../assets/css/createjobs.css";
+import "../../assets/css/brand-home.css";
 import "../../assets/css/dashboard.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Editor } from "react-draft-wysiwyg";
@@ -41,6 +42,9 @@ const CreateJobs = () => {
     nationalitiesList,
   } = useFieldDatas();
 
+  console.log(gendersList, "gendersList");
+  console.log(nationalitiesList, "nationalitiesList");
+  console.log(categoryList, "categoryList");
   const toggleMenu = () => {
     setShowSidebar(!showSidebar);
   };
@@ -184,8 +188,8 @@ const CreateJobs = () => {
       getStates(editData.country);
       setKidsCity(editData.city);
 
-      const genderUpdatedOptions = editData?.gender.map((gender) => {
-        return gendersList.find((option) => option.label === gender);
+      const genderUpdatedOptions = editData?.gender?.map((gender) => {
+        return gendersList.find((option) => option?.label === gender);
       });
 
       setSelectedGenderOptions(genderUpdatedOptions);
@@ -196,10 +200,12 @@ const CreateJobs = () => {
 
       setSelectedLanguageOptions(selectedOptions);
 
-      const nationalitiesList = editData?.nationality.map((language) => {
-        return nationalitiesList.find((option) => option.label === language);
-      });
-      setSelectedNationalityOptions(nationalitiesList);
+      if (nationalitiesList.length > 0) {
+        const nationalitiesList = editData?.nationality?.map((language) => {
+          return nationalitiesList.find((option) => option?.label === language);
+        });
+        setSelectedNationalityOptions(nationalitiesList);
+      }
 
       const dynamicKey = Object.keys(editData.compensation)[0];
       const minPayValue = editData.compensation[dynamicKey].minPay;
@@ -339,169 +345,6 @@ const CreateJobs = () => {
 
   useEffect(() => {}, [editJobData]);
 
-  const duplicateJob = () => {
-    if (editJobData) {
-      setSelectedTab("create-job");
-
-      setCategory(editJobData?.category);
-      setEmploymentType(editJobData?.employmentType);
-      setLastdateApply(editJobData?.lastDateForApply);
-      setSkills(editJobData?.skills);
-      setMinAge(editJobData?.minAge);
-      setMaxAge(editJobData?.maxAge);
-      setjobTitle(editJobData?.jobTitle);
-      setAgeRange(editJobData?.age);
-      setzipCode(editJobData?.jobLocation);
-      setstreetAddress(editJobData?.streetAddress);
-      setjobType(editJobData?.jobType);
-      setGender(editJobData?.gender);
-      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
-      setSelectedApplyOption(editJobData?.selectedApplyOption);
-      setHiringCompany(editJobData?.hiringCompany);
-      setSelectedBenefits(editJobData?.benefits);
-      setSelectedApplyOption(editJobData?.howLikeToApply);
-      setPortofolioFile(editJobData?.workSamples);
-      setJobCurrency(editJobData?.jobCurrency);
-      setInstaMin(editJobData?.instaMin);
-      setInstaMax(editJobData?.instaMax);
-      setTiktokMin(editJobData?.tikTokMin);
-      setTiktokMax(editJobData?.tikTokMax);
-      setLinkedInMin(editJobData?.linkedInMin);
-      setLinkedInMax(editJobData?.linkedInMax);
-      setFbMin(editJobData?.fbMin);
-      setFbMax(editJobData?.fbMax);
-      setTwitterMin(editJobData?.twitterMin);
-      setTwitterMax(editJobData?.twitterMax);
-      setYouTubeMin(editJobData?.youTubeMin);
-      setYouTubeMax(editJobData?.youTubeMax);
-      setCountry(editJobData.country);
-      setState(editJobData.state);
-      getStates(editJobData.country);
-      setKidsCity(editJobData.city);
-
-      const genderUpdatedOptions = editJobData?.gender.map((gender) => {
-        return gendersList.find((option) => option.label === gender);
-      });
-
-      setSelectedGenderOptions(genderUpdatedOptions);
-
-      const selectedOptions = editJobData?.languages.map((language) => {
-        return languagesList.find((option) => option.label === language);
-      });
-
-      setSelectedLanguageOptions(selectedOptions);
-
-      const nationalitiesList = editJobData?.nationality.map((language) => {
-        return nationalitiesList.find((option) => option.label === language);
-      });
-      setSelectedNationalityOptions(nationalitiesList);
-
-      const dynamicKey = Object.keys(editJobData.compensation)[0];
-      const minPayValue = editJobData.compensation[dynamicKey].minPay;
-      setMinPay(minPayValue);
-      const maxPaydynamicKey = Object.keys(editJobData.compensation)[0];
-      const maxPayValue = editJobData.compensation[maxPaydynamicKey].maxPay;
-      setMaxPay(maxPayValue);
-
-      const currencydynamicKey = Object.keys(editJobData.compensation)[0];
-      const currencyValue =
-        editJobData.compensation[currencydynamicKey].currency;
-      setCurrency(currencyValue);
-
-      const frequencydynamicKey = Object.keys(editJobData.compensation)[0];
-      const frequencyValue =
-        editJobData.compensation[frequencydynamicKey].frequency;
-
-      getCities({
-        countryName: editJobData.country,
-        stateName: editJobData.state,
-      });
-      if (editJobData?.questions && editJobData?.questions?.length > 0) {
-        setShowQuestions(true);
-        setQuestions(editJobData?.questions);
-      }
-
-      if (
-        editJobData?.compensation.hasOwnProperty("paid_collaboration_and_gift")
-      ) {
-        setCompensationChange("paid_collaboration_and_gift");
-        setType(editJobData?.compensation?.paid_collaboration_and_gift?.type);
-        setCurrency(
-          editJobData?.compensation?.paid_collaboration_and_gift?.currency
-        );
-        setProductName(
-          editJobData?.compensation?.paid_collaboration_and_gift?.product_name
-        );
-        setValueUSD(
-          editJobData?.compensation?.paid_collaboration_and_gift?.amount_value
-        );
-        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
-        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
-      } else if (
-        editJobData?.compensation.hasOwnProperty("paid_collaboration")
-      ) {
-        setCompensationChange("paid_collaboration");
-        setType(editJobData?.compensation?.paid_collaboration?.type);
-        setCurrency(editJobData?.compensation?.paid_collaboration?.currency);
-        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
-        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
-      } else if (editJobData?.compensation.hasOwnProperty("product_gift")) {
-        setCompensationChange("product_gift");
-        setProductName(editJobData?.compensation?.product_gift?.product_name);
-        setValueUSD(editJobData?.compensation?.product_gift?.amount_value);
-        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
-        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
-      }
-      if (editJobData?.paymentType?.label === "range") {
-        setSelectedPaymentOption("range");
-        setMinPay(editJobData?.paymentType?.minPay);
-        setMaxPay(editJobData?.paymentType?.maxPay);
-      } else if (editJobData?.paymentType?.label === "fixed") {
-        setSelectedPaymentOption("fixed");
-        setAmount(editJobData?.paymentType?.amount);
-      }
-      const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
-      const jobDescriptionContentBlocks = convertFromHTML(
-        jobDescriptionhtmlContent
-      );
-      const jobDescriptionContentState = ContentState.createFromBlockArray(
-        jobDescriptionContentBlocks
-      );
-      const updateJobDescription = EditorState.createWithContent(
-        jobDescriptionContentState
-      );
-      setEditorStateJobDescription(updateJobDescription);
-      setJobDescription(editJobData?.jobDescription);
-      const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
-      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
-      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-        whyWorkWithUsContentBlocks
-      );
-      const updatewhyWorkWithUs = EditorState.createWithContent(
-        whyWorkWithUsContentState
-      );
-      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
-      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
-
-      const hiringCompanyDescriptionContent =
-        editJobData?.hiringCompanyDescription[0];
-      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
-        hiringCompanyDescriptionContent
-      );
-      const hiringCompanyDescriptionContentState =
-        ContentState.createFromBlockArray(
-          hiringCompanyDescriptionContentBlocks
-        );
-      const hiringCompanyDescription = EditorState.createWithContent(
-        hiringCompanyDescriptionContentState
-      );
-      setEditorStateClientDescription(hiringCompanyDescription);
-      setClientDescription(editJobData?.hiringCompanyDescription);
-
-      setfrequency(frequencyValue);
-    }
-  };
-
   useEffect(() => {
     // const howToApplyDescriptionContent = initialHowToApply;
     // const howToApplyDescriptionContentBlocks = convertFromHTML(
@@ -540,9 +383,10 @@ const CreateJobs = () => {
   const getAllJobs = async (id) => {
     await ApiHelper.get(`${API.getAllJobs}${id}`)
       .then((resData) => {
+        console.log(resData, "getAllJobs");
         if (resData.data.status === true) {
           if (resData.data.data) {
-            setAllJobsList(resData.data.data, "resData.data.data");
+            setAllJobsList(resData.data.data, "resData.data.data getAllJobs");
           }
         }
       })
@@ -1744,6 +1588,170 @@ const CreateJobs = () => {
   };
   const onYouTubeMaxChange = (event) => {
     setYouTubeMax(event.target.value); // Update the state with the new value
+  };
+
+  const duplicateJob = () => {
+    if (editJobData) {
+      setSelectedTab("create-job");
+      setCategory(editJobData?.category);
+      setEmploymentType(editJobData?.employmentType);
+      setLastdateApply(editJobData?.lastDateForApply);
+      setSkills(editJobData?.skills);
+      setMinAge(editJobData?.minAge);
+      setMaxAge(editJobData?.maxAge);
+      setjobTitle(editJobData?.jobTitle);
+      setAgeRange(editJobData?.age);
+      setzipCode(editJobData?.jobLocation);
+      setstreetAddress(editJobData?.streetAddress);
+      setjobType(editJobData?.jobType);
+      setGender(editJobData?.gender);
+      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
+      setSelectedApplyOption(editJobData?.selectedApplyOption);
+      setHiringCompany(editJobData?.hiringCompany);
+      setSelectedBenefits(editJobData?.benefits);
+      setSelectedApplyOption(editJobData?.howLikeToApply);
+      setPortofolioFile(editJobData?.workSamples);
+      setJobCurrency(editJobData?.jobCurrency);
+      setInstaMin(editJobData?.instaMin);
+      setInstaMax(editJobData?.instaMax);
+      setTiktokMin(editJobData?.tikTokMin);
+      setTiktokMax(editJobData?.tikTokMax);
+      setLinkedInMin(editJobData?.linkedInMin);
+      setLinkedInMax(editJobData?.linkedInMax);
+      setFbMin(editJobData?.fbMin);
+      setFbMax(editJobData?.fbMax);
+      setTwitterMin(editJobData?.twitterMin);
+      setTwitterMax(editJobData?.twitterMax);
+      setYouTubeMin(editJobData?.youTubeMin);
+      setYouTubeMax(editJobData?.youTubeMax);
+      setCountry(editJobData.country);
+      setState(editJobData.state);
+      getStates(editJobData.country);
+      setKidsCity(editJobData.city);
+
+      const genderUpdatedOptions = editJobData?.gender.map((gender) => {
+        return gendersList.find((option) => option?.label === gender);
+      });
+
+      setSelectedGenderOptions(genderUpdatedOptions);
+
+      const selectedOptions = editJobData?.languages.map((language) => {
+        return languagesList.find((option) => option?.label === language);
+      });
+
+      setSelectedLanguageOptions(selectedOptions);
+
+      if (nationalitiesList.length > 0) {
+        const nationalitiesList = editJobData?.nationality?.map((language) => {
+          return nationalitiesList.find((option) => option?.label === language);
+        });
+        setSelectedNationalityOptions(nationalitiesList);
+      }
+
+      const dynamicKey = Object.keys(editJobData.compensation)[0];
+      const minPayValue = editJobData.compensation[dynamicKey].minPay;
+      setMinPay(minPayValue);
+      const maxPaydynamicKey = Object.keys(editJobData.compensation)[0];
+      const maxPayValue = editJobData.compensation[maxPaydynamicKey].maxPay;
+      setMaxPay(maxPayValue);
+
+      const currencydynamicKey = Object.keys(editJobData.compensation)[0];
+      const currencyValue =
+        editJobData.compensation[currencydynamicKey].currency;
+      setCurrency(currencyValue);
+
+      const frequencydynamicKey = Object.keys(editJobData.compensation)[0];
+      const frequencyValue =
+        editJobData.compensation[frequencydynamicKey].frequency;
+
+      getCities({
+        countryName: editJobData.country,
+        stateName: editJobData.state,
+      });
+      if (editJobData?.questions && editJobData?.questions?.length > 0) {
+        setShowQuestions(true);
+        setQuestions(editJobData?.questions);
+      }
+
+      if (
+        editJobData?.compensation.hasOwnProperty("paid_collaboration_and_gift")
+      ) {
+        setCompensationChange("paid_collaboration_and_gift");
+        setType(editJobData?.compensation?.paid_collaboration_and_gift?.type);
+        setCurrency(
+          editJobData?.compensation?.paid_collaboration_and_gift?.currency
+        );
+        setProductName(
+          editJobData?.compensation?.paid_collaboration_and_gift?.product_name
+        );
+        setValueUSD(
+          editJobData?.compensation?.paid_collaboration_and_gift?.amount_value
+        );
+        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
+      } else if (
+        editJobData?.compensation.hasOwnProperty("paid_collaboration")
+      ) {
+        setCompensationChange("paid_collaboration");
+        setType(editJobData?.compensation?.paid_collaboration?.type);
+        setCurrency(editJobData?.compensation?.paid_collaboration?.currency);
+        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
+      } else if (editJobData?.compensation.hasOwnProperty("product_gift")) {
+        setCompensationChange("product_gift");
+        setProductName(editJobData?.compensation?.product_gift?.product_name);
+        setValueUSD(editJobData?.compensation?.product_gift?.amount_value);
+        setExactPay(editJobData?.compensation?.paid_collaboration?.exactPay);
+        setfrequency(editJobData?.compensation?.paid_collaboration?.frequency);
+      }
+      if (editJobData?.paymentType?.label === "range") {
+        setSelectedPaymentOption("range");
+        setMinPay(editJobData?.paymentType?.minPay);
+        setMaxPay(editJobData?.paymentType?.maxPay);
+      } else if (editJobData?.paymentType?.label === "fixed") {
+        setSelectedPaymentOption("fixed");
+        setAmount(editJobData?.paymentType?.amount);
+      }
+      const jobDescriptionhtmlContent = editJobData?.jobDescription[0];
+      const jobDescriptionContentBlocks = convertFromHTML(
+        jobDescriptionhtmlContent
+      );
+      const jobDescriptionContentState = ContentState.createFromBlockArray(
+        jobDescriptionContentBlocks
+      );
+      const updateJobDescription = EditorState.createWithContent(
+        jobDescriptionContentState
+      );
+      setEditorStateJobDescription(updateJobDescription);
+      setJobDescription(editJobData?.jobDescription);
+      const whyWorkWithUsContent = editJobData?.whyWorkWithUs[0];
+      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      const whyWorkWithUsContentState = ContentState.createFromBlockArray(
+        whyWorkWithUsContentBlocks
+      );
+      const updatewhyWorkWithUs = EditorState.createWithContent(
+        whyWorkWithUsContentState
+      );
+      setEditorStateWhyWorkWithUs(updatewhyWorkWithUs);
+      setWhyWorkWithUs(editJobData?.whyWorkWithUs);
+
+      const hiringCompanyDescriptionContent =
+        editJobData?.hiringCompanyDescription[0];
+      const hiringCompanyDescriptionContentBlocks = convertFromHTML(
+        hiringCompanyDescriptionContent
+      );
+      const hiringCompanyDescriptionContentState =
+        ContentState.createFromBlockArray(
+          hiringCompanyDescriptionContentBlocks
+        );
+      const hiringCompanyDescription = EditorState.createWithContent(
+        hiringCompanyDescriptionContentState
+      );
+      setEditorStateClientDescription(hiringCompanyDescription);
+      setClientDescription(editJobData?.hiringCompanyDescription);
+
+      setfrequency(frequencyValue);
+    }
   };
 
   return (
