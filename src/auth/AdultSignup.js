@@ -435,9 +435,8 @@ const AdultSignup = () => {
                       className="invalid-fields password-error-box"
                       style={{ width: "360px" }}
                     >
-                      ( The minimum password length is 8 characters and must
-                      contain at least 1 capital letter, 1 lowercase letter, 1
-                      number and 1 special character. )
+                      (1 capital letter (A, B, C...) 1 small letter (a, b, c...)
+                      1 number (1, 2, 3...) 1 special symbol (!, @, #...))
                     </div>
                   )}
                   {passwordError && (

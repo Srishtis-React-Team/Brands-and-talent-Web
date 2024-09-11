@@ -274,18 +274,14 @@ const AppliedJobs = () => {
             </>
           )}
 
-          {!allJobsList ||
-            allJobsList?.length === 0 ||
-            (allJobsList == undefined && (
-              <>
-                <div
-                  style={{ textAlign: "center", padding: "20px" }}
-                  className="list-jobs-wrapper"
-                >
-                  No Jobs Available
-                </div>
-              </>
-            ))}
+          {(!allJobsList || allJobsList.length === 0) && (
+            <div
+              style={{ textAlign: "center", padding: "20px" }}
+              className="list-jobs-wrapper"
+            >
+              No Jobs Available
+            </div>
+          )}
         </div>
       </main>
 
