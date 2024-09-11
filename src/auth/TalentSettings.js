@@ -81,6 +81,21 @@ const TalentSettings = () => {
     setValueTabs(newValue);
   };
 
+  useEffect(()=>{
+    fetchPaymentDetails()
+  },[])
+
+  const fetchPaymentDetails = async () =>{
+    const userId = localStorage.getItem("userId")
+    const obj = {
+      "user_id":userId
+    }
+    console.log('inside fetchPaymentDetails',obj)
+    const paymentDetailsData = await ApiHelper.post('https://brandsandtalent.com/api/users/fetchPaymentDetails', obj);
+    console.log('paymentDetailsData',paymentDetailsData)
+
+  }
+
   const customStylesAlert = {
     content: {
       top: "50%",

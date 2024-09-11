@@ -67,7 +67,11 @@ const KidsFormTwo = () => {
           const userData = {
               "subscriptionPlan":selectedPaymentPeriod,
               "planName":selectedPaymentPlan,
-              "user_id":userId
+              "user_id":userId,
+              "transactionDate":paymentData?.transaction_date,
+              "paymentStatus":paymentData?.payment_status,
+              "paymentCurreny":paymentData?.payment_currency,
+              "paymentAmount":paymentData?.payment_amount,
           } 
           const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
           console.log('responseSubscription',responseSubscription)
@@ -159,6 +163,7 @@ const KidsFormTwo = () => {
         // await axios.post('/api/pricing/create-payment', { amount, currency, type });
         console.log('Payment Response:', response);
         setResponseUrl(response.data.url)
+        localStorage.setItem("paymenttrans_id", response.data.trans_id);
       setCheckout(true)
         // Handle the response and update UI
     } catch (error) {

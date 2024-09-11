@@ -145,7 +145,11 @@ const CreateJobs = () => {
           const userData = {
               "subscriptionPlan":selectedPaymentPeriod,
               "planName":selectedPaymentPlan,
-              "user_id":userId
+              "user_id":userId,
+              "transactionDate":paymentData?.transaction_date,
+              "paymentStatus":paymentData?.payment_status,
+              "paymentCurreny":paymentData?.payment_currency,
+              "paymentAmount":paymentData?.payment_amount,
           } 
           const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
           console.log('responseSubscription',responseSubscription)
