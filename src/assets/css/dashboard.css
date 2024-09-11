@@ -1665,7 +1665,7 @@ head .profile-image-header {
   height: 45px;
   border-radius: 50px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0 10px;
 }
@@ -2061,12 +2061,6 @@ ul.MuiMenu-list li {
   color: red;
 }
 
-
-
-
-
-
-
 @media (max-width: 1399px) {
   .menu-items > div.navTxt {
     padding-right: 18px;
@@ -2383,7 +2377,9 @@ ul.MuiMenu-list li {
     padding: 0;
     margin: 30px 0 15px;
   }
-  .get-discover.title{  font-size: 20px; }
+  .get-discover.title {
+    font-size: 20px;
+  }
   .tabs {
     display: flex;
     justify-content: center;

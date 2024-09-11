@@ -515,6 +515,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                                 setInstagramFollowers(e.target.value);
                               }}
                               placeholder="Followers Count"
+                              min="0"
                             ></input>
                           </div>
                         </div>
@@ -554,6 +555,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                                 setfacebookFollowers(e.target.value);
                               }}
                               placeholder="Followers Count"
+                              min="0"
                             ></input>
                           </div>
                         </div>
@@ -595,6 +597,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                                 setTiktoksFollowers(e.target.value);
                               }}
                               placeholder="Followers Count"
+                              min="0"
                             ></input>
                           </div>
                         </div>
@@ -633,6 +636,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                               onChange={(e) => {
                                 setlinkedinFollowers(e.target.value);
                               }}
+                              min="0"
                               placeholder="Followers Count"
                             ></input>
                           </div>
@@ -676,6 +680,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                                 setXtwitterFollowers(e.target.value);
                               }}
                               placeholder="Followers Count"
+                              min="0"
                             ></input>
                           </div>
                         </div>
@@ -715,6 +720,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                                 setThreadsFollowers(e.target.value);
                               }}
                               placeholder="Followers Count"
+                              min="0"
                             ></input>
                           </div>
                         </div>
@@ -757,6 +763,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                                 setYoutubesFollowers(e.target.value);
                               }}
                               placeholder="Followers Count"
+                              min="0"
                             ></input>
                           </div>
                         </div>

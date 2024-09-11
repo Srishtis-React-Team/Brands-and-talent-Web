@@ -97,7 +97,9 @@ const OTPComponent = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
 
   const otpResend = () => {
@@ -148,7 +150,7 @@ const OTPComponent = () => {
             }}
             src={btLogo}
           ></img>
-          <div className="step-text">Step 2 of 3</div>
+          <div className="step-text">Step 2 of 2</div>
         </div>
         <button
           type="button"

@@ -13,6 +13,13 @@ import PopUp from "../../components/PopUp";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
 import RichTextEditor from "../../views/RichTextEditor";
+import { IconButton } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Tooltip } from "react-tooltip";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 const BrandLogo = () => {
   const navigate = useNavigate();
   const uploadIcon = require("../../assets/icons/uploadIcon.png");
@@ -64,6 +71,7 @@ const BrandLogo = () => {
 
       uploadFile(fileData);
     }
+    event.target.value = null;
   };
 
   const getFileType = (fileType) => {
@@ -168,6 +176,27 @@ const BrandLogo = () => {
     localStorage.setItem("currentUserType", "brand");
     localStorage.setItem("currentUserImage", data?.brandImage[0]?.fileData);
   };
+  const dropDownClose = () => {
+    setPortfolioAnchor(null);
+  };
+
+  const [portfolioAnchor, setPortfolioAnchor] = useState(null);
+
+  const portfolioOpen = Boolean(portfolioAnchor);
+  const [selectedPortfolioItem, setSelectedPortfolioItem] = useState(null); // Track the selected item
+
+  // Single function to handle menu open
+  const handlePortfolioClick = (event, item) => {
+    setPortfolioAnchor(event.currentTarget);
+    setSelectedPortfolioItem(item); // Set the selected item
+  };
+
+  const handlePortfolioClose = () => {
+    setPortfolioAnchor(null);
+    setSelectedPortfolioItem(null); // Reset the selected item when closing the menu
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {}, [portofolioFile]);
 
@@ -253,49 +282,41 @@ const BrandLogo = () => {
                               )}
                               <div className="fileName">{item.title}</div>
                             </div>
-                            <div className="file-options">
-                              <div className="sucess-tick">
-                                <img src={greenTickCircle} alt="" />
-                              </div>
-                              <div className="option-menu">
-                                <div className="dropdown">
-                                  <img
-                                    onClick={() => setShowOptions(!showOptions)}
-                                    src={elipsis}
-                                    alt=""
-                                    className="dropdown-toggle elipsis-icon"
-                                    type="button"
-                                    id="dropdownMenuButton"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                  />
-                                  <ul
-                                    className="dropdown-menu"
-                                    aria-labelledby="dropdownMenuButton"
-                                  >
-                                    <li>
-                                      <a
-                                        className="dropdown-item"
-                                        onClick={() => handleView(item)}
-                                        id="view"
-                                      >
-                                        View
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        className="dropdown-item"
-                                        onClick={() =>
-                                          handlePortofolioDelete(item)
-                                        }
-                                        id="delete"
-                                      >
-                                        Delete
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
+
+                            <div className="update-portfolio-action">
+                              <IconButton
+                                aria-label="more"
+                                aria-controls={`dropdown-menu-${item.id}`}
+                                aria-haspopup="true"
+                                onClick={(event) =>
+                                  handlePortfolioClick(event, item)
+                                }
+                              >
+                                <MoreVertIcon />
+                              </IconButton>
+                              <Menu
+                                id={`dropdown-menu-${item.id}`} // Use unique ID
+                                anchorEl={portfolioAnchor} // Correct prop name
+                                open={portfolioOpen} // Control visibility
+                                onClose={handlePortfolioClose}
+                              >
+                                <MenuItem
+                                  onClick={() => {
+                                    handlePortfolioClose();
+                                    handleView(selectedPortfolioItem); // Use selected item
+                                  }}
+                                >
+                                  View
+                                </MenuItem>
+                                <MenuItem
+                                  onClick={() => {
+                                    dropDownClose();
+                                    handlePortofolioDelete(item);
+                                  }}
+                                >
+                                  Delete
+                                </MenuItem>
+                              </Menu>
                             </div>
                           </div>
                         </>

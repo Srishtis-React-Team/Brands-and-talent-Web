@@ -34,6 +34,9 @@ const AdultSignup = () => {
   const [message, setMessage] = useState("");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handlePasswordChange = (e) => {
     setAdultPassword(e.target.value);
     setPasswordMatch(e.target.value === adultConfirmPassword);
@@ -61,7 +64,7 @@ const AdultSignup = () => {
         googleId: response?.sub,
         provider: "google",
         image: {
-          fileData: "a11fe9fc-f4c3-4b51-9f98-25a9247fcbd9.webp",
+          fileData: "5cf3b581-deb2-4366-8949-43e7f1086165.webp",
           id: "9f429f86-ca9c-4730-804b-06cd2d3db7c0",
           title: "blank-profile-picture-973460_640.webp",
           type: "image",
@@ -73,7 +76,7 @@ const AdultSignup = () => {
         facebookId: response?.data?.id,
         provider: "facebook",
         image: {
-          fileData: "a11fe9fc-f4c3-4b51-9f98-25a9247fcbd9.webp",
+          fileData: "5cf3b581-deb2-4366-8949-43e7f1086165.webp",
           id: "9f429f86-ca9c-4730-804b-06cd2d3db7c0",
           title: "blank-profile-picture-973460_640.webp",
           type: "image",
@@ -129,7 +132,7 @@ const AdultSignup = () => {
         confirmPassword: adultConfirmPassword,
         publicUrl: adultName.replace(/ /g, "-"),
         image: {
-          fileData: "a11fe9fc-f4c3-4b51-9f98-25a9247fcbd9.webp",
+          fileData: "5cf3b581-deb2-4366-8949-43e7f1086165.webp",
           id: "9f429f86-ca9c-4730-804b-06cd2d3db7c0",
           title: "blank-profile-picture-973460_640.webp",
           type: "image",
@@ -304,6 +307,13 @@ const AdultSignup = () => {
     }
   };
 
+  const handleEmailChange = (e) => {
+    setEmailError(false);
+    const email = e.target.value;
+    setAdultEmail(e.target.value);
+    setIsValidEmail(emailRegex.test(email));
+  };
+
   return (
     <>
       <div className="form-dialog">
@@ -316,7 +326,7 @@ const AdultSignup = () => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 1 of 3</div>
+            <div className="step-text">Step 1 of 2</div>
           </div>
           <button
             type="button"
@@ -341,18 +351,23 @@ const AdultSignup = () => {
                 </label>
                 <div className="form-group has-search">
                   <span className="fa fa-envelope form-control-feedback"></span>
+
                   <input
-                    type="text"
-                    className="form-control adult-signup-inputs"
-                    placeholder="Email "
-                    onChange={(e) => {
-                      setAdultEmail(e.target.value);
-                      setEmailError(false);
-                    }}
-                    value={googleUser?.email}
-                  ></input>
+                    type="email"
+                    className={`form-control ${
+                      !isValidEmail ? "is-invalid" : "form-control"
+                    }`}
+                    onChange={handleEmailChange}
+                    placeholder="Enter E-mail"
+                    value={adultEmail}
+                  />
+                  {!isValidEmail && (
+                    <div className="invalid-feedback">
+                      Please enter a valid E-mail address.
+                    </div>
+                  )}
                   {emailError && (
-                    <div className="invalid-fields">Please enter Email</div>
+                    <div className="invalid-fields">Please enter E-mail</div>
                   )}
                 </div>
               </div>
@@ -516,8 +531,10 @@ const AdultSignup = () => {
                   <div className="media-text">Google</div>
                 </div> */}
               </div>
+
               <div className="signup-terms">
-                By registering you confirm that you accept the 
+                By registering you confirm that you accept the Brands & Talent
+                (BT)
               </div>
               <div className="signup-terms-linetwo">
                 <span onClick={() => handleCondition("terms")}>

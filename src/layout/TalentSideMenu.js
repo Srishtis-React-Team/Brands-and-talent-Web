@@ -6,12 +6,18 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 import CurrentUser from "../CurrentUser";
+import { useNavigate } from "react-router";
+import PopUp from "../components/PopUp";
+
 const TalentSideMenu = ({ myState }) => {
   const { currentUserId, currentUserImage, currentUserType, avatarImage } =
     CurrentUser();
+  const navigate = useNavigate();
 
   const location = useLocation();
   const [talentData, setTalentData] = useState();
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (currentUserId) {
@@ -63,20 +69,37 @@ const TalentSideMenu = ({ myState }) => {
   }, []);
 
   useEffect(() => {}, [isSmallScreen]);
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+
+  const handleNavigation = () => {
+    if (talentData?.adminApproved === true) {
+      navigate(`/edit-talent-profile?${talentData?._id}`);
+    } else {
+      setMessage(
+        "After your verification is approved, you can update your profile"
+      );
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 2000);
+    }
+  };
 
   return (
     <>
       <nav className="brand-sidebar-container">
         <div className="brand-profile-not-sidemenu">
           <div className="profImg">
-            {talentData?.image && (
+            {talentData?.image?.fileData && (
               <img
                 className="profile-img"
                 src={`${API.userFilePath}${talentData?.image?.fileData}`}
                 alt=""
               />
             )}
-            {!talentData?.image && (
+            {!talentData?.image?.fileData && (
               <img className="profile-img" src={avatarImage} alt="" />
             )}
           </div>
@@ -84,11 +107,21 @@ const TalentSideMenu = ({ myState }) => {
         <div className="talent-profile">
           <div className="talent-data-wrapper">
             <div className="profImg">
-              <img
-                className="profile-img"
-                src={`${API.userFilePath}${talentData?.image?.fileData}`}
-                alt=""
-              />
+              {talentData?.image?.fileData && (
+                <>
+                  <img
+                    className="profile-img"
+                    src={`${API.userFilePath}${talentData?.image?.fileData}`}
+                    alt=""
+                  />
+                </>
+              )}
+
+              {!talentData?.image?.fileData && (
+                <>
+                  <img className="profile-img" src={`${avatarImage}`} alt="" />
+                </>
+              )}
             </div>
             <div className="talent-details">
               <div className="talent-name">
@@ -201,8 +234,8 @@ const TalentSideMenu = ({ myState }) => {
             <div className="brand-menu-text">Messages</div>
           </Link> */}
 
-          <Link
-            to="/edit-talent-profile"
+          <div
+            onClick={handleNavigation}
             className={
               location.pathname === "/edit-talent-profile"
                 ? "sidemenu-active mt-2"
@@ -211,7 +244,7 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-person icons"></i>
             <div className="brand-menu-text">Edit Profile</div>
-          </Link>
+          </div>
 
           <Link
             to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
@@ -297,6 +330,7 @@ const TalentSideMenu = ({ myState }) => {
           </Link> */}
         </div>
       </nav>
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };
