@@ -71,6 +71,7 @@ const TalentSettings = () => {
   const [valueTabs, setValueTabs] = React.useState(0);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [showOldPassword, setShowOldPassword] = useState(false);
+  const [paymentDetailsDataArray, setPaymentDetailsDataArray] = useState([]);
 
   const paymentData = localStorage.getItem("paymentData");
   const paymentDetails = JSON.parse(paymentData);
@@ -96,6 +97,7 @@ const TalentSettings = () => {
       obj
     );
     console.log("paymentDetailsData", paymentDetailsData);
+    setPaymentDetailsDataArray(paymentDetailsData.data.data);
   };
 
   const customStylesAlert = {
@@ -606,11 +608,20 @@ const TalentSettings = () => {
               {/* Manage Account */}
               <div className=" edit-basicdetails-section-main">
                 <div>
-                  {console.log("consoling the exact", paymentDetails)}
-                  <h6>Transaction date : {paymentDetails?.transaction_date}</h6>
-                  <h6>Payment status : {paymentDetails?.payment_status}</h6>
-                  <h6>Payment currency : {paymentDetails?.payment_currency}</h6>
-                  <h6>Payment amount : {paymentDetails?.payment_amount}</h6>
+                  {console.log("consoling the exact", paymentDetailsDataArray)}
+                  <h6>
+                    Transaction date :{" "}
+                    {paymentDetailsDataArray?.transactionDate}
+                  </h6>
+                  <h6>
+                    Payment status : {paymentDetailsDataArray?.paymentStatus}
+                  </h6>
+                  <h6>
+                    Payment currency : {paymentDetailsDataArray?.paymentCurreny}
+                  </h6>
+                  <h6>
+                    Payment amount : {paymentDetailsDataArray?.paymentAmount}
+                  </h6>
                   <h6>Payment period : {selectedPaymentPeriod}</h6>
                   <h6>Payment plan : {selectedPaymentPlan}</h6>
                 </div>
