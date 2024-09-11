@@ -139,14 +139,20 @@ const KidsformOne = () => {
     control: (provided, state) => ({
       ...provided,
       minHeight: "45px",
-      // zIndex: 1,
     }),
     menu: (provided, state) => ({
       ...provided,
       maxHeight: "500px",
-      // zIndex: 1,
     }),
     menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? "#fff" : "#fff", // or any color you want for selected option
+      color: state.isSelected ? "#000" : "#333", // text color for selected and non-selected options
+      "&:hover": {
+        backgroundColor: "#e0e0e0", // hover state color
+      },
+    }),
   };
 
   useEffect(() => {
@@ -1596,12 +1602,12 @@ const KidsformOne = () => {
                           style={{ fontSize: "14px" }}
                           value={gender}
                         >
-                          <option value="" disabled selected>
+                          <option value="" disabled>
                             Select Gender
                           </option>
-                          {gendersList?.map((option, index) => (
-                            <option key={index} value={option}>
-                              {option}
+                          {gendersList?.map((option) => (
+                            <option key={option.id} value={option.value}>
+                              {option.label}
                             </option>
                           ))}
                         </select>

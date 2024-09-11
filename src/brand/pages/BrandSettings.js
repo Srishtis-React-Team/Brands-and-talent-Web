@@ -70,10 +70,51 @@ const BrandSettings = () => {
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  // const [paymentDetails,setPaymentDetails] = useState()
 
+  const paymentData = localStorage.getItem("paymentData");
+  const paymentDetails = JSON.parse(paymentData);
+  const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
+  const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
+
+  
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
   };
+
+  // useEffect(() => {
+  //   checkTransaction();
+  // }, []);
+
+  // const checkTransaction = async () => {
+  //   const paymenttrans_id = localStorage.getItem("paymenttrans_id")
+  //   const obj = { tranId: paymenttrans_id };
+
+  //   try {
+  //     console.log("here cinsiu")
+  //     const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
+  //     console.log('data cconasoling', resData)
+  //     if (resData) {
+  //       if(resData.data.status.message == "Success!"){
+  //       const paymentData = resData.data.data;
+  //       if(paymentData.payment_status == "APPROVED"){
+  //         localStorage.setItem("paymentData", JSON.stringify(paymentData));
+  //         // alert('payment successfully completed')
+  //         const userId = localStorage.getItem("userId")
+  //         const userData = {
+  //             "subscriptionPlan":selectedPaymentPeriod,
+  //             "planName":selectedPaymentPlan,
+  //             "user_id":userId
+  //         } 
+  //         const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
+  //         console.log('responseSubscription',responseSubscription)
+  //       }
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error("Error:", err);
+  //   }
+  // };
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
@@ -373,6 +414,11 @@ const BrandSettings = () => {
                   {...a11yProps(1)}
                   style={{ textTransform: "capitalize" }}
                 />
+                <Tab
+                  label="Active subscription"
+                  {...a11yProps(2)}
+                  style={{ textTransform: "capitalize" }}
+                />
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
@@ -567,6 +613,20 @@ const BrandSettings = () => {
                     {brandData?.inActive === true && "Deactivate"}
                     {brandData?.inActive === false && "Activate"}
                   </Button>
+                </div>
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={2}>
+              {/* Manage Account */}
+              <div className=" edit-basicdetails-section-main">
+                <div>
+                  {console.log('consoling the exact',paymentDetails)}
+                  <h6>Transaction date : {paymentDetails?.transaction_date}</h6>
+                  <h6>Payment status : {paymentDetails?.payment_status}</h6>
+                  <h6>Payment currency : {paymentDetails?.payment_currency}</h6>
+                  <h6>Payment amount : {paymentDetails?.payment_amount}</h6>
+                  <h6>Payment period : {selectedPaymentPeriod}</h6>
+                  <h6>Payment plan : {selectedPaymentPlan}</h6>
                 </div>
               </div>
             </CustomTabPanel>

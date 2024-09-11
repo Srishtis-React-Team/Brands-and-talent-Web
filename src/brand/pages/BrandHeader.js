@@ -99,15 +99,21 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
-        console.log(resData?.data?.data?._id, "getDataByPublicUrl");
+        console.log(resData, "getDataByPublicUrl");
         // setUrlTalentData(resData?.data?.data);
         // checkUser(resData?.data?.data?._id, resData?.data?.data);
-        setBrandData(resData?.data?.data);
+        if (resData?.data?.data) {
+          setBrandData(resData?.data?.data);
+        } else {
+          getBrand();
+        }
       })
       .catch((err) => {});
   };
 
-  useEffect(() => {}, [brandData]);
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
 
   const gotomessage = (item) => {
     navigate(`/message?${item?.talentId}`);
@@ -338,10 +344,10 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                 <Dropdown>
                   <MenuButton>
                     <div className="talent-profile-icon">
-                      {!brandData?.brandImage[0] && (
+                      {!Array.isArray(brandData?.brandImage) ||
+                      brandData?.brandImage.length === 0 ? (
                         <img src={avatarImage} alt="" />
-                      )}
-                      {brandData?.brandImage[0] && (
+                      ) : (
                         <img
                           src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
                           alt=""
