@@ -47,7 +47,9 @@ const AdultFormTwo = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {}, [talentData]);
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
 
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -95,7 +97,7 @@ const AdultFormTwo = () => {
           updateProfileStatus();
           setTimeout(function () {
             setOpenPopUp(false);
-            navigate(`/talent/${talentData.publicUrl}`, {
+            navigate(`/talent/${talentData?.publicUrl}`, {
               state: { talentData: talentData },
             });
           }, 1000);

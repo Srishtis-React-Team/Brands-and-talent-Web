@@ -6,7 +6,12 @@ import "../assets/css/register.css";
 import "../assets/css/kidsmain.scss";
 import "../assets/css/createjobs.css";
 import "../assets/css/talent-profile.css";
-
+import {
+  parsePhoneNumber,
+  isValidPhoneNumber,
+  getNumberType,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
 import Axios from "axios";
 import { API } from "../config/api";
 import PopUp from "../components/PopUp";
@@ -89,6 +94,7 @@ const isValidUrl = (url) => {
 const EditTalent = () => {
   const [languages, setLanguages] = useState([]);
   const [nationality, setNationality] = useState("");
+  const [mobileValidationError, setMobileValidationError] = useState(false);
 
   const [listOfLanguages, setListOfLanguages] = useState([]);
   const [listOfNationalities, setListOfNationalities] = useState([]);
@@ -261,6 +267,8 @@ const EditTalent = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [age, setAge] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
+  const [completedError, setJobsCompletedError] = useState(false);
+
   const [allJobsList, setAllJobsList] = useState([]);
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [talentId, setTalentId] = useState(null);
@@ -270,6 +278,8 @@ const EditTalent = () => {
     []
   );
   const [videoUrl, setVideoUrl] = useState("");
+  const [completedJobs, setCompletedJobs] = useState("");
+
   const [audioUrl, setAudioUrl] = useState("");
   const [checkVideoUrl, setCheckVideoUrl] = useState(false);
   const [checkAudioUrl, setCheckAudioUrl] = useState(false);
@@ -490,7 +500,7 @@ const EditTalent = () => {
         if (resData.data.status === true) {
           if (resData?.data?.data?.type === "kids") {
             setLanguages(resData?.data?.data?.languages);
-
+            setCompletedJobs(resData?.data?.data?.noOfJobsCompleted);
             setTalentData(resData.data.data, "resData.data.data");
             setEditProfileImage(resData.data.data?.image?.fileData);
             setKidsFillData(resData.data.data);
@@ -565,6 +575,8 @@ const EditTalent = () => {
             setInitialUrl(`${resData?.data?.data?.publicUrl}`);
           } else if (resData?.data?.data?.type === "adults") {
             setTalentData(resData.data.data);
+            setCompletedJobs(resData?.data?.data?.noOfJobsCompleted);
+
             setEditProfileImage(resData.data.data?.image?.fileData);
             setKidsFillData(resData.data.data);
             setParentFirstName(resData?.data?.data?.adultLegalFirstName);
@@ -751,6 +763,7 @@ const EditTalent = () => {
           profession: selectedProfessions,
           age: age,
           publicUrl: publicUrl,
+          noOfJobsCompleted: completedJobs,
         };
         await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
           .then((resData) => {
@@ -807,6 +820,7 @@ const EditTalent = () => {
           childCity: kidsCity,
           age: age,
           publicUrl: publicUrl,
+          noOfJobsCompleted: completedJobs,
         };
         await ApiHelper.post(`${API.updateAdults}${talentData?._id}`, formData)
           .then((resData) => {
@@ -978,6 +992,16 @@ const EditTalent = () => {
   const handleMobileChange = (value, countryData) => {
     setParentMobile(value);
     setParentMobileError(false);
+    isValidPhoneNumber(value);
+    console.log(value, "isValidPhoneNumber");
+    if (isValidPhoneNumber(value)) {
+      console.log(true, "isValidPhoneNumber");
+      setMobileValidationError(false);
+      setParentMobile(value);
+    } else {
+      setMobileValidationError(true);
+      console.log(false, "isValidPhoneNumber");
+    }
   };
 
   const [valueTabs, setValueTabs] = React.useState(0);
@@ -1664,10 +1688,6 @@ const EditTalent = () => {
       });
   };
 
-  const handleDeleteUrl = (index) => {
-    const newUrls = urls.filter((url, i) => i !== index);
-    setUrls(newUrls);
-  };
   const [showOptions, setShowOptions] = useState(false);
 
   const handleOptionClick = (option) => {
@@ -1788,9 +1808,7 @@ const EditTalent = () => {
         setCheckAudioUrl(true);
       }
     }
-    if (audioUrl && audioUrlsList.length > 0) {
-      postNewAudios([...audioUrlsList, audioUrl]);
-    }
+    postNewAudios([...audioUrlsList, audioUrl]);
   };
 
   const handleUrlChange = (e) => {
@@ -1838,14 +1856,80 @@ const EditTalent = () => {
         setCheckVideoUrl(true);
       }
     }
-    if (videoUrl && urls.length > 0) {
-      postNewVideos([...urls, videoUrl]);
-    }
+    postNewVideos([...urls, videoUrl]);
   };
 
-  const deleteAudioUrl = (index) => {
+  const handleJobsCompleted = (event) => {
+    setCompletedJobs(event.target.value);
+
+    setJobsCompletedError(false);
+  };
+
+  const handleDeleteUrl = async (index) => {
+    console.log(index, "index");
+    const newUrls = urls.filter((url, i) => i !== index);
+    setUrls(newUrls);
+
+    let apiName;
+    if (talentData?.type === "adults") {
+      apiName = `${API.deleteVideoUrls}`;
+    } else {
+      apiName = `${API.deleteVideoUrls}`;
+    }
+    const formData = {
+      talentId: talentData?._id,
+      index: index,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${apiName}`, formData)
+      .then((resData) => {
+        if (resData?.data?.status) {
+          setIsLoading(false);
+          setMessage("Deleted Successfully");
+          scrollToTop();
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+          }, 1000);
+        } else {
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const deleteAudioUrl = async (index) => {
     const newUrls = audioUrlsList.filter((url, i) => i !== index);
     setAudioUrlsList(newUrls);
+
+    let apiName;
+    if (talentData?.type === "adults") {
+      apiName = `${API.deleteAudioUrls}`;
+    } else {
+      apiName = `${API.deleteAudioUrls}`;
+    }
+    const formData = {
+      talentId: talentData?._id,
+      index: index,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${apiName}`, formData)
+      .then((resData) => {
+        if (resData?.data?.status === true) {
+          setIsLoading(false);
+          setMessage("Deleted Successfully");
+          scrollToTop();
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+          }, 1000);
+        } else {
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -1854,10 +1938,10 @@ const EditTalent = () => {
   useEffect(() => {
     console.log(audioUrl, "audioUrl");
   }, [audioUrl]);
-  // useEffect(() => {
-  //   console.log(urls, "urls");
-  //   postNewVideos();
-  // }, [urls]);
+  useEffect(() => {
+    console.log(urls, "urls");
+    // postNewVideos();
+  }, [urls]);
 
   // useEffect(() => {
   //   console.log(audioUrlsList, "audioUrlsList");
@@ -1865,12 +1949,18 @@ const EditTalent = () => {
   // }, [audioUrlsList]);
 
   const postNewVideos = async (urlsData) => {
+    let apiName;
+    if (talentData?.type === "adults") {
+      apiName = `${API.updateAdults}`;
+    } else {
+      apiName = `${API.editKids}`;
+    }
     if (urlsData.length > 0) {
       const formData = {
         videoList: urlsData,
       };
       setIsLoading(true);
-      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+      await ApiHelper.post(`${apiName}${talentData?._id}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
@@ -1890,12 +1980,18 @@ const EditTalent = () => {
     }
   };
   const postNewAudios = async (urlsData) => {
+    let apiName;
+    if (talentData?.type === "adults") {
+      apiName = `${API.updateAdults}`;
+    } else {
+      apiName = `${API.editKids}`;
+    }
     if (urlsData.length > 0) {
       const formData = {
         audioList: urlsData,
       };
       setIsLoading(true);
-      await ApiHelper.post(`${API.editKids}${talentData?._id}`, formData)
+      await ApiHelper.post(`${apiName}${talentData?._id}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
             setIsLoading(false);
@@ -1914,6 +2010,40 @@ const EditTalent = () => {
         });
     }
   };
+  const [portfolioAnchor, setPortfolioAnchor] = useState(null);
+
+  const portfolioOpen = Boolean(portfolioAnchor);
+  const [selectedPortfolioItem, setSelectedPortfolioItem] = useState(null); // Track the selected item
+
+  // Single function to handle menu open
+  const handlePortfolioClick = (event, item) => {
+    setPortfolioAnchor(event.currentTarget);
+    setSelectedPortfolioItem(item); // Set the selected item
+  };
+
+  const handlePortfolioClose = () => {
+    setPortfolioAnchor(null);
+    setSelectedPortfolioItem(null); // Reset the selected item when closing the menu
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  const [videoAnchor, setVideoAnchor] = useState(null);
+
+  const videoOpen = Boolean(videoAnchor);
+  const [selectedVideoItem, setSelectedVideoItem] = useState(null); // Track the selected item
+
+  // Single function to handle menu open
+  const handleVideoClick = (event, item) => {
+    setVideoAnchor(event.currentTarget);
+    setSelectedVideoItem(item); // Set the selected item
+  };
+
+  const handleVideoClose = () => {
+    setVideoAnchor(null);
+    setSelectedVideoItem(null); // Reset the selected item when closing the menu
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     console.log(urls, "urls");
@@ -2327,6 +2457,11 @@ const EditTalent = () => {
                       className="material-mobile-style"
                       onChange={handleMobileChange}
                     />
+                    {mobileValidationError && (
+                      <div className="invalid-fields">
+                        Please enter correct Mobile Number
+                      </div>
+                    )}
 
                     {parentMobileError && (
                       <div className="invalid-fields">
@@ -2412,6 +2547,34 @@ const EditTalent = () => {
                       onChange={handleSelectedCity}
                       isSearchable={true}
                     />
+                  </div>
+                  <div className="kids-form-section col-md-6 mb-3">
+                    <label className="form-label">
+                      Projects Completed
+                      <span className="mandatory">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control projects-completed"
+                      value={completedJobs}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (
+                          /^\d*\.?\d*$/.test(value) &&
+                          (value >= 0 || value === "")
+                        ) {
+                          handleJobsCompleted(e);
+                          setJobsCompletedError(false);
+                        }
+                      }}
+                      min="0"
+                      placeholder="Number of jobs/client projects completed"
+                    ></input>
+                    {completedError && (
+                      <div className="invalid-fields">
+                        Please enter Projects Completed
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -2769,22 +2932,26 @@ const EditTalent = () => {
                                     <div className="update-portfolio-action">
                                       <IconButton
                                         aria-label="more"
-                                        aria-controls="dropdown-menu"
+                                        aria-controls={`dropdown-menu-${item.id}`}
                                         aria-haspopup="true"
-                                        onClick={handleClick}
+                                        onClick={(event) =>
+                                          handlePortfolioClick(event, item)
+                                        }
                                       >
                                         <MoreVertIcon />
                                       </IconButton>
                                       <Menu
-                                        id="dropdown-menu"
-                                        anchorEl={anchorEl}
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleClose}
+                                        id={`dropdown-menu-${item.id}`} // Use unique ID
+                                        anchorEl={portfolioAnchor} // Correct prop name
+                                        open={portfolioOpen} // Control visibility
+                                        onClose={handlePortfolioClose}
                                       >
                                         <MenuItem
                                           onClick={() => {
-                                            handleClose();
-                                            viewUpdateFile(item);
+                                            handlePortfolioClose();
+                                            viewUpdateFile(
+                                              selectedPortfolioItem
+                                            ); // Use selected item
                                           }}
                                         >
                                           View
@@ -2893,21 +3060,23 @@ const EditTalent = () => {
                                   <div className="update-portfolio-action">
                                     <IconButton
                                       aria-label="more"
-                                      aria-controls="dropdown-menu"
+                                      aria-controls={`dropdown-menu-${index}`}
                                       aria-haspopup="true"
-                                      onClick={handleClick}
+                                      onClick={(event) =>
+                                        handleVideoClick(event, url)
+                                      }
                                     >
                                       <MoreVertIcon />
                                     </IconButton>
                                     <Menu
-                                      id="dropdown-menu"
-                                      anchorEl={anchorEl}
-                                      open={Boolean(anchorEl)}
-                                      onClose={handleClose}
+                                      id={`dropdown-menu-${index}`} // Use unique ID
+                                      anchorEl={videoAnchor} // Correct prop name
+                                      open={videoOpen} // Control visibility
+                                      onClose={handleVideoClose}
                                     >
                                       <MenuItem
                                         onClick={() => {
-                                          dropDownClose();
+                                          handleVideoClose();
                                           handleDeleteUrl(index);
                                         }}
                                       >
@@ -3489,7 +3658,7 @@ const EditTalent = () => {
                   <span className="edit-profile-navigation-text">Back</span>
                 </div>
               )}
-              {valueTabs != 7 && (
+              {valueTabs != 5 && (
                 <div
                   className="edit-profile-navigation-btn"
                   onClick={() => {

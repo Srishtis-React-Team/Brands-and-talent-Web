@@ -507,6 +507,8 @@ const EditBrands = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setMessage("Url updated Successfully!");
+          setPublicUrlEdit(false);
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);

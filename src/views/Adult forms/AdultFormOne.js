@@ -74,12 +74,20 @@ const AdultFormOne = () => {
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "55px", // Reset the minHeight to avoid clipping
+      minHeight: "45px",
     }),
     menu: (provided, state) => ({
       ...provided,
-      maxHeight: "500px", // Adjust the maxHeight as per your requirement
-      zIndex: 9999, // Ensure menu appears above other elements
+      maxHeight: "500px",
+    }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? "#fff" : "#fff", // or any color you want for selected option
+      color: state.isSelected ? "#000" : "#333", // text color for selected and non-selected options
+      "&:hover": {
+        backgroundColor: "#e0e0e0", // hover state color
+      },
     }),
   };
   const btLogo = require("../../assets/images/LOGO.png");
@@ -1064,6 +1072,7 @@ const AdultFormOne = () => {
                         value={country?.value}
                         onChange={handleSelectedCountry}
                         isSearchable={true}
+                        styles={customStylesProfession}
                       />
                       {countryError && (
                         <div className="invalid-fields">
@@ -1082,6 +1091,7 @@ const AdultFormOne = () => {
                         value={state?.label}
                         onChange={handleSelectedState}
                         isSearchable={true}
+                        styles={customStylesProfession}
                       />
                     </div>
                   </div>
@@ -1097,6 +1107,7 @@ const AdultFormOne = () => {
                         value={kidsCity?.label}
                         onChange={handleSelectedCity}
                         isSearchable={true}
+                        styles={customStylesProfession}
                       />
                     </div>
                     <div className="kids-form-section col-md-6">

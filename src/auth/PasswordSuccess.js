@@ -41,8 +41,8 @@ const PasswordSuccess = () => {
             <span className="success-text">Successful</span>
           </div>
           <div className="success-info">
-            Your Password Has Been Successfully Changed. For Any Assistance
-            Reach Out to our Support Team. Thank You{" "}
+            You have successfully changed your password. If you require help,
+            please reach out to our support team. Thank you
           </div>
           <div className="login-btn" onClick={submit}>
             Back To Login

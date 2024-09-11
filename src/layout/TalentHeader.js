@@ -159,7 +159,17 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
       } else if (menuItem === "dashboard") {
         navigate(`${"/talent-home"}`);
       } else if (menuItem === "edit") {
-        navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+        if (talentData?.adminApproved === true) {
+          navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+        } else {
+          setMessage(
+            "After your verification is approved, you can update your profile"
+          );
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+          }, 2000);
+        }
       } else if (menuItem == "find-talent") {
         console.log("here---");
         // window.open(
@@ -993,7 +1003,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
           </Link> */}
 
                   <React.Fragment>
-                    <div className="header-search-wrapper desktop-search">
+                    <div className="header-search-wrapper">
                       <SearchHeaderComponent />
                     </div>
                   </React.Fragment>

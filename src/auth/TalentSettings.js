@@ -119,11 +119,11 @@ const TalentSettings = () => {
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
+        console.log(resData, "resData?.data?.data");
         if (resData.data.status === true) {
-          if (resData?.data?.data?.type === "kids") {
-            setTalentData(resData?.data?.data);
-            setEditProfileImage(resData.data.data?.image?.fileData);
-          }
+          console.log(resData?.data?.data, "resData?.data?.data");
+          setTalentData(resData?.data?.data);
+          setEditProfileImage(resData.data.data?.image?.fileData);
         }
       })
       .catch((err) => {});
@@ -339,6 +339,13 @@ const TalentSettings = () => {
       }
     };
   }
+
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+  useEffect(() => {
+    console.log(editProfileImage, "editProfileImage");
+  }, [editProfileImage]);
 
   return (
     <>

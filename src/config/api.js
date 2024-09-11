@@ -37,7 +37,6 @@ export const API = {
   adultFetch: BASEURL + "users/adultFetch/",
   typeChecking: BASEURL + "users/typeChecking",
   getDataByPublicUrl: BASEURL + "users/getDataByPublicUrl",
-
   //passwords
   brandsForgotPassword: BASEURL + "brands/brandsForgotPassword",
   brandsResetPassword: BASEURL + "brands/brandsResetPassword",
@@ -94,6 +93,8 @@ export const API = {
   reviewsPosting: BASEURL + "users/reviewsPosting",
   countUsers: BASEURL + "users/countUsers",
   deleteVideoUrls: BASEURL + "users/deleteVideoUrls",
+  deleteAudioUrls: BASEURL + "users/deleteAudioUrls",
+
   reportReview: BASEURL + "users/reportReview",
 
   //keyword
