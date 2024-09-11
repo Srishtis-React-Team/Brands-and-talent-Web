@@ -77,7 +77,6 @@ const BrandSettings = () => {
   const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
   const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
 
-  
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
   };
@@ -105,7 +104,7 @@ const BrandSettings = () => {
   //             "subscriptionPlan":selectedPaymentPeriod,
   //             "planName":selectedPaymentPlan,
   //             "user_id":userId
-  //         } 
+  //         }
   //         const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
   //         console.log('responseSubscription',responseSubscription)
   //       }
@@ -480,9 +479,9 @@ const BrandSettings = () => {
                     </div>
                     {talentPassword && !passwordStatus && (
                       <div className="invalid-fields password-error-box">
-                        ( The minimum password length is 8 characters and must
-                        contain at least 1 capital letter, 1 lowercase letter, 1
-                        number and 1 special character. )
+                        1 capital letter (A, B, C...) 1 small letter (a, b,
+                        c...) 1 number (1, 2, 3...) 1 special symbol (!, @,
+                        #...)
                       </div>
                     )}
                     {showPassword ? (
@@ -620,7 +619,7 @@ const BrandSettings = () => {
               {/* Manage Account */}
               <div className=" edit-basicdetails-section-main">
                 <div>
-                  {console.log('consoling the exact',paymentDetails)}
+                  {console.log("consoling the exact", paymentDetails)}
                   <h6>Transaction date : {paymentDetails?.transaction_date}</h6>
                   <h6>Payment status : {paymentDetails?.payment_status}</h6>
                   <h6>Payment currency : {paymentDetails?.payment_currency}</h6>

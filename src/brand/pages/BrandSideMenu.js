@@ -5,13 +5,17 @@ import { Link, useLocation } from "react-router-dom";
 import { API } from "../../config/api";
 import { ApiHelper } from "../../helpers/ApiHelper";
 import CurrentUser from "../../CurrentUser";
+import { useNavigate } from "react-router";
+import PopUp from "../../components/PopUp";
 
 const postJob = require("../../assets/icons/postJob.png");
 const postJobHv = require("../../assets/icons/postJob-h.png");
 
 const BrandSideMenu = ({ onChildClick, myState }) => {
   const { currentUserType, avatarImage } = CurrentUser();
-
+  const navigate = useNavigate();
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const [message, setMessage] = useState("");
   const location = useLocation();
   const [showSidebar, setShowSidebar] = useState(true);
   const girl1 = require("../../assets/images/girl1.png");
@@ -96,6 +100,20 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleNavigation = () => {
+    if (brandData?.adminApproved === true) {
+      navigate("/edit-brand-profile");
+    } else {
+      setMessage(
+        "After your verification is approved, you can update your profile"
+      );
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 2000);
+    }
+  };
 
   useEffect(() => {}, [isSmallScreen]);
 
@@ -252,7 +270,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           </Link>
 
           <Link
-            to="/edit-brand-profile"
+            onClick={handleNavigation}
             className={
               location.pathname === "/edit-brand-profile"
                 ? "sidemenu-active mt-2"
@@ -302,6 +320,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             </Link> */}
         </div>
       </nav>
+      {openPopUp && <PopUp message={message} />}
     </>
   );
 };
