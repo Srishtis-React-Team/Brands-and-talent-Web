@@ -29,6 +29,14 @@ const urlPatterns = {
   instagram: /^.*(instagram\.com\/(p|reel|tv)\/[^/?#&]+)\/?(?:\?.*)?$/,
   twitter: /^.*((twitter|x)\.com\/.*\/status\/\d+)\/?$/,
 };
+const audioUrlPatterns = {
+  youtube:
+    /^.*(youtube\.com\/(?:embed\/|watch\?v=|shorts\/)|youtu\.be\/)([^"&?\/\s]{11})/,
+  vimeo: /^.*(vimeo\.com\/)(\d+|[\w-]+\/[\w-]+)(?:\?.*)?$/,
+  instagram: /^.*(instagram\.com\/(p|reel|tv)\/[^/?#&]+)\/?(?:\?.*)?$/,
+  twitter: /^.*((twitter|x)\.com\/.*\/status\/\d+)\/?$/,
+  audio: /\.(mp3|wav|ogg)$/i,
+};
 
 const isValidUrl = (url) => {
   return (
@@ -210,11 +218,21 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const isNotKnownFormatUrl = (url) => {
+    // alert("url");
+    console.log(url, "url");
+    const isValidAudioUrl = audioUrlPatterns?.audio?.test(url); // Check for audio URLs
+    console.log(isValidAudioUrl, "url");
+
+    const isValidUrl = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i?.test(url); // Check for valid URL format
     return !(
-      urlPatterns.youtube.test(url) ||
-      urlPatterns.vimeo.test(url) ||
-      urlPatterns.instagram.test(url) ||
-      urlPatterns.twitter.test(url)
+      (
+        audioUrlPatterns.youtube.test(url) ||
+        audioUrlPatterns.vimeo.test(url) ||
+        audioUrlPatterns.instagram.test(url) ||
+        audioUrlPatterns.twitter.test(url) ||
+        isValidAudioUrl || // Accept valid audio URLs
+        isValidUrl
+      ) // Accept any standard valid URL
     );
   };
 
@@ -339,7 +357,9 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     const url = e.target.value;
     setAudioUrl(url);
     // Validate URL in real-time
-    setCheckAudioUrl(!isNotKnownFormatUrl(url));
+
+    setCheckAudioUrl(isNotKnownFormatUrl(url));
+    console.log(isNotKnownFormatUrl(url), "isNotKnownFormatUrl");
   };
 
   const handlePaste = (e) => {
@@ -361,7 +381,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     );
     setAudioUrl(pastedText);
     // Validate pasted URL
-    setCheckAudioUrl(!isNotKnownFormatUrl(pastedText));
+    setCheckAudioUrl(isNotKnownFormatUrl(pastedText));
   };
 
   const handleDeleteUrl = (index) => {

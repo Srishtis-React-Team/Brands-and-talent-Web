@@ -73,6 +73,26 @@ const BrandDetails = () => {
 
   useEffect(() => {}, [state]);
 
+  const customStylesProfession = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "45px",
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      maxHeight: "500px",
+    }),
+    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? "#fff" : "#fff", // or any color you want for selected option
+      color: state.isSelected ? "#000" : "#333", // text color for selected and non-selected options
+      "&:hover": {
+        backgroundColor: "#e0e0e0", // hover state color
+      },
+    }),
+  };
+
   const handleSelectedCity = (state) => {
     setKidsCity(state?.label);
     setCityError(false);
@@ -495,6 +515,7 @@ const BrandDetails = () => {
                   value={country?.value}
                   onChange={handleSelectedCountry}
                   isSearchable={true}
+                  styles={customStylesProfession}
                 />
                 {parentCountryError && (
                   <div className="invalid-fields">Please Select Country</div>
@@ -511,6 +532,7 @@ const BrandDetails = () => {
                   value={state?.label}
                   onChange={handleSelectedState}
                   isSearchable={true}
+                  styles={customStylesProfession}
                 />
                 {stateError && (
                   <div className="invalid-fields">Please Select State</div>
@@ -530,6 +552,7 @@ const BrandDetails = () => {
                   value={kidsCity?.label}
                   onChange={handleSelectedCity}
                   isSearchable={true}
+                  styles={customStylesProfession}
                 />
               </div>
               <div className="kids-form-section col-md-6">

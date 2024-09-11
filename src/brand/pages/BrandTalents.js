@@ -755,14 +755,15 @@ const BrandTalents = () => {
                               className="form-select"
                               aria-label="Default select example"
                               onChange={selectGender}
+                              style={{ fontSize: "14px" }}
                               value={gender}
                             >
-                              <option value="" disabled selected>
+                              <option value="" disabled>
                                 Select Gender
                               </option>
-                              {gendersList.map((option, index) => (
-                                <option key={index} value={option}>
-                                  {option}
+                              {gendersList?.map((option) => (
+                                <option key={option.id} value={option.value}>
+                                  {option.label}
                                 </option>
                               ))}
                             </select>

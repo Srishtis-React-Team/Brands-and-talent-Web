@@ -22,7 +22,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
 import { useNavigate } from "react-router-dom";
 import CheckoutComponent from "./CheckoutComponent.js";
-import PaymentOptions from './PaymentOptions.js'
+import PaymentOptions from "./PaymentOptions.js";
 // import { createPayment, checkTransactionStatus } from '../config/paymentGateway.js';
 
 const Pricing = () => {
@@ -65,11 +65,11 @@ const Pricing = () => {
   const [checkout, setCheckout] = useState(false);
   const [responseurl, setResponseUrl] = useState("");
   const [paymentOptions, setPaymentOption] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState('')
-  const [selectedAmount, setSelectedAmount] = useState('')
-  const [selectedPaymentOption, setSelectedPaymentOption] = useState('')
-  const [selectedPaymentPlan, setSelectedPaymentPlan] = useState('')
-  const [selectedPaymentPeriod,setSelectedPaymentPeriod] = useState('')
+  const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState("");
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
+  const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
+  const [selectedPaymentPeriod, setSelectedPaymentPeriod] = useState("");
 
   const [message, setMessage] = useState("");
   const greenTick = require("../assets/icons/greenTick.png");
@@ -120,11 +120,14 @@ const Pricing = () => {
   }, []);
 
   const checkTransaction = async () => {
-    const paymenttrans_id = localStorage.getItem("paymenttrans_id")
+    const paymenttrans_id = localStorage.getItem("paymenttrans_id");
     const obj = { tranId: paymenttrans_id };
 
     try {
-      const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
+      const resData = await ApiHelper.post(
+        "https://brandsandtalent.com/api/pricing/check-transaction",
+        obj
+      );
 
       if (resData) {
         if(resData.data.status.message == "Success!"){
@@ -188,7 +191,7 @@ const Pricing = () => {
       // const type = 'https://dev.brandsandtalent.com/create-jobs'
       localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
       localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
-      setPaymentOption(true)
+      setPaymentOption(true);
     } else {
       console.error("Price string format is incorrect");
     }
@@ -240,7 +243,8 @@ const Pricing = () => {
 
   const handlePayment = async (amount, currency, type, paymentOption) => {
     try {
-      let apiUrl = paymentOption == 'card' ? API.createPayment : API.createqrpayment;
+      let apiUrl =
+        paymentOption == "card" ? API.createPayment : API.createqrpayment;
       const response = await ApiHelper.post(apiUrl, {
         amount,
         currency,
@@ -351,13 +355,23 @@ const Pricing = () => {
     setIsValidRecieverEmail(emailRegex.test(email));
   };
 
-  useEffect(()=>{
-    if(selectedPaymentOption == 'qr'){
-      handlePayment(selectedAmount, selectedCurrency, 'https://dev.brandsandtalent.com/create-jobs','qr')
-    }else if(selectedPaymentOption == 'card'){
-      handlePayment(selectedAmount, selectedCurrency, 'https://dev.brandsandtalent.com/create-jobs','card')
+  useEffect(() => {
+    if (selectedPaymentOption == "qr") {
+      handlePayment(
+        selectedAmount,
+        selectedCurrency,
+        "https://dev.brandsandtalent.com/create-jobs",
+        "qr"
+      );
+    } else if (selectedPaymentOption == "card") {
+      handlePayment(
+        selectedAmount,
+        selectedCurrency,
+        "https://dev.brandsandtalent.com/create-jobs",
+        "card"
+      );
     }
-  },[selectedPaymentOption])
+  }, [selectedPaymentOption]);
 
   const modalRef = useRef(null);
 
@@ -500,7 +514,11 @@ const Pricing = () => {
                                   checked={
                                     selectedPlan === `annual-${item._id}`
                                   }
-                                  onChange={handleRadioChange("annual",`annual-${item._id}`,item.planname)}
+                                  onChange={handleRadioChange(
+                                    "annual",
+                                    `annual-${item._id}`,
+                                    item.planname
+                                  )}
                                   className={
                                     item.planname === "Pro (Popular)"
                                       ? "pro-checkbox"
@@ -539,7 +557,11 @@ const Pricing = () => {
                                   checked={
                                     selectedPlan === `monthly-${item._id}`
                                   }
-                                  onChange={handleRadioChange("monthly",`monthly-${item._id}`,item.planname)}
+                                  onChange={handleRadioChange(
+                                    "monthly",
+                                    `monthly-${item._id}`,
+                                    item.planname
+                                  )}
                                   className={
                                     item.planname === "Pro (Popular)"
                                       ? "pro-checkbox"
@@ -804,13 +826,13 @@ const Pricing = () => {
         </Dialog>
       </React.Fragment>
       {paymentOptions && (
-        <PaymentOptions 
-          selectedCurrency = {selectedCurrency}
-          selectedAmount = {selectedAmount}
-          setSelectedPaymentOption = {setSelectedPaymentOption}
-          setPaymentOption = {setPaymentOption}
-          selectedPaymentPlan = {selectedPaymentPlan}
-      />
+        <PaymentOptions
+          selectedCurrency={selectedCurrency}
+          selectedAmount={selectedAmount}
+          setSelectedPaymentOption={setSelectedPaymentOption}
+          setPaymentOption={setPaymentOption}
+          selectedPaymentPlan={selectedPaymentPlan}
+        />
       )}
 
       {checkout && (

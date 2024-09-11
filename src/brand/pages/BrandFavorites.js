@@ -330,6 +330,12 @@ const BrandFavorites = () => {
                           </div>
                         );
                       })}
+
+                    {talentList?.length === 0 && (
+                      <>
+                        <p>No Favorite Talents Added</p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

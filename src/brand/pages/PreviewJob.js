@@ -351,14 +351,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                               Gender :
                             </span>
                             <span className="job-feature-values">
-                              {jobData?.gender &&
-                                jobData.gender
-                                  .map((gender, index) =>
-                                    index === jobData.gender.length - 1
-                                      ? gender
-                                      : gender + ", "
-                                  )
-                                  .join("")}
+                              {jobData?.gender && jobData.gender.join(", ")}
                             </span>
                           </li>
                         )}
