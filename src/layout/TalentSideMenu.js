@@ -161,7 +161,7 @@ const TalentSideMenu = ({ myState }) => {
             <div className="brand-menu-text">Dashboard</div>
           </Link>
 
-          <Link
+          {/* <Link
             to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
             target="_blank"
             className={
@@ -172,8 +172,8 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-suitcase-lg icons"></i>
             <div className="brand-menu-text">Browse Jobs</div>
-          </Link>
-          {/* <Link
+          </Link> */}
+          <Link
             to="/talent-dashboard"
             className={
               location.pathname === "/talent-dashboard"
@@ -183,9 +183,9 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-suitcase-lg icons"></i>
             <div className="brand-menu-text">Browse Jobs</div>
-          </Link> */}
+          </Link>
 
-          <Link
+          {/* <Link
             to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
             target="_blank"
             className={
@@ -196,8 +196,8 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-bell icons"></i>
             <div className="brand-menu-text">Notification</div>
-          </Link>
-          {/* 
+          </Link> */}
+
           <Link
             to="/talent-notification"
             className={
@@ -208,7 +208,7 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-bell icons"></i>
             <div className="brand-menu-text">Notification</div>
-          </Link> */}
+          </Link>
 
           <Link
             to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
@@ -246,7 +246,7 @@ const TalentSideMenu = ({ myState }) => {
             <div className="brand-menu-text">Edit Profile</div>
           </div>
 
-          <Link
+          {/* <Link
             to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
             target="_blank"
             className={
@@ -257,8 +257,8 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-heart icons"></i>
             <div className="brand-menu-text">Saved Jobs</div>
-          </Link>
-          {/* <Link
+          </Link> */}
+          <Link
             to="/saved-jobs"
             className={
               location.pathname === "/saved-jobs"
@@ -268,9 +268,9 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-heart icons"></i>
             <div className="brand-menu-text">Saved Jobs</div>
-          </Link> */}
+          </Link>
 
-          <Link
+          {/* <Link
             to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
             target="_blank"
             className={
@@ -281,8 +281,8 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-check-circle icons"></i>
             <div className="brand-menu-text">Applied Jobs</div>
-          </Link>
-          {/* <Link
+          </Link> */}
+          <Link
             to="/applied-jobs"
             className={
               location.pathname === "/applied-jobs"
@@ -292,7 +292,7 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-check-circle icons"></i>
             <div className="brand-menu-text">Applied Jobs</div>
-          </Link> */}
+          </Link>
           {/* <Link
             to="/message"
             className={

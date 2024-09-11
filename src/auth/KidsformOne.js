@@ -1095,17 +1095,15 @@ const KidsformOne = () => {
                               <span>
                                 <i className="bi bi-question-circle"></i>
                               </span>
+
                               <div className="tool_tip">
                                 <p style={{ listStyleType: "none" }}>
                                   <b>Password must be:</b>
                                 </p>
-                                <p>At least 8 character long</p>
-                                <p>At least 1 uppercase letter</p>
-                                <p>At least 1 lowercase letter</p>
-                                <p>At least 1 number</p>
-                                <p>
-                                  At least 1 special character from !@#$%^&*
-                                </p>
+                                <p>1 capital letter (A, B, C...)</p>
+                                <p>1 small letter (a, b, c...)</p>
+                                <p>1 number (1, 2, 3...)</p>
+                                <p>1 special symbol (!, @, #...)</p>
                               </div>
                             </div>
                           </div>
@@ -1128,10 +1126,9 @@ const KidsformOne = () => {
                           )}
                           {talentPassword && !passwordStatus && (
                             <div className="invalid-fields password-error-box">
-                              ( The minimum password length is 8 characters and
-                              must contain at least 1 capital letter, 1
-                              lowercase letter, 1 number and 1 special
-                              character. )
+                              1 capital letter (A, B, C...) 1 small letter (a,
+                              b, c...) 1 number (1, 2, 3...) 1 special symbol
+                              (!, @, #...)
                             </div>
                           )}
                         </div>

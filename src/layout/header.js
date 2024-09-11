@@ -174,33 +174,46 @@ const Header = ({ onData }) => {
     }
     if (data == "post-job") {
       if (!currentUserId) {
-        window.open(
-          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          "_blank"
-        );
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function () {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
+        // window.open(
+        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        //   "_blank"
+        // );
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/create-jobs");
       }
     }
 
+    if (data == "get-booked") {
+      if (!currentUserId) {
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
+      } else if (currentUser_type === "talent" && currentUserId) {
+        navigate("/talent-dashboard");
+      }
+    }
+
     if (data == "find-talent") {
       if (!currentUserId) {
-        // setMessage("You must be logged in");
-        // setOpenPopUp(true);
-        // setTimeout(function () {
-        //   setOpenPopUp(false);
-        //   navigate("/login");
-        // }, 1000);
-        window.open(
-          "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          "_blank"
-        );
+        setMessage("You must be logged in");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate("/login");
+        }, 1000);
+        // window.open(
+        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        //   "_blank"
+        // );
       } else if (currentUser_type === "brand" && currentUserId) {
         navigate("/find-creators");
       } else if (
@@ -829,8 +842,16 @@ const Header = ({ onData }) => {
               Home
             </NavLink>
           </div> */}
-          {currentUser_type === "brand" ||
-            (!currentUserId && (
+          {currentUser_type === "brand" && currentUserId ? (
+            <div
+              className="navTxt"
+              style={{ cursor: "pointer" }}
+              onClick={() => handleClick("post-job")}
+            >
+              Post a Job
+            </div>
+          ) : (
+            !currentUserId && (
               <div
                 className="navTxt"
                 style={{ cursor: "pointer" }}
@@ -838,12 +859,13 @@ const Header = ({ onData }) => {
               >
                 Post a Job
               </div>
-            ))}
+            )
+          )}
 
           {!currentUserId && (
             <div
               className="navTxt"
-              onClick={() => handleClick("post-job")}
+              onClick={() => handleClick("get-booked")}
               style={{ cursor: "pointer" }}
             >
               Get Booked
@@ -853,7 +875,7 @@ const Header = ({ onData }) => {
           {currentUserId && currentUser_type == "talent" && (
             <div
               className="navTxt"
-              onClick={() => handleClick("post-job")}
+              onClick={() => handleClick("get-booked")}
               style={{ cursor: "pointer" }}
             >
               Get Booked
@@ -990,8 +1012,16 @@ const Header = ({ onData }) => {
                 </NavLink>
               </div> */}
 
-              {currentUser_type === "brand" ||
-                (!currentUserId && (
+              {currentUser_type === "brand" && currentUserId ? (
+                <div
+                  className="navTxt"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleClick("post-job")}
+                >
+                  Post a Job
+                </div>
+              ) : (
+                !currentUserId && (
                   <div
                     className="navTxt"
                     style={{ cursor: "pointer" }}
@@ -999,12 +1029,13 @@ const Header = ({ onData }) => {
                   >
                     Post a Job
                   </div>
-                ))}
+                )
+              )}
 
               {!currentUserId && (
                 <div
                   className="navTxt"
-                  onClick={() => handleClick("post-job")}
+                  onClick={() => handleClick("get-booked")}
                   style={{ cursor: "pointer" }}
                 >
                   Get Booked
@@ -1014,7 +1045,7 @@ const Header = ({ onData }) => {
               {currentUserId && currentUser_type == "talent" && (
                 <div
                   className="navTxt"
-                  onClick={() => handleClick("post-job")}
+                  onClick={() => handleClick("get-booked")}
                   style={{ cursor: "pointer" }}
                 >
                   Get Booked

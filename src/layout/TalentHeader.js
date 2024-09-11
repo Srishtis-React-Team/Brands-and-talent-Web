@@ -170,23 +170,16 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
             setOpenPopUp(false);
           }, 2000);
         }
-      } else if (menuItem == "find-talent") {
-        console.log("here---");
-        // window.open(
-        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        //   "_blank"
-        // );
+      } else if (menuItem == "find-talent" && talentData?.planName == "Basic") {
+        setMessage("Purchase Pro or Premium Plan to unlock this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate("/pricing");
+        }, 3000);
+      } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
+        navigate("/find-creators");
       }
-      // if (menuItem == "find-talent" && talentData?.planName == "Basic") {
-      //   setMessage("Purchase Pro or Premium Plan to unlock this feature");
-      //   setOpenPopUp(true);
-      //   setTimeout(function () {
-      //     setOpenPopUp(false);
-      //     navigate("/pricing");
-      //   }, 3000);
-      // } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
-      //   navigate("/find-creators");
-      // }
     };
   };
 
@@ -784,13 +777,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                     <NavLink to="/">Home</NavLink>
                   </div>
                   <div className="navTxt">
-                    <NavLink
-                      to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
-                      target="_blank"
-                    >
-                      {" "}
-                      Get Booked
-                    </NavLink>
+                    <NavLink to="/talent-dashboard"> Get Booked</NavLink>
                   </div>
                   <div
                     className="navTxt"

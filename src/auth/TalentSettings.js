@@ -71,7 +71,7 @@ const TalentSettings = () => {
   const [valueTabs, setValueTabs] = React.useState(0);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [showOldPassword, setShowOldPassword] = useState(false);
-  const [paymentDetailsDataArray, setPaymentDetailsDataArray] = useState([])
+  const [paymentDetailsDataArray, setPaymentDetailsDataArray] = useState([]);
 
   const paymentData = localStorage.getItem("paymentData");
   const paymentDetails = JSON.parse(paymentData);
@@ -82,21 +82,23 @@ const TalentSettings = () => {
     setValueTabs(newValue);
   };
 
-  useEffect(()=>{
-    fetchPaymentDetails()
-  },[])
+  useEffect(() => {
+    fetchPaymentDetails();
+  }, []);
 
-  const fetchPaymentDetails = async () =>{
-    const userId = localStorage.getItem("userId")
+  const fetchPaymentDetails = async () => {
+    const userId = localStorage.getItem("userId");
     const obj = {
-      "user_id":userId
-    }
-    console.log('inside fetchPaymentDetails',obj)
-    const paymentDetailsData = await ApiHelper.post('https://brandsandtalent.com/api/users/fetchPaymentDetails', obj);
-    console.log('paymentDetailsData',paymentDetailsData)
-    setPaymentDetailsDataArray(paymentDetailsData.data.data)
-
-  }
+      user_id: userId,
+    };
+    console.log("inside fetchPaymentDetails", obj);
+    const paymentDetailsData = await ApiHelper.post(
+      "https://brandsandtalent.com/api/users/fetchPaymentDetails",
+      obj
+    );
+    console.log("paymentDetailsData", paymentDetailsData);
+    setPaymentDetailsDataArray(paymentDetailsData.data.data);
+  };
 
   const customStylesAlert = {
     content: {
@@ -470,9 +472,9 @@ const TalentSettings = () => {
                     </div>
                     {talentPassword && !passwordStatus && (
                       <div className="invalid-fields password-error-box">
-                        ( The minimum password length is 8 characters and must
-                        contain at least 1 capital letter, 1 lowercase letter, 1
-                        number and 1 special character. )
+                        1 capital letter (A, B, C...) 1 small letter (a, b,
+                        c...) 1 number (1, 2, 3...) 1 special symbol (!, @,
+                        #...)
                       </div>
                     )}
                     {showPassword ? (
@@ -606,11 +608,20 @@ const TalentSettings = () => {
               {/* Manage Account */}
               <div className=" edit-basicdetails-section-main">
                 <div>
-                  {console.log('consoling the exact',paymentDetailsDataArray)}
-                  <h6>Transaction date : {paymentDetailsDataArray?.transactionDate}</h6>
-                  <h6>Payment status : {paymentDetailsDataArray?.paymentStatus}</h6>
-                  <h6>Payment currency : {paymentDetailsDataArray?.paymentCurreny}</h6>
-                  <h6>Payment amount : {paymentDetailsDataArray?.paymentAmount}</h6>
+                  {console.log("consoling the exact", paymentDetailsDataArray)}
+                  <h6>
+                    Transaction date :{" "}
+                    {paymentDetailsDataArray?.transactionDate}
+                  </h6>
+                  <h6>
+                    Payment status : {paymentDetailsDataArray?.paymentStatus}
+                  </h6>
+                  <h6>
+                    Payment currency : {paymentDetailsDataArray?.paymentCurreny}
+                  </h6>
+                  <h6>
+                    Payment amount : {paymentDetailsDataArray?.paymentAmount}
+                  </h6>
                   <h6>Payment period : {selectedPaymentPeriod}</h6>
                   <h6>Payment plan : {selectedPaymentPlan}</h6>
                 </div>
