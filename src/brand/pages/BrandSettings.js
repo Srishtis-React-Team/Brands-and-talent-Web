@@ -82,6 +82,40 @@ const BrandSettings = () => {
     setValueTabs(newValue);
   };
 
+  // useEffect(() => {
+  //   checkTransaction();
+  // }, []);
+
+  // const checkTransaction = async () => {
+  //   const paymenttrans_id = localStorage.getItem("paymenttrans_id")
+  //   const obj = { tranId: paymenttrans_id };
+
+  //   try {
+  //     console.log("here cinsiu")
+  //     const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
+  //     console.log('data cconasoling', resData)
+  //     if (resData) {
+  //       if(resData.data.status.message == "Success!"){
+  //       const paymentData = resData.data.data;
+  //       if(paymentData.payment_status == "APPROVED"){
+  //         localStorage.setItem("paymentData", JSON.stringify(paymentData));
+  //         // alert('payment successfully completed')
+  //         const userId = localStorage.getItem("userId")
+  //         const userData = {
+  //             "subscriptionPlan":selectedPaymentPeriod,
+  //             "planName":selectedPaymentPlan,
+  //             "user_id":userId
+  //         } 
+  //         const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
+  //         console.log('responseSubscription',responseSubscription)
+  //       }
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error("Error:", err);
+  //   }
+  // };
+
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
 

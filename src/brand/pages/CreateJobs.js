@@ -127,14 +127,16 @@ const CreateJobs = () => {
     const obj = { tranId: paymenttrans_id };
 
     try {
+      console.log('here...')
       const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
+      console.log('resData',resData)
 
       if (resData) {
         if(resData.data.status.message == "Success!"){
         const paymentData = resData.data.data;
         if(paymentData.payment_status == "APPROVED"){
           localStorage.setItem("paymentData", paymentData);
-          // alert('payment successfully completed')
+          alert('payment successfully completed')
           const userId = localStorage.getItem("userId")
           const userData = {
               "subscriptionPlan":selectedPaymentPeriod,
