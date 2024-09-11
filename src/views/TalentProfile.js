@@ -467,6 +467,9 @@ const TalentProfile = () => {
   useEffect(() => {
     console.log(audiosList, "audiosList");
   }, [audiosList]);
+  useEffect(() => {
+    console.log(urlsList, "urlsList");
+  }, [urlsList]);
   const [currentIndex, setCurrentIndex] = useState(currentImageIndex);
 
   useEffect(() => {
@@ -1348,12 +1351,12 @@ const TalentProfile = () => {
                               <PhotosCarousel photosList={photosList} />
                             )}
                             {photosList.length === 0 &&
-                              talentData?.profileApprove === true && (
+                              talentData?.adminApproved === true && (
                                 <>
                                   <div>Data not added</div>
                                 </>
                               )}
-                            {talentData?.profileApprove === false &&
+                            {talentData?.adminApproved === false &&
                               photosList.length === 0 && (
                                 <>
                                   <div>
@@ -1362,7 +1365,7 @@ const TalentProfile = () => {
                                   </div>
                                 </>
                               )}
-                            {talentData?.profileApprove === true &&
+                            {talentData?.adminApproved === true &&
                               photosList &&
                               photosList.length === 0 && (
                                 <>
@@ -1373,7 +1376,7 @@ const TalentProfile = () => {
                                 </>
                               )}
                             {/* {photosList.length === 0 &&
-                              talentData?.profileApprove === false && (
+                              talentData?.adminApproved === false && (
                                 <>
                                   <div>
                                     Data will be visible only after admin
@@ -1506,7 +1509,7 @@ const TalentProfile = () => {
                                 </div>
                               ))}
 
-                              {talentData?.profileApprove === false &&
+                              {talentData?.adminApproved === false &&
                                 urlsList?.length === 0 && (
                                   <>
                                     <div className="msgs">
@@ -1516,11 +1519,11 @@ const TalentProfile = () => {
                                   </>
                                 )}
 
-                              {talentData?.profileApprove === true &&
+                              {talentData?.adminApproved === true &&
                                 urlsList?.length === 0 && (
                                   <>
                                     <div className="msgs">
-                                      No Videos Available
+                                      Videos are not added
                                     </div>
                                   </>
                                 )}
@@ -1557,16 +1560,16 @@ const TalentProfile = () => {
                                 </div>
                               )}
 
-                              {talentData?.profileApprove === true &&
+                              {talentData?.adminApproved === true &&
                                 audiosList &&
                                 audiosList?.length === 0 && (
                                   <>
                                     <div className="msgs">
-                                      No Audios Available
+                                      Audios are not added
                                     </div>
                                   </>
                                 )}
-                              {talentData?.profileApprove === false &&
+                              {talentData?.adminApproved === false &&
                                 audiosList?.length === 0 && (
                                   <>
                                     <div className="msgs">
@@ -1593,14 +1596,14 @@ const TalentProfile = () => {
                               </div>
                               <ServicesCarousel talentData={talentData} />
                               {!talentData?.services?.length &&
-                                talentData?.profileApprove === true && (
+                                talentData?.adminApproved === true && (
                                   <>
                                     <div>Data not added</div>
                                   </>
                                 )}
 
                               {!talentData?.services?.length &&
-                                talentData?.profileApprove === false && (
+                                talentData?.adminApproved === false && (
                                   <>
                                     <div>
                                       Data will be visible only after admin
@@ -1676,15 +1679,15 @@ const TalentProfile = () => {
                                 </>
                               );
                             })}
-                            {talentData?.profileApprove === true &&
+                            {talentData?.adminApproved === true &&
                               cvList.length === 0 && (
                                 <>
                                   <div className="msgs">
-                                    No Resumes Available
+                                    Resumes are not added
                                   </div>
                                 </>
                               )}
-                            {talentData?.profileApprove === false &&
+                            {talentData?.adminApproved === false &&
                               cvList.length === 0 && (
                                 <>
                                   <div className="msgs">
@@ -1725,15 +1728,15 @@ const TalentProfile = () => {
                                 );
                               })}
 
-                            {talentData?.profileApprove === true &&
+                            {talentData?.adminApproved === true &&
                               photosList.length === 0 && (
                                 <>
                                   <div className="msgs">
-                                    No Photos Available
+                                    Photos are not added
                                   </div>
                                 </>
                               )}
-                            {talentData?.profileApprove === false &&
+                            {talentData?.adminApproved === false &&
                               photosList.length === 0 && (
                                 <>
                                   <div className="msgs">
@@ -1808,15 +1811,15 @@ const TalentProfile = () => {
                                   </div>
                                 ))}
 
-                                {talentData?.profileApprove === true &&
+                                {talentData?.adminApproved === true &&
                                   urlsList?.length === 0 && (
                                     <>
                                       <div className="msgs">
-                                        No Videos Available
+                                        Videos are not added
                                       </div>
                                     </>
                                   )}
-                                {talentData?.profileApprove === false &&
+                                {talentData?.adminApproved === false &&
                                   urlsList?.length === 0 && (
                                     <>
                                       <div className="msgs">
@@ -1868,15 +1871,15 @@ const TalentProfile = () => {
                                 </div>
                               )}
 
-                              {talentData?.profileApprove === true &&
+                              {talentData?.adminApproved === true &&
                                 audiosList?.length === 0 && (
                                   <>
                                     <div className="msgs">
-                                      No Audios Available
+                                      Audios are not added
                                     </div>
                                   </>
                                 )}
-                              {talentData?.profileApprove === false &&
+                              {talentData?.adminApproved === false &&
                                 audiosList?.length === 0 && (
                                   <>
                                     <div className="msgs">
@@ -1952,15 +1955,15 @@ const TalentProfile = () => {
                             </>
                           )}
 
-                          {talentData?.profileApprove === true &&
+                          {talentData?.adminApproved === true &&
                             featuresList.length === 0 && (
                               <>
                                 <div className="msgs">
-                                  No Features Available
+                                  Features are not added
                                 </div>
                               </>
                             )}
-                          {talentData?.profileApprove === false &&
+                          {talentData?.adminApproved === false &&
                             featuresList.length === 0 && (
                               <>
                                 <div className="msgs">
@@ -1989,7 +1992,7 @@ const TalentProfile = () => {
                                       className="view-cv"
                                       onClick={() => handleView(pdf)}
                                     >
-                                      View PDF
+                                      View
                                     </button>
                                   </div>
                                 </>
@@ -1997,13 +2000,16 @@ const TalentProfile = () => {
                             );
                           })}
 
-                          {talentData?.profileApprove === true &&
+                          {talentData?.adminApproved === true &&
                             cvList.length === 0 && (
                               <>
-                                <div className="msgs">No Resumes Available</div>
+                                <div className="msgs">
+                                  {" "}
+                                  Resumes are not added
+                                </div>
                               </>
                             )}
-                          {talentData?.profileApprove === false &&
+                          {talentData?.adminApproved === false &&
                             cvList.length === 0 && (
                               <>
                                 <div className="msgs">
@@ -2097,13 +2103,16 @@ const TalentProfile = () => {
                             </div>
                           )}
 
-                          {talentData?.profileApprove === true &&
+                          {talentData?.adminApproved === true &&
                             reviewsList.length === 0 && (
                               <>
-                                <div className="msgs">No Reviews Available</div>
+                                <div className="msgs">
+                                  {" "}
+                                  Reviews are not added
+                                </div>
                               </>
                             )}
-                          {talentData?.profileApprove === false &&
+                          {talentData?.adminApproved === false &&
                             reviewsList.length === 0 && (
                               <>
                                 <div className="msgs">

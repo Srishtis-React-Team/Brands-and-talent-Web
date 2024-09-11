@@ -221,12 +221,12 @@ const TalentHome = () => {
                       ></div>
                     </div>
                   </div>
-                  <div className="talent-popup-description">
+                  {/* <div className="talent-popup-description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
                     repellat corporis corrupti aliquid laboriosam neque ratione
                     fuga. <br></br>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </div>
+                  </div> */}
                 </div>
                 <div className="doit-two col-md-4 text-center">
                   <img className="img-fluid" src={doitnow} alt="" />

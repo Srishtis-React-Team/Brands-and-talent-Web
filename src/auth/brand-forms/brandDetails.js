@@ -374,7 +374,7 @@ const BrandDetails = () => {
                     <input
                       type="text"
                       className="form-control adult-signup-inputs adult-name-input"
-                      placeholder="Enter your company name or your name if you’re an individual client"
+                      placeholder="Company / Client Name"
                       onChange={(e) => {
                         handleBrandName(e);
                         setbrandNameError(false);
