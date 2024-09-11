@@ -135,8 +135,8 @@ const CreateJobs = () => {
         if(resData.data.status.message == "Success!"){
         const paymentData = resData.data.data;
         if(paymentData.payment_status == "APPROVED"){
-          localStorage.setItem("paymentData", paymentData);
-          alert('payment successfully completed')
+          localStorage.setItem("paymentData", JSON.stringify(paymentData));
+          // alert('payment successfully completed')
           const userId = localStorage.getItem("userId")
           const userData = {
               "subscriptionPlan":selectedPaymentPeriod,
