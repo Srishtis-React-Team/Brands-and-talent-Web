@@ -11,6 +11,7 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 import "../assets/css/register.css";
 import CheckoutComponent from "../views/CheckoutComponent.js";
+import PaymentOptions from '../views/PaymentOptions.js'
 
 
 const KidsFormTwo = () => {
@@ -28,8 +29,55 @@ const KidsFormTwo = () => {
   const userEmail = urlParams.get("userEmail");
   const [responseurl,setResponseUrl] = useState('')
   const [checkout,setCheckout] = useState(false)
+  const [selectedPaymentPlan, setSelectedPaymentPlan] = useState('')
+  const [selectedPaymentPeriod,setSelectedPaymentPeriod] = useState('')
+  const [selectedCurrency, setSelectedCurrency] = useState('')
+  const [selectedAmount, setSelectedAmount] = useState('')
+  const [paymentOptions, setPaymentOption] = useState(false);
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState('')
 
 
+
+  useEffect(()=>{
+    if(selectedPaymentOption == 'qr'){
+      handlePayment(selectedAmount, selectedCurrency, `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,'qr')
+    }else if(selectedPaymentOption == 'card'){
+      handlePayment(selectedAmount, selectedCurrency, `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,'card')
+    }
+  },[selectedPaymentOption])
+
+  useEffect(() => {
+    checkTransaction();
+  }, []);
+
+  const checkTransaction = async () => {
+    const paymenttrans_id = localStorage.getItem("paymenttrans_id")
+    const obj = { tranId: paymenttrans_id };
+
+    try {
+      const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
+
+      if (resData) {
+        if(resData.data.status.message == "Success!"){
+        const paymentData = resData.data.data;
+        if(paymentData.payment_status == "APPROVED"){
+          localStorage.setItem("paymentData", JSON.stringify(paymentData));
+          // alert('payment successfully completed')
+          const userId = localStorage.getItem("userId")
+          const userData = {
+              "subscriptionPlan":selectedPaymentPeriod,
+              "planName":selectedPaymentPlan,
+              "user_id":userId
+          } 
+          const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
+          console.log('responseSubscription',responseSubscription)
+        }
+        }
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
 
   useEffect(() => {
     getPricingList();
@@ -45,34 +93,34 @@ const KidsFormTwo = () => {
       .catch((err) => {});
   };
 
-  const subscriptionPlan = async (index) => {
-    setSelectedIndex(index);
-    if (!selectedPlan) {
-      setMessage("Please choose Annual Or Monthly");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-      }, 1000);
-    } else if (selectedPlan) {
-      const formData = {
-        subscriptionPlan: "annual",
-        planName: "Premium",
-        user_id: "668cc6fb9545f3d7afde294e",
-      };
+  // const subscriptionPlan = async (index) => {
+  //   setSelectedIndex(index);
+  //   if (!selectedPlan) {
+  //     setMessage("Please choose Annual Or Monthly");
+  //     setOpenPopUp(true);
+  //     setTimeout(function () {
+  //       setOpenPopUp(false);
+  //     }, 1000);
+  //   } else if (selectedPlan) {
+  //     const formData = {
+  //       subscriptionPlan: "annual",
+  //       planName: "Premium",
+  //       user_id: "668cc6fb9545f3d7afde294e",
+  //     };
 
-      await ApiHelper.post(`${API.subscriptionPlan}${userId}`, formData)
-        .then((resData) => {
-          if (resData) {
-            setMessage("Plan Selected Successfully!");
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-            }, 1000);
-          }
-        })
-        .catch((err) => {});
-    }
-  };
+  //     await ApiHelper.post(`${API.subscriptionPlan}${userId}`, formData)
+  //       .then((resData) => {
+  //         if (resData) {
+  //           setMessage("Plan Selected Successfully!");
+  //           setOpenPopUp(true);
+  //           setTimeout(function () {
+  //             setOpenPopUp(false);
+  //           }, 1000);
+  //         }
+  //       })
+  //       .catch((err) => {});
+  //   }
+  // };
   const choosePlan = async (index, item) => {
     console.log('item',item)
     console.log('selectedPlan',`annual-${selectedPlan}`)
@@ -88,14 +136,14 @@ const KidsFormTwo = () => {
       const currency = match[1].toUpperCase(); // "USD"
       const amount = parseFloat(match[2]);     // 29.99
       const duration = match[3];               // "month"
-    
-      console.log(`Currency: ${currency}`);
-      console.log(`Chosen plan index: ${index}`);
-      console.log(`Amount: ${amount}`);
-      console.log(`Duration: ${duration}`);
-      
-      const type = `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`
-      handlePayment(amount, currency, type)
+      setSelectedCurrency(currency);
+      setSelectedAmount(amount);
+      localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
+      localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
+      setPaymentOption(true)
+
+      // const type = `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`
+      // handlePayment(amount, currency, type)
       // /api/pricing/create-payment
       // /check-transaction
       // handlePayment(amount, currency)
@@ -104,9 +152,10 @@ const KidsFormTwo = () => {
     }
   };
 
-  const handlePayment = async (amount, currency, type) => {
+  const handlePayment = async (amount, currency, type, paymentOption) => {
     try {
-      const response =  await ApiHelper.post(API.createPayment, { amount, currency, type })
+      let apiUrl = paymentOption == 'card' ? API.createPayment : API.createqrpayment;
+      const response =  await ApiHelper.post(apiUrl, { amount, currency, type })
         // await axios.post('/api/pricing/create-payment', { amount, currency, type });
         console.log('Payment Response:', response);
         setResponseUrl(response.data.url)
@@ -117,8 +166,10 @@ const KidsFormTwo = () => {
     }
 };
 
-  const handleRadioChange = (event) => {
-    setPlan(event.target.id);
+  const handleRadioChange = (type, id, planname) => (event) => {
+    setPlan(id);
+    setSelectedPaymentPlan(planname);
+    setSelectedPaymentPeriod(type);
   };
 
   const goBack = () => {
@@ -208,7 +259,7 @@ const KidsFormTwo = () => {
                                           id={`annual-${item._id}`}
                                           checked={selectedPlan === `annual-${item._id}`}
                                           value="save"
-                                          onChange={handleRadioChange}
+                                          onChange={handleRadioChange("annual",`annual-${item._id}`,item.planname)}
                                           CHECKED
                                           className={
                                             item.planname == "Pro (Popular)"
@@ -255,7 +306,7 @@ const KidsFormTwo = () => {
                                           name={`monthly-${item._id}`}
                                           id={`monthly-${item._id}`}
                                           checked={selectedPlan === `monthly-${item._id}`}
-                                          onChange={handleRadioChange}
+                                          onChange={handleRadioChange("monthly",`monthly-${item._id}`,item.planname)}
                                           CHECKED
                                           className={
                                             item.planname == "Pro (Popular)"
@@ -354,7 +405,15 @@ const KidsFormTwo = () => {
           </button>
         </div>
       </div>
-
+      {paymentOptions && (
+        <PaymentOptions 
+          selectedCurrency = {selectedCurrency}
+          selectedAmount = {selectedAmount}
+          setSelectedPaymentOption = {setSelectedPaymentOption}
+          setPaymentOption = {setPaymentOption}
+          selectedPaymentPlan = {selectedPaymentPlan}
+      />
+      )}
       {checkout && <CheckoutComponent responseUrl={responseurl} setCheckout={setCheckout}/>}
       {openPopUp && <PopUp message={message} />}
     </>
