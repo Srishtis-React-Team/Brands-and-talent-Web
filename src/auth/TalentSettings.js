@@ -72,9 +72,29 @@ const TalentSettings = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [showOldPassword, setShowOldPassword] = useState(false);
 
+  const paymentData = localStorage.getItem("paymentData");
+  const paymentDetails = JSON.parse(paymentData);
+  const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
+  const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
+
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
   };
+
+  useEffect(()=>{
+    fetchPaymentDetails()
+  },[])
+
+  const fetchPaymentDetails = async () =>{
+    const userId = localStorage.getItem("userId")
+    const obj = {
+      "user_id":userId
+    }
+    console.log('inside fetchPaymentDetails',obj)
+    const paymentDetailsData = await ApiHelper.post('https://brandsandtalent.com/api/users/fetchPaymentDetails', obj);
+    console.log('paymentDetailsData',paymentDetailsData)
+
+  }
 
   const customStylesAlert = {
     content: {
@@ -382,6 +402,11 @@ const TalentSettings = () => {
                   {...a11yProps(1)}
                   style={{ textTransform: "capitalize" }}
                 />
+                <Tab
+                  label="Active subscription"
+                  {...a11yProps(2)}
+                  style={{ textTransform: "capitalize" }}
+                />
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
@@ -572,6 +597,20 @@ const TalentSettings = () => {
                     {talentData?.inActive === true && "Deactivate"}
                     {talentData?.inActive === false && "Activate"}
                   </Button>
+                </div>
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={2}>
+              {/* Manage Account */}
+              <div className=" edit-basicdetails-section-main">
+                <div>
+                  {console.log('consoling the exact',paymentDetails)}
+                  <h6>Transaction date : {paymentDetails?.transaction_date}</h6>
+                  <h6>Payment status : {paymentDetails?.payment_status}</h6>
+                  <h6>Payment currency : {paymentDetails?.payment_currency}</h6>
+                  <h6>Payment amount : {paymentDetails?.payment_amount}</h6>
+                  <h6>Payment period : {selectedPaymentPeriod}</h6>
+                  <h6>Payment plan : {selectedPaymentPlan}</h6>
                 </div>
               </div>
             </CustomTabPanel>
