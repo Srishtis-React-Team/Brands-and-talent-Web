@@ -127,7 +127,6 @@ export const API = {
   getSavedJobsByTalentId: BASEURL + "gigs/getSavedJobsByTalentId	",
   readNotification: BASEURL + "gigs/readNotification	",
   createJobAlert: BASEURL + "gigs/createJobAlert	",
-  updateJobAlert: BASEURL + "gigs/updateJobAlert	",
 
   //notifications
   getBrandNotification: BASEURL + "gigs/getBrandNotification/",

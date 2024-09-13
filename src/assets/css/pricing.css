@@ -582,4 +582,6 @@ input[type="radio"].premium-checkbox {
 
 .recipient-form {
   width: 480px;
+  height: 600px;
+  overflow-y: scroll;
 }

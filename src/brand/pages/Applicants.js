@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/forms/kidsform-one.css";
 import "../../assets/css/createjobs.css";
+import "../../assets/css/brand-home.css";
 import "../../assets/css/talent-profile.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { API } from "../../config/api";
@@ -69,6 +70,7 @@ const Applicants = () => {
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
+          sendMailToCandidate("shortlistedCandidates");
           setMessage("Candidate Shortlisted Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -88,6 +90,8 @@ const Applicants = () => {
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
+          sendMailToCandidate("bookedCandidates");
+
           setMessage("Candidate Booked Successfully!");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -210,7 +214,6 @@ const Applicants = () => {
     await ApiHelper.post(API.informSelectedLevel, formData)
       .then((resData) => {
         setIsLoading(false);
-
         if (resData.data.status === true) {
           setMessage("An Invite has been send to the candidate");
           setOpenPopUp(true);
@@ -218,6 +221,29 @@ const Applicants = () => {
             handleForms("interview-invitations");
             setOpenPopUp(false);
           }, 1000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const sendMailToCandidate = async (level) => {
+    const formData = {
+      talentId: alertpop?.talentId,
+      selectedLevel: level,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(API.informSelectedLevel, formData)
+      .then((resData) => {
+        setIsLoading(false);
+        if (resData.data.status === true) {
+          // setMessage("An Invite has been send to the candidate");
+          // setOpenPopUp(true);
+          // setTimeout(function () {
+          //   handleForms("interview-invitations");
+          //   setOpenPopUp(false);
+          // }, 1000);
         }
       })
       .catch((err) => {
@@ -273,6 +299,8 @@ const Applicants = () => {
       selectedLevel: "rejectedCandidates",
       gigId: alertpop?.jobId,
     };
+    sendMailToCandidate("rejectedCandidates");
+
     await ApiHelper.post(API.selectedLevelRange, formData)
       .then((resData) => {
         if (resData.data.status === true) {
