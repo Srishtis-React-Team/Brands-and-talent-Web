@@ -433,7 +433,7 @@ const AdultSignup = () => {
                   {adultPassword && !passwordStatus && (
                     <div
                       className="invalid-fields password-error-box"
-                      style={{ width: "360px" }}
+                      style={{ width: "420px" }}
                     >
                       (1 capital letter (A, B, C...) 1 small letter (a, b, c...)
                       1 number (1, 2, 3...) 1 special symbol (!, @, #...))
