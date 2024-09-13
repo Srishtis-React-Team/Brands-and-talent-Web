@@ -173,6 +173,10 @@ export const API = {
   twitterCount: BASEURL + "socialmedia/twitterCount",
   youtubeCount: BASEURL + "socialmedia/youtubeCount",
 
+  // coupons
+
+  applyCoupon: BASEURL + "coupon/applyCoupon",
+
   //ABA payway
 
   abaTestingUrl:

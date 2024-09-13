@@ -232,7 +232,7 @@ const Pricing = () => {
             state: formData.recipientState,
             country: formData.recipientCountry,
             zipcode: formData.recipientZipcode,
-            email: formData.recipientEmail,
+            recipientEmail: formData.recipientEmail,
             message: formData.comment,
           },
         ],
@@ -836,6 +836,7 @@ const Pricing = () => {
         <PaymentOptions
           selectedCurrency={selectedCurrency}
           selectedAmount={selectedAmount}
+          setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
