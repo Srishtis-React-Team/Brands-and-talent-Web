@@ -519,15 +519,18 @@ input[type="radio"].premium-checkbox {
   .plan-value {
     font-size: 36px;
   }
-  .annual, .monthly, .per-value, .monthly-amount, .after-value {
+  .annual,
+  .monthly,
+  .per-value,
+  .monthly-amount,
+  .after-value {
     font-size: 13px;
   }
   .plan-content-text {
     font-size: 14px;
   }
-
-
 }
+
 @media (max-width: 480px) {
   .priceHeight {
     min-height: auto;
@@ -575,4 +578,8 @@ input[type="radio"].premium-checkbox {
     align-items: start;
     padding: 4px 0;
   }
+}
+
+.recipient-form {
+  width: 480px;
 }

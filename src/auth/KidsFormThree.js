@@ -122,39 +122,44 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   }, []);
 
   const checkTransaction = async () => {
-    const paymenttrans_id = localStorage.getItem("paymenttrans_id")
-    const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod")
-    const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan")
-    console.log('selectedPaymentPeriod',selectedPaymentPeriod)
-    console.log('selectedPaymentPlan',selectedPaymentPlan)
+    const paymenttrans_id = localStorage.getItem("paymenttrans_id");
+    const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
+    const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
+    console.log("selectedPaymentPeriod", selectedPaymentPeriod);
+    console.log("selectedPaymentPlan", selectedPaymentPlan);
 
-    
     const obj = { tranId: paymenttrans_id };
 
     try {
-      console.log('here...')
-      const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
-      console.log('resData',resData)
+      console.log("here...");
+      const resData = await ApiHelper.post(
+        "https://brandsandtalent.com/api/pricing/check-transaction",
+        obj
+      );
+      console.log("resData", resData);
 
       if (resData) {
-        if(resData.data.status.message == "Success!"){
-        const paymentData = resData.data.data;
-        if(paymentData.payment_status == "APPROVED"){
-          localStorage.setItem("paymentData", JSON.stringify(paymentData));
-          alert('payment successfully completed')
-          const userId = localStorage.getItem("userId")
-          const userData = {
-              "subscriptionPlan":selectedPaymentPeriod,
-              "planName":selectedPaymentPlan,
-              "user_id":userId,
-              "transactionDate":paymentData?.transaction_date,
-              "paymentStatus":paymentData?.payment_status,
-              "paymentCurreny":paymentData?.payment_currency,
-              "paymentAmount":paymentData?.payment_amount,
-          } 
-          const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
-          console.log('responseSubscription',responseSubscription)
-        }
+        if (resData.data.status.message == "Success!") {
+          const paymentData = resData.data.data;
+          if (paymentData.payment_status == "APPROVED") {
+            localStorage.setItem("paymentData", JSON.stringify(paymentData));
+            alert("payment successfully completed");
+            const userId = localStorage.getItem("userId");
+            const userData = {
+              subscriptionPlan: selectedPaymentPeriod,
+              planName: selectedPaymentPlan,
+              user_id: userId,
+              transactionDate: paymentData?.transaction_date,
+              paymentStatus: paymentData?.payment_status,
+              paymentCurreny: paymentData?.payment_currency,
+              paymentAmount: paymentData?.payment_amount,
+            };
+            const responseSubscription = await ApiHelper.post(
+              API.subscriptionPlan,
+              userData
+            );
+            console.log("responseSubscription", responseSubscription);
+          }
         }
       }
     } catch (err) {
@@ -833,18 +838,19 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-            if (talentData?.planName == "Basic") {
-              // navigate(
-              //   `/talent/${talentData.publicUrl}`,
-              //   {
-              //     state: { talentData: talentData },
-              //   }
-              // );
-              navigate(`/login?type=talent&user_id=${userId}`);
-            } else {
-              navigate(`/talent-signup-service-details?${userId}`);
-            }
-            // navigate(`/talent-home`);
+            directKidsLogin(resData);
+            // if (talentData?.planName == "Basic") {
+            //   // navigate(
+            //   //   `/talent/${talentData.publicUrl}`,
+            //   //   {
+            //   //     state: { talentData: talentData },
+            //   //   }
+            //   // );
+            //   navigate(`/login?type=talent&user_id=${userId}`);
+            // } else {
+            //   navigate(`/talent-signup-service-details?${userId}`);
+            // }
+            // // navigate(`/talent-home`);
           }, 1000);
         } else {
         }
@@ -852,6 +858,39 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       .catch((err) => {
         setIsLoading(false);
       });
+  };
+
+  const directKidsLogin = async (data) => {
+    console.log(data, "get directKidsLogin");
+    const formData = {
+      parentEmail: data?.data?.data?.email,
+    };
+    await ApiHelper.post(`${API.directKidsLogin}`, formData)
+      .then((resData) => {
+        console.log(resData, "directKidsLogin_RESPONSE");
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setTalentLocalStorage(resData.data.data);
+          navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
+        } else {
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+
+  const setTalentLocalStorage = (data) => {
+    localStorage.setItem("userId", data?.user?._id);
+    localStorage.setItem("emailID", data?.email);
+    localStorage.setItem("token", data?.token);
+    localStorage.setItem("currentUser", data?.user?._id);
+    localStorage.setItem("currentUserType", data?.user?.userType);
+    localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
+    localStorage.setItem(
+      "talentName",
+      `${data?.user?.preferredChildFirstname} ${data?.user?.preferredChildLastName}`
+    );
   };
 
   const goBack = () => {

@@ -69,7 +69,7 @@ export const API = {
   subscriptionPlan: BASEURL + "users/subscriptionPlan",
   createPayment: BASEURL + "pricing/create-payment",
   checktransaction: BASEURL + "pricing/check-transaction",
-  createqrpayment: BASEURL + 'pricing/createqrpayment',
+  createqrpayment: BASEURL + "pricing/createqrpayment",
   giftSubCreation: BASEURL + "giftsub/giftSubCreation",
 
   // /api/pricing/create-payment
@@ -95,6 +95,7 @@ export const API = {
   countUsers: BASEURL + "users/countUsers",
   deleteVideoUrls: BASEURL + "users/deleteVideoUrls",
   deleteAudioUrls: BASEURL + "users/deleteAudioUrls",
+  directKidsLogin: BASEURL + "users/directKidsLogin",
 
   reportReview: BASEURL + "users/reportReview",
 
