@@ -552,10 +552,13 @@ const TalentProfile = () => {
   useEffect(() => {
     console.log(userId, "userId");
   }, [userId]);
+  useEffect(() => {
+    console.log(brandId, "brandId");
+  }, [brandId]);
 
   return (
     <>
-      {userId && (
+      {(userId || brandId) && (
         <>
           {currentUser_type == "brand" && (
             <BrandHeader

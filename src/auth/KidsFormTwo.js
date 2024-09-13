@@ -631,7 +631,7 @@ const KidsFormTwo = () => {
           }}
         >
           <div className="gift-dialog-header">
-            <DialogTitle>Gift subscription</DialogTitle>
+            <DialogTitle>Gift Subscription</DialogTitle>
             <i className="bi bi-x-lg close-gift" onClick={handleClose}></i>
           </div>
           <DialogContent>
