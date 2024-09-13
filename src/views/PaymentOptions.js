@@ -38,19 +38,35 @@ const PaymentOptions = ({
 
     try {
       const responseCoupon = await ApiHelper.post(API.applyCoupon, obj);
-      if (responseCoupon?.data?.discountAmount) {
+      console.log('responseCoupon',responseCoupon)
+      if(responseCoupon?.data?.status == false){
+        // if (responseCoupon?.data?.message === 'Coupon has already been used') {
+            setErrorMessage(responseCoupon?.data?.message);
+            setIsCouponApplied(false); // Reset coupon applied status
+          // }
+      }else if(responseCoupon?.data?.status == true){
         setSelectedAmount(responseCoupon?.data?.discountAmount);
         setFinalAmount(responseCoupon?.data?.discountAmount);
         setCouponDiscountPercent(responseCoupon?.data?.couponDiscountPercent);
         setIsCouponApplied(true); // Update coupon applied status
         setErrorMessage(''); // Clear any previous error message
-      } else if (responseCoupon?.data?.message === 'Coupon has already been used') {
-        setErrorMessage('Coupon has already been used');
-        setIsCouponApplied(false); // Reset coupon applied status
-      } else {
-        setErrorMessage('Invalid coupon code'); // Optionally handle other cases
-        setIsCouponApplied(false); // Reset coupon applied status
+      }else{
+          setErrorMessage('Invalid coupon code'); // Optionally handle other cases
+          setIsCouponApplied(false); // Reset coupon applied status
       }
+      // if (responseCoupon?.data?.discountAmount) {
+      //   setSelectedAmount(responseCoupon?.data?.discountAmount);
+      //   setFinalAmount(responseCoupon?.data?.discountAmount);
+      //   setCouponDiscountPercent(responseCoupon?.data?.couponDiscountPercent);
+      //   setIsCouponApplied(true); // Update coupon applied status
+      //   setErrorMessage(''); // Clear any previous error message
+      // } else if (responseCoupon?.data?.message === 'Coupon has already been used') {
+      //   setErrorMessage('Coupon has already been used');
+      //   setIsCouponApplied(false); // Reset coupon applied status
+      // } else {
+      //   setErrorMessage('Invalid coupon code'); // Optionally handle other cases
+      //   setIsCouponApplied(false); // Reset coupon applied status
+      // }
     } catch (error) {
       console.error('Error applying coupon:', error);
       setErrorMessage('Error applying coupon'); // Handle error case

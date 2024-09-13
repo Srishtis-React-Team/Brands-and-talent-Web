@@ -10,7 +10,7 @@
   justify-content: center;
   align-items: center;
 }
-.popupcontainer {
+.popupcontainermain {
   width: 500px;
   max-width: 92%;
   height: 12rem;
@@ -25,18 +25,18 @@
   align-self: center;
   border: 3px solid #6495ed;
 }
-.popupcontainer .logo-header {
+.popupcontainermain .logo-header {
   text-align: center;
   padding: 15px;
   background-color: #eee;
   border-radius: 5px;
   margin: 0;
 }
-.popupcontainer .logo-header img {
+.popupcontainermain .logo-header img {
   width: 180px;
   max-width: 100%;
 }
-.popupcontainer .message {
+.popupcontainermain .message {
   flex: 50%;
   display: flex;
   justify-content: center;
@@ -46,7 +46,7 @@
   font-size: 27px;
   color: #c2114b;
 }
-.popupcontainer .message p {
+.popupcontainermain .message p {
   font-weight: 700;
   margin: 10px 0;
 }
