@@ -5,7 +5,7 @@ const PopUp = (props) => {
   const btLogo = require("../assets/images/LOGO.png");
   return (
     <div className="popupbackground">
-      <div className="popupcontainer">
+      <div className="popupcontainermain">
         {/* <div className="logo-header">
           <img
             src={btLogo}

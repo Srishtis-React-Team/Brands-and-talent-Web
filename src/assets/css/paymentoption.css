@@ -13,7 +13,8 @@
   
   .popupcontainer {
     width: 628px;
-    min-height: 36rem;
+    height: 70%;
+    /* min-height: 36rem; */
     border-radius: 10px;
     background-color: #fff;
     box-shadow: 0 0 15px #77a1f0;
