@@ -36,14 +36,11 @@ const PaymentOptions = ({
       "totalAmount": selectedAmount
     };
 
-    try {
       const responseCoupon = await ApiHelper.post(API.applyCoupon, obj);
       console.log('responseCoupon',responseCoupon)
       if(responseCoupon?.data?.status == false){
-        // if (responseCoupon?.data?.message === 'Coupon has already been used') {
             setErrorMessage(responseCoupon?.data?.message);
             setIsCouponApplied(false); // Reset coupon applied status
-          // }
       }else if(responseCoupon?.data?.status == true){
         setSelectedAmount(responseCoupon?.data?.discountAmount);
         setFinalAmount(responseCoupon?.data?.discountAmount);
@@ -67,11 +64,6 @@ const PaymentOptions = ({
       //   setErrorMessage('Invalid coupon code'); // Optionally handle other cases
       //   setIsCouponApplied(false); // Reset coupon applied status
       // }
-    } catch (error) {
-      console.error('Error applying coupon:', error);
-      setErrorMessage('Error applying coupon'); // Handle error case
-      setIsCouponApplied(false); // Reset coupon applied status
-    }
   };
 
   const handleInputChange = (event) => {
