@@ -13,7 +13,8 @@
   
   .popupcontainer {
     width: 628px;
-    min-height: 36rem;
+    height: 70%;
+    /* min-height: 36rem; */
     border-radius: 10px;
     background-color: #fff;
     box-shadow: 0 0 15px #77a1f0;
@@ -181,5 +182,6 @@
   
   /* Highlighted state for the apply button */
   .apply-btn.highlighted {
-    background: #4CAF50; /* Change this to the highlight color you want */
+    background-color: #4CAF50; /* Green background for highlighted state */
+    color: white;
   }

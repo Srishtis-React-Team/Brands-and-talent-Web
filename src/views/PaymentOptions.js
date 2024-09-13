@@ -20,11 +20,14 @@ const PaymentOptions = ({
   const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [amount, setAmount] = useState('');
-  const [finalAmount, setFinalAmount] = useState('')
+  const [finalAmount, setFinalAmount] = useState('');
+  const [couponDiscountPercent, setCouponDiscountPercent] = useState('');
+  const [isCouponApplied, setIsCouponApplied] = useState(false); // New state for coupon applied status
 
-  useEffect(()=>{
-  setAmount(selectedAmount)
-  },[])
+  useEffect(() => {
+    setAmount(selectedAmount);
+  }, []);
+
   const applyCoupon = async () => {
     const userId = localStorage.getItem("userId");
     const obj = {
@@ -36,17 +39,38 @@ const PaymentOptions = ({
     try {
       const responseCoupon = await ApiHelper.post(API.applyCoupon, obj);
       console.log('responseCoupon',responseCoupon)
-      if (responseCoupon?.data?.discountAmount) {
+      if(responseCoupon?.data?.status == false){
+        // if (responseCoupon?.data?.message === 'Coupon has already been used') {
+            setErrorMessage(responseCoupon?.data?.message);
+            setIsCouponApplied(false); // Reset coupon applied status
+          // }
+      }else if(responseCoupon?.data?.status == true){
         setSelectedAmount(responseCoupon?.data?.discountAmount);
+        setFinalAmount(responseCoupon?.data?.discountAmount);
+        setCouponDiscountPercent(responseCoupon?.data?.couponDiscountPercent);
+        setIsCouponApplied(true); // Update coupon applied status
         setErrorMessage(''); // Clear any previous error message
-      } else if (responseCoupon?.data?.message === 'Coupon has already been used') {
-        setErrorMessage('Coupon has already been used');
-      } else {
-        setErrorMessage('Invalid coupon code'); // Optionally handle other cases
+      }else{
+          setErrorMessage('Invalid coupon code'); // Optionally handle other cases
+          setIsCouponApplied(false); // Reset coupon applied status
       }
+      // if (responseCoupon?.data?.discountAmount) {
+      //   setSelectedAmount(responseCoupon?.data?.discountAmount);
+      //   setFinalAmount(responseCoupon?.data?.discountAmount);
+      //   setCouponDiscountPercent(responseCoupon?.data?.couponDiscountPercent);
+      //   setIsCouponApplied(true); // Update coupon applied status
+      //   setErrorMessage(''); // Clear any previous error message
+      // } else if (responseCoupon?.data?.message === 'Coupon has already been used') {
+      //   setErrorMessage('Coupon has already been used');
+      //   setIsCouponApplied(false); // Reset coupon applied status
+      // } else {
+      //   setErrorMessage('Invalid coupon code'); // Optionally handle other cases
+      //   setIsCouponApplied(false); // Reset coupon applied status
+      // }
     } catch (error) {
       console.error('Error applying coupon:', error);
       setErrorMessage('Error applying coupon'); // Handle error case
+      setIsCouponApplied(false); // Reset coupon applied status
     }
   };
 
@@ -54,9 +78,10 @@ const PaymentOptions = ({
     const newValue = event.target.value;
     setInputValue(newValue);
     
-    // Hide error message if input is cleared
+    // Hide error message and reset coupon applied status if input is cleared
     if (newValue === '') {
       setErrorMessage('');
+      setIsCouponApplied(false);
     }
   };
 
@@ -76,9 +101,17 @@ const PaymentOptions = ({
         <h4>Complete your payment</h4>
         <span>
           You've chosen {selectedPaymentPlan} Membership <br />
-          Total: {selectedCurrency} <span style={{fontWeight:'bold'}}>{amount}</span> Select your payment method to finalize your subscription and enjoy exclusive benefits.
+          Total: {selectedCurrency} <span style={{ fontWeight: 'bold' }}>{amount}</span> Select your payment method to finalize your subscription and enjoy exclusive benefits.
         </span>
-        <div style={{marginTop:'3%'}}>
+        {couponDiscountPercent ? (
+          <div>
+            <span>You've saved <span style={{ fontWeight: 'bold' }}>{couponDiscountPercent}% </span> on your total amount!</span>
+            <br />
+            <span>Payable amount: {selectedCurrency} <span style={{ fontWeight: 'bold' }}>{finalAmount}</span></span>
+          </div>
+        ) : null}
+
+        <div style={{ marginTop: '3%' }}>
           <span style={{ fontSize: '12px', color: 'rgb(115 131 205)' }}>Have a coupon code?</span>
         </div>
         <div className="input-group">
@@ -92,7 +125,7 @@ const PaymentOptions = ({
             onClick={applyCoupon}
             className={`apply-btn ${inputValue ? 'highlighted' : ''}`} // Conditionally apply class
           >
-            Apply
+            {isCouponApplied ? 'Applied' : 'Apply'} {/* Conditional button text */}
           </button>
         </div>
         {errorMessage && (
