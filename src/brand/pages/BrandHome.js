@@ -287,7 +287,9 @@ const BrandHome = () => {
                             <i className="bi bi-dot"></i>
                             <span className="job-company_dtls">
                               <i className="bi bi-geo-alt-fill location-icon"></i>
-                              {jobsList?.state}, {jobsList?.city}
+                              {jobsList?.state && jobsList?.city
+                                ? `${jobsList.state}, ${jobsList.city}`
+                                : jobsList?.state || jobsList?.city}
                             </span>
                             <i className="bi bi-dot"></i>
                             <span className="job-company-name">

@@ -7,6 +7,14 @@ import "../assets/css/dashboard.css";
 import "../assets/css/register.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
+
+import MuiPhoneNumber from "material-ui-phone-number";
+import {
+  parsePhoneNumber,
+  isValidPhoneNumber,
+  getNumberType,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import { styled } from "@mui/system";
@@ -51,6 +59,7 @@ const Pricing = () => {
   const [isLoading, setIsLoading] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isRecieverValidEmail, setIsRecieverValidEmail] = useState(true);
   const [isValidRecieverEmail, setIsValidRecieverEmail] = useState(true);
   const [senderName, setSenderName] = useState("");
   const [giftRecieverName, setGiftRecieverName] = useState("");
@@ -70,6 +79,49 @@ const Pricing = () => {
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
   const [selectedPaymentPeriod, setSelectedPaymentPeriod] = useState("");
+  const [giftMessage, setGiftMessage] = useState("");
+  const [giftMessageError, setGiftMessageError] = useState("");
+  const [email, setEmail] = useState("");
+  const [recieversFirstName, setRecieversFirstName] = useState("");
+  const [recieversLastName, setRecieversLastName] = useState("");
+  const [recieversAddress, setRecieversAddress] = useState("");
+  const [enquiry, setEnquiry] = useState("");
+  const [mobile, setMobile] = useState("");
+
+  const [emailError, setEmailError] = useState(false);
+  const [recieversNameError, setRecieversNameError] = useState(false);
+  const [enquiryError, setEnquiryError] = useState(false);
+  const [recieversLastNameError, setRecieversLastNameError] = useState(false);
+  const [mobileError, setMobileError] = useState(false);
+  const [mobileNumError, setMobileNumError] = useState(false);
+  const [mobileValidationError, setMobileValidationError] = useState(false);
+  const [mobileNumberError, setMobileNumberError] = useState("");
+
+  const handleMobileChange = (value) => {
+    console.log(value, "handleMobileChange");
+    isValidPhoneNumber(value);
+    if (isValidPhoneNumber(value)) {
+      setMobileError(false);
+      setMobileValidationError(false);
+      setMobile(value);
+    } else {
+      setMobileValidationError(true);
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    setEmailError(false);
+    const email = e.target.value;
+    setEmail(email);
+    setIsValidEmail(emailRegex.test(email));
+  };
+
+  const handleRecieverEmailChange = (e) => {
+    setRecieverEmailError(false);
+    const email = e.target.value;
+    setRecieverEmail(email);
+    setIsRecieverValidEmail(emailRegex.test(email));
+  };
 
   const [message, setMessage] = useState("");
   const greenTick = require("../assets/icons/greenTick.png");
@@ -208,46 +260,84 @@ const Pricing = () => {
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true);
-    // setError(null);
+    console.log("Sender Name: ", senderName);
+    console.log("Email: ", email);
+    console.log("Receiver's Email: ", recieverEmail);
+    console.log("Receiver's First Name: ", recieversFirstName);
+    console.log("Receiver's Last Name: ", recieversLastName);
 
-    try {
-      const payload = {
-        name: formData.billingFirstName,
-        lastName: formData.billingLastName,
-        company: formData.organization,
-        address: formData.address1,
-        additionalAddrees: formData.address2,
-        city: formData.city,
-        state: formData.state,
-        country: formData.country,
-        zipcode: formData.zipcode,
-        email: formData.email,
-        user_id: "", // Provide actual user_id if needed
-        gift: [
-          {
-            name: formData.recipientFirstName,
-            lastName: formData.recipientLastName,
-            company: formData.organization,
-            address: formData.recipientAddress1,
-            additionalAddrees: formData.recipientAddress2,
-            city: formData.recipientCity,
-            state: formData.recipientState,
-            country: formData.recipientCountry,
-            zipcode: formData.recipientZipcode,
-            recipientEmail: formData.recipientEmail,
-            message: formData.comment,
-          },
-        ],
-      };
-      const resultData = await ApiHelper.post(API.giftSubCreation, payload);
-      // Handle successful submission,
-      handleClose(); // Close the dialog
-    } catch (err) {
-      console.error("Error submitting form:", err);
-      // setError('There was an error submitting the form. Please try again.');
-    } finally {
-      setIsLoading(false);
+    if (!senderName) setSenderNameError(true);
+    if (!email) setEmailError(true);
+    if (!recieverEmail) setRecieverEmailError(true);
+    if (!recieversFirstName) setRecieversNameError(true);
+    if (!recieversLastName) setRecieversLastNameError(true);
+    if (
+      senderName &&
+      email &&
+      recieverEmail &&
+      recieversFirstName &&
+      recieversLastName
+    ) {
+      setIsLoading(true);
+      try {
+        const payload = {
+          senderName: senderName,
+          email: email,
+          gift: [
+            {
+              receiversFirstName: recieversFirstName,
+              receiversLastName: recieversLastName,
+              address: recieversAddress,
+              mobile: mobile,
+              receiverEmail: recieverEmail,
+              message: enquiry,
+            },
+          ],
+        };
+
+        try {
+          const resData = await ApiHelper.post(
+            `${API.giftSubCreation}`,
+            payload
+          );
+          console.log(resData, "resData");
+          if (resData.data.status) {
+            setIsLoading(false);
+            setMessage("Form Submitted Successfully");
+            setOpenPopUp(true);
+            setTimeout(() => {
+              setSenderName("");
+              setEmail("");
+              setRecieversFirstName("");
+              setRecieversLastName("");
+              setRecieversAddress("");
+              setEnquiry("");
+              setMobile("");
+              setMessage("");
+              setOpenPopUp(false);
+
+              handleClose();
+            }, 2000);
+          }
+        } catch (err) {
+          setIsLoading(false);
+          // Handle error
+        }
+
+        // Handle successful submission,
+        // handleClose(); // Close the dialog
+      } catch (err) {
+        console.error("Error submitting form:", err);
+        // setError('There was an error submitting the form. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      setMessage("Please Update All Required Fields");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
     }
   };
 
@@ -357,13 +447,13 @@ const Pricing = () => {
     setIsValidEmail(emailRegex.test(email));
   };
 
-  const handleRecieverEmailChange = (e) => {
-    setRecieverEmailError(false);
-    setGiftRecieverEmailError(false);
-    const email = e.target.value;
-    setRecieverEmail(e.target.value);
-    setIsValidRecieverEmail(emailRegex.test(email));
-  };
+  // const handleRecieverEmailChange = (e) => {
+  //   setRecieverEmailError(false);
+  //   setGiftRecieverEmailError(false);
+  //   const email = e.target.value;
+  //   setRecieverEmail(e.target.value);
+  //   setIsValidRecieverEmail(emailRegex.test(email));
+  // };
 
   useEffect(() => {
     if (selectedPaymentOption == "qr") {
@@ -386,9 +476,9 @@ const Pricing = () => {
   const modalRef = useRef(null);
 
   const sendGiftSubscription = async () => {
-    if (senderName == "") {
-      setSenderNameError(true);
-    }
+    // if (senderName == "") {
+    //   setSenderNameError(true);
+    // }
     if (senderEmail == "") {
       setSenderEmailError(true);
     }
@@ -645,182 +735,190 @@ const Pricing = () => {
           }}
         >
           <div className="gift-dialog-header">
-            <DialogTitle>
-              {isBillingForm
-                ? "Your Billing Address"
-                : "Gift Recipient Information"}
-            </DialogTitle>
+            <DialogTitle>Gift subscription</DialogTitle>
             <i className="bi bi-x-lg close-gift" onClick={handleClose}></i>
           </div>
           <DialogContent>
-            <div className="search-filter-section">
-              {isBillingForm ? (
-                <div className="billing-form">
-                  <div className="kids-form-row row">
-                    {/* Billing Information Fields */}
-                    {[
-                      "First Name",
-                      "Last Name",
-                      "Organization",
-                      "Address 1",
-                      "Address 2",
-                      "City",
-                      "State",
-                      "Zipcode",
-                      "Country",
-                    ].map((field) => (
-                      <div
-                        className="kids-form-section col-md-12 mb-3"
-                        key={field}
-                      >
-                        <label className="form-label">
-                          {field} <span className="mandatory">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name={`billing${field.replace(" ", "")}`}
-                          className="form-control"
-                          placeholder={field}
-                          onChange={handleInputChange}
-                          value={formData[`billing${field.replace(" ", "")}`]}
-                        />
-                      </div>
-                    ))}
-                    <div className="kids-form-section col-md-12 mb-3">
-                      <label className="form-label">
-                        Email <span className="mandatory">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        className={`form-control ${
-                          formData.email === formData.retypeEmail
-                            ? ""
-                            : "is-invalid"
-                        }`}
-                        placeholder="Enter E-mail"
-                        onChange={handleInputChange}
-                        value={formData.email}
-                      />
-                    </div>
-                    <div className="kids-form-section col-md-12 mb-3">
-                      <label className="form-label">
-                        Re-type Email <span className="mandatory">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        name="retypeEmail"
-                        className={`form-control ${
-                          formData.email === formData.retypeEmail
-                            ? ""
-                            : "is-invalid"
-                        }`}
-                        placeholder="Re-type E-mail"
-                        onChange={handleInputChange}
-                        value={formData.retypeEmail}
-                      />
-                    </div>
+            <div className="kids-form-section col-md-12 mb-3">
+              <label className="form-label">
+                Sender's name <span className="mandatory">*</span>
+              </label>
+              <div className="form-group adult-password-wrapper">
+                <input
+                  type="text"
+                  className="form-control adult-signup-inputs"
+                  placeholder="Sender's name"
+                  value={senderName}
+                  onChange={(e) => {
+                    setSenderName(e.target.value);
+                    setSenderNameError(false);
+                  }}
+                />
+                {senderNameError && (
+                  <div className="invalid-fields">
+                    Please enter sender's name
                   </div>
+                )}
+              </div>
+            </div>
+            <div className="kids-form-section col-md-12 mb-3">
+              <label className="form-label">
+                Sender's e-mail <span className="mandatory">*</span>
+              </label>
+              <input
+                type="email"
+                className={`form-control ${
+                  !isValidEmail ? "is-invalid" : "form-control"
+                }`}
+                onChange={handleEmailChange}
+                placeholder="Enter E-mail"
+                value={email}
+              />
+              {!isValidEmail && (
+                <div className="invalid-feedback">
+                  Please enter a valid sender's e-mail.
                 </div>
-              ) : (
-                <div className="recipient-form">
-                  {/* Recipient Information Fields */}
-                  {[
-                    "First Name",
-                    "Last Name",
-                    "Address 1",
-                    "Address 2",
-                    "City",
-                    "State",
-                    "Zipcode",
-                    "Country",
-                  ].map((field) => (
-                    <div
-                      className="kids-form-section col-md-12 mb-3"
-                      key={field}
-                    >
-                      <label className="form-label">
-                        {field} <span className="mandatory">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        name={`recipient${field.replace(" ", "")}`}
-                        className="form-control"
-                        placeholder={field}
-                        onChange={handleInputChange}
-                        value={formData[`recipient${field.replace(" ", "")}`]}
-                      />
-                    </div>
-                  ))}
-                  <div className="kids-form-section col-md-12 mb-3">
-                    <label className="form-label">
-                      Email Address <span className="mandatory">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      name="recipientEmail"
-                      className={`form-control ${
-                        formData.recipientEmail ===
-                        formData.confirmRecipientEmail
-                          ? ""
-                          : "is-invalid"
-                      }`}
-                      placeholder="Email Address"
-                      onChange={handleInputChange}
-                      value={formData.recipientEmail}
-                    />
-                  </div>
-                  <div className="kids-form-section col-md-12 mb-3">
-                    <label className="form-label">
-                      Confirm Email Address <span className="mandatory">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      name="confirmRecipientEmail"
-                      className={`form-control ${
-                        formData.recipientEmail ===
-                        formData.confirmRecipientEmail
-                          ? ""
-                          : "is-invalid"
-                      }`}
-                      placeholder="Confirm Email Address"
-                      onChange={handleInputChange}
-                      value={formData.confirmRecipientEmail}
-                    />
-                  </div>
-                  <div className="kids-form-section col-md-12 mb-3">
-                    <label className="form-label">
-                      Announce Your Gift With A Personalized Message (Hide)
-                      <span className="mandatory">*</span>
-                    </label>
-                    <textarea
-                      name="comment"
-                      style={{ width: "100%" }}
-                      className="form-control address-textarea"
-                      placeholder="Enter message here"
-                      rows="3"
-                      onChange={handleInputChange}
-                      value={formData.comment}
-                    ></textarea>
-                    <div className="character-count">
-                      Count (250 maximum characters): {formData.comment.length}
-                    </div>
-                  </div>
-                  <div className="kids-form-section col-md-12 mb-3">
-                    <label className="form-label">Total Due</label>
-                    <input
-                      type="text"
-                      name="totalDue"
-                      className="form-control"
-                      placeholder="Total Due"
-                      onChange={handleInputChange}
-                      value={formData.totalDue}
-                    />
-                  </div>
-                  <button type="button" className="btn add-another-gift-btn">
-                    Add Another Gift
-                  </button>
+              )}
+              {emailError && (
+                <div className="invalid-fields">
+                  Please enter sender's e-mail
                 </div>
+              )}
+            </div>
+            <div className="kids-form-section col-md-12 mb-3">
+              <label className="form-label">
+                Receiver's first name <span className="mandatory">*</span>
+              </label>
+              <div className="form-group adult-password-wrapper">
+                <input
+                  type="text"
+                  className="form-control adult-signup-inputs"
+                  placeholder="Receiver's first name*"
+                  value={recieversFirstName}
+                  onChange={(e) => {
+                    setRecieversFirstName(e.target.value);
+                    setRecieversNameError(false);
+                  }}
+                />
+                {recieversNameError && (
+                  <div className="invalid-fields">
+                    Please enter receiver's first name
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="kids-form-section col-md-12 mb-3">
+              <label className="form-label">
+                Receiver's last name <span className="mandatory">*</span>
+              </label>
+              <div className="form-group adult-password-wrapper">
+                <input
+                  type="text"
+                  className="form-control adult-signup-inputs"
+                  placeholder="Receiver's last name*"
+                  value={recieversLastName}
+                  onChange={(e) => {
+                    setRecieversLastName(e.target.value);
+                    setRecieversLastNameError(false);
+                  }}
+                />
+                {recieversLastNameError && (
+                  <div className="invalid-fields">
+                    Please enter receiver's last name
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="kids-form-section col-md-12 mb-3">
+              <label className="form-label">
+                Receiver's e-mail<span className="mandatory">*</span>
+              </label>
+              <input
+                type="email"
+                className={`form-control ${
+                  !isRecieverValidEmail ? "is-invalid" : "form-control"
+                }`}
+                onChange={handleRecieverEmailChange}
+                placeholder="Enter E-mail"
+                value={recieverEmail}
+              />
+              {!isRecieverValidEmail && (
+                <div className="invalid-feedback">
+                  Please enter a valid receiver's e-mail*.
+                </div>
+              )}
+              {recieverEmailError && (
+                <div className="invalid-fields">
+                  Please enter receiver's e-mail
+                </div>
+              )}
+            </div>
+
+            <div className="kids-form-section col-md-12 mb-3">
+              <label
+                htmlFor="exampleFormControlTextarea1"
+                className="form-label"
+              >
+                Receiver's address
+              </label>
+
+              <input
+                type="email"
+                className="form-control"
+                onChange={(e) => {
+                  setRecieversAddress(e.target.value);
+                }}
+                placeholder="Enter address"
+                value={recieversAddress}
+              />
+            </div>
+
+            <div className="kids-form-section col-md-12 mb-3">
+              <label className="form-label">Receiver's phone number</label>
+              <MuiPhoneNumber
+                countryCodeEditable={false}
+                defaultCountry={"kh"}
+                className="material-mobile-style"
+                onChange={handleMobileChange}
+                value={mobile}
+              />
+              {mobileNumberError && (
+                <div className="error">{mobileNumberError}</div>
+              )}
+              {mobileError && (
+                <div className="invalid-fields">
+                  Please enter receiver's phone number
+                </div>
+              )}
+              {mobileValidationError && (
+                <div className="invalid-fields">
+                  Please enter correct receiver's phone number
+                </div>
+              )}
+              {mobileNumError && (
+                <div className="invalid-fields">Only Numbers Allowed</div>
+              )}
+            </div>
+
+            <div className="kids-form-section col-md-12 mb-3">
+              <label
+                htmlFor="exampleFormControlTextarea1"
+                className="form-label"
+              >
+                Message
+              </label>
+              <textarea
+                className="contact-us-textarea w-100"
+                id="exampleFormControlTextarea1"
+                value={enquiry}
+                rows="3"
+                onChange={(e) => {
+                  setEnquiry(e.target.value);
+                  setEnquiryError(false);
+                }}
+              />
+              {enquiryError && (
+                <div className="invalid-fields">Please enter Message</div>
               )}
             </div>
           </DialogContent>
@@ -828,9 +926,9 @@ const Pricing = () => {
             <button
               type="button"
               className="btn gift-payment-btn"
-              onClick={isBillingForm ? handleNext : handleSubmit}
+              onClick={handleSubmit}
             >
-              {isLoading ? "Loading..." : isBillingForm ? "Next" : "Submit"}
+              {isLoading ? "Loading..." : "Submit"}
             </button>
           </DialogActions>
         </Dialog>
@@ -839,7 +937,6 @@ const Pricing = () => {
         <PaymentOptions
           selectedCurrency={selectedCurrency}
           selectedAmount={selectedAmount}
-          setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
