@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/paymentoption.css";
 import qrlogo from '../assets/icons/payment/ic_KHQR_x2.png';
 import cardlogo from '../assets/icons/payment/ic_generic_1x.png';
@@ -18,35 +18,13 @@ const PaymentOptions = ({
   selectedPaymentPlan
 }) => {
   const [inputValue, setInputValue] = useState('');
-  console.log('props', responseUrl);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [amount, setAmount] = useState('');
+  const [finalAmount, setFinalAmount] = useState('')
 
-  const closeButtonStyle = {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    background: '#ff5f5f',
-    border: 'none',
-    color: 'white',
-    fontSize: '16px',
-    width: '24px',
-    height: '24px',
-    textAlign: 'center',
-    cursor: 'pointer',
-    borderRadius: '50%',
-  };
-
-  const applyButtonStyle = {
-    marginLeft: "7%",
-    borderRadius: "5px",
-    fontSize: "13px",
-    width: "80px",
-    height: "30px",
-    fontWeight: "bold",
-    border: "none",
-    color: "white",
-    background: "rgb(179 179 186)"
-  };
-
+  useEffect(()=>{
+  setAmount(selectedAmount)
+  },[])
   const applyCoupon = async () => {
     const userId = localStorage.getItem("userId");
     const obj = {
@@ -55,97 +33,94 @@ const PaymentOptions = ({
       "totalAmount": selectedAmount
     };
 
-    console.log('code', obj);
-
     try {
       const responseCoupon = await ApiHelper.post(API.applyCoupon, obj);
-      console.log('responseCoupon', responseCoupon?.data?.discountAmount);
-      if(responseCoupon?.data?.discountAmount){
-      setSelectedAmount(responseCoupon?.data?.discountAmount)
-      }else{
-        return
+      console.log('responseCoupon',responseCoupon)
+      if (responseCoupon?.data?.discountAmount) {
+        setSelectedAmount(responseCoupon?.data?.discountAmount);
+        setErrorMessage(''); // Clear any previous error message
+      } else if (responseCoupon?.data?.message === 'Coupon has already been used') {
+        setErrorMessage('Coupon has already been used');
+      } else {
+        setErrorMessage('Invalid coupon code'); // Optionally handle other cases
       }
-      // Handle the response as needed
     } catch (error) {
       console.error('Error applying coupon:', error);
-      // Handle errors as needed
+      setErrorMessage('Error applying coupon'); // Handle error case
     }
   };
 
   const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+    const newValue = event.target.value;
+    setInputValue(newValue);
+    
+    // Hide error message if input is cleared
+    if (newValue === '') {
+      setErrorMessage('');
+    }
   };
 
   const handleSelection = async (type) => {
-    console.log('type', type);
     setSelectedPaymentOption(type);
+    setPaymentOption(false);
+  };
+
+  const handleClose = () => {
     setPaymentOption(false);
   };
 
   return (
     <div className="popupbackground">
       <div className="popupcontainer">
-        <div>
-          <h4 style={{ fontWeight: 'bold' }}>Complete your payment</h4>
-        </div>
-        <div>
-          <span style={{ fontSize: '12px' }}>
-            You've chosen {selectedPaymentPlan} Membership <br />
-            Total: {selectedCurrency} {selectedAmount}. Select your payment method to finalize your subscription and enjoy exclusive benefits.
-          </span>
-        </div>
-        <div>
+        <button onClick={handleClose} className="close-btn">X</button>
+        <h4>Complete your payment</h4>
+        <span>
+          You've chosen {selectedPaymentPlan} Membership <br />
+          Total: {selectedCurrency} <span style={{fontWeight:'bold'}}>{amount}</span> Select your payment method to finalize your subscription and enjoy exclusive benefits.
+        </span>
+        <div style={{marginTop:'3%'}}>
           <span style={{ fontSize: '12px', color: 'rgb(115 131 205)' }}>Have a coupon code?</span>
         </div>
-        <div style={{ display: 'flex', marginTop: '3px' }}>
-          <div>
-            <input
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Have a coupon code?"
-              style={{ height: '30px' }}
-              type="text"
-            />
-          </div>
-          <div>
-            <button onClick={applyCoupon} style={applyButtonStyle}>Apply</button>
-          </div>
+        <div className="input-group">
+          <input
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Have a coupon code?"
+            type="text"
+          />
+          <button
+            onClick={applyCoupon}
+            className={`apply-btn ${inputValue ? 'highlighted' : ''}`} // Conditionally apply class
+          >
+            Apply
+          </button>
         </div>
-        <div className="paymentOptionSection" style={{ background: '#E5E5EA', borderRadius: '5px', height: '64%', marginTop: '5%' }}>
-          <div style={{ display: "flex", gap: '10px', background: 'white', marginTop: '5px', margin: "18px", borderRadius: '5px' }}>
+        {errorMessage && (
+          <div className="error-message">
+            {errorMessage}
+          </div>
+        )}
+        <div className="paymentOptionSection">
+          <div className="paymentOption">
+            <img src={qrlogo} alt="QR Code" />
             <div>
-              <img style={{ marginTop: '40%', width: '67%', marginLeft: '10px' }} src={qrlogo} alt="QR Code" />
+              <p>ABA KHQR</p>
+              <span>Scan and pay using any Cambodian banking app</span>
             </div>
-            <div>
-              <div style={{ fontWeight: 'bold' }}>
-                ABA KHQR
-              </div>
-              <div>
-                <p>Scan and pay using any Combodian banking app</p>
-              </div>
-            </div>
-            <div>
-              <div onClick={() => handleSelection('qr')} style={{ background: '#E5E5EA', borderRadius: '5px', marginTop: '28px', marginLeft: '18px', cursor: 'pointer' }}>
-                <img src={rightArrow} alt="Right Arrow" />
-              </div>
+            <div onClick={() => handleSelection('qr')}>
+              <img src={rightArrow} alt="Right Arrow" />
             </div>
           </div>
-          <div style={{ display: "flex", gap: '10px', background: 'white', margin: "18px", borderRadius: '5px' }}>
+          <div className="paymentOption2">
+            <img src={cardlogo} alt="Card Logo" />
             <div>
-              <img style={{ marginTop: '15%', width: '67%', marginLeft: '10px' }} src={cardlogo} alt="Card Logo" />
+              <p>Credit/Debit Card</p>
+              <span>
+                <img src={payOptionslogo} alt="Payment Options" />
+              </span>
             </div>
-            <div>
-              <div style={{ fontWeight: 'bold' }}>
-                Credit/Debit Card
-              </div>
-              <div style={{ marginBottom: '1rem' }}>
-                <img style={{ width: "50%" }} src={payOptionslogo} alt="Payment Options" />
-              </div>
-            </div>
-            <div>
-              <div onClick={() => handleSelection('card')} style={{ background: '#E5E5EA', borderRadius: '5px', marginTop: '19px', marginLeft: '97px', cursor: 'pointer' }}>
-                <img src={rightArrow} alt="Right Arrow" />
-              </div>
+            <div onClick={() => handleSelection('card')}>
+              <img src={rightArrow} alt="Right Arrow" />
             </div>
           </div>
         </div>
