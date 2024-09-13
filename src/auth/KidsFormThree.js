@@ -143,7 +143,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           const paymentData = resData.data.data;
           if (paymentData.payment_status == "APPROVED") {
             localStorage.setItem("paymentData", JSON.stringify(paymentData));
-            alert("payment successfully completed");
+            // alert('payment successfully completed')
             const userId = localStorage.getItem("userId");
             const userData = {
               subscriptionPlan: selectedPaymentPeriod,

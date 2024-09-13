@@ -1,8 +1,14 @@
 import React from "react";
-import "../assets/css/checkout.css";
+// import "../assets/css/checkout.css";
 
-const PopUp = ({responseUrl, setCheckout}) => {
-  console.log('props',responseUrl)
+const PopUp = ({ responseUrl, setCheckout }) => {
+  console.log('props', responseUrl);
+
+  // Close button click handler
+  const handleClose = () => {
+    setCheckout(false); // Assuming setCheckout is used to manage the visibility of the popup
+  };
+
   const closeButtonStyle = {
     position: 'absolute',
     top: '10px',
@@ -17,10 +23,12 @@ const PopUp = ({responseUrl, setCheckout}) => {
     cursor: 'pointer',
     borderRadius: '50%',
   };
+
   return (
     <div className="popupbackground">
-      <div className="popupcontainer">
-      <iframe 
+      <div className="popupcontainer" style={{ position: 'relative'}}>
+        <button onClick={handleClose} style={closeButtonStyle}>X</button>
+        <iframe 
           src={responseUrl} 
           title="Popup Content" 
           style={{ width: '100%', height: '100%' }} // Inline styling for iframe
