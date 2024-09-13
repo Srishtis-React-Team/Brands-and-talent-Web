@@ -181,5 +181,6 @@
   
   /* Highlighted state for the apply button */
   .apply-btn.highlighted {
-    background: #4CAF50; /* Change this to the highlight color you want */
+    background-color: #4CAF50; /* Green background for highlighted state */
+    color: white;
   }
