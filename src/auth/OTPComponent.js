@@ -74,10 +74,10 @@ const OTPComponent = () => {
       adultEmail: queryString,
     };
     setIsLoading(true);
-
     await ApiHelper.post(API.otpVerificationAdult, formData)
       .then((resData) => {
         if (resData.data.status === true) {
+          console.log(resData?.data?.data, "adultResponse");
           setMessage("Successfully Verified");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -86,7 +86,8 @@ const OTPComponent = () => {
           setIsLoading(false);
           setTimeout(function () {
             let successData = "verified";
-            navigate(`/login?type=talent&user_id=${resData?.data?.data}`);
+            directLogin(resData);
+            // navigate(`/login?type=talent&user_id=${resData?.data?.data}`);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("Enter Correct OTP");
@@ -100,6 +101,40 @@ const OTPComponent = () => {
       .catch((err) => {
         setIsLoading(false);
       });
+  };
+
+  const directLogin = async (resData) => {
+    setTalentLocalStorage(resData.data.data);
+    navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
+  };
+
+  // Function to set user ID
+  const setTalentLocalStorage = (data) => {
+    localStorage.setItem("userId", data?.user?._id);
+    localStorage.setItem("emailID", data?.email);
+    localStorage.setItem("token", data?.token);
+    localStorage.setItem("currentUser", data?.user?._id);
+    localStorage.setItem("currentUserType", data?.user?.userType);
+    localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
+    localStorage.setItem(
+      "talentName",
+      `${data?.user?.preferredChildFirstname} ${data?.user?.preferredChildLastName}`
+    );
+    setUserId(userId);
+  };
+
+  const setBrandsLocalStorage = (data) => {
+    localStorage.setItem("brandId", data?.data?._id);
+    localStorage.setItem("currentUser", data?.data?._id);
+    localStorage.setItem("brandEmail", data?.data?.brandEmail);
+    localStorage.setItem("brandToken", data?.token);
+    localStorage.setItem("currentUserType", data?.data?.userType);
+    localStorage.setItem(
+      "currentUserImage",
+      data?.data?.brandImage[0]?.fileData
+    );
+    localStorage.setItem("brandName", data?.data?.brandName);
+    setUserId(userId);
   };
 
   const otpResend = () => {

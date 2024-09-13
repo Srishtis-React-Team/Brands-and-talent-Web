@@ -130,27 +130,30 @@ const Pricing = () => {
       );
 
       if (resData) {
-        if(resData.data.status.message == "Success!"){
-        const paymentData = resData.data.data;
-        if(paymentData.payment_status == "APPROVED"){
-          localStorage.setItem("paymentData", JSON.stringify(paymentData));
-          console.log('paymentData',paymentData)
-          // alert('payment successfully completed')
-          const userId = localStorage.getItem("userId")
-          // transactionDate,paymentStatus,paymentCurreny,paymentAmount,paymentPeriod,paymentPlan
+        if (resData.data.status.message == "Success!") {
+          const paymentData = resData.data.data;
+          if (paymentData.payment_status == "APPROVED") {
+            localStorage.setItem("paymentData", JSON.stringify(paymentData));
+            console.log("paymentData", paymentData);
+            // alert('payment successfully completed')
+            const userId = localStorage.getItem("userId");
+            // transactionDate,paymentStatus,paymentCurreny,paymentAmount,paymentPeriod,paymentPlan
 
-          const userData = {
-              "subscriptionPlan":selectedPaymentPeriod,
-              "planName":selectedPaymentPlan,
-              "user_id":userId,
-              "transactionDate":paymentData?.transaction_date,
-              "paymentStatus":paymentData?.payment_status,
-              "paymentCurreny":paymentData?.payment_currency,
-              "paymentAmount":paymentData?.payment_amount,
-          } 
-          const responseSubscription = await ApiHelper.post(API.subscriptionPlan, userData);
-          console.log('responseSubscription',responseSubscription)
-        }
+            const userData = {
+              subscriptionPlan: selectedPaymentPeriod,
+              planName: selectedPaymentPlan,
+              user_id: userId,
+              transactionDate: paymentData?.transaction_date,
+              paymentStatus: paymentData?.payment_status,
+              paymentCurreny: paymentData?.payment_currency,
+              paymentAmount: paymentData?.payment_amount,
+            };
+            const responseSubscription = await ApiHelper.post(
+              API.subscriptionPlan,
+              userData
+            );
+            console.log("responseSubscription", responseSubscription);
+          }
         }
       }
     } catch (err) {

@@ -114,7 +114,6 @@ const Login = () => {
         brandPassword: talentPassword,
         fcmToken: fcmToken,
       };
-
       setIsLoading(true);
       await ApiHelper.post(API.brandsLogin, formData)
         .then((resData) => {
