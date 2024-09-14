@@ -605,28 +605,28 @@ const TalentSettings = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
-              {/* Manage Account */}
-              <div className=" edit-basicdetails-section-main">
-                <div>
-                  {console.log("consoling the exact", paymentDetailsDataArray)}
-                  <h6>
-                    Transaction date :{" "}
-                    {paymentDetailsDataArray?.transactionDate}
-                  </h6>
-                  <h6>
-                    Payment status : {paymentDetailsDataArray?.paymentStatus}
-                  </h6>
-                  <h6>
-                    Payment currency : {paymentDetailsDataArray?.paymentCurreny}
-                  </h6>
-                  <h6>
-                    Payment amount : {paymentDetailsDataArray?.paymentAmount}
-                  </h6>
-                  <h6>Payment period : {selectedPaymentPeriod}</h6>
-                  <h6>Payment plan : {selectedPaymentPlan}</h6>
-                </div>
-              </div>
-            </CustomTabPanel>
+          {/* Manage Account */}
+          <div className="edit-basicdetails-section-main">
+            <div>
+              {console.log("consoling the exact", paymentDetailsDataArray)}
+              <h6>
+                Transaction date : <span>{paymentDetailsDataArray?.transactionDate}</span>
+              </h6>
+              <h6>
+                Payment status : <span>{paymentDetailsDataArray?.paymentStatus}</span>
+              </h6>
+              <h6>
+                Payment currency : <span>{paymentDetailsDataArray?.paymentCurrency}</span>
+              </h6>
+              <h6>
+                Payment amount : <span>{paymentDetailsDataArray?.paymentAmount}</span>
+              </h6>
+              <h6>Payment period : <span>{selectedPaymentPeriod}</span></h6>
+              <h6>Payment plan : <span>{selectedPaymentPlan}</span></h6>
+            </div>
+          </div>
+        </CustomTabPanel>
+
           </Box>
         </div>
       </main>
