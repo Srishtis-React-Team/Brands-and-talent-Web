@@ -31,6 +31,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import { useNavigate } from "react-router-dom";
 import CheckoutComponent from "./CheckoutComponent.js";
 import PaymentOptions from "./PaymentOptions.js";
+import Loader from "./Loader.js";
 // import { createPayment, checkTransactionStatus } from '../config/paymentGateway.js';
 
 const Pricing = () => {
@@ -87,7 +88,7 @@ const Pricing = () => {
   const [recieversAddress, setRecieversAddress] = useState("");
   const [enquiry, setEnquiry] = useState("");
   const [mobile, setMobile] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [recieversNameError, setRecieversNameError] = useState(false);
   const [enquiryError, setEnquiryError] = useState(false);
@@ -353,6 +354,7 @@ const Pricing = () => {
       setResponseUrl(response.data.url);
       localStorage.setItem("paymenttrans_id", response.data.trans_id);
       setCheckout(true);
+      setLoading(false)
     } catch (error) {
       console.error("Error during payment:", error);
     }
@@ -457,6 +459,7 @@ const Pricing = () => {
 
   useEffect(() => {
     if (selectedPaymentOption == "qr") {
+    setLoading(true)
       handlePayment(
         selectedAmount,
         selectedCurrency,
@@ -464,6 +467,7 @@ const Pricing = () => {
         "qr"
       );
     } else if (selectedPaymentOption == "card") {
+    setLoading(true)
       handlePayment(
         selectedAmount,
         selectedCurrency,
@@ -937,6 +941,7 @@ const Pricing = () => {
         <PaymentOptions
           selectedCurrency={selectedCurrency}
           selectedAmount={selectedAmount}
+          setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
@@ -949,6 +954,8 @@ const Pricing = () => {
           setCheckout={setCheckout}
         />
       )}
+       {/* {isLoading ? "Loading..." : "Continue"} */}
+       {loading ? <Loader /> : <div></div>}
       {openPopUp && <PopUp message={message} />}
     </>
   );

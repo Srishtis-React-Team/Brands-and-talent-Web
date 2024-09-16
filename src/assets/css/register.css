@@ -4,6 +4,33 @@
   padding: 18px 0;
   border-bottom: 1px solid #bab4b4;
 }
+
+.edit-basicdetails-section-main {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-basicdetails-section-main h6 {
+  font-size: 16px;
+  color: #333;
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+.edit-basicdetails-section-main h6 span {
+  font-weight: 400;
+  color: #555;
+}
+
+.edit-basicdetails-section-main h6::before {
+  content: "• ";
+  color: #007bff;
+  font-size: 18px;
+  margin-right: 8px;
+}
+
 .rdw-editor-wrapper {
   box-sizing: content-box;
   border-radius: 8px;

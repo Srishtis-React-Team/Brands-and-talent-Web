@@ -42,6 +42,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Tooltip } from "react-tooltip";
 import useFieldDatas from "../config/useFieldDatas";
 import EditFeatures from "../pages/EditFeatures";
+import EditSocialMedias from "../pages/EditSocialMedias";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -674,6 +675,11 @@ const EditTalent = () => {
   const handleEditFeatureChanges = (values) => {
     setFeatures(values);
     console.log("Updated Form Values handleEditFeatureChanges:", values);
+  };
+
+  const handleEditSocialMediaChanges = (values) => {
+    // setFeatures(values);
+    console.log("Updated Form Values handleEditSocialMediaChanges:", values);
   };
 
   const handleFeaturesChange = (label, value) => {
@@ -1611,6 +1617,39 @@ const EditTalent = () => {
         setIsLoading(false);
       });
   };
+  const submitSocialMedia = async () => {
+    let formData = {
+      features: features,
+    };
+    let apiUrl;
+    if (talentData?.type == "kids") {
+      apiUrl = API.editKids;
+    } else if (talentData?.type == "adults") {
+      apiUrl = API.updateAdults;
+    }
+    await ApiHelper.post(`${apiUrl}${talentId}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+          setMessage("Features Updated Successfully");
+          scrollToTop();
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+          }, 1000);
+        } else if (resData.data.status === false) {
+          setIsLoading(false);
+          setMessage(resData.data.message);
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
 
   useEffect(() => {}, [services]);
 
@@ -2129,6 +2168,11 @@ const EditTalent = () => {
                 <Tab
                   label="Features"
                   {...a11yProps(5)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="Social Medias"
+                  {...a11yProps(6)}
                   style={{ textTransform: "capitalize" }}
                 />
                 {/* <Tab
@@ -3655,6 +3699,20 @@ const EditTalent = () => {
                     >
                       Submit
                     </Button>
+                  </div>
+                </>
+              )}
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={6}>
+              {talentData && (
+                <>
+                  <div className="mt-4">
+                    <div className="row">
+                      <EditSocialMedias
+                        talentData={talentData}
+                        onValuesChange={handleEditSocialMediaChanges}
+                      />
+                    </div>
                   </div>
                 </>
               )}

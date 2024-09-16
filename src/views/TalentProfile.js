@@ -558,7 +558,7 @@ const TalentProfile = () => {
 
   return (
     <>
-      {(userId || brandId) && talentData?.adminApproved === true && (
+      {userId && (
         <>
           {currentUser_type == "brand" && (
             <BrandHeader
