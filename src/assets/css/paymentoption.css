@@ -13,7 +13,21 @@
   
   .popupcontainer {
     width: 628px;
-    height: 70%;
+    height: 69%;
+    /* min-height: 36rem; */
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 15px #77a1f0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+    border: 3px solid #6495ed;
+  }
+
+  .popupcontainer2 {
+    width: 628px;
+    height: 85%;
     /* min-height: 36rem; */
     border-radius: 10px;
     background-color: #fff;
@@ -53,23 +67,24 @@
   .paymentOptionSection {
     background: #E5E5EA;
     border-radius: 5px;
-    margin-top: 10%;
+    margin-top: 4%;
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    height: 14rem;
+    gap: 30px;
+    height: 18rem;
   }
   
   .paymentOption {
     background: white;
     border-radius: 5px;
     display: flex;
-    margin-top: 5%;
+    margin-top: 2%;
     align-items: center;
     padding: 10px;
     gap: 10px;
     box-shadow: 0 0 5px #aaa;
+    height: 6rem;
   }
 
   .paymentOption2{
@@ -80,6 +95,7 @@
     padding: 10px;
     gap: 10px;
     box-shadow: 0 0 5px #aaa;
+    height: 6rem;
     /* min-height: 5rem; */
   }
 

@@ -31,46 +31,38 @@ const PaymentOptions = ({
   const applyCoupon = async () => {
     const userId = localStorage.getItem("userId");
     const obj = {
-      "userId": userId,
-      "code": inputValue,
-      "totalAmount": selectedAmount
+      userId,
+      code: inputValue,
+      totalAmount: selectedAmount,
     };
-
+  
     try {
       const responseCoupon = await ApiHelper.post(API.applyCoupon, obj);
-      console.log('responseCoupon',responseCoupon)
-      if(responseCoupon?.data?.status == false){
-        // if (responseCoupon?.data?.message === 'Coupon has already been used') {
-            setErrorMessage(responseCoupon?.data?.message);
-            setIsCouponApplied(false); // Reset coupon applied status
-          // }
-      }else if(responseCoupon?.data?.status == true){
-        setSelectedAmount(responseCoupon?.data?.discountAmount);
-        setFinalAmount(responseCoupon?.data?.discountAmount);
-        setCouponDiscountPercent(responseCoupon?.data?.couponDiscountPercent);
-        setIsCouponApplied(true); // Update coupon applied status
-        setErrorMessage(''); // Clear any previous error message
-      }else{
-          setErrorMessage('Invalid coupon code'); // Optionally handle other cases
-          setIsCouponApplied(false); // Reset coupon applied status
+  
+      if (responseCoupon?.data?.status === false) {
+        setErrorMessage(responseCoupon?.data?.message || 'Failed to apply coupon');
+        setIsCouponApplied(false);
+      } else if (responseCoupon?.data?.status === true) {
+        if (responseCoupon?.data?.message === "Coupon applied successfully") {
+          const { discountAmount, couponDiscountPercent } = responseCoupon.data;
+          console.log('responseCoupon',responseCoupon)
+          setSelectedAmount(discountAmount);
+          setFinalAmount(discountAmount);
+          setCouponDiscountPercent(couponDiscountPercent);
+          setIsCouponApplied(true);
+          setErrorMessage('');
+        } else {
+          setErrorMessage('Unexpected response message');
+          setIsCouponApplied(false);
+        }
+      } else {
+        setErrorMessage('Invalid coupon code'); // Handle other cases if needed
+        setIsCouponApplied(false);
       }
-      // if (responseCoupon?.data?.discountAmount) {
-      //   setSelectedAmount(responseCoupon?.data?.discountAmount);
-      //   setFinalAmount(responseCoupon?.data?.discountAmount);
-      //   setCouponDiscountPercent(responseCoupon?.data?.couponDiscountPercent);
-      //   setIsCouponApplied(true); // Update coupon applied status
-      //   setErrorMessage(''); // Clear any previous error message
-      // } else if (responseCoupon?.data?.message === 'Coupon has already been used') {
-      //   setErrorMessage('Coupon has already been used');
-      //   setIsCouponApplied(false); // Reset coupon applied status
-      // } else {
-      //   setErrorMessage('Invalid coupon code'); // Optionally handle other cases
-      //   setIsCouponApplied(false); // Reset coupon applied status
-      // }
     } catch (error) {
       console.error('Error applying coupon:', error);
-      setErrorMessage('Error applying coupon'); // Handle error case
-      setIsCouponApplied(false); // Reset coupon applied status
+      setErrorMessage('An error occurred while applying the coupon.');
+      setIsCouponApplied(false);
     }
   };
 
@@ -93,6 +85,11 @@ const PaymentOptions = ({
   const handleClose = () => {
     setPaymentOption(false);
   };
+
+
+  // useEffect(()=>{
+  //   setSelectedAmount(finalAmount)
+  // },[finalAmount])
 
   return (
     <div className="popupbackground">
@@ -118,7 +115,7 @@ const PaymentOptions = ({
           <input
             value={inputValue}
             onChange={handleInputChange}
-            placeholder="Have a coupon code?"
+            placeholder="Enter the coupon code"
             type="text"
           />
           <button
@@ -134,17 +131,17 @@ const PaymentOptions = ({
           </div>
         )}
         <div className="paymentOptionSection">
-          <div className="paymentOption">
+          <div onClick={() => handleSelection('qr')} style={{cursor:'pointer'}} className="paymentOption">
             <img src={qrlogo} alt="QR Code" />
             <div>
               <p>ABA KHQR</p>
               <span>Scan and pay using any Cambodian banking app</span>
             </div>
-            <div onClick={() => handleSelection('qr')}>
+            <div >
               <img src={rightArrow} alt="Right Arrow" />
             </div>
           </div>
-          <div className="paymentOption2">
+          <div onClick={() => handleSelection('card')} style={{cursor:'pointer'}} className="paymentOption2">
             <img src={cardlogo} alt="Card Logo" />
             <div>
               <p>Credit/Debit Card</p>
@@ -152,7 +149,7 @@ const PaymentOptions = ({
                 <img src={payOptionslogo} alt="Payment Options" />
               </span>
             </div>
-            <div onClick={() => handleSelection('card')}>
+            <div >
               <img src={rightArrow} alt="Right Arrow" />
             </div>
           </div>
