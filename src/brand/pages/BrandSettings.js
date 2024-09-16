@@ -81,6 +81,63 @@ const BrandSettings = () => {
     setValueTabs(newValue);
   };
 
+
+  const containerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+    padding: '20px',
+    backgroundColor: '#f4f4f4',
+  };
+
+  const cardStyle = {
+    backgroundColor: '#fff',
+    border: '1px solid #ddd',
+    borderRadius: '12px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    padding: '20px',
+    maxWidth: '700px',
+    width: '100%',
+  };
+
+  const headerStyle = {
+    fontSize: '1.8em',
+    marginBottom: '20px',
+    color: '#333',
+  };
+
+  const listStyle = {
+    margin: '0',
+    padding: '0',
+    listStyle: 'none',
+  };
+
+  const detailItemStyle = {
+    display: 'grid',
+    gridTemplateColumns: '1fr 2fr',
+    gap: '10px',
+    padding: '10px 0',
+    borderBottom: '1px solid #eee',
+  };
+
+  const lastDetailItemStyle = {
+    ...detailItemStyle,
+    borderBottom: 'none',
+  };
+
+  const labelStyle = {
+    fontWeight: 'bold',
+    color: 'red',
+    textAlign: 'right',
+  };
+
+  const valueStyle = {
+    color: 'red',
+    textAlign: 'left',
+  };
+
+
   // useEffect(() => {
   //   checkTransaction();
   // }, []);
@@ -616,19 +673,39 @@ const BrandSettings = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
-              {/* Manage Account */}
-              <div className=" edit-basicdetails-section-main">
-                <div>
-                  {console.log("consoling the exact", paymentDetails)}
-                  <h6>Transaction date : {paymentDetails?.transaction_date}</h6>
-                  <h6>Payment status : {paymentDetails?.payment_status}</h6>
-                  <h6>Payment currency : {paymentDetails?.payment_currency}</h6>
-                  <h6>Payment amount : {paymentDetails?.payment_amount}</h6>
-                  <h6>Payment period : {selectedPaymentPeriod}</h6>
-                  <h6>Payment plan : {selectedPaymentPlan}</h6>
-                </div>
-              </div>
-            </CustomTabPanel>
+  {/* Manage Account */}
+  <div style={containerStyle}>
+      <div style={cardStyle}>
+        <h2 style={headerStyle}>Transaction Details</h2>
+        <div style={listStyle}>
+          <div style={detailItemStyle}>
+            <div style={labelStyle}>Transaction Date:</div>
+            <div style={valueStyle}>{paymentDetails?.transaction_date}</div>
+          </div>
+          <div style={detailItemStyle}>
+            <div style={labelStyle}>Payment Status:</div>
+            <div style={valueStyle}>{paymentDetails?.payment_status}</div>
+          </div>
+          <div style={detailItemStyle}>
+            <div style={labelStyle}>Payment Currency:</div>
+            <div style={valueStyle}>{paymentDetails?.payment_currency}</div>
+          </div>
+          <div style={detailItemStyle}>
+            <div style={labelStyle}>Payment Amount:</div>
+            <div style={valueStyle}>{paymentDetails?.payment_amount}</div>
+          </div>
+          <div style={detailItemStyle}>
+            <div style={labelStyle}>Payment Period:</div>
+            <div style={valueStyle}>{selectedPaymentPeriod}</div>
+          </div>
+          <div style={lastDetailItemStyle}>
+            <div style={labelStyle}>Payment Plan:</div>
+            <div style={valueStyle}>{selectedPaymentPlan}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+</CustomTabPanel>
           </Box>
         </div>
       </main>

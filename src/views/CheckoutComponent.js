@@ -26,7 +26,7 @@ const PopUp = ({ responseUrl, setCheckout }) => {
 
   return (
     <div className="popupbackground">
-      <div className="popupcontainer" style={{ position: 'relative'}}>
+      <div className="popupcontainer2" style={{ position: 'relative'}}>
         <button onClick={handleClose} style={closeButtonStyle}>X</button>
         <iframe 
           src={responseUrl} 
