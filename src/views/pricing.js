@@ -64,6 +64,7 @@ const Pricing = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPlanForm, setIsPlanForm] = useState(false);
+  const [showBtn, setShowBtn] = useState(true);
   const [isGiftPayment, setIsGiftPayment] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [isValidEmail, setIsValidEmail] = useState(true);
@@ -83,6 +84,7 @@ const Pricing = () => {
   const [responseurl, setResponseUrl] = useState("");
   const [paymentOptions, setPaymentOption] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [paymentFrom, setPaymentFrom] = useState("gift-form");
   const [selectedAmount, setSelectedAmount] = useState("");
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
@@ -300,6 +302,7 @@ const Pricing = () => {
       // const type = 'https://dev.brandsandtalent.com/create-jobs'
       localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
       localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
+      setPaymentFrom(from);
       setPaymentOption(true);
     } else {
       console.error("Price string format is incorrect");
@@ -307,6 +310,7 @@ const Pricing = () => {
   };
 
   const handleSubmit = async () => {
+    setShowBtn(false);
     if (isPlanForm === false) {
       console.log("Sender Name: ", senderName);
       console.log("Email: ", email);
@@ -1126,6 +1130,7 @@ const Pricing = () => {
               <>
                 <div>
                   <PaymentOptions
+                    paymentFrom={paymentFrom}
                     selectedCurrency={selectedCurrency}
                     selectedAmount={selectedAmount}
                     setSelectedAmount={setSelectedAmount}
@@ -1138,20 +1143,25 @@ const Pricing = () => {
             )}
           </DialogContent>
           <DialogActions>
-            <button
-              type="button"
-              className="btn gift-payment-btn"
-              onClick={handleSubmit}
-            >
-              {isPlanForm == false || isGiftPayment == false
-                ? "Next"
-                : "Submit"}
-            </button>
+            {showBtn && (
+              <>
+                <button
+                  type="button"
+                  className="btn gift-payment-btn"
+                  onClick={handleSubmit}
+                >
+                  {isPlanForm == false || isGiftPayment == false
+                    ? "Next"
+                    : "Submit"}
+                </button>
+              </>
+            )}
           </DialogActions>
         </Dialog>
       </React.Fragment>
       {paymentOptions && (
         <PaymentOptions
+          paymentFrom={paymentFrom}
           selectedCurrency={selectedCurrency}
           selectedAmount={selectedAmount}
           setSelectedAmount={setSelectedAmount}
