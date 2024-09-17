@@ -64,6 +64,7 @@ const Pricing = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPlanForm, setIsPlanForm] = useState(false);
+  const [showBtn, setShowBtn] = useState(true);
   const [isGiftPayment, setIsGiftPayment] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [isValidEmail, setIsValidEmail] = useState(true);
@@ -83,6 +84,7 @@ const Pricing = () => {
   const [responseurl, setResponseUrl] = useState("");
   const [paymentOptions, setPaymentOption] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [paymentFrom, setPaymentFrom] = useState("gift-form");
   const [selectedAmount, setSelectedAmount] = useState("");
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
@@ -256,7 +258,7 @@ const Pricing = () => {
     setIsPlanForm(false);
   };
 
-  const choosePlan = async (index, item) => {
+  const choosePlan = async (index, item, from) => {
     const selectedPlanItem =
       item.plan_type_annual.find(
         (plan) => `annual-${item._id}` === selectedPlan
@@ -277,6 +279,7 @@ const Pricing = () => {
       // const type = 'https://dev.brandsandtalent.com/create-jobs'
       localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
       localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
+      setPaymentFrom(from);
       setPaymentOption(true);
     } else {
       console.error("Price string format is incorrect");
@@ -284,6 +287,7 @@ const Pricing = () => {
   };
 
   const handleSubmit = async () => {
+    setShowBtn(false);
     if (isPlanForm === false) {
       console.log("Sender Name: ", senderName);
       console.log("Email: ", email);
@@ -477,22 +481,33 @@ const Pricing = () => {
   // };
 
   useEffect(() => {
-    if (selectedPaymentOption == "qr") {
-      setLoading(true);
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        "https://dev.brandsandtalent.com/talent-home",
-        "qr"
-      );
-    } else if (selectedPaymentOption == "card") {
-      setLoading(true);
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        "https://dev.brandsandtalent.com/talent-home",
-        "card"
-      );
+    console.log(selectedPaymentOption);
+    if (paymentFrom == "main-form") {
+      if (selectedPaymentOption == "qr") {
+        setLoading(true);
+        handlePayment(
+          selectedAmount,
+          selectedCurrency,
+          "https://dev.brandsandtalent.com/talent-home",
+          "qr"
+        );
+      } else if (selectedPaymentOption == "card") {
+        setLoading(true);
+        handlePayment(
+          selectedAmount,
+          selectedCurrency,
+          "https://dev.brandsandtalent.com/talent-home",
+          "card"
+        );
+      }
+    } else if (paymentFrom == "gift-form") {
+      if (selectedPaymentOption == "qr") {
+        setLoading(true);
+        handlePayment(selectedAmount, selectedCurrency, "/pricing", "qr");
+      } else if (selectedPaymentOption == "card") {
+        setLoading(true);
+        handlePayment(selectedAmount, selectedCurrency, "/pricing", "card");
+      }
     }
   }, [selectedPaymentOption]);
 
@@ -720,7 +735,7 @@ const Pricing = () => {
                             ? "choose-btn premium-btn"
                             : ""
                         }
-                        onClick={() => choosePlan(index, item)}
+                        onClick={() => choosePlan(index, item, "main-form")}
                       >
                         Choose plan
                       </div>
@@ -1052,7 +1067,9 @@ const Pricing = () => {
                                       ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
                                       : ""
                                   }
-                                  onClick={() => choosePlan(index + 1, item)} // Adjust the index for the chosen plan
+                                  onClick={() =>
+                                    choosePlan(index + 1, item, "gift-form")
+                                  } // Adjust the index for the chosen plan
                                 >
                                   Choose plan
                                 </div>
@@ -1083,6 +1100,7 @@ const Pricing = () => {
               <>
                 <div>
                   <PaymentOptions
+                    paymentFrom={paymentFrom}
                     selectedCurrency={selectedCurrency}
                     selectedAmount={selectedAmount}
                     setSelectedAmount={setSelectedAmount}
@@ -1095,20 +1113,25 @@ const Pricing = () => {
             )}
           </DialogContent>
           <DialogActions>
-            <button
-              type="button"
-              className="btn gift-payment-btn"
-              onClick={handleSubmit}
-            >
-              {isPlanForm == false || isGiftPayment == false
-                ? "Next"
-                : "Submit"}
-            </button>
+            {showBtn && (
+              <>
+                <button
+                  type="button"
+                  className="btn gift-payment-btn"
+                  onClick={handleSubmit}
+                >
+                  {isPlanForm == false || isGiftPayment == false
+                    ? "Next"
+                    : "Submit"}
+                </button>
+              </>
+            )}
           </DialogActions>
         </Dialog>
       </React.Fragment>
       {paymentOptions && (
         <PaymentOptions
+          paymentFrom={paymentFrom}
           selectedCurrency={selectedCurrency}
           selectedAmount={selectedAmount}
           setSelectedAmount={setSelectedAmount}
