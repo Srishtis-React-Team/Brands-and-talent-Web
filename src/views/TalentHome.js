@@ -45,7 +45,6 @@ const TalentHome = () => {
     try {
       console.log('here...')
       const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
-      console.log('resData',resData)
 
       if (resData) {
         if(resData.data.status.message == "Success!"){
