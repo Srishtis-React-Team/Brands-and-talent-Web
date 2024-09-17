@@ -106,6 +106,8 @@ const Pricing = () => {
   const [mobileNumError, setMobileNumError] = useState(false);
   const [mobileValidationError, setMobileValidationError] = useState(false);
   const [mobileNumberError, setMobileNumberError] = useState("");
+  const [giftSub,setGiftSub] = useState(false)
+  const [pathFrom,setPathFrom] = useState('')
 
   const handleMobileChange = (value) => {
     console.log(value, "handleMobileChange");
@@ -203,10 +205,12 @@ const Pricing = () => {
   };
 
   useEffect(() => {
+    console.log('inside useEffect')
     checkTransaction();
   }, []);
 
   const checkTransaction = async () => {
+    console.log('useEffect action',pathFrom)
     const paymenttrans_id = localStorage.getItem("paymenttrans_id");
     const obj = { tranId: paymenttrans_id };
 
@@ -217,12 +221,13 @@ const Pricing = () => {
       );
 
       if (resData) {
+        const giftData = localStorage.getItem('giftsubscription')
         if (resData.data.status.message == "Success!") {
           const paymentData = resData.data.data;
           if (paymentData.payment_status == "APPROVED") {
             localStorage.setItem("paymentData", JSON.stringify(paymentData));
             console.log("paymentData", paymentData);
-            // alert('payment successfully completed')
+            // alert('payment successfully completed');
             const userId = localStorage.getItem("userId");
             // transactionDate,paymentStatus,paymentCurreny,paymentAmount,paymentPeriod,paymentPlan
 
@@ -235,11 +240,17 @@ const Pricing = () => {
               paymentCurreny: paymentData?.payment_currency,
               paymentAmount: paymentData?.payment_amount,
             };
-            const responseSubscription = await ApiHelper.post(
-              API.subscriptionPlan,
-              userData
-            );
+            if(giftData == 'true'){
+              alert('gift subscription')
+            }else{
+              const responseSubscription = await ApiHelper.post(
+                API.subscriptionPlan,
+                userData
+              );
             console.log("responseSubscription", responseSubscription);
+
+            }
+            
           }
         }
       }
@@ -259,6 +270,16 @@ const Pricing = () => {
   };
 
   const choosePlan = async (index, item, from) => {
+    console.log('inside chooseplan.....',from)
+    setPathFrom(from)
+    if(from == 'giftsubscription'){
+      setGiftSub(true)
+      localStorage.setItem('giftsubscription',true)
+    }else{
+      setGiftSub(false)
+      localStorage.setItem('giftsubscription',false)
+    }
+
     const selectedPlanItem =
       item.plan_type_annual.find(
         (plan) => `annual-${item._id}` === selectedPlan
@@ -274,6 +295,8 @@ const Pricing = () => {
       const currency = match[1].toUpperCase(); // "USD"
       const amount = parseFloat(match[2]); // 29.99
       const duration = match[3]; // "month"
+      console.log('currency',currency)
+      console.log('amount',amount)
       setSelectedCurrency(currency);
       setSelectedAmount(amount);
       // const type = 'https://dev.brandsandtalent.com/create-jobs'
@@ -481,18 +504,34 @@ const Pricing = () => {
   // };
 
   useEffect(() => {
-    console.log(selectedPaymentOption);
-    if (paymentFrom == "main-form") {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
+    if (selectedPaymentOption == "qr") {
+      setLoading(true);
+      if(giftSub){
+        handlePayment(
+          selectedAmount,
+          selectedCurrency,
+          "https://dev.brandsandtalent.com/pricing",
+          "qr"
+        );
+      }else{
         handlePayment(
           selectedAmount,
           selectedCurrency,
           "https://dev.brandsandtalent.com/talent-home",
           "qr"
         );
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
+      }
+    } else if (selectedPaymentOption == "card") {
+      setLoading(true);
+      if(giftSub){
+        console.log('correct...')
+        handlePayment(
+          selectedAmount,
+          selectedCurrency,
+          "https://dev.brandsandtalent.com/pricing",
+          "card"
+        );
+      }else{
         handlePayment(
           selectedAmount,
           selectedCurrency,
@@ -500,14 +539,7 @@ const Pricing = () => {
           "card"
         );
       }
-    } else if (paymentFrom == "gift-form") {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
-        handlePayment(selectedAmount, selectedCurrency, "/pricing", "qr");
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
-        handlePayment(selectedAmount, selectedCurrency, "/pricing", "card");
-      }
+      
     }
   }, [selectedPaymentOption]);
 
@@ -735,7 +767,7 @@ const Pricing = () => {
                             ? "choose-btn premium-btn"
                             : ""
                         }
-                        onClick={() => choosePlan(index, item, "main-form")}
+                        onClick={() => choosePlan(index, item,'plan')}
                       >
                         Choose plan
                       </div>
@@ -1067,9 +1099,7 @@ const Pricing = () => {
                                       ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
                                       : ""
                                   }
-                                  onClick={() =>
-                                    choosePlan(index + 1, item, "gift-form")
-                                  } // Adjust the index for the chosen plan
+                                  onClick={() => choosePlan(index + 1, item,'giftsubscription')} // Adjust the index for the chosen plan
                                 >
                                   Choose plan
                                 </div>

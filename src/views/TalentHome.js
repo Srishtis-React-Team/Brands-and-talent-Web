@@ -40,12 +40,9 @@ const TalentHome = () => {
     console.log("selectedPaymentPlan", selectedPaymentPlan);
     const obj = { tranId: paymenttrans_id };
     try {
-      console.log("here...");
-      const resData = await ApiHelper.post(
-        "https://brandsandtalent.com/api/pricing/check-transaction",
-        obj
-      );
-      console.log("resData", resData);
+      console.log('here...')
+      const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
+
       if (resData) {
         if (resData.data.status.message == "Success!") {
           const paymentData = resData.data.data;
