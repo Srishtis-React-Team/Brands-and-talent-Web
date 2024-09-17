@@ -19,6 +19,7 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
+import Loader from "../views/Loader.js";
 import { useTheme, useMediaQuery } from "@mui/material";
 
 import {
@@ -70,8 +71,7 @@ const KidsFormTwo = () => {
   const [enquiry, setEnquiry] = useState("");
   const [mobile, setMobile] = useState("");
   const [senderNameError, setSenderNameError] = useState(false);
-  const [isPlanForm, setIsPlanForm] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [recieversNameError, setRecieversNameError] = useState(false);
   const [enquiryError, setEnquiryError] = useState(false);
@@ -80,6 +80,7 @@ const KidsFormTwo = () => {
   const [mobileNumError, setMobileNumError] = useState(false);
   const [mobileValidationError, setMobileValidationError] = useState(false);
   const [mobileNumberError, setMobileNumberError] = useState("");
+  const [isPlanForm, setIsPlanForm] = useState(false);
 
   const handleMobileChange = (value) => {
     console.log(value, "handleMobileChange");
@@ -214,6 +215,7 @@ const KidsFormTwo = () => {
 
   useEffect(() => {
     if (selectedPaymentOption == "qr") {
+      setLoading(true)
       handlePayment(
         selectedAmount,
         selectedCurrency,
@@ -221,6 +223,7 @@ const KidsFormTwo = () => {
         "qr"
       );
     } else if (selectedPaymentOption == "card") {
+      setLoading(true)
       handlePayment(
         selectedAmount,
         selectedCurrency,
@@ -361,6 +364,7 @@ const KidsFormTwo = () => {
       setResponseUrl(response.data.url);
       localStorage.setItem("paymenttrans_id", response.data.trans_id);
       setCheckout(true);
+      setLoading(false)
       // Handle the response and update UI
     } catch (error) {
       console.error("Error during payment:", error);
@@ -985,6 +989,7 @@ const KidsFormTwo = () => {
           setCheckout={setCheckout}
         />
       )}
+      {loading ? <Loader /> : <div></div>}
       {openPopUp && <PopUp message={message} />}
     </>
   );

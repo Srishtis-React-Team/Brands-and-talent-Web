@@ -47,6 +47,8 @@ const Pricing = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setIsPlanForm(false);
+    setIsGiftPayment(false);
   };
 
   const [pricingList, setPricingList] = useState([]);
@@ -62,6 +64,7 @@ const Pricing = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPlanForm, setIsPlanForm] = useState(false);
+  const [isGiftPayment, setIsGiftPayment] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isRecieverValidEmail, setIsRecieverValidEmail] = useState(true);
@@ -158,16 +161,37 @@ const Pricing = () => {
     // Add other states as needed
   });
 
+  const [isChecked, setIsChecked] = useState(false);
+
   useEffect(() => {
-    getBrandsPricingList();
-  }, []);
+    if (isChecked) {
+      getPricingList();
+    } else {
+      getBrandsPricingList();
+    }
+  }, [isChecked]);
+
+  const handleToggle = (event) => {
+    setIsChecked(event.target.checked);
+  };
 
   useEffect(() => {
     console.log(pricingList, "pricingList");
   }, [pricingList]);
   useEffect(() => {}, [comment]);
+
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
+      .then((resData) => {
+        if (resData) {
+          setPricingList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const getBrandsPricingList = async () => {
+    await ApiHelper.get(API.brandsPricingList)
       .then((resData) => {
         if (resData) {
           setPricingList(resData.data.data);
@@ -232,16 +256,6 @@ const Pricing = () => {
     setIsPlanForm(false);
   };
 
-  const getBrandsPricingList = async () => {
-    await ApiHelper.get(API.brandsPricingList)
-      .then((resData) => {
-        if (resData) {
-          setPricingList(resData.data.data);
-        }
-      })
-      .catch((err) => {});
-  };
-
   const choosePlan = async (index, item) => {
     const selectedPlanItem =
       item.plan_type_annual.find(
@@ -271,8 +285,6 @@ const Pricing = () => {
 
   const handleSubmit = async () => {
     if (isPlanForm === false) {
-      setIsPlanForm(true);
-    } else {
       console.log("Sender Name: ", senderName);
       console.log("Email: ", email);
       console.log("Receiver's Email: ", recieverEmail);
@@ -282,7 +294,18 @@ const Pricing = () => {
       if (!email) setEmailError(true);
       if (!recieverEmail) setRecieverEmailError(true);
       if (!recieversFirstName) setRecieversNameError(true);
-      if (!recieversLastName) setRecieversLastNameError(true);
+      if (senderName && email && recieverEmail && recieversFirstName) {
+        setIsPlanForm(true);
+      } else {
+        setMessage("Please Update All Required Fields");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 1000);
+      }
+    } else if (isGiftPayment === false) {
+      setIsGiftPayment(true);
+    } else {
       if (
         senderName &&
         email &&
@@ -344,12 +367,6 @@ const Pricing = () => {
         } finally {
           setIsLoading(false);
         }
-      } else {
-        setMessage("Please Update All Required Fields");
-        setOpenPopUp(true);
-        setTimeout(function () {
-          setOpenPopUp(false);
-        }, 1000);
       }
     }
   };
@@ -395,16 +412,6 @@ const Pricing = () => {
       selectPlan3(false);
     }
   }
-
-  const handleToggle = (event) => {
-    const { checked } = event.target;
-
-    if (checked) {
-      getPricingList();
-    } else {
-      getBrandsPricingList();
-    }
-  };
 
   const handleSenderNameChange = (e) => {
     const value = e.target.value;
@@ -1072,6 +1079,20 @@ const Pricing = () => {
                 </div>
               </>
             )}
+            {isGiftPayment === true && (
+              <>
+                <div>
+                  <PaymentOptions
+                    selectedCurrency={selectedCurrency}
+                    selectedAmount={selectedAmount}
+                    setSelectedAmount={setSelectedAmount}
+                    setSelectedPaymentOption={setSelectedPaymentOption}
+                    setPaymentOption={setPaymentOption}
+                    selectedPaymentPlan={selectedPaymentPlan}
+                  />
+                </div>
+              </>
+            )}
           </DialogContent>
           <DialogActions>
             <button
@@ -1079,7 +1100,9 @@ const Pricing = () => {
               className="btn gift-payment-btn"
               onClick={handleSubmit}
             >
-              {isPlanForm == false ? "Next" : "Submit"}
+              {isPlanForm == false || isGiftPayment == false
+                ? "Next"
+                : "Submit"}
             </button>
           </DialogActions>
         </Dialog>
