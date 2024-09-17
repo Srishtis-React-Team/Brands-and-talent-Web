@@ -20,6 +20,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContentText from "@mui/material/DialogContentText";
 import Loader from "../views/Loader.js";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 import {
   parsePhoneNumber,
@@ -79,6 +80,7 @@ const KidsFormTwo = () => {
   const [mobileNumError, setMobileNumError] = useState(false);
   const [mobileValidationError, setMobileValidationError] = useState(false);
   const [mobileNumberError, setMobileNumberError] = useState("");
+  const [isPlanForm, setIsPlanForm] = useState(false);
 
   const handleMobileChange = (value) => {
     console.log(value, "handleMobileChange");
