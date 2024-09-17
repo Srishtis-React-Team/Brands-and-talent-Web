@@ -22,6 +22,9 @@
   align-items: center;
 }
 .gift-dialog-header {
+  padding: 20px 20px 0 20px;
+}
+.gift-dialog-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -94,6 +97,23 @@ input[type="radio"].premium-checkbox {
   font-weight: 400;
   line-height: 22px;
   padding-left: 10px;
+}
+.plan-content-text-popup {
+  color: #000;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  margin-bottom: 0px;
+}
+.plan-content-text-head {
+  color: #000;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  margin-bottom: 0px;
+  padding-bottom: 8px;
 }
 .plans-wrapper {
   margin: 15px 0 25px;
@@ -270,7 +290,6 @@ input[type="radio"].premium-checkbox {
 .value-wrapper {
   display: flex;
   line-height: 18px;
-  flex-direction: column;
 }
 .previous-value {
   text-decoration: line-through;
@@ -280,6 +299,7 @@ input[type="radio"].premium-checkbox {
   font-style: normal;
   font-weight: 700;
   cursor: pointer;
+  padding-right: 10px;
 }
 .after-value,
 .monthly-amount {
