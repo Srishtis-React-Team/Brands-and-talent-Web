@@ -17,6 +17,7 @@ const TalentHome = () => {
   const [modalData, setModalData] = useState(null);
   const doitnow = require("../assets/images/doitnow.png");
   const [isFilled, setIsFilled] = useState(true);
+  const [talentData, setTalentData] = useState();
 
   useEffect(() => {
     setTimeout(function () {
@@ -25,12 +26,25 @@ const TalentHome = () => {
 
     if (talentId) {
       getTalentNotification();
+      getTalentById();
     }
   }, [talentId]);
 
   useEffect(() => {
     checkTransaction();
   }, []);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${talentId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const checkTransaction = async () => {
     const paymenttrans_id = localStorage.getItem("paymenttrans_id");
@@ -40,8 +54,11 @@ const TalentHome = () => {
     console.log("selectedPaymentPlan", selectedPaymentPlan);
     const obj = { tranId: paymenttrans_id };
     try {
-      console.log('here...')
-      const resData = await ApiHelper.post('https://brandsandtalent.com/api/pricing/check-transaction', obj);
+      console.log("here...");
+      const resData = await ApiHelper.post(
+        "https://brandsandtalent.com/api/pricing/check-transaction",
+        obj
+      );
 
       if (resData) {
         if (resData.data.status.message == "Success!") {
@@ -140,6 +157,20 @@ const TalentHome = () => {
     }, 800);
   };
 
+  const handleEditNavigation = () => {
+    if (talentData?.adminApproved === true) {
+      navigate(`/edit-talent-profile?${talentData?._id}`);
+    } else {
+      setMessage(
+        "After your verification is approved, you can update your profile"
+      );
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 2000);
+    }
+  };
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -161,7 +192,7 @@ const TalentHome = () => {
           <div className="create-job-title">Welcome To Brands and Talent</div>
           <div className="home-cards mt-1 row pad8">
             <div className="col-md-4 col-lg-3 pad8">
-              <Link to="/edit-talent-profile">
+              <Link onClick={handleEditNavigation}>
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
                     <i className="bi bi-person icons home-card-icons"></i>
