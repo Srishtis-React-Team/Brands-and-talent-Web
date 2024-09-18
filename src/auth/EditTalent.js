@@ -2171,7 +2171,7 @@ const EditTalent = () => {
                   style={{ textTransform: "capitalize" }}
                 />
                 <Tab
-                  label="Social Medias"
+                  label="Social Media"
                   {...a11yProps(6)}
                   style={{ textTransform: "capitalize" }}
                 />

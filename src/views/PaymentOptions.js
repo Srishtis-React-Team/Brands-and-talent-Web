@@ -125,7 +125,7 @@ const PaymentOptions = ({
           </div>
         ) : null}
 
-        {paymentFrom != "gift-form" && (
+        {paymentFrom != "giftsubscription" && (
           <>
             <div style={{ marginTop: "3%" }}>
               <span style={{ fontSize: "12px", color: "rgb(115 131 205)" }}>

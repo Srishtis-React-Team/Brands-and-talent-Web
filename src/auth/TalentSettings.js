@@ -616,13 +616,13 @@ const TalentSettings = () => {
                 Payment status : <span>{paymentDetailsDataArray?.paymentStatus}</span>
               </h6>
               <h6>
-                Payment currency : <span>{paymentDetailsDataArray?.paymentCurrency}</span>
+                Payment currency : <span>{paymentDetailsDataArray?.paymentCurreny}</span>
               </h6>
               <h6>
-                Payment amount : <span>{paymentDetailsDataArray?.paymentAmount}</span>
+                Payment amount     : <span>{paymentDetailsDataArray?.paymentAmount}</span>
               </h6>
-              <h6>Payment period : <span>{selectedPaymentPeriod}</span></h6>
-              <h6>Payment plan : <span>{selectedPaymentPlan}</span></h6>
+              <h6>Payment period   : <span>{paymentDetailsDataArray?.subscriptionPlan}</span></h6>
+              <h6>Payment plan     : <span>{paymentDetailsDataArray?.planName}</span></h6>
             </div>
           </div>
         </CustomTabPanel>

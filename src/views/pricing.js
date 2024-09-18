@@ -84,7 +84,7 @@ const Pricing = () => {
   const [responseurl, setResponseUrl] = useState("");
   const [paymentOptions, setPaymentOption] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("");
-  const [paymentFrom, setPaymentFrom] = useState("gift-form");
+  const [paymentFrom, setPaymentFrom] = useState("giftsubscription");
   const [selectedAmount, setSelectedAmount] = useState("");
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
@@ -106,6 +106,8 @@ const Pricing = () => {
   const [mobileNumError, setMobileNumError] = useState(false);
   const [mobileValidationError, setMobileValidationError] = useState(false);
   const [mobileNumberError, setMobileNumberError] = useState("");
+  const [giftSub, setGiftSub] = useState(false);
+  const [pathFrom, setPathFrom] = useState("");
 
   const handleMobileChange = (value) => {
     console.log(value, "handleMobileChange");
@@ -203,13 +205,14 @@ const Pricing = () => {
   };
 
   useEffect(() => {
+    console.log("inside useEffect");
     checkTransaction();
   }, []);
 
   const checkTransaction = async () => {
+    console.log("useEffect action", pathFrom);
     const paymenttrans_id = localStorage.getItem("paymenttrans_id");
     const obj = { tranId: paymenttrans_id };
-
     try {
       const resData = await ApiHelper.post(
         "https://brandsandtalent.com/api/pricing/check-transaction",
@@ -217,15 +220,15 @@ const Pricing = () => {
       );
 
       if (resData) {
+        const giftData = localStorage.getItem("giftsubscription");
         if (resData.data.status.message == "Success!") {
           const paymentData = resData.data.data;
           if (paymentData.payment_status == "APPROVED") {
             localStorage.setItem("paymentData", JSON.stringify(paymentData));
             console.log("paymentData", paymentData);
-            // alert('payment successfully completed')
+            // alert('payment successfully completed');
             const userId = localStorage.getItem("userId");
             // transactionDate,paymentStatus,paymentCurreny,paymentAmount,paymentPeriod,paymentPlan
-
             const userData = {
               subscriptionPlan: selectedPaymentPeriod,
               planName: selectedPaymentPlan,
@@ -235,11 +238,16 @@ const Pricing = () => {
               paymentCurreny: paymentData?.payment_currency,
               paymentAmount: paymentData?.payment_amount,
             };
-            const responseSubscription = await ApiHelper.post(
-              API.subscriptionPlan,
-              userData
-            );
-            console.log("responseSubscription", responseSubscription);
+            if (giftData == "true") {
+              alert("gift subscription");
+              giftSubCreationCall();
+            } else {
+              const responseSubscription = await ApiHelper.post(
+                API.subscriptionPlan,
+                userData
+              );
+              console.log("responseSubscription", responseSubscription);
+            }
           }
         }
       }
@@ -259,6 +267,16 @@ const Pricing = () => {
   };
 
   const choosePlan = async (index, item, from) => {
+    console.log("inside chooseplan.....", from);
+    setPathFrom(from);
+    if (from == "giftsubscription") {
+      setGiftSub(true);
+      localStorage.setItem("giftsubscription", true);
+    } else {
+      setGiftSub(false);
+      localStorage.setItem("giftsubscription", false);
+    }
+
     const selectedPlanItem =
       item.plan_type_annual.find(
         (plan) => `annual-${item._id}` === selectedPlan
@@ -274,6 +292,8 @@ const Pricing = () => {
       const currency = match[1].toUpperCase(); // "USD"
       const amount = parseFloat(match[2]); // 29.99
       const duration = match[3]; // "month"
+      console.log("currency", currency);
+      console.log("amount", amount);
       setSelectedCurrency(currency);
       setSelectedAmount(amount);
       // const type = 'https://dev.brandsandtalent.com/create-jobs'
@@ -309,68 +329,63 @@ const Pricing = () => {
       }
     } else if (isGiftPayment === false) {
       setIsGiftPayment(true);
-    } else {
-      if (
-        senderName &&
-        email &&
-        recieverEmail &&
-        recieversFirstName &&
-        recieversLastName
-      ) {
-        setIsLoading(true);
+    }
+  };
+  const giftSubCreationCall = async () => {
+    if (senderName && email && recieverEmail && recieversFirstName) {
+      setIsLoading(true);
+      try {
+        const payload = {
+          senderName: senderName,
+          email: email,
+          gift: [
+            {
+              receiversFirstName: recieversFirstName,
+              receiversLastName: recieversLastName,
+              address: recieversAddress,
+              mobile: mobile,
+              receiverEmail: recieverEmail,
+              message: enquiry,
+            },
+          ],
+        };
+
         try {
-          const payload = {
-            senderName: senderName,
-            email: email,
-            gift: [
-              {
-                receiversFirstName: recieversFirstName,
-                receiversLastName: recieversLastName,
-                address: recieversAddress,
-                mobile: mobile,
-                receiverEmail: recieverEmail,
-                message: enquiry,
-              },
-            ],
-          };
-
-          try {
-            const resData = await ApiHelper.post(
-              `${API.giftSubCreation}`,
-              payload
-            );
-            console.log(resData, "resData");
-            if (resData.data.status) {
-              setIsLoading(false);
-              setMessage("Form Submitted Successfully");
-              setOpenPopUp(true);
-              setTimeout(() => {
-                setSenderName("");
-                setEmail("");
-                setRecieversFirstName("");
-                setRecieversLastName("");
-                setRecieversAddress("");
-                setEnquiry("");
-                setMobile("");
-                setMessage("");
-                setOpenPopUp(false);
-
-                handleClose();
-              }, 2000);
-            }
-          } catch (err) {
+          const resData = await ApiHelper.post(
+            `${API.giftSubCreation}`,
+            payload
+          );
+          console.log(resData, "resData");
+          if (resData.data.status) {
             setIsLoading(false);
-            // Handle error
-          }
+            setMessage("Form Submitted Successfully");
+            setOpenPopUp(true);
+            setTimeout(() => {
+              setSenderName("");
+              setEmail("");
+              setRecieversFirstName("");
+              setRecieversLastName("");
+              setRecieversAddress("");
+              setEnquiry("");
+              setMobile("");
+              setMessage("");
+              setOpenPopUp(false);
 
-          // Handle successful submission,
-          // handleClose(); // Close the dialog
+              handleClose();
+            }, 2000);
+          }
         } catch (err) {
-          console.error("Error submitting form:", err);
-          // setError('There was an error submitting the form. Please try again.');
-        } finally {
           setIsLoading(false);
+          // Handle error
         }
+
+        // Handle successful submission,
+        // handleClose(); // Close the dialog
+      } catch (err) {
+        console.error("Error submitting form:", err);
+        // setError('There was an error submitting the form. Please try again.');
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -481,32 +496,40 @@ const Pricing = () => {
   // };
 
   useEffect(() => {
-    console.log(selectedPaymentOption);
-    if (paymentFrom == "main-form") {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
+    if (selectedPaymentOption == "qr") {
+      setLoading(true);
+      if (giftSub) {
+        handlePayment(
+          selectedAmount,
+          selectedCurrency,
+          "https://dev.brandsandtalent.com/talent-settings",
+          "qr"
+        );
+      } else {
         handlePayment(
           selectedAmount,
           selectedCurrency,
           "https://dev.brandsandtalent.com/talent-home",
           "qr"
         );
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
+      }
+    } else if (selectedPaymentOption == "card") {
+      setLoading(true);
+      if (giftSub) {
+        console.log("correct...");
+        handlePayment(
+          selectedAmount,
+          selectedCurrency,
+          "https://dev.brandsandtalent.com/talent-settings",
+          "card"
+        );
+      } else {
         handlePayment(
           selectedAmount,
           selectedCurrency,
           "https://dev.brandsandtalent.com/talent-home",
           "card"
         );
-      }
-    } else if (paymentFrom == "gift-form") {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
-        handlePayment(selectedAmount, selectedCurrency, "/pricing", "qr");
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
-        handlePayment(selectedAmount, selectedCurrency, "/pricing", "card");
       }
     }
   }, [selectedPaymentOption]);
@@ -735,7 +758,7 @@ const Pricing = () => {
                             ? "choose-btn premium-btn"
                             : ""
                         }
-                        onClick={() => choosePlan(index, item, "main-form")}
+                        onClick={() => choosePlan(index, item, "plan")}
                       >
                         Choose plan
                       </div>
@@ -767,14 +790,13 @@ const Pricing = () => {
             component: "form",
             onSubmit: (event) => {
               event.preventDefault();
-              if (isPlanForm == false) {
-                handleNext();
-              } else {
-                handleSubmit();
-              }
             },
             style: {
-              width: isMobile ? "90vw" : "60vw", // Adjust width for mobile and larger screens
+              width: isPlanForm
+                ? isMobile
+                  ? "90vw"
+                  : "60vw" // If isPlanForm is true, always 90vw
+                : "60vw", // If isPlanForm is false, always 60vw regardless of mobile or desktop
               maxWidth: "90vw", // Ensure the dialog does not exceed the viewport width
             },
           }}
@@ -1068,7 +1090,11 @@ const Pricing = () => {
                                       : ""
                                   }
                                   onClick={() =>
-                                    choosePlan(index + 1, item, "gift-form")
+                                    choosePlan(
+                                      index + 1,
+                                      item,
+                                      "giftsubscription"
+                                    )
                                   } // Adjust the index for the chosen plan
                                 >
                                   Choose plan
@@ -1113,16 +1139,14 @@ const Pricing = () => {
             )}
           </DialogContent>
           <DialogActions>
-            {showBtn && (
+            {isPlanForm == false && (
               <>
                 <button
                   type="button"
                   className="btn gift-payment-btn"
                   onClick={handleSubmit}
                 >
-                  {isPlanForm == false || isGiftPayment == false
-                    ? "Next"
-                    : "Submit"}
+                  Next
                 </button>
               </>
             )}
