@@ -28,6 +28,38 @@
   padding: 20px 0;
   width: 100%;
 }
+
+.edit-basicdetails-section-main {
+  display: flex;
+  justify-content: center; /* Center the card */
+  padding: 16px; /* Add some padding around */
+}
+
+.payment-details-card {
+  background-color: #fff; /* White background for the card */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Inner padding */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  width: 100%; /* Full width */
+  max-width: 600px; /* Max width for larger screens */
+  /* margin: 0 auto; Center the card */
+}
+
+.payment-detail {
+  display: flex;
+  justify-content: space-between; /* Space between label and value */
+  margin: 12px 0; /* Space between lines */
+}
+
+.payment-detail span {
+  color: #333; /* Darker text for readability */
+}
+
+.payment-detail span:nth-child(2) {
+  font-weight: bold; /* Highlight the values */
+  color: #007BFF; /* Bootstrap primary color for emphasis */
+}
 .kidsform-one .kids-wrapper .kids-form .kids-notes-two {
   padding: 20px 0;
 }
@@ -57,6 +89,12 @@
   justify-content: space-evenly;
   align-items: center;
   max-width: 100%;
+}
+
+.listsub{
+  font-size: 14px;
+    color: #afafaf;
+    font-weight: 600;
 }
 .kidsform-one .kids-wrapper .kids-form .profession-input {
   max-width: 145px;

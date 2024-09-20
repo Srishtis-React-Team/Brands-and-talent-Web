@@ -204,57 +204,57 @@ const Pricing = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log("inside useEffect");
-    checkTransaction();
-  }, []);
+  // useEffect(() => {
+  //   console.log("inside useEffect");
+  //   checkTransaction();
+  // }, []);
 
-  const checkTransaction = async () => {
-    console.log("useEffect action", pathFrom);
-    const paymenttrans_id = localStorage.getItem("paymenttrans_id");
-    const obj = { tranId: paymenttrans_id };
-    try {
-      const resData = await ApiHelper.post(
-        "https://brandsandtalent.com/api/pricing/check-transaction",
-        obj
-      );
+  // const checkTransaction = async () => {
+  //   console.log("useEffect action", pathFrom);
+  //   const paymenttrans_id = localStorage.getItem("paymenttrans_id");
+  //   const obj = { tranId: paymenttrans_id };
+  //   try {
+  //     const resData = await ApiHelper.post(
+  //       "https://brandsandtalent.com/api/pricing/check-transaction",
+  //       obj
+  //     );
 
-      if (resData) {
-        const giftData = localStorage.getItem("giftsubscription");
-        if (resData.data.status.message == "Success!") {
-          const paymentData = resData.data.data;
-          if (paymentData.payment_status == "APPROVED") {
-            localStorage.setItem("paymentData", JSON.stringify(paymentData));
-            console.log("paymentData", paymentData);
-            // alert('payment successfully completed');
-            const userId = localStorage.getItem("userId");
-            // transactionDate,paymentStatus,paymentCurreny,paymentAmount,paymentPeriod,paymentPlan
-            const userData = {
-              subscriptionPlan: selectedPaymentPeriod,
-              planName: selectedPaymentPlan,
-              user_id: userId,
-              transactionDate: paymentData?.transaction_date,
-              paymentStatus: paymentData?.payment_status,
-              paymentCurreny: paymentData?.payment_currency,
-              paymentAmount: paymentData?.payment_amount,
-            };
-            if (giftData == "true") {
-              alert("gift subscription");
-              giftSubCreationCall();
-            } else {
-              const responseSubscription = await ApiHelper.post(
-                API.subscriptionPlan,
-                userData
-              );
-              console.log("responseSubscription", responseSubscription);
-            }
-          }
-        }
-      }
-    } catch (err) {
-      console.error("Error:", err);
-    }
-  };
+  //     if (resData) {
+  //       const giftData = localStorage.getItem("giftsubscription");
+  //       if (resData.data.status.message == "Success!") {
+  //         const paymentData = resData.data.data;
+  //         if (paymentData.payment_status == "APPROVED") {
+  //           localStorage.setItem("paymentData", JSON.stringify(paymentData));
+  //           console.log("paymentData", paymentData);
+  //           // alert('payment successfully completed');
+  //           const userId = localStorage.getItem("userId");
+  //           // transactionDate,paymentStatus,paymentCurreny,paymentAmount,paymentPeriod,paymentPlan
+  //           const userData = {
+  //             subscriptionPlan: selectedPaymentPeriod,
+  //             planName: selectedPaymentPlan,
+  //             user_id: userId,
+  //             transactionDate: paymentData?.transaction_date,
+  //             paymentStatus: paymentData?.payment_status,
+  //             paymentCurreny: paymentData?.payment_currency,
+  //             paymentAmount: paymentData?.payment_amount,
+  //           };
+  //           if (giftData == "true") {
+  //             alert("gift subscription");
+  //             giftSubCreationCall();
+  //           } else {
+  //             const responseSubscription = await ApiHelper.post(
+  //               API.subscriptionPlan,
+  //               userData
+  //             );
+  //             console.log("responseSubscription", responseSubscription);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error("Error:", err);
+  //   }
+  // };
 
   const handlePlanTypeChange = (type) => {
     setSelectedType(type);
@@ -284,13 +284,24 @@ const Pricing = () => {
       item.plan_type_monthly.find(
         (plan) => `monthly-${item._id}` === selectedPlan
       );
+      console.log('selectedPlanItem',selectedPlanItem)
     const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
     const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
+    const afterDiscount = selectedPlanItem ? selectedPlanItem.afterDiscount : "N/A";
+    console.log('afterDiscount',afterDiscount)
     const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
     const match = price.match(regex);
     if (match) {
+      let amount;
+      if(afterDiscount.includes("per year")){
+        const match = afterDiscount.match(/(\w+)\s([\d.,]+)\sper\syear/);
+        if (match) {
+          amount = parseFloat(match[2]); // Extracts the numeric part
+        }
+      }else{
+       amount = parseFloat(match[2]); // 29.99
+      }
       const currency = match[1].toUpperCase(); // "USD"
-      const amount = parseFloat(match[2]); // 29.99
       const duration = match[3]; // "month"
       console.log("currency", currency);
       console.log("amount", amount);
@@ -390,8 +401,10 @@ const Pricing = () => {
     }
   };
 
-  const handlePayment = async (amount, currency, type, paymentOption) => {
+  const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
+      console.log('plan----',plan)
+      const userId = localStorage.getItem("userId");
       let apiUrl =
         paymentOption == "card" ? API.createPayment : API.createqrpayment;
       const response = await ApiHelper.post(apiUrl, {
@@ -401,6 +414,46 @@ const Pricing = () => {
       });
       setResponseUrl(response.data.url);
       localStorage.setItem("paymenttrans_id", response.data.trans_id);
+      if(plan == 'giftsubscription'){
+        const giftObj = {
+          "senderName": senderName,
+          "email": email,
+          "gift": [
+              {
+                  "receiversFirstName": recieversFirstName,
+                  "receiverEmail": recieverEmail,
+                  "message": enquiry,
+                  "subscriptionPlan": selectedPaymentPeriod,
+                  "planName": selectedPaymentPlan,
+                  "transId": response.data.trans_id,
+                  "paymentStatus": "Pending",
+              }
+          ],
+          "isActive": true
+      }
+
+      // giftSubCreation
+      const resGiftSub = await ApiHelper.post(
+        API.giftSubCreation,
+        giftObj
+      );
+      console.log("resGiftSub", resGiftSub);
+      }else{
+        const userData = {
+          subscriptionPlan: selectedPaymentPeriod,
+          planName: selectedPaymentPlan,
+          user_id: userId,
+          transId: response.data.trans_id,
+          paymentStatus:'Pending'
+        };
+        console.log()
+        const responseSubscription = await ApiHelper.post(
+          API.subscriptionPlan,
+          userData
+        );
+      console.log("responseSubscription", responseSubscription);
+
+      }
       setCheckout(true);
       setLoading(false);
     } catch (error) {
@@ -408,7 +461,41 @@ const Pricing = () => {
     }
   };
 
+  // const subscriptionHandler = async (trans_id) => {
+  //   const userId = localStorage.getItem("userId");
+  //   const giftObj = {
+  //       "user_id":userId
+  //   }
+  //   const giftRes = await ApiHelper.post(API.getGiftSubscriptionsByUser, giftObj);
+  //   console.log('giftRes',giftRes)
+  //   const obj = {
+  //     "senderName": senderName,
+  //     "email": email,
+  //     "gift": [
+  //       {
+  //         "receiversFirstName": recieversFirstName,
+  //         "receiverEmail": recieverEmail,
+  //         "message":enquiry,
+  //         "subscriptionPlan":selectedPaymentPeriod,
+  //         "planName":selectedPaymentPlan,
+  //         "paymentStatus":'Pending',
+  //         "transId":trans_id,
+  //         "transactionDate":'', 
+  //         "paymentCurreny":'', 
+  //         "paymentAmount":'', 
+  //         "paymentPeriod":'', 
+  //         "paymentPlan":'',
+  //     }
+  //     ],
+  //     "isActive": true
+  // }
+  // console.log('new obj',obj)
+  // // const response = await ApiHelper.post(API.giftSubCreation, obj);
+  // // console.log('gift response',response)
+  // }
+
   const handleRadioChange = (type, id, planname) => (event) => {
+    console.log('type, id, planname',type, id, planname)
     setSelectedPlan(id);
     setSelectedPaymentPlan(planname);
     setSelectedPaymentPeriod(type);
@@ -503,14 +590,16 @@ const Pricing = () => {
           selectedAmount,
           selectedCurrency,
           "https://dev.brandsandtalent.com/talent-settings",
-          "qr"
+          "qr",
+          'giftsubscription'
         );
       } else {
         handlePayment(
           selectedAmount,
           selectedCurrency,
           "https://dev.brandsandtalent.com/talent-home",
-          "qr"
+          "qr",
+          'normal'
         );
       }
     } else if (selectedPaymentOption == "card") {
@@ -521,14 +610,16 @@ const Pricing = () => {
           selectedAmount,
           selectedCurrency,
           "https://dev.brandsandtalent.com/talent-settings",
-          "card"
+          "card",
+          'giftsubscription'
         );
       } else {
         handlePayment(
           selectedAmount,
           selectedCurrency,
           "https://dev.brandsandtalent.com/talent-home",
-          "card"
+          "card",
+          'normal'
         );
       }
     }
@@ -909,6 +1000,7 @@ const Pricing = () => {
                       className={`form-control ${
                         !isRecieverValidEmail ? "is-invalid" : "form-control"
                       }`}
+                     
                       onChange={handleRecieverEmailChange}
                       placeholder="Recipient's Email Address"
                       value={recieverEmail}
@@ -1180,74 +1272,3 @@ const Pricing = () => {
 
 export default Pricing;
 
-{
-  /* <div className="kids-form-section col-md-12 mb-3">
-                <label className="form-label">
-                  Receiver's last name <span className="mandatory">*</span>
-                </label>
-                <div className="form-group adult-password-wrapper">
-                  <input
-                    type="text"
-                    className="form-control adult-signup-inputs"
-                    placeholder="Receiver's last name*"
-                    value={recieversLastName}
-                    onChange={(e) => {
-                      setRecieversLastName(e.target.value);
-                      setRecieversLastNameError(false);
-                    }}
-                  />
-                  {recieversLastNameError && (
-                    <div className="invalid-fields">
-                      Please enter receiver's last name
-                    </div>
-                  )}
-                </div>
-              </div> */
-}
-{
-  /* <div className="kids-form-section col-md-12 mb-3">
-                <label
-                  htmlFor="exampleFormControlTextarea1"
-                  className="form-label"
-                >
-                  Receiver's address
-                </label>
-
-                <input
-                  type="email"
-                  className="form-control"
-                  onChange={(e) => {
-                    setRecieversAddress(e.target.value);
-                  }}
-                  placeholder="Enter address"
-                  value={recieversAddress}
-                />
-              </div>
-
-              <div className="kids-form-section col-md-12 mb-3">
-                <label className="form-label">Receiver's phone number</label>
-                <MuiPhoneNumber
-                  countryCodeEditable={false}
-                  defaultCountry={"kh"}
-                  className="material-mobile-style"
-                  onChange={handleMobileChange}
-                  value={mobile}
-                />
-                {mobileNumberError && (
-                  <div className="error">{mobileNumberError}</div>
-                )}
-                {mobileError && (
-                  <div className="invalid-fields">
-                    Please enter receiver's phone number
-                  </div>
-                )}
-                {mobileValidationError && (
-                  <div className="invalid-fields">
-                    Please enter correct receiver's phone number
-                  </div>
-                )}
-                {mobileNumError && (
-                  <div className="invalid-fields">Only Numbers Allowed</div>
-                )}
-              </div> */
-}

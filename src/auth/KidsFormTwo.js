@@ -81,6 +81,8 @@ const KidsFormTwo = () => {
   const [mobileValidationError, setMobileValidationError] = useState(false);
   const [mobileNumberError, setMobileNumberError] = useState("");
   const [isPlanForm, setIsPlanForm] = useState(false);
+  const [giftSub, setGiftSub] = useState(false);
+
 
   const handleMobileChange = (value) => {
     console.log(value, "handleMobileChange");
@@ -212,69 +214,92 @@ const KidsFormTwo = () => {
   const [selectedAmount, setSelectedAmount] = useState("");
   const [paymentOptions, setPaymentOption] = useState(false);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
+  const [pathFrom, setPathFrom] = useState("");
 
   useEffect(() => {
     if (selectedPaymentOption == "qr") {
       setLoading(true)
+      if (giftSub) {
       handlePayment(
         selectedAmount,
         selectedCurrency,
         `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "qr"
+        "qr",
+        'giftsubscription'
       );
+    } else {
+      handlePayment(
+        selectedAmount,
+        selectedCurrency,
+        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        "qr",
+        'normal'
+      );
+    }
     } else if (selectedPaymentOption == "card") {
       setLoading(true)
+      if (giftSub) {
       handlePayment(
         selectedAmount,
         selectedCurrency,
         `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "card"
+        "card",
+        'giftsubscription'
       );
+    } else {
+      handlePayment(
+        selectedAmount,
+        selectedCurrency,
+        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        "card",
+        'normal'
+      );
+    }
     }
   }, [selectedPaymentOption]);
 
-  useEffect(() => {
-    checkTransaction();
-  }, []);
+  // useEffect(() => {
+  //   checkTransaction();
+  // }, []);
 
-  const checkTransaction = async () => {
-    const paymenttrans_id = localStorage.getItem("paymenttrans_id");
-    const obj = { tranId: paymenttrans_id };
+  // const checkTransaction = async () => {
+  //   const paymenttrans_id = localStorage.getItem("paymenttrans_id");
+  //   const obj = { tranId: paymenttrans_id };
 
-    try {
-      const resData = await ApiHelper.post(
-        "https://brandsandtalent.com/api/pricing/check-transaction",
-        obj
-      );
+  //   try {
+  //     const resData = await ApiHelper.post(
+  //       "https://brandsandtalent.com/api/pricing/check-transaction",
+  //       obj
+  //     );
 
-      if (resData) {
-        if (resData.data.status.message == "Success!") {
-          const paymentData = resData.data.data;
-          if (paymentData.payment_status == "APPROVED") {
-            localStorage.setItem("paymentData", JSON.stringify(paymentData));
-            // alert('payment successfully completed')
-            const userId = localStorage.getItem("userId");
-            const userData = {
-              subscriptionPlan: selectedPaymentPeriod,
-              planName: selectedPaymentPlan,
-              user_id: userId,
-              transactionDate: paymentData?.transaction_date,
-              paymentStatus: paymentData?.payment_status,
-              paymentCurreny: paymentData?.payment_currency,
-              paymentAmount: paymentData?.payment_amount,
-            };
-            const responseSubscription = await ApiHelper.post(
-              API.subscriptionPlan,
-              userData
-            );
-            console.log("responseSubscription", responseSubscription);
-          }
-        }
-      }
-    } catch (err) {
-      console.error("Error:", err);
-    }
-  };
+  //     if (resData) {
+  //       if (resData.data.status.message == "Success!") {
+  //         const paymentData = resData.data.data;
+  //         if (paymentData.payment_status == "APPROVED") {
+  //           localStorage.setItem("paymentData", JSON.stringify(paymentData));
+  //           // alert('payment successfully completed')
+  //           const userId = localStorage.getItem("userId");
+  //           const userData = {
+  //             subscriptionPlan: selectedPaymentPeriod,
+  //             planName: selectedPaymentPlan,
+  //             user_id: userId,
+  //             transactionDate: paymentData?.transaction_date,
+  //             paymentStatus: paymentData?.payment_status,
+  //             paymentCurreny: paymentData?.payment_currency,
+  //             paymentAmount: paymentData?.payment_amount,
+  //           };
+  //           const responseSubscription = await ApiHelper.post(
+  //             API.subscriptionPlan,
+  //             userData
+  //           );
+  //           console.log("responseSubscription", responseSubscription);
+  //         }
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error("Error:", err);
+  //   }
+  // };
 
   useEffect(() => {
     getPricingList();
@@ -318,9 +343,17 @@ const KidsFormTwo = () => {
   //       .catch((err) => {});
   //   }
   // };
-  const choosePlan = async (index, item) => {
+  const choosePlan = async (index, item, from) => {
     console.log("item", item);
+    setPathFrom(from);
     console.log("selectedPlan", `annual-${selectedPlan}`);
+    if (from == "giftsubscription") {
+      setGiftSub(true);
+      localStorage.setItem("giftsubscription", true);
+    } else {
+      setGiftSub(false);
+      localStorage.setItem("giftsubscription", false);
+    }
     const selectedPlanItem =
       item.plan_type_annual.find(
         (plan) => `annual-${item._id}` === selectedPlan
@@ -354,8 +387,9 @@ const KidsFormTwo = () => {
     }
   };
 
-  const handlePayment = async (amount, currency, type, paymentOption) => {
+  const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
+      const userId = localStorage.getItem("userId");
       let apiUrl =
         paymentOption == "card" ? API.createPayment : API.createqrpayment;
       const response = await ApiHelper.post(apiUrl, { amount, currency, type });
@@ -363,6 +397,47 @@ const KidsFormTwo = () => {
       console.log("Payment Response:", response);
       setResponseUrl(response.data.url);
       localStorage.setItem("paymenttrans_id", response.data.trans_id);
+      if(plan == 'giftsubscription'){
+        const giftObj = {
+          "senderName": senderName,
+          "email": email,
+          "gift": [
+              {
+                  "receiversFirstName": recieversFirstName,
+                  "receiverEmail": recieverEmail,
+                  "message": enquiry,
+                  "subscriptionPlan": selectedPaymentPeriod,
+                  "planName": selectedPaymentPlan,
+                  "transId": response.data.trans_id,
+                  "paymentStatus": "Pending",
+              }
+          ],
+          "isActive": true
+      }
+
+      console.log('giftObj',giftObj)
+
+      const resGiftSub = await ApiHelper.post(
+        API.giftSubCreation,
+        giftObj
+      );
+      console.log("resGiftSub", resGiftSub);
+      }else{
+        const userData = {
+          subscriptionPlan: selectedPaymentPeriod,
+          planName: selectedPaymentPlan,
+          user_id: userId,
+          transId: response.data.trans_id,
+          paymentStatus:'Pending'
+        };
+        console.log('userData',userData)
+        const responseSubscription = await ApiHelper.post(
+          API.subscriptionPlan,
+          userData
+        );
+      console.log("responseSubscription", responseSubscription);
+
+      }
       setCheckout(true);
       setLoading(false)
       // Handle the response and update UI
@@ -372,6 +447,7 @@ const KidsFormTwo = () => {
   };
 
   const handleRadioChange = (type, id, planname) => (event) => {
+    console.log('type, id, planname',type, id, planname)
     setPlan(id);
     setSelectedPaymentPlan(planname);
     setSelectedPaymentPeriod(type);
@@ -564,7 +640,7 @@ const KidsFormTwo = () => {
                                     ? "choose-btn premium-btn"
                                     : ""
                                 }
-                                onClick={() => choosePlan(index, item)}
+                                onClick={() => choosePlan(index, item, "plan")}
                               >
                                 Choose plan
                               </div>
@@ -934,7 +1010,7 @@ const KidsFormTwo = () => {
                                       ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
                                       : ""
                                   }
-                                  onClick={() => choosePlan(index + 1, item)} // Adjust the index for the chosen plan
+                                  onClick={() => choosePlan(index + 1, item, "giftsubscription")} // Adjust the index for the chosen plan
                                 >
                                   Choose plan
                                 </div>
