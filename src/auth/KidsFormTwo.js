@@ -1051,6 +1051,7 @@ const KidsFormTwo = () => {
         <PaymentOptions
           selectedCurrency={selectedCurrency}
           selectedAmount={selectedAmount}
+          setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
