@@ -1,0 +1,49 @@
+/* GiftCard.css */
+.gift-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    /* background-color: #f9f9f9; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .gift-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .gift-card h3 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .gift-card p {
+    margin: 8px 0;
+    color: #555;
+  }
+  
+  .gift-card strong {
+    color: #333;
+  }
+
+  /* YourComponent.css */
+.edit-basicdetails-section-main {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to the next line */
+    justify-content: space-between; /* Space between cards */
+  }
+  
+  .gift-card {
+    flex: 0 0 calc(50% - 16px); /* Set to 50% width with margin adjustment */
+    margin: 8px; /* Margin around cards */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+  
+  @media (max-width: 600px) {
+    .gift-card {
+      flex: 0 0 100%; /* Stack cards on smaller screens */
+    }
+  }
+  
+  

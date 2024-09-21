@@ -9,7 +9,7 @@
     top: 0;
     left: 0;
     background: rgba(255, 255, 255, 0.8); /* Optional: Adds a background to the loader area */
-    z-index: 1000; /* Optional: Ensures loader is above other content */
+    z-index: 500; /* Optional: Ensures loader is above other content */
   }
   
   .spinner {
