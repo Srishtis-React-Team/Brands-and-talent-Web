@@ -622,7 +622,7 @@ const BrandSettings = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
               Manage Account
-              <div className="profile-image-edit-section edit-basicdetails-section-main">
+              <div className="profile-image-edit-section">
                 <div>
                   <div className="text-center">
                     <img

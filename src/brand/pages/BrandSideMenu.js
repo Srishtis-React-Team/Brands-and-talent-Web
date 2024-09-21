@@ -128,25 +128,29 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
       <nav className="brand-sidebar-container">
         <div className="brand-profile-not-sidemenu">
           <div className="profImg">
-            <img
-              className="profile-img"
-              src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
-              alt=""
-            />
+            {brandData?.brandImage && (
+              <img
+                className="profile-img"
+                src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
+                alt="profile"
+              />
+            )}
           </div>
         </div>
         <div className="talent-profile">
           <div className="talent-data-wrapper">
             <div className="profImg">
-              {!brandData?.brandImage[0] && (
+              {!brandData && (
                 <img className="profile-img" src={avatarImage} alt="" />
               )}
 
-              <img
-                className="profile-img"
-                src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
-                alt=""
-              />
+              {brandData?.brandImage && (
+                <img
+                  className="profile-img"
+                  src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
+                  alt="profile"
+                />
+              )}
             </div>
             <div className="talent-details">
               <div className="talent-name">{brandData?.brandName}</div>

@@ -15,10 +15,28 @@ const BrandPricing = () => {
   const location = useLocation();
   const [receivedData, setReceivedData] = useState(null);
 
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Get the current URL
+    const url = window.location.href;
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
+  }, []);
+
   const goBack = async () => {
-    navigate("/brand-logo", {
-      state: { data: receivedData },
-    });
+    navigate(`/brand-logo?userId=${userId}&userEmail=${userEmail}`);
   };
 
   useEffect(() => {
@@ -27,14 +45,18 @@ const BrandPricing = () => {
     }
   }, [location.state]);
 
+  useEffect(() => {
+    console.log(receivedData, "receivedData");
+  }, [receivedData]);
+
   const brandsSignup = async () => {
     navigate(`/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
       state: { data: receivedData },
     });
 
-    navigate("/brand-activated", {
-      state: { data: receivedData },
-    });
+    // navigate("/brand-activated", {
+    //   state: { data: receivedData },
+    // });
   };
 
   return (
@@ -59,7 +81,7 @@ const BrandPricing = () => {
             }}
           ></button>
         </div>
-        <Pricing from={"signup"} />
+        <Pricing from={"signup"} userType={"brands"} />
 
         <div className="dialog-footer">
           <button

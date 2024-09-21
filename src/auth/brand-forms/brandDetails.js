@@ -46,6 +46,56 @@ const BrandDetails = () => {
     getCountries();
   }, []);
 
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Get the current URL
+    const url = window.location.href;
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
+  }, []);
+
+  useEffect(() => {
+    getBrand();
+  }, [userId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${userId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "getBrand");
+            setBrandName(resData?.data?.data?.brandName);
+            setPhoneNumber(resData?.data?.data?.brandPhone);
+            setZipCode(resData?.data?.data?.brandZipCode);
+            setHearAboutUs(resData?.data?.data?.hearAboutUs);
+            setCountry(resData?.data?.data?.brandCountry);
+            setState(resData?.data?.data?.brandState);
+            getStates(resData?.data?.data?.brandCountry);
+            setKidsCity(resData?.data?.data?.brandCity);
+            setWebsiteLink(resData?.data?.data?.brandWebsite);
+            setLinkedinUrl(resData?.data?.data?.linkedinUrl);
+            setFacebookUrl(resData?.data?.data?.facebookUrl);
+            setTwitterUrl(resData?.data?.data?.facebookUrl);
+            setYourName(resData?.data?.data?.yourFullName);
+            setBrandType(resData?.data?.data?.brandType);
+          }
+        }
+      })
+      .catch((err) => {});
+  };
+
   const getCountries = async () => {
     await ApiHelper.get(API.listCountries)
       .then((resData) => {
@@ -181,7 +231,7 @@ const BrandDetails = () => {
     ) {
       const formData = {
         brandName: brandName,
-        brandEmail: receivedData?.brandEmail,
+        brandEmail: userEmail,
         brandPhone: phoneNumber,
         brandZipCode: zipCode,
         howHearAboutAs: hearAboutUs,
@@ -197,20 +247,20 @@ const BrandDetails = () => {
         facebookUrl: facebookUrl,
         twitterUrl: twitterUrl,
       };
-      await ApiHelper.post(
-        `${API.editBrands}${receivedData?.brandUserId}`,
-        formData
-      )
+      await ApiHelper.post(`${API.editBrands}${userId}`, formData)
         .then((resData) => {
+          console.log(resData, "resData");
+          console.log(resData?.data?.data, "resData?.data?.data");
           if (resData.data.status === true) {
+            // alert("sdsd");
             setMessage("Registered Successfully!");
             setTalentLocalStorage(resData.data.data);
-            navigate("/brand-logo", {
-              state: { data: resData.data.data },
-            });
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
+              navigate(
+                `/brand-logo?userId=${resData?.data?.data["brand_id"]}&userEmail=${resData?.data?.data?.brandEmail}`
+              );
             }, 1000);
           } else if (resData.data.status === false) {
             setMessage("Error Occured Try Again!");
@@ -358,6 +408,12 @@ const BrandDetails = () => {
     }
   };
 
+  const goBack = async () => {
+    navigate(
+      `/otp-verification-brands?userId=${userId}&userEmail=${userEmail}`
+    );
+  };
+
   return (
     <>
       <div className="form-dialog">
@@ -456,6 +512,7 @@ const BrandDetails = () => {
                     aria-label="Default select example"
                     onChange={selectBrandType}
                     style={{ fontSize: "14px" }}
+                    value={brandType}
                   >
                     <option value="" disabled selected>
                       Brand / Client Type
@@ -480,6 +537,7 @@ const BrandDetails = () => {
                       defaultCountry={"kh"}
                       className="material-mobile-style"
                       onChange={handleMobileChange}
+                      value={phoneNumber}
                     />
                     {mobileValidationError && (
                       <div className="invalid-fields">
@@ -507,15 +565,14 @@ const BrandDetails = () => {
                 </label>
                 <Select
                   placeholder="Search country..."
-                  options={countryList.map((country, index) => ({
+                  options={countryList?.map((country, index) => ({
                     value: country,
                     label: country,
                     key: index,
                   }))}
-                  value={country?.value}
+                  value={country ? { value: country, label: country } : null}
                   onChange={handleSelectedCountry}
                   isSearchable={true}
-                  styles={customStylesProfession}
                 />
                 {parentCountryError && (
                   <div className="invalid-fields">Please Select Country</div>
@@ -525,14 +582,13 @@ const BrandDetails = () => {
                 <label className="form-label">State</label>
                 <Select
                   placeholder="Select state..."
-                  options={stateList.map((state) => ({
+                  options={stateList?.map((state) => ({
                     value: state.stateId, // or whatever unique identifier you want to use
                     label: state.name,
                   }))}
-                  value={state?.label}
+                  value={state ? { value: state, label: state } : null}
                   onChange={handleSelectedState}
                   isSearchable={true}
-                  styles={customStylesProfession}
                 />
                 {stateError && (
                   <div className="invalid-fields">Please Select State</div>
@@ -545,14 +601,13 @@ const BrandDetails = () => {
                 <label className="form-label">City</label>
                 <Select
                   placeholder="Select City..."
-                  options={cityList.map((city) => ({
+                  options={cityList?.map((city) => ({
                     value: city.cityId, // or whatever unique identifier you want to use
                     label: city.name,
                   }))}
-                  value={kidsCity?.label}
+                  value={kidsCity ? { value: kidsCity, label: kidsCity } : null}
                   onChange={handleSelectedCity}
                   isSearchable={true}
-                  styles={customStylesProfession}
                 />
               </div>
               <div className="kids-form-section col-md-6">
@@ -626,6 +681,7 @@ const BrandDetails = () => {
                     aria-label="Default select example"
                     onChange={selectHearAbout}
                     style={{ fontSize: "14px" }}
+                    value={hearAboutUs}
                   >
                     <option value="" disabled selected>
                       How Did You Hear About Us?
@@ -696,6 +752,15 @@ const BrandDetails = () => {
           </div>
         </div>
         <div className="dialog-footer">
+          <button
+            type="button"
+            onClick={(e) => {
+              goBack();
+            }}
+            className="step-back"
+          >
+            Back
+          </button>
           <button
             type="button"
             className="step-continue"

@@ -42,11 +42,49 @@ const BrandLogo = () => {
   const [profileFileError, setProfileFileError] = useState(false);
   const [aboutYou, setAboutYou] = useState([]);
   const [whyWorkWithUs, setWhyWorkWithUs] = useState([]);
+  const [brandName, setBrandName] = useState("");
+
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Get the current URL
+    const url = window.location.href;
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
+  }, []);
+
+  useEffect(() => {
+    getBrand();
+  }, [userId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${userId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "getBrand");
+            setPortofolioFile(resData?.data?.data?.logo);
+            // setAboutYou(resData?.data?.data?.aboutBrand);
+            setBrandName(resData?.data?.data?.brandName);
+          }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const goBack = async () => {
-    navigate(`/otp-verification-brands?${receivedData}`, {
-      state: { data: receivedData },
-    });
+    navigate(`/brand-details?userId=${userId}&userEmail=${userEmail}`);
   };
 
   useEffect(() => {
@@ -145,18 +183,24 @@ const BrandLogo = () => {
       profileImage: profileFile,
       aboutBrand: aboutYou,
       whyWorkWithUs: whyWorkWithUs,
+      brandEmail: userEmail,
+      publicUrl: brandName.replace(/ /g, "-"),
     };
-    await ApiHelper.post(`${API.editBrands}${receivedData?.brand_id}`, formData)
+    await ApiHelper.post(`${API.editBrands}${userId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setBrandsLocalStorage(resData.data.data);
           setMessage("Registered Successfully!");
-          navigate("/brand-signup-plan-details", {
-            state: { data: receivedData },
-          });
-
           setOpenPopUp(true);
           setTimeout(function () {
+            // navigate(
+            //   `/brand-signup-plan-details?userId=${resData?.data?.data["brand_id"]}&userEmail=${resData?.data?.data?.brandEmail}`
+            // );
+            console.log(resData?.data?.data, "resData?.data?.data");
+            navigate(`/brand-signup-plan-details`, {
+              state: { data: resData?.data?.data },
+            });
+
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
@@ -178,6 +222,7 @@ const BrandLogo = () => {
   };
 
   const setBrandsLocalStorage = (data) => {
+    console.log("brandId", data?.brand_id);
     localStorage.setItem("brandId", data?.brand_id);
     localStorage.setItem("currentUser", data?.brand_id);
     localStorage.setItem("currentUserType", "brand");
