@@ -23,6 +23,11 @@ import {
 } from "libphonenumber-js";
 
 const KidsformOne = () => {
+  const [listOfLanguages, setListOfLanguages] = useState([]);
+  const [listOfNationalities, setListOfNationalities] = useState([]);
+  const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
+  const [languages, setLanguages] = useState([]);
+
   const {
     categoryList,
     professionList,
@@ -31,10 +36,65 @@ const KidsformOne = () => {
     nationalitiesList,
   } = useFieldDatas();
 
-  const paramsValues = window.location.search;
-  const urlParams = new URLSearchParams(paramsValues);
-  const userId = urlParams.get("userId");
-  const userEmail = urlParams.get("userEmail");
+  useEffect(() => {
+    if (nationalitiesList.length > 0) {
+      console.log(nationalitiesList, "nationalitiesList");
+      setListOfNationalities(nationalitiesList);
+      getKidsData();
+    }
+  }, [nationalitiesList]);
+
+  useEffect(() => {
+    if (languagesList.length > 0) {
+      console.log(languagesList, "languagesList");
+      setListOfLanguages(languagesList);
+      getKidsData();
+    }
+  }, [languagesList]);
+
+  useEffect(() => {
+    console.log(listOfLanguages, "LANGUAGES_GET listOfLanguages");
+    let selectedOptions;
+    if (listOfLanguages && listOfLanguages.length > 0) {
+      selectedOptions = languages.map((language) => {
+        return listOfLanguages.find((option) => option.label === language);
+      });
+    }
+    console.log(
+      selectedOptions,
+      "LANGUAGES_GET listOfLanguages selectedOptions"
+    );
+    setSelectedLanguageOptions(selectedOptions);
+  }, [languagesList, languages]);
+
+  console.log(nationalitiesList, "nationalitiesList");
+
+  // const paramsValues = window.location.search;
+  // const urlParams = new URLSearchParams(paramsValues);
+  // const userId = urlParams.get("userId");
+  // const userEmail = urlParams.get("userEmail");
+
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Get the current URL
+    const url = window.location.href;
+
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
+  }, []);
+
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
   const kidsImage = require("../assets/images/kidsImage.png");
@@ -82,7 +142,6 @@ const KidsformOne = () => {
   const [maritalStatus, setMaritalStatus] = useState("");
   const [nationality, setNationality] = useState([]);
   const [ethnicity, setEthnicity] = useState("");
-  const [languages, setLanguages] = useState([]);
   const [dateOfBirth, setDob] = useState("");
   const [aboutYou, setAboutYou] = useState([]);
   const [countryList, setCountryList] = useState([]);
@@ -157,10 +216,104 @@ const KidsformOne = () => {
 
   useEffect(() => {
     getCountries();
+  }, []);
+  useEffect(() => {
     if (userId) {
       getKidsData();
     }
-  }, []);
+  }, [userId]);
+
+  useEffect(() => {
+    if (languagesList.length > 0) {
+      console.log(languagesList, "languagesList");
+      setListOfLanguages(languagesList);
+    }
+  }, [languagesList]);
+
+  const getKidsData = async () => {
+    // alert("sd");
+    await ApiHelper.post(`${API.getTalentById}${userId}`)
+      .then((resData) => {
+        console.log(resData, "getKidsData");
+        if (resData.data.status === true) {
+          setKidsFillData(resData.data.data);
+          setParentFirstName(resData?.data?.data?.parentFirstName);
+          setParentLastName(resData?.data?.data?.parentLastName);
+          setParentEmail(resData?.data?.data?.parentEmail);
+          setParentMobile(resData?.data?.data?.parentMobileNo);
+          setAddress(resData?.data?.data?.parentAddress);
+          setKidsLegalFirstName(resData?.data?.data?.childFirstName);
+          setKidsLegalLastName(resData?.data?.data?.childLastName);
+          setDob(resData?.data?.data?.childDob);
+          setSelectedProfessions(resData.data.data?.profession);
+          // handleSelectedCountry({
+          //   value: resData?.data?.data?.parentCountry,
+          //   label: resData?.data?.data?.parentCountry,
+          //   key: 0,
+          // });
+          setCountry(resData?.data?.data?.parentCountry);
+          setState(resData?.data?.data?.parentState);
+          getStates(resData?.data?.data?.parentCountry);
+          setKidsCity(resData?.data?.data?.childCity);
+          setKidsPreferedFirstName(
+            resData?.data?.data?.preferredChildFirstname
+          );
+          setKidsPreferedLastName(resData?.data?.data?.preferredChildLastName);
+          setGender(resData?.data?.data?.childGender);
+          setLanguages(resData?.data?.data?.languages);
+          setNationality(resData?.data?.data?.childNationality);
+          setMaritalStatus(resData?.data?.data?.maritalStatus);
+          setEthnicity(resData?.data?.data?.childEthnicity);
+          setKidsCity(resData?.data?.data?.childCity);
+          setSelectedCategories(resData.data.data?.relevantCategories);
+
+          setAboutYou(resData.data.data?.childAboutYou);
+          setAge(resData.data.data?.age);
+          setCompletedJobs(resData.data.data?.noOfJobsCompleted);
+          setParentMobile(resData.data.data?.parentMobileNo);
+
+          const selectedOptions = resData?.data?.data?.languages.map(
+            (language) => {
+              return listOfLanguages.find(
+                (option) => option.label === language
+              );
+            }
+          );
+          setSelectedLanguageOptions(selectedOptions);
+
+          const selectedNationalityOptions =
+            resData.data.data?.childNationality.map((language) => {
+              return nationalitiesList.find(
+                (option) => option.label === language
+              );
+            });
+          setSelectedNationalityOptions(selectedNationalityOptions);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(selectedNationalityOptions, "selectedNationalityOptions");
+  }, [selectedNationalityOptions]);
+
+  useEffect(() => {
+    if (nationalitiesList.length > 0) {
+      const selectedNationalityOptions = kidsFillData?.childNationality.map(
+        (nationality) => {
+          const foundOption = nationalitiesList.find((option) => {
+            console.log(option, "option"); // Logs each option in nationalitiesList
+            return option.label === nationality; // Correct comparison with return
+          });
+          console.log(nationality, "nationality"); // Logs each nationality from childNationality
+          console.log(foundOption, "foundOption"); // Logs the found option
+
+          return foundOption; // Return the found option (or undefined if not found)
+        }
+      );
+      console.log(selectedNationalityOptions, "selectedNationalityOptions"); // Logs final result
+    }
+  }, [kidsFillData, nationalitiesList]);
 
   const handleDateChange = (e) => {
     setValue(e);
@@ -202,14 +355,16 @@ const KidsformOne = () => {
   };
 
   const selectLanguage = (selectedOptions) => {
+    console.log(selectedOptions, "selectedOptions");
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       setLanguages([]);
+      setSelectedLanguageOptions([]);
       return;
     }
-
     const selectedLanguages = selectedOptions.map((option) => option.value);
     setLanguages(selectedLanguages);
+    setSelectedLanguageOptions(selectedOptions);
   };
 
   const selectNationality = (selectedOptions) => {
@@ -301,45 +456,6 @@ const KidsformOne = () => {
       .catch((err) => {});
   };
 
-  const getKidsData = async () => {
-    await ApiHelper.post(`${API.getKidsData}${userId}`)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          setKidsFillData(resData.data.data);
-          setParentFirstName(resData?.data?.data?.parentFirstName);
-          setParentLastName(resData?.data?.data?.parentLastName);
-          setParentEmail(resData?.data?.data?.parentEmail);
-          setParentMobile(resData?.data?.data?.parentMobileNo);
-          setAddress(resData?.data?.data?.parentAddress);
-          setKidsLegalFirstName(resData?.data?.data?.childFirstName);
-          setKidsLegalLastName(resData?.data?.data?.childLastName);
-          setDob(resData?.data?.data?.childDob);
-          handleSelectedCountry({
-            value: resData?.data?.data?.parentCountry,
-            label: resData?.data?.data?.parentCountry,
-            key: 0,
-          });
-          setKidsPreferedFirstName(
-            resData?.data?.data?.preferredChildFirstname
-          );
-          setKidsPreferedLastName(resData?.data?.data?.preferredChildLastName);
-          setGender(resData?.data?.data?.childGender);
-          setLanguages(resData?.data?.data?.languages);
-          setNationality(resData?.data?.data?.childNationality);
-          setMaritalStatus(resData?.data?.data?.maritalStatus);
-          setEthnicity(resData?.data?.data?.childEthnicity);
-          setKidsCity(resData?.data?.data?.childCity);
-          setSelectedCategories([
-            ...selectedCategories,
-            ...resData.data.data?.relevantCategories,
-          ]);
-          setAboutYou(resData.data.data?.childAboutYou);
-          setAge(resData.data.data?.age);
-        }
-      })
-      .catch((err) => {});
-  };
-
   const handleSelectedCountry = (event) => {
     setParentCountryError(false);
 
@@ -384,6 +500,28 @@ const KidsformOne = () => {
   };
 
   const kidsSignUp = async () => {
+    console.log("Parent First Name:", parentFirstName);
+    console.log("Parent Email:", parentEmail);
+    console.log("Talent Password:", talentPassword);
+    console.log("Talent Confirm Password:", talentConfirmPassword);
+    console.log("Kids Legal First Name:", kidsLegalFirstName);
+    console.log("Gender:", gender);
+    console.log("Parent Mobile:", parentMobile);
+    console.log("Country:", country);
+    console.log("Address:", address);
+    console.log("Selected Professions:", selectedProfessions);
+    console.log("Selected Categories:", selectedCategories);
+    console.log("Kids Preferred First Name:", kidsPreferedFirstName);
+    console.log("Nationality:", nationality);
+    console.log("Ethnicity:", ethnicity);
+    console.log("Languages:", languages);
+    console.log("Date of Birth:", dateOfBirth);
+    console.log("Password Match:", passwordMatch);
+    console.log("Completed Jobs:", completedJobs);
+    console.log("Mobile Validation Error:", mobileValidationError);
+    console.log("Password Status:", passwordStatus);
+    console.log("passwordMatch:", passwordMatch);
+
     if (parentFirstName === "") {
       setparentFirstNameError(true);
     }
@@ -427,6 +565,9 @@ const KidsformOne = () => {
     if (nationality.length === 0) {
       setNationalityError(true);
     }
+    if (selectedNationalityOptions.length === 0) {
+      setNationalityError(true);
+    }
     if (ethnicity === "") {
       setEthnicityError(true);
     }
@@ -453,15 +594,14 @@ const KidsformOne = () => {
       selectedCategories.length >= 3 &&
       selectedCategories.length <= 6 &&
       kidsPreferedFirstName !== "" &&
-      nationality !== "" &&
+      nationality.length !== 0 &&
       ethnicity !== "" &&
       languages.length !== 0 &&
       dateOfBirth !== "" &&
       passwordMatch === true &&
       completedJobs !== "" &&
-      !mobileValidationError &&
-      passwordStatus &&
-      passwordMatch
+      mobileValidationError == false &&
+      passwordStatus
     ) {
       const formData = {
         parentFirstName: parentFirstName,
@@ -501,7 +641,10 @@ const KidsformOne = () => {
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
-                navigate(`/talent-otp?${resData.data.data}`);
+                console.log(resData.data, "resData.data");
+                navigate(
+                  `/talent-otp?userId=${resData.data["user_id"]}&userEmail=${resData.data.data}`
+                );
               }, 1000);
             } else if (resData.data.status === false) {
               setIsLoading(false);
@@ -525,7 +668,7 @@ const KidsformOne = () => {
               setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(
-                  `/talent-signup-plan-details?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
+                  `/talent-otp?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
                 );
               }, 1000);
             } else if (resData.data.status === false) {
@@ -855,6 +998,12 @@ const KidsformOne = () => {
   useEffect(() => {
     console.log(selectedProfessions, "selectedProfessions");
   }, [selectedProfessions]);
+  useEffect(() => {
+    console.log(selectedNationalityOptions, "selectedNationalityOptions");
+  }, [selectedNationalityOptions]);
+  useEffect(() => {
+    console.log(selectedCategories, "selectedCategories");
+  }, [selectedCategories]);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -1014,15 +1163,17 @@ const KidsformOne = () => {
                         </label>
                         <Select
                           placeholder="Search country..."
-                          options={countryList.map((country, index) => ({
+                          options={countryList?.map((country, index) => ({
                             value: country,
                             label: country,
                             key: index,
                           }))}
-                          value={country?.value}
+                          // value={{ value: country, label: country }}
+                          value={
+                            country ? { value: country, label: country } : null
+                          }
                           onChange={handleSelectedCountry}
                           isSearchable={true}
-                          styles={customStylesProfession}
                         />
                         {parentCountryError && (
                           <div className="invalid-fields">
@@ -1036,14 +1187,13 @@ const KidsformOne = () => {
                         <label className="form-label">State</label>
                         <Select
                           placeholder="Select state..."
-                          options={stateList.map((state) => ({
+                          options={stateList?.map((state) => ({
                             value: state.stateId, // or whatever unique identifier you want to use
                             label: state.name,
                           }))}
-                          value={state?.label}
+                          value={state ? { value: state, label: state } : null}
                           onChange={handleSelectedState}
                           isSearchable={true}
-                          styles={customStylesProfession}
                         />
                         {stateError && (
                           <div className="invalid-fields">
@@ -1055,14 +1205,17 @@ const KidsformOne = () => {
                         <label className="form-label">City</label>
                         <Select
                           placeholder="Select City..."
-                          options={cityList.map((city) => ({
+                          options={cityList?.map((city) => ({
                             value: city.cityId, // or whatever unique identifier you want to use
                             label: city.name,
                           }))}
-                          value={kidsCity?.label}
+                          value={
+                            kidsCity
+                              ? { value: kidsCity, label: kidsCity }
+                              : null
+                          }
                           onChange={handleSelectedCity}
                           isSearchable={true}
-                          styles={customStylesProfession}
                         />
                       </div>
                     </div>
@@ -1126,9 +1279,10 @@ const KidsformOne = () => {
                           )}
                           {talentPassword && !passwordStatus && (
                             <div className="invalid-fields password-error-box">
-                              1 capital letter (A, B, C...) 1 small letter (a,
-                              b, c...) 1 number (1, 2, 3...) 1 special symbol
-                              (!, @, #...)
+                              Your password must be at least 8 characters long
+                              and include at least: 1 capital letter (A, B,
+                              C...) 1 small letter (a, b, c...) 1 number (1, 2,
+                              3...) 1 special symbol (!, @, #...)
                             </div>
                           )}
                         </div>
@@ -1186,6 +1340,7 @@ const KidsformOne = () => {
                           defaultCountry={"kh"}
                           className="material-mobile-style"
                           onChange={handleMobileChange}
+                          value={parentMobile}
                         />
 
                         {mobileValidationError && (
@@ -1237,33 +1392,32 @@ const KidsformOne = () => {
                       <span>Your Child Details</span>
                     </div>
                     <div className="profession-section-cover">
-                      <div className="kids-form-row row">
-                        <div className="kids-form-section col-md-12 mb-3">
-                          <label className="form-label pay-info">
-                            Profession / Skills (Choose any 1 to 5)
-                            <span className="mandatory">*</span>
-                          </label>
-                          <div>
-                            <Select
-                              defaultValue={[]}
-                              isMulti
-                              name="professions"
-                              options={professionList}
-                              className="basic-multi-select"
-                              classNamePrefix="select"
-                              placeholder="Search for Profession / Skills"
-                              onChange={handleProfessionChange}
-                              styles={customStylesProfession}
-                              value={selectedProfessions}
-                              menuPlacement="auto"
-                              menuPortalTarget={document.body}
-                              menuShouldScrollIntoView={false}
-                            />
-                            {professionError && (
-                              <div className="invalid-fields">
-                                Please choose Profession
-                              </div>
-                            )}
+                      <div className="row">
+                        <div className="kids-form-section">
+                          <div className="mb-3">
+                            <label className="form-label pay-info">
+                              Profession / Skills (Choose any 5)
+                              <span className="mandatory">*</span>
+                            </label>
+                            <div>
+                              <Select
+                                defaultValue={[]}
+                                isMulti
+                                name="professions"
+                                options={professionList}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                placeholder="Search for Profession / Skills"
+                                onChange={handleProfessionChange}
+                                styles={customStylesProfession}
+                                value={selectedProfessions}
+                              />
+                              {professionError && (
+                                <div className="invalid-fields">
+                                  Please choose Profession
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1289,7 +1443,6 @@ const KidsformOne = () => {
                               className="dynamic-profession newAlign"
                             >
                               <div className="algSepc">
-                                {" "}
                                 <div className="row">
                                   <div className="mb-3 col-md-3 divSep">
                                     <input
@@ -1337,28 +1490,7 @@ const KidsformOne = () => {
                                       min="0"
                                     ></input>
                                   </div>
-                                  {/* <div className="mb-3 col-md-2 divSep">
-                                    <input
-                                      type="number"
-                                      className="form-control profession-input"
-                                      value={profession.perMonthSalary || ""}
-                                      onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (
-                                          /^\d*\.?\d*$/.test(value) &&
-                                          (value >= 0 || value === "")
-                                        ) {
-                                          handleDetailChange(
-                                            index,
-                                            "perMonthSalary",
-                                            value
-                                          );
-                                        }
-                                      }}
-                                      placeholder="$/month"
-                                      min="0"
-                                    ></input>
-                                  </div> */}
+
                                   {profession?.value == "Creator" && (
                                     <>
                                       <div className="mb-3 col-md-2 divSep">
@@ -1411,10 +1543,10 @@ const KidsformOne = () => {
                                       </div>
                                     </>
                                   )}
-                                </div>{" "}
+                                </div>
                               </div>
 
-                              <div className="offer-wrapper pt-0">
+                              <div className="offer-wrapper">
                                 <input
                                   className="profession-checkbox"
                                   id={profession.label}
@@ -1621,15 +1753,13 @@ const KidsformOne = () => {
                         <Select
                           isMulti
                           name="colors"
-                          options={languagesList}
+                          options={listOfLanguages}
                           valueField="value"
                           className="basic-multi-select"
                           classNamePrefix="select"
                           onChange={(value) => selectLanguage(value)}
                           styles={customStylesProfession}
-                          menuPlacement="auto"
-                          menuPortalTarget={document.body}
-                          menuShouldScrollIntoView={false}
+                          value={selectedLanguageOptions}
                         />
                         {languageError && (
                           <div className="invalid-fields">
@@ -1698,7 +1828,7 @@ const KidsformOne = () => {
                         </label>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                           <DatePicker
-                            value={value}
+                            value={dateOfBirth}
                             onChange={(newValue) => {
                               handleDateChange(newValue);
                             }}

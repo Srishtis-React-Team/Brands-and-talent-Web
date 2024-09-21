@@ -683,7 +683,7 @@ input[type="radio"] {
   justify-content: space-between;
   align-items: center;
   height: auto;
-  min-height: 64px;
+  min-height: 59px;
   top: 0;
   position: fixed;
   width: 100%;

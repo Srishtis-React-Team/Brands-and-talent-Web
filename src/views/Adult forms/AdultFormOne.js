@@ -37,6 +37,40 @@ const AdultFormOne = () => {
     languagesList,
     nationalitiesList,
   } = useFieldDatas();
+  const [listOfNationalities, setListOfNationalities] = useState([]);
+  const [listOfLanguages, setListOfLanguages] = useState([]);
+  const [languages, setLanguages] = useState([]);
+
+  useEffect(() => {
+    if (nationalitiesList.length > 0) {
+      console.log(nationalitiesList, "nationalitiesList");
+      setListOfNationalities(nationalitiesList);
+      getTalentById();
+    }
+  }, [nationalitiesList]);
+
+  useEffect(() => {
+    if (languagesList.length > 0) {
+      console.log(languagesList, "languagesList");
+      setListOfLanguages(languagesList);
+      getTalentById();
+    }
+  }, [languagesList]);
+
+  useEffect(() => {
+    console.log(listOfLanguages, "LANGUAGES_GET listOfLanguages");
+    let selectedOptions;
+    if (listOfLanguages && listOfLanguages.length > 0) {
+      selectedOptions = languages.map((language) => {
+        return listOfLanguages.find((option) => option.label === language);
+      });
+    }
+    console.log(
+      selectedOptions,
+      "LANGUAGES_GET listOfLanguages selectedOptions"
+    );
+    setSelectedLanguageOptions(selectedOptions);
+  }, [languagesList, languages]);
 
   const [talentData, setTalentData] = useState();
 
@@ -45,13 +79,63 @@ const AdultFormOne = () => {
       getTalentById();
     }
   }, [currentUserId]);
+  const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
 
   const getTalentById = async () => {
+    // alert("d");
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            setTalentData(resData.data.data, "resData.data.data");
+            setAdultsLegalFirstName(resData?.data?.data?.adultLegalFirstName);
+            setAdultsLegalLastName(resData?.data?.data?.adultLegalLastName);
+            setAdultsPreferedFirstName(
+              resData?.data?.data?.preferredChildFirstname
+            );
+            setAdultsPreferedLastName(
+              resData?.data?.data?.preferredChildLastName
+            );
+            setAdultsPhone(resData?.data?.data?.childPhone);
+            setCompletedJobs(resData?.data?.data?.noOfJobsCompleted);
+            setAddress(resData?.data?.data?.parentAddress);
+            setDob(resData?.data?.data?.childDob);
+            setCountry(resData?.data?.data?.parentCountry);
+            setState(resData?.data?.data?.parentState);
+            setKidsCity(resData?.data?.data?.childCity);
+            setGender(resData?.data?.data?.childGender);
+            console.log(resData?.data?.data?.languages, "languages");
+            setLanguages(resData?.data?.data?.languages);
+
+            const selectedOptions = resData?.data?.data?.languages.map(
+              (language) => {
+                return listOfLanguages.find(
+                  (option) => option.label === language
+                );
+              }
+            );
+            setSelectedLanguageOptions(selectedOptions);
+            setNationality(resData?.data?.data?.childNationality);
+            setMaritalStatus(resData?.data?.data?.maritalStatus);
+            setEthnicity(resData?.data?.data?.childEthnicity);
+            setKidsCity(resData?.data?.data?.childCity);
+            setSelectedCategories(resData.data.data?.relevantCategories);
+            setAge(resData.data.data?.age);
+            const selectedProfessionOptions = resData.data.data?.profession.map(
+              (profession) => {
+                return professionList.find(
+                  (option) => option.label === profession
+                );
+              }
+            );
+            setSelectedProfessions(resData.data.data?.profession);
+
+            const selectedNationalityOptions =
+              resData.data.data?.childNationality.map((language) => {
+                return nationalitiesList.find(
+                  (option) => option.label === language
+                );
+              });
+            setSelectedNationalityOptions(selectedNationalityOptions);
           }
         }
       })
@@ -125,7 +209,6 @@ const AdultFormOne = () => {
   );
 
   const [ethnicity, setEthnicity] = useState("");
-  const [languages, setLanguages] = useState([]);
   const [dateOfBirth, setDob] = useState("");
   const [kidsEmail, setKidsEmail] = useState("");
 
@@ -988,6 +1071,7 @@ const AdultFormOne = () => {
                         }}
                         onKeyDown={handleAdultLegalFirstNameKeyPress}
                         placeholder="Enter Legal First Name"
+                        value={adultsLegalFirstName}
                       ></input>
                       {adultsLegalFirstNameError && (
                         <div className="invalid-fields">
@@ -1012,6 +1096,7 @@ const AdultFormOne = () => {
                         }}
                         onKeyDown={handleAdultLegalLastNameKeyPress}
                         placeholder="Enter Legal Last name"
+                        value={adultsLegalLastName}
                       ></input>
                       {adultsLegalLastNameError && (
                         <div className="invalid-fields">
@@ -1038,6 +1123,7 @@ const AdultFormOne = () => {
                         }}
                         onKeyDown={handleAdultPrefferedFirstNameKeyPress}
                         placeholder="Enter Preferred  First Name"
+                        value={adultsPreferedFirstName}
                       ></input>
                       {adultsPreferedFirstNameError && (
                         <div className="invalid-fields">
@@ -1060,6 +1146,7 @@ const AdultFormOne = () => {
                           adultsPrefferedLastNameChange(e);
                           setAdultsPreferedLastNameError(false);
                         }}
+                        value={adultsPreferedLastName}
                         onKeyDown={handleAdultPrefferedLastNameKeyPress}
                         placeholder="Preferred  Legal Last name"
                       ></input>
@@ -1081,15 +1168,17 @@ const AdultFormOne = () => {
                       <span className="mandatory">*</span>
                       <Select
                         placeholder="Search country..."
-                        options={countryList.map((country, index) => ({
+                        options={countryList?.map((country, index) => ({
                           value: country,
                           label: country,
                           key: index,
                         }))}
-                        value={country?.value}
+                        // value={{ value: country, label: country }}
+                        value={
+                          country ? { value: country, label: country } : null
+                        }
                         onChange={handleSelectedCountry}
                         isSearchable={true}
-                        styles={customStylesProfession}
                       />
                       {countryError && (
                         <div className="invalid-fields">
@@ -1101,14 +1190,13 @@ const AdultFormOne = () => {
                       <label className="form-label">State</label>
                       <Select
                         placeholder="Select state..."
-                        options={stateList.map((state) => ({
+                        options={stateList?.map((state) => ({
                           value: state.stateId, // or whatever unique identifier you want to use
                           label: state.name,
                         }))}
-                        value={state?.label}
+                        value={state ? { value: state, label: state } : null}
                         onChange={handleSelectedState}
                         isSearchable={true}
-                        styles={customStylesProfession}
                       />
                     </div>
                   </div>
@@ -1117,14 +1205,15 @@ const AdultFormOne = () => {
                       <label className="form-label">City</label>
                       <Select
                         placeholder="Select City..."
-                        options={cityList.map((city) => ({
+                        options={cityList?.map((city) => ({
                           value: city.cityId, // or whatever unique identifier you want to use
                           label: city.name,
                         }))}
-                        value={kidsCity?.label}
+                        value={
+                          kidsCity ? { value: kidsCity, label: kidsCity } : null
+                        }
                         onChange={handleSelectedCity}
                         isSearchable={true}
-                        styles={customStylesProfession}
                       />
                     </div>
                     <div className="kids-form-section col-md-6">
@@ -1145,6 +1234,7 @@ const AdultFormOne = () => {
                         defaultCountry={"kh"}
                         className="material-mobile-style"
                         onChange={handleMobileChange}
+                        value={adultsPhone}
                       />
                       {adultsPhoneError && (
                         <div className="invalid-fields">
@@ -1190,6 +1280,7 @@ const AdultFormOne = () => {
                         className="form-select"
                         aria-label="Default select example"
                         onChange={selectMaritalStatus}
+                        value={maritalStatus}
                       >
                         <option value="" disabled selected>
                           Select Marital Status
@@ -1209,6 +1300,7 @@ const AdultFormOne = () => {
                         className="form-select"
                         aria-label="Default select example"
                         onChange={selectEthnicity}
+                        value={ethnicity}
                       >
                         <option value="" disabled selected>
                           Select Ethnicity
@@ -1233,6 +1325,9 @@ const AdultFormOne = () => {
                         onChange={(value) => selectNationality(value)}
                         styles={customStylesProfession}
                         value={selectedNationalityOptions}
+                        menuPlacement="auto"
+                        menuPortalTarget={document.body}
+                        menuShouldScrollIntoView={false}
                       />
                     </div>
                   </div>
@@ -1243,7 +1338,7 @@ const AdultFormOne = () => {
                       <div className="mb-3">
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                           <DatePicker
-                            value={value}
+                            value={dateOfBirth}
                             onChange={(newValue) => {
                               handleDateChange(newValue);
                             }}
@@ -1270,6 +1365,7 @@ const AdultFormOne = () => {
                         classNamePrefix="select"
                         onChange={(value) => selectLanguage(value)}
                         styles={customStyles}
+                        value={selectedLanguageOptions}
                       />
                       {languagesError && (
                         <div className="invalid-fields">

@@ -20,19 +20,28 @@ const OTPComponent = () => {
   const [userId, setUserId] = useState(null);
   const [emailID, setEmailID] = useState(null);
 
-  const url = window.location.href;
-  const queryString = url.split("?")[1];
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    const storedEmailID = localStorage.getItem("emailID");
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-    if (storedEmailID) {
-      setEmailID(storedEmailID);
-    }
+    // Get the current URL
+    const url = window.location.href;
+
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
+
+  // const url = window.location.href;
+  // const userId = url.split("?")[1];
 
   const handleChange = (value, index) => {
     const newOtp = [...otp];
@@ -71,7 +80,7 @@ const OTPComponent = () => {
   const otpVerification = async (newOTP) => {
     const formData = {
       otp: newOTP,
-      adultEmail: queryString,
+      adultEmail: userEmail,
     };
     setIsLoading(true);
     await ApiHelper.post(API.otpVerificationAdult, formData)
@@ -147,7 +156,7 @@ const OTPComponent = () => {
 
   const resendOtp = async (newOTP) => {
     const formData = {
-      adultEmail: queryString,
+      adultEmail: userEmail,
     };
     setIsLoading(true);
 
@@ -172,6 +181,10 @@ const OTPComponent = () => {
       .catch((err) => {
         setIsLoading(false);
       });
+  };
+
+  const goBack = async () => {
+    navigate(`/adult-signup?userId=${userId}&userEmail=${userEmail}`);
   };
 
   return (
@@ -202,7 +215,7 @@ const OTPComponent = () => {
           </div>
           <div className="otp-title">OTP Verification</div>
           <div className="otp-enter">Please enter the OTP we just sent to</div>
-          <div className="otp-mail">{queryString}</div>
+          <div className="otp-mail">{userEmail}</div>
           <div className="otp-boxes">
             <div onPaste={handlePaste}>
               {otp.map((value, index) => (
@@ -232,6 +245,14 @@ const OTPComponent = () => {
           <div className="otp-info" onClick={otpResend}>
             Didn’t received the OTP?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
+          </div>
+          <div
+            className="otp-back"
+            onClick={(e) => {
+              goBack();
+            }}
+          >
+            <p>Back</p>
           </div>
         </div>
       </div>
