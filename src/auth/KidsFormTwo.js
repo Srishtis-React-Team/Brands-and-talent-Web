@@ -12,6 +12,22 @@ import { useNavigate } from "react-router";
 import "../assets/css/register.css";
 import Pricing from "../views/pricing.js";
 import Loader from "../views/Loader.js";
+import { useTheme, useMediaQuery } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import PaymentOptions from "../views/PaymentOptions.js";
+import CheckoutComponent from "../views/CheckoutComponent.js";
+
+
+
+import {
+  parsePhoneNumber,
+  isValidPhoneNumber,
+  getNumberType,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
+
 
 const KidsFormTwo = () => {
   const theme = useTheme();
@@ -79,6 +95,10 @@ const KidsFormTwo = () => {
     } else {
       setMobileValidationError(true);
     }
+  };
+
+  const editKids = async () => {
+    navigate(`/talent-signup-files-details?userId=${userId}`);
   };
 
   const handleEmailChange = (e) => {
@@ -201,6 +221,72 @@ const KidsFormTwo = () => {
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [pathFrom, setPathFrom] = useState("");
 
+  const handleRadioChange = (type, id, planname) => (event) => {
+    console.log('type, id, planname',type, id, planname)
+    setPlan(id);
+    setSelectedPaymentPlan(planname);
+    setSelectedPaymentPeriod(type);
+  };
+
+  const handlePayment = async (amount, currency, type, paymentOption, plan) => {
+    try {
+      const userId = localStorage.getItem("userId");
+      let apiUrl =
+        paymentOption == "card" ? API.createPayment : API.createqrpayment;
+      const response = await ApiHelper.post(apiUrl, { amount, currency, type });
+      // await axios.post('/api/pricing/create-payment', { amount, currency, type });
+      console.log("Payment Response:", response);
+      setResponseUrl(response.data.url);
+      localStorage.setItem("paymenttrans_id", response.data.trans_id);
+      if(plan == 'giftsubscription'){
+        const giftObj = {
+          "senderName": senderName,
+          "email": email,
+          "gift": [
+              {
+                  "receiversFirstName": recieversFirstName,
+                  "receiverEmail": recieverEmail,
+                  "message": enquiry,
+                  "subscriptionPlan": selectedPaymentPeriod,
+                  "planName": selectedPaymentPlan,
+                  "transId": response.data.trans_id,
+                  "paymentStatus": "Pending",
+              }
+          ],
+          "isActive": true
+      }
+
+      console.log('giftObj',giftObj)
+
+      const resGiftSub = await ApiHelper.post(
+        API.giftSubCreation,
+        giftObj
+      );
+      console.log("resGiftSub", resGiftSub);
+      }else{
+        const userData = {
+          subscriptionPlan: selectedPaymentPeriod,
+          planName: selectedPaymentPlan,
+          user_id: userId,
+          transId: response.data.trans_id,
+          paymentStatus:'Pending'
+        };
+        console.log('userData',userData)
+        const responseSubscription = await ApiHelper.post(
+          API.subscriptionPlan,
+          userData
+        );
+      console.log("responseSubscription", responseSubscription);
+
+      }
+      setCheckout(true);
+      setLoading(false)
+      // Handle the response and update UI
+    } catch (error) {
+      console.error("Error during payment:", error);
+    }
+  };
+
   useEffect(() => {
     if (selectedPaymentOption == "qr") {
       setLoading(true)
@@ -307,12 +393,22 @@ const KidsFormTwo = () => {
     console.log("selectedPlanItem", selectedPlanItem);
     const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
     const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
+    const afterDiscount = selectedPlanItem ? selectedPlanItem.afterDiscount : "N/A";
+
     console.log("price", price);
     const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
     const match = price.match(regex);
     if (match) {
+      let amount;
+      if(afterDiscount.includes("per year")){
+        const match = afterDiscount.match(/(\w+)\s([\d.,]+)\sper\syear/);
+        if (match) {
+          amount = parseFloat(match[2]); // Extracts the numeric part
+        }
+      }else{
+       amount = parseFloat(match[2]); // 29.99
+      }
       const currency = match[1].toUpperCase(); // "USD"
-      const amount = parseFloat(match[2]); // 29.99
       const duration = match[3]; // "month"
       setSelectedCurrency(currency);
       setSelectedAmount(amount);
@@ -329,71 +425,9 @@ const KidsFormTwo = () => {
       console.error("Price string format is incorrect");
     }
 
-  const handlePayment = async (amount, currency, type, paymentOption, plan) => {
-    try {
-      const userId = localStorage.getItem("userId");
-      let apiUrl =
-        paymentOption == "card" ? API.createPayment : API.createqrpayment;
-      const response = await ApiHelper.post(apiUrl, { amount, currency, type });
-      // await axios.post('/api/pricing/create-payment', { amount, currency, type });
-      console.log("Payment Response:", response);
-      setResponseUrl(response.data.url);
-      localStorage.setItem("paymenttrans_id", response.data.trans_id);
-      if(plan == 'giftsubscription'){
-        const giftObj = {
-          "senderName": senderName,
-          "email": email,
-          "gift": [
-              {
-                  "receiversFirstName": recieversFirstName,
-                  "receiverEmail": recieverEmail,
-                  "message": enquiry,
-                  "subscriptionPlan": selectedPaymentPeriod,
-                  "planName": selectedPaymentPlan,
-                  "transId": response.data.trans_id,
-                  "paymentStatus": "Pending",
-              }
-          ],
-          "isActive": true
-      }
+  
 
-      console.log('giftObj',giftObj)
-
-      const resGiftSub = await ApiHelper.post(
-        API.giftSubCreation,
-        giftObj
-      );
-      console.log("resGiftSub", resGiftSub);
-      }else{
-        const userData = {
-          subscriptionPlan: selectedPaymentPeriod,
-          planName: selectedPaymentPlan,
-          user_id: userId,
-          transId: response.data.trans_id,
-          paymentStatus:'Pending'
-        };
-        console.log('userData',userData)
-        const responseSubscription = await ApiHelper.post(
-          API.subscriptionPlan,
-          userData
-        );
-      console.log("responseSubscription", responseSubscription);
-
-      }
-      setCheckout(true);
-      setLoading(false)
-      // Handle the response and update UI
-    } catch (error) {
-      console.error("Error during payment:", error);
-    }
-  };
-
-  const handleRadioChange = (type, id, planname) => (event) => {
-    console.log('type, id, planname',type, id, planname)
-    setPlan(id);
-    setSelectedPaymentPlan(planname);
-    setSelectedPaymentPeriod(type);
-  };
+  
 
     // const formData = {
     // };
