@@ -636,6 +636,7 @@ const KidsformOne = () => {
         await ApiHelper.post(API.kidsSignUp, formData)
           .then((resData) => {
             if (resData.data.status === true) {
+              localStorage.setItem("userId", resData.data.user_id);
               setIsLoading(false);
               setMessage("Successfully Registered");
               setOpenPopUp(true);

@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Modal from "react-modal";
 import "../assets/css/register.css";
+import GiftCard from "../auth/GiftCard";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -72,6 +73,7 @@ const TalentSettings = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [paymentDetailsDataArray, setPaymentDetailsDataArray] = useState([]);
+  const [activeGifts,setActiveGifts] = useState([])
 
   const paymentData = localStorage.getItem("paymentData");
   const paymentDetails = JSON.parse(paymentData);
@@ -96,7 +98,8 @@ const TalentSettings = () => {
       "https://brandsandtalent.com/api/users/fetchPaymentDetails",
       obj
     );
-    console.log("paymentDetailsData", paymentDetailsData);
+    console.log("paymentDetailsData", paymentDetailsData?.data?.data?.gift);
+    setActiveGifts(paymentDetailsData?.data?.data?.gift);
     setPaymentDetailsDataArray(paymentDetailsData.data.data);
   };
 
@@ -411,6 +414,11 @@ const TalentSettings = () => {
                   {...a11yProps(2)}
                   style={{ textTransform: "capitalize" }}
                 />
+                <Tab
+                  label="Gift subscription"
+                  {...a11yProps(3)}
+                  style={{ textTransform: "capitalize" }}
+                />
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
@@ -606,37 +614,42 @@ const TalentSettings = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
-              {/* Manage Account */}
-              <div className="edit-basicdetails-section-main">
-                <div>
-                  {console.log("consoling the exact", paymentDetailsDataArray)}
-                  <h6>
-                    Transaction date :{" "}
-                    <span>{paymentDetailsDataArray?.transactionDate}</span>
-                  </h6>
-                  <h6>
-                    Payment status :{" "}
-                    <span>{paymentDetailsDataArray?.paymentStatus}</span>
-                  </h6>
-                  <h6>
-                    Payment currency :{" "}
-                    <span>{paymentDetailsDataArray?.paymentCurreny}</span>
-                  </h6>
-                  <h6>
-                    Payment amount :{" "}
-                    <span>{paymentDetailsDataArray?.paymentAmount}</span>
-                  </h6>
-                  <h6>
-                    Payment period :{" "}
-                    <span>{paymentDetailsDataArray?.subscriptionPlan}</span>
-                  </h6>
-                  <h6>
-                    Payment plan :{" "}
-                    <span>{paymentDetailsDataArray?.planName}</span>
-                  </h6>
+                {/* Manage Account */}
+                <div className="edit-basicdetails-section-main">
+                  <div className="payment-details-card">
+                    {console.log("consoling the exact", paymentDetailsDataArray)}
+                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
+                      Transaction Date :  <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.transactionDate}</span>
+                    </h6>
+                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
+                      Payment Status : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.paymentStatus}</span>
+                    </h6>
+                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
+                      Payment Currency : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.paymentCurreny}</span>
+                    </h6>
+                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
+                      Payment Amount : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.paymentAmount}</span>
+                    </h6>
+                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
+                      Payment Period : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.subscriptionPlan}</span>
+                    </h6>
+                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
+                      Payment Plan : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.planName}</span>
+                    </h6>
+                  </div>
                 </div>
-              </div>
-            </CustomTabPanel>
+              </CustomTabPanel>
+        <CustomTabPanel value={valueTabs} index={3}>
+      <div className="edit-basicdetails-section-main">
+        {activeGifts.length > 0 ? (
+          activeGifts.map((gift) => (
+            <GiftCard key={gift._id} gift={gift} />
+          ))
+        ) : (
+          <p>No active gifts available.</p>
+        )}
+      </div>
+    </CustomTabPanel>
           </Box>
         </div>
       </main>
