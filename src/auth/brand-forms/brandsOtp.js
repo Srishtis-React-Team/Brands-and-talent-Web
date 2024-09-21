@@ -11,6 +11,8 @@ import "../../assets/css/dashboard.css";
 import { useLocation } from "react-router-dom";
 
 const BrandsOtp = React.memo((props) => {
+  const location = useLocation();
+
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
@@ -18,39 +20,29 @@ const BrandsOtp = React.memo((props) => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [emailID, setEmailID] = useState(null);
-  const [receivedData, setReceivedData] = useState(null);
 
-  const url = window.location.href;
-  const queryString = url.split("?")[1];
-  const location = useLocation();
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    if (location.state && location.state.data) {
-      setReceivedData(location.state.data);
-    }
-  }, [location.state]);
+    // Get the current URL
+    const url = window.location.href;
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
 
-  useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    const storedEmailID = localStorage.getItem("emailID");
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-    if (storedEmailID) {
-      setEmailID(storedEmailID);
-    }
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
-  useEffect(() => {
-    console.log(receivedData, "Brand Otp");
-  }, [receivedData]);
-
   const goBack = async () => {
-    navigate("/brand-signup", {
-      state: { data: receivedData },
-    });
+    navigate(`/brand-signup?userId=${userId}&userEmail=${userEmail}`);
   };
 
   const handleChange = (value, index) => {
@@ -90,7 +82,7 @@ const BrandsOtp = React.memo((props) => {
   const otpVerification = async (newOTP) => {
     const formData = {
       otp: newOTP,
-      brandEmail: queryString,
+      brandEmail: userEmail,
     };
     setIsLoading(true);
 
@@ -102,9 +94,12 @@ const BrandsOtp = React.memo((props) => {
           setTimeout(function () {
             setOpenPopUp(false);
             setIsLoading(false);
-            navigate("/brand-details", {
-              state: { data: resData?.data?.data },
-            });
+            // navigate("/brand-details", {
+            //   state: { data: resData?.data?.data },
+            // });
+            navigate(
+              `/brand-details?userId=${resData?.data?.data["brandUserId"]}&userEmail=${resData?.data?.data?.brandEmail}`
+            );
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("Enter Correct OTP");
@@ -128,7 +123,7 @@ const BrandsOtp = React.memo((props) => {
 
   const resendOtp = async (newOTP) => {
     const formData = {
-      brandEmail: queryString,
+      brandEmail: userEmail,
     };
     setIsLoading(true);
     await ApiHelper.post(API.otpResendBrands, formData)
@@ -182,7 +177,7 @@ const BrandsOtp = React.memo((props) => {
           </div>
           <div className="otp-title">OTP Verification</div>
           <div className="otp-enter">Please enter the OTP we just sent to</div>
-          <div className="otp-mail">{queryString}</div>
+          <div className="otp-mail">{userEmail}</div>
           <div className="otp-boxes">
             <div onPaste={handlePaste}>
               {otp.map((value, index) => (

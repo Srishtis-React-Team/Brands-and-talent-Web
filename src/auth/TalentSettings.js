@@ -73,7 +73,7 @@ const TalentSettings = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [paymentDetailsDataArray, setPaymentDetailsDataArray] = useState([]);
-  const [activeGifts,setActiveGifts] = useState([])
+  const [activeGifts, setActiveGifts] = useState([]);
 
   const paymentData = localStorage.getItem("paymentData");
   const paymentDetails = JSON.parse(paymentData);
@@ -614,42 +614,138 @@ const TalentSettings = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
-                {/* Manage Account */}
-                <div className="edit-basicdetails-section-main">
-                  <div className="payment-details-card">
-                    {console.log("consoling the exact", paymentDetailsDataArray)}
-                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
-                      Transaction Date :  <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.transactionDate}</span>
-                    </h6>
-                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
-                      Payment Status : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.paymentStatus}</span>
-                    </h6>
-                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
-                      Payment Currency : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.paymentCurreny}</span>
-                    </h6>
-                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
-                      Payment Amount : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.paymentAmount}</span>
-                    </h6>
-                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
-                      Payment Period : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.subscriptionPlan}</span>
-                    </h6>
-                    <h6 style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}} className="listsub">
-                      Payment Plan : <span style={{fontSize:'14px', color:'#afafaf', fontWeight:'600'}}>{paymentDetailsDataArray?.planName}</span>
-                    </h6>
-                  </div>
+              {/* Manage Account */}
+              <div className="edit-basicdetails-section-main">
+                <div className="payment-details-card">
+                  {console.log("consoling the exact", paymentDetailsDataArray)}
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Transaction Date :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {paymentDetailsDataArray?.transactionDate}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Status :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {paymentDetailsDataArray?.paymentStatus}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Currency :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {paymentDetailsDataArray?.paymentCurreny}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Amount :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {paymentDetailsDataArray?.paymentAmount}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Period :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {paymentDetailsDataArray?.subscriptionPlan}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Plan :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {paymentDetailsDataArray?.planName}
+                    </span>
+                  </h6>
                 </div>
-              </CustomTabPanel>
-        <CustomTabPanel value={valueTabs} index={3}>
-      <div className="edit-basicdetails-section-main">
-        {activeGifts.length > 0 ? (
-          activeGifts.map((gift) => (
-            <GiftCard key={gift._id} gift={gift} />
-          ))
-        ) : (
-          <p>No active gifts available.</p>
-        )}
-      </div>
-    </CustomTabPanel>
+              </div>
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={3}>
+              <div className="edit-basicdetails-section-main">
+                {activeGifts.length > 0 ? (
+                  activeGifts.map((gift) => (
+                    <GiftCard key={gift._id} gift={gift} />
+                  ))
+                ) : (
+                  <p>No active gifts available.</p>
+                )}
+              </div>
+            </CustomTabPanel>
           </Box>
         </div>
       </main>

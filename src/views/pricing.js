@@ -7,6 +7,7 @@ import "../assets/css/dashboard.css";
 import "../assets/css/register.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
+import { useLocation } from "react-router-dom";
 
 import MuiPhoneNumber from "material-ui-phone-number";
 import {
@@ -35,18 +36,42 @@ import Loader from "./Loader.js";
 // import { createPayment, checkTransactionStatus } from '../config/paymentGateway.js';
 import { useTheme, useMediaQuery } from "@mui/material";
 
-const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
+const Pricing = ({
+  from,
+  setSelectedPaymentStatus,
+  setIsPaymentClicked,
+  userType,
+}) => {
   console.log(from, "from");
+  console.log(userType, "userType");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [receivedData, setReceivedData] = useState(null);
+  useEffect(() => {
+    if (location.state && location.state.data) {
+      setReceivedData(location.state.data);
+    }
+  }, [location.state]);
+  useEffect(() => {
+    console.log(receivedData, "receivedData");
+  }, [receivedData]);
 
   const paramsValues = window.location.search;
 
   const urlParams = new URLSearchParams(paramsValues);
 
   const signupUserId = urlParams.get("userId");
+
+  const [userId, setUserId] = useState(null);
+
+  const url = window.location.href;
+  const queryString = url.split("?")[1];
+
+  console.log(queryString, "queryString");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -187,6 +212,8 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
       } else {
         getBrandsPricingList();
       }
+    } else if (from != "brands") {
+      getBrandsPricingList();
     }
   }, [isChecked]);
 
@@ -298,22 +325,24 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
       item.plan_type_monthly.find(
         (plan) => `monthly-${item._id}` === selectedPlan
       );
-      console.log('selectedPlanItem',selectedPlanItem)
+    console.log("selectedPlanItem", selectedPlanItem);
     const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
     const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
-    const afterDiscount = selectedPlanItem ? selectedPlanItem.afterDiscount : "N/A";
-    console.log('afterDiscount',afterDiscount)
+    const afterDiscount = selectedPlanItem
+      ? selectedPlanItem.afterDiscount
+      : "N/A";
+    console.log("afterDiscount", afterDiscount);
     const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
     const match = price.match(regex);
     if (match) {
       let amount;
-      if(afterDiscount.includes("per year")){
+      if (afterDiscount.includes("per year")) {
         const match = afterDiscount.match(/(\w+)\s([\d.,]+)\sper\syear/);
         if (match) {
           amount = parseFloat(match[2]); // Extracts the numeric part
         }
-      }else{
-       amount = parseFloat(match[2]); // 29.99
+      } else {
+        amount = parseFloat(match[2]); // 29.99
       }
       const currency = match[1].toUpperCase(); // "USD"
       const duration = match[3]; // "month"
@@ -417,7 +446,7 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
 
   const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
-      console.log('plan----',plan)
+      console.log("plan----", plan);
       const userId = localStorage.getItem("userId");
       let apiUrl =
         paymentOption == "card" ? API.createPayment : API.createqrpayment;
@@ -428,45 +457,41 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
       });
       setResponseUrl(response.data.url);
       localStorage.setItem("paymenttrans_id", response.data.trans_id);
-      if(plan == 'giftsubscription'){
+      if (plan == "giftsubscription") {
         const giftObj = {
-          "senderName": senderName,
-          "email": email,
-          "gift": [
-              {
-                  "receiversFirstName": recieversFirstName,
-                  "receiverEmail": recieverEmail,
-                  "message": enquiry,
-                  "subscriptionPlan": selectedPaymentPeriod,
-                  "planName": selectedPaymentPlan,
-                  "transId": response.data.trans_id,
-                  "paymentStatus": "Pending",
-              }
+          senderName: senderName,
+          email: email,
+          gift: [
+            {
+              receiversFirstName: recieversFirstName,
+              receiverEmail: recieverEmail,
+              message: enquiry,
+              subscriptionPlan: selectedPaymentPeriod,
+              planName: selectedPaymentPlan,
+              transId: response.data.trans_id,
+              paymentStatus: "Pending",
+            },
           ],
-          "isActive": true
-      }
+          isActive: true,
+        };
 
-      // giftSubCreation
-      const resGiftSub = await ApiHelper.post(
-        API.giftSubCreation,
-        giftObj
-      );
-      console.log("resGiftSub", resGiftSub);
-      }else{
+        // giftSubCreation
+        const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
+        console.log("resGiftSub", resGiftSub);
+      } else {
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
           planName: selectedPaymentPlan,
           user_id: userId,
           transId: response.data.trans_id,
-          paymentStatus:'Pending'
+          paymentStatus: "Pending",
         };
-        console.log()
+        console.log();
         const responseSubscription = await ApiHelper.post(
           API.subscriptionPlan,
           userData
         );
-      console.log("responseSubscription", responseSubscription);
-
+        console.log("responseSubscription", responseSubscription);
       }
       setCheckout(true);
       setLoading(false);
@@ -494,10 +519,10 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
   //         "planName":selectedPaymentPlan,
   //         "paymentStatus":'Pending',
   //         "transId":trans_id,
-  //         "transactionDate":'', 
-  //         "paymentCurreny":'', 
-  //         "paymentAmount":'', 
-  //         "paymentPeriod":'', 
+  //         "transactionDate":'',
+  //         "paymentCurreny":'',
+  //         "paymentAmount":'',
+  //         "paymentPeriod":'',
   //         "paymentPlan":'',
   //     }
   //     ],
@@ -509,7 +534,7 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
   // }
 
   const handleRadioChange = (type, id, planname) => (event) => {
-    console.log('type, id, planname',type, id, planname)
+    console.log("type, id, planname", type, id, planname);
     setSelectedPlan(id);
     setSelectedPaymentPlan(planname);
     setSelectedPaymentPeriod(type);
@@ -597,44 +622,128 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
   // };
 
   useEffect(() => {
-    if (selectedPaymentOption == "qr") {
-      setLoading(true);
-      if (giftSub) {
-        handlePayment(
-          selectedAmount,
-          selectedCurrency,
-          "https://dev.brandsandtalent.com/talent-settings",
-          "qr",
-          'giftsubscription'
-        );
-      } else {
-        handlePayment(
-          selectedAmount,
-          selectedCurrency,
-          "https://dev.brandsandtalent.com/talent-home",
-          "qr",
-          'normal'
-        );
+    if (userType == "adults") {
+      if (selectedPaymentOption == "qr") {
+        setLoading(true);
+        if (giftSub) {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            `/adult-signup-files-details?${queryString}`,
+            "qr",
+            "giftsubscription"
+          );
+        } else {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            `/adult-signup-files-details?${queryString}`,
+            "qr",
+            "normal"
+          );
+        }
+      } else if (selectedPaymentOption == "card") {
+        setLoading(true);
+        if (giftSub) {
+          console.log("correct...");
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            `/adult-signup-files-details?${queryString}`,
+            "card",
+            "giftsubscription"
+          );
+        } else {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            `/adult-signup-files-details?${queryString}`,
+            "card",
+            "normal"
+          );
+        }
       }
-    } else if (selectedPaymentOption == "card") {
-      setLoading(true);
-      if (giftSub) {
-        console.log("correct...");
-        handlePayment(
-          selectedAmount,
-          selectedCurrency,
-          "https://dev.brandsandtalent.com/talent-settings",
-          "card",
-          'giftsubscription'
-        );
-      } else {
-        handlePayment(
-          selectedAmount,
-          selectedCurrency,
-          "https://dev.brandsandtalent.com/talent-home",
-          "card",
-          'normal'
-        );
+    } else if (userType == "brands") {
+      if (selectedPaymentOption == "qr") {
+        setLoading(true);
+        if (giftSub) {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            `/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+            "qr",
+            "giftsubscription"
+          );
+        } else {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            `/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+            "qr",
+            "normal"
+          );
+        }
+      } else if (selectedPaymentOption == "card") {
+        setLoading(true);
+        if (giftSub) {
+          console.log("correct...");
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            `/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+            "card",
+            "giftsubscription"
+          );
+        } else {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            `/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+            "card",
+            "normal"
+          );
+        }
+      }
+    } else {
+      if (selectedPaymentOption == "qr") {
+        setLoading(true);
+        if (giftSub) {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            "https://dev.brandsandtalent.com/talent-settings",
+            "qr",
+            "giftsubscription"
+          );
+        } else {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            "https://dev.brandsandtalent.com/talent-home",
+            "qr",
+            "normal"
+          );
+        }
+      } else if (selectedPaymentOption == "card") {
+        setLoading(true);
+        if (giftSub) {
+          console.log("correct...");
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            "https://dev.brandsandtalent.com/talent-settings",
+            "card",
+            "giftsubscription"
+          );
+        } else {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            "https://dev.brandsandtalent.com/talent-home",
+            "card",
+            "normal"
+          );
+        }
       }
     }
   }, [selectedPaymentOption]);
@@ -1033,7 +1142,6 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
                       className={`form-control ${
                         !isRecieverValidEmail ? "is-invalid" : "form-control"
                       }`}
-                     
                       onChange={handleRecieverEmailChange}
                       placeholder="Recipient's Email Address"
                       value={recieverEmail}
@@ -1304,4 +1412,3 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
 };
 
 export default Pricing;
-

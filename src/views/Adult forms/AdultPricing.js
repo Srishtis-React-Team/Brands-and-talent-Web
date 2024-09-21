@@ -76,7 +76,7 @@ const AdultPricing = ({ onDataFromChild, ...props }) => {
             }}
           ></button>
         </div>
-        <Pricing from={"signup"} />
+        <Pricing from={"signup"} userType={"adults"} />
         <div className="dialog-footer">
           <button
             type="button"
