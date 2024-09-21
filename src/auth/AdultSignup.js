@@ -14,9 +14,47 @@ import { generateToken } from "../auth/firebase";
 import "../assets/css/register.css";
 
 const AdultSignup = () => {
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Get the current URL
+    const url = window.location.href;
+
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
+  }, []);
+
   useEffect(() => {
     generateToken();
   }, []);
+  useEffect(() => {
+    getTalentById();
+  }, [userId]);
+
+  const getTalentById = async () => {
+    // alert("sd");
+    await ApiHelper.post(`${API.getTalentById}${userId}`)
+      .then((resData) => {
+        console.log(resData, "getTalentById");
+        if (resData.data.status === true) {
+          setAdultEmail(resData?.data?.data?.adultEmail);
+          setAdultName(resData?.data?.data?.adultName);
+        }
+      })
+      .catch((err) => {});
+  };
+
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
   const [showPassword, setShowPassword] = useState(false);
@@ -124,12 +162,14 @@ const AdultSignup = () => {
       adultPassword !== "" &&
       adultConfirmPassword !== "" &&
       passwordMatch === true &&
-      passwordStatus
+      passwordStatus &&
+      adultName
     ) {
       const formData = {
         adultEmail: adultEmail,
         talentPassword: adultPassword,
         confirmPassword: adultConfirmPassword,
+        adultName: adultName,
         publicUrl: adultName.replace(/ /g, "-"),
         image: {
           fileData: "5cf3b581-deb2-4366-8949-43e7f1086165.webp",
@@ -143,11 +183,14 @@ const AdultSignup = () => {
         .then((resData) => {
           setIsLoading(false);
           if (resData.data.status === true) {
+            console.log(resData.data?.data, "resData.data?.data");
             setMessage("Registered Successfully");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
-              navigate(`/otp-verification?${resData?.data?.data}`);
+              navigate(
+                `/otp-verification?userId=${resData.data["id"]}&userEmail=${resData.data.data}`
+              );
             }, 2000);
           } else if (resData.data.status === false) {
             setMessage(resData?.data?.message);
@@ -386,6 +429,7 @@ const AdultSignup = () => {
                       setAdultName(e.target.value);
                       setNameError(false);
                     }}
+                    value={adultName}
                   ></input>
                   {nameError && <div className="invalid-fields"> Name</div>}
                 </div>
@@ -435,8 +479,10 @@ const AdultSignup = () => {
                       className="invalid-fields password-error-box"
                       style={{ width: "420px" }}
                     >
-                      (1 capital letter (A, B, C...) 1 small letter (a, b, c...)
-                      1 number (1, 2, 3...) 1 special symbol (!, @, #...))
+                      Your password must be at least 8 characters long and
+                      include at least: 1 capital letter (A, B, C...) 1 small
+                      letter (a, b, c...) 1 number (1, 2, 3...) 1 special symbol
+                      (!, @, #...)
                     </div>
                   )}
                   {passwordError && (

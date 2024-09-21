@@ -136,7 +136,7 @@ const PaymentOptions = ({
               <input
                 value={inputValue}
                 onChange={handleInputChange}
-                placeholder="Enter the coupon code"
+                placeholder="Enter coupon code here"
                 type="text"
               />
               <button

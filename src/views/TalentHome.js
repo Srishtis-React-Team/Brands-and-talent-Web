@@ -110,11 +110,11 @@ const TalentHome = () => {
     const data = {
       isJobAlert: true,
     };
-    // navigate("/talent-notification", { state: data });
-    window.open(
-      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-      "_blank"
-    );
+    navigate("/talent-notification", { state: data });
+    // window.open(
+    //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+    //   "_blank"
+    // );
   };
   const url = window.location.href;
 
@@ -150,7 +150,18 @@ const TalentHome = () => {
     modal.hide();
   };
 
-  const openSignup = () => {
+  const openSignup = async () => {
+    const formData = {
+      image: "",
+    };
+    await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+        } else {
+        }
+      })
+      .catch((err) => {});
+
     closeDoItNowModal();
     setTimeout(() => {
       navigate(`/adult-signup-basic-details`);
@@ -204,7 +215,7 @@ const TalentHome = () => {
               </Link>
             </div>
             <div className="col-md-4 col-lg-3 pad8">
-              <Link
+              {/* <Link
                 to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
                 target="_blank"
               >
@@ -214,15 +225,15 @@ const TalentHome = () => {
                     <div className="home-cards-names">Browse Jobs</div>
                   </div>
                 </div>
-              </Link>
-              {/* <Link to="/talent-dashboard ">
+              </Link> */}
+              <Link to="/talent-dashboard ">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
                     <i className="bi bi-search icons home-card-icons"></i>
                     <div className="home-cards-names">Browse Jobs</div>
                   </div>
                 </div>
-              </Link> */}
+              </Link>
             </div>
             <div className="col-md-4 col-lg-3 pad8">
               <Link to="/contact-us">

@@ -43,6 +43,12 @@ const BrandLogo = () => {
   const [aboutYou, setAboutYou] = useState([]);
   const [whyWorkWithUs, setWhyWorkWithUs] = useState([]);
 
+  const goBack = async () => {
+    navigate(`/otp-verification-brands?${receivedData}`, {
+      state: { data: receivedData },
+    });
+  };
+
   useEffect(() => {
     if (location.state && location.state.data) {
       setReceivedData(location.state.data);
@@ -145,9 +151,10 @@ const BrandLogo = () => {
         if (resData.data.status === true) {
           setBrandsLocalStorage(resData.data.data);
           setMessage("Registered Successfully!");
-          navigate("/brand-activated", {
+          navigate("/brand-signup-plan-details", {
             state: { data: receivedData },
           });
+
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -348,6 +355,16 @@ const BrandLogo = () => {
           </div>
         </div>
         <div className="dialog-footer">
+          <button
+            type="button"
+            onClick={(e) => {
+              goBack();
+            }}
+            className="step-back"
+          >
+            Back
+          </button>
+
           <button
             type="button"
             className="step-continue"

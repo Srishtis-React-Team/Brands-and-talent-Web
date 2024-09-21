@@ -559,13 +559,12 @@ const EditTalent = () => {
             setResumeFile(resData.data.data?.cv);
             setAge(resData.data.data?.age);
 
-            const selectedNationalityOptions = resData.data.data?.languages.map(
-              (language) => {
+            const selectedNationalityOptions =
+              resData.data.data?.childNationality.map((language) => {
                 return nationalitiesList.find(
                   (option) => option.label === language
                 );
-              }
-            );
+              });
             setSelectedNationalityOptions(selectedNationalityOptions);
 
             setServices(resData.data.data?.services);
@@ -647,13 +646,12 @@ const EditTalent = () => {
             setResumeFile(resData.data.data?.cv);
             setAge(resData.data.data?.age);
 
-            const selectedNationalityOptions = resData.data.data?.languages.map(
-              (language) => {
+            const selectedNationalityOptions =
+              resData.data.data?.childNationality.map((language) => {
                 return nationalitiesList.find(
                   (option) => option.label === language
                 );
-              }
-            );
+              });
             setSelectedNationalityOptions(selectedNationalityOptions);
             console.log(selectedOptions, "selectedOptions");
             setServices(resData.data.data?.services);
@@ -2140,24 +2138,30 @@ const EditTalent = () => {
                   {...a11yProps(0)}
                   style={{ textTransform: "capitalize" }}
                 />
+
                 <Tab
                   label="Personal Info"
                   {...a11yProps(1)}
                   style={{ textTransform: "capitalize" }}
                 />
                 <Tab
-                  label="Portfolio"
+                  label="Social Media"
                   {...a11yProps(2)}
                   style={{ textTransform: "capitalize" }}
                 />
                 <Tab
-                  label="Videos & Audios"
+                  label="Portfolio"
                   {...a11yProps(3)}
                   style={{ textTransform: "capitalize" }}
                 />
                 <Tab
-                  label="CV"
+                  label="Videos & Audios"
                   {...a11yProps(4)}
+                  style={{ textTransform: "capitalize" }}
+                />
+                <Tab
+                  label="CV"
+                  {...a11yProps(5)}
                   style={{ textTransform: "capitalize" }}
                 />
                 {/* <Tab
@@ -2167,14 +2171,10 @@ const EditTalent = () => {
                 /> */}
                 <Tab
                   label="Features"
-                  {...a11yProps(5)}
-                  style={{ textTransform: "capitalize" }}
-                />
-                <Tab
-                  label="Social Media"
                   {...a11yProps(6)}
                   style={{ textTransform: "capitalize" }}
                 />
+
                 {/* <Tab
                   label="Reviews"
                   {...a11yProps(7)}
@@ -2183,7 +2183,7 @@ const EditTalent = () => {
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
-              <div className="profile-image-edit-section edit-basicdetails-section-main mt-5">
+              <div className="profile-image-edit-section  mt-5">
                 <div className="profileImg">
                   <img
                     className="profile-image-edit"
@@ -2214,8 +2214,118 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
+
+            <CustomTabPanel value={valueTabs} index={3}>
+              <div className="update-portfolio-section ">
+                <div className="update-portfolio-cards-wrapper">
+                  <div className="update-portfolio-title">Portfolio </div>
+                  <label className="form-label">
+                    Build a stunning portfolio by adding your photos or sample
+                    work photos that showcases your strengths
+                  </label>
+
+                  {talentData?.portfolio?.length === 0 && (
+                    <>
+                      <div className="update-portfolio-label">
+                        Add Your work samples here
+                      </div>
+
+                      {/* <div className="no-data">Please Add Files</div> */}
+                    </>
+                  )}
+                  <div className="row">
+                    {talentData &&
+                      talentData?.portfolio?.length > 0 &&
+                      talentData?.portfolio?.map((item) => {
+                        return (
+                          <>
+                            <div className="col-md-6">
+                              <div className="update-portfolio-cards">
+                                <div className="update-portfolio-icon">
+                                  <div className="file-section">
+                                    {item.type === "image" && (
+                                      <div className="fileType">
+                                        <i className="bi bi-card-image"></i>
+                                      </div>
+                                    )}
+                                    <div className="update-portfolio-fileName pl-0">
+                                      {item.title}
+                                    </div>
+                                    <div className="update-portfolio-action">
+                                      <IconButton
+                                        aria-label="more"
+                                        aria-controls={`dropdown-menu-${item.id}`}
+                                        aria-haspopup="true"
+                                        onClick={(event) =>
+                                          handlePortfolioClick(event, item)
+                                        }
+                                      >
+                                        <MoreVertIcon />
+                                      </IconButton>
+                                      <Menu
+                                        id={`dropdown-menu-${item.id}`} // Use unique ID
+                                        anchorEl={portfolioAnchor} // Correct prop name
+                                        open={portfolioOpen} // Control visibility
+                                        onClose={handlePortfolioClose}
+                                      >
+                                        <MenuItem
+                                          onClick={() => {
+                                            handlePortfolioClose();
+                                            viewUpdateFile(
+                                              selectedPortfolioItem
+                                            ); // Use selected item
+                                          }}
+                                        >
+                                          View
+                                        </MenuItem>
+                                        <MenuItem
+                                          onClick={() => {
+                                            dropDownClose();
+                                            setAlertpop({
+                                              status: true,
+                                              item: item,
+                                              label: "delete",
+                                              eachService: null,
+                                            });
+                                          }}
+                                        >
+                                          Delete
+                                        </MenuItem>
+                                      </Menu>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                  </div>
+                  <div className="add-portfoli-section">
+                    <div className="add-portfolia-btn">
+                      <input
+                        type="file"
+                        className="select-cv-input"
+                        id="profile-image"
+                        accept="image/*"
+                        onChange={newPortfolioUpload}
+                        ref={portfolioFileInputRef}
+                      />
+                      <Button
+                        onClick={portfolioFile}
+                        className="edit-profileimg-btn"
+                        variant="text"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Add Portfolio
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={1}>
-              <div className="kids-main edit-basicdetails-section-main">
+              <div className="kids-main ">
                 <div className="kids-form-title kids-form-title mb-3">
                   <span>Personal Details</span>
                 </div>
@@ -2567,7 +2677,10 @@ const EditTalent = () => {
                         label: country,
                         key: index,
                       }))}
-                      value={{ value: country, label: country }}
+                      // value={{ value: country, label: country }}
+                      value={
+                        country ? { value: country, label: country } : null
+                      }
                       onChange={handleSelectedCountry}
                       isSearchable={true}
                     />
@@ -2588,7 +2701,7 @@ const EditTalent = () => {
                         value: state.stateId, // or whatever unique identifier you want to use
                         label: state.name,
                       }))}
-                      value={{ value: state, label: state }}
+                      value={state ? { value: state, label: state } : null}
                       onChange={handleSelectedState}
                       isSearchable={true}
                     />
@@ -2604,7 +2717,9 @@ const EditTalent = () => {
                         value: city.cityId, // or whatever unique identifier you want to use
                         label: city.name,
                       }))}
-                      value={{ value: kidsCity, label: kidsCity }}
+                      value={
+                        kidsCity ? { value: kidsCity, label: kidsCity } : null
+                      }
                       onChange={handleSelectedCity}
                       isSearchable={true}
                     />
@@ -2958,113 +3073,8 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={2}>
-              <div className="update-portfolio-section edit-basicdetails-section-main">
-                <div className="update-portfolio-cards-wrapper">
-                  <div className="update-portfolio-title">Portfolio </div>
-
-                  {talentData?.portfolio?.length === 0 && (
-                    <>
-                      <div className="update-portfolio-label">
-                        Add Your work samples here
-                      </div>
-
-                      {/* <div className="no-data">Please Add Files</div> */}
-                    </>
-                  )}
-                  <div className="row">
-                    {talentData &&
-                      talentData?.portfolio?.length > 0 &&
-                      talentData?.portfolio?.map((item) => {
-                        return (
-                          <>
-                            <div className="col-md-6">
-                              <div className="update-portfolio-cards">
-                                <div className="update-portfolio-icon">
-                                  <div className="file-section">
-                                    {item.type === "image" && (
-                                      <div className="fileType">
-                                        <i className="bi bi-card-image"></i>
-                                      </div>
-                                    )}
-                                    <div className="update-portfolio-fileName pl-0">
-                                      {item.title}
-                                    </div>
-                                    <div className="update-portfolio-action">
-                                      <IconButton
-                                        aria-label="more"
-                                        aria-controls={`dropdown-menu-${item.id}`}
-                                        aria-haspopup="true"
-                                        onClick={(event) =>
-                                          handlePortfolioClick(event, item)
-                                        }
-                                      >
-                                        <MoreVertIcon />
-                                      </IconButton>
-                                      <Menu
-                                        id={`dropdown-menu-${item.id}`} // Use unique ID
-                                        anchorEl={portfolioAnchor} // Correct prop name
-                                        open={portfolioOpen} // Control visibility
-                                        onClose={handlePortfolioClose}
-                                      >
-                                        <MenuItem
-                                          onClick={() => {
-                                            handlePortfolioClose();
-                                            viewUpdateFile(
-                                              selectedPortfolioItem
-                                            ); // Use selected item
-                                          }}
-                                        >
-                                          View
-                                        </MenuItem>
-                                        <MenuItem
-                                          onClick={() => {
-                                            dropDownClose();
-                                            setAlertpop({
-                                              status: true,
-                                              item: item,
-                                              label: "delete",
-                                              eachService: null,
-                                            });
-                                          }}
-                                        >
-                                          Delete
-                                        </MenuItem>
-                                      </Menu>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        );
-                      })}
-                  </div>
-                  <div className="add-portfoli-section">
-                    <div className="add-portfolia-btn">
-                      <input
-                        type="file"
-                        className="select-cv-input"
-                        id="profile-image"
-                        accept="image/*"
-                        onChange={newPortfolioUpload}
-                        ref={portfolioFileInputRef}
-                      />
-                      <Button
-                        onClick={portfolioFile}
-                        className="edit-profileimg-btn"
-                        variant="text"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        Add Portfolio
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={3}>
-              <div className="update-portfolio-section edit-basicdetails-section-main">
+            <CustomTabPanel value={valueTabs} index={4}>
+              <div className="update-portfolio-section ">
                 <div className="update-portfolio-cards-wrapper">
                   <div className="update-portfolio-title">Videos & Audios</div>
                   <div className="kids-form-row row">
@@ -3336,13 +3346,14 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={4}>
+            <CustomTabPanel value={valueTabs} index={5}>
               <div className="update-portfolio-cards-wrapper">
                 <div className="update-portfolio-title">CV</div>
+                <label className="form-label">Please add your CV</label>
                 <div className="row">
                   {talentData?.cv?.length === 0 && (
                     <>
-                      <div className="no-data">Add Your work samples here</div>
+                      {/* <div className="no-data">Add Your work samples here</div> */}
                       {/* <div className="no-data">Please Add Files</div> */}
                     </>
                   )}
@@ -3438,7 +3449,7 @@ const EditTalent = () => {
                       variant="text"
                       style={{ textTransform: "capitalize" }}
                     >
-                      Add Resumes
+                      Add CV
                     </Button>
                   </div>
                 </div>
@@ -3678,7 +3689,7 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel> */}
-            <CustomTabPanel value={valueTabs} index={5}>
+            <CustomTabPanel value={valueTabs} index={6}>
               {talentData && (
                 <>
                   <div className="features-section mt-4">
@@ -3703,7 +3714,7 @@ const EditTalent = () => {
                 </>
               )}
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={6}>
+            <CustomTabPanel value={valueTabs} index={2}>
               {talentData && (
                 <>
                   <div className="mt-4">

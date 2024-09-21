@@ -42,12 +42,21 @@ const BrandSignup = React.memo((props) => {
   }, [location.state]);
 
   useEffect(() => {}, [googleUser]);
+  useEffect(() => {
+    console.log(receivedData, "Brand Signup");
+  }, [receivedData]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const goBack = async () => {
+    navigate(`/brand-firstGig`, {
+      state: { data: receivedData },
+    });
   };
 
   const socialSignup = async (response, mediaType) => {
@@ -427,8 +436,9 @@ const BrandSignup = React.memo((props) => {
                 </div>
                 {adultPassword && !passwordStatus && (
                   <div className="invalid-fields password-error-box">
-                    1 capital letter (A, B, C...) 1 small letter (a, b, c...) 1
-                    number (1, 2, 3...) 1 special symbol (!, @, #...)
+                    Your password must be at least 8 characters long and include
+                    at least: 1 capital letter (A, B, C...) 1 small letter (a,
+                    b, c...) 1 number (1, 2, 3...) 1 special symbol (!, @, #...)
                   </div>
                 )}
                 {passwordError && (
@@ -543,8 +553,8 @@ const BrandSignup = React.memo((props) => {
         <div className="dialog-footer">
           <button
             type="button"
-            onClick={() => {
-              navigate("/brand-firstGig");
+            onClick={(e) => {
+              goBack();
             }}
             className="step-back"
           >

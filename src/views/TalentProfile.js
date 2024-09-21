@@ -2944,41 +2944,52 @@ const TalentProfile = () => {
                             talentData?.profession &&
                             talentData?.profession.map((item, index) => (
                               <div key={index}>
-                                <div className="talent-profession-name">
-                                  {item?.value}
-                                  {item?.openToOffers && (
-                                    <span> (Negotiable)</span>
-                                  )}
-                                </div>
+                                {(item?.perHourSalary ||
+                                  item?.perDaySalary ||
+                                  item?.perMonthSalary ||
+                                  item?.perPostSalary ||
+                                  item?.perImageSalary) && (
+                                  <>
+                                    <div className="talent-profession-name">
+                                      {item?.value}
+                                      {item?.openToOffers && (
+                                        <span className="pl-2">
+                                          {" "}
+                                          (Negotiable)
+                                        </span>
+                                      )}
+                                    </div>
 
-                                {item?.perHourSalary && (
-                                  <div className="talent-profession-value">
-                                    $ {item.perHourSalary} per hour
-                                  </div>
-                                )}
+                                    {item?.perHourSalary && (
+                                      <div className="talent-profession-value">
+                                        $ {item.perHourSalary} per hour
+                                      </div>
+                                    )}
 
-                                {item?.perDaySalary && (
-                                  <div className="talent-profession-value">
-                                    $ {item.perDaySalary} per day
-                                  </div>
-                                )}
+                                    {item?.perDaySalary && (
+                                      <div className="talent-profession-value">
+                                        $ {item.perDaySalary} per day
+                                      </div>
+                                    )}
 
-                                {item?.perMonthSalary && (
-                                  <div className="talent-profession-value">
-                                    $ {item.perMonthSalary} per month
-                                  </div>
-                                )}
+                                    {item?.perMonthSalary && (
+                                      <div className="talent-profession-value">
+                                        $ {item.perMonthSalary} per month
+                                      </div>
+                                    )}
 
-                                {item?.perPostSalary && (
-                                  <div className="talent-profession-value">
-                                    $ {item.perPostSalary} per post
-                                  </div>
-                                )}
+                                    {item?.perPostSalary && (
+                                      <div className="talent-profession-value">
+                                        $ {item.perPostSalary} per post
+                                      </div>
+                                    )}
 
-                                {item?.perImageSalary && (
-                                  <div className="talent-profession-value">
-                                    $ {item.perImageSalary} per image
-                                  </div>
+                                    {item?.perImageSalary && (
+                                      <div className="talent-profession-value">
+                                        $ {item.perImageSalary} per image
+                                      </div>
+                                    )}
+                                  </>
                                 )}
                               </div>
                             ))}

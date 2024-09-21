@@ -472,9 +472,10 @@ const TalentSettings = () => {
                     </div>
                     {talentPassword && !passwordStatus && (
                       <div className="invalid-fields password-error-box">
-                        1 capital letter (A, B, C...) 1 small letter (a, b,
-                        c...) 1 number (1, 2, 3...) 1 special symbol (!, @,
-                        #...)
+                        Your password must be at least 8 characters long and
+                        include at least: 1 capital letter (A, B, C...) 1 small
+                        letter (a, b, c...) 1 number (1, 2, 3...) 1 special
+                        symbol (!, @, #...)
                       </div>
                     )}
                     {showPassword ? (
@@ -605,28 +606,37 @@ const TalentSettings = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
-          {/* Manage Account */}
-          <div className="edit-basicdetails-section-main">
-            <div>
-              {console.log("consoling the exact", paymentDetailsDataArray)}
-              <h6>
-                Transaction date : <span>{paymentDetailsDataArray?.transactionDate}</span>
-              </h6>
-              <h6>
-                Payment status : <span>{paymentDetailsDataArray?.paymentStatus}</span>
-              </h6>
-              <h6>
-                Payment currency : <span>{paymentDetailsDataArray?.paymentCurreny}</span>
-              </h6>
-              <h6>
-                Payment amount     : <span>{paymentDetailsDataArray?.paymentAmount}</span>
-              </h6>
-              <h6>Payment period   : <span>{paymentDetailsDataArray?.subscriptionPlan}</span></h6>
-              <h6>Payment plan     : <span>{paymentDetailsDataArray?.planName}</span></h6>
-            </div>
-          </div>
-        </CustomTabPanel>
-
+              {/* Manage Account */}
+              <div className="edit-basicdetails-section-main">
+                <div>
+                  {console.log("consoling the exact", paymentDetailsDataArray)}
+                  <h6>
+                    Transaction date :{" "}
+                    <span>{paymentDetailsDataArray?.transactionDate}</span>
+                  </h6>
+                  <h6>
+                    Payment status :{" "}
+                    <span>{paymentDetailsDataArray?.paymentStatus}</span>
+                  </h6>
+                  <h6>
+                    Payment currency :{" "}
+                    <span>{paymentDetailsDataArray?.paymentCurreny}</span>
+                  </h6>
+                  <h6>
+                    Payment amount :{" "}
+                    <span>{paymentDetailsDataArray?.paymentAmount}</span>
+                  </h6>
+                  <h6>
+                    Payment period :{" "}
+                    <span>{paymentDetailsDataArray?.subscriptionPlan}</span>
+                  </h6>
+                  <h6>
+                    Payment plan :{" "}
+                    <span>{paymentDetailsDataArray?.planName}</span>
+                  </h6>
+                </div>
+              </div>
+            </CustomTabPanel>
           </Box>
         </div>
       </main>

@@ -12,6 +12,33 @@ import { useNavigate } from "react-router";
 import "../assets/css/register.css";
 
 const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Get the current URL
+    const url = window.location.href;
+
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      getKidsData();
+    }
+  }, [userId]);
+
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
   console.log(onDataFromChild, "onDataFromChild");
@@ -72,7 +99,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
       twitterUrl: twitterUrl,
     };
     setIsLoading(true);
-    await ApiHelper.post(`${API.editKids}${queryString}`, formData)
+    await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
@@ -188,6 +215,32 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
   useEffect(() => {
     console.log(youtubesFollowers, "youtubesFollowers");
   }, [youtubesFollowers]);
+
+  const getKidsData = async () => {
+    // alert("sd");
+    await ApiHelper.post(`${API.getTalentById}${userId}`)
+      .then((resData) => {
+        console.log(resData, "getKidsData");
+        if (resData.data.status === true) {
+          setInstagramFollowers(resData.data.data.instaFollowers || "");
+          setfacebookFollowers(resData.data.data.facebookFollowers || "");
+          setXtwitterFollowers(resData.data.data.twitterFollowers || "");
+          setTwitterFollowersCount(resData.data.data.twitterFollowers || "");
+          setlinkedinFollowers(resData.data.data.linkedinFollowers || "");
+          setThreadsFollowers(resData.data.data.threadsFollowers || "");
+          setTiktoksFollowers(resData.data.data.tiktokFollowers || "");
+          setYoutubesFollowers(resData.data.data.youtubeFollowers || "");
+          setInstagramUrl(resData.data.data.instagramUrl || "");
+          setTikTokUrl(resData.data.data.tikTokUrl || "");
+          setYouTubeUrl(resData.data.data.youTubeUrl || "");
+          setLinkedinUrl(resData.data.data.linkedinUrl || "");
+          setTwitterUrl(resData.data.data.twitterUrl || "");
+          setFacebookUrl(resData.data.data.facebookUrl || "");
+          setThreadsUrl(resData.data.data.threadsUrl || "");
+        }
+      })
+      .catch((err) => {});
+  };
 
   const validateInstagramUrl = (url) => {
     const instagramUrlPattern =
@@ -457,6 +510,10 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
     e.preventDefault(); // Prevent the default paste action to avoid triggering the onChange event
   };
 
+  const goBack = async () => {
+    navigate(`/talent-otp?userId=${userId}&userEmail=${userEmail}`);
+  };
+
   return (
     <>
       <div className="form-dialog">
@@ -514,6 +571,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                               onChange={(e) => {
                                 setInstagramFollowers(e.target.value);
                               }}
+                              value={instagramFollowers}
                               placeholder="Followers Count"
                             ></input>
                           </div>
@@ -555,6 +613,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                                 setfacebookFollowers(e.target.value);
                               }}
                               placeholder="Followers Count"
+                              value={facebookFollowers}
                             ></input>
                           </div>
                         </div>
@@ -596,6 +655,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                               onChange={(e) => {
                                 setTiktoksFollowers(e.target.value);
                               }}
+                              value={tiktoksFollowers}
                               placeholder="Followers Count"
                             ></input>
                           </div>
@@ -632,6 +692,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                             <input
                               type="number"
                               min="0"
+                              value={linkedinFollowers}
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setlinkedinFollowers(e.target.value);
@@ -677,7 +738,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                               min="0"
                               className="form-control followers-count-input"
                               onChange={(e) => {
-                                setXtwitterFollowers(e.target.value);
+                                setTwitterFollowersCount(e.target.value);
                               }}
                               placeholder="Followers Count"
                             ></input>
@@ -715,6 +776,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
                             <input
                               type="number"
                               min="0"
+                              value={threadsFollowers}
                               className="form-control followers-count-input"
                               onChange={(e) => {
                                 setThreadsFollowers(e.target.value);
@@ -900,7 +962,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
           </div>
         </div>
         <div className="dialog-footer">
-          {/* <button
+          <button
             type="button"
             onClick={(e) => {
               goBack();
@@ -908,7 +970,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
             className="step-back"
           >
             Back
-          </button> */}
+          </button>
 
           <button
             type="button"

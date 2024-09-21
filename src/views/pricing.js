@@ -35,11 +35,18 @@ import Loader from "./Loader.js";
 // import { createPayment, checkTransactionStatus } from '../config/paymentGateway.js';
 import { useTheme, useMediaQuery } from "@mui/material";
 
-const Pricing = () => {
+const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
+  console.log(from, "from");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+
+  const paramsValues = window.location.search;
+
+  const urlParams = new URLSearchParams(paramsValues);
+
+  const signupUserId = urlParams.get("userId");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -168,10 +175,18 @@ const Pricing = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    if (isChecked) {
+    if (from == "signup") {
       getPricingList();
-    } else {
-      getBrandsPricingList();
+    }
+  }, [from]);
+
+  useEffect(() => {
+    if (from != "signup") {
+      if (isChecked) {
+        getPricingList();
+      } else {
+        getBrandsPricingList();
+      }
     }
   }, [isChecked]);
 
@@ -205,7 +220,6 @@ const Pricing = () => {
   };
 
   useEffect(() => {
-    console.log("inside useEffect");
     checkTransaction();
   }, []);
 
@@ -218,7 +232,6 @@ const Pricing = () => {
         "https://brandsandtalent.com/api/pricing/check-transaction",
         obj
       );
-
       if (resData) {
         const giftData = localStorage.getItem("giftsubscription");
         if (resData.data.status.message == "Success!") {
@@ -232,12 +245,13 @@ const Pricing = () => {
             const userData = {
               subscriptionPlan: selectedPaymentPeriod,
               planName: selectedPaymentPlan,
-              user_id: userId,
+              user_id: userId ? userId : signupUserId,
               transactionDate: paymentData?.transaction_date,
               paymentStatus: paymentData?.payment_status,
               paymentCurreny: paymentData?.payment_currency,
               paymentAmount: paymentData?.payment_amount,
             };
+            console.log(userData, "userData");
             if (giftData == "true") {
               alert("gift subscription");
               giftSubCreationCall();
@@ -246,7 +260,15 @@ const Pricing = () => {
                 API.subscriptionPlan,
                 userData
               );
+              setIsLoading(true);
               console.log("responseSubscription", responseSubscription);
+              if (responseSubscription?.data?.status == true) {
+                setSelectedPaymentStatus(true);
+                navigate(`/talent-signup-files-details?userId=${userId}`);
+                // if (from == "signup") {
+
+                // }
+              }
             }
           }
         }
@@ -276,7 +298,6 @@ const Pricing = () => {
       setGiftSub(false);
       localStorage.setItem("giftsubscription", false);
     }
-
     const selectedPlanItem =
       item.plan_type_annual.find(
         (plan) => `annual-${item._id}` === selectedPlan
@@ -496,38 +517,59 @@ const Pricing = () => {
   // };
 
   useEffect(() => {
-    if (selectedPaymentOption == "qr") {
-      setLoading(true);
-      if (giftSub) {
-        handlePayment(
-          selectedAmount,
-          selectedCurrency,
-          "https://dev.brandsandtalent.com/talent-settings",
-          "qr"
-        );
-      } else {
-        handlePayment(
-          selectedAmount,
-          selectedCurrency,
-          "https://dev.brandsandtalent.com/talent-home",
-          "qr"
-        );
+    if (from != "signup") {
+      if (selectedPaymentOption == "qr") {
+        setLoading(true);
+        if (giftSub) {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            "https://dev.brandsandtalent.com/talent-settings",
+            "qr"
+          );
+        } else {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            "https://dev.brandsandtalent.com/talent-home",
+            "qr"
+          );
+        }
+      } else if (selectedPaymentOption == "card") {
+        setLoading(true);
+        if (giftSub) {
+          console.log("correct...");
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            "https://dev.brandsandtalent.com/talent-settings",
+            "card"
+          );
+        } else {
+          handlePayment(
+            selectedAmount,
+            selectedCurrency,
+            "https://dev.brandsandtalent.com/talent-home",
+            "card"
+          );
+        }
       }
-    } else if (selectedPaymentOption == "card") {
-      setLoading(true);
-      if (giftSub) {
-        console.log("correct...");
+    }
+    {
+      if (selectedPaymentOption == "qr") {
+        setLoading(true);
         handlePayment(
           selectedAmount,
           selectedCurrency,
-          "https://dev.brandsandtalent.com/talent-settings",
-          "card"
+          "https://dev.brandsandtalent.com/talent-signup-plan-details?userId=66ebd324ff76a9fd1e98e96c&userEmail=sommeikefroiwe-8802@yopmail.com",
+          "qr"
         );
-      } else {
+      } else if (selectedPaymentOption == "card") {
+        setLoading(true);
         handlePayment(
           selectedAmount,
           selectedCurrency,
-          "https://dev.brandsandtalent.com/talent-home",
+          "https://dev.brandsandtalent.com/talent-signup-plan-details?userId=66ebd324ff76a9fd1e98e96c&userEmail=sommeikefroiwe-8802@yopmail.com",
           "card"
         );
       }
@@ -597,26 +639,37 @@ const Pricing = () => {
   return (
     <>
       <Header />
-      <section className="topSpace">
-        <div className="popular-header">
-          <div className="container">
-            <div className="header-title">Pricing</div>
+      {from != "signup" && (
+        <>
+          <section className="topSpace">
+            <div className="popular-header">
+              <div className="container">
+                <div className="header-title">Pricing</div>
+              </div>
+            </div>
+          </section>
+          <div className="select-plan-main ">
+            <div className="select-pricing container text-center">
+              <label className="toggleSwitch nolabel">
+                <input type="checkbox" onChange={handleToggle} />
+                <a></a>
+                <span>
+                  <span className="right-span">Brands /Clients</span>
+                  <span className="left-span">Talent</span>
+                </span>
+              </label>
+            </div>
           </div>
-        </div>
-      </section>
-      <div className="select-plan-main">
-        <div className="select-pricing container text-center">
-          <label className="toggleSwitch nolabel">
-            <input type="checkbox" onChange={handleToggle} />
-            <a></a>
-            <span>
-              <span className="right-span">Brands /Clients</span>
-              <span className="left-span">Talent</span>
-            </span>
-          </label>
-        </div>
-      </div>
-      <div className="plan-main">
+        </>
+      )}
+
+      <div
+        className="plan-main"
+        style={{
+          marginTop: from === "signup" ? "100px" : "",
+          marginBottom: from === "signup" ? "100px" : "",
+        }}
+      >
         <div className="container">
           {pricingList.length > 0 && (
             <div className="plans-section">
@@ -637,18 +690,22 @@ const Pricing = () => {
                       <div className="priceHeight">
                         <div className="plan-name">
                           {item.planname}
-                          <div
-                            className={
-                              index === 1
-                                ? "pro-gift giftSize"
-                                : index === 2
-                                ? "premium-gift giftSize"
-                                : ""
-                            }
-                            onClick={handleClickOpen}
-                          >
-                            {item.gift}
-                          </div>
+                          {from != "signup" && (
+                            <>
+                              <div
+                                className={
+                                  index === 1
+                                    ? "pro-gift giftSize"
+                                    : index === 2
+                                    ? "premium-gift giftSize"
+                                    : ""
+                                }
+                                onClick={handleClickOpen}
+                              >
+                                {item.gift}
+                              </div>
+                            </>
+                          )}
                         </div>
 
                         {item.planname === "Basic" && (
@@ -781,7 +838,11 @@ const Pricing = () => {
           )}
         </div>
       </div>
-      <Footer />
+      {from != "signup" && (
+        <>
+          <Footer />
+        </>
+      )}
       <React.Fragment>
         <Dialog
           open={open}

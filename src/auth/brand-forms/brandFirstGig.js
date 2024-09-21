@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import Spinner from "../../components/Spinner";
 import PopUp from "../../components/PopUp";
 import { generateToken } from "../firebase";
+import { useLocation } from "react-router-dom";
 
 const BrandFirstGig = () => {
   const navigate = useNavigate();
@@ -14,6 +15,19 @@ const BrandFirstGig = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [position, setPosition] = useState("");
   const [positionError, setPositionError] = useState(false);
+  const [receivedData, setReceivedData] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.data) {
+      setReceivedData(location.state.data);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    console.log(receivedData, "Brand First Gig");
+    setPosition(receivedData);
+  }, [receivedData]);
 
   useEffect(() => {
     generateToken();

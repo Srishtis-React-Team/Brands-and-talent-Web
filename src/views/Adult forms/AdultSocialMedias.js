@@ -80,7 +80,8 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-            navigate(`/adult-signup-files-details?${queryString}`);
+            // navigate(`/adult-signup-files-details?${queryString}`);
+            navigate(`/adult-signup-plan-details?${queryString}`);
           }, 1000);
         } else {
         }
@@ -123,6 +124,12 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
       setYoutubeChannelID(value);
     }
   };
+
+  useEffect(() => {
+    if (queryString) {
+      getKidsData();
+    }
+  }, [queryString]);
 
   const handleCloseModal = async (talent) => {
     let formData;
@@ -454,6 +461,36 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
     e.preventDefault(); // Prevent the default paste action to avoid triggering the onChange event
   };
 
+  const goBack = async () => {
+    navigate(`/adult-signup-basic-details?${queryString}`);
+  };
+
+  const getKidsData = async () => {
+    // alert("sd");
+    await ApiHelper.post(`${API.getTalentById}${queryString}`)
+      .then((resData) => {
+        console.log(resData, "getKidsData");
+        if (resData.data.status === true) {
+          setInstagramFollowers(resData.data.data.instaFollowers || "");
+          setfacebookFollowers(resData.data.data.facebookFollowers || "");
+          setXtwitterFollowers(resData.data.data.twitterFollowers || "");
+          setTwitterFollowersCount(resData.data.data.twitterFollowers || "");
+          setlinkedinFollowers(resData.data.data.linkedinFollowers || "");
+          setThreadsFollowers(resData.data.data.threadsFollowers || "");
+          setTiktoksFollowers(resData.data.data.tiktokFollowers || "");
+          setYoutubesFollowers(resData.data.data.youtubeFollowers || "");
+          setInstagramUrl(resData.data.data.instagramUrl || "");
+          setTikTokUrl(resData.data.data.tikTokUrl || "");
+          setYouTubeUrl(resData.data.data.youTubeUrl || "");
+          setLinkedinUrl(resData.data.data.linkedinUrl || "");
+          setTwitterUrl(resData.data.data.twitterUrl || "");
+          setFacebookUrl(resData.data.data.facebookUrl || "");
+          setThreadsUrl(resData.data.data.threadsUrl || "");
+        }
+      })
+      .catch((err) => {});
+  };
+
   return (
     <>
       <div className="form-dialog">
@@ -466,7 +503,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 3 of 6</div>
+            <div className="step-text">Step 2 of 6</div>
           </div>
           <button
             type="button"
@@ -516,6 +553,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                               }}
                               placeholder="Followers Count"
                               min="0"
+                              value={instagramFollowers}
                             ></input>
                           </div>
                         </div>
@@ -556,6 +594,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                               }}
                               placeholder="Followers Count"
                               min="0"
+                              value={facebookFollowers}
                             ></input>
                           </div>
                         </div>
@@ -598,6 +637,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                               }}
                               placeholder="Followers Count"
                               min="0"
+                              value={tiktoksFollowers}
                             ></input>
                           </div>
                         </div>
@@ -637,6 +677,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                                 setlinkedinFollowers(e.target.value);
                               }}
                               min="0"
+                              value={linkedinFollowers}
                               placeholder="Followers Count"
                             ></input>
                           </div>
@@ -673,7 +714,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                           </div>
                           <div className="media-text">
                             <input
-                              value={twitterFollowersCount}
+                              value={xtwitterFollowers}
                               type="number"
                               className="form-control followers-count-input"
                               onChange={(e) => {
@@ -721,6 +762,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                               }}
                               placeholder="Followers Count"
                               min="0"
+                              value={threadsFollowers}
                             ></input>
                           </div>
                         </div>
@@ -898,7 +940,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
           </div>
         </div>
         <div className="dialog-footer">
-          {/* <button
+          <button
             type="button"
             onClick={(e) => {
               goBack();
@@ -906,7 +948,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
             className="step-back"
           >
             Back
-          </button> */}
+          </button>
 
           <button
             type="button"

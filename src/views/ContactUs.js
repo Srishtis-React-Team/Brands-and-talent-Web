@@ -146,7 +146,10 @@ const ContactUs = () => {
                   className="form-control adult-signup-inputs"
                   placeholder="Enter Full Name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setNameError(false);
+                  }}
                 />
                 {nameError && (
                   <div className="invalid-fields">
