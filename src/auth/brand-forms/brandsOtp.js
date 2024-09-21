@@ -8,6 +8,7 @@ import "../../assets/css/register.css";
 import "../../assets/css/forms/kidsform-one.css";
 import "../../assets/css/forms/login.css";
 import "../../assets/css/dashboard.css";
+import { useLocation } from "react-router-dom";
 
 const BrandsOtp = React.memo((props) => {
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -19,9 +20,17 @@ const BrandsOtp = React.memo((props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState(null);
   const [emailID, setEmailID] = useState(null);
+  const [receivedData, setReceivedData] = useState(null);
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.data) {
+      setReceivedData(location.state.data);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -33,6 +42,16 @@ const BrandsOtp = React.memo((props) => {
       setEmailID(storedEmailID);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(receivedData, "Brand Otp");
+  }, [receivedData]);
+
+  const goBack = async () => {
+    navigate("/brand-signup", {
+      state: { data: receivedData },
+    });
+  };
 
   const handleChange = (value, index) => {
     const newOtp = [...otp];
@@ -193,6 +212,14 @@ const BrandsOtp = React.memo((props) => {
           <div className="otp-info" onClick={otpResend}>
             Didn’t received the OTP?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
+          </div>
+          <div
+            className="otp-back"
+            onClick={(e) => {
+              goBack();
+            }}
+          >
+            <p>Back</p>
           </div>
         </div>
       </div>

@@ -899,13 +899,13 @@ const Header = ({ onData }) => {
               How It Works
             </NavLink>
           </div>
-          {/* {currentUserId != null && (
+          {currentUserId != null && (
             <div className="navTxt padRmv">
               <NavLink to="/pricing" onClick={() => handleClick("")}>
                 Pricing
               </NavLink>
             </div>
-          )} */}
+          )}
           <div className="dropdown" ref={dropdownRef}>
             <button
               className=" dropdown-toggle border-0"
@@ -1090,13 +1090,13 @@ const Header = ({ onData }) => {
                 </NavLink>
               </div>
 
-              {/* {currentUserId != null && (
+              {currentUserId != null && (
                 <div className="navTxt">
                   <NavLink to="/pricing" onClick={() => handleClick("")}>
                     Pricing
                   </NavLink>
                 </div>
-              )} */}
+              )}
 
               <div className="navTxt">
                 <li className="nav-item dropdown">

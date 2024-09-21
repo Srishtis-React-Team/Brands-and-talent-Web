@@ -1036,6 +1036,10 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                       Portfolio <span className="astrix">*</span>
                     </span>
                   </div>
+                  <label className="form-label">
+                    Build a stunning portfolio by adding your photos or sample
+                    work photos that showcases your strengths
+                  </label>
                   <div
                     className="cv-section"
                     onDrop={handlePortofolioDrop}

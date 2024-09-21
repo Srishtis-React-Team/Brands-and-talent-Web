@@ -10,24 +10,9 @@ import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router";
 import "../assets/css/register.css";
-import CheckoutComponent from "../views/CheckoutComponent.js";
-import PaymentOptions from "../views/PaymentOptions.js";
-import MuiPhoneNumber from "material-ui-phone-number";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContentText from "@mui/material/DialogContentText";
+import Pricing from "../views/pricing.js";
 import Loader from "../views/Loader.js";
-import { useTheme, useMediaQuery } from "@mui/material";
 
-import {
-  parsePhoneNumber,
-  isValidPhoneNumber,
-  getNumberType,
-  validatePhoneNumberLength,
-} from "libphonenumber-js";
 const KidsFormTwo = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -343,7 +328,6 @@ const KidsFormTwo = () => {
     } else {
       console.error("Price string format is incorrect");
     }
-  };
 
   const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
@@ -411,10 +395,31 @@ const KidsFormTwo = () => {
     setSelectedPaymentPeriod(type);
   };
 
-  const goBack = () => {
-    navigate(`/talent-signup-basic-details?userId=${userId}`);
+    // const formData = {
+    // };
+    // setIsLoading(true);
+    // await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
+    //   .then((resData) => {
+    //     if (resData.data.status === true) {
+    //       setIsLoading(false);
+    //       setMessage("Updated Successfully!");
+    //       setOpenPopUp(true);
+    //       setTimeout(function () {
+    //         setOpenPopUp(false);
+    //         navigate(`/adult-signup-files-details?${queryString}`);
+    //       }, 1000);
+    //     } else {
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     setIsLoading(false);
+    //   });
   };
-
+  const goBack = async () => {
+    navigate(
+      `/talent-social-media-connections?userId=${userId}&userEmail=${userEmail}`
+    );
+  };
   return (
     <>
       <div className="form-dialog">
@@ -649,10 +654,10 @@ const KidsFormTwo = () => {
           </button>
 
           <button
-            className="step-continue"
             type="button"
+            className="step-continue"
             onClick={(e) => {
-              choosePlan();
+              editKids();
             }}
           >
             {isLoading ? "Loading..." : "Continue"}

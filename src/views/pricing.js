@@ -35,11 +35,18 @@ import Loader from "./Loader.js";
 // import { createPayment, checkTransactionStatus } from '../config/paymentGateway.js';
 import { useTheme, useMediaQuery } from "@mui/material";
 
-const Pricing = () => {
+const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
+  console.log(from, "from");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+
+  const paramsValues = window.location.search;
+
+  const urlParams = new URLSearchParams(paramsValues);
+
+  const signupUserId = urlParams.get("userId");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -168,10 +175,18 @@ const Pricing = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    if (isChecked) {
+    if (from == "signup") {
       getPricingList();
-    } else {
-      getBrandsPricingList();
+    }
+  }, [from]);
+
+  useEffect(() => {
+    if (from != "signup") {
+      if (isChecked) {
+        getPricingList();
+      } else {
+        getBrandsPricingList();
+      }
     }
   }, [isChecked]);
 
@@ -276,7 +291,6 @@ const Pricing = () => {
       setGiftSub(false);
       localStorage.setItem("giftsubscription", false);
     }
-
     const selectedPlanItem =
       item.plan_type_annual.find(
         (plan) => `annual-${item._id}` === selectedPlan
@@ -602,10 +616,10 @@ const Pricing = () => {
           'normal'
         );
       }
-    } else if (selectedPaymentOption == "card") {
-      setLoading(true);
-      if (giftSub) {
-        console.log("correct...");
+    }
+    {
+      if (selectedPaymentOption == "qr") {
+        setLoading(true);
         handlePayment(
           selectedAmount,
           selectedCurrency,
@@ -613,7 +627,8 @@ const Pricing = () => {
           "card",
           'giftsubscription'
         );
-      } else {
+      } else if (selectedPaymentOption == "card") {
+        setLoading(true);
         handlePayment(
           selectedAmount,
           selectedCurrency,
@@ -688,26 +703,37 @@ const Pricing = () => {
   return (
     <>
       <Header />
-      <section className="topSpace">
-        <div className="popular-header">
-          <div className="container">
-            <div className="header-title">Pricing</div>
+      {from != "signup" && (
+        <>
+          <section className="topSpace">
+            <div className="popular-header">
+              <div className="container">
+                <div className="header-title">Pricing</div>
+              </div>
+            </div>
+          </section>
+          <div className="select-plan-main ">
+            <div className="select-pricing container text-center">
+              <label className="toggleSwitch nolabel">
+                <input type="checkbox" onChange={handleToggle} />
+                <a></a>
+                <span>
+                  <span className="right-span">Brands /Clients</span>
+                  <span className="left-span">Talent</span>
+                </span>
+              </label>
+            </div>
           </div>
-        </div>
-      </section>
-      <div className="select-plan-main">
-        <div className="select-pricing container text-center">
-          <label className="toggleSwitch nolabel">
-            <input type="checkbox" onChange={handleToggle} />
-            <a></a>
-            <span>
-              <span className="right-span">Brands /Clients</span>
-              <span className="left-span">Talent</span>
-            </span>
-          </label>
-        </div>
-      </div>
-      <div className="plan-main">
+        </>
+      )}
+
+      <div
+        className="plan-main"
+        style={{
+          marginTop: from === "signup" ? "100px" : "",
+          marginBottom: from === "signup" ? "100px" : "",
+        }}
+      >
         <div className="container">
           {pricingList.length > 0 && (
             <div className="plans-section">
@@ -728,18 +754,22 @@ const Pricing = () => {
                       <div className="priceHeight">
                         <div className="plan-name">
                           {item.planname}
-                          <div
-                            className={
-                              index === 1
-                                ? "pro-gift giftSize"
-                                : index === 2
-                                ? "premium-gift giftSize"
-                                : ""
-                            }
-                            onClick={handleClickOpen}
-                          >
-                            {item.gift}
-                          </div>
+                          {from != "signup" && (
+                            <>
+                              <div
+                                className={
+                                  index === 1
+                                    ? "pro-gift giftSize"
+                                    : index === 2
+                                    ? "premium-gift giftSize"
+                                    : ""
+                                }
+                                onClick={handleClickOpen}
+                              >
+                                {item.gift}
+                              </div>
+                            </>
+                          )}
                         </div>
 
                         {item.planname === "Basic" && (
@@ -872,7 +902,11 @@ const Pricing = () => {
           )}
         </div>
       </div>
-      <Footer />
+      {from != "signup" && (
+        <>
+          <Footer />
+        </>
+      )}
       <React.Fragment>
         <Dialog
           open={open}

@@ -10,6 +10,8 @@ import "../assets/css/forms/login.css";
 import "../assets/css/dashboard.css";
 
 const KidsOTP = () => {
+  const paramsValues = window.location.search;
+  const urlParams = new URLSearchParams(paramsValues);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputsRef = useRef([]);
   const navigate = useNavigate();
@@ -18,8 +20,30 @@ const KidsOTP = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const url = window.location.href;
-  const queryString = url.split("?")[1];
+  // const url = window.location.href;
+  // console.log(url, "url");
+  // const queryString = url.split("?")[1];
+
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Get the current URL
+    const url = window.location.href;
+
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
+  }, []);
 
   const handleChange = (value, index) => {
     const newOtp = [...otp];
@@ -58,7 +82,7 @@ const KidsOTP = () => {
   const otpVerification = async (newOTP) => {
     const formData = {
       otp: newOTP,
-      parentEmail: queryString,
+      parentEmail: userEmail,
     };
 
     await ApiHelper.post(API.otpVerification, formData)
@@ -72,7 +96,7 @@ const KidsOTP = () => {
           setTimeout(function () {
             let successData = "verified";
             navigate(
-              `/talent-social-media-connections?${resData.data.data["userId"]}`
+              `/talent-social-media-connections?userId=${userId}&userEmail=${userEmail}`
             );
           }, 1000);
         } else if (resData.data.status === false) {
@@ -96,7 +120,7 @@ const KidsOTP = () => {
 
   const resendOtp = async (newOTP) => {
     const formData = {
-      parentEmail: queryString,
+      parentEmail: userEmail,
     };
     setIsLoading(true);
     await ApiHelper.post(API.otpResend, formData)
@@ -120,6 +144,12 @@ const KidsOTP = () => {
       .catch((err) => {
         setIsLoading(false);
       });
+  };
+
+  const goBack = async () => {
+    navigate(
+      `/talent-signup-basic-details?userId=${userId}&userEmail=${userEmail}`
+    );
   };
 
   return (
@@ -152,7 +182,7 @@ const KidsOTP = () => {
         <div className="otp-container">
           <div className="otp-title">OTP Verification</div>
           <div className="otp-enter">Please enter the OTP we just sent to</div>
-          <div className="otp-mail">{queryString}</div>
+          <div className="otp-mail">{userEmail}</div>
           <div className="otp-boxes">
             <div onPaste={handlePaste}>
               {otp.map((value, index) => (
@@ -182,6 +212,14 @@ const KidsOTP = () => {
           <div className="otp-info" onClick={otpResend}>
             Didn’t received the OTP?{" "}
             <span>{isLoading ? "Resend..." : "Resend"}</span>
+          </div>
+          <div
+            className="otp-back"
+            onClick={(e) => {
+              goBack();
+            }}
+          >
+            <p>Back</p>
           </div>
           <div
             className="otp-logo"

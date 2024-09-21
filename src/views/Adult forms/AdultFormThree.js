@@ -20,7 +20,7 @@ import useFieldDatas from "../../config/useFieldDatas";
 import { IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Tooltip } from "react-tooltip";
-
+import EditFeatures from "../../pages/EditFeatures";
 // Regular expressions for different video platforms
 const urlPatterns = {
   youtube:
@@ -176,6 +176,11 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     e.preventDefault();
   };
 
+  const handleEditFeatureChanges = (values) => {
+    setFeature(values);
+    console.log("Updated Form Values handleEditFeatureChanges:", values);
+  };
+
   const handleResumeDrop = (e) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
@@ -238,14 +243,19 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleAudioUrl = () => {
     if (audioUrl.trim() !== "") {
-      if (isNotKnownFormatUrl(audioUrl)) {
-        setAudioUrlsList([...audioUrlsList, audioUrl]);
-        setAudioUrl("");
-        setCheckAudioUrl(false);
-      } else {
-        setCheckAudioUrl(true);
-      }
+      setAudioUrlsList([...audioUrlsList, audioUrl]);
+      setAudioUrl("");
+      setCheckAudioUrl(false);
     }
+    // if (audioUrl.trim() !== "") {
+    //   if (isNotKnownFormatUrl(audioUrl)) {
+    //     setAudioUrlsList([...audioUrlsList, audioUrl]);
+    //     setAudioUrl("");
+    //     setCheckAudioUrl(false);
+    //   } else {
+    //     setCheckAudioUrl(true);
+    //   }
+    // }
   };
 
   const [profileAnchor, setProfileAnchor] = useState(null);
@@ -677,7 +687,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   // };
 
   const handlePortofolioDelete = (index) => {
-    alert(index);
     setPortofolioFile((prevImages) => {
       // Filter out the item at the specified index
       const updatedImages = prevImages.filter((_, i) => i !== index);
@@ -810,7 +819,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const goBack = () => {
-    navigate(`/talent-signup-plan-details?userId=${userId}`);
+    navigate(`/adult-signup-plan-details?userId=${queryString}`);
   };
 
   useEffect(() => {
@@ -819,6 +828,36 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   useEffect(() => {
     console.log(portofolioFile, "portofolioFile");
   }, [portofolioFile]);
+  useEffect(() => {
+    console.log(urls, "urls");
+  }, [urls]);
+  useEffect(() => {
+    console.log(aboutYou, "aboutYou");
+  }, [aboutYou]);
+
+  useEffect(() => {
+    getKidsData();
+  }, [userId]);
+
+  const getKidsData = async () => {
+    // alert("sd");
+    await ApiHelper.post(`${API.getTalentById}${queryString}`)
+      .then((resData) => {
+        console.log(resData, "getKidsData");
+        if (resData.data.status === true) {
+          setProfileFile(resData.data.data.image);
+          setResumeFile(resData.data.data.cv);
+          setPortofolioFile(resData.data.data.portfolio);
+          setIdType(resData.data.data.idType);
+          setVerificationID(resData.data.data.verificationId);
+          setFeature(resData.data.data.features);
+          setAboutYou(...resData.data.data.childAboutYou);
+          setUrls(resData.data.data.videoList);
+          setAudioUrlsList(resData.data.data.audioList);
+        }
+      })
+      .catch((err) => {});
+  };
 
   return (
     <>
@@ -956,6 +995,10 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                       Portfolio <span className="astrix">*</span>
                     </span>
                   </div>
+                  <label className="form-label">
+                    Build a stunning portfolio by adding your photos or sample
+                    work photos that showcases your strengths
+                  </label>
                   <div
                     className="cv-section"
                     onDrop={handlePortofolioDrop}
@@ -1328,7 +1371,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
 
                   <div className="features-section">
-                    {featuresList && (
+                    {/* {featuresList && (
                       <>
                         {featuresList.map((item, index) => (
                           <div
@@ -1403,7 +1446,13 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                           </div>
                         ))}
                       </>
-                    )}
+                    )} */}
+
+                    <EditFeatures
+                      featuresStructure={featuresList}
+                      featureValues={features}
+                      onValuesChange={handleEditFeatureChanges}
+                    />
                   </div>
 
                   <div className="kids-form-title">
@@ -1427,6 +1476,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                         onChange={(e) => {
                           setIdType(e.target.value);
                         }}
+                        value={idType}
                       >
                         <option defaultValue value="National ID Card">
                           National ID Card

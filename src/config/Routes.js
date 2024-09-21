@@ -28,6 +28,7 @@ const ResetPassword = lazy(() => import("../auth/ResetPassword"));
 const PasswordSuccess = lazy(() => import("../auth/PasswordSuccess"));
 const KidsformOne = lazy(() => import("../auth/KidsformOne"));
 const KidsFormTwo = lazy(() => import("../auth/KidsFormTwo"));
+const AdultPricing = lazy(() => import("../views/Adult forms/AdultPricing"));
 const KidsFormThree = lazy(() => import("../auth/KidsFormThree"));
 const KidsFormFour = lazy(() => import("../auth/KidsFormFour"));
 const AdultFormOne = lazy(() => import("../views/Adult forms/AdultFormOne"));
@@ -46,6 +47,7 @@ const BrandFirstGig = lazy(() => import("../auth/brand-forms/brandFirstGig"));
 const BrandsOtp = lazy(() => import("../auth/brand-forms/brandsOtp"));
 const BrandDetails = lazy(() => import("../auth/brand-forms/brandDetails"));
 const BrandLogo = lazy(() => import("../auth/brand-forms/brandLogo"));
+const BrandPricing = lazy(() => import("../auth/brand-forms/BrandPricing"));
 const BrandActivation = lazy(() =>
   import("../auth/brand-forms/brandActivation")
 );
@@ -170,7 +172,7 @@ function Routing() {
               path="/pricing"
               element={
                 // currentUserId || brandID ? (
-                  <Pricing />
+                <Pricing />
                 // ) : (
                 //   <Navigate to="/login" replace />
                 // )
@@ -213,6 +215,14 @@ function Routing() {
             <Route
               path="/talent-signup-plan-details"
               element={<KidsFormTwo />}
+            />
+            <Route
+              path="/adult-signup-plan-details"
+              element={<AdultPricing />}
+            />
+            <Route
+              path="/brand-signup-plan-details"
+              element={<BrandPricing />}
             />
             <Route
               path="/talent-signup-files-details"

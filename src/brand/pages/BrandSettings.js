@@ -81,62 +81,60 @@ const BrandSettings = () => {
     setValueTabs(newValue);
   };
 
-
   const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    padding: '20px',
-    backgroundColor: '#f4f4f4',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "100vh",
+    padding: "20px",
+    backgroundColor: "#f4f4f4",
   };
 
   const cardStyle = {
-    backgroundColor: '#fff',
-    border: '1px solid #ddd',
-    borderRadius: '12px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    padding: '20px',
-    maxWidth: '700px',
-    width: '100%',
+    backgroundColor: "#fff",
+    border: "1px solid #ddd",
+    borderRadius: "12px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    padding: "20px",
+    maxWidth: "700px",
+    width: "100%",
   };
 
   const headerStyle = {
-    fontSize: '1.8em',
-    marginBottom: '20px',
-    color: '#333',
+    fontSize: "1.8em",
+    marginBottom: "20px",
+    color: "#333",
   };
 
   const listStyle = {
-    margin: '0',
-    padding: '0',
-    listStyle: 'none',
+    margin: "0",
+    padding: "0",
+    listStyle: "none",
   };
 
   const detailItemStyle = {
-    display: 'grid',
-    gridTemplateColumns: '1fr 2fr',
-    gap: '10px',
-    padding: '10px 0',
-    borderBottom: '1px solid #eee',
+    display: "grid",
+    gridTemplateColumns: "1fr 2fr",
+    gap: "10px",
+    padding: "10px 0",
+    borderBottom: "1px solid #eee",
   };
 
   const lastDetailItemStyle = {
     ...detailItemStyle,
-    borderBottom: 'none',
+    borderBottom: "none",
   };
 
   const labelStyle = {
-    fontWeight: 'bold',
-    color: 'red',
-    textAlign: 'right',
+    fontWeight: "bold",
+    color: "red",
+    textAlign: "right",
   };
 
   const valueStyle = {
-    color: 'red',
-    textAlign: 'left',
+    color: "red",
+    textAlign: "left",
   };
-
 
   // useEffect(() => {
   //   checkTransaction();
@@ -536,9 +534,10 @@ const BrandSettings = () => {
                     </div>
                     {talentPassword && !passwordStatus && (
                       <div className="invalid-fields password-error-box">
-                        1 capital letter (A, B, C...) 1 small letter (a, b,
-                        c...) 1 number (1, 2, 3...) 1 special symbol (!, @,
-                        #...)
+                        Your password must be at least 8 characters long and
+                        include at least: 1 capital letter (A, B, C...) 1 small
+                        letter (a, b, c...) 1 number (1, 2, 3...) 1 special
+                        symbol (!, @, #...)
                       </div>
                     )}
                     {showPassword ? (
@@ -673,39 +672,47 @@ const BrandSettings = () => {
               </div>
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
-  {/* Manage Account */}
-  <div style={containerStyle}>
-      <div style={cardStyle}>
-        <h2 style={headerStyle}>Transaction Details</h2>
-        <div style={listStyle}>
-          <div style={detailItemStyle}>
-            <div style={labelStyle}>Transaction Date:</div>
-            <div style={valueStyle}>{paymentDetails?.transaction_date}</div>
-          </div>
-          <div style={detailItemStyle}>
-            <div style={labelStyle}>Payment Status:</div>
-            <div style={valueStyle}>{paymentDetails?.payment_status}</div>
-          </div>
-          <div style={detailItemStyle}>
-            <div style={labelStyle}>Payment Currency:</div>
-            <div style={valueStyle}>{paymentDetails?.payment_currency}</div>
-          </div>
-          <div style={detailItemStyle}>
-            <div style={labelStyle}>Payment Amount:</div>
-            <div style={valueStyle}>{paymentDetails?.payment_amount}</div>
-          </div>
-          <div style={detailItemStyle}>
-            <div style={labelStyle}>Payment Period:</div>
-            <div style={valueStyle}>{selectedPaymentPeriod}</div>
-          </div>
-          <div style={lastDetailItemStyle}>
-            <div style={labelStyle}>Payment Plan:</div>
-            <div style={valueStyle}>{selectedPaymentPlan}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-</CustomTabPanel>
+              {/* Manage Account */}
+              <div style={containerStyle}>
+                <div style={cardStyle}>
+                  <h2 style={headerStyle}>Transaction Details</h2>
+                  <div style={listStyle}>
+                    <div style={detailItemStyle}>
+                      <div style={labelStyle}>Transaction Date:</div>
+                      <div style={valueStyle}>
+                        {paymentDetails?.transaction_date}
+                      </div>
+                    </div>
+                    <div style={detailItemStyle}>
+                      <div style={labelStyle}>Payment Status:</div>
+                      <div style={valueStyle}>
+                        {paymentDetails?.payment_status}
+                      </div>
+                    </div>
+                    <div style={detailItemStyle}>
+                      <div style={labelStyle}>Payment Currency:</div>
+                      <div style={valueStyle}>
+                        {paymentDetails?.payment_currency}
+                      </div>
+                    </div>
+                    <div style={detailItemStyle}>
+                      <div style={labelStyle}>Payment Amount:</div>
+                      <div style={valueStyle}>
+                        {paymentDetails?.payment_amount}
+                      </div>
+                    </div>
+                    <div style={detailItemStyle}>
+                      <div style={labelStyle}>Payment Period:</div>
+                      <div style={valueStyle}>{selectedPaymentPeriod}</div>
+                    </div>
+                    <div style={lastDetailItemStyle}>
+                      <div style={labelStyle}>Payment Plan:</div>
+                      <div style={valueStyle}>{selectedPaymentPlan}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CustomTabPanel>
           </Box>
         </div>
       </main>

@@ -191,7 +191,9 @@ const TalentNotification = () => {
     }
   };
 
-  useEffect(() => {}, [notificationList]);
+  useEffect(() => {
+    console.log(notificationList, "notificationList");
+  }, [notificationList]);
   useEffect(() => {}, [talentData]);
 
   function setSubscriptionType(e) {
@@ -360,7 +362,7 @@ const TalentNotification = () => {
                     </div>
                   </div>
                   <div className="job-alert-btn-wrapper">
-                    <div className="edit-basicdetails-section-main">
+                    <div>
                       <Button
                         onClick={(e) => {
                           manageSubscription();

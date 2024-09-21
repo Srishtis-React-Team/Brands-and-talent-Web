@@ -262,9 +262,13 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                     <div className="navTxt">
                       <NavLink to="/how-it-works">How it works</NavLink>
                     </div>
-                    {/* <div className="navTxt">
-                      <NavLink to="/pricing">Pricing</NavLink>
-                    </div> */}
+                    {brandId && (
+                      <>
+                        <div className="navTxt">
+                          <NavLink to="/pricing">Pricing</NavLink>
+                        </div>
+                      </>
+                    )}
                     <div className="navTxt">
                       <li className="nav-item dropdown">
                         <a
