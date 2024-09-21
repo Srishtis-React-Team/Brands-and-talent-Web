@@ -58,6 +58,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   let queryString = url.split("?")[1];
 
+  console.log(queryString, "queryString");
+
   const userId = urlParams.get("userId");
 
   const [talentData, setTalentData] = useState();
@@ -811,6 +813,13 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
             }
           }, 1000);
         } else {
+          setIsLoading(false);
+
+          setMessage("Error Occured Try Again");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+          }, 1000);
         }
       })
       .catch((err) => {
@@ -851,7 +860,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
           setIdType(resData.data.data.idType);
           setVerificationID(resData.data.data.verificationId);
           setFeature(resData.data.data.features);
-          setAboutYou(...resData.data.data.childAboutYou);
+          // setAboutYou(...resData.data.data.childAboutYou);
+
           setUrls(resData.data.data.videoList);
           setAudioUrlsList(resData.data.data.audioList);
         }

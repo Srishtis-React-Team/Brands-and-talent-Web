@@ -37,6 +37,7 @@ const BrandSignup = React.memo((props) => {
 
   useEffect(() => {
     if (location.state && location.state.data) {
+      console.log(location.state.data, "location.state.data");
       setReceivedData(location.state.data);
     }
   }, [location.state]);
@@ -45,6 +46,46 @@ const BrandSignup = React.memo((props) => {
   useEffect(() => {
     console.log(receivedData, "Brand Signup");
   }, [receivedData]);
+
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    // Get the current URL
+    const url = window.location.href;
+    // Create a new URLSearchParams object with the query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Extract userId and userEmail from the URL query string
+    const userIdFromUrl = params.get("userId");
+    const userEmailFromUrl = params.get("userEmail");
+
+    // Save the values into state
+    if (userIdFromUrl) setUserId(userIdFromUrl);
+    if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
+
+    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
+  }, []);
+
+  useEffect(() => {
+    getBrand();
+  }, [userId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${userId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            console.log(resData.data.data, "getBrand");
+            setAdultName(resData?.data?.data?.userName);
+            setAdultEmail(resData?.data?.data?.brandEmail);
+            // setAdultPassword(resData?.data?.data?.brandPassword);
+            // setAdultConfirmPassword(resData?.data?.data?.confirmPassword);
+          }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -146,13 +187,17 @@ const BrandSignup = React.memo((props) => {
       setIsLoading(true);
       await ApiHelper.post(API.brandsRegister, formData)
         .then((resData) => {
+          console.log(resData.data, "resData.data");
+
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Registered Successfully");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
-              navigate(`/otp-verification-brands?${resData?.data?.data}`);
+              navigate(
+                `/otp-verification-brands?userId=${resData.data["user_id"]}&userEmail=${resData.data.data}`
+              );
             }, 2000);
           } else if (resData.data.status === false) {
             setIsLoading(false);
@@ -367,7 +412,8 @@ const BrandSignup = React.memo((props) => {
                     setAdultEmail(e.target.value);
                     setEmailError(false);
                   }}
-                  value={googleUser?.email}
+                  // value={googleUser?.email}
+                  value={adultEmail}
                 ></input>
                 {emailError && (
                   <div className="invalid-fields">Please enter Email</div>
@@ -389,6 +435,7 @@ const BrandSignup = React.memo((props) => {
                     setAdultName(e.target.value);
                     setNameError(false);
                   }}
+                  value={adultName}
                 ></input>
                 {nameError && (
                   <div className="invalid-fields">Please enter Name</div>
@@ -410,6 +457,7 @@ const BrandSignup = React.memo((props) => {
                     handlePasswordChange(e);
                     setAdultPassword(e.target.value);
                   }}
+                  value={adultPassword}
                 ></input>
 
                 <div className="password_strength_box">
@@ -472,6 +520,7 @@ const BrandSignup = React.memo((props) => {
                     setConfirmPasswordError(false);
                     setAdultConfirmPassword(e.target.value);
                   }}
+                  value={adultConfirmPassword}
                 ></input>
                 {confirmPasswordError && (
                   <div className="invalid-fields">
