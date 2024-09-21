@@ -104,7 +104,8 @@ const PaymentOptions = ({
         <span>
           You've chosen {selectedPaymentPlan} Membership <br />
           Total: {selectedCurrency}{" "}
-          <span style={{ fontWeight: "bold" }}>{amount}</span> Select your
+          <span style={{ fontWeight: "bold" }}>{amount}</span> <br/>
+          Select your
           payment method to finalize your subscription and enjoy exclusive
           benefits.
         </span>
