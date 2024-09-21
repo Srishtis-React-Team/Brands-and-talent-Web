@@ -616,10 +616,10 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
           'normal'
         );
       }
-    }
-    {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
+    } else if (selectedPaymentOption == "card") {
+      setLoading(true);
+      if (giftSub) {
+        console.log("correct...");
         handlePayment(
           selectedAmount,
           selectedCurrency,
@@ -627,8 +627,7 @@ const Pricing = ({ from, setSelectedPaymentStatus, setIsPaymentClicked }) => {
           "card",
           'giftsubscription'
         );
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
+      } else {
         handlePayment(
           selectedAmount,
           selectedCurrency,
