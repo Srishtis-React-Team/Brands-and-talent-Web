@@ -449,6 +449,8 @@ const Pricing = ({
     try {
       console.log("plan----", plan);
       const userId = localStorage.getItem("userId");
+      const brandId = localStorage.getItem("brandId");
+
       let apiUrl =
         paymentOption == "card" ? API.createPayment : API.createqrpayment;
       const response = await ApiHelper.post(apiUrl, {
@@ -464,7 +466,7 @@ const Pricing = ({
         planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
         console.log('trimed value',planType); // Output: "Pro"
       }
-      
+      console.log('middle',plan)
       if (plan == "giftsubscription") {
         const giftObj = {
           senderName: senderName,
@@ -491,6 +493,7 @@ const Pricing = ({
           subscriptionPlan: selectedPaymentPeriod,
           planName: planType?planType:selectedPaymentPlan,
           user_id: userId,
+          brand_id:brandId,
           transId: response.data.trans_id,
           paymentStatus: "Pending",
           coupon:appliedCouponCode?appliedCouponCode:'',
