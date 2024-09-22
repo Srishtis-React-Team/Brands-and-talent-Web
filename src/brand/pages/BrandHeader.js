@@ -174,17 +174,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
           navigate("/");
         }, 1000);
       } else if (menuItem == "edit") {
-        if (brandData?.adminApproved === true) {
-          navigate("/edit-brand-profile");
-        } else {
-          setMessage(
-            "After your verification is approved, you can update your profile"
-          );
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-          }, 2000);
-        }
+        navigate("/edit-brand-profile");
       }
     };
   };

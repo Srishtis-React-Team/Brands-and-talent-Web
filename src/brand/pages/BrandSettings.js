@@ -70,12 +70,24 @@ const BrandSettings = () => {
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [brandDetails,setBrandDetails] = useState([])
   // const [paymentDetails,setPaymentDetails] = useState()
 
   const paymentData = localStorage.getItem("paymentData");
+  console.log('paymentDetails',paymentData)
   const paymentDetails = JSON.parse(paymentData);
   const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
   const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
+  const brand_Id = localStorage.getItem('brandId');
+
+  useEffect(async()=>{
+    const obj = {
+      user_id : brand_Id
+    }
+    const resData = await ApiHelper.post(`${API.fetchPaymentDetails}`,obj);
+    setBrandDetails(resData?.data?.data)
+    console.log('resData--0--',resData)
+  },[])
 
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
@@ -673,6 +685,7 @@ const BrandSettings = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
               {/* Manage Account */}
+              {console.log('brandDetails',brandDetails)}
               <div style={containerStyle}>
                 <div style={cardStyle}>
                   <h2 style={headerStyle}>Transaction Details</h2>
@@ -680,25 +693,25 @@ const BrandSettings = () => {
                     <div style={detailItemStyle}>
                       <div style={labelStyle}>Transaction Date:</div>
                       <div style={valueStyle}>
-                        {paymentDetails?.transaction_date}
+                        {brandDetails?.transactionDate}
                       </div>
                     </div>
                     <div style={detailItemStyle}>
                       <div style={labelStyle}>Payment Status:</div>
                       <div style={valueStyle}>
-                        {paymentDetails?.payment_status}
+                        {brandDetails?.paymentStatus}
                       </div>
                     </div>
                     <div style={detailItemStyle}>
                       <div style={labelStyle}>Payment Currency:</div>
                       <div style={valueStyle}>
-                        {paymentDetails?.payment_currency}
+                        {brandDetails?.paymentCurreny}
                       </div>
                     </div>
                     <div style={detailItemStyle}>
                       <div style={labelStyle}>Payment Amount:</div>
                       <div style={valueStyle}>
-                        {paymentDetails?.payment_amount}
+                        {brandDetails?.paymentAmount}
                       </div>
                     </div>
                     <div style={detailItemStyle}>

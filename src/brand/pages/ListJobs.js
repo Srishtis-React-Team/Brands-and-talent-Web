@@ -176,7 +176,7 @@ const ListJobs = () => {
             setTimeout(function () {
               setOpenPopUp(false);
               setAllJobsList(resData.data.data, "resData.data.data");
-            }, 5000);
+            }, 3000);
           } else {
             setMessage("Job Posted Successfully!");
             setOpenPopUp(true);

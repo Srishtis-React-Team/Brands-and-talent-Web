@@ -45,6 +45,7 @@ export const API = {
   adultResetPassword: BASEURL + "users/adultResetPassword",
   adultForgotPassword: BASEURL + "users/adultForgotPassword",
   fetchUserData: BASEURL + "users/fetchUserData/",
+  fetchPaymentDetails: BASEURL + 'users/fetchPaymentDetails',
 
   //brands
   socailSignUpBrands: BASEURL + "brands/socailSignUpBrands",

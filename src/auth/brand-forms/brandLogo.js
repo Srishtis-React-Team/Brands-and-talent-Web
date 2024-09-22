@@ -43,6 +43,7 @@ const BrandLogo = () => {
   const [aboutYou, setAboutYou] = useState([]);
   const [whyWorkWithUs, setWhyWorkWithUs] = useState([]);
   const [brandName, setBrandName] = useState("");
+  const [updateDisabled, setUpdateDisabled] = useState(false);
 
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -75,13 +76,22 @@ const BrandLogo = () => {
           if (resData.data.data) {
             console.log(resData.data.data, "getBrand");
             setPortofolioFile(resData?.data?.data?.logo);
-            // setAboutYou(resData?.data?.data?.aboutBrand);
+            setAboutYou(resData?.data?.data?.aboutBrand);
+            setWhyWorkWithUs(resData?.data?.data?.whyWorkWithUs);
             setBrandName(resData?.data?.data?.brandName);
           }
         }
       })
       .catch((err) => {});
   };
+
+  useEffect(() => {
+    if (portofolioFile.length === 0) {
+      setUpdateDisabled(true);
+    } else if (portofolioFile.length !== 0) {
+      setUpdateDisabled(false);
+    }
+  }, [portofolioFile]);
 
   const goBack = async () => {
     navigate(`/brand-details?userId=${userId}&userEmail=${userEmail}`);
@@ -94,6 +104,8 @@ const BrandLogo = () => {
   }, [location.state]);
 
   const handleEditorChange = (value, index) => {
+    console.log(value, "value");
+    console.log(typeof value, "value");
     setAboutYou(value);
   };
   const handleWhyWorkEditorChange = (value, index) => {
@@ -412,9 +424,15 @@ const BrandLogo = () => {
 
           <button
             type="button"
-            className="step-continue"
+            className={
+              updateDisabled
+                ? "step-continue disabled-continue"
+                : "step-continue"
+            }
             onClick={(e) => {
-              brandsSignup();
+              if (updateDisabled === false) {
+                brandsSignup();
+              }
             }}
           >
             Continue

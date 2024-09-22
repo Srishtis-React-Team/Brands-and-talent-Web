@@ -102,17 +102,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   }, []);
 
   const handleNavigation = () => {
-    if (brandData?.adminApproved === true) {
-      navigate("/edit-brand-profile");
-    } else {
-      setMessage(
-        "After your verification is approved, you can update your profile"
-      );
-      setOpenPopUp(true);
-      setTimeout(() => {
-        setOpenPopUp(false);
-      }, 2000);
-    }
+    navigate("/edit-brand-profile");
   };
 
   useEffect(() => {}, [isSmallScreen]);
@@ -297,7 +287,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             <div className="brand-menu-text">Settings</div>
           </Link>
 
-          <Link
+          {/* <Link
             to="/pricing"
             className={
               location.pathname === "/pricing"
@@ -307,7 +297,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           >
             <i class="bi bi-tags-fill icons"></i>
             <div className="brand-menu-text">Pricing</div>
-          </Link>
+          </Link> */}
 
           {/* <Link
               to="/brand-help"

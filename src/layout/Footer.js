@@ -162,10 +162,10 @@ const Footer = (props) => {
   };
 
   const handleAirtableClick = (data) => {
-    window.open(
-      "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-      "_blank"
-    );
+    // window.open(
+    //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+    //   "_blank"
+    // );
   };
 
   const [contentsList, setContentsList] = useState([]);

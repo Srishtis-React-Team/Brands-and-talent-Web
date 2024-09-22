@@ -217,7 +217,7 @@ const Login = () => {
       data?.data?.brandImage[0]?.fileData
     );
     localStorage.setItem("brandName", data?.data?.brandName);
-    setUserId(userId);
+    // setUserId(userId);
   };
 
   const [data, setData] = useState("");

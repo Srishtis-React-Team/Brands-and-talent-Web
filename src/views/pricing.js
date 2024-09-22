@@ -140,6 +140,7 @@ const Pricing = ({
   const [mobileNumberError, setMobileNumberError] = useState("");
   const [giftSub, setGiftSub] = useState(false);
   const [pathFrom, setPathFrom] = useState("");
+  const [appliedCouponCode, setAppliedCouponCode] = useState('')
 
   const handleMobileChange = (value) => {
     console.log(value, "handleMobileChange");
@@ -448,6 +449,8 @@ const Pricing = ({
     try {
       console.log("plan----", plan);
       const userId = localStorage.getItem("userId");
+      const brandId = localStorage.getItem("brandId");
+
       let apiUrl =
         paymentOption == "card" ? API.createPayment : API.createqrpayment;
       const response = await ApiHelper.post(apiUrl, {
@@ -457,6 +460,13 @@ const Pricing = ({
       });
       setResponseUrl(response.data.url);
       localStorage.setItem("paymenttrans_id", response.data.trans_id);
+      console.log("selectedPaymentPlan---",selectedPaymentPlan)
+      let planType;
+      if(selectedPaymentPlan == "Pro (Popular)"){
+        planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
+        console.log('trimed value',planType); // Output: "Pro"
+      }
+      console.log('middle',plan)
       if (plan == "giftsubscription") {
         const giftObj = {
           senderName: senderName,
@@ -467,26 +477,28 @@ const Pricing = ({
               receiverEmail: recieverEmail,
               message: enquiry,
               subscriptionPlan: selectedPaymentPeriod,
-              planName: selectedPaymentPlan,
+              planName: planType?planType:selectedPaymentPlan,
               transId: response.data.trans_id,
               paymentStatus: "Pending",
             },
           ],
           isActive: true,
         };
-
+        console.log('giftObj--0',giftObj)
         // giftSubCreation
         const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
         console.log("resGiftSub", resGiftSub);
       } else {
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
-          planName: selectedPaymentPlan,
+          planName: planType?planType:selectedPaymentPlan,
           user_id: userId,
+          brand_id:brandId,
           transId: response.data.trans_id,
           paymentStatus: "Pending",
+          coupon:appliedCouponCode?appliedCouponCode:'',
         };
-        console.log();
+        console.log('userData--0',userData);
         const responseSubscription = await ApiHelper.post(
           API.subscriptionPlan,
           userData
@@ -1395,6 +1407,7 @@ const Pricing = ({
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
+          setAppliedCouponCode={setAppliedCouponCode}
         />
       )}
 

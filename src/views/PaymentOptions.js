@@ -17,6 +17,7 @@ const PaymentOptions = ({
   setPaymentOption,
   selectedPaymentPlan,
   paymentFrom,
+  setAppliedCouponCode
 }) => {
   console.log(paymentFrom, "paymentFrom");
   const [inputValue, setInputValue] = useState("");
@@ -32,6 +33,9 @@ const PaymentOptions = ({
 
   const applyCoupon = async () => {
     const userId = localStorage.getItem("userId");
+    if(inputValue){
+    setAppliedCouponCode(inputValue)
+    }
     const obj = {
       userId,
       code: inputValue,
@@ -104,7 +108,8 @@ const PaymentOptions = ({
         <span>
           You've chosen {selectedPaymentPlan} Membership <br />
           Total: {selectedCurrency}{" "}
-          <span style={{ fontWeight: "bold" }}>{amount}</span> Select your
+          <span style={{ fontWeight: "bold" }}>{amount}</span> <br/>
+          Select your
           payment method to finalize your subscription and enjoy exclusive
           benefits.
         </span>
@@ -142,6 +147,7 @@ const PaymentOptions = ({
               <button
                 onClick={applyCoupon}
                 className={`apply-btn ${inputValue ? "highlighted" : ""}`} // Conditionally apply class
+                disabled={!!couponDiscountPercent}
               >
                 {isCouponApplied ? "Applied" : "Apply"}{" "}
                 {/* Conditional button text */}
