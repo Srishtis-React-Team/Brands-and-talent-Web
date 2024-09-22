@@ -43,6 +43,7 @@ const BrandLogo = () => {
   const [aboutYou, setAboutYou] = useState([]);
   const [whyWorkWithUs, setWhyWorkWithUs] = useState([]);
   const [brandName, setBrandName] = useState("");
+  const [updateDisabled, setUpdateDisabled] = useState(false);
 
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -83,6 +84,14 @@ const BrandLogo = () => {
       })
       .catch((err) => {});
   };
+
+  useEffect(() => {
+    if (portofolioFile.length === 0) {
+      setUpdateDisabled(true);
+    } else if (portofolioFile.length !== 0) {
+      setUpdateDisabled(false);
+    }
+  }, [portofolioFile]);
 
   const goBack = async () => {
     navigate(`/brand-details?userId=${userId}&userEmail=${userEmail}`);
@@ -415,9 +424,15 @@ const BrandLogo = () => {
 
           <button
             type="button"
-            className="step-continue"
+            className={
+              updateDisabled
+                ? "step-continue disabled-continue"
+                : "step-continue"
+            }
             onClick={(e) => {
-              brandsSignup();
+              if (updateDisabled === false) {
+                brandsSignup();
+              }
             }}
           >
             Continue

@@ -510,30 +510,44 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const resumeUpload = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const filesArray = Array.from(event.target.files);
-      const documentFiles = filesArray.filter((file) =>
-        isDocumentFile(file.type)
-      );
-      const nonDocumentFiles = filesArray.filter(
-        (file) => !isDocumentFile(file.type)
-      );
-      if (nonDocumentFiles.length > 0) {
-        setMessage("You can only upload PDF, Word documents, etc.");
-        setOpenPopUp(true);
-        setTimeout(() => {
-          setOpenPopUp(false);
-        }, 1000);
-        return;
+    if (talentData?.planName != "Basic") {
+      if (event.target.files && event.target.files.length > 0) {
+        const filesArray = Array.from(event.target.files);
+        const documentFiles = filesArray.filter((file) =>
+          isDocumentFile(file.type)
+        );
+        const nonDocumentFiles = filesArray.filter(
+          (file) => !isDocumentFile(file.type)
+        );
+        if (nonDocumentFiles.length > 0) {
+          setMessage("You can only upload PDF, Word documents, etc.");
+          setOpenPopUp(true);
+          setTimeout(() => {
+            setOpenPopUp(false);
+          }, 1000);
+          return;
+        }
+        documentFiles.forEach((file) => {
+          uploadResume(file);
+        });
+        // Reset the input value to allow re-uploading the same file
       }
-      documentFiles.forEach((file) => {
-        uploadResume(file);
-      });
-      // Reset the input value to allow re-uploading the same file
-      event.target.value = null;
-    }
-  };
+    } else {
+      let upgradeMessage;
+      if (talentData?.planName === "Basic") {
+        upgradeMessage = "Upgrade to Pro to add resumes.";
+      } else if (talentData?.planName === "Pro") {
+        upgradeMessage = "Upgrade to Premium to add resumes.";
+      }
 
+      setMessage(`${upgradeMessage}`);
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 3000);
+    }
+    event.target.value = null;
+  };
   const isDocumentFile = (fileType) => {
     return (
       fileType === "application/pdf" ||

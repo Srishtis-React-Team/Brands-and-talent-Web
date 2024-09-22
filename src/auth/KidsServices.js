@@ -6,11 +6,14 @@ import { useNavigate } from "react-router";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 import "../assets/css/talent-dashboard.css";
-import "../assets/css/forms/kidsform-one.css";
 import PopUp from "../components/PopUp";
 import { v4 as uuidv4 } from "uuid";
 import RichTextEditor from "../views/RichTextEditor";
+import "../assets/css/forms/kidsformthree.css";
+import "../assets/css/forms/kidsform-one.css";
 import "../assets/css/register.css";
+import "../assets/css/dashboard.css";
+import "../assets/css/kidsmain.scss";
 
 const KidsServices = () => {
   const btLogo = require("../assets/images/LOGO.png");
@@ -29,6 +32,32 @@ const KidsServices = () => {
   const [showOptions, setShowOptions] = useState(false);
   const url = window.location.href;
   let queryString = url.split("?")[1];
+  const paramsValues = window.location.search;
+
+  const urlParams = new URLSearchParams(paramsValues);
+
+  const userId = urlParams.get("userId");
+
+  const [talentData, setTalentData] = useState();
+
+  useEffect(() => {
+    console.log(userId, "userId");
+    if (userId) {
+      getTalentById();
+    }
+  }, [userId]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${userId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -37,18 +66,16 @@ const KidsServices = () => {
     let formData = {
       services: inputs,
     };
-    await ApiHelper.post(`${API.editKids}${queryString}`, formData)
+    await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
           setIsLoading(false);
-          setMessage("Updated Successfully Login to Continue");
+          setMessage("Updated successfully");
           setOpenPopUp(true);
           loginTemplate(resData?.data?.data?.email);
           setTimeout(function () {
             setOpenPopUp(false);
-            navigate(
-              `/login?type=talent&user_id=${resData?.data?.data?.user_id}`
-            );
+            navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -90,6 +117,10 @@ const KidsServices = () => {
       uniqueId: uuidv4(),
     },
   ]);
+
+  const goBack = () => {
+    navigate(`/talent-signup-files-details?userId=${userId}`);
+  };
 
   const handleFileChange = (index, event) => {
     if (event.target.files && event.target.files[0]) {
@@ -394,7 +425,7 @@ const KidsServices = () => {
             <button
               type="button"
               onClick={(e) => {
-                navigate("/adult-signup-basic-details");
+                goBack();
               }}
               className="step-back"
             >

@@ -267,12 +267,20 @@ const Header = ({ onData }) => {
         }
       }
       if (menuItem === "edit") {
-        if (currentUser_type === "talent") {
-          // alert("navigate to edittalent");
-          navigate(`${"/edit-talent-profile"}?${currentUserId}`);
-        } else if (currentUser_type === "brand") {
-          navigate(`/edit-brand-profile`);
-          // alert("navigate to edit brand");
+        if (currentUser_type == "talent") {
+          if (talentData?.adminApproved === true) {
+            navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+          } else {
+            setMessage(
+              "After your verification is approved, you can update your profile"
+            );
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+            }, 2000);
+          }
+        } else {
+          navigate("/edit-brand-profile");
         }
       }
     };
@@ -578,7 +586,6 @@ const Header = ({ onData }) => {
     } else if (route === "/edit-brand-profile") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-
         setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function () {

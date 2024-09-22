@@ -21,7 +21,7 @@ import useFieldDatas from "../config/useFieldDatas";
 import { IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Tooltip } from "react-tooltip";
-
+import EditFeatures from "../pages/EditFeatures";
 // Regular expressions for different video platforms
 const urlPatterns = {
   youtube:
@@ -60,18 +60,25 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [talentData, setTalentData] = useState();
 
   useEffect(() => {
-    if (userId) {
-      getTalentById();
-    }
+    console.log(userId, "userId");
+    getKidsData();
   }, [userId]);
 
-  const getTalentById = async () => {
+  const getKidsData = async () => {
+    // alert("sd");
     await ApiHelper.post(`${API.getTalentById}${userId}`)
       .then((resData) => {
+        console.log(resData, "getKidsData");
         if (resData.data.status === true) {
-          if (resData.data.data) {
-            setTalentData(resData.data.data, "resData.data.data");
-          }
+          setProfileFile(resData.data.data.image);
+          setResumeFile(resData.data.data.cv);
+          setPortofolioFile(resData.data.data.portfolio);
+          setIdType(resData.data.data.idType);
+          setVerificationID(resData.data.data.verificationId);
+          setFeature(resData.data.data.features);
+          setAboutYou(resData.data.data.childAboutYou);
+          setUrls(resData.data.data.videoList);
+          setAudioUrlsList(resData.data.data.audioList);
         }
       })
       .catch((err) => {});
@@ -581,28 +588,43 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const resumeUpload = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const filesArray = Array.from(event.target.files);
-      const documentFiles = filesArray.filter((file) =>
-        isDocumentFile(file.type)
-      );
-      const nonDocumentFiles = filesArray.filter(
-        (file) => !isDocumentFile(file.type)
-      );
-      if (nonDocumentFiles.length > 0) {
-        setMessage("You can only upload PDF, Word documents, etc.");
-        setOpenPopUp(true);
-        setTimeout(() => {
-          setOpenPopUp(false);
-        }, 1000);
-        return;
+    if (talentData?.planName != "Basic") {
+      if (event.target.files && event.target.files.length > 0) {
+        const filesArray = Array.from(event.target.files);
+        const documentFiles = filesArray.filter((file) =>
+          isDocumentFile(file.type)
+        );
+        const nonDocumentFiles = filesArray.filter(
+          (file) => !isDocumentFile(file.type)
+        );
+        if (nonDocumentFiles.length > 0) {
+          setMessage("You can only upload PDF, Word documents, etc.");
+          setOpenPopUp(true);
+          setTimeout(() => {
+            setOpenPopUp(false);
+          }, 1000);
+          return;
+        }
+        documentFiles.forEach((file) => {
+          uploadResume(file);
+        });
+        // Reset the input value to allow re-uploading the same file
       }
-      documentFiles.forEach((file) => {
-        uploadResume(file);
-      });
-      // Reset the input value to allow re-uploading the same file
-      event.target.value = null;
+    } else {
+      let upgradeMessage;
+      if (talentData?.planName === "Basic") {
+        upgradeMessage = "Upgrade to Pro to add resumes.";
+      } else if (talentData?.planName === "Pro") {
+        upgradeMessage = "Upgrade to Premium to add resumes.";
+      }
+
+      setMessage(`${upgradeMessage}`);
+      setOpenPopUp(true);
+      setTimeout(() => {
+        setOpenPopUp(false);
+      }, 3000);
     }
+    event.target.value = null;
   };
 
   const isDocumentFile = (fileType) => {
@@ -938,19 +960,18 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-            directKidsLogin(resData);
-            // if (talentData?.planName == "Basic") {
-            //   // navigate(
-            //   //   `/talent/${talentData.publicUrl}`,
-            //   //   {
-            //   //     state: { talentData: talentData },
-            //   //   }
-            //   // );
-            //   navigate(`/login?type=talent&user_id=${userId}`);
-            // } else {
-            //   navigate(`/talent-signup-service-details?${userId}`);
-            // }
-            // // navigate(`/talent-home`);
+            if (talentData?.planName == "Basic") {
+              // navigate(
+              //   `/talent/${talentData.publicUrl}`,
+              //   {
+              //     state: { talentData: talentData },
+              //   }
+              // );
+              directKidsLogin();
+            } else {
+              navigate(`/talent-signup-service-details?userId=${userId}`);
+            }
+            // navigate(`/talent-home`);
           }, 1000);
         } else {
         }
@@ -960,7 +981,13 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       });
   };
 
+  const handleEditFeatureChanges = (values) => {
+    setFeature(values);
+    console.log("Updated Form Values handleEditFeatureChanges:", values);
+  };
+
   const directKidsLogin = async (data) => {
+    // alert("sd");
     console.log(data, "get directKidsLogin");
     const formData = {
       parentEmail: data?.data?.data?.email,
@@ -1016,7 +1043,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 6 of 6</div>
+            <div className="step-text">Step 5 of 6</div>
           </div>
           <button
             type="button"
@@ -1512,7 +1539,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
 
                   <div className="features-section">
-                    {featuresList && (
+                    {/* {featuresList && (
                       <>
                         {featuresList.map((item, index) => (
                           <div
@@ -1587,7 +1614,12 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                           </div>
                         ))}
                       </>
-                    )}
+                    )} */}
+                    <EditFeatures
+                      featuresStructure={featuresList}
+                      featureValues={features}
+                      onValuesChange={handleEditFeatureChanges}
+                    />
                   </div>
 
                   <div className="kids-form-title">

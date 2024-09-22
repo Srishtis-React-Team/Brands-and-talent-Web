@@ -102,17 +102,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   }, []);
 
   const handleNavigation = () => {
-    if (brandData?.adminApproved === true) {
-      navigate("/edit-brand-profile");
-    } else {
-      setMessage(
-        "After your verification is approved, you can update your profile"
-      );
-      setOpenPopUp(true);
-      setTimeout(() => {
-        setOpenPopUp(false);
-      }, 2000);
-    }
+    navigate("/edit-brand-profile");
   };
 
   useEffect(() => {}, [isSmallScreen]);
