@@ -77,7 +77,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       .catch((err) => {});
   };
 
-  useEffect(() => {}, [talentData]);
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
 
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -255,6 +257,36 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const handleAddUrl = () => {
     if (videoUrl.trim() !== "") {
       if (isValidUrl(videoUrl)) {
+        // Determine allowed URL limits based on plan type
+        let maxUrls;
+        if (talentData?.planName === "Basic") {
+          maxUrls = 2;
+        } else if (talentData?.planName === "Pro") {
+          maxUrls = 5;
+        } else if (talentData?.planName === "Premium") {
+          maxUrls = Infinity; // Unlimited
+        }
+
+        // Check if adding the new URL exceeds the limit
+        if (urls.length >= maxUrls) {
+          let upgradeMessage;
+          if (talentData?.planName === "Basic") {
+            upgradeMessage = "Upgrade to Pro to add more URLs.";
+          } else if (talentData?.planName === "Pro") {
+            upgradeMessage = "Upgrade to Premium to add more URLs.";
+          }
+
+          setMessage(
+            `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+          );
+          setOpenPopUp(true);
+          setTimeout(() => {
+            setOpenPopUp(false);
+          }, 1000);
+          return;
+        }
+
+        // Add the valid URL
         setUrls([...urls, videoUrl]);
         setVideoUrl("");
         setCheckVideoUrl(false);
@@ -265,12 +297,17 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const isNotKnownFormatUrl = (url) => {
-    // alert("url");
     console.log(url, "url");
+
     const isValidAudioUrl = audioUrlPatterns?.audio?.test(url); // Check for audio URLs
     console.log(isValidAudioUrl, "url");
 
-    const isValidUrl = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i?.test(url); // Check for valid URL format
+    // Updated regex to accept valid URLs including those ending in .com, .in, and audio file types
+    const isValidUrl =
+      /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*(\.(com|in|org|net|co|io|info|biz|me|us|app|dev|edu|mp3|wav|ogg|aac|flac|m4a))?(\/[^\s]*)?$/i.test(
+        url
+      );
+
     return !(
       (
         audioUrlPatterns.youtube.test(url) ||
@@ -285,7 +322,38 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleAudioUrl = () => {
     if (audioUrl.trim() !== "") {
-      if (isNotKnownFormatUrl(audioUrl)) {
+      // alert(isNotKnownFormatUrl(audioUrl));
+      if (!isNotKnownFormatUrl(audioUrl)) {
+        // Determine allowed URL limits based on plan type
+        let maxUrls;
+        if (talentData?.planName === "Basic") {
+          maxUrls = 2;
+        } else if (talentData?.planName === "Pro") {
+          maxUrls = 5;
+        } else if (talentData?.planName === "Premium") {
+          maxUrls = Infinity; // Unlimited
+        }
+
+        // Check if adding the new URL exceeds the limit
+        if (audioUrlsList.length >= maxUrls) {
+          let upgradeMessage;
+          if (talentData?.planName === "Basic") {
+            upgradeMessage = "Upgrade to Pro to add more URLs.";
+          } else if (talentData?.planName === "Pro") {
+            upgradeMessage = "Upgrade to Premium to add more URLs.";
+          }
+
+          setMessage(
+            `You can upload a maximum of ${maxUrls} audio URLs. ${upgradeMessage}`
+          );
+          setOpenPopUp(true);
+          setTimeout(() => {
+            setOpenPopUp(false);
+          }, 1000);
+          return;
+        }
+
+        // Add the valid audio URL
         setAudioUrlsList([...audioUrlsList, audioUrl]);
         setAudioUrl("");
         setCheckAudioUrl(false);
@@ -466,6 +534,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         (file) => !file.type.startsWith("image/")
       );
 
+      // Check for non-image files
       if (nonImageFiles.length > 0) {
         setMessage("You can only upload images");
         setOpenPopUp(true);
@@ -474,6 +543,37 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         }, 1000);
         return;
       }
+
+      // Determine allowed file limits based on plan type
+      let maxFiles;
+      if (talentData?.planName === "Basic") {
+        maxFiles = 5;
+      } else if (talentData?.planName === "Pro") {
+        maxFiles = 15;
+      } else if (talentData?.planName === "Premium") {
+        maxFiles = Infinity; // Unlimited
+      }
+
+      // Check if the current count plus new uploads exceeds the limit
+      if (portofolioFile.length + imageFiles.length > maxFiles) {
+        let upgradeMessage;
+        if (talentData?.planName === "Basic") {
+          upgradeMessage = "Upgrade to Pro to add more files.";
+        } else if (talentData?.planName === "Pro") {
+          upgradeMessage = "Upgrade to Premium to add more files.";
+        }
+
+        setMessage(
+          `You can upload a maximum of ${maxFiles} images. ${upgradeMessage}`
+        );
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 3000);
+        return;
+      }
+
+      // Upload valid image files
       imageFiles.forEach((file) => {
         uploadFile(file);
       });
@@ -722,7 +822,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   // };
 
   const handlePortofolioDelete = (index) => {
-    alert(index);
+    // alert(index);
     setPortofolioFile((prevImages) => {
       // Filter out the item at the specified index
       const updatedImages = prevImages.filter((_, i) => i !== index);
@@ -916,7 +1016,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 5 of 6</div>
+            <div className="step-text">Step 6 of 6</div>
           </div>
           <button
             type="button"

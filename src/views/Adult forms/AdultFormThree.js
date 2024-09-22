@@ -223,14 +223,18 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
       }
     }
   };
-
   const isNotKnownFormatUrl = (url) => {
-    // alert("url");
     console.log(url, "url");
+
     const isValidAudioUrl = audioUrlPatterns?.audio?.test(url); // Check for audio URLs
     console.log(isValidAudioUrl, "url");
 
-    const isValidUrl = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i?.test(url); // Check for valid URL format
+    // Updated regex to accept valid URLs including those ending in .com, .in, and audio file types
+    const isValidUrl =
+      /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*(\.(com|in|org|net|co|io|info|biz|me|us|app|dev|edu|mp3|wav|ogg|aac|flac|m4a))?(\/[^\s]*)?$/i.test(
+        url
+      );
+
     return !(
       (
         audioUrlPatterns.youtube.test(url) ||
@@ -245,19 +249,45 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleAudioUrl = () => {
     if (audioUrl.trim() !== "") {
-      setAudioUrlsList([...audioUrlsList, audioUrl]);
-      setAudioUrl("");
-      setCheckAudioUrl(false);
+      // alert(isNotKnownFormatUrl(audioUrl));
+      if (!isNotKnownFormatUrl(audioUrl)) {
+        // Determine allowed URL limits based on plan type
+        let maxUrls;
+        if (talentData?.planName === "Basic") {
+          maxUrls = 2;
+        } else if (talentData?.planName === "Pro") {
+          maxUrls = 5;
+        } else if (talentData?.planName === "Premium") {
+          maxUrls = Infinity; // Unlimited
+        }
+
+        // Check if adding the new URL exceeds the limit
+        if (audioUrlsList.length >= maxUrls) {
+          let upgradeMessage;
+          if (talentData?.planName === "Basic") {
+            upgradeMessage = "Upgrade to Pro to add more URLs.";
+          } else if (talentData?.planName === "Pro") {
+            upgradeMessage = "Upgrade to Premium to add more URLs.";
+          }
+
+          setMessage(
+            `You can upload a maximum of ${maxUrls} audio URLs. ${upgradeMessage}`
+          );
+          setOpenPopUp(true);
+          setTimeout(() => {
+            setOpenPopUp(false);
+          }, 1000);
+          return;
+        }
+
+        // Add the valid audio URL
+        setAudioUrlsList([...audioUrlsList, audioUrl]);
+        setAudioUrl("");
+        setCheckAudioUrl(false);
+      } else {
+        setCheckAudioUrl(true);
+      }
     }
-    // if (audioUrl.trim() !== "") {
-    //   if (isNotKnownFormatUrl(audioUrl)) {
-    //     setAudioUrlsList([...audioUrlsList, audioUrl]);
-    //     setAudioUrl("");
-    //     setCheckAudioUrl(false);
-    //   } else {
-    //     setCheckAudioUrl(true);
-    //   }
-    // }
   };
 
   const [profileAnchor, setProfileAnchor] = useState(null);
@@ -433,6 +463,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         (file) => !file.type.startsWith("image/")
       );
 
+      // Check for non-image files
       if (nonImageFiles.length > 0) {
         setMessage("You can only upload images");
         setOpenPopUp(true);
@@ -441,6 +472,37 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         }, 1000);
         return;
       }
+
+      // Determine allowed file limits based on plan type
+      let maxFiles;
+      if (talentData?.planName === "Basic") {
+        maxFiles = 5;
+      } else if (talentData?.planName === "Pro") {
+        maxFiles = 15;
+      } else if (talentData?.planName === "Premium") {
+        maxFiles = Infinity; // Unlimited
+      }
+
+      // Check if the current count plus new uploads exceeds the limit
+      if (portofolioFile.length + imageFiles.length > maxFiles) {
+        let upgradeMessage;
+        if (talentData?.planName === "Basic") {
+          upgradeMessage = "Upgrade to Pro to add more files.";
+        } else if (talentData?.planName === "Pro") {
+          upgradeMessage = "Upgrade to Premium to add more files.";
+        }
+
+        setMessage(
+          `You can upload a maximum of ${maxFiles} images. ${upgradeMessage}`
+        );
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 3000);
+        return;
+      }
+
+      // Upload valid image files
       imageFiles.forEach((file) => {
         uploadFile(file);
       });

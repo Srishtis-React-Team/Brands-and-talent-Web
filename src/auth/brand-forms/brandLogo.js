@@ -75,7 +75,8 @@ const BrandLogo = () => {
           if (resData.data.data) {
             console.log(resData.data.data, "getBrand");
             setPortofolioFile(resData?.data?.data?.logo);
-            // setAboutYou(resData?.data?.data?.aboutBrand);
+            setAboutYou(resData?.data?.data?.aboutBrand);
+            setWhyWorkWithUs(resData?.data?.data?.whyWorkWithUs);
             setBrandName(resData?.data?.data?.brandName);
           }
         }
@@ -94,6 +95,8 @@ const BrandLogo = () => {
   }, [location.state]);
 
   const handleEditorChange = (value, index) => {
+    console.log(value, "value");
+    console.log(typeof value, "value");
     setAboutYou(value);
   };
   const handleWhyWorkEditorChange = (value, index) => {
