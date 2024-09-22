@@ -83,6 +83,8 @@ const KidsFormTwo = () => {
   const [mobileNumberError, setMobileNumberError] = useState("");
   const [isPlanForm, setIsPlanForm] = useState(false);
   const [giftSub, setGiftSub] = useState(false);
+  const [appliedCouponCode, setAppliedCouponCode] = useState('')
+
 
 
   const handleMobileChange = (value) => {
@@ -238,6 +240,11 @@ const KidsFormTwo = () => {
       console.log("Payment Response:", response);
       setResponseUrl(response.data.url);
       localStorage.setItem("paymenttrans_id", response.data.trans_id);
+      let planType;
+      if(selectedPaymentPlan == "Pro (Popular)"){
+        planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
+        console.log('trimed value',planType); // Output: "Pro"
+      }
       if(plan == 'giftsubscription'){
         const giftObj = {
           "senderName": senderName,
@@ -248,7 +255,7 @@ const KidsFormTwo = () => {
                   "receiverEmail": recieverEmail,
                   "message": enquiry,
                   "subscriptionPlan": selectedPaymentPeriod,
-                  "planName": selectedPaymentPlan,
+                  "planName": planType?planType:selectedPaymentPlan,
                   "transId": response.data.trans_id,
                   "paymentStatus": "Pending",
               }
@@ -266,10 +273,11 @@ const KidsFormTwo = () => {
       }else{
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
-          planName: selectedPaymentPlan,
+          planName: planType?planType:selectedPaymentPlan,
           user_id: userId,
           transId: response.data.trans_id,
-          paymentStatus:'Pending'
+          paymentStatus:'Pending',
+          coupon:appliedCouponCode?appliedCouponCode:'',
         };
         console.log('userData',userData)
         const responseSubscription = await ApiHelper.post(
@@ -1051,9 +1059,11 @@ const KidsFormTwo = () => {
         <PaymentOptions
           selectedCurrency={selectedCurrency}
           selectedAmount={selectedAmount}
+          setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
+          setAppliedCouponCode={setAppliedCouponCode}
         />
       )}
       {checkout && (
