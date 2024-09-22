@@ -17,6 +17,7 @@ const PaymentOptions = ({
   setPaymentOption,
   selectedPaymentPlan,
   paymentFrom,
+  setAppliedCouponCode
 }) => {
   console.log(paymentFrom, "paymentFrom");
   const [inputValue, setInputValue] = useState("");
@@ -32,6 +33,9 @@ const PaymentOptions = ({
 
   const applyCoupon = async () => {
     const userId = localStorage.getItem("userId");
+    if(inputValue){
+    setAppliedCouponCode(inputValue)
+    }
     const obj = {
       userId,
       code: inputValue,
@@ -143,6 +147,7 @@ const PaymentOptions = ({
               <button
                 onClick={applyCoupon}
                 className={`apply-btn ${inputValue ? "highlighted" : ""}`} // Conditionally apply class
+                disabled={!!couponDiscountPercent}
               >
                 {isCouponApplied ? "Applied" : "Apply"}{" "}
                 {/* Conditional button text */}
