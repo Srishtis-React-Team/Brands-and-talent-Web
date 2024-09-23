@@ -5,17 +5,10 @@ import CheckoutComponent from "./CheckoutComponent.js";
 import PaymentOptions from "./PaymentOptions.js";
 import Loader from "./Loader.js";
 
-const AdminPayment = ({
-  from,
-  setSelectedPaymentStatus,
-  setIsPaymentClicked,
-  userType,
-}) => {
+const AdminPayment = () => {
   const [checkout, setCheckout] = useState(false);
   const [responseurl, setResponseUrl] = useState("");
   const [paymentOptions, setPaymentOption] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState("");
-  const [paymentFrom, setPaymentFrom] = useState("giftsubscription");
   const [selectedAmount, setSelectedAmount] = useState("");
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
@@ -45,25 +38,11 @@ const AdminPayment = ({
   };
 
   useEffect(() => {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
-          handlePayment(
-            1,
-            'USD',
-            `https://dev.brandsandtalent.com/adminpayment`,
-            "qr",
-            "normal"
-          );
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
-          handlePayment(
-            1,
-            'USD',
-            `https://dev.brandsandtalent.com/adminpayment`,
-            "card",
-            "normal"
-          );
-      }
+    console.log("Selected payment option:", selectedPaymentOption);
+    if (selectedPaymentOption) {
+      setLoading(true);
+      handlePayment(1, 'USD', `https://dev.brandsandtalent.com/adminpayment`, selectedPaymentOption, "normal");
+    }
   }, [selectedPaymentOption]);
 
   return (
@@ -103,7 +82,6 @@ const AdminPayment = ({
   
       {paymentOptions && (
         <PaymentOptions
-          paymentFrom={paymentFrom}
           selectedCurrency={'USD'}
           selectedAmount={1}
           setSelectedAmount={setSelectedAmount}
