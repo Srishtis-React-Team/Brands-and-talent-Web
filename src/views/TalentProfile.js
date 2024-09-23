@@ -28,6 +28,7 @@ import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import SwiperSlider from "./SwiperSlider.js";
 const TalentProfile = () => {
   const { currentUserType, avatarImage } = CurrentUser();
   const navigate = useNavigate();
@@ -64,6 +65,8 @@ const TalentProfile = () => {
   const [reviewsList, setreviewsList] = useState([]);
   const [allJobsList, setAllJobsList] = useState([]);
   const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
+
   const [brandImage, setBrandImage] = useState(null);
   const [userId, setUserId] = useState(null);
   const [jobTitleError, setjobTitleError] = useState(false);
@@ -169,7 +172,7 @@ const TalentProfile = () => {
 
   const fetchPhotos = async () => {
     const formData = {
-      user: userId ? userId : "",
+      user: userId ? userId : null,
     };
     await ApiHelper.post(
       `${API.unifiedDataFetch}${talentData?._id ? talentData?._id : userId}/1`,
@@ -573,6 +576,28 @@ const TalentProfile = () => {
       // }, 2000);
     }
   }, [userId, brandId]);
+
+  useEffect(() => {
+    if (brandId) {
+      getBrand();
+    }
+  }, [brandId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
 
   return (
     <>
@@ -1403,8 +1428,10 @@ const TalentProfile = () => {
                               </div>
                               <div className="photos-slider">
                                 {photosList && photosList.length > 0 && (
-                                  <PhotosCarousel photosList={photosList} />
+                                  // <PhotosCarousel photosList={photosList} />
+                                  <SwiperSlider photosList={photosList} />
                                 )}
+
                                 {photosList.length === 0 &&
                                   talentData?.adminApproved === true && (
                                     <>
@@ -2093,107 +2120,136 @@ const TalentProfile = () => {
                             </div>
                           )}
 
-                          {reviews && (
+                          {brandData?.planName != "Basic" && (
                             <>
-                              {reviewsList?.length > 0 && (
-                                <div className="model-reviews row">
-                                  {reviewsList?.map((item, index) => {
-                                    return (
-                                      <div className="col-md-6">
-                                        <div
-                                          className="model-review-wrapper col-md-6"
-                                          key={index}
-                                        >
-                                          <div className="review-header">
-                                            <div className="review-date">
-                                              {new Date(
-                                                item.reviewDate
-                                              ).toLocaleDateString("en-GB", {
-                                                day: "2-digit",
-                                                month: "long",
-                                                year: "numeric",
-                                              })}
-                                            </div>
-                                            <div className="review-action">
-                                              <IconButton
-                                                aria-label="more"
-                                                aria-controls="dropdown-menu"
-                                                aria-haspopup="true"
-                                                onClick={handleClick}
-                                              >
-                                                <MoreVertIcon />
-                                              </IconButton>
-                                              <Menu
-                                                id="dropdown-menu"
-                                                anchorEl={anchorEl}
-                                                open={Boolean(anchorEl)}
-                                                onClose={reviewMenuClose}
-                                              >
-                                                <MenuItem
-                                                  onClick={() => {
-                                                    reviewMenuClose();
-                                                    reportReview(item);
-                                                  }}
-                                                >
-                                                  <i className="bi bi-flag-fill flag-icon"></i>
-                                                  Report
-                                                </MenuItem>
-                                              </Menu>
-                                            </div>
-                                          </div>
-                                          <div className="review-title">
-                                            {item.comment}
-                                          </div>
-                                          <div className="reviewer-section pb-0">
-                                            <div className="reviewers-rating">
-                                              {[
-                                                ...Array(
-                                                  Number(item.starRatings)
-                                                ),
-                                              ].map((_, starIndex) => (
-                                                <img
-                                                  key={starIndex}
-                                                  src={pinkStar}
-                                                  alt="Star"
-                                                />
-                                              ))}
-                                            </div>
-                                            <div className="reviewer-details">
-                                              <div className="initial center">
-                                                {" "}
-                                                {item.reviewerName &&
-                                                  item.reviewerName.charAt(0)}
+                              {reviews && (
+                                <>
+                                  {reviewsList?.length > 0 && (
+                                    <div className="model-reviews row">
+                                      {reviewsList?.map((item, index) => {
+                                        return (
+                                          <div className="col-md-6">
+                                            <div
+                                              className="model-review-wrapper col-md-6"
+                                              key={index}
+                                            >
+                                              <div className="review-header">
+                                                <div className="review-date">
+                                                  {new Date(
+                                                    item.reviewDate
+                                                  ).toLocaleDateString(
+                                                    "en-GB",
+                                                    {
+                                                      day: "2-digit",
+                                                      month: "long",
+                                                      year: "numeric",
+                                                    }
+                                                  )}
+                                                </div>
+                                                <div className="review-action">
+                                                  <IconButton
+                                                    aria-label="more"
+                                                    aria-controls="dropdown-menu"
+                                                    aria-haspopup="true"
+                                                    onClick={handleClick}
+                                                  >
+                                                    <MoreVertIcon />
+                                                  </IconButton>
+                                                  <Menu
+                                                    id="dropdown-menu"
+                                                    anchorEl={anchorEl}
+                                                    open={Boolean(anchorEl)}
+                                                    onClose={reviewMenuClose}
+                                                  >
+                                                    <MenuItem
+                                                      onClick={() => {
+                                                        reviewMenuClose();
+                                                        reportReview(item);
+                                                      }}
+                                                    >
+                                                      <i className="bi bi-flag-fill flag-icon"></i>
+                                                      Report
+                                                    </MenuItem>
+                                                  </Menu>
+                                                </div>
                                               </div>
-                                              <div className="reviewer-name">
-                                                {item.reviewerName}
+                                              <div className="review-title">
+                                                {item.comment}
+                                              </div>
+                                              <div className="reviewer-section pb-0">
+                                                <div className="reviewers-rating">
+                                                  {[
+                                                    ...Array(
+                                                      Number(item.starRatings)
+                                                    ),
+                                                  ].map((_, starIndex) => (
+                                                    <img
+                                                      key={starIndex}
+                                                      src={pinkStar}
+                                                      alt="Star"
+                                                    />
+                                                  ))}
+                                                </div>
+                                                <div className="reviewer-details">
+                                                  <div className="initial center">
+                                                    {" "}
+                                                    {item.reviewerName &&
+                                                      item.reviewerName.charAt(
+                                                        0
+                                                      )}
+                                                  </div>
+                                                  <div className="reviewer-name">
+                                                    {item.reviewerName}
+                                                  </div>
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
-                                        </div>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              )}
+                                        );
+                                      })}
+                                    </div>
+                                  )}
 
-                              {talentData?.adminApproved === true &&
-                                reviewsList.length === 0 && (
-                                  <>
-                                    <div className="msgs">
-                                      {" "}
-                                      Reviews are not added
-                                    </div>
-                                  </>
-                                )}
-                              {talentData?.adminApproved === false &&
-                                reviewsList.length === 0 && (
-                                  <>
-                                    <div className="msgs">
-                                      Reviews will be visible only after admin
-                                      approval
-                                    </div>
-                                  </>
-                                )}
+                                  {talentData?.adminApproved === true &&
+                                    reviewsList.length === 0 && (
+                                      <>
+                                        <div className="msgs">
+                                          {" "}
+                                          Reviews are not added
+                                        </div>
+                                      </>
+                                    )}
+                                  {talentData?.adminApproved === false &&
+                                    reviewsList.length === 0 && (
+                                      <>
+                                        <div className="msgs">
+                                          Reviews will be visible only after
+                                          admin approval
+                                        </div>
+                                      </>
+                                    )}
+                                </>
+                              )}
+                            </>
+                          )}
+
+                          {brandData?.planName == "Basic" && (
+                            <>
+                              {reviews && (
+                                <>
+                                  <div className="msgs">
+                                    Upgrade to pro plan to view talent reviews
+                                  </div>
+                                  <button
+                                    className="view-cv"
+                                    onClick={() => {
+                                      navigate("/pricing");
+                                    }}
+                                  >
+                                    Upgrade Plan
+                                  </button>
+                                </>
+                              )}
                             </>
                           )}
                         </div>

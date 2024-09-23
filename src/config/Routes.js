@@ -16,7 +16,7 @@ const FindCreators = lazy(() => import("../views/FindCreators"));
 const TalentProfile = lazy(() => import("../views/TalentProfile"));
 const Pricing = lazy(() => import("../views/pricing"));
 const Resources = lazy(() => import("../views/resources"));
-const AdminPayment = lazy(() => import('../views/AdminPayment'));
+const AdminPayment = lazy(() => import("../views/AdminPayment"));
 const About = lazy(() => import("../pages/About"));
 const Guidelines = lazy(() => import("../pages/Guidelines"));
 const PostJob = lazy(() => import("../pages/PostJob"));
@@ -96,6 +96,7 @@ const Investors = lazy(() => import("../pages/Investors"));
 const Career = lazy(() => import("../pages/Career"));
 const EditFeatures = lazy(() => import("../pages/EditFeatures"));
 // const ErrorBoundary = lazy(() => import('../components/ErrorBoundary'));
+const LocationComponent = lazy(() => import("../components/LocationComponent"));
 
 function Routing() {
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -179,7 +180,7 @@ function Routing() {
                 // )
               }
             />
-            <Route path="/adminpayment" element={<AdminPayment />} />
+            <Route path="/admin-payment" element={<AdminPayment />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/adult-signup" element={<AdultSignup />} />
@@ -297,6 +298,7 @@ function Routing() {
             <Route path="/become-affliate" element={<BecomeAffliate />} />
             <Route path="/investors" element={<Investors />} />
             <Route path="/feedback" element={<Feedbackreporting />} />
+            <Route path="/location-select" element={<LocationComponent />} />
           </Routes>
         </Suspense>
         {openPopUp && (

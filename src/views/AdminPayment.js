@@ -20,12 +20,11 @@ const AdminPayment = ({
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
   const [loading, setLoading] = useState(false);
-  const [appliedCouponCode, setAppliedCouponCode] = useState('')
+  const [appliedCouponCode, setAppliedCouponCode] = useState("");
 
   const handlePayNow = async () => {
     setPaymentOption(true);
-  }
-
+  };
 
   const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
@@ -45,32 +44,31 @@ const AdminPayment = ({
   };
 
   useEffect(() => {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
-          handlePayment(
-            1,
-            'USD',
-            `https://dev.brandsandtalent.com/adminpayment`,
-            "qr",
-            "normal"
-          );
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
-          handlePayment(
-            1,
-            'USD',
-            `https://dev.brandsandtalent.com/adminpayment`,
-            "card",
-            "normal"
-          );
-      }
+    if (selectedPaymentOption == "qr") {
+      setLoading(true);
+      handlePayment(
+        1,
+        "USD",
+        `https://dev.brandsandtalent.com/admin-payment`,
+        "qr",
+        "normal"
+      );
+    } else if (selectedPaymentOption == "card") {
+      setLoading(true);
+      handlePayment(
+        1,
+        "USD",
+        `https://dev.brandsandtalent.com/admin-payment`,
+        "card",
+        "normal"
+      );
+    }
   }, [selectedPaymentOption]);
 
   return (
     <>
-
-<style>
-      {`
+      <style>
+        {`
         .button-container {
           display: flex;
           justify-content: center; /* Center horizontally */
@@ -88,7 +86,7 @@ const AdminPayment = ({
           color: white;
         }
       `}
-    </style>
+      </style>
       <section className="">
         <div className="popular-header">
           <div className="container">
@@ -96,15 +94,15 @@ const AdminPayment = ({
           </div>
         </div>
       </section>
-      
+
       <section className="button-container">
         <button onClick={handlePayNow}>Pay now</button>
       </section>
-  
+
       {paymentOptions && (
         <PaymentOptions
           paymentFrom={paymentFrom}
-          selectedCurrency={'USD'}
+          selectedCurrency={"USD"}
           selectedAmount={1}
           setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
@@ -113,7 +111,7 @@ const AdminPayment = ({
           setAppliedCouponCode={setAppliedCouponCode}
         />
       )}
-  
+
       {checkout && (
         <CheckoutComponent
           responseUrl={responseurl}
@@ -123,7 +121,6 @@ const AdminPayment = ({
       {loading ? <Loader /> : <div></div>}
     </>
   );
-  
 };
 
 export default AdminPayment;
