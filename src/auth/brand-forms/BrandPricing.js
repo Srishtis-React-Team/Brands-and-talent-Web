@@ -36,7 +36,9 @@ const BrandPricing = () => {
   }, []);
 
   const goBack = async () => {
-    navigate(`/brand-logo?userId=${userId}&userEmail=${userEmail}`);
+    navigate(
+      `/brand-logo?userId=${receivedData?.brand_id}&userEmail=${receivedData?.brandEmail}`
+    );
   };
 
   useEffect(() => {

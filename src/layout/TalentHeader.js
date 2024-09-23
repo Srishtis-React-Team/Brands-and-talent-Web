@@ -302,16 +302,16 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
   const handleLabelClick = (route) => {
     if (route === "/find-creators") {
       if (!currentUserId || currentUser_type != "brand") {
+        // window.open(
+        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        //   "_blank"
+        // );
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/logi n");
         }, 1000);
       } else {
         navigate(route);
@@ -324,23 +324,24 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
       }
     } else if (route === "/pricing") {
-      // navigate(route);
-      window.open(
-        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        "_blank"
-      );
-    } else if (route === "/resources") {
+      // window.open(
+      //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      //   "_blank"
+      // );
       navigate(route);
+    } else if (route === "/resources") {
+      // navigate(route);
+      navigate("/about-us");
     } else if (route === "/signup") {
       navigate(route);
     } else if (route === "/about-us") {
@@ -352,16 +353,15 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     } else if (route === "/post-job") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-
+        // window.open(
+        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        //   "_blank"
+        // );
         setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
         }, 1000);
       } else {
         navigate(route);
@@ -369,11 +369,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     } else if (route === "/how-it-works") {
       navigate(route);
     } else if (route === "/login") {
-      // navigate(route);
-      window.open(
-        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-        "_blank"
-      );
+      navigate(route);
+      // window.open(
+      //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+      //   "_blank"
+      // );
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
@@ -382,11 +382,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -394,16 +394,15 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     } else if (route === "/brand") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-
         setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -416,11 +415,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -433,11 +432,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -450,11 +449,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -467,11 +466,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -479,16 +478,15 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
     } else if (route === "/find-talents") {
       if (!currentUserId || currentUser_type == "talent") {
         handleClose();
-
+        // window.open(
+        //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+        //   "_blank"
+        // );
         setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
         }, 1000);
       } else {
         navigate(route);
@@ -514,11 +512,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -531,11 +529,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -548,11 +546,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -565,11 +563,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -582,11 +580,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -599,11 +597,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -616,11 +614,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -633,11 +631,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -650,11 +648,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -666,11 +664,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -682,11 +680,11 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
-          // navigate("/login");
-          window.open(
-            "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-            "_blank"
-          );
+          navigate("/login");
+          // window.open(
+          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
+          //   "_blank"
+          // );
         }, 1000);
       } else {
         navigate(route);
@@ -877,68 +875,6 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                         </div>
 
                         <div className="navTxt">
-                          <NavLink
-                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
-                            target="_blank"
-                          >
-                            Browse Jobs
-                          </NavLink>
-                        </div>
-
-                        <div className="navTxt">
-                          <NavLink
-                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
-                            target="_blank"
-                          >
-                            Notification
-                          </NavLink>
-                        </div>
-
-                        <div className="navTxt">
-                          <NavLink
-                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
-                            target="_blank"
-                          >
-                            Messages
-                          </NavLink>
-                        </div>
-
-                        <div className="navTxt">
-                          <NavLink to="/edit-talent-profile">
-                            Edit Profile
-                          </NavLink>
-                        </div>
-
-                        <div className="navTxt">
-                          <NavLink
-                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
-                            target="_blank"
-                          >
-                            Saved Jobs
-                          </NavLink>
-                        </div>
-                        <div className="navTxt">
-                          <NavLink
-                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
-                            target="_blank"
-                          >
-                            Applied Jobs
-                          </NavLink>
-                        </div>
-
-                        <div className="navTxt">
-                          <NavLink
-                            to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
-                            target="_blank"
-                          >
-                            Settings
-                          </NavLink>
-                        </div>
-                        {/* <div className="navTxt">
-                          <NavLink to="/talent-home">Dashboard</NavLink>
-                        </div>
-
-                        <div className="navTxt">
                           <NavLink to="/talent-dashboard">Browse Jobs</NavLink>
                         </div>
 
@@ -967,7 +903,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
                         <div className="navTxt">
                           <NavLink to="/talent-settings">Settings</NavLink>
-                        </div> */}
+                        </div>
                         {/* <div className="navTxt">
                           <NavLink to="/pricing">Pricing</NavLink>
                         </div> */}

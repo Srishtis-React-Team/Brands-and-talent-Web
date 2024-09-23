@@ -27,6 +27,7 @@ const KidsformOne = () => {
   const [listOfNationalities, setListOfNationalities] = useState([]);
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [dateError, setDateError] = useState(false);
 
   const {
     categoryList,
@@ -143,7 +144,6 @@ const KidsformOne = () => {
   const [nationality, setNationality] = useState([]);
   const [ethnicity, setEthnicity] = useState("");
   const [dateOfBirth, setDob] = useState("");
-  const [aboutYou, setAboutYou] = useState([]);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
@@ -266,8 +266,6 @@ const KidsformOne = () => {
           setEthnicity(resData?.data?.data?.childEthnicity);
           setKidsCity(resData?.data?.data?.childCity);
           setSelectedCategories(resData.data.data?.relevantCategories);
-
-          setAboutYou(resData.data.data?.childAboutYou);
           setAge(resData.data.data?.age);
           setCompletedJobs(resData.data.data?.noOfJobsCompleted);
           setParentMobile(resData.data.data?.parentMobileNo);
@@ -626,7 +624,6 @@ const KidsformOne = () => {
         languages: languages,
         childDob: dateOfBirth,
         childCity: kidsCity,
-        childAboutYou: aboutYou,
         age: age,
         noOfJobsCompleted: completedJobs,
         publicUrl: kidsPreferedFirstName.replace(/ /g, "-"),
@@ -1830,10 +1827,16 @@ const KidsformOne = () => {
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                           <DatePicker
                             value={dateOfBirth}
-                            onChange={(newValue) => {
-                              handleDateChange(newValue);
-                            }}
-                            renderInput={(params) => <TextField {...params} />}
+                            onChange={handleDateChange}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                error={dateError} // Pass error state to TextField
+                                helperText={
+                                  dateError ? "Please select a date." : ""
+                                } // Optional helper text
+                              />
+                            )}
                             disableFuture
                           />
                         </LocalizationProvider>

@@ -1118,7 +1118,7 @@
 }
 
 .logoSocial > img {
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .click-url {

@@ -343,26 +343,81 @@ const BrandDetails = () => {
   const [linkedinUrl, setLinkedinUrl] = useState("");
   const [facebookUrl, setFacebookUrl] = useState("");
   const [twitterUrl, setTwitterUrl] = useState("");
+  const [linkedinError, setLinkedinError] = useState(false);
+  const [facebookError, setFacebookError] = useState(false);
+  const [twitterError, setTwitterError] = useState(false);
+
+  const isValidSocialURL = (url) => {
+    const pattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+        "((([a-z0-9\\-]+)\\.)+[a-z]{2,}|localhost|" + // domain name
+        "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|" + // OR ip (v4) address
+        "\\[?[a-f0-9]*:[a-f0-9:%.]+\\]?)" + // OR ipv6
+        "(\\:\\d+)?(\\/[-a-z0-9%_.~+]*)*" + // port and path
+        "(\\?[;&a-z0-9%_.~+=-]*)?" + // query string
+        "(\\#[-a-z0-9_]*)?$",
+      "i"
+    ); // fragment locator
+    return !!pattern.test(url);
+  };
 
   const handleLinkedinUrl = (e) => {
     const value = e.target.value;
     setLinkedinUrl(value);
+    setLinkedinError(value && !isValidSocialURL(value)); // Validate and set error state
   };
+
   const handleFacebookUrl = (e) => {
     const value = e.target.value;
     setFacebookUrl(value);
+    setFacebookError(value && !isValidSocialURL(value)); // Validate and set error state
   };
+
   const handleTwitterUrl = (e) => {
     const value = e.target.value;
     setTwitterUrl(value);
+    setTwitterError(value && !isValidSocialURL(value)); // Validate and set error state
   };
 
   const [websiteLinkError, setWebsiteLinkError] = useState(false);
+  const [websiteValidError, setWebsiteValidError] = useState(false);
   const [websiteLink, setWebsiteLink] = useState("");
+
+  const isValidURL = (url) => {
+    const pattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+        "((([a-z0-9\\-]+)\\.)+[a-z]{2,}|localhost|" + // domain name
+        "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|" + // OR ip (v4) address
+        "\\[?[a-f0-9]*:[a-f0-9:%.]+\\]?)" + // OR ipv6
+        "(\\:\\d+)?(\\/[-a-z0-9%_.~+]*)*" + // port and path
+        "(\\?[;&a-z0-9%_.~+=-]*)?" + // query string
+        "(\\#[-a-z0-9_]*)?$",
+      "i"
+    ); // fragment locator
+    return !!pattern.test(url);
+  };
 
   const handleWebsiteLink = (e) => {
     const value = e.target.value;
-    setWebsiteLink(value);
+    setWebsiteLink(value); // Update the input value
+
+    if (value && !isValidURL(value)) {
+      setWebsiteValidError(true); // Set error state if URL is invalid
+    } else {
+      setWebsiteValidError(false); // Clear error state if URL is valid
+    }
+  };
+
+  const validateWebsiteLink = () => {
+    const urlPattern = new RegExp(
+      /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/
+    );
+
+    if (websiteLink === "" || urlPattern.test(websiteLink)) {
+      setWebsiteLinkError(false); // Reset the error state if the URL is valid or empty
+    } else {
+      setWebsiteLinkError(true); // Set error state if invalid
+    }
   };
 
   const handleYourNameKeyPress = (e) => {
@@ -668,6 +723,11 @@ const BrandDetails = () => {
                     {websiteLinkError && (
                       <div className="invalid-fields">Please enter Website</div>
                     )}
+                    {websiteValidError && (
+                      <div className="invalid-fields">
+                        Please enter valid website
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -710,6 +770,11 @@ const BrandDetails = () => {
                       }}
                       value={linkedinUrl}
                     ></input>
+                    {linkedinError && (
+                      <div className="invalid-fields">
+                        Please enter valid linkedin url
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -726,6 +791,11 @@ const BrandDetails = () => {
                       }}
                       value={facebookUrl}
                     ></input>
+                    {facebookError && (
+                      <div className="invalid-fields">
+                        Please enter valid facebook url
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -745,6 +815,11 @@ const BrandDetails = () => {
                       }}
                       value={twitterUrl}
                     ></input>
+                    {twitterError && (
+                      <div className="invalid-fields">
+                        Please enter valid twitter url
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

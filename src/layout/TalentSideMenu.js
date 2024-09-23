@@ -210,7 +210,7 @@ const TalentSideMenu = ({ myState }) => {
             <div className="brand-menu-text">Notification</div>
           </Link>
 
-          <Link
+          {/* <Link
             to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
             target="_blank"
             className={
@@ -221,8 +221,8 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-chat icons"></i>
             <div className="brand-menu-text">Messages</div>
-          </Link>
-          {/* <Link
+          </Link> */}
+          <Link
             to="/message"
             className={
               location.pathname === "/message"
@@ -232,7 +232,7 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-chat icons"></i>
             <div className="brand-menu-text">Messages</div>
-          </Link> */}
+          </Link>
 
           <div
             onClick={handleNavigation}

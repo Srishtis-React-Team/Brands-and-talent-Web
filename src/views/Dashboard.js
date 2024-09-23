@@ -337,7 +337,8 @@ const Dashboard = () => {
                   </div>
                   <button
                     className="Join-now-wrapper joinnow-text"
-                    onClick={() => handleAirtableClick()}
+                    data-bs-toggle="modal"
+                    data-bs-target="#verify_age"
                   >
                     Join Now
                   </button>
@@ -351,7 +352,11 @@ const Dashboard = () => {
                   </div>
 
                   <button
-                    onClick={() => handleAirtableClick()}
+                    onClick={(e) => {
+                      navigate("/signup", {
+                        state: { signupCategory: "brand" },
+                      });
+                    }}
                     className="Join-now-wrapper hireBtn joinnow-text"
                   >
                     Hire Now
