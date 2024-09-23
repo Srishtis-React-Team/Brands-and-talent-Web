@@ -1,22 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import CheckoutComponent from "./CheckoutComponent.js";
 import PaymentOptions from "./PaymentOptions.js";
 import Loader from "./Loader.js";
 
-const AdminPayment = ({
-  from,
-  setSelectedPaymentStatus,
-  setIsPaymentClicked,
-  userType,
-}) => {
+const AdminPayment = () => {
   const [checkout, setCheckout] = useState(false);
   const [responseurl, setResponseUrl] = useState("");
   const [paymentOptions, setPaymentOption] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState("");
-  const [paymentFrom, setPaymentFrom] = useState("giftsubscription");
-  const [selectedAmount, setSelectedAmount] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState(""); // State for selected amount
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,7 +22,7 @@ const AdminPayment = ({
   const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
       let apiUrl =
-        paymentOption == "card" ? API.createPayment : API.createqrpayment;
+        paymentOption === "card" ? API.createPayment : API.createqrpayment;
       const response = await ApiHelper.post(apiUrl, {
         amount,
         currency,
@@ -44,48 +37,54 @@ const AdminPayment = ({
   };
 
   useEffect(() => {
-    if (selectedPaymentOption == "qr") {
+    console.log("Selected payment option:", selectedPaymentOption);
+    if (selectedPaymentOption) {
       setLoading(true);
       handlePayment(
-        1,
+        selectedAmount, // Use selectedAmount from input
         "USD",
-        `https://dev.brandsandtalent.com/admin-payment`,
-        "qr",
-        "normal"
-      );
-    } else if (selectedPaymentOption == "card") {
-      setLoading(true);
-      handlePayment(
-        1,
-        "USD",
-        `https://dev.brandsandtalent.com/admin-payment`,
-        "card",
+        `https://dev.brandsandtalent.com/adminpayment`,
+        selectedPaymentOption,
         "normal"
       );
     }
-  }, [selectedPaymentOption]);
+  }, [selectedPaymentOption]); // Add selectedAmount to dependencies
 
   return (
     <>
       <style>
         {`
-        .button-container {
-          display: flex;
-          justify-content: center; /* Center horizontally */
-          align-items: center;     /* Center vertically */
-          height: 100vh;           /* Make the section full height */
-        }
+          .button-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;     /* Center vertically */
+            height: 100vh;           /* Make the section full height */
+          }
 
-        .button-container button {
-          padding: 10px 20px; /* Add some padding for better appearance */
-          font-size: 16px;    /* Adjust font size */
-          cursor: pointer;     /* Change cursor to pointer */
-          border-radius: 5px;
-          background: #c2114b;
-          border: none;
-          color: white;
-        }
-      `}
+          .button-container button {
+            padding: 10px 20px; /* Add some padding for better appearance */
+            font-size: 16px;    /* Adjust font size */
+            cursor: pointer;     /* Change cursor to pointer */
+            border-radius: 5px;
+            background: #c2114b;
+            border: none;
+            color: white;
+          }
+
+          .input-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+          }
+
+          .input-group input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+          }
+        `}
       </style>
       <section className="">
         <div className="popular-header">
@@ -96,14 +95,22 @@ const AdminPayment = ({
       </section>
 
       <section className="button-container">
-        <button onClick={handlePayNow}>Pay now</button>
+        <div className="input-group">
+          <input
+            type="number" // Ensure it's a number input
+            value={selectedAmount}
+            onChange={(e) => setSelectedAmount(e.target.value)} // Update selectedAmount
+            placeholder="Enter amount here"
+          />
+          <button onClick={handlePayNow}>Pay now</button>
+        </div>
       </section>
 
       {paymentOptions && (
         <PaymentOptions
-          paymentFrom={paymentFrom}
+          paymentFrom={"giftsubscription"}
           selectedCurrency={"USD"}
-          selectedAmount={1}
+          selectedAmount={selectedAmount} // Pass selectedAmount to PaymentOptions
           setSelectedAmount={setSelectedAmount}
           setSelectedPaymentOption={setSelectedPaymentOption}
           setPaymentOption={setPaymentOption}

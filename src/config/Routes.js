@@ -180,7 +180,7 @@ function Routing() {
                 // )
               }
             />
-            <Route path="/admin-payment" element={<AdminPayment />} />
+
             <Route path="/resources" element={<Resources />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/adult-signup" element={<AdultSignup />} />
@@ -283,6 +283,7 @@ function Routing() {
             <Route path="/applicants" element={<Applicants />} />
             <Route path="/edit-talent-profile" element={<EditTalent />} />
             <Route path="/edit-brand-profile" element={<EditBrands />} />
+            <Route path="/pricingadmin" element={<AdminPayment />} />
             <Route
               path="/talent-notification"
               element={<TalentNotification />}
