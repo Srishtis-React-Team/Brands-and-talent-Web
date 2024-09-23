@@ -82,6 +82,7 @@ const AdminPayment = () => {
   
       {paymentOptions && (
         <PaymentOptions
+          paymentFrom={'giftsubscription'}
           selectedCurrency={'USD'}
           selectedAmount={1}
           setSelectedAmount={setSelectedAmount}
