@@ -70,6 +70,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       .then((resData) => {
         console.log(resData, "getKidsData");
         if (resData.data.status === true) {
+          setTalentData(resData.data.data);
           setProfileFile(resData.data.data.image);
           setResumeFile(resData.data.data.cv);
           setPortofolioFile(resData.data.data.portfolio);
@@ -937,7 +938,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const editKids = async () => {
-    // navigate(`/talent-signup-files-success`);
     const formData = {
       image: profileFile,
       cv: resumeFile,
@@ -949,9 +949,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       videoList: urls,
       audioList: audioUrlsList,
     };
-
     setIsLoading(true);
-
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -960,18 +958,12 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-            if (talentData?.planName == "Basic") {
-              // navigate(
-              //   `/talent/${talentData.publicUrl}`,
-              //   {
-              //     state: { talentData: talentData },
-              //   }
-              // );
-              directKidsLogin();
-            } else {
+            if (talentData?.planName !== "Basic") {
               navigate(`/talent-signup-service-details?userId=${userId}`);
+            } else {
+              // alert("directKidsLogin");
+              directKidsLogin(resData);
             }
-            // navigate(`/talent-home`);
           }, 1000);
         } else {
         }
@@ -987,7 +979,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const directKidsLogin = async (data) => {
-    // alert("sd");
     console.log(data, "get directKidsLogin");
     const formData = {
       parentEmail: data?.data?.data?.email,

@@ -175,14 +175,16 @@ const ListJobs = () => {
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
-              setAllJobsList(resData.data.data, "resData.data.data");
+              // setAllJobsList(resData.data.data, "resData.data.data");
+              getAllJobs();
             }, 3000);
           } else {
             setMessage("Job Posted Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
-              setAllJobsList(resData.data.data, "resData.data.data");
+              // setAllJobsList(resData.data.data, "resData.data.data");
+              getAllJobs();
             }, 2000);
           }
         }
@@ -228,6 +230,10 @@ const ListJobs = () => {
       })
       .catch((err) => {});
   };
+
+  useEffect(() => {
+    console.log(allJobsList, "allJobsList");
+  }, [allJobsList]);
 
   return (
     <>

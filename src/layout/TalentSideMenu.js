@@ -92,14 +92,14 @@ const TalentSideMenu = ({ myState }) => {
       <nav className="brand-sidebar-container">
         <div className="brand-profile-not-sidemenu">
           <div className="profImg">
-            {talentData?.image?.fileData && (
+            {talentData?.image && (
               <img
                 className="profile-img"
                 src={`${API.userFilePath}${talentData?.image?.fileData}`}
                 alt=""
               />
             )}
-            {!talentData?.image?.fileData && (
+            {!talentData?.image && (
               <img className="profile-img" src={avatarImage} alt="" />
             )}
           </div>
