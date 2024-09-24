@@ -398,6 +398,8 @@ const TalentSettings = () => {
                 value={valueTabs}
                 onChange={handleChange}
                 aria-label="basic tabs example"
+                variant="scrollable"
+                scrollButtons="auto"
               >
                 <Tab
                   label="Change Password"

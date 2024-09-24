@@ -18,8 +18,7 @@ import CurrentUser from "../CurrentUser";
 import SearchHeaderComponent from "./SearchHeaderComponent";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import searchPathOptions from "../components/SearchPaths";
-const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
-  console.log(hideToggleButton, "hideToggleButton");
+const TalentHeader = ({ toggleMenu, myState, from }) => {
   console.log(toggleMenu, "toggleMenu");
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
   const [talent, setTalent] = useState(true);
@@ -748,7 +747,7 @@ const TalentHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                   }}
                 />
               </div>
-              {!hideToggleButton && (
+              {from != "message" && (
                 <>
                   <div className="talent-menu" onClick={toggleMenu}>
                     <div className="telent-menubar">

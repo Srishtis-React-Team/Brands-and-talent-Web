@@ -223,8 +223,17 @@ const TalentDashBoard = () => {
   };
 
   const viewJob = async (jobId) => {
-    setJob(jobId);
-    setFlag(true);
+    // alert(jobId);
+    const screenWidth = window.innerWidth;
+    if (screenWidth > 768) {
+      // alert(jobId);
+      setJob(jobId);
+      setFlag(true);
+    } else {
+      navigate("/preview-job-talent", {
+        state: { from: "talent-dashboard", jobId: jobId },
+      });
+    }
   };
 
   useEffect(() => {}, [gigsList]);
