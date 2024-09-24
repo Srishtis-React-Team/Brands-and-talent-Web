@@ -862,7 +862,7 @@ const BrandTalents = () => {
                                     </div>
                                     <div className="creators-filter-select">
                                       <select
-                                        style={{ width: "260px" }}
+                                        style={{ width: "100%" }}
                                         className="form-select features-select"
                                         aria-label="Default select example"
                                         onChange={(e) =>

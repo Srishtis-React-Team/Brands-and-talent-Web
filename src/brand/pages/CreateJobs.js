@@ -3608,7 +3608,7 @@ const CreateJobs = () => {
                   and through its distribution partners.
                 </div>
 
-                <div className="create-job-buttons mt-4 mb-2">
+                <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                   <div
                     onClick={(e) => {
                       e.preventDefault();
@@ -3687,7 +3687,7 @@ const CreateJobs = () => {
                         </div>
                       </div>
 
-                      <div className="create-job-buttons mt-4 mb-2">
+                      <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                         <div
                           className="createjob-btn"
                           onClick={(e) => {
