@@ -678,12 +678,16 @@ input[type="radio"] {
   width: 100%;
   background-color: #fff;
 }
+.filter-section .css-ymxv8s-control, .filter-section .select_control--menu-is-open{
+  min-height: 45px !important;
+  height: auto !important;
+}
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: auto;
-  min-height: 59px;
+  min-height: 64px;
   top: 0;
   position: fixed;
   width: 100%;

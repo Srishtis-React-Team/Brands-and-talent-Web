@@ -519,11 +519,7 @@
     width: 25%;
   }
 }
-@media (max-width: 480px) {
-  .top-brands-wrapper.col-md-4 {
-    width: 33.2%;
-  }
-}
+
 @media only screen and (min-width: 1025px) and (max-width: 1200px) {
   .brand-home-main {
     display: flex;
@@ -638,6 +634,21 @@
 
 
 } 
+@media (max-width: 480px) {
+  .top-brands-wrapper.col-md-4 {
+    width: 33.2%;
+  }
+  .list-jobs-card .campaign-company-wrapper {
+    width: 100%;
+    margin: 0 0 15px;
+  }
+  .list-jobs-card .campaign-company{ flex-direction: column; }
+  
+  .list-jobs-card .campaign-company .job-card-buttons {  display: flex; width: 100%;  }
+
+
+
+}
 @media (max-width: 380px) {
 
   .home-job-add {

@@ -694,7 +694,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
 
               {jobData?.type == "Draft" && (
                 <>
-                  <div className="create-job-buttons mt-4 mb-2">
+                  <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                     <div
                       className="save-draft-button"
                       onClick={(e) => {

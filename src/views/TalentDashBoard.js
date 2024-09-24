@@ -848,7 +848,7 @@ const TalentDashBoard = () => {
                                     </div>
 
                                     <div className="row">
-                                      <div className="mb-2 col-md-7 logoSpc">
+                                      <div className="mb-2 col-lg-7 col-md-12 logoSpc">
                                         {item?.brandImage && (
                                           <img
                                             className="job-company-logo"
@@ -870,7 +870,7 @@ const TalentDashBoard = () => {
                                         </span>
                                       </div>
 
-                                      <div className="recent-set-three col-md-5">
+                                      <div className="recent-set-three col-lg-5 col-md-12">
                                         <div
                                           className="view-gig-btn"
                                           onClick={() => {

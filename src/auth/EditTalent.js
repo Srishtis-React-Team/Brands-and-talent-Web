@@ -1564,8 +1564,9 @@ const EditTalent = () => {
       right: "auto",
       bottom: "auto",
       /* margin: '0 auto', */
-      width: "450px",
-      height: "270px",
+      width: "94%",
+      maxWidth: "450px",
+      minHeight: "270px",
       transform: "translate(-50%, -50%)",
     },
   };
