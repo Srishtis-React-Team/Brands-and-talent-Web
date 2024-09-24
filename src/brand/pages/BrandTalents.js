@@ -142,9 +142,9 @@ const BrandTalents = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    getUserSearchKeyword();
-  }, [keywordsList]);
+  // useEffect(() => {
+  //   getUserSearchKeyword();
+  // }, [keywordsList]);
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
@@ -415,7 +415,7 @@ const BrandTalents = () => {
       minAge: min,
       maxAge: max,
       industry: industry,
-      searchTerm: searchKeyword,
+      keyword: searchKeyword,
       selectedTerms: selectedKeyword,
       features: features,
       childEthnicity: ethnicity,
@@ -1040,9 +1040,19 @@ const BrandTalents = () => {
 
                                           <span className="job-company_dtls nweAlign pt-2 pb-0 d-flex">
                                             <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
-                                            {item?.childCity},{" "}
-                                            {item?.parentState},{" "}
-                                            {item?.parentCountry}{" "}
+                                            {item?.childCity &&
+                                              `${item.childCity}`}
+                                            {item?.childCity &&
+                                              item?.parentState &&
+                                              `, `}
+                                            {item?.parentState &&
+                                              `${item.parentState}`}
+                                            {(item?.childCity ||
+                                              item?.parentState) &&
+                                              item?.parentCountry &&
+                                              `, `}
+                                            {item?.parentCountry &&
+                                              `${item.parentCountry}`}
                                           </span>
                                         </div>
                                       </div>

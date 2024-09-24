@@ -1802,29 +1802,31 @@ const TalentProfile = () => {
                             <div className="models-photos">
                               {/* row padSpc */}
                               <section className="photos-gallery  w-100">
-                                {photosList &&
-                                  photosList.map((image, index) => {
-                                    return (
-                                      <>
-                                        {/* col-lg-3 col-md-4 padSpc */}
-                                        <div className="">
-                                          <div
-                                            className="photos-gallery-image"
-                                            key={index}
-                                          >
-                                            <img
-                                              className="photo-gallery-ind-image"
-                                              src={`${API.userFilePath}${image}`}
-                                              alt=""
-                                              onClick={() => {
-                                                handleImageClick(index);
-                                              }}
-                                            />
+                                <div className="row">
+                                  {photosList &&
+                                    photosList.map((image, index) => {
+                                      return (
+                                        <>
+                                          {/* col-lg-3 col-md-4 padSpc */}
+                                          <div className="col-md-4">
+                                            <div
+                                              className="photos-gallery-image"
+                                              key={index}
+                                            >
+                                              <img
+                                                className="photo-gallery-ind-image"
+                                                src={`${API.userFilePath}${image}`}
+                                                alt=""
+                                                onClick={() => {
+                                                  handleImageClick(index);
+                                                }}
+                                              />
+                                            </div>
                                           </div>
-                                        </div>
-                                      </>
-                                    );
-                                  })}
+                                        </>
+                                      );
+                                    })}
+                                </div>
 
                                 {talentData?.adminApproved === true &&
                                   photosList.length === 0 && (

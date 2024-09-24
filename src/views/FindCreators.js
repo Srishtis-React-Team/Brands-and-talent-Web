@@ -504,7 +504,7 @@ const FindCreators = () => {
       preferredChildFirstname: fullName,
       preferredChildLastName: fullName,
       industry: categories,
-      searchTerm: searchKeyword,
+      keyword: searchKeyword,
       selectedTerms: selectedKeyword,
       features: features,
     };
@@ -1096,8 +1096,18 @@ const FindCreators = () => {
                                     <span className="job-company_dtls nweAlign pt-2 d-flex">
                                       <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
                                       <span>
-                                        {item?.childCity},{item?.parentState},{" "}
-                                        {item?.parentCountry}{" "}
+                                        {item?.childCity && `${item.childCity}`}
+                                        {item?.childCity &&
+                                          item?.parentState &&
+                                          `, `}
+                                        {item?.parentState &&
+                                          `${item.parentState}`}
+                                        {(item?.childCity ||
+                                          item?.parentState) &&
+                                          item?.parentCountry &&
+                                          `, `}
+                                        {item?.parentCountry &&
+                                          `${item.parentCountry}`}
                                       </span>
                                     </span>
                                   </div>
