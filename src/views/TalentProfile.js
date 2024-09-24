@@ -1532,10 +1532,10 @@ const TalentProfile = () => {
                                   
                                 </>
                               )} */}
-                              <div className="service-list-main w-100">
-                                <div className="row w-100">
+                              <div className="service-list-main videoSect w-100">
+                                <div className="row w-100 padSpace">
                                   {urlsList?.map((url, index) => (
-                                    <div key={index} className="col-md-6 mb-4">
+                                    <div key={index} className="col-md-6 mb-3 padSpace">
                                       <div className="media-item">
                                         {isYouTubeUrl(url) ? (
                                           <iframe
@@ -1545,7 +1545,7 @@ const TalentProfile = () => {
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             className="video-frame w-100"
-                                            style={{ height: "300px" }}
+                                            
                                           ></iframe>
                                         ) : isVimeoUrl(url) ? (
                                           <iframe
@@ -1555,14 +1555,14 @@ const TalentProfile = () => {
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             className="video-frame w-100"
-                                            style={{ height: "300px" }}
+                                        
                                           ></iframe>
                                         ) : isVideoUrl(url) ? (
                                           <video
                                             controls
                                             src={url}
                                             className="video-frame w-100"
-                                            style={{ height: "300px" }}
+                                            
                                           >
                                             Your browser does not support the
                                             video tag.
@@ -1620,15 +1620,16 @@ const TalentProfile = () => {
                               <p>Audios</p>
 
                               <div className="service-list-main w-100">
-                                <div className="row">
+                                <div className="cvAdjust padSpace w-100">
                                   {audiosList && (
-                                    <div>
+                                    <div className="cvlist-wrapper row">
                                       {audiosList.map((url) => {
                                         return (
                                           <>
                                             <>
+                                            <div className="col-md-4 padSpace">
                                               <div
-                                                className="cv-card"
+                                                className="cv-card "
                                                 key={url}
                                               >
                                                 <div className="d-flex align-items-center">
@@ -1645,7 +1646,7 @@ const TalentProfile = () => {
                                                 >
                                                   Play
                                                 </button>
-                                              </div>
+                                              </div> </div>
                                             </>
                                           </>
                                         );
@@ -1751,49 +1752,52 @@ const TalentProfile = () => {
                                     </div>
                                   </>
                                 )}
-                              </div>
-
-                              <div className="cvlist-wrapper">
-                                {cvList.map((pdf) => {
-                                  return (
-                                    <>
+                              </div> 
+                              <div className="cvAdjust padSpace">
+                                <div className="cvlist-wrapper row">
+                                  {cvList.map((pdf) => {
+                                    return (
                                       <>
-                                        <div
-                                          className="cv-card"
-                                          key={pdf.title}
-                                        >
-                                          <div className="d-flex align-items-center">
-                                            <i className="fa-solid fa-file"></i>
-                                            <div className="fileName">
-                                              {pdf.title}
+                                        <>
+                                        <div className="col-md-4 col-lg-3 padSpace">
+                                            <div
+                                              className="cv-card"
+                                              key={pdf.title}
+                                            >
+                                                <div className="d-flex align-items-center">
+                                                  <i className="fa-solid fa-file"></i>
+                                                  <div className="fileName">
+                                                    {pdf.title}
+                                                  </div>
+                                                </div>
+                                                <button
+                                                  className="view-cv"
+                                                  onClick={() => handleView(pdf)}
+                                                >
+                                                  View
+                                                </button>
                                             </div>
-                                          </div>
-                                          <button
-                                            className="view-cv"
-                                            onClick={() => handleView(pdf)}
-                                          >
-                                            View
-                                          </button>
                                         </div>
+                                        </>
                                       </>
-                                    </>
-                                  );
-                                })}
-                                {cvList.length === 0 && (
-                                  <>
-                                    <div className="msgs">CV not added</div>
-                                  </>
-                                )}
-                                {talentData?.adminApproved === false &&
-                                  cvList.length > 0 &&
-                                  !userId && (
+                                    );
+                                  })}
+                                  {cvList.length === 0 && (
                                     <>
-                                      <div className="msgs">
-                                        CV will be visible only after admin
-                                        approval
-                                      </div>
+                                      <div className="msgs">CV not added</div>
                                     </>
                                   )}
+                                  {talentData?.adminApproved === false &&
+                                    cvList.length > 0 &&
+                                    !userId && (
+                                      <>
+                                        <div className="msgs">
+                                          CV will be visible only after admin
+                                          approval
+                                        </div>
+                                      </>
+                                    )}
+                                </div>
                               </div>
                             </>
                           )}

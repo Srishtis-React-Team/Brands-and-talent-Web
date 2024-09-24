@@ -71,16 +71,7 @@
   display: none !important; /* Hide pagination dots by default */
 }
 
-/* Show pagination dots only on mobile screens */
-@media (max-width: 768px) {
-  .swiper-pagination {
-    display: block !important; /* Show pagination dots on mobile screens */
-  }
-  .swiper-slider-width {
-    width: 100%;
-    max-width: 100%;
-  }
-}
+
 
 /* Swiper pagination dots styling */
 .swiper-pagination-bullet {
@@ -92,3 +83,33 @@
   background-color: #fff !important; /* White active dot */
   opacity: 1 !important; /* Fully visible */
 }
+
+
+
+
+@media (max-width: 2000px) and (min-width: 1540px) {
+  .swiper-slide img {
+    height: 300px;
+  }
+
+}
+/* @media (max-width: 1280px) {
+
+  .swiper-slide img {
+    height: 170px;
+  }
+
+
+} */
+@media (max-width: 768px) {
+
+  .swiper-pagination {
+    display: block !important; /* Show pagination dots on mobile screens */
+  }
+  .swiper-slider-width {
+    width: 100%;
+    max-width: 100%;
+  }
+
+}
+
