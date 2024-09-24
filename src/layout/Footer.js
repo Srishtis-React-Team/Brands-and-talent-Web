@@ -328,13 +328,21 @@ const Footer = (props) => {
                     Verified Talent Marketplace
                   </Link>
                 </li>
-                <li>
-                  <Link onClick={handleAirtableClick}>Hire Talent</Link>
-                </li>
-                <li>
-                  <Link onClick={handleAirtableClick}>Register as Talent</Link>
-                </li>
                 {/* <li>
+                  <Link
+                    onClick={(e) => {
+                      navigate("/signup", {
+                        state: { signupCategory: "brand" },
+                      });
+                    }}
+                  >
+                    Hire Talent
+                  </Link>
+                </li> */}
+                {/* <li>
+                  <Link onClick={handleAirtableClick}>Register as Talent</Link>
+                </li> */}
+                <li>
                   <Link onClick={handleClick} to="/brand-firstGig">
                     Hire Talent
                   </Link>
@@ -343,31 +351,31 @@ const Footer = (props) => {
                   <Link to="/" onClick={() => openModal()}>
                     Register as Talent
                   </Link>
-                </li> */}
+                </li>
 
                 {!currentUserId && (
                   <>
-                    <li>
-                      <Link onClick={handleAirtableClick}>Get Hired</Link>
-                    </li>
                     {/* <li>
-                      <Link to="/get-booked" onClick={handleAirtableClick}>
+                      <Link onClick={handleAirtableClick}>Get Hired</Link>
+                    </li> */}
+                    <li>
+                      <Link to="/" onClick={() => openModal()}>
                         Get Hired
                       </Link>
-                    </li> */}
+                    </li>
                   </>
                 )}
 
                 {currentUserId && currentUserType == "talent" && (
                   <>
-                    <li>
-                      <Link onClick={handleAirtableClick}>Get Hired</Link>
-                    </li>
                     {/* <li>
+                      <Link onClick={handleAirtableClick}>Get Hired</Link>
+                    </li> */}
+                    <li>
                       <Link to="/talent-dashboard" onClick={handleClick}>
                         Get Hired
                       </Link>
-                    </li> */}
+                    </li>
                   </>
                 )}
 
