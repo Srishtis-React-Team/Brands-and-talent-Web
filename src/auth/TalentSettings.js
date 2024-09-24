@@ -109,8 +109,9 @@ const TalentSettings = () => {
       left: "50%",
       right: "auto",
       bottom: "auto",
-      width: "450px",
-      height: "270px",
+      width: "94%",
+      maxWidth: "450px",
+      minHeight: "270px",
       transform: "translate(-50%, -50%)",
     },
   };
@@ -398,6 +399,8 @@ const TalentSettings = () => {
                 value={valueTabs}
                 onChange={handleChange}
                 aria-label="basic tabs example"
+                variant="scrollable"
+                scrollButtons="auto"
               >
                 <Tab
                   label="Change Password"

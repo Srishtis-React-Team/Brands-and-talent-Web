@@ -16,7 +16,7 @@ import SearchHeaderComponent from "../../layout/SearchHeaderComponent";
 import CurrentUser from "../../CurrentUser";
 import { useLocation } from "react-router-dom";
 
-const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
+const BrandHeader = ({ toggleMenu, myState, from }) => {
   const { currentUserType, avatarImage } = CurrentUser();
   console.log(toggleMenu, "toggleMenu");
 
@@ -211,7 +211,7 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
                   }}
                 />
               </div>
-              {!hideToggleButton && (
+              {from != "message" && (
                 <>
                   <div className="talent-menu" onClick={toggleMenu}>
                     <div className="telent-menubar">
@@ -224,14 +224,19 @@ const BrandHeader = ({ toggleMenu, myState, hideToggleButton }) => {
 
             <div className="rightPart">
               <div className="talent-navbar-functions">
-                {/* <div
-                  onClick={() => {
-                    setMenuOpen(!menuOpen);
-                  }}
-                  className="menu-icon"
-                >
-                  <i className="fa-solid fa-bars"></i>
-                </div> */}
+                {from != "message" && (
+                  <>
+                    <div
+                      onClick={() => {
+                        setMenuOpen(!menuOpen);
+                      }}
+                      className="menu-icon"
+                    >
+                      <i className="fa-solid fa-bars"></i>
+                    </div>
+                  </>
+                )}
+
                 <div className={menuOpen ? "mobile-nav-content" : "hide-nav"}>
                   <nav className="menu-items">
                     <div className="navTxt">

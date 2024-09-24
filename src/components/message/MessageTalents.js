@@ -516,10 +516,10 @@ const MessageTalents = () => {
   return (
     <>
       {userType && userType == "talent" && (
-        <TalentHeader hideToggleButton={true} toggleMenu={toggleMenu} />
+        <TalentHeader from={"message"} toggleMenu={toggleMenu} />
       )}
       {userType && userType == "brand" && (
-        <BrandHeader hideToggleButton={true} toggleMenu={toggleMenu} />
+        <BrandHeader from={"message"} toggleMenu={toggleMenu} />
       )}
       <div className="message-main px-2">
         <div className="container-fluid message-section-container">

@@ -136,7 +136,8 @@ function Routing() {
         <Suspense fallback={<Spinner />}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route
+            <Route path="/find-creators" element={<FindCreators />} />
+            {/* <Route
               path="/find-creators"
               element={
                 currentUserId || brandID ? (
@@ -145,7 +146,7 @@ function Routing() {
                   <Navigate to="/login" replace />
                 )
               }
-            />
+            /> */}
             {/* <Route path="/find-creators" element={<FindCreators />} /> */}
 
             {/* <Route

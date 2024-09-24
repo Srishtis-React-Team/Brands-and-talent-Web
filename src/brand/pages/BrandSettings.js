@@ -70,24 +70,24 @@ const BrandSettings = () => {
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [brandDetails,setBrandDetails] = useState([])
+  const [brandDetails, setBrandDetails] = useState([]);
   // const [paymentDetails,setPaymentDetails] = useState()
 
   const paymentData = localStorage.getItem("paymentData");
-  console.log('paymentDetails',paymentData)
+  console.log("paymentDetails", paymentData);
   const paymentDetails = JSON.parse(paymentData);
   const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
   const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
-  const brand_Id = localStorage.getItem('brandId');
+  const brand_Id = localStorage.getItem("brandId");
 
-  useEffect(async()=>{
+  useEffect(async () => {
     const obj = {
-      user_id : brand_Id
-    }
-    const resData = await ApiHelper.post(`${API.fetchPaymentDetails}`,obj);
-    setBrandDetails(resData?.data?.data)
-    console.log('resData--0--',resData)
-  },[])
+      user_id: brand_Id,
+    };
+    const resData = await ApiHelper.post(`${API.fetchPaymentDetails}`, obj);
+    setBrandDetails(resData?.data?.data);
+    console.log("resData--0--", resData);
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);
@@ -469,6 +469,8 @@ const BrandSettings = () => {
                 value={valueTabs}
                 onChange={handleChange}
                 aria-label="basic tabs example"
+                variant="scrollable"
+                scrollButtons="auto"
               >
                 <Tab
                   label="Change Password"
@@ -685,7 +687,7 @@ const BrandSettings = () => {
             </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={2}>
               {/* Manage Account */}
-              {console.log('brandDetails',brandDetails)}
+              {console.log("brandDetails", brandDetails)}
               <div style={containerStyle}>
                 <div style={cardStyle}>
                   <h2 style={headerStyle}>Transaction Details</h2>

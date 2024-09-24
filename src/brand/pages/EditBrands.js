@@ -654,6 +654,8 @@ const EditBrands = () => {
                 value={valueTabs}
                 onChange={handleChange}
                 aria-label="basic tabs example"
+                variant="scrollable"
+                scrollButtons="auto"
               >
                 {/* <Tab
                   label="Personal Info"
