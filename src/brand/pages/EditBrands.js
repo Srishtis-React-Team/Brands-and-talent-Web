@@ -668,10 +668,10 @@ const EditBrands = () => {
               </Tabs>
             </Box>
             <CustomTabPanel value={valueTabs} index={0}>
-              <div className="kids-main edit-basicdetails-section-main p-0">
+              <div className="kids-main  p-0">
                 <div className="kids-form-row row">
                   <div className="kids-form-section col-md-6">
-                    <div className="profile-image-edit-section edit-basicdetails-section-main p-0 mt-2 mx-0">
+                    <div className="profile-image-edit-section  p-0 mt-2 mx-0">
                       <div>
                         <label className="form-label">
                           Brand / Client logo
@@ -721,7 +721,7 @@ const EditBrands = () => {
                     </div>
                   </div>
                   {/* <div className="kids-form-section col-md-6">
-                    <div className="profile-image-edit-section edit-basicdetails-section-main p-0 mt-2 mx-0">
+                    <div className="profile-image-edit-section  p-0 mt-2 mx-0">
                       <div>
                         <label className="form-label">Profile Image</label>
                         <div className="image-upload-label">

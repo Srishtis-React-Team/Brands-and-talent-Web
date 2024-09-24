@@ -215,6 +215,36 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   const handleAddUrl = () => {
     if (videoUrl.trim() !== "") {
       if (isValidUrl(videoUrl)) {
+        // Determine allowed URL limits based on plan type
+        let maxUrls;
+        if (talentData?.planName === "Basic") {
+          maxUrls = 2;
+        } else if (talentData?.planName === "Pro") {
+          maxUrls = 5;
+        } else if (talentData?.planName === "Premium") {
+          maxUrls = Infinity; // Unlimited
+        }
+
+        // Check if adding the new URL exceeds the limit
+        if (urls.length >= maxUrls) {
+          let upgradeMessage;
+          if (talentData?.planName === "Basic") {
+            upgradeMessage = "Upgrade to Pro to add more URLs.";
+          } else if (talentData?.planName === "Pro") {
+            upgradeMessage = "Upgrade to Premium to add more URLs.";
+          }
+
+          setMessage(
+            `You can upload a maximum of ${maxUrls} video URLs. ${upgradeMessage}`
+          );
+          setOpenPopUp(true);
+          setTimeout(() => {
+            setOpenPopUp(false);
+          }, 1000);
+          return;
+        }
+
+        // Add the valid URL
         setUrls([...urls, videoUrl]);
         setVideoUrl("");
         setCheckVideoUrl(false);

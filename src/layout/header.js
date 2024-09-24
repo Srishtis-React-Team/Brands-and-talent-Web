@@ -759,7 +759,7 @@ const Header = ({ onData }) => {
         </div>
 
         <div className="mobile-nav-functions">
-          {!isLoginPage && (
+          {!isLoginPage && !currentUserId && (
             <div className="" onClick={() => handleClick("login")}>
               Login
             </div>
