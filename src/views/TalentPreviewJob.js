@@ -5,6 +5,7 @@ import TalentHeader from "../layout/TalentHeader.js";
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.css";
+import "../assets/css/preview-job.css";
 import { useLocation } from "react-router-dom";
 import CurrentUser from "../CurrentUser.js";
 
@@ -194,7 +195,7 @@ const TalentPreviewJob = (props) => {
             )}
           </div>
           <div className="preview-section-two">
-            <div className="d-flex">
+            <div className="d-flex align-items-center">
               <img
                 className="job-company-logo"
                 src={`${API.userFilePath}${jobData?.brandImage}`}
@@ -207,7 +208,13 @@ const TalentPreviewJob = (props) => {
               <span className="job-feature-heading">Location :&nbsp; </span>
               <span>
                 <span className="">
-                  {jobData?.state}, {jobData?.country}, {jobData?.jobLocation}
+                  {jobData?.country && `${jobData.country}`}
+                  {jobData?.country && jobData?.state && `, `}
+                  {jobData?.state && `${jobData.state}`}
+                  {(jobData?.country || jobData?.state) &&
+                    jobData?.jobLocation &&
+                    `, `}
+                  {jobData?.jobLocation && `${jobData.jobLocation}`}
                 </span>
               </span>
             </div>
