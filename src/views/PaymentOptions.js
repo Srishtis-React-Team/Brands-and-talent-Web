@@ -17,7 +17,8 @@ const PaymentOptions = ({
   setPaymentOption,
   selectedPaymentPlan,
   paymentFrom,
-  setAppliedCouponCode
+  setAppliedCouponCode,
+  selectedPaymentPeriod
 }) => {
   console.log(paymentFrom, "paymentFrom");
   const [inputValue, setInputValue] = useState("");
@@ -36,10 +37,17 @@ const PaymentOptions = ({
     if(inputValue){
     setAppliedCouponCode(inputValue)
     }
+    let planType;
+    if(selectedPaymentPlan == "Pro (Popular)"){
+      planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
+      console.log('trimed value',planType); // Output: "Pro"
+    }
     const obj = {
       userId,
       code: inputValue,
       totalAmount: selectedAmount,
+      subscriptionPlan:selectedPaymentPeriod,
+      planName:planType?planType:selectedPaymentPlan,
     };
 
     try {
