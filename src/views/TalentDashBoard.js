@@ -623,8 +623,8 @@ const TalentDashBoard = () => {
         </div>
         <div className="container-fluid my-2 p-0">
           <div className="row talent-dashboard-main">
-            <div className={flag ? "col-md-8 col-lg-6" : "col-md-8 col-lg-8"}>
-              <div className="talent-column-one">
+            <div className={flag ? "col-md-8 col-lg-6 scrolscrolPrevOut" : "col-md-8 col-lg-8"}>
+              <div className="talent-column-one scrlInner scroll">
                 <div className="filter-text-wrapper mb-3">
                   <div className="recent-gigs-title">Most Recent Jobs</div>
                   <React.Fragment>
