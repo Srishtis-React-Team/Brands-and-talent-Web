@@ -10,8 +10,8 @@ import "../assets/css/createjobs.css";
 import { useLocation } from "react-router-dom";
 import CurrentUser from "../CurrentUser.js";
 
-const TalentPreviewJob = (props) => {
-  const { job } = props;
+const TalentPreviewJob = ({ job, setFlag }) => {
+  // const { job } = props;
   const job_id = job;
   // alert(job_id);
 
@@ -119,7 +119,12 @@ const TalentPreviewJob = (props) => {
   };
 
   const handleBackClick = () => {
-    if (location.state && location.state.from) {
+    const currentUrl = location.pathname;
+    console.log(currentUrl, "currentUrl");
+    if (currentUrl == "/talent-dashboard") {
+      // navigate("/talent-dashboard");
+      setFlag(false);
+    } else if (location.state && location.state.from) {
       navigate(`/${location.state.from}`);
     } else {
       navigate(-1);
@@ -162,16 +167,32 @@ const TalentPreviewJob = (props) => {
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
 
+  // State to hold the window width
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Update window width on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Determine the width based on window size
+  const containerStyle = {
+    width: windowWidth >= 600 ? "800px" : "400px", // 800px for desktop, 400px for mobile
+  };
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
       <main id="mainBrand">
         <div className="brand-content-main preview-main-box boxBg px-4">
-          <div className="back-create">
+          <div className="back-create" onClick={handleBackClick}>
             <i className="bi bi-arrow-left-circle-fill"></i>
-            <div onClick={handleBackClick} className="back-to">
-              Back
-            </div>
+            <div className="back-to">Back</div>
           </div>
           <div className="preview-section-one">
             <div className="job-main-details">
@@ -314,7 +335,10 @@ const TalentPreviewJob = (props) => {
                     <ul>
                       {jobData?.benefits && jobData.benefits.length > 0 && (
                         <>
-                          <li className="job-features-li">
+                          <li
+                            className="job-features-li"
+                            style={containerStyle}
+                          >
                             <span className="job-feature-heading">
                               Benefits :
                             </span>

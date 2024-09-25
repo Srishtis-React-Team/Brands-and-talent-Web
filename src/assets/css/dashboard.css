@@ -678,7 +678,8 @@ input[type="radio"] {
   width: 100%;
   background-color: #fff;
 }
-.filter-section .css-ymxv8s-control, .filter-section .select_control--menu-is-open{
+.filter-section .css-ymxv8s-control,
+.filter-section .select_control--menu-is-open {
   min-height: 45px !important;
   height: auto !important;
 }
@@ -3537,6 +3538,23 @@ ul.MuiMenu-list li {
 }
 
 @media (max-width: 767px) {
+  .css-1yed7cp {
+    position: absolute;
+    top: 10%;
+    left: 49%;
+    -webkit-transform: translate(-50%, 0%);
+    -moz-transform: translate(-50%, 0%);
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
+    width: 397px;
+    background-color: #fff;
+    border: 2px solid #000;
+    box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+      0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+      0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+    padding: 32px;
+  }
+
   .header-search-wrapper {
     padding: 0 10px !important;
   }

@@ -600,6 +600,10 @@ const TalentProfile = () => {
   };
 
   useEffect(() => {
+    console.log(featuresList, "featuresList");
+  }, [featuresList]);
+
+  useEffect(() => {
     console.log(brandData, "brandData");
   }, [brandData]);
 
@@ -617,6 +621,7 @@ const TalentProfile = () => {
             <TalentHeader
               hideToggleButton={hideToglle}
               toggleMenu={toggleMenu}
+              from={"message"}
             />
           )}
           <section>
@@ -1535,7 +1540,10 @@ const TalentProfile = () => {
                               <div className="service-list-main videoSect w-100">
                                 <div className="row w-100 padSpace">
                                   {urlsList?.map((url, index) => (
-                                    <div key={index} className="col-md-6 mb-3 padSpace">
+                                    <div
+                                      key={index}
+                                      className="col-md-6 mb-3 padSpace"
+                                    >
                                       <div className="media-item">
                                         {isYouTubeUrl(url) ? (
                                           <iframe
@@ -1545,7 +1553,6 @@ const TalentProfile = () => {
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             className="video-frame w-100"
-                                            
                                           ></iframe>
                                         ) : isVimeoUrl(url) ? (
                                           <iframe
@@ -1555,14 +1562,12 @@ const TalentProfile = () => {
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             className="video-frame w-100"
-                                        
                                           ></iframe>
                                         ) : isVideoUrl(url) ? (
                                           <video
                                             controls
                                             src={url}
                                             className="video-frame w-100"
-                                            
                                           >
                                             Your browser does not support the
                                             video tag.
@@ -1627,26 +1632,27 @@ const TalentProfile = () => {
                                         return (
                                           <>
                                             <>
-                                            <div className="col-md-4 padSpace">
-                                              <div
-                                                className="cv-card "
-                                                key={url}
-                                              >
-                                                <div className="d-flex align-items-center">
-                                                  <i className="fa-solid fa-file"></i>
-                                                  <div className="fileName audio-url-style ">
-                                                    {url}
-                                                  </div>
-                                                </div>
-                                                <button
-                                                  className="view-cv"
-                                                  onClick={() =>
-                                                    window.open(url)
-                                                  }
+                                              <div className="col-md-4 padSpace">
+                                                <div
+                                                  className="cv-card "
+                                                  key={url}
                                                 >
-                                                  Play
-                                                </button>
-                                              </div> </div>
+                                                  <div className="d-flex align-items-center">
+                                                    <i className="fa-solid fa-file"></i>
+                                                    <div className="fileName audio-url-style ">
+                                                      {url}
+                                                    </div>
+                                                  </div>
+                                                  <button
+                                                    className="view-cv"
+                                                    onClick={() =>
+                                                      window.open(url)
+                                                    }
+                                                  >
+                                                    Play
+                                                  </button>
+                                                </div>{" "}
+                                              </div>
                                             </>
                                           </>
                                         );
@@ -1752,32 +1758,32 @@ const TalentProfile = () => {
                                     </div>
                                   </>
                                 )}
-                              </div> 
+                              </div>
                               <div className="cvAdjust padSpace">
                                 <div className="cvlist-wrapper row">
                                   {cvList.map((pdf) => {
                                     return (
                                       <>
                                         <>
-                                        <div className="col-md-4 col-lg-3 padSpace">
+                                          <div className="col-md-4 col-lg-3 padSpace">
                                             <div
                                               className="cv-card"
                                               key={pdf.title}
                                             >
-                                                <div className="d-flex align-items-center">
-                                                  <i className="fa-solid fa-file"></i>
-                                                  <div className="fileName">
-                                                    {pdf.title}
-                                                  </div>
+                                              <div className="d-flex align-items-center">
+                                                <i className="fa-solid fa-file"></i>
+                                                <div className="fileName">
+                                                  {pdf.title}
                                                 </div>
-                                                <button
-                                                  className="view-cv"
-                                                  onClick={() => handleView(pdf)}
-                                                >
-                                                  View
-                                                </button>
+                                              </div>
+                                              <button
+                                                className="view-cv"
+                                                onClick={() => handleView(pdf)}
+                                              >
+                                                View
+                                              </button>
                                             </div>
-                                        </div>
+                                          </div>
                                         </>
                                       </>
                                     );
@@ -2011,53 +2017,22 @@ const TalentProfile = () => {
                           {features && (
                             <>
                               {featuresList.length > 0 && (
-                                <>
-                                  <div className="table-container">
-                                    <table>
-                                      <tbody>
-                                        <tr>
-                                          <td className="left-column">
-                                            <table>
-                                              <tbody>
-                                                {featuresList
-                                                  ?.slice(
-                                                    0,
-                                                    Math.ceil(
-                                                      featuresList?.length / 2
-                                                    )
-                                                  )
-                                                  .map((feature, index) => (
-                                                    <tr key={feature.label}>
-                                                      <td>{feature.label}</td>
-                                                      <td>{feature.value}</td>
-                                                    </tr>
-                                                  ))}
-                                              </tbody>
-                                            </table>
-                                          </td>
-                                          <td className="right-column">
-                                            <table>
-                                              <tbody>
-                                                {featuresList
-                                                  ?.slice(
-                                                    Math.ceil(
-                                                      featuresList?.length / 2
-                                                    )
-                                                  )
-                                                  .map((feature, index) => (
-                                                    <tr key={feature.label}>
-                                                      <td>{feature.label}</td>
-                                                      <td>{feature.value}</td>
-                                                    </tr>
-                                                  ))}
-                                              </tbody>
-                                            </table>
+                                <div className="table-container">
+                                  <table>
+                                    <tbody>
+                                      {featuresList.map((feature) => (
+                                        <tr key={feature.label}>
+                                          <td>{feature.label}</td>
+                                          <td>
+                                            {feature.value
+                                              ? feature.value
+                                              : "No value added"}
                                           </td>
                                         </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
                               )}
 
                               {featuresList.length === 0 && (
