@@ -1378,6 +1378,7 @@ const Pricing = ({
                     setSelectedPaymentOption={setSelectedPaymentOption}
                     setPaymentOption={setPaymentOption}
                     selectedPaymentPlan={selectedPaymentPlan}
+                    selectedPaymentPeriod = {selectedPaymentPeriod}
                   />
                 </div>
               </>
@@ -1408,6 +1409,7 @@ const Pricing = ({
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
           setAppliedCouponCode={setAppliedCouponCode}
+          selectedPaymentPeriod = {selectedPaymentPeriod}
         />
       )}
 

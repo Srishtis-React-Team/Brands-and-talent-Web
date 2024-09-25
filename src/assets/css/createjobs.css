@@ -5,8 +5,18 @@
   margin-top: 10px;
   cursor: pointer;
 }
+
 .screening-checkbox {
   margin-right: 8px !important;
+}
+
+.view-undo-jobs {
+  background-color: #c2114b;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 15px;
 }
 .add-more-questions {
   display: flex;
@@ -350,7 +360,7 @@
   font-size: 15px;
   text-decoration: underline;
 }
-.gift-dialog-header{
+.gift-dialog-header {
   position: relative;
 }
 .gift-dialog-header i.close-gift {
@@ -362,15 +372,9 @@
   cursor: pointer;
 }
 
-.css-1q3vrkt-control{
- z-index: 0;
+.css-1q3vrkt-control {
+  z-index: 0;
 }
-
-
-
-
-
-
 
 @media only screen and (min-width: 320px) and (max-width: 768px) {
   .brand-content-main .create-job-title {
@@ -423,8 +427,6 @@
   .browseJob .recent-set-three.col-md-5 {
     justify-content: center;
   }
-
-
 }
 
 @media only screen and (max-width: 580px) {
@@ -433,8 +435,9 @@
     justify-content: center;
     margin: 1rem 0 3rem !important;
   }
-  .brand-content-main .create-job-buttons .createjob-btn { min-width: auto; padding: 0 20px; margin: 0 5px;  }
-    
-
-
+  .brand-content-main .create-job-buttons .createjob-btn {
+    min-width: auto;
+    padding: 0 20px;
+    margin: 0 5px;
+  }
 }

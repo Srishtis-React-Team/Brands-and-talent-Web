@@ -41,10 +41,17 @@ const TalentDashBoard = () => {
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [kidsCity, setKidsCity] = useState("");
+  const [filterState, setFilterState] = useState(false);
+  const [flagCondition, setFlagCondition] = useState(false);
 
   useEffect(() => {
     getCountries();
   }, []);
+  useEffect(() => {
+    console.log(flagCondition, "flagCondition");
+    if (flagCondition == true) {
+    }
+  }, [flagCondition]);
 
   const getCountries = async () => {
     await ApiHelper.get(API.listCountries)
@@ -181,6 +188,11 @@ const TalentDashBoard = () => {
         }
       })
       .catch((err) => {});
+  };
+
+  const undo = async () => {
+    setFilterState(false);
+    getRecentGigs();
   };
 
   const getRecentGigs = async () => {
@@ -397,9 +409,12 @@ const TalentDashBoard = () => {
     };
 
     setIsLoading(true);
+    setFilterState(true);
     await ApiHelper.post(API.searchJobs, formData)
       .then((resData) => {
         if (resData.data.status === true) {
+          setIsLoading(false);
+
           setGigsList(resData.data.data);
           setMessage("Filtered Successfully");
           setOpenPopUp(true);
@@ -407,6 +422,8 @@ const TalentDashBoard = () => {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
+          setIsLoading(false);
+
           setMessage("No Matching Users Found");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -414,7 +431,9 @@ const TalentDashBoard = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+      });
 
     setOpen(false);
   };
@@ -609,12 +628,21 @@ const TalentDashBoard = () => {
                 <div className="filter-text-wrapper mb-3">
                   <div className="recent-gigs-title">Most Recent Jobs</div>
                   <React.Fragment>
-                    <div
-                      className="header-filter-icon"
-                      onClick={handleClickOpen}
-                    >
-                      Filter Jobs
-                      <img className="filter-icon" src={sliderIcon} alt="" />
+                    <div className="d-flex align-items-center">
+                      <div
+                        className="header-filter-icon"
+                        onClick={handleClickOpen}
+                      >
+                        Filter Jobs
+                        <img className="filter-icon" src={sliderIcon} alt="" />
+                      </div>
+                      {filterState == true && (
+                        <>
+                          <div className="view-undo-jobs " onClick={undo}>
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                          </div>
+                        </>
+                      )}
                     </div>
                     <Dialog
                       open={open}
@@ -928,11 +956,31 @@ const TalentDashBoard = () => {
                                         {item?.jobType}{" "}
                                         <i className="bi bi-dot"></i>
                                       </span>
-                                      <span className="job-company_dtls">
-                                        <i className="bi bi-geo-alt-fill"></i>
-                                        {item?.city}, {item?.state}{" "}
-                                        <i className="bi bi-dot"></i>
-                                      </span>
+                                      {(item?.country ||
+                                        item?.state ||
+                                        item?.city) && ( // Check if at least one value exists
+                                        <span className="job-company_dtls">
+                                          <i className="bi bi-geo-alt-fill"></i>
+                                          {item?.country && (
+                                            <>{item.country}</>
+                                          )}{" "}
+                                          {/* Display country if it exists */}
+                                          {item?.country &&
+                                            (item?.state || item?.city) && (
+                                              <span>, </span>
+                                            )}{" "}
+                                          {/* Show comma if country exists and either state or city exists */}
+                                          {item?.state && <>{item.state}</>}{" "}
+                                          {/* Display state if it exists */}
+                                          {item?.state && item?.city && (
+                                            <span>, </span>
+                                          )}{" "}
+                                          {/* Show comma if state exists and city exists */}
+                                          {item?.city && <>{item.city}</>}{" "}
+                                          {/* Display city if it exists */}
+                                          <i className="bi bi-dot"></i>
+                                        </span>
+                                      )}
                                       <span className="job-company_dtls">
                                         {item?.employmentType}{" "}
                                         <i className="bi bi-dot"></i>
@@ -1152,7 +1200,7 @@ const TalentDashBoard = () => {
             </div>
             <div className={flag ? "col-md-4 col-lg-6" : "col-md-4 col-lg-4"}>
               {flag ? (
-                <TalentPreviewJob job={job} />
+                <TalentPreviewJob job={job} setFlag={setFlag} />
               ) : (
                 <div className="rightBx">
                   <div className="contact-section-main remvSpace">

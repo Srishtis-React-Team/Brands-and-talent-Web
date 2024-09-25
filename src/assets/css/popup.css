@@ -160,4 +160,9 @@
   .popuchooseTemples .containerBox {
     flex-direction: column;
   }
+  .popupcontainermain {
+    width: 90%; /* Adjust the width for mobile */
+    height: 10rem; /* Adjust the height for mobile */
+    min-height: 10rem; /* Adjust min-height for mobile */
+  }
 }

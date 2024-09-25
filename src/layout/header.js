@@ -866,6 +866,35 @@ const Header = ({ onData }) => {
             )
           )}
 
+          {currentUser_type == "brand" && (
+            <>
+              <div className="navTxt">
+                <NavLink to="/find-talents">Invite To Apply</NavLink>
+              </div>
+              <div className="navTxt">
+                <NavLink to="/list-jobs">My Jobs</NavLink>
+              </div>
+              <div className="navTxt">
+                <NavLink to="/applicants">Applicants</NavLink>
+              </div>
+              <div className="navTxt">
+                <NavLink to="/favorite-talents">Favourite Talents</NavLink>
+              </div>
+              <div className="navTxt">
+                <NavLink to="/brand-notification">Notification</NavLink>
+              </div>
+              <div className="navTxt">
+                <NavLink to="/message">Messages</NavLink>
+              </div>
+              <div className="navTxt">
+                <NavLink to="/edit-brand-profile">Edit Profile</NavLink>
+              </div>
+              <div className="navTxt">
+                <NavLink to="/brand-settings">Settings</NavLink>
+              </div>
+            </>
+          )}
+
           {!currentUserId && (
             <div
               className="navTxt"
