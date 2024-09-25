@@ -1,4 +1,11 @@
 @charset "UTF-8";
+
+
+
+.browseJob .recent-set-three .apply-now-btn, .browseJob .recent-set-three .view-gig-btn, .browseJob .recent-set-three .applied-btn{
+  height: 36px;
+}
+
 .container-fluid .row .talent-column-one {
   background-color: #fff;
   box-shadow: rgb(0 0 0 / 0.24) 0 3px 8px;
@@ -1287,7 +1294,11 @@
   justify-content: end;
 }
 
-
+.scrolPrev, .scrolscrolPrevOut .scrlInner {
+  max-height: 84vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 
 
@@ -1340,7 +1351,16 @@
 }
 @media (max-width: 767px) {
 
+  .scrolPrev, .scrolscrolPrevOut .scrlInner {
+    max-height: inherit;
+    overflow-y: inherit;
+    overflow-x: hidden;
+  }
+  .doitnow {
+    justify-content: center;
+  }
   .talent-dashboard-main .talent-column-one{ margin-bottom: 20px; }
+  .talent-dashboard-main .talent-column-one .doit-btn{ margin: 0 10px; }
 
   .campaigns-content-wrapper .recent-set-three {
     padding: 0 10px;

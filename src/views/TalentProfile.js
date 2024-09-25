@@ -633,7 +633,7 @@ const TalentProfile = () => {
             <div className="container">
               <div className="talent-profile-main">
                 <div className="row">
-                  <div className="col-md-4 col-lg-3 pr-0">
+                  <div className="col-md-4 col-lg-3 pr-0 mb-0">
                     <div className="talent-wrapper">
                       <div className="talent-backdrop">
                         <div className="profImg">

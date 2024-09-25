@@ -2280,6 +2280,11 @@ ul.MuiMenu-list li {
   .mobile-nav-functions .login-text {
     margin-right: 15px !important;
   }
+  .headerDashboard .dropdown-menu{ padding: 0.1rem 0; }
+  .headerDashboard .dropdown-menu li{ padding: 5px 10px; }
+
+
+
 }
 @media (max-width: 580px) {
   .section-description {

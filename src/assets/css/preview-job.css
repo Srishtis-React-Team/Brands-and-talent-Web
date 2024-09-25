@@ -90,6 +90,7 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
+  flex-direction: row;
   line-height: normal;
 }
 .time-logo {
@@ -218,4 +219,20 @@
   .preview-main-box {
     margin-top: 80px;
   }
+}
+
+
+@media (max-width: 420px) {
+
+  .preview-main-box .company-location {
+    display: flex;
+    align-items: inherit;
+    flex-direction: column;
+    line-height: normal;
+    padding: 10px 0 5px;
+  }
+  .preview-main-box .job-feature-values, .preview-main-box .job-benefits-values{ padding-left: 0; }
+
+
+
 }
