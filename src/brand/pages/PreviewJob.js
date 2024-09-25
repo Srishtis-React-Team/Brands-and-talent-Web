@@ -148,7 +148,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
               </div> */}
             </div>
             <div className="preview-section-two">
-              <div className="d-flex">
+              <div className="d-flex align-items-center">
                 <img
                   className="job-company-logo"
                   src={`${API.userFilePath}${jobData?.brandImage}`}
@@ -162,7 +162,13 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 {/* {jobData?.paymentType?.label} */}
                 <span>
                   <span className="">
-                    {jobData?.state}, {jobData?.country}, {jobData?.jobLocation}
+                    {jobData?.country && `${jobData.country}`}
+                    {jobData?.country && jobData?.state && `, `}
+                    {jobData?.state && `${jobData.state}`}
+                    {(jobData?.country || jobData?.state) &&
+                      jobData?.jobLocation &&
+                      `, `}
+                    {jobData?.jobLocation && `${jobData.jobLocation}`}
                   </span>
                 </span>
               </div>
@@ -688,7 +694,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
 
               {jobData?.type == "Draft" && (
                 <>
-                  <div className="create-job-buttons mt-4 mb-2">
+                  <div className="create-job-buttons mt-4 mb-2 justify-content-center">
                     <div
                       className="save-draft-button"
                       onClick={(e) => {

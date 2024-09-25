@@ -28,6 +28,7 @@ import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import SwiperSlider from "./SwiperSlider.js";
 const TalentProfile = () => {
   const { currentUserType, avatarImage } = CurrentUser();
   const navigate = useNavigate();
@@ -64,6 +65,8 @@ const TalentProfile = () => {
   const [reviewsList, setreviewsList] = useState([]);
   const [allJobsList, setAllJobsList] = useState([]);
   const [brandId, setBrandId] = useState(null);
+  const [brandData, setBrandData] = useState(null);
+
   const [brandImage, setBrandImage] = useState(null);
   const [userId, setUserId] = useState(null);
   const [jobTitleError, setjobTitleError] = useState(false);
@@ -169,7 +172,7 @@ const TalentProfile = () => {
 
   const fetchPhotos = async () => {
     const formData = {
-      user: userId ? userId : "",
+      user: userId ? userId : null,
     };
     await ApiHelper.post(
       `${API.unifiedDataFetch}${talentData?._id ? talentData?._id : userId}/1`,
@@ -186,10 +189,14 @@ const TalentProfile = () => {
   };
 
   const fetchVideoAudios = async () => {
+    const formData = {
+      user: userId ? userId : null,
+    };
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
         talentData?._id ? talentData?._id : queryString
-      }/2`
+      }/2`,
+      formData
     )
       .then((resData) => {
         if (resData.data.status === true) {
@@ -574,6 +581,28 @@ const TalentProfile = () => {
     }
   }, [userId, brandId]);
 
+  useEffect(() => {
+    if (brandId) {
+      getBrand();
+    }
+  }, [brandId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
+
   return (
     <>
       {(userId || brandId) && (
@@ -741,6 +770,7 @@ const TalentProfile = () => {
                                 </div>
                               </>
                             )}
+
                           <div className="talent-details-wrapper">
                             <div className="logo-fill">
                               <img className="talent-logo" src={mapFill}></img>
@@ -1211,69 +1241,69 @@ const TalentProfile = () => {
                         </div>
 
                         <div className="talent-rates">
-                          {talentData && talentData.profession && (
-                            <>
-                              {talentData.profession.map((item, index) => {
-                                const hasValidSalary =
-                                  item.openToOffers ||
-                                  item.perHourSalary ||
-                                  item.perDaySalary ||
-                                  item.perMonthSalary ||
-                                  item.perPostSalary ||
-                                  item.perImageSalary;
-
-                                return hasValidSalary ? (
-                                  <div key={index}>
-                                    {/* Display title and profession name only once */}
-                                    {index === 0 && (
-                                      <>
-                                        <div className="title">
-                                          {`${talentData.preferredChildFirstname} ${talentData.preferredChildLastName}`}{" "}
-                                          Rates
-                                        </div>
-                                        <div className="talent-profession-name">
-                                          {item.value}
-                                          {item.openToOffers && (
-                                            <span> (Negotiable)</span>
-                                          )}
-                                        </div>
-                                      </>
-                                    )}
-
-                                    {item.perHourSalary && (
-                                      <div className="talent-profession-value">
-                                        $ {item.perHourSalary} per hour
+                          <div className="title">
+                            {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
+                            Rates
+                          </div>
+                          {talentData &&
+                            talentData.profession &&
+                            talentData.profession.map((item, index) => (
+                              <>
+                                <div key={index}>
+                                  {(item?.perHourSalary ||
+                                    item?.perDaySalary ||
+                                    item?.perMonthSalary ||
+                                    item?.perPostSalary ||
+                                    item?.perImageSalary) && (
+                                    <>
+                                      <div className="talent-profession-name">
+                                        {item?.value}{" "}
+                                        {item?.openToOffers === true && (
+                                          <span>(Negotiable)</span>
+                                        )}
                                       </div>
-                                    )}
+                                    </>
+                                  )}
 
-                                    {item.perDaySalary && (
+                                  {item?.perHourSalary && (
+                                    <>
                                       <div className="talent-profession-value">
-                                        $ {item.perDaySalary} per day
+                                        $ {item?.perHourSalary} per hour{" "}
                                       </div>
-                                    )}
+                                    </>
+                                  )}
+                                  {item?.perDaySalary && (
+                                    <>
+                                      <div className="talent-profession-value">
+                                        $ {item?.perDaySalary} per day
+                                      </div>
+                                    </>
+                                  )}
 
-                                    {item.perMonthSalary && (
+                                  {item?.perMonthSalary && (
+                                    <>
                                       <div className="talent-profession-value">
-                                        $ {item.perMonthSalary} per month
+                                        $ {item?.perMonthSalary} per month
                                       </div>
-                                    )}
-
-                                    {item.perPostSalary && (
+                                    </>
+                                  )}
+                                  {item?.perPostSalary && (
+                                    <>
                                       <div className="talent-profession-value">
-                                        $ {item.perPostSalary} per post
+                                        $ {item?.perPostSalary} per post
                                       </div>
-                                    )}
-
-                                    {item.perImageSalary && (
+                                    </>
+                                  )}
+                                  {item?.perImageSalary && (
+                                    <>
                                       <div className="talent-profession-value">
-                                        $ {item.perImageSalary} per image
+                                        $ {item?.perImageSalary} per image
                                       </div>
-                                    )}
-                                  </div>
-                                ) : null;
-                              })}
-                            </>
-                          )}
+                                    </>
+                                  )}
+                                </div>
+                              </>
+                            ))}
                         </div>
                       </div>
                     </div>
@@ -1392,27 +1422,32 @@ const TalentProfile = () => {
                                 <div className="portofolio-title">
                                   Portfolio
                                 </div>
-                                <div
-                                  className="view-all"
-                                  onClick={(e) => {
-                                    handleForms("photos");
-                                  }}
-                                >
-                                  View All
-                                </div>
+
+                                {photosList && photosList.length > 0 && (
+                                  <div
+                                    className="view-all"
+                                    onClick={(e) => {
+                                      handleForms("photos");
+                                    }}
+                                  >
+                                    View All
+                                  </div>
+                                )}
                               </div>
                               <div className="photos-slider">
                                 {photosList && photosList.length > 0 && (
-                                  <PhotosCarousel photosList={photosList} />
+                                  // <PhotosCarousel photosList={photosList} />
+                                  <SwiperSlider photosList={photosList} />
                                 )}
-                                {photosList.length === 0 &&
-                                  talentData?.adminApproved === true && (
-                                    <>
-                                      <div>Data not added</div>
-                                    </>
-                                  )}
+
+                                {photosList.length === 0 && (
+                                  <>
+                                    <div>Photos not added</div>
+                                  </>
+                                )}
                                 {talentData?.adminApproved === false &&
-                                  photosList.length === 0 && (
+                                  photosList.length > 0 &&
+                                  !userId && (
                                     <>
                                       <div>
                                         Photos will be visible only after admin
@@ -1420,16 +1455,7 @@ const TalentProfile = () => {
                                       </div>
                                     </>
                                   )}
-                                {talentData?.adminApproved === true &&
-                                  photosList &&
-                                  photosList.length === 0 && (
-                                    <>
-                                      <div>
-                                        Photos will be visible only after admin
-                                        approval
-                                      </div>
-                                    </>
-                                  )}
+
                                 {/* {photosList.length === 0 &&
                               talentData?.adminApproved === false && (
                                 <>
@@ -1484,25 +1510,32 @@ const TalentProfile = () => {
                                 <div className="portofolio-title">
                                   Videos & Audios
                                 </div>
-                                <div
-                                  className="view-all"
-                                  onClick={(e) => {
-                                    handleForms("videos");
-                                  }}
-                                >
-                                  View All
-                                </div>
+                                {((urlsList && urlsList.length > 0) ||
+                                  (audiosList && audiosList.length > 0)) && (
+                                  <>
+                                    <div
+                                      className="view-all"
+                                      onClick={(e) => {
+                                        handleForms("videos");
+                                      }}
+                                    >
+                                      View All
+                                    </div>
+                                  </>
+                                )}
                               </div>
 
+                              <p className="pb-2">Videos</p>
+                              {/* 
                               {urlsList.length > 0 && (
                                 <>
-                                  <p className="pb-2">Videos</p>
+                                  
                                 </>
-                              )}
-                              <div className="service-list-main w-100">
-                                <div className="row w-100">
+                              )} */}
+                              <div className="service-list-main videoSect w-100">
+                                <div className="row w-100 padSpace">
                                   {urlsList?.map((url, index) => (
-                                    <div key={index} className="col-md-6 mb-4">
+                                    <div key={index} className="col-md-6 mb-3 padSpace">
                                       <div className="media-item">
                                         {isYouTubeUrl(url) ? (
                                           <iframe
@@ -1512,7 +1545,7 @@ const TalentProfile = () => {
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             className="video-frame w-100"
-                                            style={{ height: "300px" }}
+                                            
                                           ></iframe>
                                         ) : isVimeoUrl(url) ? (
                                           <iframe
@@ -1522,14 +1555,14 @@ const TalentProfile = () => {
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             className="video-frame w-100"
-                                            style={{ height: "300px" }}
+                                        
                                           ></iframe>
                                         ) : isVideoUrl(url) ? (
                                           <video
                                             controls
                                             src={url}
                                             className="video-frame w-100"
-                                            style={{ height: "300px" }}
+                                            
                                           >
                                             Your browser does not support the
                                             video tag.
@@ -1565,7 +1598,8 @@ const TalentProfile = () => {
                                   ))}
 
                                   {talentData?.adminApproved === false &&
-                                    urlsList?.length === 0 && (
+                                    urlsList?.length > 0 &&
+                                    !userId && (
                                       <>
                                         <div className="msgs">
                                           Videos will be visible only after
@@ -1574,28 +1608,28 @@ const TalentProfile = () => {
                                       </>
                                     )}
 
-                                  {talentData?.adminApproved === true &&
-                                    urlsList?.length === 0 && (
-                                      <>
-                                        <div className="msgs">
-                                          Videos are not added
-                                        </div>
-                                      </>
-                                    )}
+                                  {urlsList?.length === 0 && (
+                                    <>
+                                      <div className="msgs">
+                                        Videos are not added
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
                               </div>
                               <p>Audios</p>
 
                               <div className="service-list-main w-100">
-                                <div className="row">
+                                <div className="cvAdjust padSpace w-100">
                                   {audiosList && (
-                                    <div>
+                                    <div className="cvlist-wrapper row">
                                       {audiosList.map((url) => {
                                         return (
                                           <>
                                             <>
+                                            <div className="col-md-4 padSpace">
                                               <div
-                                                className="cv-card"
+                                                className="cv-card "
                                                 key={url}
                                               >
                                                 <div className="d-flex align-items-center">
@@ -1612,7 +1646,7 @@ const TalentProfile = () => {
                                                 >
                                                   Play
                                                 </button>
-                                              </div>
+                                              </div> </div>
                                             </>
                                           </>
                                         );
@@ -1620,17 +1654,9 @@ const TalentProfile = () => {
                                     </div>
                                   )}
 
-                                  {talentData?.adminApproved === true &&
-                                    audiosList &&
-                                    audiosList?.length === 0 && (
-                                      <>
-                                        <div className="msgs">
-                                          Audios are not added
-                                        </div>
-                                      </>
-                                    )}
                                   {talentData?.adminApproved === false &&
-                                    audiosList?.length === 0 && (
+                                    audiosList?.length > 0 &&
+                                    !userId && (
                                       <>
                                         <div className="msgs">
                                           Audios will be visible only after
@@ -1638,6 +1664,14 @@ const TalentProfile = () => {
                                         </div>
                                       </>
                                     )}
+
+                                  {audiosList?.length === 0 && (
+                                    <>
+                                      <div className="msgs">
+                                        Audios are not added
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
                               </div>
 
@@ -1706,59 +1740,64 @@ const TalentProfile = () => {
 
                               <div className="portofolio-section">
                                 <div className="portofolio-title">CV</div>
-                                <div
-                                  className="view-all"
-                                  onClick={(e) => {
-                                    handleForms("CV");
-                                  }}
-                                >
-                                  View All
-                                </div>
-                              </div>
-
-                              <div className="cvlist-wrapper">
-                                {cvList.map((pdf) => {
-                                  return (
-                                    <>
+                                {cvList && cvList.length > 0 && (
+                                  <>
+                                    <div
+                                      className="view-all"
+                                      onClick={(e) => {
+                                        handleForms("CV");
+                                      }}
+                                    >
+                                      View All
+                                    </div>
+                                  </>
+                                )}
+                              </div> 
+                              <div className="cvAdjust padSpace">
+                                <div className="cvlist-wrapper row">
+                                  {cvList.map((pdf) => {
+                                    return (
                                       <>
-                                        <div
-                                          className="cv-card"
-                                          key={pdf.title}
-                                        >
-                                          <div className="d-flex align-items-center">
-                                            <i className="fa-solid fa-file"></i>
-                                            <div className="fileName">
-                                              {pdf.title}
+                                        <>
+                                        <div className="col-md-4 col-lg-3 padSpace">
+                                            <div
+                                              className="cv-card"
+                                              key={pdf.title}
+                                            >
+                                                <div className="d-flex align-items-center">
+                                                  <i className="fa-solid fa-file"></i>
+                                                  <div className="fileName">
+                                                    {pdf.title}
+                                                  </div>
+                                                </div>
+                                                <button
+                                                  className="view-cv"
+                                                  onClick={() => handleView(pdf)}
+                                                >
+                                                  View
+                                                </button>
                                             </div>
-                                          </div>
-                                          <button
-                                            className="view-cv"
-                                            onClick={() => handleView(pdf)}
-                                          >
-                                            View
-                                          </button>
+                                        </div>
+                                        </>
+                                      </>
+                                    );
+                                  })}
+                                  {cvList.length === 0 && (
+                                    <>
+                                      <div className="msgs">CV not added</div>
+                                    </>
+                                  )}
+                                  {talentData?.adminApproved === false &&
+                                    cvList.length > 0 &&
+                                    !userId && (
+                                      <>
+                                        <div className="msgs">
+                                          CV will be visible only after admin
+                                          approval
                                         </div>
                                       </>
-                                    </>
-                                  );
-                                })}
-                                {talentData?.adminApproved === true &&
-                                  cvList.length === 0 && (
-                                    <>
-                                      <div className="msgs">
-                                        Resumes are not added
-                                      </div>
-                                    </>
-                                  )}
-                                {talentData?.adminApproved === false &&
-                                  cvList.length === 0 && (
-                                    <>
-                                      <div className="msgs">
-                                        Resumes will be visible only after admin
-                                        approval
-                                      </div>
-                                    </>
-                                  )}
+                                    )}
+                                </div>
                               </div>
                             </>
                           )}
@@ -1767,29 +1806,31 @@ const TalentProfile = () => {
                             <div className="models-photos">
                               {/* row padSpc */}
                               <section className="photos-gallery  w-100">
-                                {photosList &&
-                                  photosList.map((image, index) => {
-                                    return (
-                                      <>
-                                        {/* col-lg-3 col-md-4 padSpc */}
-                                        <div className="">
-                                          <div
-                                            className="photos-gallery-image"
-                                            key={index}
-                                          >
-                                            <img
-                                              className="photo-gallery-ind-image"
-                                              src={`${API.userFilePath}${image}`}
-                                              alt=""
-                                              onClick={() => {
-                                                handleImageClick(index);
-                                              }}
-                                            />
+                                <div className="row">
+                                  {photosList &&
+                                    photosList.map((image, index) => {
+                                      return (
+                                        <>
+                                          {/* col-lg-3 col-md-4 padSpc */}
+                                          <div className="col-md-4">
+                                            <div
+                                              className="photos-gallery-image"
+                                              key={index}
+                                            >
+                                              <img
+                                                className="photo-gallery-ind-image"
+                                                src={`${API.userFilePath}${image}`}
+                                                alt=""
+                                                onClick={() => {
+                                                  handleImageClick(index);
+                                                }}
+                                              />
+                                            </div>
                                           </div>
-                                        </div>
-                                      </>
-                                    );
-                                  })}
+                                        </>
+                                      );
+                                    })}
+                                </div>
 
                                 {talentData?.adminApproved === true &&
                                   photosList.length === 0 && (
@@ -1815,14 +1856,11 @@ const TalentProfile = () => {
 
                           {videos && (
                             <>
-                              {urlsList.length > 0 && (
-                                <>
-                                  <p className="pb-2">Videos</p>
-                                </>
-                              )}
                               <div className="models-photos videoWraper">
                                 <div className="service-list-main w-100">
                                   <div className="row">
+                                    <p className="pb-2">Videos</p>
+
                                     {urlsList?.map((url, index) => (
                                       <div
                                         key={index}
@@ -1877,24 +1915,24 @@ const TalentProfile = () => {
                                       </div>
                                     ))}
 
-                                    {talentData?.adminApproved === true &&
-                                      urlsList?.length === 0 && (
-                                        <>
-                                          <div className="msgs">
-                                            Videos are not added
-                                          </div>
-                                        </>
-                                      )}
                                     {talentData?.adminApproved === false &&
-                                      urlsList?.length === 0 && (
+                                      urlsList?.length > 0 &&
+                                      !userId && (
                                         <>
                                           <div className="msgs">
-                                            {" "}
                                             Videos will be visible only after
                                             admin approval
                                           </div>
                                         </>
                                       )}
+
+                                    {urlsList?.length === 0 && (
+                                      <>
+                                        <div className="msgs">
+                                          Videos are not added
+                                        </div>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -1903,11 +1941,7 @@ const TalentProfile = () => {
 
                           {videos && (
                             <>
-                              {audiosList.length > 0 && (
-                                <>
-                                  <p>Audios</p>
-                                </>
-                              )}
+                              <p>Audios</p>
                               <div className="service-list-main w-100">
                                 <div className="row">
                                   {audiosList && (
@@ -1942,16 +1976,16 @@ const TalentProfile = () => {
                                     </div>
                                   )}
 
-                                  {talentData?.adminApproved === true &&
-                                    audiosList?.length === 0 && (
-                                      <>
-                                        <div className="msgs">
-                                          Audios are not added
-                                        </div>
-                                      </>
-                                    )}
+                                  {audiosList?.length === 0 && (
+                                    <>
+                                      <div className="msgs">
+                                        Audios are not added
+                                      </div>
+                                    </>
+                                  )}
                                   {talentData?.adminApproved === false &&
-                                    audiosList?.length === 0 && (
+                                    audiosList?.length > 0 &&
+                                    !userId && (
                                       <>
                                         <div className="msgs">
                                           Audios will be visible only after
@@ -2026,16 +2060,16 @@ const TalentProfile = () => {
                                 </>
                               )}
 
-                              {talentData?.adminApproved === true &&
-                                featuresList.length === 0 && (
-                                  <>
-                                    <div className="msgs">
-                                      Features are not added
-                                    </div>
-                                  </>
-                                )}
+                              {featuresList.length === 0 && (
+                                <>
+                                  <div className="msgs">
+                                    Features are not added
+                                  </div>
+                                </>
+                              )}
                               {talentData?.adminApproved === false &&
-                                featuresList.length === 0 && (
+                                featuresList.length >= 0 &&
+                                !userId && (
                                   <>
                                     <div className="msgs">
                                       Features will be visible only after admin
@@ -2071,21 +2105,18 @@ const TalentProfile = () => {
                                 );
                               })}
 
-                              {talentData?.adminApproved === true &&
-                                cvList.length === 0 && (
-                                  <>
-                                    <div className="msgs">
-                                      {" "}
-                                      Resumes are not added
-                                    </div>
-                                  </>
-                                )}
+                              {cvList.length === 0 && (
+                                <>
+                                  <div className="msgs"> CV not added</div>
+                                </>
+                              )}
                               {talentData?.adminApproved === false &&
-                                cvList.length === 0 && (
+                                cvList.length > 0 &&
+                                !userId && (
                                   <>
                                     <div className="msgs">
                                       {" "}
-                                      Resumes will be visible only after admin
+                                      CV will be visible only after admin
                                       approval
                                     </div>
                                   </>
@@ -2093,107 +2124,136 @@ const TalentProfile = () => {
                             </div>
                           )}
 
-                          {reviews && (
+                          {brandData?.planName != "Basic" && (
                             <>
-                              {reviewsList?.length > 0 && (
-                                <div className="model-reviews row">
-                                  {reviewsList?.map((item, index) => {
-                                    return (
-                                      <div className="col-md-6">
-                                        <div
-                                          className="model-review-wrapper col-md-6"
-                                          key={index}
-                                        >
-                                          <div className="review-header">
-                                            <div className="review-date">
-                                              {new Date(
-                                                item.reviewDate
-                                              ).toLocaleDateString("en-GB", {
-                                                day: "2-digit",
-                                                month: "long",
-                                                year: "numeric",
-                                              })}
-                                            </div>
-                                            <div className="review-action">
-                                              <IconButton
-                                                aria-label="more"
-                                                aria-controls="dropdown-menu"
-                                                aria-haspopup="true"
-                                                onClick={handleClick}
-                                              >
-                                                <MoreVertIcon />
-                                              </IconButton>
-                                              <Menu
-                                                id="dropdown-menu"
-                                                anchorEl={anchorEl}
-                                                open={Boolean(anchorEl)}
-                                                onClose={reviewMenuClose}
-                                              >
-                                                <MenuItem
-                                                  onClick={() => {
-                                                    reviewMenuClose();
-                                                    reportReview(item);
-                                                  }}
-                                                >
-                                                  <i className="bi bi-flag-fill flag-icon"></i>
-                                                  Report
-                                                </MenuItem>
-                                              </Menu>
-                                            </div>
-                                          </div>
-                                          <div className="review-title">
-                                            {item.comment}
-                                          </div>
-                                          <div className="reviewer-section pb-0">
-                                            <div className="reviewers-rating">
-                                              {[
-                                                ...Array(
-                                                  Number(item.starRatings)
-                                                ),
-                                              ].map((_, starIndex) => (
-                                                <img
-                                                  key={starIndex}
-                                                  src={pinkStar}
-                                                  alt="Star"
-                                                />
-                                              ))}
-                                            </div>
-                                            <div className="reviewer-details">
-                                              <div className="initial center">
-                                                {" "}
-                                                {item.reviewerName &&
-                                                  item.reviewerName.charAt(0)}
+                              {reviews && (
+                                <>
+                                  {reviewsList?.length > 0 && (
+                                    <div className="model-reviews row">
+                                      {reviewsList?.map((item, index) => {
+                                        return (
+                                          <div className="col-md-6">
+                                            <div
+                                              className="model-review-wrapper col-md-6"
+                                              key={index}
+                                            >
+                                              <div className="review-header">
+                                                <div className="review-date">
+                                                  {new Date(
+                                                    item.reviewDate
+                                                  ).toLocaleDateString(
+                                                    "en-GB",
+                                                    {
+                                                      day: "2-digit",
+                                                      month: "long",
+                                                      year: "numeric",
+                                                    }
+                                                  )}
+                                                </div>
+                                                <div className="review-action">
+                                                  <IconButton
+                                                    aria-label="more"
+                                                    aria-controls="dropdown-menu"
+                                                    aria-haspopup="true"
+                                                    onClick={handleClick}
+                                                  >
+                                                    <MoreVertIcon />
+                                                  </IconButton>
+                                                  <Menu
+                                                    id="dropdown-menu"
+                                                    anchorEl={anchorEl}
+                                                    open={Boolean(anchorEl)}
+                                                    onClose={reviewMenuClose}
+                                                  >
+                                                    <MenuItem
+                                                      onClick={() => {
+                                                        reviewMenuClose();
+                                                        reportReview(item);
+                                                      }}
+                                                    >
+                                                      <i className="bi bi-flag-fill flag-icon"></i>
+                                                      Report
+                                                    </MenuItem>
+                                                  </Menu>
+                                                </div>
                                               </div>
-                                              <div className="reviewer-name">
-                                                {item.reviewerName}
+                                              <div className="review-title">
+                                                {item.comment}
+                                              </div>
+                                              <div className="reviewer-section pb-0">
+                                                <div className="reviewers-rating">
+                                                  {[
+                                                    ...Array(
+                                                      Number(item.starRatings)
+                                                    ),
+                                                  ].map((_, starIndex) => (
+                                                    <img
+                                                      key={starIndex}
+                                                      src={pinkStar}
+                                                      alt="Star"
+                                                    />
+                                                  ))}
+                                                </div>
+                                                <div className="reviewer-details">
+                                                  <div className="initial center">
+                                                    {" "}
+                                                    {item.reviewerName &&
+                                                      item.reviewerName.charAt(
+                                                        0
+                                                      )}
+                                                  </div>
+                                                  <div className="reviewer-name">
+                                                    {item.reviewerName}
+                                                  </div>
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
-                                        </div>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              )}
+                                        );
+                                      })}
+                                    </div>
+                                  )}
 
-                              {talentData?.adminApproved === true &&
-                                reviewsList.length === 0 && (
-                                  <>
-                                    <div className="msgs">
-                                      {" "}
-                                      Reviews are not added
-                                    </div>
-                                  </>
-                                )}
-                              {talentData?.adminApproved === false &&
-                                reviewsList.length === 0 && (
-                                  <>
-                                    <div className="msgs">
-                                      Reviews will be visible only after admin
-                                      approval
-                                    </div>
-                                  </>
-                                )}
+                                  {reviewsList.length === 0 && (
+                                    <>
+                                      <div className="msgs">
+                                        {" "}
+                                        Reviews are not added
+                                      </div>
+                                    </>
+                                  )}
+                                  {talentData?.adminApproved === false &&
+                                    reviewsList.length > 0 &&
+                                    !userId && (
+                                      <>
+                                        <div className="msgs">
+                                          Reviews will be visible only after
+                                          admin approval
+                                        </div>
+                                      </>
+                                    )}
+                                </>
+                              )}
+                            </>
+                          )}
+
+                          {brandData?.planName == "Basic" && (
+                            <>
+                              {reviews && (
+                                <>
+                                  <div className="msgs">
+                                    Upgrade to pro plan to view talent reviews
+                                  </div>
+                                  <button
+                                    className="view-cv"
+                                    onClick={() => {
+                                      navigate("/pricing");
+                                    }}
+                                  >
+                                    Upgrade Plan
+                                  </button>
+                                </>
+                              )}
                             </>
                           )}
                         </div>

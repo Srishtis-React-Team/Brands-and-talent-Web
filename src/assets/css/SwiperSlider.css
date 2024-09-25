@@ -1,0 +1,115 @@
+/* Swiper container styles */
+.swiper-container {
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+/* Swiper slide styles */
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px; /* Set a fixed height for the slides */
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 280px;
+  max-width: 100%;
+  object-fit: cover; /* Maintain aspect ratio and cover the slide */
+  cursor: pointer;
+}
+
+.swiper-slider-width {
+  width: 300px;
+  max-width: 100%;
+}
+
+/* Base styles for Swiper next/prev buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 30px; /* Small size */
+  height: 30px; /* Small size */
+  background-color: white; /* White background */
+  border-radius: 50%; /* Make it circular */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  color: black; /* Icon color */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Light border */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth hover transition */
+  z-index: 10; /* Ensure buttons are above other content */
+}
+
+/* Hover effect to slightly enlarge the button */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  transform: scale(1.1); /* Slight scale on hover */
+}
+
+/* Style the arrows inside the buttons */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 14px; /* Small icon size */
+  color: black; /* Black arrow */
+}
+
+/* Hide the buttons on mobile devices */
+/* Hide the buttons on small screens */
+@media (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+}
+
+/* Swiper pagination dots */
+.swiper-pagination {
+  display: none !important; /* Hide pagination dots by default */
+}
+
+
+
+/* Swiper pagination dots styling */
+.swiper-pagination-bullet {
+  background-color: #000 !important; /* Black dots */
+  opacity: 0.5 !important; /* Slightly transparent */
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #fff !important; /* White active dot */
+  opacity: 1 !important; /* Fully visible */
+}
+
+
+
+
+@media (max-width: 2000px) and (min-width: 1540px) {
+  .swiper-slide img {
+    height: 300px;
+  }
+
+}
+/* @media (max-width: 1280px) {
+
+  .swiper-slide img {
+    height: 170px;
+  }
+
+
+} */
+@media (max-width: 768px) {
+
+  .swiper-pagination {
+    display: block !important; /* Show pagination dots on mobile screens */
+  }
+  .swiper-slider-width {
+    width: 100%;
+    max-width: 100%;
+  }
+
+}
+

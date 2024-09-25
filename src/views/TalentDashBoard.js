@@ -6,7 +6,12 @@ import TalentHeader from "../layout/TalentHeader.js";
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.css";
+import "../assets/css/dashboard.css";
 import "../assets/css/brand-home.css";
+import "../assets/css/register.css";
+import "../assets/css/kidsmain.scss";
+import "../assets/css/createjobs.css";
+import "../assets/css/talent-profile.css";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { styled } from "@mui/system";
 import Button from "@mui/material/Button";
@@ -17,10 +22,12 @@ import DialogActions from "@mui/material/DialogActions";
 import Select from "react-select";
 import TalentPreviewJob from "./TalentPreviewJob.js";
 import useFieldDatas from "../config/useFieldDatas.js";
+import CurrentUser from "../CurrentUser.js";
 
 const TalentDashBoard = () => {
   const { categoryList } = useFieldDatas();
-
+  const { currentUserId, currentUserImage, currentUserType, avatarImage } =
+    CurrentUser();
   const navigate = useNavigate();
   const offcanvasRef = useRef(null);
   const [gigsList, setGigsList] = useState([]);
@@ -128,10 +135,33 @@ const TalentDashBoard = () => {
   const [flag, setFlag] = useState(false);
   const url = window.location.href;
   const location = useLocation();
+  const [talentData, setTalentData] = useState();
 
   useEffect(() => {}, [location]);
 
   const queryString = url.split("?")[1];
+
+  useEffect(() => {
+    if (currentUserId) {
+      getTalentById();
+    }
+  }, [currentUserId]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
 
   useEffect(() => {
     getTopBrands();
@@ -169,17 +199,41 @@ const TalentDashBoard = () => {
   const [modalData, setModalData] = useState(null);
 
   const applyjobs = async (data) => {
-    setModalData(data);
-    if (data?.isApplied != "Applied") {
-      const modalElement = document.getElementById("exampleModal");
-      const bootstrapModal = new window.bootstrap.Modal(modalElement);
-      bootstrapModal.show();
+    if (talentData?.planName == "Basic") {
+      let upgradeMessage;
+      if (talentData?.planName === "Basic") {
+        upgradeMessage = "Upgrade to Pro to apply for this job.";
+      }
+      setMessage(`${upgradeMessage}`);
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 4000);
+    } else if (
+      talentData?.planName?.includes("Pro") ||
+      talentData?.planName == "Premium"
+    ) {
+      setModalData(data);
+      if (data?.isApplied != "Applied") {
+        const modalElement = document.getElementById("exampleModal");
+        const bootstrapModal = new window.bootstrap.Modal(modalElement);
+        bootstrapModal.show();
+      }
     }
   };
 
   const viewJob = async (jobId) => {
-    setJob(jobId);
-    setFlag(true);
+    // alert(jobId);
+    const screenWidth = window.innerWidth;
+    if (screenWidth > 768) {
+      // alert(jobId);
+      setJob(jobId);
+      setFlag(true);
+    } else {
+      navigate("/preview-job-talent", {
+        state: { from: "talent-dashboard", jobId: jobId },
+      });
+    }
   };
 
   useEffect(() => {}, [gigsList]);
@@ -803,7 +857,7 @@ const TalentDashBoard = () => {
                                     </div>
 
                                     <div className="row">
-                                      <div className="mb-2 col-md-7 logoSpc">
+                                      <div className="mb-2 col-lg-7 col-md-12 logoSpc">
                                         {item?.brandImage && (
                                           <img
                                             className="job-company-logo"
@@ -825,7 +879,7 @@ const TalentDashBoard = () => {
                                         </span>
                                       </div>
 
-                                      <div className="recent-set-three col-md-5">
+                                      <div className="recent-set-three col-lg-5 col-md-12">
                                         <div
                                           className="view-gig-btn"
                                           onClick={() => {

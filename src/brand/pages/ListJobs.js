@@ -55,8 +55,9 @@ const ListJobs = () => {
       right: "auto",
       bottom: "auto",
       /* margin: '0 auto', */
-      width: "450px",
-      height: "270px",
+      width: "94%",
+      maxWidth: "450px",
+      minHeight: "270px",
       transform: "translate(-50%, -50%)",
     },
   };
@@ -175,14 +176,16 @@ const ListJobs = () => {
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
-              setAllJobsList(resData.data.data, "resData.data.data");
+              // setAllJobsList(resData.data.data, "resData.data.data");
+              getAllJobs();
             }, 3000);
           } else {
             setMessage("Job Posted Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
-              setAllJobsList(resData.data.data, "resData.data.data");
+              // setAllJobsList(resData.data.data, "resData.data.data");
+              getAllJobs();
             }, 2000);
           }
         }
@@ -228,6 +231,10 @@ const ListJobs = () => {
       })
       .catch((err) => {});
   };
+
+  useEffect(() => {
+    console.log(allJobsList, "allJobsList");
+  }, [allJobsList]);
 
   return (
     <>
@@ -548,8 +555,8 @@ const ListJobs = () => {
                         <h4 className='mt-2'>Reason For stock Return</h4>
                         <img src={CloseIcon} className='pop-close' onClick={() => { setIsModalOpen(false); }} />
                     </div> */}
-          <div className="alertBox">
-            <div className="col-md-12  mx-5">
+          <div className="alertBox mt-2">
+            <div className="col-md-12 mx-1">
               <div className="alert-icon-section">
                 <img src={jobImage} alt="" />
                 {/* <i className="alert-icon bi bi-exclamation-triangle-fill"></i> */}

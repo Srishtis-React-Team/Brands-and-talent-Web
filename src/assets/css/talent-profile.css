@@ -482,8 +482,9 @@
 
 .talent-details-wrapper {
   display: flex;
-  align-items: center;
-  padding: 10px 0px 5px;
+  /* align-items: center; */
+  line-height: 23px;
+  padding: 5px 0px;
 }
 
 .talent-details-wrapper > span {
@@ -630,19 +631,19 @@
 }
 
 .photos-gallery .photos-gallery-image {
-  height: 316px;
-  /* overflow: hidden; */
+  /* height: 316px; */
+  /* margin-right: 20px; */
   margin-bottom: 20px;
-  margin-right: 20px;
 }
 
 .photos-gallery-image img {
   /* min-height: 250px;
     width: 100%;
     object-fit: cover; */
-  width: 316px;
-  height: 316px;
+  width: 100%;
+  height: 300px;
   border-radius: 8px;
+  object-fit: cover;
 }
 
 /* Responsive-ness for different screen-sizes */
@@ -926,14 +927,14 @@
   width: auto;
   min-width: 100px;
   height: 30px;
-  padding: 5px 10px;
+  padding: 12px 16px;
   border-radius: 25px;
   border: 1px solid #fff;
   background: #c2114b;
   color: #fff;
-  font-size: 15px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 500;
   line-height: normal;
   cursor: pointer;
   display: flex;
@@ -1091,6 +1092,10 @@
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 10px;
+}
+.videoSect .media-item .video-frame{
+  height: 250px;
 }
 
 .unsupported-media {
@@ -1140,10 +1145,15 @@
   justify-content: space-between;
   margin: 10px;
 }
+
+
 .cv-card .fa-file {
   padding: 5px 10px;
   font-size: 25px;
 }
+
+
+
 .msgs {
   font-size: 14px;
   margin: 0 0 10px;
@@ -1172,6 +1182,55 @@
   min-width: 75px;
 }
 
+.padSpace{
+  padding: 0 0.5rem;
+}
+
+.warning-wrapper {
+  padding: 50px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 10px;
+  margin: 100px;
+}
+
+.warning-msg {
+  font-size: 14px;
+  color: red;
+  font-family: sans-serif;
+}
+
+.warning-btn {
+  display: flex;
+  width: 130px;
+  height: 30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #090914;
+  border: 1px solid #090914;
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 0.5s;
+  margin-top: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Media queries for responsiveness */
 @media (max-width: 1400px) {
   .cvAdjust .cvlist-wrapper .fileName {
@@ -1194,6 +1253,7 @@
   .table-container table td {
     padding: 5px;
   }
+  .service-list-main.videoSect .padSpace{ padding: 0; }
 
   .table-container table .left-column,
   .table-container table .right-column {
@@ -1213,6 +1273,8 @@
   .cvAdjust .cvlist-wrapper .view-cv {
     min-width: 75px;
     width: auto !important;
+    height: 35px;
+    margin: 5px 0;
   }
   .cvAdjust .cvlist-wrapper .cv-card {
     width: 100% !important;
@@ -1225,6 +1287,11 @@
   .individual-talents-details {
     padding: 0px 15px;
   }
+  .videoSect .media-item .video-frame {
+    height: 200px;
+  }
+
+
 }
 @media (max-width: 480px) {
   .cvAdjust .cvlist-wrapper .fileName {
@@ -1398,6 +1465,10 @@
   .bio-wrapper p {
     font-size: 14px;
   }
+
+
+
+
 }
 @media (max-width: 380px) {
   .cvAdjust .cvlist-wrapper .cv-card {
@@ -1409,37 +1480,6 @@
   .cvAdjust .cvlist-wrapper .view-cv {
     width: 100% !important;
   }
-}
 
-.warning-wrapper {
-  padding: 50px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-  border-radius: 10px;
-  margin: 100px;
-}
 
-.warning-msg {
-  font-size: 14px;
-  color: red;
-  font-family: sans-serif;
-}
-
-.warning-btn {
-  display: flex;
-  width: 130px;
-  height: 30px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #090914;
-  border: 1px solid #090914;
-  color: #fff;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: 0.5s;
-  margin-top: 15px;
 }
