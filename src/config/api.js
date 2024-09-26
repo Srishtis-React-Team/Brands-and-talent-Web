@@ -45,7 +45,7 @@ export const API = {
   adultResetPassword: BASEURL + "users/adultResetPassword",
   adultForgotPassword: BASEURL + "users/adultForgotPassword",
   fetchUserData: BASEURL + "users/fetchUserData/",
-  fetchPaymentDetails: BASEURL + 'users/fetchPaymentDetails',
+  fetchPaymentDetails: BASEURL + "users/fetchPaymentDetails",
 
   //brands
   socailSignUpBrands: BASEURL + "brands/socailSignUpBrands",
@@ -72,7 +72,7 @@ export const API = {
   checktransaction: BASEURL + "pricing/check-transaction",
   createqrpayment: BASEURL + "pricing/createqrpayment",
   giftSubCreation: BASEURL + "giftsub/giftSubCreation",
-  getGiftSubscriptionsByUser: BASEURL + 'giftsub/getGiftSubscriptionsByUser',
+  getGiftSubscriptionsByUser: BASEURL + "giftsub/getGiftSubscriptionsByUser",
 
   // /api/pricing/create-payment
 
@@ -129,6 +129,9 @@ export const API = {
   getSavedJobsByTalentId: BASEURL + "gigs/getSavedJobsByTalentId	",
   readNotification: BASEURL + "gigs/readNotification	",
   createJobAlert: BASEURL + "gigs/createJobAlert	",
+  saveUser: BASEURL + "gigs/saveUser	",
+  fetchUser: BASEURL + "gigs/fetchUser	",
+  inviteTalentNotification: BASEURL + "gigs/inviteTalentNotification	",
 
   //notifications
   getBrandNotification: BASEURL + "gigs/getBrandNotification/",

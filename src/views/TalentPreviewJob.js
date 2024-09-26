@@ -223,7 +223,7 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                       </>
                     ))}
                   {jobData?.isApplied === "Apply Now" ||
-                    (!jobData?.isApplied && <div>Easy Apply</div>)}
+                    (!jobData?.isApplied && <div>Apply Now</div>)}
                   {jobData?.isApplied === "Applied" && <div>Applied</div>}
                 </div>
               </div>

@@ -135,7 +135,7 @@ const TalentProfile = () => {
   }
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
+    const storedUserId = localStorage.getItem("currentUser");
     setVideoAudioUrls([
       "https://youtu.be/zO85jBI7Jxs?si=JtdIwdSDPxjnDv9R",
       "https://vimeo.com/956864989",
@@ -367,12 +367,15 @@ const TalentProfile = () => {
 
   const handleOpenModal = () => {
     if (currentUserType == "brand" && talentData?.planName === "Basic") {
-      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setMessage(
+        "The user is ineligible to receive an invitation for the job opening."
+      );
+      inviteTalentNotification();
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 3000);
+        // navigate(`/pricing`);
+      }, 2000);
     } else {
       if (currentUserType == "talent") {
         setMessage("Please log in as a Brand/Client and post a job first");
@@ -401,6 +404,22 @@ const TalentProfile = () => {
   useEffect(() => {
     console.log(talentData, "talentData");
   }, [talentData]);
+
+  const inviteTalentNotification = async () => {
+    const formData = {
+      talentId: talentData?._id,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${API.inviteTalentNotification}`, formData)
+      .then((resData) => {
+        if (resData) {
+          // if (resData?.data?.status === true) {
+          // } else {
+          // }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const inviteToApply = async () => {
     const formData = {
@@ -609,7 +628,7 @@ const TalentProfile = () => {
 
   return (
     <>
-      {(userId || brandId) && (
+      {currentUser_type == "talent" && userId && (
         <>
           {currentUser_type == "brand" && (
             <BrandHeader
@@ -659,7 +678,11 @@ const TalentProfile = () => {
                               <span>
                                 <i className="bi bi-star-fill"></i>
                               </span>
-                              {talentData?.planName}
+                              {talentData?.planName === "Pro (Popular)"
+                                ? "Pro"
+                                : talentData?.planName === "Premium"
+                                ? "Premium"
+                                : talentData?.planName}
                             </div>
                           </>
                         )}
@@ -2362,11 +2385,30 @@ const TalentProfile = () => {
           </div>
         </>
       )}
-
-      {(currentUser_type == "talent" && !userId) ||
-        (currentUser_type == "brand" && !brandId && (
+      {/* {currentUser_type == "brand" &&
+        userId &&
+        talentData?.adminApproved == false && (
           <>
-            {/* <div className="warning-wrapper">
+            <div className="warning-wrapper">
+              <p className="warning-msg">
+                This talent is not approved by admin
+              </p>
+              <button
+                onClick={() => {
+                  navigate(
+                    `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
+                  );
+                }}
+                className="warning-btn "
+              >
+                Back
+              </button>
+            </div>
+          </>
+        )} */}
+      {!userId && (
+        <>
+          <div className="warning-wrapper">
             <p className="warning-msg">Please login to continue</p>
             <button
               onClick={() => {
@@ -2376,10 +2418,10 @@ const TalentProfile = () => {
             >
               Login
             </button>
-          </div> */}
-            <Login />
-          </>
-        ))}
+          </div>
+          {/* <Login /> */}
+        </>
+      )}
 
       {/* {userId == null && talentData?.adminApproved == false && (
         <>

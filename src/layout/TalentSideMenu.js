@@ -87,6 +87,13 @@ const TalentSideMenu = ({ myState }) => {
     }
   };
 
+  const handleMessages = () => {
+    if (talentData?.planName !== "Basic") {
+      // alert("sd");
+      navigate("/message");
+    }
+  };
+
   return (
     <>
       <nav className="brand-sidebar-container">
@@ -222,8 +229,8 @@ const TalentSideMenu = ({ myState }) => {
             <i className="bi bi-chat icons"></i>
             <div className="brand-menu-text">Messages</div>
           </Link> */}
-          <Link
-            to="/message"
+          <div
+            onClick={handleMessages}
             className={
               location.pathname === "/message"
                 ? "sidemenu-active mt-2"
@@ -232,7 +239,7 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-chat icons"></i>
             <div className="brand-menu-text">Messages</div>
-          </Link>
+          </div>
 
           <div
             onClick={handleNavigation}

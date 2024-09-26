@@ -24,6 +24,7 @@ const BrandTalents = () => {
     talentName,
     brandName,
   } = CurrentUser();
+
   const {
     categoryList,
     professionList,
@@ -401,7 +402,7 @@ const BrandTalents = () => {
 
   const search = async () => {
     const formData = {
-      profession: profession,
+      profession: profession ? profession : [],
       parentCountry: country,
       parentCountry: country,
       parentState: state,
@@ -419,6 +420,7 @@ const BrandTalents = () => {
       selectedTerms: selectedKeyword,
       features: features,
       childEthnicity: ethnicity,
+      socialmedia: socialMedias,
     };
 
     setIsLoading(true);
