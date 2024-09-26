@@ -2066,6 +2066,16 @@ ul.MuiMenu-list li {
   color: red;
 }
 
+
+.topSpc-container{
+  margin:  100px 0 50px;
+}
+
+
+
+
+
+
 @media (max-width: 1399px) {
   .menu-items > div.navTxt {
     padding-right: 18px;

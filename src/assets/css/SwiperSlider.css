@@ -4,6 +4,9 @@
   height: auto;
   position: relative;
 }
+.swiper{
+  z-index: 0;
+}
 
 /* Swiper slide styles */
 .swiper-slide {

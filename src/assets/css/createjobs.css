@@ -110,6 +110,7 @@
   justify-content: space-evenly;
   align-items: center;
   cursor: pointer;
+  padding: 10px 15px;
 }
 .createjob-btn {
   background: #c2114b;
