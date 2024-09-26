@@ -112,7 +112,7 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
   };
 
   useEffect(() => {
-    console.log(brandData, "brandData");
+    // console.log(brandData, "brandData");
   }, [brandData]);
 
   const gotomessage = (item) => {
@@ -245,32 +245,35 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
                     <div className="navTxt">
                       <NavLink to="/create-jobs">Post a Job</NavLink>
                     </div>
-                    <div className="navTxt">
-                      <NavLink to="/find-talents">Invite To Apply</NavLink>
+                    <div className="brand-mobile-menu">
+                      <div className="navTxt">
+                        <NavLink to="/find-talents">Invite To Apply</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/list-jobs">My Jobs</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/applicants">Applicants</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/favorite-talents">
+                          Favourite Talents
+                        </NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/brand-notification">Notification</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/message">Messages</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/edit-brand-profile">Edit Profile</NavLink>
+                      </div>
+                      <div className="navTxt">
+                        <NavLink to="/brand-settings">Settings</NavLink>
+                      </div>
                     </div>
-                    <div className="navTxt">
-                      <NavLink to="/list-jobs">My Jobs</NavLink>
-                    </div>
-                    <div className="navTxt">
-                      <NavLink to="/applicants">Applicants</NavLink>
-                    </div>
-                    <div className="navTxt">
-                      <NavLink to="/favorite-talents">
-                        Favourite Talents
-                      </NavLink>
-                    </div>
-                    <div className="navTxt">
-                      <NavLink to="/brand-notification">Notification</NavLink>
-                    </div>
-                    <div className="navTxt">
-                      <NavLink to="/message">Messages</NavLink>
-                    </div>
-                    <div className="navTxt">
-                      <NavLink to="/edit-brand-profile">Edit Profile</NavLink>
-                    </div>
-                    <div className="navTxt">
-                      <NavLink to="/brand-settings">Settings</NavLink>
-                    </div>
+
                     {/* <div
                       className="navTxt"
                       onClick={window.open(

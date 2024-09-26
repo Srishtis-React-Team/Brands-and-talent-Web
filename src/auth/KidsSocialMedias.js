@@ -962,7 +962,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
           </div>
         </div>
         <div className="dialog-footer">
-          <button
+          {/* <button
             type="button"
             onClick={(e) => {
               goBack();
@@ -970,7 +970,7 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
             className="step-back"
           >
             Back
-          </button>
+          </button> */}
 
           <button
             type="button"

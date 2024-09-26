@@ -2776,13 +2776,14 @@ const CreateJobs = () => {
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
                                               <input
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
                                                 placeholder="Exact Pay"
                                                 value={exactPay}
                                                 onChange={(e) => {
                                                   onExactPayChange(e);
                                                 }}
+                                                min={1}
                                               ></input>
                                             </div>
                                           </div>
@@ -2798,13 +2799,14 @@ const CreateJobs = () => {
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
                                               <input
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
                                                 placeholder="Minimum Pay"
                                                 value={minPay}
                                                 onChange={(e) => {
                                                   onMinPayChange(e);
                                                 }}
+                                                min={1}
                                               ></input>
                                             </div>
                                           </div>
@@ -2816,13 +2818,14 @@ const CreateJobs = () => {
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
                                               <input
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
                                                 placeholder="Maximum Pay"
                                                 value={maxPay}
                                                 onChange={(e) => {
                                                   onMaxPayChange(e);
                                                 }}
+                                                min={1}
                                               ></input>
                                             </div>
                                           </div>
@@ -3049,13 +3052,14 @@ const CreateJobs = () => {
                                               </label>
                                               <div className="creators-filter-select creator-age-wrapper">
                                                 <input
-                                                  type="text"
+                                                  type="number"
                                                   className="form-control"
                                                   placeholder="Minimum Pay"
                                                   value={minPay}
                                                   onChange={(e) => {
                                                     onMinPayChange(e);
                                                   }}
+                                                  min={1}
                                                 ></input>
                                               </div>
                                             </div>
@@ -3067,13 +3071,14 @@ const CreateJobs = () => {
                                               </label>
                                               <div className="creators-filter-select creator-age-wrapper">
                                                 <input
-                                                  type="text"
+                                                  type="number"
                                                   className="form-control"
                                                   placeholder="Maximum Pay"
                                                   value={maxPay}
                                                   onChange={(e) => {
                                                     onMaxPayChange(e);
                                                   }}
+                                                  min={1}
                                                 ></input>
                                               </div>
                                             </div>
@@ -3617,7 +3622,7 @@ const CreateJobs = () => {
                     }}
                     className="createjob-btn"
                   >
-                    Save Draft
+                    Preview & Save Draft
                   </div>
                   {editData?.value && (
                     <>

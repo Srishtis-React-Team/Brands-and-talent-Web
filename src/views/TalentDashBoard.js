@@ -248,7 +248,9 @@ const TalentDashBoard = () => {
     }
   };
 
-  useEffect(() => {}, [gigsList]);
+  useEffect(() => {
+    console.log(gigsList, "gigsList");
+  }, [gigsList]);
 
   useEffect(() => {}, [flag]);
 
@@ -365,6 +367,8 @@ const TalentDashBoard = () => {
     let job_type;
     let work_place_type;
     let job_name;
+    let min_age;
+    let max_age;
     let category;
     let employment_type;
 
@@ -388,6 +392,12 @@ const TalentDashBoard = () => {
     if (jobNameRef?.current) {
       job_name = jobNameRef?.current?.value;
     }
+    if (minAgeref?.current) {
+      min_age = minAgeref?.current?.value;
+    }
+    if (MaxAgeref?.current) {
+      max_age = MaxAgeref?.current?.value;
+    }
     if (jobFullNameRef?.current) {
       job_full_name = jobFullNameRef?.current?.value;
     }
@@ -406,6 +416,8 @@ const TalentDashBoard = () => {
       country: country,
       state: state,
       city: kidsCity,
+      minAge: min_age,
+      maxAge: max_age,
     };
 
     setIsLoading(true);
@@ -441,6 +453,8 @@ const TalentDashBoard = () => {
   const keyWordRef = useRef(null);
   const jobLocationRef = useRef(null);
   const jobNameRef = useRef(null);
+  const minAgeref = useRef(null);
+  const MaxAgeref = useRef(null);
   const jobAgeRef = useRef(null);
   const jobFullNameRef = useRef(null);
 
@@ -623,7 +637,13 @@ const TalentDashBoard = () => {
         </div>
         <div className="container-fluid my-2 p-0">
           <div className="row talent-dashboard-main">
-            <div className={flag ? "col-md-8 col-lg-6 scrolscrolPrevOut" : "col-md-8 col-lg-8"}>
+            <div
+              className={
+                flag
+                  ? "col-md-8 col-lg-6 scrolscrolPrevOut"
+                  : "col-md-8 col-lg-8"
+              }
+            >
               <div className="talent-column-one scrlInner scroll">
                 <div className="filter-text-wrapper mb-3">
                   <div className="recent-gigs-title">Most Recent Jobs</div>
@@ -750,26 +770,6 @@ const TalentDashBoard = () => {
                             />
                           </div>
                           <div className="kids-form-section col-md-6 mb-3">
-                            <label className="form-label">Age</label>
-                            <select
-                              className="form-select"
-                              aria-label="Default select example"
-                              style={{ fontSize: "14px" }}
-                              id="ageSelectID"
-                            >
-                              <option value="" disabled selected>
-                                Select Age
-                              </option>
-                              {ageList.map((option, index) => (
-                                <option key={index} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                        <div className="row">
-                          <div className="kids-form-section col-md-6 mb-3">
                             <label className="form-label">Skills</label>
                             <Select
                               isMulti
@@ -781,6 +781,8 @@ const TalentDashBoard = () => {
                               styles={customStyles}
                             />
                           </div>
+                        </div>
+                        <div className="row">
                           <div className="kids-form-section col-md-6 mb-3">
                             <div className=" ">
                               <label className="form-label">Job Type</label>
@@ -801,8 +803,6 @@ const TalentDashBoard = () => {
                               </select>
                             </div>
                           </div>
-                        </div>
-                        <div className="kids-form-row row ">
                           <div className="kids-form-section col-md-6 mb-3">
                             <label className="form-label">Job Title</label>
                             <input
@@ -812,6 +812,32 @@ const TalentDashBoard = () => {
                               ref={jobNameRef}
                             ></input>
                           </div>
+                        </div>
+
+                        <div className="kids-form-row row ">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Min Age</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Min Age"
+                              ref={minAgeref}
+                              min={1}
+                            ></input>
+                          </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Max Age</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Max Age"
+                              ref={MaxAgeref}
+                              min={1}
+                            ></input>
+                          </div>
+                        </div>
+
+                        <div className="kids-form-row row ">
                           <div className="kids-form-section col-md-6 mb-3">
                             <div className=" ">
                               <label className="form-label">

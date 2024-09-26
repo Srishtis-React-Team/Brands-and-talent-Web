@@ -21,6 +21,8 @@ import useFieldDatas from "../config/useFieldDatas";
 import { IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Tooltip } from "react-tooltip";
+import Loader from "../views/Loader";
+
 import EditFeatures from "../pages/EditFeatures";
 // Regular expressions for different video platforms
 const urlPatterns = {
@@ -30,7 +32,6 @@ const urlPatterns = {
   instagram: /^.*(instagram\.com\/(p|reel|tv)\/[^/?#&]+)\/?(?:\?.*)?$/,
   twitter: /^.*((twitter|x)\.com\/.*\/status\/\d+)\/?$/,
 };
-
 const isValidUrl = (url) => {
   return (
     urlPatterns.youtube.test(url) ||
@@ -541,7 +542,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       const nonImageFiles = filesArray.filter(
         (file) => !file.type.startsWith("image/")
       );
-
       // Check for non-image files
       if (nonImageFiles.length > 0) {
         setMessage("You can only upload images");
@@ -551,7 +551,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         }, 1000);
         return;
       }
-
       // Determine allowed file limits based on plan type
       let maxFiles;
       if (talentData?.planName === "Basic") {
@@ -561,7 +560,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       } else if (talentData?.planName === "Premium") {
         maxFiles = Infinity; // Unlimited
       }
-
       // Check if the current count plus new uploads exceeds the limit
       if (portofolioFile.length + imageFiles.length > maxFiles) {
         let upgradeMessage;
@@ -688,12 +686,14 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
     params.append("file", fileData);
     params.append("fileName", fileData.name);
     params.append("fileType", getFileType(fileData.type));
+    setIsLoading(true);
     await Axios.post(API.uploadFile, params, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     })
       .then((resData) => {
+        setIsLoading(false);
         setMessage(resData.data.message);
         let fileObj = {
           id: resData.data.data.fileId,
@@ -701,18 +701,19 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           fileData: resData.data.data.filename,
           type: resData?.data?.data?.filetype,
         };
-
         setProfileFile(fileObj);
-
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
+          setIsLoading(false);
         }, 1000);
       })
       .catch((err) => {
         setLoader(false);
+        setIsLoading(false);
       });
   };
+
   const uploadFile = async (fileData) => {
     setLoader(true);
     const params = new FormData();
@@ -1776,6 +1777,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       </div>
 
       {openPopUp && <PopUp message={message} />}
+      {isLoading ? <Loader /> : <div></div>}
     </>
   );
 };

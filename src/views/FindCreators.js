@@ -488,7 +488,7 @@ const FindCreators = () => {
 
   const search = async () => {
     const formData = {
-      profession: profession,
+      profession: profession ? profession : [],
       parentCountry: country,
       parentState: state,
       childCity: kidsCity,
@@ -507,6 +507,7 @@ const FindCreators = () => {
       keyword: searchKeyword,
       selectedTerms: selectedKeyword,
       features: features,
+      socialmedia: socialMedias,
     };
 
     setIsLoading(true);
