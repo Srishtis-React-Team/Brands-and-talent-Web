@@ -1783,12 +1783,12 @@ const TalentProfile = () => {
                                 )}
                               </div>
                               <div className="cvAdjust padSpace">
-                                <div className="cvlist-wrapper row">
+                                <div className="cvlist-wrapper row p-0">
                                   {cvList.map((pdf) => {
                                     return (
                                       <>
                                         <>
-                                          <div className="col-md-4 col-lg-3 padSpace">
+                                          <div className="col-md-4 padSpace">
                                             <div
                                               className="cv-card"
                                               key={pdf.title}
