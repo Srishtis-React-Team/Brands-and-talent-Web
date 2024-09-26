@@ -52,6 +52,8 @@ const BrandTalents = () => {
   const [talentList, setTalentList] = useState([]);
   const [min, setMinAge] = useState("0");
   const [max, setMaxAge] = useState("100");
+  const [minimumAge, setMinimumAge] = useState("");
+  const [maximumAge, setMaximumAge] = useState("");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [countryList, setCountryList] = useState([]);
@@ -336,6 +338,8 @@ const BrandTalents = () => {
   const onRangeChange = (e) => {
     setMinAge(Math.round(e.min));
     setMaxAge(Math.round(e.max));
+    setMinimumAge(Math.round(e.min));
+    setMaximumAge(Math.round(e.max));
   };
 
   const handleSelectedCountry = (event) => {
@@ -413,11 +417,9 @@ const BrandTalents = () => {
       childNationality: nationality,
       preferredChildFirstname: fullName,
       preferredChildLastName: fullName,
-      minAge: min,
-      maxAge: max,
-      industry: industry,
+      minAge: minimumAge,
+      maxAge: maximumAge,
       keyword: searchKeyword,
-      selectedTerms: selectedKeyword,
       features: features,
       childEthnicity: ethnicity,
       socialmedia: socialMedias,

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "../assets/css/findcreators.css";
+import "../assets/css/talent-profile.css";
+import "../assets/css/talent-dashboard.css";
+
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 import Select from "react-select";
@@ -11,6 +13,7 @@ import PopUp from "../components/PopUp.js";
 import CurrentUser from "../CurrentUser.js";
 import SocialMediasList from "../components/SocialMediasList.js";
 import useFieldDatas from "../config/useFieldDatas.js";
+import { Maximize } from "@mui/icons-material";
 
 const FindCreators = () => {
   const {
@@ -48,6 +51,8 @@ const FindCreators = () => {
   const [talentList, setTalentList] = useState([]);
   const [min, setMinAge] = useState("0");
   const [max, setMaxAge] = useState("100");
+  const [minimumAge, setMinimumAge] = useState("");
+  const [maximumAge, setMaximumAge] = useState("");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -393,6 +398,8 @@ const FindCreators = () => {
   const onRangeChange = (e) => {
     setMinAge(Math.round(e.min));
     setMaxAge(Math.round(e.max));
+    setMinimumAge(Math.round(e.min));
+    setMaximumAge(Math.round(e.max));
   };
 
   const handleSelectedCountry = (event) => {
@@ -492,21 +499,18 @@ const FindCreators = () => {
       parentCountry: country,
       parentState: state,
       childCity: kidsCity,
-      platforms: socialMedias,
       minFollowers: minFollowers,
       maxFollowers: maxFollowers,
       childGender: gender,
-      minAge: min,
-      maxAge: max,
+      minAge: minimumAge,
+      maxAge: maximumAge,
       childEthnicity: ethnicity,
-      childNationality: nationality,
-      languages: languages,
+      childNationality: nationality ? nationality : [],
+      languages: languages ? languages : [],
       preferredChildFirstname: fullName,
       preferredChildLastName: fullName,
-      industry: categories,
       keyword: searchKeyword,
-      selectedTerms: selectedKeyword,
-      features: features,
+      features: features ? features : [],
       socialmedia: socialMedias,
     };
 
