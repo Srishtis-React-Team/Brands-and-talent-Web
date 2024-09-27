@@ -130,9 +130,9 @@ const TalentProfile = () => {
   //   }
   // };
 
-  if (!talentData && !userId) {
-    navigate("/login");
-  }
+  // if (!talentData && !userId) {
+  //   navigate("/login");
+  // }
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("currentUser");
