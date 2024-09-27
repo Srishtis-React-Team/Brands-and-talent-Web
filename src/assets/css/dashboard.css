@@ -2070,9 +2070,33 @@ ul.MuiMenu-list li {
 .topSpc-container{
   margin:  100px 0 50px;
 }
-
-
-
+.spacHeight-log {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.warning-wrapper.newBoxLog{
+  width: 480px;
+  margin: 0 auto;
+  max-width: 90%;
+  padding: 20px 30px;
+  text-align: center;
+}
+.warning-wrapper.newBoxLog .logoImg{
+  margin-bottom: 15px;
+}
+.warning-wrapper.newBoxLog button.warning-btn {
+  width: 100%;
+  height: 45px;
+  margin: 30px 0 10px;
+  display: inline-block;
+}
+.newBoxLog img.logNew-img {
+  max-width: 250px;
+  margin: 15px auto;
+}
 
 
 

@@ -32,6 +32,7 @@ import SwiperSlider from "./SwiperSlider.js";
 const TalentProfile = () => {
   const { currentUserType, avatarImage } = CurrentUser();
   const navigate = useNavigate();
+  const log_Logo = require("../assets/images/LOGO.png");
   const pinkStar = require("../assets/icons/pink-star.png");
   const instaLogo = require("../assets/icons/social-media-icons/instagram.png");
   const userFill = require("../assets/icons/userFill.png");
@@ -2415,18 +2416,22 @@ const TalentProfile = () => {
             </div>
           </>
         )} */}
+
       {!userId && (
         <>
-          <div className="warning-wrapper">
-            <p className="warning-msg">Please login to continue</p>
-            <button
-              onClick={() => {
-                navigate("/login");
-              }}
-              className="warning-btn "
-            >
-              Login
-            </button>
+          <div className="spacHeight-log">
+            <div className="warning-wrapper newBoxLog">
+              <div className="logoImg">  <img src={log_Logo} alt="img" className="logNew-img" /></div>
+              <p className="warning-msg">Please login to continue</p>
+              <button
+                onClick={() => {
+                  navigate("/login");
+                }}
+                className="warning-btn "
+              >
+                Login
+              </button>
+            </div>
           </div>
           {/* <Login /> */}
         </>
