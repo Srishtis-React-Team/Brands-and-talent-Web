@@ -188,9 +188,9 @@ const TalentPreviewJob = ({ job, setFlag }) => {
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
-      <main id="mainBrand" className="topSpc-container">
-        <div className="container ">
-          <div className="brand-content-main preview-main-box boxBg">
+      <main id="mainBrand">
+        <div className="scrolscrolPrevOut">
+          <div className="brand-content-main preview-main-box boxBg scrlInner scroll">
             <div className="back-create" onClick={handleBackClick}>
               <i className="bi bi-arrow-left-circle-fill"></i>
               <div className="back-to">Back</div>
