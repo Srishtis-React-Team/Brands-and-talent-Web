@@ -510,7 +510,7 @@ const EditTalent = () => {
   }, [talentId]);
 
   const [services, setServices] = useState();
-  const [isBasic, setIsBasic] = useState(true);
+  const [isBasic, setIsBasic] = useState(false);
 
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
@@ -2336,20 +2336,21 @@ const EditTalent = () => {
                   {...a11yProps(4)}
                   style={{ textTransform: "capitalize" }}
                 />
+
                 <Tab
-                  label="CV"
+                  label="Features"
                   {...a11yProps(5)}
                   style={{ textTransform: "capitalize" }}
                 />
 
                 <Tab
-                  label="Features"
+                  label="Services"
                   {...a11yProps(6)}
                   style={{ textTransform: "capitalize" }}
                 />
 
                 <Tab
-                  label="Services"
+                  label="CV"
                   {...a11yProps(7)}
                   style={{ textTransform: "capitalize" }}
                 />
@@ -3538,7 +3539,7 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={5}>
+            <CustomTabPanel value={valueTabs} index={7}>
               <div className="update-portfolio-cards-wrapper">
                 <div className="update-portfolio-title">CV</div>
                 {talentData?.cv?.length === 0 && (
@@ -3652,7 +3653,7 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
 
-            <CustomTabPanel value={valueTabs} index={6}>
+            <CustomTabPanel value={valueTabs} index={5}>
               {talentData && (
                 <>
                   <div className="features-section mt-4">
@@ -3678,7 +3679,7 @@ const EditTalent = () => {
               )}
             </CustomTabPanel>
 
-            <CustomTabPanel value={valueTabs} index={7}>
+            <CustomTabPanel value={valueTabs} index={6}>
               {isBasic == false && (
                 <>
                   <div className="update-portfolio-section">
