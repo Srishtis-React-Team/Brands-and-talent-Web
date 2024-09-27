@@ -51,6 +51,7 @@ const FindCreators = () => {
   const [talentList, setTalentList] = useState([]);
   const [min, setMinAge] = useState("0");
   const [max, setMaxAge] = useState("100");
+  const [height, setHeight] = useState("");
   const [minimumAge, setMinimumAge] = useState("");
   const [maximumAge, setMaximumAge] = useState("");
   const [loader, setLoader] = useState(false);
@@ -149,6 +150,9 @@ const FindCreators = () => {
     checkUserStatus();
   }, []);
   useEffect(() => {}, [keywordsList]);
+  useEffect(() => {
+    console.log(profession, "profession");
+  }, [profession]);
 
   const checkUserStatus = async () => {
     const formData = {
@@ -179,7 +183,6 @@ const FindCreators = () => {
     setCountry(null);
     setState("");
     setEthnicity("");
-    setTalentList([]);
     setMinAge("0");
     setMaxAge("100");
     setLanguages([]);
@@ -507,11 +510,13 @@ const FindCreators = () => {
       childEthnicity: ethnicity,
       childNationality: nationality ? nationality : [],
       languages: languages ? languages : [],
-      preferredChildFirstname: fullName,
-      preferredChildLastName: fullName,
+      // preferredChildFirstname: fullName,
+      // preferredChildLastName: fullName,
       keyword: searchKeyword,
       features: features ? features : [],
       socialmedia: socialMedias,
+      name: fullName,
+      height: height,
     };
 
     setIsLoading(true);
@@ -549,21 +554,7 @@ const FindCreators = () => {
       {
         label: "Build",
         type: "select",
-        options: [
-          "Build",
-          "Slim",
-          "Average",
-          "Athletic",
-          "Curvy",
-          "Plus Size",
-          "Other",
-        ],
-      },
-
-      {
-        label: "Height",
-        type: "select",
-        options: ["168.2 cm", "176.6 cm"],
+        options: ["Slim", "Average", "Athletic", "Curvy", "Plus Size", "Other"],
       },
     ]);
   }, []);
@@ -621,6 +612,10 @@ const FindCreators = () => {
       });
     });
   });
+
+  const handleProfessionChange = (selectedOptions) => {
+    setProfession(selectedOptions);
+  };
 
   return (
     <>
@@ -716,7 +711,7 @@ const FindCreators = () => {
                   <div className="profession-creator-wrapper">
                     <div className="filter-items">Profession</div>
                     <div className="profession-wrapper talents-profession inpWid">
-                      <Select
+                      {/* <Select
                         isMulti
                         name="colors"
                         options={professionList}
@@ -724,6 +719,18 @@ const FindCreators = () => {
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={(value) => setProfession(value?.value)}
+                        styles={customStylesProfession}
+                      /> */}
+
+                      <Select
+                        defaultValue={[]}
+                        isMulti
+                        name="professions"
+                        options={professionList}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        placeholder="Search for Profession / Skills"
+                        onChange={handleProfessionChange}
                         styles={customStylesProfession}
                       />
                     </div>
@@ -951,6 +958,20 @@ const FindCreators = () => {
                       })}
                     </>
                   )}
+
+                  <div className="keyword-wrapper pt-4">
+                    <div className="filter-items">Height</div>
+                    <div className="filter-input-wrapper inpWid">
+                      <input
+                        className="keyword-input"
+                        placeholder="Search Keyword"
+                        value={height}
+                        onChange={(e) => {
+                          setHeight(e.target.value);
+                        }}
+                      ></input>
+                    </div>
+                  </div>
 
                   <div className="submit-buttons">
                     <div

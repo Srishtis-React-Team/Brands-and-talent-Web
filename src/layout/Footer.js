@@ -41,7 +41,6 @@ const Footer = (props) => {
   const [brand, setBrand] = useState(false);
 
   const [currentUser_image, setCurrentUserImage] = useState("");
-  const [currentUser_type, setCurrentUserType] = useState("");
   const [talentData, setTalentData] = useState();
   const [talentId, setTalentId] = useState(null);
   const clear = () => {
@@ -55,6 +54,24 @@ const Footer = (props) => {
   //   // setData("talent-signup");
   //   handleRegister();
   // };
+
+  useEffect(() => {
+    if (currentUserId) {
+      getTalentById();
+    }
+  }, [currentUserId]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const subscribe = async () => {
     // if (firstName === "") {
@@ -185,6 +202,37 @@ const Footer = (props) => {
         }
       })
       .catch((err) => {});
+  };
+
+  const handleNavigationClick = () => {
+    if (!currentUserId) {
+      setMessage("You must be logged in");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 1000);
+    } else if (currentUserType === "brand" && currentUserId) {
+      navigate("/find-creators");
+    } else if (
+      currentUserType === "talent" &&
+      talentData?.planName == "Basic"
+    ) {
+      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate("/pricing");
+      }, 3000);
+    } else if (
+      currentUserType === "talent" &&
+      talentData?.planName != "Basic"
+    ) {
+      // alert(currentUserId);
+      // alert(currentUserType);
+      // alert(talentData?.planName);
+      navigate("/find-creators");
+    }
   };
 
   return (
@@ -323,10 +371,8 @@ const Footer = (props) => {
               </h6>
 
               <ul className="footerLinks">
-                <li>
-                  <Link onClick={handleClick} to="/">
-                    Verified Talent Marketplace
-                  </Link>
+                <li onClick={() => handleNavigationClick()}>
+                  <Link>Verified Talent Marketplace</Link>
                 </li>
                 {/* <li>
                   <Link
@@ -343,7 +389,7 @@ const Footer = (props) => {
                   <Link onClick={handleAirtableClick}>Register as Talent</Link>
                 </li> */}
                 <li>
-                  <Link onClick={handleClick} to="/brand-firstGig">
+                  <Link onClick={() => handleNavigationClick()}>
                     Hire Talent
                   </Link>
                 </li>
@@ -393,28 +439,28 @@ const Footer = (props) => {
                   Resources
                 </Link>
               </h6>
-              <ul className="footerLinks">
-                <li>
-                  <a href=""> Industry Insights</a>
-                </li>
-                <li>
-                  <a href=""> Case Studies</a>
-                </li>
-                <li>
-                  <a href="">Interviews</a>
-                </li>
-              </ul>
               {/* <ul className="footerLinks">
-                <li onClick={() => handleClickBlogs(0)}>
+                <li>
                   <a href=""> Industry Insights</a>
                 </li>
-                <li onClick={() => handleClickBlogs(1)}>
+                <li>
                   <a href=""> Case Studies</a>
                 </li>
-                <li onClick={() => handleClickBlogs(2)}>
+                <li>
                   <a href="">Interviews</a>
                 </li>
               </ul> */}
+              <ul className="footerLinks">
+                <li onClick={() => handleClickBlogs(2)}>
+                  <a href=""> Industry Insights</a>
+                </li>
+                <li onClick={() => handleClickBlogs(4)}>
+                  <a href=""> Case Studies</a>
+                </li>
+                <li onClick={() => handleClickBlogs(3)}>
+                  <a href="">Interviews</a>
+                </li>
+              </ul>
             </div>
             <div className="footer-wrapper col-md-4 col-lg-2">
               <h6>

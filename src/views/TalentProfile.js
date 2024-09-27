@@ -625,17 +625,25 @@ const TalentProfile = () => {
   useEffect(() => {
     console.log(brandData, "brandData");
   }, [brandData]);
+  useEffect(() => {
+    console.log(currentUser_type, "currentUser_type");
+  }, [currentUser_type]);
+  useEffect(() => {
+    console.log(userId, "userId");
+  }, [userId]);
 
   return (
     <>
-      {currentUser_type == "talent" && userId && (
+      {userId && (
         <>
           {currentUser_type == "brand" && (
             <BrandHeader
               hideToggleButton={hideToglle}
               toggleMenu={toggleMenu}
+              from={"message"}
             />
           )}
+
           {currentUser_type == "talent" && (
             <TalentHeader
               hideToggleButton={hideToglle}
@@ -643,6 +651,7 @@ const TalentProfile = () => {
               from={"message"}
             />
           )}
+
           <section>
             <div className="popular-header">
               <div className="header-title">Profile</div>
@@ -1296,14 +1305,14 @@ const TalentProfile = () => {
                                   {item?.perHourSalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perHourSalary} per hour{" "}
+                                        ${item?.perHourSalary} per hour{" "}
                                       </div>
                                     </>
                                   )}
                                   {item?.perDaySalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perDaySalary} per day
+                                        ${item?.perDaySalary} per day
                                       </div>
                                     </>
                                   )}
@@ -1311,21 +1320,21 @@ const TalentProfile = () => {
                                   {item?.perMonthSalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perMonthSalary} per month
+                                        ${item?.perMonthSalary} per month
                                       </div>
                                     </>
                                   )}
                                   {item?.perPostSalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perPostSalary} per post
+                                        ${item?.perPostSalary} per post
                                       </div>
                                     </>
                                   )}
                                   {item?.perImageSalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perImageSalary} per image
+                                        ${item?.perImageSalary} per image
                                       </div>
                                     </>
                                   )}
