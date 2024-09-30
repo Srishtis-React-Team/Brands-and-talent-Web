@@ -227,9 +227,17 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                           <i className="bi bi-briefcase-fill"></i>
                         </>
                       ))}
-                    {jobData?.isApplied === "Apply Now" ||
+
+                    {jobData?.isApplied === "Apply Now" && <div>Apply Now</div>}
+                    {jobData?.isApplied === "Applied" && (
+                      <>
+                        <div>Applied</div>
+                      </>
+                    )}
+
+                    {/* {jobData?.isApplied === "Apply Now" ||
                       (!jobData?.isApplied && <div>Apply Now</div>)}
-                    {jobData?.isApplied === "Applied" && <div>Applied</div>}
+                    {jobData?.isApplied === "Applied" && <div>Applied</div>} */}
                   </div>
                 </div>
               )}
@@ -302,12 +310,24 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                                 <span>{value.currency}</span>&nbsp;
                                 {value?.minPay && (
                                   <>
-                                    <span>{value.minPay}/day</span> +&nbsp;
+                                    <span>{value.minPay}/day</span>
+                                    {!value?.maxPay && <>+</>}
+                                    &nbsp;
+                                  </>
+                                )}
+                                {value?.maxPay && (
+                                  <>
+                                    <span>to</span>&nbsp;
+                                  </>
+                                )}
+                                {value?.maxPay && (
+                                  <>
+                                    <span>{value.maxPay}/day</span>+&nbsp;
                                   </>
                                 )}
                                 {value?.exactPay && (
                                   <>
-                                    <span>{value.exactPay}</span> + &nbsp;
+                                    <span>{value.exactPay}</span>+&nbsp;
                                   </>
                                 )}
                                 {value.product_name && (

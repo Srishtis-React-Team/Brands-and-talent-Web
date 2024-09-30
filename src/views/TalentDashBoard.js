@@ -365,6 +365,7 @@ const TalentDashBoard = () => {
     let job_age;
     let job_full_name;
     let job_type;
+    let comp_type;
     let work_place_type;
     let job_name;
     let min_age;
@@ -376,6 +377,8 @@ const TalentDashBoard = () => {
     work_place_type = selectElement?.value;
     var selectJobElement = document.getElementById("jobtypeID");
     job_type = selectJobElement?.value;
+    var selectCompensationElement = document.getElementById("compensationID");
+    comp_type = selectCompensationElement?.value;
     var selectEmploymentElement = document.getElementById("employmentTypeID");
     employment_type = selectEmploymentElement?.value;
     var selectAgeElement = document.getElementById("ageSelectID");
@@ -408,6 +411,7 @@ const TalentDashBoard = () => {
       jobLocation: job_location,
       age: job_age,
       jobType: job_type,
+      compensation: comp_type,
       workPlaceType: work_place_type,
       skills: selectedSkillsRef?.current,
       talentId: talentId,
@@ -465,6 +469,11 @@ const TalentDashBoard = () => {
     "Hybrid",
     "Temporary",
     "Other",
+  ];
+  const compensationTypes = [
+    "Paid Collaboration",
+    "Product/ Gift",
+    "Paid Collaboration + Product/Gift",
   ];
 
   useEffect(() => {
@@ -770,6 +779,28 @@ const TalentDashBoard = () => {
                             />
                           </div>
                           <div className="kids-form-section col-md-6 mb-3">
+                            <div className=" ">
+                              <label className="form-label">
+                                Employment Type
+                              </label>
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                style={{ fontSize: "14px" }}
+                                id="employmentTypeID"
+                              >
+                                <option value="" disabled selected>
+                                  Select Employment Type
+                                </option>
+                                {employmentTypeList.map((option, index) => (
+                                  <option key={index} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          {/* <div className="kids-form-section col-md-6 mb-3">
                             <label className="form-label">Skills</label>
                             <Select
                               isMulti
@@ -780,7 +811,7 @@ const TalentDashBoard = () => {
                               onChange={(value) => selectSkills(value)}
                               styles={customStyles}
                             />
-                          </div>
+                          </div> */}
                         </div>
                         <div className="row">
                           <div className="kids-form-section col-md-6 mb-3">
@@ -814,7 +845,7 @@ const TalentDashBoard = () => {
                           </div>
                         </div>
 
-                        <div className="kids-form-row row ">
+                        {/* <div className="kids-form-row row ">
                           <div className="kids-form-section col-md-6 mb-3">
                             <label className="form-label">Min Age</label>
                             <input
@@ -835,24 +866,22 @@ const TalentDashBoard = () => {
                               min={1}
                             ></input>
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="kids-form-row row ">
                           <div className="kids-form-section col-md-6 mb-3">
                             <div className=" ">
-                              <label className="form-label">
-                                Employment Type
-                              </label>
+                              <label className="form-label">Compensation</label>
                               <select
                                 className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "14px" }}
-                                id="employmentTypeID"
+                                id="compensationID"
                               >
                                 <option value="" disabled selected>
-                                  Select Employment Type
+                                  Select compensation
                                 </option>
-                                {employmentTypeList.map((option, index) => (
+                                {compensationTypes.map((option, index) => (
                                   <option key={index} value={option}>
                                     {option}
                                   </option>
