@@ -440,7 +440,17 @@
     min-width: auto;
     padding: 0 20px;
     margin: 0 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 15px;
+    text-align: center;
   }
+  .easy-apply-description {
+    line-height: 21px;
+  }
+
+
 }
 
 .age-inputs {

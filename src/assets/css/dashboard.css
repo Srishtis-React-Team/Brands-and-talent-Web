@@ -2098,6 +2098,9 @@ ul.MuiMenu-list li {
   margin: 15px auto;
 }
 
+.pr-sp{ padding-right: 0; }
+
+
 
 
 @media (max-width: 1399px) {
@@ -2115,8 +2118,12 @@ ul.MuiMenu-list li {
   .navTxt {
     padding-right: 25px;
   }
+  .pr-sp{ padding-right: calc(var(--bs-gutter-x) * .5); }
+  
 }
 @media (max-width: 991px) {
+
+
   .talent-all-details-wrapper .service-list-content .text-btm {
     justify-content: inherit;
     align-items: baseline;
@@ -2196,14 +2203,18 @@ ul.MuiMenu-list li {
     justify-content: flex-start;
     align-items: inherit;
     flex-direction: column;
+    margin-bottom: 10px;
   }
   .dashHeader .mobile-nav-content {
     padding: 20px;
     left: 0;
   }
   .dashHeader .mobile-nav-content .navTxt {
-    margin: 10px 0;
-    padding: 0 !important;
+    padding: 10px 0 !important;
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    margin: 0;
   }
   .show-sidebar.hide-sidebar {
     display: block !important;
@@ -2217,6 +2228,9 @@ ul.MuiMenu-list li {
 }
 
 @media (max-width: 767px) {
+
+  .talentSet .edit-basicdetails-section-main{ justify-content: center; width: 100%;  }
+  .brand-content-main.talentSet.boxBg .cardHeight{ min-height: auto !important; }
   .step-back,
   .step-continue {
     margin: 0 5px;
@@ -3595,7 +3609,8 @@ ul.MuiMenu-list li {
   }
 
   .header-search-wrapper {
-    padding: 0 10px !important;
+    padding: 5px !important;
+    width: 45px;
   }
   .dialog-body.spaceTops,
   .dialog-body {

@@ -473,6 +473,7 @@
       .kids-form-section {
         width: 100%;
       }
+      
     }
   }
 }
@@ -1013,6 +1014,14 @@
 }
 
 @media only screen and (max-width: 767px) {
+
+  .kids-main .kids-form-row > .kids-form-row{
+    margin: 0;
+    padding: 0;
+  }
+
+  .brand-content-main.boxBg .dialog-body { margin-top: 20px !important; }
+
   .fileType > img {
     max-width: 20px;
     height: 20px;
