@@ -136,7 +136,7 @@ const TalentProfile = () => {
   // }
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("currentUser");
+    const storedUserId = localStorage.getItem("userId");
     setVideoAudioUrls([
       "https://youtu.be/zO85jBI7Jxs?si=JtdIwdSDPxjnDv9R",
       "https://vimeo.com/956864989",
@@ -653,11 +653,11 @@ const TalentProfile = () => {
             />
           )}
 
-          <section>
+          {/* <section>
             <div className="popular-header">
               <div className="header-title">Profile</div>
             </div>
-          </section>
+          </section> */}
           <section>
             <div className="container">
               <div className="talent-profile-main">
@@ -2421,7 +2421,10 @@ const TalentProfile = () => {
         <>
           <div className="spacHeight-log">
             <div className="warning-wrapper newBoxLog">
-              <div className="logoImg">  <img src={log_Logo} alt="img" className="logNew-img" /></div>
+              <div className="logoImg">
+                {" "}
+                <img src={log_Logo} alt="img" className="logNew-img" />
+              </div>
               <p className="warning-msg">Please login to continue</p>
               <button
                 onClick={() => {

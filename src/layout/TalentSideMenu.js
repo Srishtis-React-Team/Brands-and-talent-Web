@@ -20,13 +20,13 @@ const TalentSideMenu = ({ myState }) => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    if (currentUserId) {
-      getTalentById();
-    }
-  }, [currentUserId]);
+    getTalentById();
+  }, []);
 
   const getTalentById = async () => {
-    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
+    await ApiHelper.post(
+      `${API.getTalentById}${localStorage.getItem("userId")}`
+    )
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {

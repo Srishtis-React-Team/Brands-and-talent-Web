@@ -185,6 +185,10 @@ const TalentPreviewJob = ({ job, setFlag }) => {
     width: windowWidth >= 600 ? "800px" : "400px", // 800px for desktop, 400px for mobile
   };
 
+  useEffect(() => {
+    console.log(modalData, "modalData");
+  }, [modalData]);
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -284,7 +288,9 @@ const TalentPreviewJob = ({ job, setFlag }) => {
               </div>
 
               <div className="company-location">
-                <span className="job-feature-heading">Compensation :&nbsp; </span>
+                <span className="job-feature-heading">
+                  Compensation :&nbsp;{" "}
+                </span>
                 <span>
                   {jobData.compensation && (
                     <>
@@ -388,7 +394,9 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                         )}
                         {jobData?.gender && (
                           <li className="job-features-li">
-                            <span className="job-feature-heading">Gender :</span>
+                            <span className="job-feature-heading">
+                              Gender :
+                            </span>
                             <span className="job-feature-values">
                               {jobData?.gender &&
                                 jobData.gender
@@ -401,23 +409,24 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                             </span>
                           </li>
                         )}
-                        {jobData?.languages && jobData?.languages?.length > 0 && (
-                          <li className="job-features-li">
-                            <span className="job-feature-heading">
-                              Languages :
-                            </span>
-                            <span className="job-feature-values">
-                              {jobData?.languages &&
-                                jobData.languages
-                                  .map((skill, index) =>
-                                    index === jobData.languages.length - 1
-                                      ? skill
-                                      : skill + ", "
-                                  )
-                                  .join("")}
-                            </span>
-                          </li>
-                        )}
+                        {jobData?.languages &&
+                          jobData?.languages?.length > 0 && (
+                            <li className="job-features-li">
+                              <span className="job-feature-heading">
+                                Languages :
+                              </span>
+                              <span className="job-feature-values">
+                                {jobData?.languages &&
+                                  jobData.languages
+                                    .map((skill, index) =>
+                                      index === jobData.languages.length - 1
+                                        ? skill
+                                        : skill + ", "
+                                    )
+                                    .join("")}
+                              </span>
+                            </li>
+                          )}
                         {jobData?.nationality && (
                           <li className="job-features-li">
                             <span className="job-feature-heading">
@@ -471,7 +480,8 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                                   <li>
                                     TikTok Followers:{" "}
                                     <span className="job-feature-values">
-                                      {jobData?.tikTokMin} - {jobData?.tikTokMax}
+                                      {jobData?.tikTokMin} -{" "}
+                                      {jobData?.tikTokMax}
                                     </span>
                                   </li>
                                 )}
@@ -527,7 +537,9 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                 {jobData?.questions?.length > 0 &&
                   jobData?.questions?.some((question) => question) && (
                     <>
-                      <div className="job-feature-title">Screening Questions</div>
+                      <div className="job-feature-title">
+                        Screening Questions
+                      </div>
                       <div>
                         <ul>
                           {jobData?.questions &&
@@ -542,22 +554,23 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                   )}
               </div>
 
-              {jobData?.jobDescription && jobData?.jobDescription.length > 0 && (
-                <>
-                  <div className="job-about-section">
-                    <div className="job-feature-title">Job Description</div>
-                    <div className="job-about-values">
-                      {jobData?.jobDescription &&
-                        jobData?.jobDescription?.map((htmlContent, index) => (
-                          <div
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: htmlContent }}
-                          />
-                        ))}
+              {jobData?.jobDescription &&
+                jobData?.jobDescription.length > 0 && (
+                  <>
+                    <div className="job-about-section">
+                      <div className="job-feature-title">Job Description</div>
+                      <div className="job-about-values">
+                        {jobData?.jobDescription &&
+                          jobData?.jobDescription?.map((htmlContent, index) => (
+                            <div
+                              key={index}
+                              dangerouslySetInnerHTML={{ __html: htmlContent }}
+                            />
+                          ))}
+                      </div>
                     </div>
-                  </div>
-                </>
-              )}
+                  </>
+                )}
 
               {jobData?.whyWorkWithUs && jobData?.whyWorkWithUs.length > 0 && (
                 <>
@@ -650,7 +663,9 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                                           <li>
                                             <a
                                               className="dropdown-item"
-                                              onClick={() => viewUpdateFile(item)}
+                                              onClick={() =>
+                                                viewUpdateFile(item)
+                                              }
                                             >
                                               View
                                             </a>
