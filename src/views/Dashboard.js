@@ -14,6 +14,9 @@ import MobileSlider from "./MobileSlider";
 const Dashboard = () => {
   const { currentUserId, currentUserType, talentName, brandName } =
     CurrentUser();
+  useEffect(() => {
+    getBrand();
+  }, [currentUserId]);
   const navigate = useNavigate();
   const adidasIcon = require("../assets/icons/6539fea9ad514fe89ff5d7fc_adidas.png");
   const ubisoftIcon = require("../assets/icons/6539fd74ad514fe89ff48cdd_ubisoft.png");
@@ -140,6 +143,19 @@ const Dashboard = () => {
                 break;
             }
           });
+        }
+      })
+      .catch((err) => {});
+  };
+  const [brandData, setBrandData] = useState(null);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${currentUserId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
         }
       })
       .catch((err) => {});
@@ -335,10 +351,24 @@ const Dashboard = () => {
                   <div className="section-description brand-secription">
                     {contentsList?.title3}
                   </div>
-                  <button
+                  {/* <button
                     className="Join-now-wrapper joinnow-text"
                     data-bs-toggle="modal"
                     data-bs-target="#verify_age"
+                  >
+                    Join Now
+                  </button> */}
+                  <button
+                    className="Join-now-wrapper joinnow-text"
+                    onClick={() => {
+                      if (currentUserType === "talent") {
+                        navigate("/talent-home");
+                      }
+                    }}
+                    {...(currentUserType !== "talent" && {
+                      "data-bs-toggle": "modal",
+                      "data-bs-target": "#verify_age",
+                    })}
                   >
                     Join Now
                   </button>
@@ -353,9 +383,15 @@ const Dashboard = () => {
 
                   <button
                     onClick={(e) => {
-                      navigate("/signup", {
-                        state: { signupCategory: "brand" },
-                      });
+                      if (currentUserType == "brand") {
+                        navigate(
+                          `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
+                        );
+                      } else {
+                        navigate("/signup", {
+                          state: { signupCategory: "brand" },
+                        });
+                      }
                     }}
                     className="Join-now-wrapper hireBtn joinnow-text"
                   >

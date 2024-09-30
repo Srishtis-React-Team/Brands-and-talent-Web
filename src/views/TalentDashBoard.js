@@ -41,10 +41,17 @@ const TalentDashBoard = () => {
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [kidsCity, setKidsCity] = useState("");
+  const [filterState, setFilterState] = useState(false);
+  const [flagCondition, setFlagCondition] = useState(false);
 
   useEffect(() => {
     getCountries();
   }, []);
+  useEffect(() => {
+    console.log(flagCondition, "flagCondition");
+    if (flagCondition == true) {
+    }
+  }, [flagCondition]);
 
   const getCountries = async () => {
     await ApiHelper.get(API.listCountries)
@@ -183,6 +190,11 @@ const TalentDashBoard = () => {
       .catch((err) => {});
   };
 
+  const undo = async () => {
+    setFilterState(false);
+    getRecentGigs();
+  };
+
   const getRecentGigs = async () => {
     const formData = {
       talentId: userId,
@@ -236,7 +248,9 @@ const TalentDashBoard = () => {
     }
   };
 
-  useEffect(() => {}, [gigsList]);
+  useEffect(() => {
+    console.log(gigsList, "gigsList");
+  }, [gigsList]);
 
   useEffect(() => {}, [flag]);
 
@@ -353,6 +367,8 @@ const TalentDashBoard = () => {
     let job_type;
     let work_place_type;
     let job_name;
+    let min_age;
+    let max_age;
     let category;
     let employment_type;
 
@@ -376,6 +392,12 @@ const TalentDashBoard = () => {
     if (jobNameRef?.current) {
       job_name = jobNameRef?.current?.value;
     }
+    if (minAgeref?.current) {
+      min_age = minAgeref?.current?.value;
+    }
+    if (MaxAgeref?.current) {
+      max_age = MaxAgeref?.current?.value;
+    }
     if (jobFullNameRef?.current) {
       job_full_name = jobFullNameRef?.current?.value;
     }
@@ -394,12 +416,17 @@ const TalentDashBoard = () => {
       country: country,
       state: state,
       city: kidsCity,
+      minAge: min_age,
+      maxAge: max_age,
     };
 
     setIsLoading(true);
+    setFilterState(true);
     await ApiHelper.post(API.searchJobs, formData)
       .then((resData) => {
         if (resData.data.status === true) {
+          setIsLoading(false);
+
           setGigsList(resData.data.data);
           setMessage("Filtered Successfully");
           setOpenPopUp(true);
@@ -407,6 +434,8 @@ const TalentDashBoard = () => {
             setOpenPopUp(false);
           }, 1000);
         } else if (resData.data.status === false) {
+          setIsLoading(false);
+
           setMessage("No Matching Users Found");
           setOpenPopUp(true);
           setTimeout(function () {
@@ -414,7 +443,9 @@ const TalentDashBoard = () => {
           }, 1000);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+      });
 
     setOpen(false);
   };
@@ -422,6 +453,8 @@ const TalentDashBoard = () => {
   const keyWordRef = useRef(null);
   const jobLocationRef = useRef(null);
   const jobNameRef = useRef(null);
+  const minAgeref = useRef(null);
+  const MaxAgeref = useRef(null);
   const jobAgeRef = useRef(null);
   const jobFullNameRef = useRef(null);
 
@@ -604,17 +637,32 @@ const TalentDashBoard = () => {
         </div>
         <div className="container-fluid my-2 p-0">
           <div className="row talent-dashboard-main">
-            <div className={flag ? "col-md-8 col-lg-6" : "col-md-8 col-lg-8"}>
-              <div className="talent-column-one">
+            <div
+              className={
+                flag
+                  ? "col-md-8 col-lg-6 scrolscrolPrevOut"
+                  : "col-md-8 col-lg-8"
+              }
+            >
+              <div className="talent-column-one scrlInner scroll">
                 <div className="filter-text-wrapper mb-3">
                   <div className="recent-gigs-title">Most Recent Jobs</div>
                   <React.Fragment>
-                    <div
-                      className="header-filter-icon"
-                      onClick={handleClickOpen}
-                    >
-                      Filter Jobs
-                      <img className="filter-icon" src={sliderIcon} alt="" />
+                    <div className="d-flex align-items-center">
+                      <div
+                        className="header-filter-icon"
+                        onClick={handleClickOpen}
+                      >
+                        Filter Jobs
+                        <img className="filter-icon" src={sliderIcon} alt="" />
+                      </div>
+                      {filterState == true && (
+                        <>
+                          <div className="view-undo-jobs " onClick={undo}>
+                            <i className="bi bi-arrow-counterclockwise"></i>
+                          </div>
+                        </>
+                      )}
                     </div>
                     <Dialog
                       open={open}
@@ -722,26 +770,6 @@ const TalentDashBoard = () => {
                             />
                           </div>
                           <div className="kids-form-section col-md-6 mb-3">
-                            <label className="form-label">Age</label>
-                            <select
-                              className="form-select"
-                              aria-label="Default select example"
-                              style={{ fontSize: "14px" }}
-                              id="ageSelectID"
-                            >
-                              <option value="" disabled selected>
-                                Select Age
-                              </option>
-                              {ageList.map((option, index) => (
-                                <option key={index} value={option}>
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                        <div className="row">
-                          <div className="kids-form-section col-md-6 mb-3">
                             <label className="form-label">Skills</label>
                             <Select
                               isMulti
@@ -753,6 +781,8 @@ const TalentDashBoard = () => {
                               styles={customStyles}
                             />
                           </div>
+                        </div>
+                        <div className="row">
                           <div className="kids-form-section col-md-6 mb-3">
                             <div className=" ">
                               <label className="form-label">Job Type</label>
@@ -773,8 +803,6 @@ const TalentDashBoard = () => {
                               </select>
                             </div>
                           </div>
-                        </div>
-                        <div className="kids-form-row row ">
                           <div className="kids-form-section col-md-6 mb-3">
                             <label className="form-label">Job Title</label>
                             <input
@@ -784,6 +812,32 @@ const TalentDashBoard = () => {
                               ref={jobNameRef}
                             ></input>
                           </div>
+                        </div>
+
+                        <div className="kids-form-row row ">
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Min Age</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Min Age"
+                              ref={minAgeref}
+                              min={1}
+                            ></input>
+                          </div>
+                          <div className="kids-form-section col-md-6 mb-3">
+                            <label className="form-label">Max Age</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Max Age"
+                              ref={MaxAgeref}
+                              min={1}
+                            ></input>
+                          </div>
+                        </div>
+
+                        <div className="kids-form-row row ">
                           <div className="kids-form-section col-md-6 mb-3">
                             <div className=" ">
                               <label className="form-label">
@@ -928,11 +982,31 @@ const TalentDashBoard = () => {
                                         {item?.jobType}{" "}
                                         <i className="bi bi-dot"></i>
                                       </span>
-                                      <span className="job-company_dtls">
-                                        <i className="bi bi-geo-alt-fill"></i>
-                                        {item?.city}, {item?.state}{" "}
-                                        <i className="bi bi-dot"></i>
-                                      </span>
+                                      {(item?.country ||
+                                        item?.state ||
+                                        item?.city) && ( // Check if at least one value exists
+                                        <span className="job-company_dtls">
+                                          <i className="bi bi-geo-alt-fill"></i>
+                                          {item?.country && (
+                                            <>{item.country}</>
+                                          )}{" "}
+                                          {/* Display country if it exists */}
+                                          {item?.country &&
+                                            (item?.state || item?.city) && (
+                                              <span>, </span>
+                                            )}{" "}
+                                          {/* Show comma if country exists and either state or city exists */}
+                                          {item?.state && <>{item.state}</>}{" "}
+                                          {/* Display state if it exists */}
+                                          {item?.state && item?.city && (
+                                            <span>, </span>
+                                          )}{" "}
+                                          {/* Show comma if state exists and city exists */}
+                                          {item?.city && <>{item.city}</>}{" "}
+                                          {/* Display city if it exists */}
+                                          <i className="bi bi-dot"></i>
+                                        </span>
+                                      )}
                                       <span className="job-company_dtls">
                                         {item?.employmentType}{" "}
                                         <i className="bi bi-dot"></i>
@@ -1152,7 +1226,7 @@ const TalentDashBoard = () => {
             </div>
             <div className={flag ? "col-md-4 col-lg-6" : "col-md-4 col-lg-4"}>
               {flag ? (
-                <TalentPreviewJob job={job} />
+                <TalentPreviewJob job={job} setFlag={setFlag} />
               ) : (
                 <div className="rightBx">
                   <div className="contact-section-main remvSpace">

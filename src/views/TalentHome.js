@@ -34,6 +34,10 @@ const TalentHome = () => {
     checkTransaction();
   }, []);
 
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
@@ -169,16 +173,20 @@ const TalentHome = () => {
   };
 
   const handleEditNavigation = () => {
-    if (talentData?.adminApproved === true) {
-      navigate(`/edit-talent-profile?${talentData?._id}`);
-    } else {
-      setMessage(
-        "After your verification is approved, you can update your profile"
-      );
-      setOpenPopUp(true);
-      setTimeout(() => {
-        setOpenPopUp(false);
-      }, 2000);
+    if (talentData) {
+      // alert(talentData?.adminApproved);
+
+      if (talentData?.adminApproved === true) {
+        navigate(`/edit-talent-profile?${talentData?._id}`);
+      } else {
+        setMessage(
+          "After your verification is approved, you can update your profile"
+        );
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 2000);
+      }
     }
   };
 
@@ -201,9 +209,12 @@ const TalentHome = () => {
       >
         <div className="brand-content-main">
           <div className="create-job-title">Welcome To Brands and Talent</div>
-          <div className="home-cards mt-1 row pad8">
+          <div
+            className="home-cards mt-1 row pad8"
+            onClick={handleEditNavigation}
+          >
             <div className="col-md-4 col-lg-3 pad8">
-              <Link onClick={handleEditNavigation}>
+              <div>
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
                     <i className="bi bi-person icons home-card-icons"></i>
@@ -212,7 +223,7 @@ const TalentHome = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             </div>
             <div className="col-md-4 col-lg-3 pad8">
               {/* <Link
@@ -226,7 +237,7 @@ const TalentHome = () => {
                   </div>
                 </div>
               </Link> */}
-              <Link to="/talent-dashboard ">
+              <Link to="/talent-dashboard">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">
                     <i className="bi bi-search icons home-card-icons"></i>

@@ -20,13 +20,13 @@ const TalentSideMenu = ({ myState }) => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    if (currentUserId) {
-      getTalentById();
-    }
-  }, [currentUserId]);
+    getTalentById();
+  }, []);
 
   const getTalentById = async () => {
-    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
+    await ApiHelper.post(
+      `${API.getTalentById}${localStorage.getItem("userId")}`
+    )
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
@@ -84,6 +84,13 @@ const TalentSideMenu = ({ myState }) => {
       setTimeout(() => {
         setOpenPopUp(false);
       }, 2000);
+    }
+  };
+
+  const handleMessages = () => {
+    if (talentData?.planName !== "Basic") {
+      // alert("sd");
+      navigate("/message");
     }
   };
 
@@ -222,8 +229,8 @@ const TalentSideMenu = ({ myState }) => {
             <i className="bi bi-chat icons"></i>
             <div className="brand-menu-text">Messages</div>
           </Link> */}
-          <Link
-            to="/message"
+          <div
+            onClick={handleMessages}
             className={
               location.pathname === "/message"
                 ? "sidemenu-active mt-2"
@@ -232,7 +239,7 @@ const TalentSideMenu = ({ myState }) => {
           >
             <i className="bi bi-chat icons"></i>
             <div className="brand-menu-text">Messages</div>
-          </Link>
+          </div>
 
           <div
             onClick={handleNavigation}

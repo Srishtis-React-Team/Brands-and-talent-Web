@@ -1,5 +1,5 @@
 .talent-profile-main {
-  margin: 50px 0 0px;
+  margin: 100px 0 0px;
   padding: 0;
 }
 .talent-wrapper {
@@ -358,7 +358,7 @@
   position: absolute;
   bottom: -8px;
   right: 0px;
-  z-index: 1;
+  z-index: 0;
   background-color: #fff;
   padding: 2px 10px 2px 3px;
   font-size: 13px;
@@ -1002,9 +1002,12 @@
   max-width: 165px;
   padding: 15px;
 }
-
+.talents-social .logoSocial {
+  float: left;
+}
 .social-followers-count-section {
   padding-left: 7px;
+  float: left;
 }
 
 .talent-profession-name {
@@ -1094,7 +1097,7 @@
   height: auto;
   border-radius: 10px;
 }
-.videoSect .media-item .video-frame{
+.videoSect .media-item .video-frame {
   height: 250px;
 }
 
@@ -1146,13 +1149,10 @@
   margin: 10px;
 }
 
-
 .cv-card .fa-file {
   padding: 5px 10px;
   font-size: 25px;
 }
-
-
 
 .msgs {
   font-size: 14px;
@@ -1182,7 +1182,7 @@
   min-width: 75px;
 }
 
-.padSpace{
+.padSpace {
   padding: 0 0.5rem;
 }
 
@@ -1219,27 +1219,36 @@
   margin-top: 15px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* Media queries for responsiveness */
 @media (max-width: 1400px) {
   .cvAdjust .cvlist-wrapper .fileName {
     max-width: 16ch;
   }
+  .social-followers-count-section .followers-text {
+    font-size: 11px;
+  }
+  .social-followers-count-section .social-count {
+    font-size: 14px;
+  }
+  .logoSocial img {
+    max-width: 23px;
+  }
 }
 @media (max-width: 1200px) {
   .cvAdjust .cvlist-wrapper .fileName {
     max-width: 10ch;
+  }
+  .individual-talents-details {
+    padding: 0px 15px;
+  }
+  .talent-profile-main .talents-social-wrapper .talents-social {
+    padding: 0;
+  }
+  .talent-profile-main .talents-social-wrapper {
+    padding: 10px 15px 10px 18px;
+  }
+  .talent-profile-main .social-followers-count-section {
+    padding-left: 5px;
   }
 }
 @media (max-width: 991px) {
@@ -1253,7 +1262,9 @@
   .table-container table td {
     padding: 5px;
   }
-  .service-list-main.videoSect .padSpace{ padding: 0; }
+  .service-list-main.videoSect .padSpace {
+    padding: 0;
+  }
 
   .table-container table .left-column,
   .table-container table .right-column {
@@ -1287,11 +1298,25 @@
   .individual-talents-details {
     padding: 0px 15px;
   }
+  .talent-profile-main .talent-wrapper {
+    margin: 0 0 15px;
+    float: left;
+    width: 100%;
+    height: auto;
+  }
+  .talent-profile-main .talent-info-section {
+    float: left;
+    width: 100%;
+    height: auto;
+  }
   .videoSect .media-item .video-frame {
     height: 200px;
   }
 
-
+  .talent-profile-main .talents-social-wrapper .talents-social {
+    padding: 0 10px;
+    width: 50%;
+  }
 }
 @media (max-width: 480px) {
   .cvAdjust .cvlist-wrapper .fileName {
@@ -1337,6 +1362,12 @@
     align-items: center;
     justify-content: center;
     padding: 20px 0px;
+  }
+  .individual-talents-details .talent-verified {
+    padding: 0;
+  }
+  .individual-talents-details .talent-details-wrapper {
+    padding-bottom: 0;
   }
   .talent-details-wrapper {
     display: flex;
@@ -1465,10 +1496,6 @@
   .bio-wrapper p {
     font-size: 14px;
   }
-
-
-
-
 }
 @media (max-width: 380px) {
   .cvAdjust .cvlist-wrapper .cv-card {
@@ -1480,6 +1507,14 @@
   .cvAdjust .cvlist-wrapper .view-cv {
     width: 100% !important;
   }
-
-
+}
+@media (max-width: 280px) {
+  .talent-profile-main .talents-social-wrapper .talents-social {
+    padding: 0 10px;
+    width: 100%;
+    min-height: auto;
+  }
+  .talent-profile-main .talents-social-wrapper {
+    padding: 10px 15px;
+  }
 }

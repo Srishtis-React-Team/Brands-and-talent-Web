@@ -66,6 +66,7 @@ const ListJobs = () => {
     jobId: "",
     jobType: "",
     label: "",
+    jobObject: null,
   });
   const jobImage = require("../../assets/icons/jobImage.png");
   const [showSidebar, setShowSidebar] = useState(true);
@@ -166,39 +167,42 @@ const ListJobs = () => {
   useEffect(() => {}, [allJobsList]);
 
   const postJob = async () => {
-    await ApiHelper.post(`${API.postJobByDraft}${alertpop?.jobId}`)
-      .then((resData) => {
-        if (resData.data.status === true) {
-          if (brandData?.planName == "Basic") {
-            setMessage(
-              "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
-            );
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-              // setAllJobsList(resData.data.data, "resData.data.data");
-              getAllJobs();
-            }, 3000);
-          } else {
+    console.log(alertpop?.jobType, "jobType");
+    console.log(alertpop?.jobObject, "jobObject");
+
+    if (alertpop?.jobObject?.adminApproved == true) {
+      await ApiHelper.post(`${API.postJobByDraft}${alertpop?.jobId}`)
+        .then((resData) => {
+          if (resData.data.status === true) {
             setMessage("Job Posted Successfully!");
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
               // setAllJobsList(resData.data.data, "resData.data.data");
-              getAllJobs();
+              getAllJobs("posted-jobs", brandId);
             }, 2000);
           }
-        }
-
-        if (resData.data.status == false) {
-          setMessage(resData.data.message);
-          setOpenPopUp(true);
-          setTimeout(function () {
-            setOpenPopUp(false);
-          }, 1000);
-        }
-      })
-      .catch((err) => {});
+          if (resData.data.status == false) {
+            setMessage(resData.data.message);
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+              getAllJobs("posted-jobs", brandId);
+            }, 1000);
+          }
+        })
+        .catch((err) => {});
+    } else {
+      setMessage(
+        "Your Job Will be approved by admin with in 2 days For Instant approval upgrade your plan to Pro"
+      );
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        // setAllJobsList(resData.data.data, "resData.data.data");
+        getAllJobs();
+      }, 3000);
+    }
   };
 
   function PreviewJob(jobId) {
@@ -477,6 +481,7 @@ const ListJobs = () => {
                                               jobId: job?._id,
                                               jobType: job?.type,
                                               label: "post-job",
+                                              jobObject: job,
                                             });
                                           }}
                                         >

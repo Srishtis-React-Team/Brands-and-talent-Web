@@ -272,13 +272,14 @@ p {
 }
 button.btn.gift-payment-btn {
   background-color: #c2114b;
-  color: #FFF;
+  color: #fff;
   padding: 5px 25px;
   margin: 5px 0;
 }
 
-
-.css-knqc4i-MuiDialogActions-root{ justify-content: center; }
+.css-knqc4i-MuiDialogActions-root {
+  justify-content: center;
+}
 
 .search-filter-section .search-labels {
   color: #c9c9c9;
@@ -299,4 +300,14 @@ button.btn.gift-payment-btn {
 .nav-item {
   color: #000;
   font-size: 16px;
+}
+
+.brand-mobile-menu {
+  display: none;
+}
+
+@media only screen and (max-width: 990px) {
+  .brand-mobile-menu {
+    display: block;
+  }
 }

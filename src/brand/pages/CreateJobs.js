@@ -116,7 +116,6 @@ const CreateJobs = () => {
     []
   );
 
-
   const [isDuplicateJob, setIsDuplicateJob] = useState(false);
 
   const getBrand = async () => {
@@ -2777,13 +2776,14 @@ const CreateJobs = () => {
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
                                               <input
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
                                                 placeholder="Exact Pay"
                                                 value={exactPay}
                                                 onChange={(e) => {
                                                   onExactPayChange(e);
                                                 }}
+                                                min={1}
                                               ></input>
                                             </div>
                                           </div>
@@ -2799,13 +2799,14 @@ const CreateJobs = () => {
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
                                               <input
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
                                                 placeholder="Minimum Pay"
                                                 value={minPay}
                                                 onChange={(e) => {
                                                   onMinPayChange(e);
                                                 }}
+                                                min={1}
                                               ></input>
                                             </div>
                                           </div>
@@ -2817,13 +2818,14 @@ const CreateJobs = () => {
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
                                               <input
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
                                                 placeholder="Maximum Pay"
                                                 value={maxPay}
                                                 onChange={(e) => {
                                                   onMaxPayChange(e);
                                                 }}
+                                                min={1}
                                               ></input>
                                             </div>
                                           </div>
@@ -2897,14 +2899,14 @@ const CreateJobs = () => {
                                     <div className="kids-form-section col-md-3 mb-3">
                                       <div className="">
                                         <label className="form-label">
-                                          Product/Gift Name
+                                          Product/Gift Name (or) Product link
                                         </label>
                                         <input
                                           type="text"
                                           className="form-control"
                                           value={productName}
                                           onChange={handleProductNameChange}
-                                          placeholder="Enter Product/Gift Name"
+                                          placeholder="Enter Product/Gift Name (or) Product link"
                                         ></input>
                                       </div>
                                     </div>
@@ -2916,13 +2918,14 @@ const CreateJobs = () => {
                                         </label>
                                         <div className="creators-filter-select creator-age-wrapper">
                                           <input
-                                            type="text"
+                                            type="number"
                                             className="form-control"
                                             placeholder="Product/Gift Value"
                                             value={productValue}
                                             onChange={(e) => {
                                               handleProductValueChange(e);
                                             }}
+                                            min={0}
                                           ></input>
                                         </div>
                                       </div>
@@ -3049,13 +3052,14 @@ const CreateJobs = () => {
                                               </label>
                                               <div className="creators-filter-select creator-age-wrapper">
                                                 <input
-                                                  type="text"
+                                                  type="number"
                                                   className="form-control"
                                                   placeholder="Minimum Pay"
                                                   value={minPay}
                                                   onChange={(e) => {
                                                     onMinPayChange(e);
                                                   }}
+                                                  min={1}
                                                 ></input>
                                               </div>
                                             </div>
@@ -3067,13 +3071,14 @@ const CreateJobs = () => {
                                               </label>
                                               <div className="creators-filter-select creator-age-wrapper">
                                                 <input
-                                                  type="text"
+                                                  type="number"
                                                   className="form-control"
                                                   placeholder="Maximum Pay"
                                                   value={maxPay}
                                                   onChange={(e) => {
                                                     onMaxPayChange(e);
                                                   }}
+                                                  min={1}
                                                 ></input>
                                               </div>
                                             </div>
@@ -3145,14 +3150,14 @@ const CreateJobs = () => {
                                       <div className="kids-form-section col-md-3 mb-3">
                                         <div className="">
                                           <label className="form-label">
-                                            Product/Gift Name
+                                            Product/Gift Name (or) Product link
                                           </label>
                                           <input
                                             type="text"
                                             className="form-control"
                                             value={productName}
                                             onChange={handleProductNameChange}
-                                            placeholder="Enter Product/Gift Name"
+                                            placeholder="Enter Product/Gift Name (or) Product link"
                                           ></input>
                                         </div>
                                       </div>
@@ -3163,13 +3168,14 @@ const CreateJobs = () => {
                                           </label>
                                           <div className="creators-filter-select creator-age-wrapper">
                                             <input
-                                              type="text"
+                                              type="number"
                                               className="form-control"
                                               placeholder="Product/Gift Value"
                                               value={productValue}
                                               onChange={(e) => {
                                                 handleProductValueChange(e);
                                               }}
+                                              min={0}
                                             ></input>
                                           </div>
                                         </div>
@@ -3616,7 +3622,7 @@ const CreateJobs = () => {
                     }}
                     className="createjob-btn"
                   >
-                    Save Draft
+                    Preview & Save Draft
                   </div>
                   {editData?.value && (
                     <>

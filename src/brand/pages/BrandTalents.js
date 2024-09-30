@@ -24,6 +24,7 @@ const BrandTalents = () => {
     talentName,
     brandName,
   } = CurrentUser();
+
   const {
     categoryList,
     professionList,
@@ -51,6 +52,8 @@ const BrandTalents = () => {
   const [talentList, setTalentList] = useState([]);
   const [min, setMinAge] = useState("0");
   const [max, setMaxAge] = useState("100");
+  const [minimumAge, setMinimumAge] = useState("");
+  const [maximumAge, setMaximumAge] = useState("");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [countryList, setCountryList] = useState([]);
@@ -62,6 +65,8 @@ const BrandTalents = () => {
   const [fullName, setFullName] = useState("");
   const [featuresListSelect, selectFeaturesList] = useState([]);
   const [featuresList, setFeaturesList] = useState([]);
+  const [height, setHeight] = useState("");
+
   const [features, setFeature] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [kidsCity, setKidsCity] = useState("");
@@ -160,7 +165,6 @@ const BrandTalents = () => {
     setCountry(null);
     setState("");
     setEthnicity("");
-    setTalentList([]);
     setMinAge("0");
     setMaxAge("100");
     setLanguages("");
@@ -335,6 +339,8 @@ const BrandTalents = () => {
   const onRangeChange = (e) => {
     setMinAge(Math.round(e.min));
     setMaxAge(Math.round(e.max));
+    setMinimumAge(Math.round(e.min));
+    setMaximumAge(Math.round(e.max));
   };
 
   const handleSelectedCountry = (event) => {
@@ -401,7 +407,7 @@ const BrandTalents = () => {
 
   const search = async () => {
     const formData = {
-      profession: profession,
+      profession: profession ? profession : [],
       parentCountry: country,
       parentCountry: country,
       parentState: state,
@@ -410,15 +416,16 @@ const BrandTalents = () => {
       childEthnicity: ethnicity,
       languages: languages,
       childNationality: nationality,
-      preferredChildFirstname: fullName,
-      preferredChildLastName: fullName,
-      minAge: min,
-      maxAge: max,
-      industry: industry,
+      // preferredChildFirstname: fullName,
+      // preferredChildLastName: fullName,
+      minAge: minimumAge,
+      maxAge: maximumAge,
       keyword: searchKeyword,
-      selectedTerms: selectedKeyword,
       features: features,
       childEthnicity: ethnicity,
+      socialmedia: socialMedias,
+      name: fullName,
+      height: height,
     };
 
     setIsLoading(true);
@@ -453,14 +460,9 @@ const BrandTalents = () => {
     getFeatures();
     selectFeaturesList([
       {
-        label: "Height",
+        label: "Build",
         type: "select",
-        options: ["168.2 cm", "176.6 cm"],
-      },
-      {
-        label: "BodyType",
-        type: "select",
-        options: ["small", "fat"],
+        options: ["Slim", "Average", "Athletic", "Curvy", "Plus Size", "Other"],
       },
     ]);
   }, []);
@@ -537,6 +539,10 @@ const BrandTalents = () => {
     const selectedLanguages = selectedOptions.map((option) => option.value);
 
     setSocialMedias(selectedLanguages);
+  };
+
+  const handleProfessionChange = (selectedOptions) => {
+    setProfession(selectedOptions);
   };
 
   return (
@@ -640,7 +646,7 @@ const BrandTalents = () => {
                         <div className="profession-creator-wrapper">
                           <div className="filter-items">Profession</div>
                           <div className="profession-wrapper talents-profession inpWid">
-                            <Select
+                            {/* <Select
                               isMulti
                               name="colors"
                               options={professionList}
@@ -648,6 +654,17 @@ const BrandTalents = () => {
                               className="basic-multi-select"
                               classNamePrefix="select"
                               onChange={(value) => setProfession(value?.value)}
+                              styles={customStylesProfession}
+                            /> */}
+                            <Select
+                              defaultValue={[]}
+                              isMulti
+                              name="professions"
+                              options={professionList}
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              placeholder="Search for Profession / Skills"
+                              onChange={handleProfessionChange}
                               styles={customStylesProfession}
                             />
                           </div>
@@ -888,6 +905,20 @@ const BrandTalents = () => {
                             })}
                           </>
                         )}
+
+                        <div className="keyword-wrapper pt-4">
+                          <div className="filter-items">Height</div>
+                          <div className="filter-input-wrapper inpWid">
+                            <input
+                              className="keyword-input"
+                              placeholder="Search Keyword"
+                              value={height}
+                              onChange={(e) => {
+                                setHeight(e.target.value);
+                              }}
+                            ></input>
+                          </div>
+                        </div>
 
                         <div className="submit-buttons">
                           <div

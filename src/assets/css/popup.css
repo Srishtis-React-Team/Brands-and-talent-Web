@@ -13,7 +13,7 @@
 .popupcontainermain {
   width: 500px;
   max-width: 92%;
-  height: 12rem;
+  min-height: 12rem;
   min-height: 12rem;
   border-radius: 10px;
   background-color: #fff;
@@ -43,7 +43,7 @@
   align-items: center;
   text-align: center;
   padding: 25px 0;
-  font-size: 27px;
+  font-size: 18px;
   color: #c2114b;
 }
 .popupcontainermain .message p {
@@ -159,5 +159,10 @@
   }
   .popuchooseTemples .containerBox {
     flex-direction: column;
+  }
+  .popupcontainermain {
+    width: 90%; /* Adjust the width for mobile */
+    height: 10rem; /* Adjust the height for mobile */
+    min-height: 10rem; /* Adjust min-height for mobile */
   }
 }

@@ -827,7 +827,7 @@ const BrandDetails = () => {
           </div>
         </div>
         <div className="dialog-footer">
-          <button
+          {/* <button
             type="button"
             onClick={(e) => {
               goBack();
@@ -835,7 +835,7 @@ const BrandDetails = () => {
             className="step-back"
           >
             Back
-          </button>
+          </button> */}
           <button
             type="button"
             className="step-continue"

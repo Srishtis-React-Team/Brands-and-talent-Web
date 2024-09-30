@@ -32,6 +32,7 @@ import SwiperSlider from "./SwiperSlider.js";
 const TalentProfile = () => {
   const { currentUserType, avatarImage } = CurrentUser();
   const navigate = useNavigate();
+  const log_Logo = require("../assets/images/LOGO.png");
   const pinkStar = require("../assets/icons/pink-star.png");
   const instaLogo = require("../assets/icons/social-media-icons/instagram.png");
   const userFill = require("../assets/icons/userFill.png");
@@ -130,9 +131,9 @@ const TalentProfile = () => {
   //   }
   // };
 
-  if (!talentData && !userId) {
-    navigate("/login");
-  }
+  // if (!talentData && !userId) {
+  //   navigate("/login");
+  // }
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -367,12 +368,15 @@ const TalentProfile = () => {
 
   const handleOpenModal = () => {
     if (currentUserType == "brand" && talentData?.planName === "Basic") {
-      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setMessage(
+        "The user is ineligible to receive an invitation for the job opening."
+      );
+      inviteTalentNotification();
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 3000);
+        // navigate(`/pricing`);
+      }, 2000);
     } else {
       if (currentUserType == "talent") {
         setMessage("Please log in as a Brand/Client and post a job first");
@@ -401,6 +405,22 @@ const TalentProfile = () => {
   useEffect(() => {
     console.log(talentData, "talentData");
   }, [talentData]);
+
+  const inviteTalentNotification = async () => {
+    const formData = {
+      talentId: talentData?._id,
+    };
+    setIsLoading(true);
+    await ApiHelper.post(`${API.inviteTalentNotification}`, formData)
+      .then((resData) => {
+        if (resData) {
+          // if (resData?.data?.status === true) {
+          // } else {
+          // }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const inviteToApply = async () => {
     const formData = {
@@ -600,35 +620,49 @@ const TalentProfile = () => {
   };
 
   useEffect(() => {
+    console.log(featuresList, "featuresList");
+  }, [featuresList]);
+
+  useEffect(() => {
     console.log(brandData, "brandData");
   }, [brandData]);
+  useEffect(() => {
+    console.log(currentUser_type, "currentUser_type");
+  }, [currentUser_type]);
+  useEffect(() => {
+    console.log(userId, "userId");
+  }, [userId]);
 
   return (
     <>
-      {(userId || brandId) && (
+      {userId && (
         <>
           {currentUser_type == "brand" && (
             <BrandHeader
               hideToggleButton={hideToglle}
               toggleMenu={toggleMenu}
+              from={"message"}
             />
           )}
+
           {currentUser_type == "talent" && (
             <TalentHeader
               hideToggleButton={hideToglle}
               toggleMenu={toggleMenu}
+              from={"message"}
             />
           )}
-          <section>
+
+          {/* <section>
             <div className="popular-header">
               <div className="header-title">Profile</div>
             </div>
-          </section>
+          </section> */}
           <section>
             <div className="container">
               <div className="talent-profile-main">
                 <div className="row">
-                  <div className="col-md-4 col-lg-3 pr-0">
+                  <div className="col-md-4 col-lg-3 pr-0 mb-0">
                     <div className="talent-wrapper">
                       <div className="talent-backdrop">
                         <div className="profImg">
@@ -654,7 +688,11 @@ const TalentProfile = () => {
                               <span>
                                 <i className="bi bi-star-fill"></i>
                               </span>
-                              {talentData?.planName}
+                              {talentData?.planName === "Pro (Popular)"
+                                ? "Pro"
+                                : talentData?.planName === "Premium"
+                                ? "Premium"
+                                : talentData?.planName}
                             </div>
                           </>
                         )}
@@ -1268,14 +1306,14 @@ const TalentProfile = () => {
                                   {item?.perHourSalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perHourSalary} per hour{" "}
+                                        ${item?.perHourSalary} per hour{" "}
                                       </div>
                                     </>
                                   )}
                                   {item?.perDaySalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perDaySalary} per day
+                                        ${item?.perDaySalary} per day
                                       </div>
                                     </>
                                   )}
@@ -1283,21 +1321,21 @@ const TalentProfile = () => {
                                   {item?.perMonthSalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perMonthSalary} per month
+                                        ${item?.perMonthSalary} per month
                                       </div>
                                     </>
                                   )}
                                   {item?.perPostSalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perPostSalary} per post
+                                        ${item?.perPostSalary} per post
                                       </div>
                                     </>
                                   )}
                                   {item?.perImageSalary && (
                                     <>
                                       <div className="talent-profession-value">
-                                        $ {item?.perImageSalary} per image
+                                        ${item?.perImageSalary} per image
                                       </div>
                                     </>
                                   )}
@@ -1535,7 +1573,10 @@ const TalentProfile = () => {
                               <div className="service-list-main videoSect w-100">
                                 <div className="row w-100 padSpace">
                                   {urlsList?.map((url, index) => (
-                                    <div key={index} className="col-md-6 mb-3 padSpace">
+                                    <div
+                                      key={index}
+                                      className="col-md-6 mb-3 padSpace"
+                                    >
                                       <div className="media-item">
                                         {isYouTubeUrl(url) ? (
                                           <iframe
@@ -1545,7 +1586,6 @@ const TalentProfile = () => {
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             className="video-frame w-100"
-                                            
                                           ></iframe>
                                         ) : isVimeoUrl(url) ? (
                                           <iframe
@@ -1555,14 +1595,12 @@ const TalentProfile = () => {
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             className="video-frame w-100"
-                                        
                                           ></iframe>
                                         ) : isVideoUrl(url) ? (
                                           <video
                                             controls
                                             src={url}
                                             className="video-frame w-100"
-                                            
                                           >
                                             Your browser does not support the
                                             video tag.
@@ -1627,26 +1665,27 @@ const TalentProfile = () => {
                                         return (
                                           <>
                                             <>
-                                            <div className="col-md-4 padSpace">
-                                              <div
-                                                className="cv-card "
-                                                key={url}
-                                              >
-                                                <div className="d-flex align-items-center">
-                                                  <i className="fa-solid fa-file"></i>
-                                                  <div className="fileName audio-url-style ">
-                                                    {url}
-                                                  </div>
-                                                </div>
-                                                <button
-                                                  className="view-cv"
-                                                  onClick={() =>
-                                                    window.open(url)
-                                                  }
+                                              <div className="col-md-4 padSpace">
+                                                <div
+                                                  className="cv-card "
+                                                  key={url}
                                                 >
-                                                  Play
-                                                </button>
-                                              </div> </div>
+                                                  <div className="d-flex align-items-center">
+                                                    <i className="fa-solid fa-file"></i>
+                                                    <div className="fileName audio-url-style ">
+                                                      {url}
+                                                    </div>
+                                                  </div>
+                                                  <button
+                                                    className="view-cv"
+                                                    onClick={() =>
+                                                      window.open(url)
+                                                    }
+                                                  >
+                                                    Play
+                                                  </button>
+                                                </div>{" "}
+                                              </div>
                                             </>
                                           </>
                                         );
@@ -1752,32 +1791,32 @@ const TalentProfile = () => {
                                     </div>
                                   </>
                                 )}
-                              </div> 
+                              </div>
                               <div className="cvAdjust padSpace">
-                                <div className="cvlist-wrapper row">
+                                <div className="cvlist-wrapper row p-0">
                                   {cvList.map((pdf) => {
                                     return (
                                       <>
                                         <>
-                                        <div className="col-md-4 col-lg-3 padSpace">
+                                          <div className="col-md-4 padSpace">
                                             <div
                                               className="cv-card"
                                               key={pdf.title}
                                             >
-                                                <div className="d-flex align-items-center">
-                                                  <i className="fa-solid fa-file"></i>
-                                                  <div className="fileName">
-                                                    {pdf.title}
-                                                  </div>
+                                              <div className="d-flex align-items-center">
+                                                <i className="fa-solid fa-file"></i>
+                                                <div className="fileName">
+                                                  {pdf.title}
                                                 </div>
-                                                <button
-                                                  className="view-cv"
-                                                  onClick={() => handleView(pdf)}
-                                                >
-                                                  View
-                                                </button>
+                                              </div>
+                                              <button
+                                                className="view-cv"
+                                                onClick={() => handleView(pdf)}
+                                              >
+                                                View
+                                              </button>
                                             </div>
-                                        </div>
+                                          </div>
                                         </>
                                       </>
                                     );
@@ -2011,53 +2050,22 @@ const TalentProfile = () => {
                           {features && (
                             <>
                               {featuresList.length > 0 && (
-                                <>
-                                  <div className="table-container">
-                                    <table>
-                                      <tbody>
-                                        <tr>
-                                          <td className="left-column">
-                                            <table>
-                                              <tbody>
-                                                {featuresList
-                                                  ?.slice(
-                                                    0,
-                                                    Math.ceil(
-                                                      featuresList?.length / 2
-                                                    )
-                                                  )
-                                                  .map((feature, index) => (
-                                                    <tr key={feature.label}>
-                                                      <td>{feature.label}</td>
-                                                      <td>{feature.value}</td>
-                                                    </tr>
-                                                  ))}
-                                              </tbody>
-                                            </table>
-                                          </td>
-                                          <td className="right-column">
-                                            <table>
-                                              <tbody>
-                                                {featuresList
-                                                  ?.slice(
-                                                    Math.ceil(
-                                                      featuresList?.length / 2
-                                                    )
-                                                  )
-                                                  .map((feature, index) => (
-                                                    <tr key={feature.label}>
-                                                      <td>{feature.label}</td>
-                                                      <td>{feature.value}</td>
-                                                    </tr>
-                                                  ))}
-                                              </tbody>
-                                            </table>
+                                <div className="table-container">
+                                  <table>
+                                    <tbody>
+                                      {featuresList.map((feature) => (
+                                        <tr key={feature.label}>
+                                          <td>{feature.label}</td>
+                                          <td>
+                                            {feature.value
+                                              ? feature.value
+                                              : "No value added"}
                                           </td>
                                         </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
                               )}
 
                               {featuresList.length === 0 && (
@@ -2387,24 +2395,50 @@ const TalentProfile = () => {
           </div>
         </>
       )}
-
-      {(currentUser_type == "talent" && !userId) ||
-        (currentUser_type == "brand" && !brandId && (
+      {/* {currentUser_type == "brand" &&
+        userId &&
+        talentData?.adminApproved == false && (
           <>
-            {/* <div className="warning-wrapper">
-            <p className="warning-msg">Please login to continue</p>
-            <button
-              onClick={() => {
-                navigate("/login");
-              }}
-              className="warning-btn "
-            >
-              Login
-            </button>
-          </div> */}
-            <Login />
+            <div className="warning-wrapper">
+              <p className="warning-msg">
+                This talent is not approved by admin
+              </p>
+              <button
+                onClick={() => {
+                  navigate(
+                    `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
+                  );
+                }}
+                className="warning-btn "
+              >
+                Back
+              </button>
+            </div>
           </>
-        ))}
+        )} */}
+
+      {!userId && (
+        <>
+          <div className="spacHeight-log">
+            <div className="warning-wrapper newBoxLog">
+              <div className="logoImg">
+                {" "}
+                <img src={log_Logo} alt="img" className="logNew-img" />
+              </div>
+              <p className="warning-msg">Please login to continue</p>
+              <button
+                onClick={() => {
+                  navigate("/login");
+                }}
+                className="warning-btn "
+              >
+                Login
+              </button>
+            </div>
+          </div>
+          {/* <Login /> */}
+        </>
+      )}
 
       {/* {userId == null && talentData?.adminApproved == false && (
         <>

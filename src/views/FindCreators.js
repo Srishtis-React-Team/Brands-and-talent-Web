@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "../assets/css/findcreators.css";
+import "../assets/css/talent-profile.css";
+import "../assets/css/talent-dashboard.css";
+
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 import Select from "react-select";
@@ -11,6 +13,7 @@ import PopUp from "../components/PopUp.js";
 import CurrentUser from "../CurrentUser.js";
 import SocialMediasList from "../components/SocialMediasList.js";
 import useFieldDatas from "../config/useFieldDatas.js";
+import { Maximize } from "@mui/icons-material";
 
 const FindCreators = () => {
   const {
@@ -48,6 +51,9 @@ const FindCreators = () => {
   const [talentList, setTalentList] = useState([]);
   const [min, setMinAge] = useState("0");
   const [max, setMaxAge] = useState("100");
+  const [height, setHeight] = useState("");
+  const [minimumAge, setMinimumAge] = useState("");
+  const [maximumAge, setMaximumAge] = useState("");
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
@@ -144,6 +150,9 @@ const FindCreators = () => {
     checkUserStatus();
   }, []);
   useEffect(() => {}, [keywordsList]);
+  useEffect(() => {
+    console.log(profession, "profession");
+  }, [profession]);
 
   const checkUserStatus = async () => {
     const formData = {
@@ -174,7 +183,6 @@ const FindCreators = () => {
     setCountry(null);
     setState("");
     setEthnicity("");
-    setTalentList([]);
     setMinAge("0");
     setMaxAge("100");
     setLanguages([]);
@@ -393,6 +401,8 @@ const FindCreators = () => {
   const onRangeChange = (e) => {
     setMinAge(Math.round(e.min));
     setMaxAge(Math.round(e.max));
+    setMinimumAge(Math.round(e.min));
+    setMaximumAge(Math.round(e.max));
   };
 
   const handleSelectedCountry = (event) => {
@@ -488,25 +498,25 @@ const FindCreators = () => {
 
   const search = async () => {
     const formData = {
-      profession: profession,
+      profession: profession ? profession : [],
       parentCountry: country,
       parentState: state,
       childCity: kidsCity,
-      platforms: socialMedias,
       minFollowers: minFollowers,
       maxFollowers: maxFollowers,
       childGender: gender,
-      minAge: min,
-      maxAge: max,
+      minAge: minimumAge,
+      maxAge: maximumAge,
       childEthnicity: ethnicity,
-      childNationality: nationality,
-      languages: languages,
-      preferredChildFirstname: fullName,
-      preferredChildLastName: fullName,
-      industry: categories,
+      childNationality: nationality ? nationality : [],
+      languages: languages ? languages : [],
+      // preferredChildFirstname: fullName,
+      // preferredChildLastName: fullName,
       keyword: searchKeyword,
-      selectedTerms: selectedKeyword,
-      features: features,
+      features: features ? features : [],
+      socialmedia: socialMedias,
+      name: fullName,
+      height: height,
     };
 
     setIsLoading(true);
@@ -544,21 +554,7 @@ const FindCreators = () => {
       {
         label: "Build",
         type: "select",
-        options: [
-          "Build",
-          "Slim",
-          "Average",
-          "Athletic",
-          "Curvy",
-          "Plus Size",
-          "Other",
-        ],
-      },
-
-      {
-        label: "Height",
-        type: "select",
-        options: ["168.2 cm", "176.6 cm"],
+        options: ["Slim", "Average", "Athletic", "Curvy", "Plus Size", "Other"],
       },
     ]);
   }, []);
@@ -616,6 +612,10 @@ const FindCreators = () => {
       });
     });
   });
+
+  const handleProfessionChange = (selectedOptions) => {
+    setProfession(selectedOptions);
+  };
 
   return (
     <>
@@ -711,7 +711,7 @@ const FindCreators = () => {
                   <div className="profession-creator-wrapper">
                     <div className="filter-items">Profession</div>
                     <div className="profession-wrapper talents-profession inpWid">
-                      <Select
+                      {/* <Select
                         isMulti
                         name="colors"
                         options={professionList}
@@ -719,6 +719,18 @@ const FindCreators = () => {
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={(value) => setProfession(value?.value)}
+                        styles={customStylesProfession}
+                      /> */}
+
+                      <Select
+                        defaultValue={[]}
+                        isMulti
+                        name="professions"
+                        options={professionList}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        placeholder="Search for Profession / Skills"
+                        onChange={handleProfessionChange}
                         styles={customStylesProfession}
                       />
                     </div>
@@ -946,6 +958,20 @@ const FindCreators = () => {
                       })}
                     </>
                   )}
+
+                  <div className="keyword-wrapper pt-4">
+                    <div className="filter-items">Height</div>
+                    <div className="filter-input-wrapper inpWid">
+                      <input
+                        className="keyword-input"
+                        placeholder="Search Keyword"
+                        value={height}
+                        onChange={(e) => {
+                          setHeight(e.target.value);
+                        }}
+                      ></input>
+                    </div>
+                  </div>
 
                   <div className="submit-buttons">
                     <div

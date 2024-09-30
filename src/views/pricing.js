@@ -8,7 +8,7 @@ import "../assets/css/register.css";
 import Header from "../layout/header.js";
 import Footer from "../layout/Footer.js";
 import { useLocation } from "react-router-dom";
-
+import CurrentUser from "../CurrentUser.js";
 import MuiPhoneNumber from "material-ui-phone-number";
 import {
   parsePhoneNumber,
@@ -42,6 +42,8 @@ const Pricing = ({
   setIsPaymentClicked,
   userType,
 }) => {
+  const { currentUserId, currentUserImage, currentUserType, avatarImage } =
+    CurrentUser();
   console.log(from, "from");
   console.log(userType, "userType");
   const theme = useTheme();
@@ -74,7 +76,17 @@ const Pricing = ({
   console.log(queryString, "queryString");
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (currentUserType == "talent") {
+      if (talentData?.planName != "Basic") {
+        setOpen(true);
+      } else {
+        setMessage("Please upgrade to pro plan to send gift subscription");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+        }, 1000);
+      }
+    }
   };
 
   const handleClose = () => {
@@ -140,7 +152,7 @@ const Pricing = ({
   const [mobileNumberError, setMobileNumberError] = useState("");
   const [giftSub, setGiftSub] = useState(false);
   const [pathFrom, setPathFrom] = useState("");
-  const [appliedCouponCode, setAppliedCouponCode] = useState('')
+  const [appliedCouponCode, setAppliedCouponCode] = useState("");
 
   const handleMobileChange = (value) => {
     console.log(value, "handleMobileChange");
@@ -460,13 +472,13 @@ const Pricing = ({
       });
       setResponseUrl(response.data.url);
       localStorage.setItem("paymenttrans_id", response.data.trans_id);
-      console.log("selectedPaymentPlan---",selectedPaymentPlan)
+      console.log("selectedPaymentPlan---", selectedPaymentPlan);
       let planType;
-      if(selectedPaymentPlan == "Pro (Popular)"){
+      if (selectedPaymentPlan == "Pro (Popular)") {
         planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
-        console.log('trimed value',planType); // Output: "Pro"
+        console.log("trimed value", planType); // Output: "Pro"
       }
-      console.log('middle',plan)
+      console.log("middle", plan);
       if (plan == "giftsubscription") {
         const giftObj = {
           senderName: senderName,
@@ -477,28 +489,28 @@ const Pricing = ({
               receiverEmail: recieverEmail,
               message: enquiry,
               subscriptionPlan: selectedPaymentPeriod,
-              planName: planType?planType:selectedPaymentPlan,
+              planName: planType ? planType : selectedPaymentPlan,
               transId: response.data.trans_id,
               paymentStatus: "Pending",
             },
           ],
           isActive: true,
         };
-        console.log('giftObj--0',giftObj)
+        console.log("giftObj--0", giftObj);
         // giftSubCreation
         const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
         console.log("resGiftSub", resGiftSub);
       } else {
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
-          planName: planType?planType:selectedPaymentPlan,
+          planName: planType ? planType : selectedPaymentPlan,
           user_id: userId,
-          brand_id:brandId,
+          brand_id: brandId,
           transId: response.data.trans_id,
           paymentStatus: "Pending",
-          coupon:appliedCouponCode?appliedCouponCode:'',
+          coupon: appliedCouponCode ? appliedCouponCode : "",
         };
-        console.log('userData--0',userData);
+        console.log("userData--0", userData);
         const responseSubscription = await ApiHelper.post(
           API.subscriptionPlan,
           userData
@@ -819,6 +831,51 @@ const Pricing = ({
         setIsLoading(false);
       });
   };
+  const [talentData, setTalentData] = useState();
+  const [brandData, setBrandData] = useState();
+
+  useEffect(() => {
+    console.log(currentUserId, "currentUserId");
+    console.log(currentUserType, "currentUserType");
+    if (currentUserId) {
+      if (currentUserType == "talent") {
+        getTalentById();
+      } else if (currentUserType == "brand") {
+        getBrand();
+      }
+    }
+  }, [currentUserId, currentUserType]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${currentUserId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setBrandData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    console.log(talentData, "talentData");
+  }, [talentData]);
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
 
   return (
     <>
@@ -1378,7 +1435,7 @@ const Pricing = ({
                     setSelectedPaymentOption={setSelectedPaymentOption}
                     setPaymentOption={setPaymentOption}
                     selectedPaymentPlan={selectedPaymentPlan}
-                    selectedPaymentPeriod = {selectedPaymentPeriod}
+                    selectedPaymentPeriod={selectedPaymentPeriod}
                   />
                 </div>
               </>
@@ -1409,7 +1466,7 @@ const Pricing = ({
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
           setAppliedCouponCode={setAppliedCouponCode}
-          selectedPaymentPeriod = {selectedPaymentPeriod}
+          selectedPaymentPeriod={selectedPaymentPeriod}
         />
       )}
 
