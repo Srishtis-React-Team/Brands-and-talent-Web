@@ -442,3 +442,7 @@
     margin: 0 5px;
   }
 }
+
+.age-inputs {
+  width: 100% !important;
+}

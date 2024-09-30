@@ -388,15 +388,11 @@ const Footer = (props) => {
                 {/* <li>
                   <Link onClick={handleAirtableClick}>Register as Talent</Link>
                 </li> */}
-                <li>
-                  <Link onClick={() => handleNavigationClick()}>
-                    Hire Talent
-                  </Link>
+                <li onClick={() => handleNavigationClick()}>
+                  <Link>Hire Talent</Link>
                 </li>
-                <li>
-                  <Link to="/" onClick={() => openModal()}>
-                    Register as Talent
-                  </Link>
+                <li onClick={() => openModal()}>
+                  <Link>Register as Talent</Link>
                 </li>
 
                 {!currentUserId && (

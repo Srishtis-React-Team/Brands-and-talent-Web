@@ -159,7 +159,6 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       console.log("inside function");
-
       if (menuItem === "profile") {
         console.log("inside profile");
         console.log("brandData?.publicUrl", brandData?.publicUrl);
@@ -194,6 +193,19 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
   };
 
   const conditionalNavigate = () => {};
+
+  const handleNavigationClick = () => {
+    if (brandData?.planName == "Basic") {
+      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate("/pricing");
+      }, 3000);
+    } else {
+      navigate("/find-talents");
+    }
+  };
 
   return (
     <>
@@ -274,15 +286,12 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
                       </div>
                     </div>
 
-                    {/* <div
+                    <div
                       className="navTxt"
-                      onClick={window.open(
-                        "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-                        "_blank"
-                      )}
+                      onClick={() => handleNavigationClick()}
                     >
                       <NavLink>Find Talent</NavLink>
-                    </div> */}
+                    </div>
                     <div className="navTxt">
                       <NavLink to="/how-it-works">How it works</NavLink>
                     </div>

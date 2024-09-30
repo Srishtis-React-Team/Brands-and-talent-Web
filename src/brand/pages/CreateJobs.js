@@ -1557,13 +1557,33 @@ const CreateJobs = () => {
   useEffect(() => {}, [lastdateApply]);
   useEffect(() => {}, [category]);
 
-  const onMinChange = (event) => {
-    setMinAge(event.target.value); // Update the state with the new value
-    setMinAgeError(FlashOnTwoTone);
+  useEffect(() => {
+    if (minAge && maxAge && parseInt(minAge) > parseInt(maxAge)) {
+      setMinAgeError("Minimum age cannot be greater than maximum age.");
+    } else {
+      setMinAgeError(""); // Clear error if valid
+    }
+
+    if (maxAge && minAge && parseInt(maxAge) < parseInt(minAge)) {
+      setMaxAgeError("Maximum age cannot be less than minimum age.");
+    } else {
+      setMaxAgeError(""); // Clear error if valid
+    }
+  }, [minAge, maxAge]);
+
+  const onMinChange = (e) => {
+    const value = e.target.value;
+    // Allow only positive numbers or empty string (in case the user is deleting the input)
+    if (/^\d*$/.test(value)) {
+      setMinAge(value);
+    }
   };
-  const onMaxChange = (event) => {
-    setMaxAge(event.target.value); // Update the state with the new value
-    setMaxAgeError(false);
+  const onMaxChange = (e) => {
+    const value = e.target.value;
+    // Allow only positive numbers or empty string
+    if (/^\d*$/.test(value)) {
+      setMaxAge(value);
+    }
   };
   const onLinkedInMinChange = (event) => {
     setLinkedInMin(event.target.value); // Update the state with the new value
@@ -2196,42 +2216,57 @@ const CreateJobs = () => {
                         <div className="kids-form-section col-md-6 mb-3">
                           <div className="">
                             <label className="form-label">Age Range</label>
-                            <div className="creators-filter-select creator-age-wrapper splitterDiv">
-                              <input
-                                type="number"
-                                className="form-control "
-                                value={minAge}
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  // Check if the value is a valid number and is non-negative
-                                  if (
-                                    /^\d*\.?\d*$/.test(value) &&
-                                    (value >= 0 || value === "")
-                                  ) {
-                                    onMinChange(e);
-                                  }
-                                }}
-                                placeholder="Minimum Age"
-                                min="0"
-                              ></input>
+                            <div className="creators-filter-select creator-age-wrapper">
+                              <div className="age-inputs ">
+                                {" "}
+                                <input
+                                  type="number"
+                                  className="form-control "
+                                  value={minAge}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onMinChange(e);
+                                    }
+                                  }}
+                                  placeholder="Minimum Age"
+                                  min="0"
+                                ></input>
+                                {minAgeError && (
+                                  <div className="invalid-fields">
+                                    {minAgeError}
+                                  </div>
+                                )}{" "}
+                              </div>
 
-                              <input
-                                type="number"
-                                className="form-control "
-                                value={maxAge}
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  // Check if the value is a valid number and is non-negative
-                                  if (
-                                    /^\d*\.?\d*$/.test(value) &&
-                                    (value >= 0 || value === "")
-                                  ) {
-                                    onMaxChange(e);
-                                  }
-                                }}
-                                placeholder="Maximum Age"
-                                min="0"
-                              ></input>
+                              <div className="age-inputs ">
+                                <input
+                                  type="number"
+                                  className="form-control  "
+                                  value={maxAge}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Check if the value is a valid number and is non-negative
+                                    if (
+                                      /^\d*\.?\d*$/.test(value) &&
+                                      (value >= 0 || value === "")
+                                    ) {
+                                      onMaxChange(e);
+                                    }
+                                  }}
+                                  placeholder="Maximum Age"
+                                  min="0"
+                                ></input>
+                                {maxAgeError && (
+                                  <div className="invalid-fields">
+                                    {maxAgeError}
+                                  </div>
+                                )}{" "}
+                              </div>
                             </div>
                             {/* <label className="form-label">
                               Age <span className="mandatory">*</span>
