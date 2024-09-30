@@ -229,52 +229,45 @@ const PreviewJob = ({ data, onButtonClick }) => {
               <div className="company-location">
                 <span className="font-600">Compensation :&nbsp; </span>
                 {/* {jobData?.paymentType?.label} */}
-                {jobData.compensation && (
-                  <>
-                    <span className="job-feature-values">
-                      {jobData.compensation &&
-                        Object.entries(jobData.compensation).map(
-                          ([key, value]) => (
-                            <span key={key}>
-                              <span>{value.currency}</span>&nbsp;
-                              {value?.minPay && (
-                                <>
-                                  <span>{value.minPay}/day</span> &nbsp;
-                                </>
-                              )}
-                              {value?.exactPay && (
-                                <>
-                                  <span>{value.exactPay}</span> &nbsp;
-                                </>
-                              )}
-                              {value.product_name && (
-                                <>
-                                  + <span>{value.product_name}</span>
-                                  &nbsp;
-                                </>
-                              )}
-                              {value.product_name && value?.productValue && (
-                                <>
-                                  <span>
-                                    ( valued at {value?.productValue} )
-                                  </span>
-                                </>
-                              )}
-                              {/* <p>
-                                      <strong>{key}</strong>
-                                    </p>
-                                    <p>Type: {value.type}</p>
-                                    <p>Product Name: {value.product_name}</p>
-                                    <p>Min Pay: {value.minPay}</p>
-                                    <p>Max Pay: {value.maxPay}</p>
-                                    <p>Currency: {value.currency}</p>
-                                    <p>Frequency: {value.frequency}</p> */}
-                            </span>
-                          )
-                        )}
+                {jobData.compensation &&
+                  Object.entries(jobData.compensation).map(([key, value]) => (
+                    <span key={key}>
+                      <span>{value.currency}</span>&nbsp;
+                      {value?.minPay && (
+                        <>
+                          <span>{value.minPay}/day</span>
+                          {!value?.maxPay && <>+</>}
+                          &nbsp;
+                        </>
+                      )}
+                      {value?.maxPay && (
+                        <>
+                          <span>to</span>&nbsp;
+                        </>
+                      )}
+                      {value?.maxPay && (
+                        <>
+                          <span>{value.maxPay}/day</span>+&nbsp;
+                        </>
+                      )}
+                      {value?.exactPay && (
+                        <>
+                          <span>{value.exactPay}</span>+&nbsp;
+                        </>
+                      )}
+                      {value.product_name && (
+                        <>
+                          <span>{value.product_name}</span>
+                          &nbsp;
+                        </>
+                      )}
+                      {value.product_name && value?.productValue && (
+                        <>
+                          <span>( valued at {value?.productValue} )</span>
+                        </>
+                      )}
                     </span>
-                  </>
-                )}
+                  ))}
               </div>
 
               {/* <div className="company-location">

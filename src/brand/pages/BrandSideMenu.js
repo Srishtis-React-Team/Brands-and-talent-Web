@@ -123,6 +123,19 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     };
   }, []);
 
+  const handleNavigationClick = () => {
+    if (brandData?.planName == "Basic") {
+      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate("/pricing");
+      }, 3000);
+    } else {
+      navigate("/find-talents");
+    }
+  };
+
   const handleNavigation = () => {
     navigate("/edit-brand-profile");
   };
@@ -256,13 +269,15 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           </Link>
 
           <Link
-            to="/find-talents"
             className={
               location.pathname === "/find-talents"
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
-            onClick={fetchUser}
+            onClick={() => {
+              handleNavigationClick();
+              fetchUser();
+            }}
           >
             <i className="bi bi-send icons"></i>
             <div className="brand-menu-text">Invite To Apply</div>

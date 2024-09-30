@@ -606,6 +606,7 @@
 .profile-image-edit-section {
   margin: 20px;
   width: 300px;
+  max-width: 100%;
   position: relative;
 }
 .profile-image-edit-section .profile-image-edit {
@@ -1243,6 +1244,12 @@ textarea.contact-us-textarea.w-100 {
   .edit-profileimg-btn {
     width: 100%;
   }
+  .profile-image-edit-section {
+    margin: 20px 0;
+    padding: 0;
+    width: 100%;
+  }
+
 }
 
 .social-chain-icon {

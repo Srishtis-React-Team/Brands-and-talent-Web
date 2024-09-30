@@ -136,7 +136,9 @@ const TalentProfile = () => {
   // }
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
+    const storedUserId =
+      localStorage.getItem("userId") || localStorage.getItem("currentUser");
+
     setVideoAudioUrls([
       "https://youtu.be/zO85jBI7Jxs?si=JtdIwdSDPxjnDv9R",
       "https://vimeo.com/956864989",
@@ -377,6 +379,14 @@ const TalentProfile = () => {
         setOpenPopUp(false);
         // navigate(`/pricing`);
       }, 2000);
+    } else if (currentUserType == "brand" && brandData?.planName === "Basic") {
+      setMessage("Please upgrade to pro plan to use this feature");
+      inviteTalentNotification();
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate(`/pricing`);
+      }, 2000);
     } else {
       if (currentUserType == "talent") {
         setMessage("Please log in as a Brand/Client and post a job first");
@@ -395,11 +405,27 @@ const TalentProfile = () => {
     // );
   };
   const messageNow = () => {
-    navigate(`/message?${talentData?._id}`);
-    // window.open(
-    //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-    //   "_blank"
-    // );
+    if (currentUserType == "talent" && talentData?.planName != "Premium") {
+      setMessage("Please upgrade to premium plan to use this feature");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate(`/pricing`);
+      }, 3000);
+    } else {
+      navigate(`/message?${talentData?._id}`);
+    }
+    if (currentUserType == "brand" && brandData?.planName === "Basic") {
+      setMessage("Please upgrade to pro plan to use this feature");
+      inviteTalentNotification();
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate(`/pricing`);
+      }, 2000);
+    } else {
+      navigate(`/message?${talentData?._id}`);
+    }
   };
 
   useEffect(() => {
@@ -2053,16 +2079,14 @@ const TalentProfile = () => {
                                 <div className="table-container">
                                   <table>
                                     <tbody>
-                                      {featuresList.map((feature) => (
-                                        <tr key={feature.label}>
-                                          <td>{feature.label}</td>
-                                          <td>
-                                            {feature.value
-                                              ? feature.value
-                                              : "No value added"}
-                                          </td>
-                                        </tr>
-                                      ))}
+                                      {featuresList
+                                        .filter((feature) => feature.value) // Only keep features that have a value
+                                        .map((feature) => (
+                                          <tr key={feature.label}>
+                                            <td>{feature.label}</td>
+                                            <td>{feature.value}</td>
+                                          </tr>
+                                        ))}
                                     </tbody>
                                   </table>
                                 </div>
