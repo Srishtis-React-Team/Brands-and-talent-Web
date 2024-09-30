@@ -68,14 +68,22 @@ const KidsServices = () => {
     };
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
+        console.log(resData.data.data, "SERVICE_AFTER_DATA");
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Updated successfully");
           setOpenPopUp(true);
+          // setTalentLocalStorage(resData.data.data);
           loginTemplate(resData?.data?.data?.email);
+
+          localStorage.setItem("userId", resData.data.data?.user_id);
+          localStorage.setItem("emailID", resData.data.data?.email);
+          localStorage.setItem("currentUser", resData.data.data?.user_id);
+          localStorage.setItem("currentUserType", "talent");
+
           setTimeout(function () {
             setOpenPopUp(false);
-            navigate(`/talent-home?${resData?.data?.data?.user?._id}`);
+            navigate(`/talent-home?${resData?.data?.data?.user_id}`);
           }, 1000);
         } else if (resData.data.status === false) {
           setIsLoading(false);
@@ -89,6 +97,20 @@ const KidsServices = () => {
       .catch((err) => {
         setIsLoading(false);
       });
+  };
+
+  const setTalentLocalStorage = (data) => {
+    localStorage.setItem("userId", data?.user?._id);
+    localStorage.setItem("emailID", data?.email);
+    localStorage.setItem("token", data?.token);
+    localStorage.setItem("currentUser", data?.user?._id);
+    localStorage.setItem("currentUserType", "talent");
+    localStorage.setItem("currentUserImage", data?.user?.image?.fileData);
+    localStorage.setItem(
+      "talentName",
+      `${data?.user?.preferredChildFirstname} ${data?.user?.preferredChildLastName}`
+    );
+    // setUserId(userId);
   };
 
   const loginTemplate = async (email) => {

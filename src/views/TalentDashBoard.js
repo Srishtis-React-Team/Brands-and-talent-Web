@@ -659,7 +659,7 @@ const TalentDashBoard = () => {
                       {filterState == true && (
                         <>
                           <div className="view-undo-jobs " onClick={undo}>
-                            <i class="bi bi-arrow-counterclockwise"></i>
+                            <i className="bi bi-arrow-counterclockwise"></i>
                           </div>
                         </>
                       )}
