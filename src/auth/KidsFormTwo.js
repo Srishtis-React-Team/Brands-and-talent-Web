@@ -302,7 +302,7 @@ const KidsFormTwo = () => {
       handlePayment(
         selectedAmount,
         selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
         "qr",
         'giftsubscription'
       );
@@ -310,7 +310,7 @@ const KidsFormTwo = () => {
       handlePayment(
         selectedAmount,
         selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
         "qr",
         'normal'
       );
@@ -321,7 +321,7 @@ const KidsFormTwo = () => {
       handlePayment(
         selectedAmount,
         selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
         "card",
         'giftsubscription'
       );
@@ -329,7 +329,7 @@ const KidsFormTwo = () => {
       handlePayment(
         selectedAmount,
         selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
         "card",
         'normal'
       );
@@ -382,7 +382,11 @@ const KidsFormTwo = () => {
   // };
   const choosePlan = async (index, item, from) => {
     console.log("item", item);
-    setPathFrom(from);
+    console.log('index',index)
+    if(index == 0){
+      editKids()
+    }else{
+      setPathFrom(from);
     console.log("selectedPlan", `annual-${selectedPlan}`);
     if (from == "giftsubscription") {
       setGiftSub(true);
@@ -423,15 +427,18 @@ const KidsFormTwo = () => {
       localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
       localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
       setPaymentOption(true);
+    } else {
+      console.error("Price string format is incorrect");
+    }
+    }
+    
 
       // const type = `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`
       // handlePayment(amount, currency, type)
       // /api/pricing/create-payment
       // /check-transaction
       // handlePayment(amount, currency)
-    } else {
-      console.error("Price string format is incorrect");
-    }
+   
 
   
 
