@@ -50,20 +50,12 @@ const BrandDetails = () => {
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    // Get the current URL
     const url = window.location.href;
-    // Create a new URLSearchParams object with the query string
     const params = new URLSearchParams(window.location.search);
-
-    // Extract userId and userEmail from the URL query string
     const userIdFromUrl = params.get("userId");
     const userEmailFromUrl = params.get("userEmail");
-
-    // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
-
-    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
   useEffect(() => {
@@ -75,7 +67,6 @@ const BrandDetails = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getBrand");
             setBrandName(resData?.data?.data?.brandName);
             setPhoneNumber(resData?.data?.data?.brandPhone);
             setZipCode(resData?.data?.data?.brandZipCode);
@@ -119,28 +110,6 @@ const BrandDetails = () => {
       countryName: country,
       stateName: state?.label,
     });
-  };
-
-  useEffect(() => {}, [state]);
-
-  const customStylesProfession = {
-    control: (provided, state) => ({
-      ...provided,
-      minHeight: "45px",
-    }),
-    menu: (provided, state) => ({
-      ...provided,
-      maxHeight: "500px",
-    }),
-    menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isSelected ? "#fff" : "#fff", // or any color you want for selected option
-      color: state.isSelected ? "#000" : "#333", // text color for selected and non-selected options
-      "&:hover": {
-        backgroundColor: "#e0e0e0", // hover state color
-      },
-    }),
   };
 
   const handleSelectedCity = (state) => {
@@ -249,10 +218,7 @@ const BrandDetails = () => {
       };
       await ApiHelper.post(`${API.editBrands}${userId}`, formData)
         .then((resData) => {
-          console.log(resData, "resData");
-          console.log(resData?.data?.data, "resData?.data?.data");
           if (resData.data.status === true) {
-            // alert("sdsd");
             setMessage("Registered Successfully!");
             setTalentLocalStorage(resData.data.data);
             setOpenPopUp(true);
@@ -302,7 +268,6 @@ const BrandDetails = () => {
   };
 
   const [brandNameLetterError, setBrandNameLetterError] = useState(false);
-
   const handleBrandName = (e) => {
     const value = e.target.value;
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
@@ -349,15 +314,15 @@ const BrandDetails = () => {
 
   const isValidSocialURL = (url) => {
     const pattern = new RegExp(
-      "^(https?:\\/\\/)?" + // protocol
-        "((([a-z0-9\\-]+)\\.)+[a-z]{2,}|localhost|" + // domain name
-        "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|" + // OR ip (v4) address
-        "\\[?[a-f0-9]*:[a-f0-9:%.]+\\]?)" + // OR ipv6
-        "(\\:\\d+)?(\\/[-a-z0-9%_.~+]*)*" + // port and path
-        "(\\?[;&a-z0-9%_.~+=-]*)?" + // query string
+      "^(https?:\\/\\/)?" +
+        "((([a-z0-9\\-]+)\\.)+[a-z]{2,}|localhost|" +
+        "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|" +
+        "\\[?[a-f0-9]*:[a-f0-9:%.]+\\]?)" +
+        "(\\:\\d+)?(\\/[-a-z0-9%_.~+]*)*" +
+        "(\\?[;&a-z0-9%_.~+=-]*)?" +
         "(\\#[-a-z0-9_]*)?$",
       "i"
-    ); // fragment locator
+    );
     return !!pattern.test(url);
   };
 
@@ -452,14 +417,11 @@ const BrandDetails = () => {
     setPhoneNumber(value);
     setPhoneNumberError(false);
     isValidPhoneNumber(value);
-    console.log(value, "isValidPhoneNumber");
     if (isValidPhoneNumber(value)) {
-      console.log(true, "isValidPhoneNumber");
       setMobileValidationError(false);
       setPhoneNumber(value);
     } else {
       setMobileValidationError(true);
-      console.log(false, "isValidPhoneNumber");
     }
   };
 

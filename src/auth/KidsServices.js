@@ -41,7 +41,6 @@ const KidsServices = () => {
   const [talentData, setTalentData] = useState();
 
   useEffect(() => {
-    console.log(userId, "userId");
     if (userId) {
       getTalentById();
     }
@@ -68,7 +67,6 @@ const KidsServices = () => {
     };
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
-        console.log(resData.data.data, "SERVICE_AFTER_DATA");
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Updated successfully");

@@ -30,10 +30,6 @@ const Investors = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(aboutusList, "aboutusList");
-  }, [aboutusList]);
-
   return (
     <>
       <Header />{" "}

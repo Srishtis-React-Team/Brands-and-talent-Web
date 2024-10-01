@@ -43,7 +43,6 @@ const AdultFormOne = () => {
 
   useEffect(() => {
     if (nationalitiesList.length > 0) {
-      console.log(nationalitiesList, "nationalitiesList");
       setListOfNationalities(nationalitiesList);
       getTalentById();
     }
@@ -51,24 +50,19 @@ const AdultFormOne = () => {
 
   useEffect(() => {
     if (languagesList.length > 0) {
-      console.log(languagesList, "languagesList");
       setListOfLanguages(languagesList);
       getTalentById();
     }
   }, [languagesList]);
 
   useEffect(() => {
-    console.log(listOfLanguages, "LANGUAGES_GET listOfLanguages");
     let selectedOptions;
     if (listOfLanguages && listOfLanguages.length > 0) {
       selectedOptions = languages.map((language) => {
         return listOfLanguages.find((option) => option.label === language);
       });
     }
-    console.log(
-      selectedOptions,
-      "LANGUAGES_GET listOfLanguages selectedOptions"
-    );
+
     setSelectedLanguageOptions(selectedOptions);
   }, [languagesList, languages]);
 
@@ -82,7 +76,6 @@ const AdultFormOne = () => {
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
 
   const getTalentById = async () => {
-    // alert("d");
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -103,7 +96,6 @@ const AdultFormOne = () => {
             setState(resData?.data?.data?.parentState);
             setKidsCity(resData?.data?.data?.childCity);
             setGender(resData?.data?.data?.childGender);
-            console.log(resData?.data?.data?.languages, "languages");
             setLanguages(resData?.data?.data?.languages);
 
             const selectedOptions = resData?.data?.data?.languages.map(
@@ -621,14 +613,11 @@ const AdultFormOne = () => {
     setAdultsPhone(value);
     setAdultsPhoneError(false);
     isValidPhoneNumber(value);
-    console.log(value, "isValidPhoneNumber");
     if (isValidPhoneNumber(value)) {
-      console.log(true, "isValidPhoneNumber");
       setMobileValidationError(false);
       setAdultsPhone(value);
     } else {
       setMobileValidationError(true);
-      console.log(false, "isValidPhoneNumber");
     }
   };
 

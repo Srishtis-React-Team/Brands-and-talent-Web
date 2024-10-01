@@ -61,8 +61,6 @@ const BrandLogo = () => {
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
-
-    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
   useEffect(() => {
@@ -74,7 +72,6 @@ const BrandLogo = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getBrand");
             setPortofolioFile(resData?.data?.data?.logo);
             setAboutYou(resData?.data?.data?.aboutBrand);
             setWhyWorkWithUs(resData?.data?.data?.whyWorkWithUs);
@@ -104,8 +101,6 @@ const BrandLogo = () => {
   }, [location.state]);
 
   const handleEditorChange = (value, index) => {
-    console.log(value, "value");
-    console.log(typeof value, "value");
     setAboutYou(value);
   };
   const handleWhyWorkEditorChange = (value, index) => {
@@ -208,7 +203,6 @@ const BrandLogo = () => {
             // navigate(
             //   `/brand-signup-plan-details?userId=${resData?.data?.data["brand_id"]}&userEmail=${resData?.data?.data?.brandEmail}`
             // );
-            console.log(resData?.data?.data, "resData?.data?.data");
             navigate(`/brand-signup-plan-details`, {
               state: { data: resData?.data?.data },
             });
@@ -234,7 +228,6 @@ const BrandLogo = () => {
   };
 
   const setBrandsLocalStorage = (data) => {
-    console.log("brandId", data?.brand_id);
     localStorage.setItem("brandId", data?.brand_id);
     localStorage.setItem("currentUser", data?.brand_id);
     localStorage.setItem("currentUserType", "brand");

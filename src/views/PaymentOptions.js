@@ -18,9 +18,8 @@ const PaymentOptions = ({
   selectedPaymentPlan,
   paymentFrom,
   setAppliedCouponCode,
-  selectedPaymentPeriod
+  selectedPaymentPeriod,
 }) => {
-  console.log(paymentFrom, "paymentFrom");
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [amount, setAmount] = useState("");
@@ -34,20 +33,19 @@ const PaymentOptions = ({
 
   const applyCoupon = async () => {
     const userId = localStorage.getItem("userId");
-    if(inputValue){
-    setAppliedCouponCode(inputValue)
+    if (inputValue) {
+      setAppliedCouponCode(inputValue);
     }
     let planType;
-    if(selectedPaymentPlan == "Pro (Popular)"){
+    if (selectedPaymentPlan == "Pro (Popular)") {
       planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
-      console.log('trimed value',planType); // Output: "Pro"
     }
     const obj = {
       userId,
       code: inputValue,
       totalAmount: selectedAmount,
-      subscriptionPlan:selectedPaymentPeriod,
-      planName:planType?planType:selectedPaymentPlan,
+      subscriptionPlan: selectedPaymentPeriod,
+      planName: planType ? planType : selectedPaymentPlan,
     };
 
     try {
@@ -61,7 +59,6 @@ const PaymentOptions = ({
       } else if (responseCoupon?.data?.status === true) {
         if (responseCoupon?.data?.message === "Coupon applied successfully") {
           const { discountAmount, couponDiscountPercent } = responseCoupon.data;
-          console.log("responseCoupon", responseCoupon);
           setSelectedAmount(discountAmount);
           setFinalAmount(discountAmount);
           setCouponDiscountPercent(couponDiscountPercent);
@@ -116,10 +113,9 @@ const PaymentOptions = ({
         <span>
           You've chosen {selectedPaymentPlan} Membership <br />
           Total: {selectedCurrency}{" "}
-          <span style={{ fontWeight: "bold" }}>{amount}</span> <br/>
-          Select your
-          payment method to finalize your subscription and enjoy exclusive
-          benefits.
+          <span style={{ fontWeight: "bold" }}>{amount}</span> <br />
+          Select your payment method to finalize your subscription and enjoy
+          exclusive benefits.
         </span>
         {couponDiscountPercent ? (
           <div>

@@ -39,7 +39,6 @@ const KidsformOne = () => {
 
   useEffect(() => {
     if (nationalitiesList.length > 0) {
-      console.log(nationalitiesList, "nationalitiesList");
       setListOfNationalities(nationalitiesList);
       getKidsData();
     }
@@ -47,28 +46,21 @@ const KidsformOne = () => {
 
   useEffect(() => {
     if (languagesList.length > 0) {
-      console.log(languagesList, "languagesList");
       setListOfLanguages(languagesList);
       getKidsData();
     }
   }, [languagesList]);
 
   useEffect(() => {
-    console.log(listOfLanguages, "LANGUAGES_GET listOfLanguages");
     let selectedOptions;
     if (listOfLanguages && listOfLanguages.length > 0) {
       selectedOptions = languages.map((language) => {
         return listOfLanguages.find((option) => option.label === language);
       });
     }
-    console.log(
-      selectedOptions,
-      "LANGUAGES_GET listOfLanguages selectedOptions"
-    );
+
     setSelectedLanguageOptions(selectedOptions);
   }, [languagesList, languages]);
-
-  console.log(nationalitiesList, "nationalitiesList");
 
   // const paramsValues = window.location.search;
   // const urlParams = new URLSearchParams(paramsValues);
@@ -92,8 +84,6 @@ const KidsformOne = () => {
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
-
-    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
   const navigate = useNavigate();
@@ -225,16 +215,13 @@ const KidsformOne = () => {
 
   useEffect(() => {
     if (languagesList.length > 0) {
-      console.log(languagesList, "languagesList");
       setListOfLanguages(languagesList);
     }
   }, [languagesList]);
 
   const getKidsData = async () => {
-    // alert("sd");
     await ApiHelper.post(`${API.getTalentById}${userId}`)
       .then((resData) => {
-        console.log(resData, "getKidsData");
         if (resData.data.status === true) {
           setKidsFillData(resData.data.data);
           setParentFirstName(resData?.data?.data?.parentFirstName);
@@ -292,24 +279,16 @@ const KidsformOne = () => {
   };
 
   useEffect(() => {
-    console.log(selectedNationalityOptions, "selectedNationalityOptions");
-  }, [selectedNationalityOptions]);
-
-  useEffect(() => {
     if (nationalitiesList.length > 0) {
       const selectedNationalityOptions = kidsFillData?.childNationality.map(
         (nationality) => {
           const foundOption = nationalitiesList.find((option) => {
-            console.log(option, "option"); // Logs each option in nationalitiesList
             return option.label === nationality; // Correct comparison with return
           });
-          console.log(nationality, "nationality"); // Logs each nationality from childNationality
-          console.log(foundOption, "foundOption"); // Logs the found option
 
           return foundOption; // Return the found option (or undefined if not found)
         }
       );
-      console.log(selectedNationalityOptions, "selectedNationalityOptions"); // Logs final result
     }
   }, [kidsFillData, nationalitiesList]);
 
@@ -353,7 +332,6 @@ const KidsformOne = () => {
   };
 
   const selectLanguage = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions");
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       setLanguages([]);
@@ -412,7 +390,6 @@ const KidsformOne = () => {
   };
 
   const chooseCategory = (category) => {
-    console.log(category, "category selectedCategories");
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -429,7 +406,6 @@ const KidsformOne = () => {
         }, 2000);
       }
     }
-    console.log(selectedCategories.length, "selectedCategories");
 
     if (selectedCategories.length < 4) {
       setCategoryError(true);
@@ -498,28 +474,6 @@ const KidsformOne = () => {
   };
 
   const kidsSignUp = async () => {
-    console.log("Parent First Name:", parentFirstName);
-    console.log("Parent Email:", parentEmail);
-    console.log("Talent Password:", talentPassword);
-    console.log("Talent Confirm Password:", talentConfirmPassword);
-    console.log("Kids Legal First Name:", kidsLegalFirstName);
-    console.log("Gender:", gender);
-    console.log("Parent Mobile:", parentMobile);
-    console.log("Country:", country);
-    console.log("Address:", address);
-    console.log("Selected Professions:", selectedProfessions);
-    console.log("Selected Categories:", selectedCategories);
-    console.log("Kids Preferred First Name:", kidsPreferedFirstName);
-    console.log("Nationality:", nationality);
-    console.log("Ethnicity:", ethnicity);
-    console.log("Languages:", languages);
-    console.log("Date of Birth:", dateOfBirth);
-    console.log("Password Match:", passwordMatch);
-    console.log("Completed Jobs:", completedJobs);
-    console.log("Mobile Validation Error:", mobileValidationError);
-    console.log("Password Status:", passwordStatus);
-    console.log("passwordMatch:", passwordMatch);
-
     if (parentFirstName === "") {
       setparentFirstNameError(true);
     }
@@ -639,7 +593,6 @@ const KidsformOne = () => {
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
-                console.log(resData.data, "resData.data");
                 navigate(
                   `/talent-otp?userId=${resData.data["user_id"]}&userEmail=${resData.data.data}`
                 );
@@ -871,14 +824,11 @@ const KidsformOne = () => {
     setParentMobile(value);
     setParentMobileError(false);
     isValidPhoneNumber(value);
-    console.log(value, "isValidPhoneNumber");
     if (isValidPhoneNumber(value)) {
-      console.log(true, "isValidPhoneNumber");
       setMobileValidationError(false);
       setParentMobile(value);
     } else {
       setMobileValidationError(true);
-      console.log(false, "isValidPhoneNumber");
     }
   };
 
@@ -992,16 +942,6 @@ const KidsformOne = () => {
       }
     };
   }
-
-  useEffect(() => {
-    console.log(selectedProfessions, "selectedProfessions");
-  }, [selectedProfessions]);
-  useEffect(() => {
-    console.log(selectedNationalityOptions, "selectedNationalityOptions");
-  }, [selectedNationalityOptions]);
-  useEffect(() => {
-    console.log(selectedCategories, "selectedCategories");
-  }, [selectedCategories]);
 
   useEffect(() => {
     const handleKeyPress = (event) => {

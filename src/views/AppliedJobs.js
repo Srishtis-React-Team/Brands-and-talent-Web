@@ -85,7 +85,6 @@ const AppliedJobs = () => {
     await ApiHelper.post(API.getAppliedjobs, formData)
       .then((resData) => {
         setAllJobsList(resData?.data?.data);
-        console.log(resData?.data?.data, "allJobsList");
       })
       .catch((err) => {});
   };

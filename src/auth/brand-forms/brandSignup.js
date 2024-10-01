@@ -37,15 +37,9 @@ const BrandSignup = React.memo((props) => {
 
   useEffect(() => {
     if (location.state && location.state.data) {
-      console.log(location.state.data, "location.state.data");
       setReceivedData(location.state.data);
     }
   }, [location.state]);
-
-  useEffect(() => {}, [googleUser]);
-  useEffect(() => {
-    console.log(receivedData, "Brand Signup");
-  }, [receivedData]);
 
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -63,8 +57,6 @@ const BrandSignup = React.memo((props) => {
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
-
-    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
   useEffect(() => {
@@ -76,7 +68,6 @@ const BrandSignup = React.memo((props) => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            console.log(resData.data.data, "getBrand");
             setAdultName(resData?.data?.data?.userName);
             setAdultEmail(resData?.data?.data?.brandEmail);
             // setAdultPassword(resData?.data?.data?.brandPassword);
@@ -123,8 +114,6 @@ const BrandSignup = React.memo((props) => {
     await ApiHelper.post(API.socailSignUpBrands, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          // alert("dfd");
-
           setIsLoading(false);
           setMessage("Registered Successfully Update Your Password");
           setGoogleUser(resData?.data);
@@ -187,8 +176,6 @@ const BrandSignup = React.memo((props) => {
       setIsLoading(true);
       await ApiHelper.post(API.brandsRegister, formData)
         .then((resData) => {
-          console.log(resData.data, "resData.data");
-
           if (resData.data.status === true) {
             setIsLoading(false);
             setMessage("Registered Successfully");

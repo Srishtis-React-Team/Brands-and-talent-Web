@@ -13,7 +13,6 @@ import CurrentUser from "../CurrentUser.js";
 const TalentPreviewJob = ({ job, setFlag }) => {
   // const { job } = props;
   const job_id = job;
-  // alert(job_id);
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
@@ -23,7 +22,6 @@ const TalentPreviewJob = ({ job, setFlag }) => {
   const location = useLocation();
 
   const { jobId } = location.state || {};
-  // alert(jobId, "dddd");
 
   const navigate = useNavigate();
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -33,7 +31,6 @@ const TalentPreviewJob = ({ job, setFlag }) => {
   const [brandData, setBrandData] = useState(null);
 
   const getJobsByID = async () => {
-    // alert(jobId);
     let preview_id;
     if (job_id) {
       preview_id = job_id;
@@ -109,18 +106,12 @@ const TalentPreviewJob = ({ job, setFlag }) => {
     getJobsByID();
   }, [job_id]);
 
-  useEffect(() => {
-    console.log(jobData, "jobData");
-  }, [jobData]);
-  useEffect(() => {}, [jobId]);
-
   const createJob = () => {
     navigate("/talent-dashboard");
   };
 
   const handleBackClick = () => {
     const currentUrl = location.pathname;
-    console.log(currentUrl, "currentUrl");
     if (currentUrl == "/talent-dashboard") {
       // navigate("/talent-dashboard");
       setFlag(false);
@@ -133,7 +124,6 @@ const TalentPreviewJob = ({ job, setFlag }) => {
   const [modalData, setModalData] = useState(null);
 
   const applyjobs = async (data) => {
-    console.log(data, "data");
     setModalData(data);
     if (data?.isApplied != "Applied") {
       const modalElement = document.getElementById("exampleModal");
@@ -184,10 +174,6 @@ const TalentPreviewJob = ({ job, setFlag }) => {
   const containerStyle = {
     width: windowWidth >= 600 ? "800px" : "400px", // 800px for desktop, 400px for mobile
   };
-
-  useEffect(() => {
-    console.log(modalData, "modalData");
-  }, [modalData]);
 
   return (
     <>
