@@ -89,7 +89,6 @@ const TalentSideMenu = ({ myState }) => {
 
   const handleMessages = () => {
     if (talentData?.planName !== "Basic") {
-      // alert("sd");
       navigate("/message");
     }
   };

@@ -10,7 +10,6 @@ import { Modal, Box, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 const SwiperSlider = ({ photosList }) => {
   const logoWhite = require("../assets/images/logo-white.png");
-  console.log(photosList, "photosList");
   const [isSliderOpen, setSliderOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const handleImageClick = (index) => {
@@ -19,7 +18,6 @@ const SwiperSlider = ({ photosList }) => {
   };
 
   const handleClose = () => {
-    // alert("handleCloseSlider");
     setSliderOpen(false);
   };
 

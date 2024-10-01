@@ -21,7 +21,6 @@ const KidsOTP = () => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   // const url = window.location.href;
-  // console.log(url, "url");
   // const queryString = url.split("?")[1];
 
   const [userId, setUserId] = useState("");
@@ -41,8 +40,6 @@ const KidsOTP = () => {
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
-
-    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
   const handleChange = (value, index) => {

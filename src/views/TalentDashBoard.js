@@ -48,7 +48,6 @@ const TalentDashBoard = () => {
     getCountries();
   }, []);
   useEffect(() => {
-    console.log(flagCondition, "flagCondition");
     if (flagCondition == true) {
     }
   }, [flagCondition]);
@@ -167,10 +166,6 @@ const TalentDashBoard = () => {
   };
 
   useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-
-  useEffect(() => {
     getTopBrands();
     const storedUserId = localStorage.getItem("userId");
 
@@ -235,10 +230,8 @@ const TalentDashBoard = () => {
   };
 
   const viewJob = async (jobId) => {
-    // alert(jobId);
     const screenWidth = window.innerWidth;
     if (screenWidth > 768) {
-      // alert(jobId);
       setJob(jobId);
       setFlag(true);
     } else {
@@ -247,10 +240,6 @@ const TalentDashBoard = () => {
       });
     }
   };
-
-  useEffect(() => {
-    console.log(gigsList, "gigsList");
-  }, [gigsList]);
 
   useEffect(() => {}, [flag]);
 

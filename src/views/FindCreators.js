@@ -149,10 +149,6 @@ const FindCreators = () => {
   useEffect(() => {
     checkUserStatus();
   }, []);
-  useEffect(() => {}, [keywordsList]);
-  useEffect(() => {
-    console.log(profession, "profession");
-  }, [profession]);
 
   const checkUserStatus = async () => {
     const formData = {

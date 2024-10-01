@@ -228,9 +228,6 @@ const Footer = (props) => {
       currentUserType === "talent" &&
       talentData?.planName != "Basic"
     ) {
-      // alert(currentUserId);
-      // alert(currentUserType);
-      // alert(talentData?.planName);
       navigate("/find-creators");
     }
   };

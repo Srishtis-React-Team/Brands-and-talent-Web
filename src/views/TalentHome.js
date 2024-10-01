@@ -34,10 +34,6 @@ const TalentHome = () => {
     checkTransaction();
   }, []);
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
@@ -54,11 +50,9 @@ const TalentHome = () => {
     const paymenttrans_id = localStorage.getItem("paymenttrans_id");
     const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
     const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
-    console.log("selectedPaymentPeriod", selectedPaymentPeriod);
-    console.log("selectedPaymentPlan", selectedPaymentPlan);
+
     const obj = { tranId: paymenttrans_id };
     try {
-      console.log("here...");
       const resData = await ApiHelper.post(
         "https://brandsandtalent.com/api/pricing/check-transaction",
         obj
@@ -69,7 +63,6 @@ const TalentHome = () => {
           const paymentData = resData.data.data;
           if (paymentData.payment_status == "APPROVED") {
             localStorage.setItem("paymentData", JSON.stringify(paymentData));
-            // alert('payment successfully completed')
             const userId = localStorage.getItem("userId");
             const userData = {
               subscriptionPlan: selectedPaymentPeriod,
@@ -84,7 +77,6 @@ const TalentHome = () => {
               API.subscriptionPlan,
               userData
             );
-            console.log("responseSubscription", responseSubscription);
           }
         }
       }
@@ -174,8 +166,6 @@ const TalentHome = () => {
 
   const handleEditNavigation = () => {
     if (talentData) {
-      // alert(talentData?.adminApproved);
-
       if (talentData?.adminApproved === true) {
         navigate(`/edit-talent-profile?${talentData?._id}`);
       } else {

@@ -254,16 +254,14 @@ const Header = ({ onData }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "dashboard") {
-        // alert("createHandleMenuClick");
         if (currentUser_type === "talent") {
           // navigate("/talent", { state: { talentData: talentData } });
-          // alert("navigatetotalentprofile");
 
           navigate(`/talent/${talentData.publicUrl}`, {
             state: { talentData },
           });
         } else if (currentUser_type === "brand") {
-          navigate(`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`);
+          navigate(`/client/${brandData?.publicUrl.replace(/\s+/g, "")}`);
         }
       }
       if (menuItem === "edit") {

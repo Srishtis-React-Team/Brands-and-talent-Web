@@ -14,27 +14,27 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-console.log('firebaseApp:', firebaseApp);
 
 let messaging;
 
-if ('serviceWorker' in navigator && 'PushManager' in window) {
+if ("serviceWorker" in navigator && "PushManager" in window) {
   messaging = getMessaging(firebaseApp);
 
-  navigator.serviceWorker.register('/firebase-messaging-sw.js')
-    .then((registration) => {
-      console.log('Service Worker registered with scope:', registration.scope);
-    })
+  navigator.serviceWorker
+    .register("/firebase-messaging-sw.js")
+    .then((registration) => {})
     .catch((err) => {
-      console.error('Service Worker registration failed:', err);
+      console.error("Service Worker registration failed:", err);
     });
 } else {
-  console.warn('Firebase Messaging is not supported in this environment.');
+  console.warn("Firebase Messaging is not supported in this environment.");
 }
 
 export const generateToken = async () => {
   if (!messaging) {
-    console.warn('Messaging is not initialized due to lack of browser support.');
+    console.warn(
+      "Messaging is not initialized due to lack of browser support."
+    );
     return null;
   }
 
@@ -42,14 +42,16 @@ export const generateToken = async () => {
     const permission = await Notification.requestPermission();
     if (permission === "granted") {
       const token = await getToken(messaging, {
-        vapidKey: "BOrRUsFr6qM_RnH76mGZmeCu3_zRjKrl9rshpQSB2QRRe38Q-NbFYEZ2Bm-VTapy9UgzUHw313RFfT1bu8slsp4",
+        vapidKey:
+          "BOrRUsFr6qM_RnH76mGZmeCu3_zRjKrl9rshpQSB2QRRe38Q-NbFYEZ2Bm-VTapy9UgzUHw313RFfT1bu8slsp4",
       });
       if (token) {
         localStorage.setItem("fcmToken", token);
-        console.log("FCM Token:", token);
         return token;
       } else {
-        console.error("No registration token available. Request permission to generate one.");
+        console.error(
+          "No registration token available. Request permission to generate one."
+        );
       }
     } else {
       console.warn("Notification permission not granted.");
@@ -64,7 +66,6 @@ export const generateToken = async () => {
 // Listen for incoming messages
 if (messaging) {
   onMessage(messaging, (payload) => {
-    console.log('Message received:', payload);
     // Customize notification handling here
   });
 }

@@ -281,7 +281,6 @@ const Pricing = ({
   //         if (paymentData.payment_status == "APPROVED") {
   //           localStorage.setItem("paymentData", JSON.stringify(paymentData));
   //           console.log("paymentData", paymentData);
-  //           // alert('payment successfully completed');
   //           const userId = localStorage.getItem("userId");
   //           // transactionDate,paymentStatus,paymentCurreny,paymentAmount,paymentPeriod,paymentPlan
   //           const userData = {
@@ -294,7 +293,6 @@ const Pricing = ({
   //             paymentAmount: paymentData?.payment_amount,
   //           };
   //           if (giftData == "true") {
-  //             alert("gift subscription");
   //             giftSubCreationCall();
   //           } else {
   //             const responseSubscription = await ApiHelper.post(
@@ -363,7 +361,7 @@ const Pricing = ({
       console.log("amount", amount);
       setSelectedCurrency(currency);
       setSelectedAmount(amount);
-      // const type = 'https://dev.brandsandtalent.com/create-jobs'
+      // const type = 'https://brandsandtalent.com/create-jobs'
       localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
       localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
       setPaymentFrom(from);
@@ -694,7 +692,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            `/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+            `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
             "qr",
             "giftsubscription"
           );
@@ -702,7 +700,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            `/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+            `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
             "qr",
             "normal"
           );
@@ -714,7 +712,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            `/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+            `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
             "card",
             "giftsubscription"
           );
@@ -722,7 +720,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            `/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+            `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
             "card",
             "normal"
           );
@@ -735,7 +733,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            "https://dev.brandsandtalent.com/talent-settings",
+            "https://brandsandtalent.com/talent-settings",
             "qr",
             "giftsubscription"
           );
@@ -743,7 +741,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            "https://dev.brandsandtalent.com/talent-home",
+            "https://brandsandtalent.com/talent-home",
             "qr",
             "normal"
           );
@@ -755,7 +753,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            "https://dev.brandsandtalent.com/talent-settings",
+            "https://brandsandtalent.com/talent-settings",
             "card",
             "giftsubscription"
           );
@@ -763,7 +761,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            "https://dev.brandsandtalent.com/talent-home",
+            "https://brandsandtalent.com/talent-home",
             "card",
             "normal"
           );

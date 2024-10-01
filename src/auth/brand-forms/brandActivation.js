@@ -23,7 +23,7 @@ const BrandActivation = () => {
   }, [location.state]);
 
   const brandsSignup = async () => {
-    navigate(`/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+    navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
       state: { data: receivedData },
     });
   };

@@ -18,8 +18,6 @@ import { useLocation } from "react-router-dom";
 
 const BrandHeader = ({ toggleMenu, myState, from }) => {
   const { currentUserType, avatarImage } = CurrentUser();
-  console.log(toggleMenu, "toggleMenu");
-
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
   const cofeeIcon = require("../../assets/icons/cofeeIcon.png");
@@ -89,17 +87,16 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
     // Extract the last part of the URL (i.e., 'peter')
     const pathParts = location.pathname.split("/");
     const name = pathParts[pathParts.length - 1];
-    console.log(name, "name");
     getDataByPublicUrl(name);
   }, [location]);
 
   const getDataByPublicUrl = async (name) => {
     const formData = {
       publicUrl: name,
+      userId: localStorage.getItem("brandId"),
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
-        console.log(resData, "getDataByPublicUrl");
         // setUrlTalentData(resData?.data?.data);
         // checkUser(resData?.data?.data?._id, resData?.data?.data);
         if (resData?.data?.data) {
@@ -110,10 +107,6 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
       })
       .catch((err) => {});
   };
-
-  useEffect(() => {
-    // console.log(brandData, "brandData");
-  }, [brandData]);
 
   const gotomessage = (item) => {
     navigate(`/message?${item?.talentId}`);
@@ -144,6 +137,9 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
+  }, [localStorage.getItem("brandId")]);
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
     if (brandId) {
       getBrand();
       getBrandNotification();
@@ -158,11 +154,8 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
 
   const createHandleMenuClick = (menuItem) => {
     return () => {
-      console.log("inside function");
       if (menuItem === "profile") {
-        console.log("inside profile");
-        console.log("brandData?.publicUrl", brandData?.publicUrl);
-        navigate(`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`);
+        navigate(`/client/${brandData?.publicUrl?.replace(/\s+/g, "")}`);
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);

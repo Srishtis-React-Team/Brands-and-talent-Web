@@ -64,7 +64,6 @@ function CustomTabPanel(props) {
 }
 
 function a11yProps(index) {
-  // alert(index);
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
@@ -127,31 +126,25 @@ const EditTalent = () => {
 
   useEffect(() => {
     if (languagesList.length > 0) {
-      console.log(languagesList, "languagesList");
       setListOfLanguages(languagesList);
       getKidsData();
     }
   }, [languagesList]);
   useEffect(() => {
     if (nationalitiesList.length > 0) {
-      console.log(nationalitiesList, "nationalitiesList");
       setListOfNationalities(nationalitiesList);
       getKidsData();
     }
   }, [nationalitiesList]);
 
   useEffect(() => {
-    console.log(listOfLanguages, "LANGUAGES_GET listOfLanguages");
     let selectedOptions;
     if (listOfLanguages && listOfLanguages.length > 0) {
       selectedOptions = languages.map((language) => {
         return listOfLanguages.find((option) => option.label === language);
       });
     }
-    console.log(
-      selectedOptions,
-      "LANGUAGES_GET listOfLanguages selectedOptions"
-    );
+
     setSelectedLanguageOptions(selectedOptions);
   }, [languagesList, languages]);
 
@@ -164,10 +157,7 @@ const EditTalent = () => {
         );
       });
     }
-    console.log(
-      selectedOptions,
-      "LANGUAGES_GET listOfLanguages selectedOptions"
-    );
+
     setSelectedNationalityOptions(selectedOptions);
   }, [nationalitiesList, nationality]);
 
@@ -332,7 +322,6 @@ const EditTalent = () => {
   ];
 
   const chooseCategory = (category) => {
-    console.log(category, "category selectedCategories");
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -349,7 +338,6 @@ const EditTalent = () => {
         }, 2000);
       }
     }
-    console.log(selectedCategories.length, "selectedCategories");
 
     if (selectedCategories.length < 4) {
       setCategoryError(true);
@@ -463,7 +451,6 @@ const EditTalent = () => {
   };
 
   const selectLanguage = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions");
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       setLanguages([]);
@@ -476,7 +463,6 @@ const EditTalent = () => {
   };
 
   const selectNationality = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions");
     setNationalityError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       setNationality([]);
@@ -515,7 +501,6 @@ const EditTalent = () => {
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
-        console.log(resData, "KIDS_DATA");
         if (resData.data.status === true) {
           if (resData?.data?.data?.type === "kids") {
             if (resData?.data?.data?.planName == "Basic") {
@@ -635,8 +620,6 @@ const EditTalent = () => {
             );
             setGender(resData?.data?.data?.childGender);
 
-            console.log(resData?.data?.data?.languages, "languages");
-
             setLanguages(resData?.data?.data?.languages);
 
             const selectedOptions = resData?.data?.data?.languages.map(
@@ -669,7 +652,6 @@ const EditTalent = () => {
                 );
               });
             setSelectedNationalityOptions(selectedNationalityOptions);
-            console.log(selectedOptions, "selectedOptions");
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
@@ -688,12 +670,10 @@ const EditTalent = () => {
 
   const handleEditFeatureChanges = (values) => {
     setFeatures(values);
-    console.log("Updated Form Values handleEditFeatureChanges:", values);
   };
 
   const handleEditSocialMediaChanges = (values) => {
     // setFeatures(values);
-    console.log("Updated Form Values handleEditSocialMediaChanges:", values);
   };
 
   const handleFeaturesChange = (label, value) => {
@@ -1020,21 +1000,17 @@ const EditTalent = () => {
     setParentMobile(value);
     setParentMobileError(false);
     isValidPhoneNumber(value);
-    console.log(value, "isValidPhoneNumber");
     if (isValidPhoneNumber(value)) {
-      console.log(true, "isValidPhoneNumber");
       setMobileValidationError(false);
       setParentMobile(value);
     } else {
       setMobileValidationError(true);
-      console.log(false, "isValidPhoneNumber");
     }
   };
 
   const [valueTabs, setValueTabs] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    console.log(newValue, "newValue");
     setValueTabs(newValue);
   };
 
@@ -1051,19 +1027,6 @@ const EditTalent = () => {
   useEffect(() => {}, [valueTabs]);
 
   useEffect(() => {}, [editProfileImage]);
-
-  useEffect(() => {
-    console.log(features, "features");
-  }, [features]);
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-  useEffect(() => {
-    console.log(selectedLanguageOptions, "selectedLanguageOptions");
-  }, [selectedLanguageOptions]);
-  useEffect(() => {
-    console.log(selectedCategories, "selectedCategories");
-  }, [selectedCategories]);
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -1762,11 +1725,6 @@ const EditTalent = () => {
       });
   };
 
-  useEffect(() => {}, [services]);
-  useEffect(() => {
-    console.log(isBasic, "isBasic");
-  }, [isBasic]);
-
   const handleEditorChange = (index, editorState) => {
     const editInputs = [...services];
     editInputs[index]["editorState"] = editorState;
@@ -1948,10 +1906,7 @@ const EditTalent = () => {
   };
 
   const isNotKnownFormatUrl = (url) => {
-    // alert("url");
-    console.log(url, "url");
     const isValidAudioUrl = audioUrlPatterns?.audio?.test(url); // Check for audio URLs
-    console.log(isValidAudioUrl, "url");
 
     const isValidUrl = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i?.test(url); // Check for valid URL format
     return !(
@@ -1967,8 +1922,6 @@ const EditTalent = () => {
   };
 
   const handleAudioUrl = async () => {
-    console.log(audioUrlsList, "audioUrlsList audioUrl");
-    console.log(audioUrl, "audioUrl audioUrl");
     let maxUrls;
     if (talentData?.planName === "Basic") {
       maxUrls = 2;
@@ -2030,15 +1983,11 @@ const EditTalent = () => {
       "text"
     );
     setAudioUrl(pastedText);
-    console.log(pastedText, "pastedText");
-    console.log(audioUrl, "audioUrl");
     // Validate pasted URL
     setCheckAudioUrl(isNotKnownFormatUrl(pastedText));
   };
 
   const handleAddUrl = async () => {
-    console.log(videoUrl, "videoUrl");
-    console.log(urls, "urls");
     if (videoUrl.trim() !== "") {
       if (isValidUrl(videoUrl)) {
         if (!Array.isArray(urls)) {
@@ -2076,7 +2025,6 @@ const EditTalent = () => {
         }
 
         setUrls([...urls, videoUrl]);
-        console.log(urls, "urlsAdd");
         setVideoUrl("");
         setCheckVideoUrl(false);
       } else {
@@ -2093,7 +2041,6 @@ const EditTalent = () => {
   };
 
   const handleDeleteUrl = async (index) => {
-    console.log(index, "index");
     const newUrls = urls.filter((url, i) => i !== index);
     setUrls(newUrls);
 
@@ -2158,22 +2105,6 @@ const EditTalent = () => {
         setIsLoading(false);
       });
   };
-
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-  useEffect(() => {
-    console.log(audioUrl, "audioUrl");
-  }, [audioUrl]);
-  useEffect(() => {
-    console.log(urls, "urls");
-    // postNewVideos();
-  }, [urls]);
-
-  // useEffect(() => {
-  //   console.log(audioUrlsList, "audioUrlsList");
-  //   postNewAudios();
-  // }, [audioUrlsList]);
 
   const postNewVideos = async (urlsData) => {
     let apiName;
@@ -2274,11 +2205,6 @@ const EditTalent = () => {
     setSelectedVideoItem(null); // Reset the selected item when closing the menu
   };
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  useEffect(() => {
-    console.log(urls, "urls");
-  }, []);
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} myState={myState} />

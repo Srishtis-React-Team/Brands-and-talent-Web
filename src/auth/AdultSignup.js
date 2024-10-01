@@ -31,8 +31,6 @@ const AdultSignup = () => {
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
-
-    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
   useEffect(() => {
@@ -43,10 +41,8 @@ const AdultSignup = () => {
   }, [userId]);
 
   const getTalentById = async () => {
-    // alert("sd");
     await ApiHelper.post(`${API.getTalentById}${userId}`)
       .then((resData) => {
-        console.log(resData, "getTalentById");
         if (resData.data.status === true) {
           setAdultEmail(resData?.data?.data?.adultEmail);
           setAdultName(resData?.data?.data?.adultName);
@@ -183,7 +179,6 @@ const AdultSignup = () => {
         .then((resData) => {
           setIsLoading(false);
           if (resData.data.status === true) {
-            console.log(resData.data?.data, "resData.data?.data");
             setMessage("Registered Successfully");
             setOpenPopUp(true);
             setTimeout(function () {

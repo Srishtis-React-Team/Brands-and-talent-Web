@@ -191,11 +191,6 @@ const TalentNotification = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(notificationList, "notificationList");
-  }, [notificationList]);
-  useEffect(() => {}, [talentData]);
-
   function setSubscriptionType(e) {
     if (e == "weekly") {
       setWeekly(true);

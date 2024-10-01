@@ -36,8 +36,6 @@ const OTPComponent = () => {
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
-
-    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
   // const url = window.location.href;
@@ -86,7 +84,6 @@ const OTPComponent = () => {
     await ApiHelper.post(API.otpVerificationAdult, formData)
       .then((resData) => {
         if (resData.data.status === true) {
-          console.log(resData?.data?.data, "adultResponse");
           setMessage("Successfully Verified");
           setOpenPopUp(true);
           setTimeout(function () {

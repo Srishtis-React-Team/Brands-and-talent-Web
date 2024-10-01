@@ -37,15 +37,14 @@ const AdminPayment = () => {
   };
 
   useEffect(() => {
-    console.log("Selected payment option:", selectedPaymentOption);
     if (selectedPaymentOption) {
       setLoading(true);
       handlePayment(
         selectedAmount, // Use selectedAmount from input
         "USD",
-        `https://dev.brandsandtalent.com/pricingadmin`,
+        `https://brandsandtalent.com/pricingadmin`,
         selectedPaymentOption,
-        "normal"  
+        "normal"
       );
     }
   }, [selectedPaymentOption]); // Add selectedAmount to dependencies

@@ -70,7 +70,6 @@ const Dashboard = () => {
     await ApiHelper.get(API.getLogos)
       .then((resData) => {
         if (resData) {
-          console.log(resData?.data?.data[0]?.image, "brandLogosList");
           setBrandLogosList(resData?.data?.data[0]?.image);
         }
       })
@@ -385,7 +384,7 @@ const Dashboard = () => {
                     onClick={(e) => {
                       if (currentUserType == "brand") {
                         navigate(
-                          `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
+                          `/client/${brandData?.publicUrl.replace(/\s+/g, "")}`
                         );
                       } else {
                         navigate("/signup", {

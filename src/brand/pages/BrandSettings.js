@@ -165,7 +165,6 @@ const BrandSettings = () => {
   //       const paymentData = resData.data.data;
   //       if(paymentData.payment_status == "APPROVED"){
   //         localStorage.setItem("paymentData", JSON.stringify(paymentData));
-  //         // alert('payment successfully completed')
   //         const userId = localStorage.getItem("userId")
   //         const userData = {
   //             "subscriptionPlan":selectedPaymentPeriod,
@@ -688,7 +687,7 @@ const BrandSettings = () => {
             <CustomTabPanel value={valueTabs} index={2}>
               {/* Manage Account */}
               {console.log("brandDetails", brandDetails)}
-              <div style={containerStyle}  className="cardHeight">
+              <div style={containerStyle} className="cardHeight">
                 <div style={cardStyle}>
                   <h2 style={headerStyle}>Transaction Details</h2>
                   <div style={listStyle}>

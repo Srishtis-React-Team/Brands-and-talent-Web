@@ -105,7 +105,6 @@ const ForgotPassword = () => {
         };
         await ApiHelper.post(API.forgotPassword, formdata)
           .then((resData) => {
-            console.log(resData, "resData");
             if (resData.data.status === true) {
               setIsLoading(false);
 

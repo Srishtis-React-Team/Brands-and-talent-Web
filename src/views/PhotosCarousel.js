@@ -42,7 +42,6 @@ const PhotosCarousel = ({ photosList }) => {
   };
 
   const handleClose = () => {
-    // alert("handleCloseSlider");
     setSliderOpen(false);
   };
 

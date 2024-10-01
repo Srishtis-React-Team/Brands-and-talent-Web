@@ -30,16 +30,23 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   const [brandData, setBrandData] = useState(null);
   const [jobCountNumber, setJobCountNumber] = useState(null);
 
-  useEffect(() => {
-    if (currentUserId) {
-      getBrand(currentUserId);
-      jobCount();
-      saveUser();
-    }
-  }, [currentUserId]);
+  // useEffect(() => {
+  //   if (currentUserId) {
+  //     getBrand(currentUserId);
 
-  const getBrand = async (id) => {
-    await ApiHelper.get(`${API.getBrandById}${id}`)
+  //   }
+  // }, [currentUserId]);
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+  }, [localStorage.getItem("brandId")]);
+  useEffect(() => {
+    getBrand();
+    jobCount();
+    saveUser();
+  }, [brandId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
@@ -52,7 +59,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
 
   const saveUser = async () => {
     const formData = {
-      tempId: currentUserId,
+      tempId: localStorage.getItem("brandId"),
     };
     await ApiHelper.post(`${API.saveUser}`, formData)
       .then((resData) => {})
@@ -60,7 +67,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   };
 
   const fetchUser = async () => {
-    // alert("fetchUser");
     await ApiHelper.get(`${API.fetchUser}`)
       .then((resData) => {
         console.log(resData?.data?.user?.tempId, "fetchUser");
@@ -84,6 +90,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   const getDataByPublicUrl = async (name) => {
     const formData = {
       publicUrl: name,
+      userId: localStorage.getItem("brandId"),
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
@@ -172,12 +179,16 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
       <nav className="brand-sidebar-container">
         <div className="brand-profile-not-sidemenu">
           <div className="profImg">
-            {brandData?.brandImage && (
-              <img
-                className="profile-img"
-                src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
-                alt="profile"
-              />
+            {brandData && (
+              <>
+                {brandData?.brandImage.length > 0 && (
+                  <img
+                    className="profile-img"
+                    src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
+                    alt="profile"
+                  />
+                )}
+              </>
             )}
           </div>
         </div>
@@ -241,10 +252,10 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
         <div className="sidenavWraper scroll">
           <Link
             onClick={fetchUser}
-            to={`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`}
+            to={`/client/${brandData?.publicUrl.replace(/\s+/g, "")}`}
             className={
               location.pathname ===
-              `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
+              `/client/${brandData?.publicUrl.replace(/\s+/g, "")}`
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
