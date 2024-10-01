@@ -363,7 +363,6 @@ const Pricing = ({
       console.log("amount", amount);
       setSelectedCurrency(currency);
       setSelectedAmount(amount);
-      // const type = 'https://dev.brandsandtalent.com/create-jobs'
       localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
       localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
       setPaymentFrom(from);
@@ -735,7 +734,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            "https://dev.brandsandtalent.com/talent-settings",
+            "https://brandsandtalent.com/talent-settings",
             "qr",
             "giftsubscription"
           );
@@ -743,7 +742,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            "https://dev.brandsandtalent.com/talent-home",
+            "https://brandsandtalent.com/talent-home",
             "qr",
             "normal"
           );
@@ -755,7 +754,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            "https://dev.brandsandtalent.com/talent-settings",
+            "https://brandsandtalent.com/talent-settings",
             "card",
             "giftsubscription"
           );
@@ -763,7 +762,7 @@ const Pricing = ({
           handlePayment(
             selectedAmount,
             selectedCurrency,
-            "https://dev.brandsandtalent.com/talent-home",
+            "https://brandsandtalent.com/talent-home",
             "card",
             "normal"
           );

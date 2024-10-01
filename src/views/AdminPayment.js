@@ -43,7 +43,7 @@ const AdminPayment = () => {
       handlePayment(
         selectedAmount, // Use selectedAmount from input
         "USD",
-        `https://dev.brandsandtalent.com/pricingadmin`,
+        `https://brandsandtalent.com/pricingadmin`,
         selectedPaymentOption,
         "normal"  
       );
