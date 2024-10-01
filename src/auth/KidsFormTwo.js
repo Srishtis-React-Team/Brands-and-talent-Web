@@ -356,55 +356,62 @@ const KidsFormTwo = () => {
   //   }
   // };
   const choosePlan = async (index, item, from) => {
-    setPathFrom(from);
-    if (from == "giftsubscription") {
-      setGiftSub(true);
-      localStorage.setItem("giftsubscription", true);
+    console.log("item", item);
+    console.log("index", index);
+    if (index == 0) {
+      editKids();
     } else {
-      setGiftSub(false);
-      localStorage.setItem("giftsubscription", false);
-    }
-    const selectedPlanItem =
-      item.plan_type_annual.find(
-        (plan) => `annual-${item._id}` === selectedPlan
-      ) ||
-      item.plan_type_monthly.find(
-        (plan) => `monthly-${item._id}` === selectedPlan
-      );
-    const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
-    const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
-    const afterDiscount = selectedPlanItem
-      ? selectedPlanItem.afterDiscount
-      : "N/A";
-
-    const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
-    const match = price.match(regex);
-    if (match) {
-      let amount;
-      if (afterDiscount.includes("per year")) {
-        const match = afterDiscount.match(/(\w+)\s([\d.,]+)\sper\syear/);
-        if (match) {
-          amount = parseFloat(match[2]); // Extracts the numeric part
-        }
+      setPathFrom(from);
+      console.log("selectedPlan", `annual-${selectedPlan}`);
+      if (from == "giftsubscription") {
+        setGiftSub(true);
+        localStorage.setItem("giftsubscription", true);
       } else {
-        amount = parseFloat(match[2]); // 29.99
+        setGiftSub(false);
+        localStorage.setItem("giftsubscription", false);
       }
-      const currency = match[1].toUpperCase(); // "USD"
-      const duration = match[3]; // "month"
-      setSelectedCurrency(currency);
-      setSelectedAmount(amount);
-      localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
-      localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
-      setPaymentOption(true);
+      const selectedPlanItem =
+        item.plan_type_annual.find(
+          (plan) => `annual-${item._id}` === selectedPlan
+        ) ||
+        item.plan_type_monthly.find(
+          (plan) => `monthly-${item._id}` === selectedPlan
+        );
+      const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
+      const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
+      const afterDiscount = selectedPlanItem
+        ? selectedPlanItem.afterDiscount
+        : "N/A";
 
-      // const type = `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`
-      // handlePayment(amount, currency, type)
-      // /api/pricing/create-payment
-      // /check-transaction
-      // handlePayment(amount, currency)
-    } else {
-      console.error("Price string format is incorrect");
+      const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
+      const match = price.match(regex);
+      if (match) {
+        let amount;
+        if (afterDiscount.includes("per year")) {
+          const match = afterDiscount.match(/(\w+)\s([\d.,]+)\sper\syear/);
+          if (match) {
+            amount = parseFloat(match[2]); // Extracts the numeric part
+          }
+        } else {
+          amount = parseFloat(match[2]); // 29.99
+        }
+        const currency = match[1].toUpperCase(); // "USD"
+        const duration = match[3]; // "month"
+        setSelectedCurrency(currency);
+        setSelectedAmount(amount);
+        localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
+        localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
+        setPaymentOption(true);
+      } else {
+        console.error("Price string format is incorrect");
+      }
     }
+
+    // const type = `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`
+    // handlePayment(amount, currency, type)
+    // /api/pricing/create-payment
+    // /check-transaction
+    // handlePayment(amount, currency)
 
     // const formData = {
     // };

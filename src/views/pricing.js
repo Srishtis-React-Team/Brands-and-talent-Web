@@ -155,7 +155,6 @@ const Pricing = ({
   const [appliedCouponCode, setAppliedCouponCode] = useState("");
 
   const handleMobileChange = (value) => {
-    console.log(value, "handleMobileChange");
     isValidPhoneNumber(value);
     if (isValidPhoneNumber(value)) {
       setMobileError(false);
