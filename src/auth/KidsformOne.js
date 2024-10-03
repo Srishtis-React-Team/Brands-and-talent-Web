@@ -1219,8 +1219,8 @@ const KidsformOne = () => {
                             <div className="invalid-fields password-error-box">
                               Your password must be at least 8 characters long
                               and include at least: 1 capital letter (A, B,
-                              C...) 1 small letter (a, b, c...) 1 number (1, 2,
-                              3...) 1 special symbol (!, @, #...)
+                              C...), 1 small letter (a, b, c...), 1 number (1, 2,
+                              3...), 1 special symbol (!, @, #...)
                             </div>
                           )}
                         </div>
