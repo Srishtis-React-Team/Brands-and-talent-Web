@@ -229,7 +229,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             </div>
             <div className="talent-details">
               <div className="talent-name">{brandData?.brandName}</div>
-              <div className="talent-category">Brand</div>
+              <div className="talent-category">Brand / Client</div>
             </div>
           </div>
           <div className="talents-plan-info">

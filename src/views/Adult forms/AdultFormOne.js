@@ -768,7 +768,7 @@ const AdultFormOne = () => {
                 }}
                 src={btLogo}
               ></img>
-              <div className="step-text">Step 1 of 4</div>
+              <div className="step-text">Step 1 of 5</div>
             </div>
             <button
               type="button"

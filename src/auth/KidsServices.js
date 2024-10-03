@@ -58,6 +58,8 @@ const KidsServices = () => {
       .catch((err) => {});
   };
 
+  const durationList = ["Days", "Weeks", "Months"];
+
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -65,6 +67,7 @@ const KidsServices = () => {
     let formData = {
       services: inputs,
     };
+    console.log(formData, "formData");
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -291,27 +294,54 @@ const KidsServices = () => {
                                   )
                                 }
                                 className="form-control"
-                                placeholder="Enter Amount In $"
+                                placeholder="Must be in USD"
                               ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">
                               <label className="form-label">
-                                Duration (Weeks/Months)
+                                Delivery Time
                               </label>
-                              <input
-                                type="text"
-                                name="duration"
-                                value={input.serviceDuration}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    serviceIndex,
-                                    "serviceDuration",
-                                    e.target.value
-                                  )
-                                }
-                                className="form-control"
-                                placeholder="Duration (Weeks/Months)"
-                              ></input>
+                              <div className="duration-splitter">
+                                <div className="duration-select-main">
+                                  <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    style={{ fontSize: "14px" }}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceTime",
+                                        e.target.value
+                                      )
+                                    }
+                                  >
+                                    <option value="" disabled selected>
+                                      Time Unit
+                                    </option>
+                                    {durationList.map((option, index) => (
+                                      <option key={index} value={option}>
+                                        {option}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                                <div className="duration-value-main">
+                                  <input
+                                    type="text"
+                                    name="duration"
+                                    value={input.serviceDuration}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceDuration",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="form-control"
+                                    placeholder="Duration"
+                                  ></input>
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div className="adults-titles">Features</div>

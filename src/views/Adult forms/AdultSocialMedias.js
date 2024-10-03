@@ -494,7 +494,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 2 of 6</div>
+            <div className="step-text">Step 2 of 5</div>
           </div>
           <button
             type="button"

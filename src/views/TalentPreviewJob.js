@@ -10,7 +10,7 @@ import "../assets/css/createjobs.css";
 import { useLocation } from "react-router-dom";
 import CurrentUser from "../CurrentUser.js";
 
-const TalentPreviewJob = ({ job, setFlag }) => {
+const TalentPreviewJob = ({ job, setFlag, from }) => {
   // const { job } = props;
   const job_id = job;
 
@@ -177,7 +177,11 @@ const TalentPreviewJob = ({ job, setFlag }) => {
 
   return (
     <>
-      <TalentHeader toggleMenu={toggleMenu} />
+      {from != "dashboard" && (
+        <>
+          <TalentHeader toggleMenu={toggleMenu} />
+        </>
+      )}
       <main id="mainBrand">
         <div className="scrolscrolPrevOut">
           <div className="brand-content-main preview-main-box boxBg scrlInner scroll">

@@ -212,10 +212,12 @@ const Pricing = ({
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    if (from == "signup") {
+    if (userType == "adults") {
       getPricingList();
+    } else if (userType == "brands") {
+      getBrandsPricingList();
     }
-  }, [from]);
+  }, [userType]);
 
   useEffect(() => {
     if (from != "signup") {
@@ -224,8 +226,6 @@ const Pricing = ({
       } else {
         getBrandsPricingList();
       }
-    } else if (from != "brands") {
-      getBrandsPricingList();
     }
   }, [isChecked]);
 
@@ -236,6 +236,7 @@ const Pricing = ({
   useEffect(() => {
     console.log(pricingList, "pricingList");
   }, [pricingList]);
+
   useEffect(() => {}, [comment]);
 
   const getPricingList = async () => {

@@ -140,9 +140,11 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                       <div className="text-btm">
                         <div className="service-duration">
                           <div className="service-duration-title">
-                            Duration :
+                            Delivery Time :
                           </div>
-                          <div>{item?.serviceDuration} Weeks/Months</div>
+                          <div>
+                            {item?.serviceDuration} {item?.serviceTime}
+                          </div>
                         </div>
                         <div
                           onClick={() => messageNow()}

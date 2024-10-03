@@ -115,6 +115,8 @@ const EditTalent = () => {
     featuresList,
   } = useFieldDatas();
 
+  const durationList = ["Days", "Weeks", "Months"];
+
   const isDocumentFile = (fileType) => {
     return (
       fileType === "application/pdf" ||
@@ -3689,7 +3691,7 @@ const EditTalent = () => {
                                       }
                                     />
                                   </div>
-                                  <div className="kids-form-section col-md-6 mb-3">
+                                  {/* <div className="kids-form-section col-md-6 mb-3">
                                     <label className="form-label">
                                       Service Duration
                                     </label>
@@ -3706,6 +3708,54 @@ const EditTalent = () => {
                                         )
                                       }
                                     ></input>
+                                  </div> */}
+
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                    <label className="form-label">
+                                      Delivery Time
+                                    </label>
+                                    <div className="duration-splitter">
+                                      <div className="duration-select-main">
+                                        <select
+                                          className="form-select"
+                                          aria-label="Default select example"
+                                          style={{ fontSize: "14px" }}
+                                          value={eachService.serviceTime}
+                                          onChange={(e) =>
+                                            handleInputChange(
+                                              servicesIndex,
+                                              "serviceTime",
+                                              e.target.value
+                                            )
+                                          }
+                                        >
+                                          <option value="" disabled selected>
+                                            Time Unit
+                                          </option>
+                                          {durationList.map((option, index) => (
+                                            <option key={index} value={option}>
+                                              {option}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                      <div className="duration-value-main">
+                                        <input
+                                          type="text"
+                                          name="duration"
+                                          value={eachService.serviceDuration}
+                                          onChange={(e) =>
+                                            handleInputChange(
+                                              servicesIndex,
+                                              "serviceDuration",
+                                              e.target.value
+                                            )
+                                          }
+                                          className="form-control"
+                                          placeholder="Duration"
+                                        ></input>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                                 <div className="service-files-main uplWraps">

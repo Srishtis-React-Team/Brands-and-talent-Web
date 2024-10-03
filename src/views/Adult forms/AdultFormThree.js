@@ -957,7 +957,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 5 of 6</div>
+            <div className="step-text">Step 4 of 5</div>
           </div>
           <button
             type="button"

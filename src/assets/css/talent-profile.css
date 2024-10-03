@@ -282,7 +282,7 @@
 }
 
 .models-photos {
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
   padding: 0;
   align-items: center;
@@ -644,6 +644,7 @@
   height: 300px;
   border-radius: 8px;
   object-fit: cover;
+  margin-bottom: 20px;
 }
 
 /* Responsive-ness for different screen-sizes */

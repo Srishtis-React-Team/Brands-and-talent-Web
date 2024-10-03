@@ -339,7 +339,7 @@ const Footer = (props) => {
                 </li> */}
                 <li>
                   <Link to="/career" onClick={handleClick}>
-                    Career
+                    Careers
                   </Link>
                 </li>
                 <li>

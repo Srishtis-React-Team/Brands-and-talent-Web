@@ -169,7 +169,7 @@ const BrandDetails = () => {
     "Company ( 251-500 Employess )",
     "Company ( 501-3500 Employess )",
     "Company ( 3500+ Employess )",
-    "Recruiting firms",
+    "Recruiting firm",
     "Staffing Agency",
   ];
 
