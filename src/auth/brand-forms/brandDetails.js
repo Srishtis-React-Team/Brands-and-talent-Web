@@ -170,7 +170,7 @@ const BrandDetails = () => {
     "Company ( 501-3500 Employess )",
     "Company ( 3500+ Employess )",
     "Recruiting firm",
-    "Staffing Agency",
+    "Talent agency",
   ];
 
   useEffect(() => {}, [openPopUp]);

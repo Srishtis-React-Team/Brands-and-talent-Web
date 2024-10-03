@@ -72,7 +72,7 @@ const brandTypeList = [
   "Company ( 501-3500 Employess )",
   "Company ( 3500+ Employess )",
   "Recruiting firm",
-  "Staffing Agency",
+  "Talent agency",
 ];
 
 const EditBrands = () => {

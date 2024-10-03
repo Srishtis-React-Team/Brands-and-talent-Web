@@ -129,14 +129,14 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                       )}
                     </div>
                     <div className="service-list-content col-md-8">
-                      <div className="starting-amount">
-                        USD {item?.serviceAmount}
-                      </div>
                       <div className="service-title">{item?.serviceName}</div>
                       <div
                         className="service-description"
                         dangerouslySetInnerHTML={{ __html: item?.editorState }}
                       />
+                      <div className="starting-amount">
+                        $ {item?.serviceAmount} per hour
+                      </div>
                       <div className="text-btm">
                         <div className="service-duration">
                           <div className="service-duration-title">

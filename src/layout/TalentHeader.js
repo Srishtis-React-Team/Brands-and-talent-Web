@@ -170,7 +170,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
           }, 2000);
         }
       } else if (menuItem == "find-talent" && talentData?.planName == "Basic") {
-        setMessage("Purchase Pro or Premium Plan to unlock this feature");
+        setMessage("Upgrade Pro or Premium Plan to unlock this feature");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

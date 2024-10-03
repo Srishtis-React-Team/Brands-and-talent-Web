@@ -399,27 +399,56 @@ const TalentProfile = () => {
     // );
   };
   const messageNow = () => {
-    if (currentUserType == "talent" && talentData?.planName != "Premium") {
-      setMessage("Please upgrade to premium plan to use this feature");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 3000);
-    } else {
-      navigate(`/message?${talentData?._id}`);
+    if (isOwnTalent == true) {
+      if (talentData?.planName != "Premium") {
+        setMessage("Please upgrade to premium plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      } else if (talentData?.planName == "Premium") {
+        navigate(`/message?${talentData?._id}`);
+      }
+    } else if (isOwnTalent == false && isAdminApproved == true) {
+    } else if (currentUserType == "brand") {
+      if (brandData?.planName === "Basic") {
+        setMessage("Please upgrade to premium plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      } else if (brandData?.planName !== "Basic") {
+        navigate(`/message?${talentData?._id}`);
+      }
     }
-    if (currentUserType == "brand" && brandData?.planName === "Basic") {
-      setMessage("Please upgrade to pro plan to use this feature");
-      inviteTalentNotification();
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 2000);
-    } else {
-      navigate(`/message?${talentData?._id}`);
-    }
+
+    // if (currentUserType == "talent" && talentData?.planName != "Premium") {
+    //   alert("called");
+    //   setMessage("Please upgrade to premium plan to use this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 3000);
+    // } else if (talentData?.planName == "Premium") {
+    //   navigate(`/message?${talentData?._id}`);
+    // }
+    // if (currentUserType == "brand" && brandData?.planName === "Basic") {
+    //   setMessage("Please upgrade to pro plan to use this feature");
+    //   inviteTalentNotification();
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 2000);
+    // } else if (
+    //   currentUserType == "brand" &&
+    //   brandData?.planName === "Premium"
+    // ) {
+    //   navigate(`/message?${talentData?._id}`);
+    // }
   };
 
   const inviteTalentNotification = async () => {
@@ -429,13 +458,23 @@ const TalentProfile = () => {
     setIsLoading(true);
     await ApiHelper.post(`${API.inviteTalentNotification}`, formData)
       .then((resData) => {
+        setIsLoading(false);
         if (resData) {
-          // if (resData?.data?.status === true) {
-          // } else {
-          // }
+          console.log(resData, "resData");
+          if (resData?.data?.status === true) {
+            setMessage("Invitation email sent successfully");
+            setIsLoading(false);
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+            }, 3000);
+          } else {
+          }
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
 
   const inviteToApply = async () => {
@@ -620,8 +659,8 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
 
-  // const [isOwnTalent, setIsOwnTalent] = useEffect(false);
-
+  const [isOwnTalent, setIsOwnTalent] = useState(null);
+  const [isAdminApproved, setIsAdminApproved] = useState(null);
   const [showProfile, setShowProfile] = useState(null);
 
   const getDataByPublicUrl = async (name) => {
@@ -634,10 +673,14 @@ const TalentProfile = () => {
       .then((resData) => {
         if (resData?.data?.currentStatus == "own-talent") {
           setShowProfile(true);
+          setIsOwnTalent(true);
         } else if (resData?.data?.currentStatus == "approved") {
           setShowProfile(true);
+          setIsOwnTalent(false);
+          setIsAdminApproved(true);
         } else if (resData?.data?.currentStatus == "not-approved") {
           setShowProfile(false);
+          setIsOwnTalent(false);
         }
         if (resData?.data?.status == false) {
           setMessage(resData?.data?.msg);
