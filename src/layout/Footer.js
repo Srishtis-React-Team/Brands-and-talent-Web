@@ -163,7 +163,8 @@ const Footer = (props) => {
   // };
 
   const handleClickBlogs = (step) => {
-    navigate("/blogs", { state: { step: step } });
+    // navigate("/blogs", { state: { step: step } });
+    window.open("https://brandsandtalent.substack.com/", "_blank");
   };
 
   const handleEmailChange = (e) => {
@@ -218,7 +219,7 @@ const Footer = (props) => {
       currentUserType === "talent" &&
       talentData?.planName == "Basic"
     ) {
-      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setMessage("Upgrade Pro or Premium Plan to unlock this feature");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);

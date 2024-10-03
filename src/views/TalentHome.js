@@ -180,6 +180,10 @@ const TalentHome = () => {
     }
   };
 
+  const sampleProfileNavigate = () => {
+    window.open("https://brandsandtalent.com/talent/Grace", "_blank");
+  };
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -202,7 +206,9 @@ const TalentHome = () => {
             <div className="create-job-title w-50">
               Welcome To Brands and Talent
             </div>
-            <div className="sample-profile">Go to sample profile</div>
+            <div className="sample-profile" onClick={sampleProfileNavigate}>
+              Go to sample profile
+            </div>
           </div>
 
           <div

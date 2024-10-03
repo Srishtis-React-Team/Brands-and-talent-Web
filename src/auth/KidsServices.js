@@ -274,14 +274,14 @@ const KidsServices = () => {
                                   type="text"
                                   name="serviceName"
                                   className="form-control"
-                                  placeholder="Enter Service Heading"
+                                  placeholder=""
                                 ></input>
                               </div>
                             </div>
                           </div>
                           <div className="kids-form-row row">
                             <div className="kids-form-section col-md-6 mb-3">
-                              <label className="form-label">Amount</label>
+                              <label className="form-label">Rates (/hr)</label>
                               <input
                                 type="number"
                                 name="amount"
@@ -338,16 +338,16 @@ const KidsServices = () => {
                                       )
                                     }
                                     className="form-control"
-                                    placeholder="Duration"
+                                    placeholder=""
                                   ></input>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div className="adults-titles">Features</div>
                           <div className="rich-editor">
-                            <label className="form-label">Features</label>
-
+                            <label className="form-label">
+                              Short Description
+                            </label>
                             <RichTextEditor
                               value={input.editorState}
                               onChange={(editorState) =>

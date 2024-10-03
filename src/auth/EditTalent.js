@@ -3656,14 +3656,14 @@ const EditTalent = () => {
                                   </div>
                                   <div className="kids-form-section col-md-6 mb-3">
                                     <label className="form-label">
-                                      Service Amount
+                                      Rates (/hr)
                                       <span className="mandatory">*</span>
                                     </label>
                                     <input
                                       min="0"
                                       type="number"
                                       className="form-control"
-                                      placeholder="service amount"
+                                      placeholder="Must be in USD"
                                       value={eachService.serviceAmount}
                                       onChange={(e) =>
                                         handleInputChange(
@@ -3678,7 +3678,7 @@ const EditTalent = () => {
                                 <div className="row">
                                   <div className="kids-form-section col-md-6 mb-2">
                                     <label className="form-label">
-                                      Features
+                                      Short Description
                                       <span className="mandatory">*</span>
                                     </label>
                                     <RichTextEditor
@@ -3752,7 +3752,7 @@ const EditTalent = () => {
                                             )
                                           }
                                           className="form-control"
-                                          placeholder="Duration"
+                                          placeholder=""
                                         ></input>
                                       </div>
                                     </div>

@@ -132,7 +132,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
 
   const handleNavigationClick = () => {
     if (brandData?.planName == "Basic") {
-      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setMessage("Upgrade Pro or Premium Plan to unlock this feature");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
