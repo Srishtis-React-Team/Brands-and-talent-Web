@@ -35,6 +35,8 @@ const AdultFormTwo = () => {
     }
   }, [currentUserId]);
 
+  const durationList = ["Days", "Weeks", "Months"];
+
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
       .then((resData) => {
@@ -86,6 +88,8 @@ const AdultFormTwo = () => {
     let formData = {
       services: inputs,
     };
+    console.log(formData, "formData");
+
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -224,7 +228,7 @@ const AdultFormTwo = () => {
                 }}
                 src={btLogo}
               ></img>
-              <div className="step-text">Step 4 of 4</div>
+              <div className="step-text">Step 5 of 5</div>
             </div>
             <button
               type="button"
@@ -296,27 +300,54 @@ const AdultFormTwo = () => {
                                   )
                                 }
                                 className="form-control"
-                                placeholder="Enter Amount In $"
+                                placeholder="Must be in USD"
                               ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">
                               <label className="form-label">
-                                Duration (Weeks/Months)
+                                Delivery Time
                               </label>
-                              <input
-                                type="text"
-                                name="duration"
-                                value={input.serviceDuration}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    serviceIndex,
-                                    "serviceDuration",
-                                    e.target.value
-                                  )
-                                }
-                                className="form-control"
-                                placeholder="Duration (Weeks/Months)"
-                              ></input>
+                              <div className="duration-splitter">
+                                <div className="duration-select-main">
+                                  <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    style={{ fontSize: "14px" }}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceTime",
+                                        e.target.value
+                                      )
+                                    }
+                                  >
+                                    <option value="" disabled selected>
+                                      Time Unit
+                                    </option>
+                                    {durationList.map((option, index) => (
+                                      <option key={index} value={option}>
+                                        {option}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                                <div className="duration-value-main">
+                                  <input
+                                    type="text"
+                                    name="duration"
+                                    value={input.serviceDuration}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceDuration",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="form-control"
+                                    placeholder="Duration"
+                                  ></input>
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div className="adults-titles">Features</div>

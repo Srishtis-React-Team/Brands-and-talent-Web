@@ -241,7 +241,9 @@ const TalentDashBoard = () => {
     }
   };
 
-  useEffect(() => {}, [flag]);
+  useEffect(() => {
+    console.log(flag, "flag");
+  }, [flag]);
 
   const getTopBrands = async () => {
     await ApiHelper.post(API.getTopBrands)
@@ -1244,7 +1246,11 @@ const TalentDashBoard = () => {
             </div>
             <div className={flag ? "col-md-4 col-lg-6" : "col-md-4 col-lg-4"}>
               {flag ? (
-                <TalentPreviewJob job={job} setFlag={setFlag} />
+                <TalentPreviewJob
+                  from={"dashboard"}
+                  job={job}
+                  setFlag={setFlag}
+                />
               ) : (
                 <div className="rightBx">
                   <div className="contact-section-main remvSpace">

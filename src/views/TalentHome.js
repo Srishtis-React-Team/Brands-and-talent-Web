@@ -198,7 +198,13 @@ const TalentHome = () => {
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main">
-          <div className="create-job-title">Welcome To Brands and Talent</div>
+          <div className="brand-headings-wrapper">
+            <div className="create-job-title w-50">
+              Welcome To Brands and Talent
+            </div>
+            <div className="sample-profile">Go to sample profile</div>
+          </div>
+
           <div
             className="home-cards mt-1 row pad8"
             onClick={handleEditNavigation}

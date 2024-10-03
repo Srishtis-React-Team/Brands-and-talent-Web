@@ -1877,52 +1877,50 @@ const TalentProfile = () => {
                           {photos && (
                             <div className="models-photos">
                               {/* row padSpc */}
-                              <section className="photos-gallery  w-100">
-                                <div className="row">
-                                  {photosList &&
-                                    photosList.map((image, index) => {
-                                      return (
-                                        <>
-                                          {/* col-lg-3 col-md-4 padSpc */}
-                                          <div className="col-md-4">
-                                            <div
-                                              className="photos-gallery-image"
-                                              key={index}
-                                            >
-                                              <img
-                                                className="photo-gallery-ind-image"
-                                                src={`${API.userFilePath}${image}`}
-                                                alt=""
-                                                onClick={() => {
-                                                  handleImageClick(index);
-                                                }}
-                                              />
-                                            </div>
+                              <div className="row">
+                                {photosList &&
+                                  photosList.map((image, index) => {
+                                    return (
+                                      <>
+                                        {/* col-lg-3 col-md-4 padSpc */}
+                                        <div className="col-md-4">
+                                          <div
+                                            className="photos-gallery-image"
+                                            key={index}
+                                          >
+                                            <img
+                                              className="photo-gallery-ind-image"
+                                              src={`${API.userFilePath}${image}`}
+                                              alt=""
+                                              onClick={() => {
+                                                handleImageClick(index);
+                                              }}
+                                            />
                                           </div>
-                                        </>
-                                      );
-                                    })}
-                                </div>
+                                        </div>
+                                      </>
+                                    );
+                                  })}
+                              </div>
 
-                                {talentData?.adminApproved === true &&
-                                  photosList.length === 0 && (
-                                    <>
-                                      <div className="msgs">
-                                        Photos are not added
-                                      </div>
-                                    </>
-                                  )}
-                                {talentData?.adminApproved === false &&
-                                  photosList.length === 0 && (
-                                    <>
-                                      <div className="msgs">
-                                        {" "}
-                                        Photos will be visible only after admin
-                                        approval
-                                      </div>
-                                    </>
-                                  )}
-                              </section>
+                              {talentData?.adminApproved === true &&
+                                photosList.length === 0 && (
+                                  <>
+                                    <div className="msgs">
+                                      Photos are not added
+                                    </div>
+                                  </>
+                                )}
+                              {talentData?.adminApproved === false &&
+                                photosList.length === 0 && (
+                                  <>
+                                    <div className="msgs">
+                                      {" "}
+                                      Photos will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
                             </div>
                           )}
 

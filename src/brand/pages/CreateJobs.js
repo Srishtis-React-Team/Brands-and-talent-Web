@@ -94,7 +94,9 @@ const CreateJobs = () => {
   const [jobCountNumber, setJobCountNumber] = useState("");
   const [brandData, setBrandData] = useState("");
   const [minPay, setMinPay] = useState("");
+  const [minPayError, setMinPayError] = useState("");
   const [maxPay, setMaxPay] = useState("");
+  const [maxPayError, setMaxPayError] = useState("");
   const [instaMin, setInstaMin] = useState("");
   const [instaMax, setInstaMax] = useState("");
   const [tikTokMin, setTiktokMin] = useState("");
@@ -110,8 +112,7 @@ const CreateJobs = () => {
 
   const [instaMinError, setInstaMinError] = useState("");
   const [instaMaxError, setInstaMaxError] = useState("");
-  const [tikTokMinError, setTikTokMinError] = useState("");
-  const [tikTokMaxError, setTikTokMaxError] = useState("");
+
   const [linkedInMinError, setLinkedInMinError] = useState("");
   const [linkedInMaxError, setLinkedInMaxError] = useState("");
 
@@ -124,7 +125,7 @@ const CreateJobs = () => {
       setInstaMinError(""); // Clear error if valid
     }
 
-    if (instaMin && instaMax && parseInt(instaMin) < parseInt(instaMax)) {
+    if (instaMax && instaMin && parseInt(instaMax) < parseInt(instaMin)) {
       setInstaMaxError(
         "Maximum followers cannot be less than minimum followers."
       );
@@ -137,12 +138,11 @@ const CreateJobs = () => {
     console.log(instaMinError, "instaMinError");
   }, [instaMinError]);
 
+  const [tikTokMinError, setTikTokMinError] = useState("");
+  const [tikTokMaxError, setTikTokMaxError] = useState("");
+
   useEffect(() => {
-    if (
-      tikTokMinError &&
-      tikTokMaxError &&
-      parseInt(tikTokMinError) > parseInt(tikTokMaxError)
-    ) {
+    if (tikTokMin && tikTokMax && parseInt(tikTokMin) > parseInt(tikTokMax)) {
       setTikTokMinError(
         "Minimum followers cannot be greater than maximum followers."
       );
@@ -150,24 +150,20 @@ const CreateJobs = () => {
       setTikTokMinError(""); // Clear error if valid
     }
 
-    if (
-      tikTokMaxError &&
-      tikTokMinError &&
-      parseInt(tikTokMaxError) < parseInt(tikTokMinError)
-    ) {
+    if (tikTokMax && tikTokMin && parseInt(tikTokMax) < parseInt(tikTokMin)) {
       setTikTokMaxError(
         "Maximum followers cannot be less than minimum followers."
       );
     } else {
       setTikTokMaxError(""); // Clear error if valid
     }
-  }, [tikTokMinError, tikTokMaxError]);
+  }, [tikTokMin, tikTokMax]);
 
   useEffect(() => {
     if (
-      linkedInMinError &&
-      linkedInMaxError &&
-      parseInt(linkedInMinError) > parseInt(linkedInMaxError)
+      linkedInMin &&
+      linkedInMax &&
+      parseInt(linkedInMin) > parseInt(linkedInMax)
     ) {
       setLinkedInMinError(
         "Minimum followers cannot be greater than maximum followers."
@@ -177,9 +173,9 @@ const CreateJobs = () => {
     }
 
     if (
-      linkedInMaxError &&
-      linkedInMinError &&
-      parseInt(linkedInMaxError) < parseInt(linkedInMinError)
+      linkedInMax &&
+      linkedInMin &&
+      parseInt(linkedInMax) < parseInt(linkedInMin)
     ) {
       setLinkedInMaxError(
         "Maximum followers cannot be less than minimum followers."
@@ -187,17 +183,13 @@ const CreateJobs = () => {
     } else {
       setLinkedInMaxError(""); // Clear error if valid
     }
-  }, [linkedInMinError, linkedInMaxError]);
+  }, [linkedInMin, linkedInMax]);
 
   const [fbMinError, setFbMinError] = useState("");
   const [fbMaxError, setFbMaxError] = useState("");
 
   useEffect(() => {
-    if (
-      fbMinError &&
-      fbMaxError &&
-      parseInt(fbMinError) > parseInt(fbMaxError)
-    ) {
+    if (fbMin && fbMax && parseInt(fbMin) > parseInt(fbMax)) {
       setFbMinError(
         "Minimum followers cannot be greater than maximum followers."
       );
@@ -205,25 +197,21 @@ const CreateJobs = () => {
       setFbMinError(""); // Clear error if valid
     }
 
-    if (
-      fbMaxError &&
-      fbMinError &&
-      parseInt(fbMaxError) < parseInt(fbMinError)
-    ) {
+    if (fbMax && fbMin && parseInt(fbMax) < parseInt(fbMin)) {
       setFbMaxError("Maximum followers cannot be less than minimum followers.");
     } else {
       setFbMaxError(""); // Clear error if valid
     }
-  }, [fbMinError, fbMaxError]);
+  }, [fbMin, fbMax]);
 
   const [twitterMinError, setTwitterMinError] = useState("");
   const [twitterMaxError, setTwitterMaxError] = useState("");
 
   useEffect(() => {
     if (
-      twitterMinError &&
-      twitterMaxError &&
-      parseInt(twitterMinError) > parseInt(twitterMaxError)
+      twitterMin &&
+      twitterMax &&
+      parseInt(twitterMin) > parseInt(twitterMax)
     ) {
       setTwitterMinError(
         "Minimum followers cannot be greater than maximum followers."
@@ -233,9 +221,9 @@ const CreateJobs = () => {
     }
 
     if (
-      twitterMaxError &&
-      twitterMinError &&
-      parseInt(twitterMaxError) < parseInt(twitterMinError)
+      twitterMax &&
+      twitterMin &&
+      parseInt(twitterMax) < parseInt(twitterMin)
     ) {
       setTwitterMaxError(
         "Maximum followers cannot be less than minimum followers."
@@ -243,16 +231,30 @@ const CreateJobs = () => {
     } else {
       setTwitterMaxError(""); // Clear error if valid
     }
-  }, [twitterMinError, twitterMaxError]);
+  }, [twitterMin, twitterMax]);
 
   const [youTubeMinError, setYouTubeMinError] = useState("");
   const [youTubeMaxError, setYouTubeMaxError] = useState("");
 
   useEffect(() => {
+    if (minPay && maxPay && parseInt(minPay) > parseInt(maxPay)) {
+      setMinPayError("Minimum pay cannot be greater than maximum pay.");
+    } else {
+      setMinPayError(""); // Clear error if valid
+    }
+
+    if (maxPay && minPay && parseInt(maxPay) < parseInt(minPay)) {
+      setMaxPayError("Maximum pay cannot be less than minimum pay.");
+    } else {
+      setMaxPayError(""); // Clear error if valid
+    }
+  }, [minPay, maxPay]);
+
+  useEffect(() => {
     if (
-      youTubeMinError &&
-      youTubeMaxError &&
-      parseInt(youTubeMinError) > parseInt(youTubeMaxError)
+      youTubeMin &&
+      youTubeMax &&
+      parseInt(youTubeMin) > parseInt(youTubeMax)
     ) {
       setYouTubeMinError(
         "Minimum followers cannot be greater than maximum followers."
@@ -262,9 +264,9 @@ const CreateJobs = () => {
     }
 
     if (
-      youTubeMaxError &&
-      youTubeMinError &&
-      parseInt(youTubeMaxError) < parseInt(youTubeMinError)
+      youTubeMax &&
+      youTubeMin &&
+      parseInt(youTubeMax) < parseInt(youTubeMin)
     ) {
       setYouTubeMaxError(
         "Maximum followers cannot be less than minimum followers."
@@ -272,7 +274,7 @@ const CreateJobs = () => {
     } else {
       setYouTubeMaxError(""); // Clear error if valid
     }
-  }, [youTubeMinError, youTubeMaxError]);
+  }, [youTubeMin, youTubeMax]);
 
   const [employmentType, setEmploymentType] = useState("");
   const [employmentError, setEmploymentError] = useState(false);
@@ -1313,7 +1315,23 @@ const CreateJobs = () => {
       skills !== "" &&
       country !== "" &&
       category !== "" &&
-      employmentType !== ""
+      employmentType !== "" &&
+      !minAgeError &&
+      !maxAgeError &&
+      !instaMinError &&
+      !instaMaxError &&
+      !tikTokMinError &&
+      !tikTokMaxError &&
+      !linkedInMinError &&
+      !linkedInMaxError &&
+      !fbMinError &&
+      !fbMaxError &&
+      !twitterMinError &&
+      !twitterMaxError &&
+      !youTubeMinError &&
+      !youTubeMaxError &&
+      !minPayError &&
+      !maxPayError
     ) {
       const formData = {
         jobTitle: jobTitle,
@@ -3081,16 +3099,27 @@ const CreateJobs = () => {
                                               Minimum Pay
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
-                                              <input
-                                                type="number"
-                                                className="form-control"
-                                                placeholder="Minimum Pay"
-                                                value={minPay}
-                                                onChange={(e) => {
-                                                  onMinPayChange(e);
-                                                }}
-                                                min={1}
-                                              ></input>
+                                              <div>
+                                                <input
+                                                  type="number"
+                                                  className="form-control"
+                                                  placeholder="Minimum Pay"
+                                                  value={minPay}
+                                                  onChange={(e) => {
+                                                    onMinPayChange(e);
+                                                  }}
+                                                  style={{ width: "343px" }}
+                                                  min={1}
+                                                ></input>
+                                                {minPayError && (
+                                                  <div
+                                                    className="invalid-fields"
+                                                    style={{ width: "343px" }}
+                                                  >
+                                                    {minPayError}
+                                                  </div>
+                                                )}{" "}
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
@@ -3100,16 +3129,27 @@ const CreateJobs = () => {
                                               Maximum Pay
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
-                                              <input
-                                                type="number"
-                                                className="form-control"
-                                                placeholder="Maximum Pay"
-                                                value={maxPay}
-                                                onChange={(e) => {
-                                                  onMaxPayChange(e);
-                                                }}
-                                                min={1}
-                                              ></input>
+                                              <div>
+                                                <input
+                                                  type="number"
+                                                  className="form-control"
+                                                  placeholder="Maximum Pay"
+                                                  value={maxPay}
+                                                  onChange={(e) => {
+                                                    onMaxPayChange(e);
+                                                  }}
+                                                  style={{ width: "343px" }}
+                                                  min={1}
+                                                ></input>
+                                                {maxPayError && (
+                                                  <div
+                                                    className="invalid-fields"
+                                                    style={{ width: "343px" }}
+                                                  >
+                                                    {maxPayError}
+                                                  </div>
+                                                )}{" "}
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
@@ -3334,16 +3374,27 @@ const CreateJobs = () => {
                                                 Minimum Pay
                                               </label>
                                               <div className="creators-filter-select creator-age-wrapper">
-                                                <input
-                                                  type="number"
-                                                  className="form-control"
-                                                  placeholder="Minimum Pay"
-                                                  value={minPay}
-                                                  onChange={(e) => {
-                                                    onMinPayChange(e);
-                                                  }}
-                                                  min={1}
-                                                ></input>
+                                                <div>
+                                                  <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    placeholder="Minimum Pay"
+                                                    value={minPay}
+                                                    style={{ width: "343px" }}
+                                                    onChange={(e) => {
+                                                      onMinPayChange(e);
+                                                    }}
+                                                    min={1}
+                                                  ></input>
+                                                  {minPayError && (
+                                                    <div
+                                                      className="invalid-fields"
+                                                      style={{ width: "343px" }}
+                                                    >
+                                                      {minPayError}
+                                                    </div>
+                                                  )}{" "}
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
@@ -3353,16 +3404,27 @@ const CreateJobs = () => {
                                                 Maximum Pay
                                               </label>
                                               <div className="creators-filter-select creator-age-wrapper">
-                                                <input
-                                                  type="number"
-                                                  className="form-control"
-                                                  placeholder="Maximum Pay"
-                                                  value={maxPay}
-                                                  onChange={(e) => {
-                                                    onMaxPayChange(e);
-                                                  }}
-                                                  min={1}
-                                                ></input>
+                                                <div>
+                                                  <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    placeholder="Maximum Pay"
+                                                    value={maxPay}
+                                                    onChange={(e) => {
+                                                      onMaxPayChange(e);
+                                                    }}
+                                                    style={{ width: "343px" }}
+                                                    min={1}
+                                                  ></input>
+                                                  {maxPayError && (
+                                                    <div
+                                                      className="invalid-fields"
+                                                      style={{ width: "343px" }}
+                                                    >
+                                                      {maxPayError}
+                                                    </div>
+                                                  )}{" "}
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
