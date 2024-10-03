@@ -475,8 +475,8 @@ const AdultSignup = () => {
                       style={{ width: "420px" }}
                     >
                       Your password must be at least 8 characters long and
-                      include at least: 1 capital letter (A, B, C...) 1 small
-                      letter (a, b, c...) 1 number (1, 2, 3...) 1 special symbol
+                      include at least: 1 capital letter (A, B, C...), 1 small
+                      letter (a, b, c...), 1 number (1, 2, 3...), 1 special symbol
                       (!, @, #...)
                     </div>
                   )}
