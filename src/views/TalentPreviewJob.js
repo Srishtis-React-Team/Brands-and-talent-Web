@@ -124,13 +124,18 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
   const [modalData, setModalData] = useState(null);
 
   const applyjobs = async (data) => {
+    console.log(data, "applyjobs_data");
     setModalData(data);
     if (data?.isApplied != "Applied") {
-      const modalElement = document.getElementById("exampleModal");
+      const modalElement = document.getElementById("viewJobApplyModal");
       const bootstrapModal = new window.bootstrap.Modal(modalElement);
       bootstrapModal.show();
     }
   };
+
+  useEffect(() => {
+    console.log(modalData, "modalData");
+  }, [modalData]);
 
   const handleCloseModal = async () => {
     const formData = {
@@ -145,7 +150,7 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
         setTimeout(function () {
           setOpenPopUp(false);
           getJobsByID();
-          const modalElement = document.getElementById("exampleModal");
+          const modalElement = document.getElementById("viewJobApplyModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
         }, 1000);
@@ -173,6 +178,16 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
   // Determine the width based on window size
   const containerStyle = {
     width: windowWidth >= 600 ? "800px" : "400px", // 800px for desktop, 400px for mobile
+  };
+
+  // Utility function to check if the value is a valid URL
+  const isValidURL = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch (err) {
+      return false;
+    }
   };
 
   return (
@@ -286,9 +301,15 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
               </div>
 
               <div className="company-location">
-                <span className="job-feature-heading">
-                  Compensation :&nbsp;{" "}
-                </span>
+                {jobData.compensation &&
+                  Object.keys(jobData.compensation).length > 0 && (
+                    <>
+                      <span className="job-feature-heading">
+                        Compensation :&nbsp;{" "}
+                      </span>
+                    </>
+                  )}
+
                 <span>
                   {jobData.compensation && (
                     <>
@@ -297,7 +318,12 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                           Object.entries(jobData.compensation).map(
                             ([key, value]) => (
                               <span key={key}>
-                                <span>{value.currency}</span>&nbsp;
+                                {value?.minPay ||
+                                  (value?.maxPay && (
+                                    <>
+                                      <span>{value.currency}</span>&nbsp;
+                                    </>
+                                  ))}
                                 {value?.minPay && (
                                   <>
                                     <span>{value.minPay}/day</span>
@@ -322,14 +348,28 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                                 )}
                                 {value.product_name && (
                                   <>
-                                    <span>{value.product_name}</span>
+                                    {isValidURL(value.product_name) ? (
+                                      <a
+                                        href={value.product_name}
+                                        style={{
+                                          color: "#c2114b",
+                                          textDecoration: "underline",
+                                          fontWeight: "bold",
+                                        }}
+                                      >
+                                        {value.product_name}
+                                      </a>
+                                    ) : (
+                                      <span>{value.product_name}</span>
+                                    )}
                                     &nbsp;
                                   </>
                                 )}
                                 {value.product_name && value?.productValue && (
                                   <>
                                     <span>
-                                      ( valued at {value?.productValue} )
+                                      ( valued at {value.currency}{" "}
+                                      {value?.productValue} )
                                     </span>
                                   </>
                                 )}
@@ -700,7 +740,7 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
                     Interested candidates should submit their resume and a link
-                    that contains portfolio from Brands and Talent website to
+                    that contains portfolio from Brands & Talent website to
                     <span className="how-apply-terms-link">
                       {brandData?.brandEmail}
                     </span>
@@ -744,7 +784,7 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
 
       <div
         className="modal fade"
-        id="exampleModal"
+        id="viewJobApplyModal"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -837,14 +877,16 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                   </div>
                 </div>
               )}
-              {modalData?.gender && Array.isArray(modalData?.gender) && (
-                <div className="modal-job-flex">
-                  <i className="bi bi-gender-ambiguous model-job-icons"></i>
-                  <div className="model-job-name">
-                    {modalData.gender.join(", ")}
+              {modalData?.gender &&
+                modalData?.gender.length > 0 &&
+                Array.isArray(modalData?.gender) && (
+                  <div className="modal-job-flex">
+                    <i className="bi bi-gender-ambiguous model-job-icons"></i>
+                    <div className="model-job-name">
+                      {modalData.gender.join(", ")}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {modalData?.lastDateForApply && (
                 <div className="modal-job-flex">

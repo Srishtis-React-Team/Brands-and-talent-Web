@@ -300,6 +300,12 @@ const CreateJobs = () => {
       .catch((err) => {});
   };
 
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
+  useEffect(() => {
+    console.log(jobTitle, "jobTitle");
+  }, [jobTitle]);
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
@@ -533,7 +539,7 @@ const CreateJobs = () => {
     //    Please include ${jobTitle} in the subject line.</p>\n`,
     // ];
     let initialHowToApply = [
-      `<p>Interested candidates should submit their resume and a link of their brandsandtalent.com profile/portfolio to ${brandData?.brandEmail}. Please include${jobTitle} in the subject line</p>\n`,
+      `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line</p>\n`,
     ];
 
     const whyWorkWithUsContent = initialHowToApply[0];
@@ -546,7 +552,7 @@ const CreateJobs = () => {
     );
     setEditorStateHowToApply(updatewhyWorkWithUs);
     setHowToApplyDescription(editJobData?.whyWorkWithUs);
-  }, []);
+  }, [brandData, jobTitle]);
 
   const getAllJobs = async (id) => {
     await ApiHelper.get(`${API.getAllJobs}${id}`)

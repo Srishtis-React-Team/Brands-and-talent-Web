@@ -260,7 +260,7 @@ const KidsServices = () => {
                             <div className="">
                               <div className="mb-3 mt-3">
                                 <label className="form-label">
-                                  Service name
+                                  Service Name
                                 </label>
                                 <input
                                   value={input.serviceName}
@@ -274,14 +274,16 @@ const KidsServices = () => {
                                   type="text"
                                   name="serviceName"
                                   className="form-control"
-                                  placeholder=""
+                                  placeholder="Custom Photoshoot"
                                 ></input>
                               </div>
                             </div>
                           </div>
                           <div className="kids-form-row row">
                             <div className="kids-form-section col-md-6 mb-3">
-                              <label className="form-label">Rates (/hr)</label>
+                              <label className="form-label">
+                                Rates (in USD)
+                              </label>
                               <input
                                 type="number"
                                 name="amount"
@@ -294,7 +296,7 @@ const KidsServices = () => {
                                   )
                                 }
                                 className="form-control"
-                                placeholder="Must be in USD"
+                                placeholder="$200 per hour (negotiable)"
                               ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">
@@ -302,6 +304,22 @@ const KidsServices = () => {
                                 Delivery Time
                               </label>
                               <div className="duration-splitter">
+                                <div className="duration-value-main">
+                                  <input
+                                    type="text"
+                                    name="duration"
+                                    value={input.serviceDuration}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceDuration",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="form-control"
+                                    placeholder="3-5 days"
+                                  ></input>
+                                </div>
                                 <div className="duration-select-main">
                                   <select
                                     className="form-select"
@@ -325,22 +343,6 @@ const KidsServices = () => {
                                     ))}
                                   </select>
                                 </div>
-                                <div className="duration-value-main">
-                                  <input
-                                    type="text"
-                                    name="duration"
-                                    value={input.serviceDuration}
-                                    onChange={(e) =>
-                                      handleInputChange(
-                                        serviceIndex,
-                                        "serviceDuration",
-                                        e.target.value
-                                      )
-                                    }
-                                    className="form-control"
-                                    placeholder=""
-                                  ></input>
-                                </div>
                               </div>
                             </div>
                           </div>
@@ -349,6 +351,7 @@ const KidsServices = () => {
                               Short Description
                             </label>
                             <RichTextEditor
+                              from={"service"}
                               value={input.editorState}
                               onChange={(editorState) =>
                                 handleEditorStateChange(

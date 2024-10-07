@@ -281,10 +281,12 @@ const ContactSupport = () => {
                   setEnquiryError(false);
                 }}
               />
+
               {enquiryError && (
                 <div className="invalid-fields">Please enter Message</div>
               )}
             </div>
+
             <div className="add-portfoli-section cn-btn">
               <div className="add-portfolia-btn contactus-btn-wrapper">
                 <button

@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CurrentUser from "../CurrentUser.js";
+import Spinner from "../components/Spinner.js";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -42,6 +43,7 @@ function a11yProps(index) {
 }
 const TalentNotification = () => {
   const { avatarImage } = CurrentUser();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [talentId, setTalentId] = useState(null);
   const [talentEmail, setTalentEmail] = useState(null);
@@ -98,7 +100,6 @@ const TalentNotification = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           setTalentData(resData.data.data, "resData.data.data");
-
           setSubscriptionCategory(resData?.data?.data?.subscriptionType);
           if (resData?.data?.data?.subscriptionType == "weekly") {
             setWeekly(true);
@@ -109,6 +110,13 @@ const TalentNotification = () => {
       })
       .catch((err) => {});
   };
+
+  useEffect(() => {
+    console.log(talentData, "TALENTDATA_TALENTNOTIFICATIONS");
+  }, [talentData]);
+  useEffect(() => {
+    console.log(subscriptionCategory, "TALENTDATA_subscriptionCategoryS");
+  }, [subscriptionCategory]);
 
   const getTalentNotification = async () => {
     await ApiHelper.get(`${API.getTalentNotification}${talentId}`)
@@ -154,41 +162,53 @@ const TalentNotification = () => {
       .catch((err) => {});
   };
 
-  const manageSubscription = async (item) => {
-    if (talentData?.isSubscribed === false) {
-      const formData = {
-        talentId: talentId,
-        subscriptionType: subscriptionCategory,
-      };
-      await ApiHelper.post(`${API.createJobAlert}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            setMessage("Subscribed To Job Alert");
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-              getKidsData();
-            }, 1000);
-          }
-        })
-        .catch((err) => {});
-    } else if (talentData?.isSubscribed === true) {
-      const formData = {
-        talentId: talentId,
-      };
-      await ApiHelper.post(`${API.updateJobAlert}`, formData)
-        .then((resData) => {
-          if (resData.data.status === true) {
-            setMessage("Unsubscribed Successfully");
-            setOpenPopUp(true);
-            setTimeout(function () {
-              setOpenPopUp(false);
-              getKidsData();
-            }, 1000);
-          }
-        })
-        .catch((err) => {});
-    }
+  const createJobAlert = async (item) => {
+    setIsLoading(true);
+    const formData = {
+      talentId: talentId,
+      subscriptionType: subscriptionCategory,
+    };
+    await ApiHelper.post(`${API.createJobAlert}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+
+          setMessage("Subscribed To Job Alert");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            getKidsData();
+            setIsLoading(false);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
+  };
+  const updateJobAlert = async (item) => {
+    setIsLoading(true);
+
+    const formData = {
+      talentId: talentId,
+    };
+    await ApiHelper.post(`${API.updateJobAlert}`, formData)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          setIsLoading(false);
+
+          setMessage("Unsubscribed Successfully");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setIsLoading(false);
+
+            setOpenPopUp(false);
+            getKidsData();
+          }, 1000);
+        }
+      })
+      .catch((err) => {});
+    setIsLoading(false);
   };
 
   function setSubscriptionType(e) {
@@ -338,21 +358,25 @@ const TalentNotification = () => {
                 <div className="job-alert-wrapper">
                   <div className="modal-buttons">
                     <div
-                      onClick={(e) => {
-                        setSubscriptionType("weekly");
+                      onClick={() => {
+                        setSubscriptionCategory("weekly");
                       }}
                       className={
-                        weekly ? "selected-register" : "choose-register"
+                        subscriptionCategory === "weekly"
+                          ? "selected-register"
+                          : "choose-register"
                       }
                     >
                       Weekly Job Alert
                     </div>
                     <div
-                      onClick={(e) => {
-                        setSubscriptionType("monthly");
+                      onClick={() => {
+                        setSubscriptionCategory("monthly");
                       }}
                       className={
-                        monthly ? "selected-register" : "choose-register"
+                        subscriptionCategory === "monthly"
+                          ? "selected-register"
+                          : "choose-register"
                       }
                     >
                       Monthly Job Alert
@@ -362,14 +386,53 @@ const TalentNotification = () => {
                     <div>
                       <Button
                         onClick={(e) => {
-                          manageSubscription();
+                          if (
+                            talentData?.subscriptionType !==
+                              subscriptionCategory &&
+                            talentData?.isSubscribed
+                          ) {
+                            // User is subscribed and changing their subscription type
+                            createJobAlert(); // Re-subscribe to a different type
+                          } else if (
+                            talentData?.subscriptionType !==
+                              subscriptionCategory &&
+                            !talentData?.isSubscribed
+                          ) {
+                            // User is not subscribed and selecting a different subscription
+                            createJobAlert();
+                          } else if (
+                            talentData?.subscriptionType ===
+                              subscriptionCategory &&
+                            talentData?.isSubscribed
+                          ) {
+                            // User is subscribed and wants to unsubscribe
+                            updateJobAlert();
+                          }
                         }}
                         className="edit-profileimg-btn"
                         variant="text"
                         style={{ textTransform: "capitalize" }}
                       >
-                        {talentData?.isSubscribed === false && "Subscribe"}
-                        {talentData?.isSubscribed === true && "Unsubscribe"}
+                        {console.log(
+                          "subscriptionType: manageSubscription",
+                          talentData?.subscriptionType
+                        )}
+                        {console.log(
+                          "subscriptionCategory: manageSubscription",
+                          subscriptionCategory
+                        )}
+                        {console.log(
+                          "isSubscribed: manageSubscription",
+                          talentData?.isSubscribed
+                        )}
+
+                        {talentData?.subscriptionType !==
+                          subscriptionCategory && !talentData?.isSubscribed
+                          ? "Subscribe"
+                          : talentData?.subscriptionType ===
+                              subscriptionCategory && talentData?.isSubscribed
+                          ? "Unsubscribe"
+                          : "Subscribe"}
                       </Button>
                     </div>
                   </div>
@@ -403,6 +466,7 @@ const TalentNotification = () => {
           </Box>
         </div>
       </main>
+      {isLoading && <Spinner />}
 
       {openPopUp && <PopUp message={message} />}
     </>

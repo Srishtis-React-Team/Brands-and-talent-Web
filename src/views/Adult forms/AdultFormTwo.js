@@ -266,7 +266,7 @@ const AdultFormTwo = () => {
                             <div className="">
                               <div className="mb-3">
                                 <label className="form-label">
-                                  Service name
+                                  Service Name
                                 </label>
                                 <input
                                   value={input.serviceName}
@@ -280,14 +280,16 @@ const AdultFormTwo = () => {
                                   type="text"
                                   name="serviceName"
                                   className="form-control"
-                                  placeholder=""
+                                  placeholder="Custom Photoshoot"
                                 ></input>
                               </div>
                             </div>
                           </div>
                           <div className="kids-form-row row">
                             <div className="kids-form-section col-md-6 mb-3">
-                              <label className="form-label">Rates (/hr)</label>
+                              <label className="form-label">
+                                Rates (in USD)
+                              </label>
                               <input
                                 type="number"
                                 name="amount"
@@ -300,7 +302,7 @@ const AdultFormTwo = () => {
                                   )
                                 }
                                 className="form-control"
-                                placeholder="Must be in USD"
+                                placeholder="$200 per hour (negotiable)"
                               ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">
@@ -308,6 +310,22 @@ const AdultFormTwo = () => {
                                 Delivery Time
                               </label>
                               <div className="duration-splitter">
+                                <div className="duration-value-main">
+                                  <input
+                                    type="text"
+                                    name="duration"
+                                    value={input.serviceDuration}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceDuration",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="form-control"
+                                    placeholder="3-5 days"
+                                  ></input>
+                                </div>
                                 <div className="duration-select-main">
                                   <select
                                     className="form-select"
@@ -331,22 +349,6 @@ const AdultFormTwo = () => {
                                     ))}
                                   </select>
                                 </div>
-                                <div className="duration-value-main">
-                                  <input
-                                    type="text"
-                                    name="duration"
-                                    value={input.serviceDuration}
-                                    onChange={(e) =>
-                                      handleInputChange(
-                                        serviceIndex,
-                                        "serviceDuration",
-                                        e.target.value
-                                      )
-                                    }
-                                    className="form-control"
-                                    placeholder=""
-                                  ></input>
-                                </div>
                               </div>
                             </div>
                           </div>
@@ -354,35 +356,9 @@ const AdultFormTwo = () => {
                             <label className="form-label">
                               Short Description
                             </label>
-                            {/* <Editor
-                              editorStyle={{
-                                overflow: "hidden",
-                              }}
-                              value={input.editorState}
-                              onEditorStateChange={(editorState) =>
-                                handleEditorStateChange(
-                                  serviceIndex,
-                                  editorState
-                                )
-                              }
-                              toolbar={{
-                                options: [
-                                  "inline",
-                                  "blockType",
-                                  "fontSize",
-                                  "list",
-                                  "textAlign",
-                                  "history",
-                                ],
-                                inline: { inDropdown: true },
-                                list: { inDropdown: true },
-                                textAlign: { inDropdown: true },
-                                link: { inDropdown: true },
-                                history: { inDropdown: true },
-                              }}
-                            /> */}
 
                             <RichTextEditor
+                              from={"service"}
                               value={input.editorState}
                               onChange={(editorState) =>
                                 handleEditorStateChange(
