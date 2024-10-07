@@ -398,19 +398,19 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
                   <Menu slots={{ listbox: AnimatedListbox }}>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("profile")}
+                      onClick={() => createHandleMenuClick("profile")()}
                     >
                       View profile
                     </MenuItem>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("edit")}
+                      onClick={() => createHandleMenuClick("edit")()}
                     >
                       Edit profile
                     </MenuItem>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("logout")}
+                      onClick={() => createHandleMenuClick("logout")()}
                     >
                       Log out
                     </MenuItem>
