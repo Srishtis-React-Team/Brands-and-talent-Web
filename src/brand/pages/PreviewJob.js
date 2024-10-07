@@ -116,6 +116,15 @@ const PreviewJob = ({ data, onButtonClick }) => {
     window.open(`${API.userFilePath}${item.fileData}`, "_blank");
   };
 
+  const isValidURL = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
+
   return (
     <>
       <>
@@ -227,12 +236,23 @@ const PreviewJob = ({ data, onButtonClick }) => {
               </div>
 
               <div className="company-location">
-                <span className="font-600">Compensation :&nbsp; </span>
+                {jobData.compensation &&
+                  Object.keys(jobData.compensation).length > 0 && (
+                    <>
+                      <span className="font-600">Compensation :&nbsp;</span>
+                    </>
+                  )}
+
                 {/* {jobData?.paymentType?.label} */}
                 {jobData.compensation &&
                   Object.entries(jobData.compensation).map(([key, value]) => (
                     <span key={key}>
-                      <span>{value.currency}</span>&nbsp;
+                      {value?.minPay ||
+                        (value?.maxPay && (
+                          <>
+                            <span>{value.currency}</span>&nbsp;
+                          </>
+                        ))}
                       {value?.minPay && (
                         <>
                           <span>{value.minPay}/day</span>
@@ -257,13 +277,28 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       )}
                       {value.product_name && (
                         <>
-                          <span>{value.product_name}</span>
+                          {isValidURL(value.product_name) ? (
+                            <a
+                              href={value.product_name}
+                              style={{
+                                color: "#c2114b",
+                                textDecoration: "underline",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {value.product_name}
+                            </a>
+                          ) : (
+                            <span>{value.product_name}</span>
+                          )}
                           &nbsp;
                         </>
                       )}
                       {value.product_name && value?.productValue && (
                         <>
-                          <span>( valued at {value?.productValue} )</span>
+                          <span>
+                            ( valued at {value.currency} {value?.productValue} )
+                          </span>
                         </>
                       )}
                     </span>
@@ -648,7 +683,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
                     Interested candidates should submit their resume and a link
-                    that contains portfolio from Brands and Talent website to
+                    that contains portfolio from Brands & Talent website to
                     <span className="how-apply-terms-link">
                       {brandData?.brandEmail}
                     </span>

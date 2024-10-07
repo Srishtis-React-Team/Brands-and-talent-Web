@@ -402,7 +402,7 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {talentsList && talentsList?.length >= 5 && (
+        {talentsList && talentsList?.length >= 10 && (
           <>
             <div className="wraper">
               <div className="container-fluid">
@@ -488,15 +488,12 @@ const Dashboard = () => {
                                 item?.averageStarRatings > 0 && (
                                   <>
                                     <div className="talent-details-wrapper">
-                                      <div className="logo-fill">
-                                        <img
-                                          className="talent-logo"
-                                          src={pinkStar}
-                                        ></img>
+                                      <div className="logo-fill-briefcase">
+                                        <i class="bi bi-star-fill model-job-icons"></i>
                                       </div>
                                       <div className="contSect">
                                         <span>
-                                          *{item?.averageStarRatings} (
+                                          {item?.averageStarRatings} (
                                           {item?.totalReviews} ratings)
                                         </span>
                                       </div>
@@ -533,8 +530,18 @@ const Dashboard = () => {
                               <span className="job-company_dtls nweAlign pt-2 d-flex">
                                 <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
                                 <span>
-                                  {item?.childCity},{item?.parentState},{" "}
-                                  {item?.parentCountry}{" "}
+                                  {item?.childCity && <>{item.childCity}</>}
+                                  {item?.parentState && item?.childCity && (
+                                    <>, </>
+                                  )}
+                                  {item?.parentState && <>{item.parentState}</>}
+                                  {item?.parentCountry &&
+                                    (item?.childCity || item?.parentState) && (
+                                      <>, </>
+                                    )}
+                                  {item?.parentCountry && (
+                                    <>{item.parentCountry}</>
+                                  )}
                                 </span>
                               </span>
                             </div>

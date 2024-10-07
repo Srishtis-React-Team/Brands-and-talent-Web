@@ -1068,15 +1068,12 @@ const FindCreators = () => {
                                       item?.averageStarRatings > 0 && (
                                         <>
                                           <div className="talent-details-wrapper">
-                                            <div className="logo-fill">
-                                              <img
-                                                className="talent-logo"
-                                                src={pinkStar}
-                                              ></img>
+                                            <div className="logo-fill-briefcase">
+                                              <i class="bi bi-star-fill model-job-icons"></i>
                                             </div>
                                             <div className="contSect">
                                               <span>
-                                                *{item?.averageStarRatings} (
+                                                {item?.averageStarRatings} (
                                                 {item?.totalReviews} ratings)
                                               </span>
                                             </div>
