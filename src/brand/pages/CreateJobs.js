@@ -2404,7 +2404,7 @@ const CreateJobs = () => {
                       </div>
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="">
+                          <div className="rangeWidth">
                             <label className="form-label">Age Range</label>
                             <div className="creators-filter-select creator-age-wrapper">
                               <div className="age-inputs ">
@@ -2458,6 +2458,7 @@ const CreateJobs = () => {
                                 )}{" "}
                               </div>
                             </div>
+
                             {/* <label className="form-label">
                               Age <span className="mandatory">*</span>
                             </label>
@@ -2482,6 +2483,7 @@ const CreateJobs = () => {
                                 Please select Age
                               </div>
                             )} */}
+
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
@@ -3100,7 +3102,7 @@ const CreateJobs = () => {
                                     {type == "pay_range" && (
                                       <>
                                         <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
+                                          <div className="payWidth">
                                             <label className="form-label">
                                               Minimum Pay
                                             </label>
@@ -3114,13 +3116,13 @@ const CreateJobs = () => {
                                                   onChange={(e) => {
                                                     onMinPayChange(e);
                                                   }}
-                                                  style={{ width: "343px" }}
+                                                 
                                                   min={1}
                                                 ></input>
                                                 {minPayError && (
                                                   <div
                                                     className="invalid-fields"
-                                                    style={{ width: "343px" }}
+                                              
                                                   >
                                                     {minPayError}
                                                   </div>
@@ -3130,7 +3132,7 @@ const CreateJobs = () => {
                                           </div>
                                         </div>
                                         <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
+                                          <div className="payWidth">
                                             <label className="form-label">
                                               Maximum Pay
                                             </label>
@@ -3144,13 +3146,13 @@ const CreateJobs = () => {
                                                   onChange={(e) => {
                                                     onMaxPayChange(e);
                                                   }}
-                                                  style={{ width: "343px" }}
+                                                  
                                                   min={1}
                                                 ></input>
                                                 {maxPayError && (
                                                   <div
                                                     className="invalid-fields"
-                                                    style={{ width: "343px" }}
+                                                    
                                                   >
                                                     {maxPayError}
                                                   </div>
@@ -3375,7 +3377,7 @@ const CreateJobs = () => {
                                       {type == "pay_range" && (
                                         <>
                                           <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                            <div className="">
+                                            <div className="payWidth">
                                               <label className="form-label">
                                                 Minimum Pay
                                               </label>
@@ -3386,7 +3388,7 @@ const CreateJobs = () => {
                                                     className="form-control"
                                                     placeholder="Minimum Pay"
                                                     value={minPay}
-                                                    style={{ width: "343px" }}
+                                              
                                                     onChange={(e) => {
                                                       onMinPayChange(e);
                                                     }}
@@ -3395,7 +3397,7 @@ const CreateJobs = () => {
                                                   {minPayError && (
                                                     <div
                                                       className="invalid-fields"
-                                                      style={{ width: "343px" }}
+                                                      style={{  }}
                                                     >
                                                       {minPayError}
                                                     </div>
@@ -3405,7 +3407,7 @@ const CreateJobs = () => {
                                             </div>
                                           </div>
                                           <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                            <div className="">
+                                            <div className="payWidth">
                                               <label className="form-label">
                                                 Maximum Pay
                                               </label>
@@ -3419,13 +3421,13 @@ const CreateJobs = () => {
                                                     onChange={(e) => {
                                                       onMaxPayChange(e);
                                                     }}
-                                                    style={{ width: "343px" }}
+                                                    style={{  }}
                                                     min={1}
                                                   ></input>
                                                   {maxPayError && (
                                                     <div
                                                       className="invalid-fields"
-                                                      style={{ width: "343px" }}
+                                                      style={{  }}
                                                     >
                                                       {maxPayError}
                                                     </div>
@@ -3498,7 +3500,7 @@ const CreateJobs = () => {
                                       </div>
                                     </div>
                                     <div className="compensation-row row">
-                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                      <div className="kids-form-section col-md-4 mb-3 pr-sp">
                                         <div className="">
                                           <label className="form-label">
                                             Product/Gift Name (or) Product link
@@ -3564,7 +3566,7 @@ const CreateJobs = () => {
                                           </select>
                                         </div>
                                       </div>
-                                      <div className="kids-form-section col-md-3 mb-3">
+                                      <div className="kids-form-section col-md-2 mb-3">
                                         <div className="">
                                           <label className="form-label">
                                             Frequency

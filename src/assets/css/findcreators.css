@@ -203,6 +203,7 @@
 .keyword-wrapper.creator-age-main .creator-age-wrapper {
   justify-content: space-between;
 }
+
 .select__control.css-1oeearl-control {
   height: auto !important;
 }
@@ -379,6 +380,12 @@ select {
 .models-images .gallery-main {
   margin: 0;
 }
+
+.kids-form-section .creator-age-wrapper .age-inputs{ 
+  width: calc(98% / 2) !important;
+  
+}
+
 .galCont {
   cursor: pointer;
 }

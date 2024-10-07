@@ -2255,7 +2255,7 @@ const TalentProfile = () => {
                                                   </Menu>
                                                 </div>
                                               </div>
-                                              <div className="review-title">
+                                              <div className="review-title scroll">
                                                 {item.comment}
                                               </div>
                                               <div className="reviewer-section pb-0">
