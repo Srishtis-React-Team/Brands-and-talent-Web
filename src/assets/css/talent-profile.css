@@ -87,6 +87,11 @@
   padding: 15px 0px;
   line-height: 21px;
 }
+.talent-all-details-wrapper .review-title{
+  min-height: 120px;
+  max-height: 120px;
+  overflow-y: auto;
+}
 .talent-details-wrapper.nweAlign .contSect,
 .job-company_dtls.nweAlign {
   font-size: 13px;
