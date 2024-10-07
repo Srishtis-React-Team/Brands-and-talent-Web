@@ -44,56 +44,24 @@ const BecomeAffliate = () => {
           </div>
         </div>
       </section>
-      <section className="abtWraper">
+
+      <section className="abtWraper genCont_desg">
         <div className="container">
           <div className="topCont pt-5 pb-0">
             <div className="text-center">
-              <h2 className="maintitles">About Brands & Talent</h2>
+
+              <h2 className="maintitles">Become an Affiliate</h2>
               <div className="widthParg">
                 <p
-                  className="descp"
-                  dangerouslySetInnerHTML={{
-                    __html: aboutusList[0]?.description,
-                  }}
-                ></p>
-              </div>
-            </div>
-          </div>
-          <div className="contSpc pt-3 pb-5">
-            <div className="row textAlg mb-5">
-              <div
-                className="col-md-6 descp"
-                dangerouslySetInnerHTML={{
-                  __html: aboutusList[1]?.description,
-                }}
-              ></div>
-              <div className="col-md-6">
-                <img
-                  className="img-fluid"
-                  src={
-                    "https://brandsandtalent.com//backend/uploads/060b5e10-128d-455e-9a63-9d4bd1531031.webp"
-                  }
-                ></img>
+                  className="descp">
+                    If you’re passionate about the creator industry and want to contribute your time by collaborating with us, we’d love to hear from you! As an affiliate, you’ll have the opportunity to play a key role in connecting talent with brands globally and helping creators thrive. <br/><br/>
+                    Email your CV to <strong><a href="mailto:brandsntalent@gmail.com">brandsntalent@gmail.com</a></strong> and let’s explore how we can work together to grow the future of the creator economy.
+                  </p>
               </div>
             </div>
 
-            <div className="row textAlg mt-3 mb-5">
-              <div className="col-md-6 ">
-                <img
-                  className="img-fluid"
-                  src={
-                    "https://brandsandtalent.com//backend/uploads/76f0ef01-9a84-4459-90f6-b2c7aaa9f1e3.webp"
-                  }
-                ></img>
-              </div>
-              <div
-                className="col-md-6 descp"
-                dangerouslySetInnerHTML={{
-                  __html: aboutusList[2]?.description,
-                }}
-              ></div>
-            </div>
           </div>
+  
         </div>
       </section>
       <Footer />

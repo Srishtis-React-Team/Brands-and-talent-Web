@@ -779,7 +779,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                   <div
                     className="navTxt"
                     style={{ cursor: "pointer" }}
-                    onClick={createHandleMenuClick("find-talent")}
+                    onClick={() => createHandleMenuClick("find-talent")()}
                   >
                     Find Talent
                   </div>
@@ -1119,7 +1119,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                     {isTalentProfilePage === false && (
                       <MenuItem
                         style={{ cursor: "pointer" }}
-                        onClick={createHandleMenuClick("profile")}
+                        onClick={() => createHandleMenuClick("profile")()}
                       >
                         View Profile
                       </MenuItem>
@@ -1127,20 +1127,20 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                     {isTalentProfilePage === true && (
                       <MenuItem
                         style={{ cursor: "pointer" }}
-                        onClick={createHandleMenuClick("dashboard")}
+                        onClick={() => createHandleMenuClick("dashboard")()}
                       >
                         Dashboard
                       </MenuItem>
                     )}
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("edit")}
+                      onClick={() => createHandleMenuClick("edit")()}
                     >
                       Edit Profile
                     </MenuItem>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("logout")}
+                      onClick={() => createHandleMenuClick("logout")()}
                     >
                       Log out
                     </MenuItem>

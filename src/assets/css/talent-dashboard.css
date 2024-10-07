@@ -788,9 +788,11 @@
   background-color: #eee;
 }
 
-.gallery-wrapper.modalSpc .galCont .logo-fill-briefcase {
+.gallery-wrapper.modalSpc .galCont .logo-fill-briefcase, .gallery-wrapper.modalSpc .galCont .model-job-icons.location-icon {
   float: left;
-  width: 25px;
+  width: 20px;
+  min-width: 20px;
+  margin-right: 5px;
 }
 .gallery-wrapper.modalSpc .galCont .model-job-icons {
   font-size: 15px;

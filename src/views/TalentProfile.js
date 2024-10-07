@@ -822,15 +822,13 @@ const TalentProfile = () => {
                             talentData?.averageStarRatings > 0 && (
                               <>
                                 <div className="talent-details-wrapper">
-                                  <div className="logo-fill">
-                                    <img
-                                      className="talent-logo"
-                                      src={pinkStar}
-                                    ></img>
+                                  <div className="logo-fill-briefcase">
+                                    <i class="bi bi-star-fill model-job-icons"></i>
                                   </div>
+
                                   <div className="contSect">
                                     <span>
-                                      *{talentData?.averageStarRatings} (
+                                      {talentData?.averageStarRatings} (
                                       {talentData?.totalReviews} ratings)
                                     </span>
                                   </div>
@@ -2257,7 +2255,7 @@ const TalentProfile = () => {
                                                   </Menu>
                                                 </div>
                                               </div>
-                                              <div className="review-title">
+                                              <div className="review-title scroll">
                                                 {item.comment}
                                               </div>
                                               <div className="reviewer-section pb-0">

@@ -211,13 +211,13 @@ const TalentHome = () => {
             </div>
           </div>
 
-          <div
-            className="home-cards mt-1 row pad8"
-            onClick={handleEditNavigation}
-          >
+          <div className="home-cards mt-1 row pad8">
             <div className="col-md-4 col-lg-3 pad8">
               <div>
-                <div className="home-cards-wrapper hovBx">
+                <div
+                  className="home-cards-wrapper hovBx"
+                  onClick={handleEditNavigation}
+                >
                   <div className="home-card-content">
                     <i className="bi bi-person icons home-card-icons"></i>
                     <div className="home-cards-names">
@@ -228,17 +228,6 @@ const TalentHome = () => {
               </div>
             </div>
             <div className="col-md-4 col-lg-3 pad8">
-              {/* <Link
-                to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
-                target="_blank"
-              >
-                <div className="home-cards-wrapper hovBx">
-                  <div className="home-card-content">
-                    <i className="bi bi-search icons home-card-icons"></i>
-                    <div className="home-cards-names">Browse Jobs</div>
-                  </div>
-                </div>
-              </Link> */}
               <Link to="/talent-dashboard">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">

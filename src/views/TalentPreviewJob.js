@@ -13,6 +13,7 @@ import CurrentUser from "../CurrentUser.js";
 const TalentPreviewJob = ({ job, setFlag, from }) => {
   // const { job } = props;
   const job_id = job;
+  console.log(from, "from");
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
@@ -194,11 +195,15 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
     <>
       {from != "dashboard" && (
         <>
-          <TalentHeader toggleMenu={toggleMenu} />
+          <TalentHeader toggleMenu={toggleMenu} from={"message"} />
         </>
       )}
       <main id="mainBrand">
-        <div className="scrolscrolPrevOut">
+        <div
+          className={`scrolscrolPrevOut ${
+            from !== "dashboard" ? "not-viewjob" : ""
+          }`}
+        >
           <div className="brand-content-main preview-main-box boxBg scrlInner scroll">
             <div className="back-create" onClick={handleBackClick}>
               <i className="bi bi-arrow-left-circle-fill"></i>
