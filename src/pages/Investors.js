@@ -42,14 +42,14 @@ const Investors = () => {
       </section>
       <section className="abtWraper genCont_desg">
         <div className="container">
-          <div className="topCont pt-5 pb-0">
+          <div className="topCont mt-4">
 
           <div className="text-center">
 
-              <h2 className="maintitles">Investors</h2>
-              <div className="widthParg">
+              {/* <h2 className="maintitles">Investors</h2> */}
+              <div className="widthParg mb-3">
                 <p
-                  className="descp">
+                  className="descp m-0">
                     At Brands & Talent, we’re redefining the creator industry in the age of AI, providing a seamless platform for brands and talent to connect, collaborate, and succeed. We welcome visionary investors who want to join us in shaping this dynamic industry and empowering creators worldwide.<br/><br/>
                     Our minimum investment amount is USD 80,000. If you’re interested in learning more or investing, please contact us at <strong><a href="mailto:brandsntalent@gmail.com">brandsntalent@gmail.com</a></strong>.
                   </p>
