@@ -47,13 +47,14 @@ const BecomeAffliate = () => {
 
       <section className="abtWraper genCont_desg">
         <div className="container">
-          <div className="topCont pt-5 pb-0">
+          
+          <div className="topCont mt-4">
             <div className="text-center">
 
-              <h2 className="maintitles">Become an Affiliate</h2>
-              <div className="widthParg">
+              {/* <h2 className="maintitles">Become an Affiliate</h2> */}
+              <div className="widthParg mb-3">
                 <p
-                  className="descp">
+                  className="descp m-0">
                     If you’re passionate about the creator industry and want to contribute your time by collaborating with us, we’d love to hear from you! As an affiliate, you’ll have the opportunity to play a key role in connecting talent with brands globally and helping creators thrive. <br/><br/>
                     Email your CV to <strong><a href="mailto:brandsntalent@gmail.com">brandsntalent@gmail.com</a></strong> and let’s explore how we can work together to grow the future of the creator economy.
                   </p>

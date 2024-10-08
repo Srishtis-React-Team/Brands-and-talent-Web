@@ -42,13 +42,13 @@ const Feedbackreporting = () => {
       </section>
       <section className="abtWraper genCont_desg">
         <div className="container">
-          <div className="topCont pt-5 pb-0">
+          <div className="topCont mt-4">
 
             <div className="text-center">
-              <h2 className="maintitles">Feedback & Reporting</h2>
-              <div className="widthParg">
+              {/* <h2 className="maintitles">Feedback & Reporting</h2> */}
+              <div className="widthParg mb-3">
                 <p
-                  className="descp">
+                  className="descp m-0">
                     We’re committed to providing the best and safest platform for brands/clients, and creators to collaborate professionally. At Brands & Talent, we empower creators to be easily discovered and booked for meaningful projects.<br/><br/>
                     We have zero tolerance for any form of platform misuse, harassment, or discrimination. Please review our Terms & Conditions, Community Guidelines, and Privacy Policy in the Policy section for full details on platform conduct.<br/><br/>
                     Your feedback is valuable in helping us continuously improve. For feedback, complaints, or to report any issues, please contact us at <strong><a href="mailto:brandsntalent@gmail.com">brandsntalent@gmail.com</a></strong>. We appreciate your input as we work to enhance your experience on our platform.

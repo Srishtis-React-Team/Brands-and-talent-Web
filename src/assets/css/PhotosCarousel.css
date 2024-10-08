@@ -22,7 +22,7 @@
   width: 100%;
 }
 .photos-slider .item {
-  height: 316px;
+  height: 250px !important;
   overflow: hidden;
   position: relative;
 }
@@ -31,12 +31,12 @@
   /* width: 100%; */
   object-fit: cover;
   cursor: pointer;
-  width: 316px !important;
-  height: 316px !important;
+  width: 100% !important;
+  height: 250px !important;
 }
 
 .owl-item {
-  width: 316px !important;
+  width: 250px !important;
 }
 
 .carousel-talent-name {

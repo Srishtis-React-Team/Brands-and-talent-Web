@@ -23,6 +23,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
   const [talent, setTalent] = useState(true);
   const [signupCategory, setSignupCategory] = useState("talent");
+  const [activeMenu, setActiveMenu] = useState(""); // State to track active menu
 
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -99,6 +100,9 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
       getTalentById();
     }
   }, [myState]);
+  useEffect(() => {
+    console.log(activeMenu, "activeMenu");
+  }, [activeMenu]);
 
   const getTalentNotification = async () => {
     await ApiHelper.get(`${API.getTalentNotification}${talentId}`)
@@ -177,6 +181,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
           navigate("/pricing");
         }, 3000);
       } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
+        setActiveMenu(menuItem); // Update the active menu item
         navigate("/find-creators");
       }
     };
@@ -777,8 +782,10 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                     <NavLink to="/talent-dashboard"> Get Booked</NavLink>
                   </div>
                   <div
-                    className="navTxt"
                     style={{ cursor: "pointer" }}
+                    className={`navTxt ${
+                      activeMenu === "find-talent" ? "active" : ""
+                    }`} // Apply active class conditionally
                     onClick={() => createHandleMenuClick("find-talent")()}
                   >
                     Find Talent

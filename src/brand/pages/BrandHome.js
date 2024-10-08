@@ -9,6 +9,7 @@ import Talentscarousel from "../../views/Talentscarousel.js";
 import BrandSideMenu from "./BrandSideMenu.js";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import TalentsSlider from "../../views/TalentsSlider.js";
 
 const BrandHome = () => {
   const navigate = useNavigate();
@@ -221,7 +222,12 @@ const BrandHome = () => {
               </div>
 
               <div className="photos-slider">
-                <Talentscarousel talentList={talentList} />
+                <div className="row">
+                  <div className="col-lg-12">
+                    <Talentscarousel talentList={talentList} />
+                  </div>
+                </div>
+                {/* <TalentsSlider talentList={talentList} /> */}
               </div>
               <div className="brand-home-title-flex">
                 <div className="kids-title pb-2">Most Recent Campaigns</div>
