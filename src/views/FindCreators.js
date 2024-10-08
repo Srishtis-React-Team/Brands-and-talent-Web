@@ -619,7 +619,7 @@ const FindCreators = () => {
       <section>
         <div className="popular-header" style={{ marginTop: "64px" }}>
           <div className="container">
-            <div className="header-title">Find Talents</div>
+            <div className="header-title">Find Talent</div>
           </div>
         </div>
       </section>

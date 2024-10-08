@@ -21,6 +21,7 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
   const cofeeIcon = require("../../assets/icons/cofeeIcon.png");
+  const [activeMenu, setActiveMenu] = useState(""); // State to track active menu
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [brandId, setBrandId] = useState(null);
@@ -187,6 +188,8 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
 
   const conditionalNavigate = () => {};
 
+  const isActive = location.pathname.includes("/find-talents");
+
   const handleNavigationClick = () => {
     if (brandData?.planName == "Basic") {
       setMessage("Upgrade Pro or Premium Plan to unlock this feature");
@@ -280,11 +283,13 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
                     </div>
 
                     <div
-                      className="navTxt"
+                      style={{ cursor: "pointer" }}
+                      className={`navTxt ${isActive ? "active" : ""}`}
                       onClick={() => handleNavigationClick()}
                     >
-                      <NavLink>Find Talent</NavLink>
+                      Find Talent
                     </div>
+
                     <div className="navTxt">
                       <NavLink to="/how-it-works">How it works</NavLink>
                     </div>

@@ -279,20 +279,23 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             <div className="brand-menu-text">Post a Job</div>
           </Link>
 
-          <Link
-            className={
-              location.pathname === "/find-talents"
-                ? "sidemenu-active mt-2"
-                : "brand-menu-wrapper mt-2"
-            }
+          <div
             onClick={() => {
               handleNavigationClick();
               fetchUser();
             }}
           >
-            <i className="bi bi-send icons"></i>
-            <div className="brand-menu-text">Invite To Apply</div>
-          </Link>
+            <Link
+              className={
+                location.pathname === "/find-talents"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+            >
+              <i className="bi bi-send icons"></i>
+              <div className="brand-menu-text">Invite To Apply</div>
+            </Link>
+          </div>
 
           <Link
             to="/list-jobs"

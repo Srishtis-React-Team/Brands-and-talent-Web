@@ -3689,7 +3689,6 @@ const EditTalent = () => {
                                                             <MenuItem
                                                               onClick={(e) => {
                                                                 dropDownClose();
-
                                                                 setAlertpop({
                                                                   status: true,
                                                                   item: item,
@@ -3961,6 +3960,11 @@ const EditTalent = () => {
                 <i className="alert-icon bi bi-exclamation-triangle-fill"></i>
               </div>
               {alertpop?.label == "delete" && (
+                <>
+                  <h5>Are you sure you want to Delete this File? </h5>
+                </>
+              )}
+              {alertpop?.label === "delete-service" && (
                 <>
                   <h5>Are you sure you want to Delete this File? </h5>
                 </>
