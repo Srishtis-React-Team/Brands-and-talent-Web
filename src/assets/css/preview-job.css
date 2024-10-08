@@ -236,6 +236,7 @@
 }
 
 .not-viewjob {
-  margin-top: 70px;
-  max-height: unset !important;
+  overflow: inherit;
+  max-height: inherit;
+  margin: 100px 30px 20px;
 }
