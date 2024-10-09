@@ -51,6 +51,7 @@ const Pricing = ({
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const currentPath = location.pathname;
 
   const [receivedData, setReceivedData] = useState(null);
   useEffect(() => {
@@ -315,6 +316,18 @@ const Pricing = ({
     setSelectedType(type);
   };
 
+  const editKids = async () => {
+    // console.log('currentPath',currentPath)
+    // const userId = localStorage.getItem("userId");
+    // if(currentPath == '/pricing'){
+    //   console.log("if")
+    // navigate(``);
+    // }else{
+    //   console.log('else')
+    // navigate(`/adult-signup-files-details?userId=${userId}`);
+    // }
+  };
+
   const handleNext = () => {
     // Handle form submission or transition to next form
     // setIsBillingForm(false);
@@ -323,7 +336,10 @@ const Pricing = ({
 
   const choosePlan = async (index, item, from) => {
     console.log("inside chooseplan.....", from);
-    setPathFrom(from);
+    if(index == 0){
+      editKids()
+    }else{
+      setPathFrom(from);
     if (from == "giftsubscription") {
       setGiftSub(true);
       localStorage.setItem("giftsubscription", true);
@@ -369,6 +385,7 @@ const Pricing = ({
       setPaymentOption(true);
     } else {
       console.error("Price string format is incorrect");
+    }
     }
   };
 

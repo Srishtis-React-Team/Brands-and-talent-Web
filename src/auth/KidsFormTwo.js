@@ -302,7 +302,7 @@ const KidsFormTwo = () => {
       handlePayment(
         selectedAmount,
         selectedCurrency,
-        `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
         "qr",
         'giftsubscription'
       );
@@ -310,7 +310,7 @@ const KidsFormTwo = () => {
       handlePayment(
         selectedAmount,
         selectedCurrency,
-        `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
         "qr",
         'normal'
       );
@@ -321,7 +321,7 @@ const KidsFormTwo = () => {
       handlePayment(
         selectedAmount,
         selectedCurrency,
-        `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
         "card",
         'giftsubscription'
       );
@@ -329,7 +329,7 @@ const KidsFormTwo = () => {
       handlePayment(
         selectedAmount,
         selectedCurrency,
-        `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
+        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
         "card",
         'normal'
       );
