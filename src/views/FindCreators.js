@@ -149,10 +149,6 @@ const FindCreators = () => {
   useEffect(() => {
     checkUserStatus();
   }, []);
-  useEffect(() => {}, [keywordsList]);
-  useEffect(() => {
-    console.log(profession, "profession");
-  }, [profession]);
 
   const checkUserStatus = async () => {
     const formData = {
@@ -623,7 +619,7 @@ const FindCreators = () => {
       <section>
         <div className="popular-header" style={{ marginTop: "64px" }}>
           <div className="container">
-            <div className="header-title">Find Talents</div>
+            <div className="header-title">Find Talent</div>
           </div>
         </div>
       </section>
@@ -1072,15 +1068,12 @@ const FindCreators = () => {
                                       item?.averageStarRatings > 0 && (
                                         <>
                                           <div className="talent-details-wrapper">
-                                            <div className="logo-fill">
-                                              <img
-                                                className="talent-logo"
-                                                src={pinkStar}
-                                              ></img>
+                                            <div className="logo-fill-briefcase">
+                                              <i class="bi bi-star-fill model-job-icons"></i>
                                             </div>
                                             <div className="contSect">
                                               <span>
-                                                *{item?.averageStarRatings} (
+                                                {item?.averageStarRatings} (
                                                 {item?.totalReviews} ratings)
                                               </span>
                                             </div>

@@ -64,7 +64,6 @@ function CustomTabPanel(props) {
 }
 
 function a11yProps(index) {
-  // alert(index);
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
@@ -116,6 +115,8 @@ const EditTalent = () => {
     featuresList,
   } = useFieldDatas();
 
+  const durationList = ["Days", "Weeks", "Months"];
+
   const isDocumentFile = (fileType) => {
     return (
       fileType === "application/pdf" ||
@@ -127,31 +128,25 @@ const EditTalent = () => {
 
   useEffect(() => {
     if (languagesList.length > 0) {
-      console.log(languagesList, "languagesList");
       setListOfLanguages(languagesList);
       getKidsData();
     }
   }, [languagesList]);
   useEffect(() => {
     if (nationalitiesList.length > 0) {
-      console.log(nationalitiesList, "nationalitiesList");
       setListOfNationalities(nationalitiesList);
       getKidsData();
     }
   }, [nationalitiesList]);
 
   useEffect(() => {
-    console.log(listOfLanguages, "LANGUAGES_GET listOfLanguages");
     let selectedOptions;
     if (listOfLanguages && listOfLanguages.length > 0) {
       selectedOptions = languages.map((language) => {
         return listOfLanguages.find((option) => option.label === language);
       });
     }
-    console.log(
-      selectedOptions,
-      "LANGUAGES_GET listOfLanguages selectedOptions"
-    );
+
     setSelectedLanguageOptions(selectedOptions);
   }, [languagesList, languages]);
 
@@ -164,10 +159,7 @@ const EditTalent = () => {
         );
       });
     }
-    console.log(
-      selectedOptions,
-      "LANGUAGES_GET listOfLanguages selectedOptions"
-    );
+
     setSelectedNationalityOptions(selectedOptions);
   }, [nationalitiesList, nationality]);
 
@@ -332,7 +324,6 @@ const EditTalent = () => {
   ];
 
   const chooseCategory = (category) => {
-    console.log(category, "category selectedCategories");
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category)
@@ -349,7 +340,6 @@ const EditTalent = () => {
         }, 2000);
       }
     }
-    console.log(selectedCategories.length, "selectedCategories");
 
     if (selectedCategories.length < 4) {
       setCategoryError(true);
@@ -463,7 +453,6 @@ const EditTalent = () => {
   };
 
   const selectLanguage = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions");
     setLanguageError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       setLanguages([]);
@@ -476,7 +465,6 @@ const EditTalent = () => {
   };
 
   const selectNationality = (selectedOptions) => {
-    console.log(selectedOptions, "selectedOptions");
     setNationalityError(false);
     if (!selectedOptions || selectedOptions.length === 0) {
       setNationality([]);
@@ -515,7 +503,6 @@ const EditTalent = () => {
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
-        console.log(resData, "KIDS_DATA");
         if (resData.data.status === true) {
           if (resData?.data?.data?.type === "kids") {
             if (resData?.data?.data?.planName == "Basic") {
@@ -635,8 +622,6 @@ const EditTalent = () => {
             );
             setGender(resData?.data?.data?.childGender);
 
-            console.log(resData?.data?.data?.languages, "languages");
-
             setLanguages(resData?.data?.data?.languages);
 
             const selectedOptions = resData?.data?.data?.languages.map(
@@ -669,7 +654,6 @@ const EditTalent = () => {
                 );
               });
             setSelectedNationalityOptions(selectedNationalityOptions);
-            console.log(selectedOptions, "selectedOptions");
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
@@ -688,12 +672,10 @@ const EditTalent = () => {
 
   const handleEditFeatureChanges = (values) => {
     setFeatures(values);
-    console.log("Updated Form Values handleEditFeatureChanges:", values);
   };
 
   const handleEditSocialMediaChanges = (values) => {
     // setFeatures(values);
-    console.log("Updated Form Values handleEditSocialMediaChanges:", values);
   };
 
   const handleFeaturesChange = (label, value) => {
@@ -1020,21 +1002,17 @@ const EditTalent = () => {
     setParentMobile(value);
     setParentMobileError(false);
     isValidPhoneNumber(value);
-    console.log(value, "isValidPhoneNumber");
     if (isValidPhoneNumber(value)) {
-      console.log(true, "isValidPhoneNumber");
       setMobileValidationError(false);
       setParentMobile(value);
     } else {
       setMobileValidationError(true);
-      console.log(false, "isValidPhoneNumber");
     }
   };
 
   const [valueTabs, setValueTabs] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    console.log(newValue, "newValue");
     setValueTabs(newValue);
   };
 
@@ -1051,19 +1029,6 @@ const EditTalent = () => {
   useEffect(() => {}, [valueTabs]);
 
   useEffect(() => {}, [editProfileImage]);
-
-  useEffect(() => {
-    console.log(features, "features");
-  }, [features]);
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-  useEffect(() => {
-    console.log(selectedLanguageOptions, "selectedLanguageOptions");
-  }, [selectedLanguageOptions]);
-  useEffect(() => {
-    console.log(selectedCategories, "selectedCategories");
-  }, [selectedCategories]);
 
   const profileUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -1762,11 +1727,6 @@ const EditTalent = () => {
       });
   };
 
-  useEffect(() => {}, [services]);
-  useEffect(() => {
-    console.log(isBasic, "isBasic");
-  }, [isBasic]);
-
   const handleEditorChange = (index, editorState) => {
     const editInputs = [...services];
     editInputs[index]["editorState"] = editorState;
@@ -1948,10 +1908,7 @@ const EditTalent = () => {
   };
 
   const isNotKnownFormatUrl = (url) => {
-    // alert("url");
-    console.log(url, "url");
     const isValidAudioUrl = audioUrlPatterns?.audio?.test(url); // Check for audio URLs
-    console.log(isValidAudioUrl, "url");
 
     const isValidUrl = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i?.test(url); // Check for valid URL format
     return !(
@@ -1967,8 +1924,6 @@ const EditTalent = () => {
   };
 
   const handleAudioUrl = async () => {
-    console.log(audioUrlsList, "audioUrlsList audioUrl");
-    console.log(audioUrl, "audioUrl audioUrl");
     let maxUrls;
     if (talentData?.planName === "Basic") {
       maxUrls = 2;
@@ -2030,15 +1985,11 @@ const EditTalent = () => {
       "text"
     );
     setAudioUrl(pastedText);
-    console.log(pastedText, "pastedText");
-    console.log(audioUrl, "audioUrl");
     // Validate pasted URL
     setCheckAudioUrl(isNotKnownFormatUrl(pastedText));
   };
 
   const handleAddUrl = async () => {
-    console.log(videoUrl, "videoUrl");
-    console.log(urls, "urls");
     if (videoUrl.trim() !== "") {
       if (isValidUrl(videoUrl)) {
         if (!Array.isArray(urls)) {
@@ -2076,7 +2027,6 @@ const EditTalent = () => {
         }
 
         setUrls([...urls, videoUrl]);
-        console.log(urls, "urlsAdd");
         setVideoUrl("");
         setCheckVideoUrl(false);
       } else {
@@ -2093,7 +2043,6 @@ const EditTalent = () => {
   };
 
   const handleDeleteUrl = async (index) => {
-    console.log(index, "index");
     const newUrls = urls.filter((url, i) => i !== index);
     setUrls(newUrls);
 
@@ -2158,22 +2107,6 @@ const EditTalent = () => {
         setIsLoading(false);
       });
   };
-
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-  useEffect(() => {
-    console.log(audioUrl, "audioUrl");
-  }, [audioUrl]);
-  useEffect(() => {
-    console.log(urls, "urls");
-    // postNewVideos();
-  }, [urls]);
-
-  // useEffect(() => {
-  //   console.log(audioUrlsList, "audioUrlsList");
-  //   postNewAudios();
-  // }, [audioUrlsList]);
 
   const postNewVideos = async (urlsData) => {
     let apiName;
@@ -2274,11 +2207,6 @@ const EditTalent = () => {
     setSelectedVideoItem(null); // Reset the selected item when closing the menu
   };
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  useEffect(() => {
-    console.log(urls, "urls");
-  }, []);
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} myState={myState} />
@@ -2338,13 +2266,13 @@ const EditTalent = () => {
                 />
 
                 <Tab
-                  label="Features"
+                  label="Services"
                   {...a11yProps(5)}
                   style={{ textTransform: "capitalize" }}
                 />
 
                 <Tab
-                  label="Services"
+                  label="Features"
                   {...a11yProps(6)}
                   style={{ textTransform: "capitalize" }}
                 />
@@ -2391,129 +2319,6 @@ const EditTalent = () => {
                   >
                     Update Image
                   </Button>
-                </div>
-              </div>
-            </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={2}>
-              {talentData && (
-                <>
-                  <div className="mt-4">
-                    <div className="row">
-                      <EditSocialMedias
-                        talentData={talentData}
-                        onValuesChange={handleEditSocialMediaChanges}
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
-            </CustomTabPanel>
-            <CustomTabPanel value={valueTabs} index={3}>
-              <div className="update-portfolio-section ">
-                <div className="update-portfolio-cards-wrapper">
-                  <div className="update-portfolio-title">Portfolio </div>
-                  <label className="form-label">
-                    Build a stunning portfolio by adding your photos or sample
-                    work photos that showcases your strengths
-                  </label>
-
-                  {talentData?.portfolio?.length === 0 && (
-                    <>
-                      <div className="update-portfolio-label">
-                        Add Your work samples here
-                      </div>
-
-                      {/* <div className="no-data">Please Add Files</div> */}
-                    </>
-                  )}
-                  <div className="row">
-                    {talentData &&
-                      talentData?.portfolio?.length > 0 &&
-                      talentData?.portfolio?.map((item) => {
-                        return (
-                          <>
-                            <div className="col-md-6">
-                              <div className="update-portfolio-cards">
-                                <div className="update-portfolio-icon">
-                                  <div className="file-section">
-                                    {item.type === "image" && (
-                                      <div className="fileType">
-                                        <i className="bi bi-card-image"></i>
-                                      </div>
-                                    )}
-                                    <div className="update-portfolio-fileName pl-0">
-                                      {item.title}
-                                    </div>
-                                    <div className="update-portfolio-action">
-                                      <IconButton
-                                        aria-label="more"
-                                        aria-controls={`dropdown-menu-${item.id}`}
-                                        aria-haspopup="true"
-                                        onClick={(event) =>
-                                          handlePortfolioClick(event, item)
-                                        }
-                                      >
-                                        <MoreVertIcon />
-                                      </IconButton>
-                                      <Menu
-                                        id={`dropdown-menu-${item.id}`} // Use unique ID
-                                        anchorEl={portfolioAnchor} // Correct prop name
-                                        open={portfolioOpen} // Control visibility
-                                        onClose={handlePortfolioClose}
-                                      >
-                                        <MenuItem
-                                          onClick={() => {
-                                            handlePortfolioClose();
-                                            viewUpdateFile(
-                                              selectedPortfolioItem
-                                            ); // Use selected item
-                                          }}
-                                        >
-                                          View
-                                        </MenuItem>
-                                        <MenuItem
-                                          onClick={() => {
-                                            dropDownClose();
-                                            setAlertpop({
-                                              status: true,
-                                              item: item,
-                                              label: "delete",
-                                              eachService: null,
-                                            });
-                                          }}
-                                        >
-                                          Delete
-                                        </MenuItem>
-                                      </Menu>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        );
-                      })}
-                  </div>
-                  <div className="add-portfoli-section">
-                    <div className="add-portfolia-btn">
-                      <input
-                        type="file"
-                        className="select-cv-input"
-                        id="profile-image"
-                        accept="image/*"
-                        onChange={newPortfolioUpload}
-                        ref={portfolioFileInputRef}
-                      />
-                      <Button
-                        onClick={portfolioFile}
-                        className="edit-profileimg-btn"
-                        variant="text"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        Add Portfolio
-                      </Button>
-                    </div>
-                  </div>
                 </div>
               </div>
             </CustomTabPanel>
@@ -3266,6 +3071,130 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={2}>
+              {talentData && (
+                <>
+                  <div className="mt-4">
+                    <div className="row">
+                      <EditSocialMedias
+                        talentData={talentData}
+                        onValuesChange={handleEditSocialMediaChanges}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+            </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={3}>
+              <div className="update-portfolio-section ">
+                <div className="update-portfolio-cards-wrapper">
+                  <div className="update-portfolio-title">Portfolio </div>
+                  <label className="form-label">
+                    Build a stunning portfolio by adding your photos or sample
+                    work photos that showcases your strengths
+                  </label>
+
+                  {talentData?.portfolio?.length === 0 && (
+                    <>
+                      <div className="update-portfolio-label">
+                        Add Your work samples here
+                      </div>
+
+                      {/* <div className="no-data">Please Add Files</div> */}
+                    </>
+                  )}
+                  <div className="row">
+                    {talentData &&
+                      talentData?.portfolio?.length > 0 &&
+                      talentData?.portfolio?.map((item) => {
+                        return (
+                          <>
+                            <div className="col-md-6">
+                              <div className="update-portfolio-cards">
+                                <div className="update-portfolio-icon">
+                                  <div className="file-section">
+                                    {item.type === "image" && (
+                                      <div className="fileType">
+                                        <i className="bi bi-card-image"></i>
+                                      </div>
+                                    )}
+                                    <div className="update-portfolio-fileName pl-0">
+                                      {item.title}
+                                    </div>
+                                    <div className="update-portfolio-action">
+                                      <IconButton
+                                        aria-label="more"
+                                        aria-controls={`dropdown-menu-${item.id}`}
+                                        aria-haspopup="true"
+                                        onClick={(event) =>
+                                          handlePortfolioClick(event, item)
+                                        }
+                                      >
+                                        <MoreVertIcon />
+                                      </IconButton>
+                                      <Menu
+                                        id={`dropdown-menu-${item.id}`} // Use unique ID
+                                        anchorEl={portfolioAnchor} // Correct prop name
+                                        open={portfolioOpen} // Control visibility
+                                        onClose={handlePortfolioClose}
+                                      >
+                                        <MenuItem
+                                          onClick={() => {
+                                            handlePortfolioClose();
+                                            viewUpdateFile(
+                                              selectedPortfolioItem
+                                            ); // Use selected item
+                                          }}
+                                        >
+                                          View
+                                        </MenuItem>
+                                        <MenuItem
+                                          onClick={() => {
+                                            dropDownClose();
+                                            setAlertpop({
+                                              status: true,
+                                              item: item,
+                                              label: "delete",
+                                              eachService: null,
+                                            });
+                                          }}
+                                        >
+                                          Delete
+                                        </MenuItem>
+                                      </Menu>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                  </div>
+                  <div className="add-portfoli-section">
+                    <div className="add-portfolia-btn">
+                      <input
+                        type="file"
+                        className="select-cv-input"
+                        id="profile-image"
+                        accept="image/*"
+                        onChange={newPortfolioUpload}
+                        ref={portfolioFileInputRef}
+                      />
+                      <Button
+                        onClick={portfolioFile}
+                        className="edit-profileimg-btn"
+                        variant="text"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Add Portfolio
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CustomTabPanel>
+
             <CustomTabPanel value={valueTabs} index={4}>
               <div className="update-portfolio-section ">
                 <div className="update-portfolio-cards-wrapper">
@@ -3539,6 +3468,339 @@ const EditTalent = () => {
                 </div>
               </div>
             </CustomTabPanel>
+            <CustomTabPanel value={valueTabs} index={5}>
+              {isBasic == false && (
+                <>
+                  <div className="update-portfolio-section">
+                    <div className="update-service-cards-wrapper edit-service-section-main">
+                      {services &&
+                        services?.length > 0 &&
+                        services?.map((eachService, servicesIndex) => {
+                          return (
+                            <>
+                              <div className="edit-service-section-wrapper">
+                                <div className="edit-service-header">
+                                  <h5>{eachService.serviceName}</h5>
+                                  <div>
+                                    <i
+                                      className="bi bi-trash"
+                                      onClick={(e) => {
+                                        setAlertpop({
+                                          status: true,
+                                          item: eachService,
+                                          label: "delete-individual-service",
+                                          eachService: null,
+                                        });
+                                      }}
+                                    ></i>
+                                  </div>
+                                </div>
+                                <div className="row">
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                    <label className="form-label">
+                                      Service Name
+                                      <span className="mandatory">*</span>
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Custom Photoshoot"
+                                      value={eachService.serviceName}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          servicesIndex,
+                                          "serviceName",
+                                          e.target.value
+                                        )
+                                      }
+                                    ></input>
+                                  </div>
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                    <label className="form-label">
+                                      Rates (in USD)
+                                      <span className="mandatory">*</span>
+                                    </label>
+                                    <input
+                                      min="0"
+                                      type="number"
+                                      className="form-control"
+                                      placeholder="$200 per hour (negotiable)"
+                                      value={eachService.serviceAmount}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          servicesIndex,
+                                          "serviceAmount",
+                                          e.target.value
+                                        )
+                                      }
+                                    ></input>
+                                  </div>
+                                </div>
+                                <div className="row">
+                                  <div className="kids-form-section col-md-6 mb-2">
+                                    <label className="form-label">
+                                      Short Description
+                                      <span className="mandatory">*</span>
+                                    </label>
+                                    <RichTextEditor
+                                      from={"service"}
+                                      value={eachService?.editorState}
+                                      onChange={(editorState) =>
+                                        handleEditorChange(
+                                          servicesIndex,
+                                          editorState
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                  {/* <div className="kids-form-section col-md-6 mb-3">
+                                    <label className="form-label">
+                                      Service Duration
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Service Duration"
+                                      value={eachService.serviceDuration}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          servicesIndex,
+                                          "serviceDuration",
+                                          e.target.value
+                                        )
+                                      }
+                                    ></input>
+                                  </div> */}
+
+                                  <div className="kids-form-section col-md-6 mb-3">
+                                    <label className="form-label">
+                                      Delivery Time
+                                    </label>
+                                    <div className="duration-splitter">
+                                      <div className="duration-value-main">
+                                        <input
+                                          type="text"
+                                          name="duration"
+                                          value={eachService.serviceDuration}
+                                          onChange={(e) =>
+                                            handleInputChange(
+                                              servicesIndex,
+                                              "serviceDuration",
+                                              e.target.value
+                                            )
+                                          }
+                                          className="form-control"
+                                          placeholder="3-5 days"
+                                        ></input>
+                                      </div>
+                                      <div className="duration-select-main">
+                                        <select
+                                          className="form-select"
+                                          aria-label="Default select example"
+                                          style={{ fontSize: "14px" }}
+                                          value={eachService.serviceTime}
+                                          onChange={(e) =>
+                                            handleInputChange(
+                                              servicesIndex,
+                                              "serviceTime",
+                                              e.target.value
+                                            )
+                                          }
+                                        >
+                                          <option value="" disabled selected>
+                                            Time Unit
+                                          </option>
+                                          {durationList.map((option, index) => (
+                                            <option key={index} value={option}>
+                                              {option}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="service-files-main uplWraps">
+                                  <div className="wraper">
+                                    {" "}
+                                    <div className="row">
+                                      <div className="col-md-6">
+                                        <div>
+                                          {eachService?.files?.length > 0 &&
+                                            eachService?.files?.map((item) => {
+                                              return (
+                                                <>
+                                                  <div className="update-portfolio-cards">
+                                                    <div className="update-portfolio-icon">
+                                                      <div className="file-section">
+                                                        {item.type ===
+                                                          "audio" && (
+                                                          <div className="fileType">
+                                                            <i className="bi bi-mic-fill"></i>
+                                                          </div>
+                                                        )}
+                                                        {item.type ===
+                                                          "video" && (
+                                                          <div className="fileType">
+                                                            <i className="bi bi-play-circle-fill"></i>
+                                                          </div>
+                                                        )}
+                                                        {item.type ===
+                                                          "document" && (
+                                                          <div className="fileType">
+                                                            <i className="bi bi-file-earmark-richtext"></i>
+                                                          </div>
+                                                        )}
+                                                        <div className="update-portfolio-fileName pl-0">
+                                                          {item.title}
+                                                        </div>
+
+                                                        <div className="ml-2">
+                                                          <IconButton
+                                                            aria-label="more"
+                                                            aria-controls="dropdown-menu"
+                                                            aria-haspopup="true"
+                                                            onClick={
+                                                              handleClick
+                                                            }
+                                                          >
+                                                            <MoreVertIcon />
+                                                          </IconButton>
+                                                          <Menu
+                                                            id="dropdown-menu"
+                                                            anchorEl={anchorEl}
+                                                            open={Boolean(
+                                                              anchorEl
+                                                            )}
+                                                            onClose={
+                                                              handleClose
+                                                            }
+                                                          >
+                                                            <MenuItem
+                                                              onClick={() => {
+                                                                handleClose();
+                                                                viewUpdateFile(
+                                                                  item
+                                                                );
+                                                              }}
+                                                            >
+                                                              View
+                                                            </MenuItem>
+                                                            <MenuItem
+                                                              onClick={(e) => {
+                                                                dropDownClose();
+                                                                setAlertpop({
+                                                                  status: true,
+                                                                  item: item,
+                                                                  label:
+                                                                    "delete-service",
+                                                                  eachService:
+                                                                    eachService,
+                                                                });
+                                                              }}
+                                                            >
+                                                              Delete
+                                                            </MenuItem>
+                                                          </Menu>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </>
+                                              );
+                                            })}
+                                        </div>
+
+                                        <div className="add-service-section">
+                                          <div className="add-portfolia-btn">
+                                            <input
+                                              type="file"
+                                              className="select-cv-input"
+                                              id={servicesIndex}
+                                              accept="image/*"
+                                              onChange={(e) =>
+                                                newServiceFileUpload(
+                                                  e,
+                                                  eachService
+                                                )
+                                              }
+                                              ref={(el) =>
+                                                (serviceFileInputRefs.current[
+                                                  servicesIndex
+                                                ] = el)
+                                              }
+                                            />
+                                            <div className="btnWraper">
+                                              <div
+                                                className="add-more-files-btn"
+                                                onClick={() =>
+                                                  serviceFile(servicesIndex)
+                                                }
+                                                variant="text"
+                                              >
+                                                <i className="bi bi-plus-circle-fill"></i>{" "}
+                                                Add Files
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>{" "}
+                                  </div>
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })}
+                      <div
+                        className="add-more-services-btn"
+                        onClick={() => addService()}
+                        variant="text"
+                      >
+                        <i className="bi bi-plus-circle-fill"></i>Add More
+                        Service
+                      </div>
+                      <div className="add-service-btn-flex">
+                        <Button
+                          onClick={() => submitServices()}
+                          className="edit-profileimg-btn"
+                          variant="text"
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </CustomTabPanel>
+
+            <CustomTabPanel value={valueTabs} index={6}>
+              {talentData && (
+                <>
+                  <div className="features-section mt-4">
+                    <div className="row">
+                      <EditFeatures
+                        featuresStructure={featuresList}
+                        featureValues={features}
+                        onValuesChange={handleEditFeatureChanges}
+                      />
+                    </div>
+                  </div>
+                  <div className="add-service-btn-flex">
+                    <Button
+                      onClick={() => submitFeatures()}
+                      className="edit-profileimg-btn"
+                      variant="text"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </>
+              )}
+            </CustomTabPanel>
             <CustomTabPanel value={valueTabs} index={7}>
               <div className="update-portfolio-cards-wrapper">
                 <div className="update-portfolio-title">CV</div>
@@ -3653,292 +3915,6 @@ const EditTalent = () => {
               </div>
             </CustomTabPanel>
 
-            <CustomTabPanel value={valueTabs} index={5}>
-              {talentData && (
-                <>
-                  <div className="features-section mt-4">
-                    <div className="row">
-                      <EditFeatures
-                        featuresStructure={featuresList}
-                        featureValues={features}
-                        onValuesChange={handleEditFeatureChanges}
-                      />
-                    </div>
-                  </div>
-                  <div className="add-service-btn-flex">
-                    <Button
-                      onClick={() => submitFeatures()}
-                      className="edit-profileimg-btn"
-                      variant="text"
-                      style={{ textTransform: "capitalize" }}
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                </>
-              )}
-            </CustomTabPanel>
-
-            <CustomTabPanel value={valueTabs} index={6}>
-              {isBasic == false && (
-                <>
-                  <div className="update-portfolio-section">
-                    <div className="update-service-cards-wrapper edit-service-section-main">
-                      {services &&
-                        services?.length > 0 &&
-                        services?.map((eachService, servicesIndex) => {
-                          return (
-                            <>
-                              <div className="edit-service-section-wrapper">
-                                <div className="edit-service-header">
-                                  <h5>{eachService.serviceName}</h5>
-                                  <div>
-                                    <i
-                                      className="bi bi-trash"
-                                      onClick={(e) => {
-                                        setAlertpop({
-                                          status: true,
-                                          item: eachService,
-                                          label: "delete-individual-service",
-                                          eachService: null,
-                                        });
-                                      }}
-                                    ></i>
-                                  </div>
-                                </div>
-                                <div className="row">
-                                  <div className="kids-form-section col-md-6 mb-3">
-                                    <label className="form-label">
-                                      Service Name
-                                      <span className="mandatory">*</span>
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="service name"
-                                      value={eachService.serviceName}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          servicesIndex,
-                                          "serviceName",
-                                          e.target.value
-                                        )
-                                      }
-                                    ></input>
-                                  </div>
-                                  <div className="kids-form-section col-md-6 mb-3">
-                                    <label className="form-label">
-                                      Service Amount
-                                      <span className="mandatory">*</span>
-                                    </label>
-                                    <input
-                                      min="0"
-                                      type="number"
-                                      className="form-control"
-                                      placeholder="service amount"
-                                      value={eachService.serviceAmount}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          servicesIndex,
-                                          "serviceAmount",
-                                          e.target.value
-                                        )
-                                      }
-                                    ></input>
-                                  </div>
-                                </div>
-                                <div className="row">
-                                  <div className="kids-form-section col-md-6 mb-2">
-                                    <label className="form-label">
-                                      Features
-                                      <span className="mandatory">*</span>
-                                    </label>
-                                    <RichTextEditor
-                                      value={eachService?.editorState}
-                                      onChange={(editorState) =>
-                                        handleEditorChange(
-                                          servicesIndex,
-                                          editorState
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                  <div className="kids-form-section col-md-6 mb-3">
-                                    <label className="form-label">
-                                      Service Duration
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Service Duration"
-                                      value={eachService.serviceDuration}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          servicesIndex,
-                                          "serviceDuration",
-                                          e.target.value
-                                        )
-                                      }
-                                    ></input>
-                                  </div>
-                                </div>
-                                <div className="service-files-main uplWraps">
-                                  <div className="wraper">
-                                    {" "}
-                                    <div className="row">
-                                      <div className="col-md-6">
-                                        <div>
-                                          {eachService?.files?.length > 0 &&
-                                            eachService?.files?.map((item) => {
-                                              return (
-                                                <>
-                                                  <div className="update-portfolio-cards">
-                                                    <div className="update-portfolio-icon">
-                                                      <div className="file-section">
-                                                        {item.type ===
-                                                          "audio" && (
-                                                          <div className="fileType">
-                                                            <i className="bi bi-mic-fill"></i>
-                                                          </div>
-                                                        )}
-                                                        {item.type ===
-                                                          "video" && (
-                                                          <div className="fileType">
-                                                            <i className="bi bi-play-circle-fill"></i>
-                                                          </div>
-                                                        )}
-                                                        {item.type ===
-                                                          "document" && (
-                                                          <div className="fileType">
-                                                            <i className="bi bi-file-earmark-richtext"></i>
-                                                          </div>
-                                                        )}
-                                                        <div className="update-portfolio-fileName pl-0">
-                                                          {item.title}
-                                                        </div>
-
-                                                        <div className="ml-2">
-                                                          <IconButton
-                                                            aria-label="more"
-                                                            aria-controls="dropdown-menu"
-                                                            aria-haspopup="true"
-                                                            onClick={
-                                                              handleClick
-                                                            }
-                                                          >
-                                                            <MoreVertIcon />
-                                                          </IconButton>
-                                                          <Menu
-                                                            id="dropdown-menu"
-                                                            anchorEl={anchorEl}
-                                                            open={Boolean(
-                                                              anchorEl
-                                                            )}
-                                                            onClose={
-                                                              handleClose
-                                                            }
-                                                          >
-                                                            <MenuItem
-                                                              onClick={() => {
-                                                                handleClose();
-                                                                viewUpdateFile(
-                                                                  item
-                                                                );
-                                                              }}
-                                                            >
-                                                              View
-                                                            </MenuItem>
-                                                            <MenuItem
-                                                              onClick={(e) => {
-                                                                dropDownClose();
-
-                                                                setAlertpop({
-                                                                  status: true,
-                                                                  item: item,
-                                                                  label:
-                                                                    "delete-service",
-                                                                  eachService:
-                                                                    eachService,
-                                                                });
-                                                              }}
-                                                            >
-                                                              Delete
-                                                            </MenuItem>
-                                                          </Menu>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </>
-                                              );
-                                            })}
-                                        </div>
-
-                                        <div className="add-service-section">
-                                          <div className="add-portfolia-btn">
-                                            <input
-                                              type="file"
-                                              className="select-cv-input"
-                                              id={servicesIndex}
-                                              accept="image/*"
-                                              onChange={(e) =>
-                                                newServiceFileUpload(
-                                                  e,
-                                                  eachService
-                                                )
-                                              }
-                                              ref={(el) =>
-                                                (serviceFileInputRefs.current[
-                                                  servicesIndex
-                                                ] = el)
-                                              }
-                                            />
-                                            <div className="btnWraper">
-                                              <div
-                                                className="add-more-files-btn"
-                                                onClick={() =>
-                                                  serviceFile(servicesIndex)
-                                                }
-                                                variant="text"
-                                              >
-                                                <i className="bi bi-plus-circle-fill"></i>{" "}
-                                                Add Files
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>{" "}
-                                  </div>
-                                </div>
-                              </div>
-                            </>
-                          );
-                        })}
-                      <div
-                        className="add-more-services-btn"
-                        onClick={() => addService()}
-                        variant="text"
-                      >
-                        <i className="bi bi-plus-circle-fill"></i>Add More
-                        Service
-                      </div>
-                      <div className="add-service-btn-flex">
-                        <Button
-                          onClick={() => submitServices()}
-                          className="edit-profileimg-btn"
-                          variant="text"
-                          style={{ textTransform: "capitalize" }}
-                        >
-                          Submit
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )}
-            </CustomTabPanel>
-
             {/* <CustomTabPanel value={valueTabs} index={7}>
               Reviews
             </CustomTabPanel> */}
@@ -3984,6 +3960,11 @@ const EditTalent = () => {
                 <i className="alert-icon bi bi-exclamation-triangle-fill"></i>
               </div>
               {alertpop?.label == "delete" && (
+                <>
+                  <h5>Are you sure you want to Delete this File? </h5>
+                </>
+              )}
+              {alertpop?.label === "delete-service" && (
                 <>
                   <h5>Are you sure you want to Delete this File? </h5>
                 </>

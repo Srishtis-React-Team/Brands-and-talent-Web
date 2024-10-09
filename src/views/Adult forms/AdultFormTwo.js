@@ -35,6 +35,8 @@ const AdultFormTwo = () => {
     }
   }, [currentUserId]);
 
+  const durationList = ["Days", "Weeks", "Months"];
+
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
       .then((resData) => {
@@ -47,9 +49,7 @@ const AdultFormTwo = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+  useEffect(() => {}, [talentData]);
 
   const btLogo = require("../../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -88,6 +88,8 @@ const AdultFormTwo = () => {
     let formData = {
       services: inputs,
     };
+    console.log(formData, "formData");
+
     await ApiHelper.post(`${API.updateAdults}${queryString}`, formData)
       .then((resData) => {
         if (resData.data.status === true) {
@@ -226,7 +228,7 @@ const AdultFormTwo = () => {
                 }}
                 src={btLogo}
               ></img>
-              <div className="step-text">Step 4 of 4</div>
+              <div className="step-text">Step 5 of 5</div>
             </div>
             <button
               type="button"
@@ -264,7 +266,7 @@ const AdultFormTwo = () => {
                             <div className="">
                               <div className="mb-3">
                                 <label className="form-label">
-                                  Service name
+                                  Service Name
                                 </label>
                                 <input
                                   value={input.serviceName}
@@ -278,14 +280,16 @@ const AdultFormTwo = () => {
                                   type="text"
                                   name="serviceName"
                                   className="form-control"
-                                  placeholder="Enter Service Heading"
+                                  placeholder="Custom Photoshoot"
                                 ></input>
                               </div>
                             </div>
                           </div>
                           <div className="kids-form-row row">
                             <div className="kids-form-section col-md-6 mb-3">
-                              <label className="form-label">Amount</label>
+                              <label className="form-label">
+                                Rates (in USD)
+                              </label>
                               <input
                                 type="number"
                                 name="amount"
@@ -298,61 +302,63 @@ const AdultFormTwo = () => {
                                   )
                                 }
                                 className="form-control"
-                                placeholder="Enter Amount In $"
+                                placeholder="$200 per hour (negotiable)"
                               ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">
                               <label className="form-label">
-                                Duration (Weeks/Months)
+                                Delivery Time
                               </label>
-                              <input
-                                type="text"
-                                name="duration"
-                                value={input.serviceDuration}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    serviceIndex,
-                                    "serviceDuration",
-                                    e.target.value
-                                  )
-                                }
-                                className="form-control"
-                                placeholder="Duration (Weeks/Months)"
-                              ></input>
+                              <div className="duration-splitter">
+                                <div className="duration-value-main">
+                                  <input
+                                    type="text"
+                                    name="duration"
+                                    value={input.serviceDuration}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceDuration",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="form-control"
+                                    placeholder="3-5 days"
+                                  ></input>
+                                </div>
+                                <div className="duration-select-main">
+                                  <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    style={{ fontSize: "14px" }}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceTime",
+                                        e.target.value
+                                      )
+                                    }
+                                  >
+                                    <option value="" disabled selected>
+                                      Time Unit
+                                    </option>
+                                    {durationList.map((option, index) => (
+                                      <option key={index} value={option}>
+                                        {option}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                          <div className="adults-titles">Features</div>
                           <div className="rich-editor">
-                            <label className="form-label">Features</label>
-                            {/* <Editor
-                              editorStyle={{
-                                overflow: "hidden",
-                              }}
-                              value={input.editorState}
-                              onEditorStateChange={(editorState) =>
-                                handleEditorStateChange(
-                                  serviceIndex,
-                                  editorState
-                                )
-                              }
-                              toolbar={{
-                                options: [
-                                  "inline",
-                                  "blockType",
-                                  "fontSize",
-                                  "list",
-                                  "textAlign",
-                                  "history",
-                                ],
-                                inline: { inDropdown: true },
-                                list: { inDropdown: true },
-                                textAlign: { inDropdown: true },
-                                link: { inDropdown: true },
-                                history: { inDropdown: true },
-                              }}
-                            /> */}
+                            <label className="form-label">
+                              Short Description
+                            </label>
 
                             <RichTextEditor
+                              from={"service"}
                               value={input.editorState}
                               onChange={(editorState) =>
                                 handleEditorStateChange(

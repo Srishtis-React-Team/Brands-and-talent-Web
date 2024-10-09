@@ -87,6 +87,11 @@
   padding: 15px 0px;
   line-height: 21px;
 }
+.talent-all-details-wrapper .review-title{
+  min-height: 120px;
+  max-height: 120px;
+  overflow-y: auto;
+}
 .talent-details-wrapper.nweAlign .contSect,
 .job-company_dtls.nweAlign {
   font-size: 13px;
@@ -282,7 +287,7 @@
 }
 
 .models-photos {
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
   padding: 0;
   align-items: center;
@@ -644,6 +649,7 @@
   height: 300px;
   border-radius: 8px;
   object-fit: cover;
+  margin-bottom: 20px;
 }
 
 /* Responsive-ness for different screen-sizes */

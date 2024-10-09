@@ -34,10 +34,6 @@ const TalentHome = () => {
     checkTransaction();
   }, []);
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
@@ -54,11 +50,9 @@ const TalentHome = () => {
     const paymenttrans_id = localStorage.getItem("paymenttrans_id");
     const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
     const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
-    console.log("selectedPaymentPeriod", selectedPaymentPeriod);
-    console.log("selectedPaymentPlan", selectedPaymentPlan);
+
     const obj = { tranId: paymenttrans_id };
     try {
-      console.log("here...");
       const resData = await ApiHelper.post(
         "https://brandsandtalent.com/api/pricing/check-transaction",
         obj
@@ -69,7 +63,6 @@ const TalentHome = () => {
           const paymentData = resData.data.data;
           if (paymentData.payment_status == "APPROVED") {
             localStorage.setItem("paymentData", JSON.stringify(paymentData));
-            // alert('payment successfully completed')
             const userId = localStorage.getItem("userId");
             const userData = {
               subscriptionPlan: selectedPaymentPeriod,
@@ -84,7 +77,6 @@ const TalentHome = () => {
               API.subscriptionPlan,
               userData
             );
-            console.log("responseSubscription", responseSubscription);
           }
         }
       }
@@ -174,8 +166,6 @@ const TalentHome = () => {
 
   const handleEditNavigation = () => {
     if (talentData) {
-      // alert(talentData?.adminApproved);
-
       if (talentData?.adminApproved === true) {
         navigate(`/edit-talent-profile?${talentData?._id}`);
       } else {
@@ -188,6 +178,10 @@ const TalentHome = () => {
         }, 2000);
       }
     }
+  };
+
+  const sampleProfileNavigate = () => {
+    window.open("https://brandsandtalent.com/talent/Grace", "_blank");
   };
 
   return (
@@ -208,14 +202,22 @@ const TalentHome = () => {
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main">
-          <div className="create-job-title">Welcome To Brands and Talent</div>
-          <div
-            className="home-cards mt-1 row pad8"
-            onClick={handleEditNavigation}
-          >
+          <div className="brand-headings-wrapper">
+            <div className="create-job-title w-50">
+              Welcome To Brands and Talent
+            </div>
+            <div className="sample-profile" onClick={sampleProfileNavigate}>
+              Go to sample profile
+            </div>
+          </div>
+
+          <div className="home-cards mt-1 row pad8">
             <div className="col-md-4 col-lg-3 pad8">
               <div>
-                <div className="home-cards-wrapper hovBx">
+                <div
+                  className="home-cards-wrapper hovBx"
+                  onClick={handleEditNavigation}
+                >
                   <div className="home-card-content">
                     <i className="bi bi-person icons home-card-icons"></i>
                     <div className="home-cards-names">
@@ -226,17 +228,6 @@ const TalentHome = () => {
               </div>
             </div>
             <div className="col-md-4 col-lg-3 pad8">
-              {/* <Link
-                to="https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG"
-                target="_blank"
-              >
-                <div className="home-cards-wrapper hovBx">
-                  <div className="home-card-content">
-                    <i className="bi bi-search icons home-card-icons"></i>
-                    <div className="home-cards-names">Browse Jobs</div>
-                  </div>
-                </div>
-              </Link> */}
               <Link to="/talent-dashboard">
                 <div className="home-cards-wrapper hovBx">
                   <div className="home-card-content">

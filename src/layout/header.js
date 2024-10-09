@@ -33,6 +33,7 @@ const Header = ({ onData }) => {
   const [currentUser_type, setCurrentUserType] = useState("");
   const [talentData, setTalentData] = useState();
   const [talentId, setTalentId] = useState(null);
+  const [activeMenu, setActiveMenu] = useState(""); // State to track active menu
 
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
@@ -215,12 +216,13 @@ const Header = ({ onData }) => {
         //   "_blank"
         // );
       } else if (currentUser_type === "brand" && currentUserId) {
+        setActiveMenu("find-talent"); // Update the active menu item
         navigate("/find-creators");
       } else if (
         currentUser_type === "talent" &&
         talentData?.planName == "Basic"
       ) {
-        setMessage("Purchase Pro or Premium Plan to unlock this feature");
+        setMessage("Upgrade Pro or Premium Plan to unlock this feature");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -231,6 +233,7 @@ const Header = ({ onData }) => {
         talentData?.planName != "Basic"
       ) {
         navigate("/find-creators");
+        setActiveMenu("find-talent"); // Update the active menu item
       }
     }
 
@@ -254,16 +257,14 @@ const Header = ({ onData }) => {
   const createHandleMenuClick = (menuItem) => {
     return () => {
       if (menuItem === "dashboard") {
-        // alert("createHandleMenuClick");
         if (currentUser_type === "talent") {
           // navigate("/talent", { state: { talentData: talentData } });
-          // alert("navigatetotalentprofile");
 
           navigate(`/talent/${talentData.publicUrl}`, {
             state: { talentData },
           });
         } else if (currentUser_type === "brand") {
-          navigate(`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`);
+          navigate(`/client/${brandData?.publicUrl.replace(/\s+/g, "")}`);
         }
       }
       if (menuItem === "edit") {
@@ -746,6 +747,12 @@ const Header = ({ onData }) => {
   const location = useLocation();
   const isLoginPage = location.pathname.includes("/login");
 
+  const isActive = location.pathname.includes("/find-creators");
+
+  useEffect(() => {
+    console.log(activeMenu, "activeMenu");
+  }, [activeMenu]);
+
   return (
     <>
       <div className="mobile-navbar">
@@ -920,7 +927,7 @@ const Header = ({ onData }) => {
             // </div>
           )}
           <div
-            className="navTxt"
+            className={`navTxt ${isActive ? "active" : ""}`} // Apply active class conditionally
             style={{ cursor: "pointer" }}
             onClick={() => handleClick("find-talent")}
           >
@@ -1105,7 +1112,7 @@ const Header = ({ onData }) => {
               )} */}
 
               <div
-                className="navTxt"
+                className={`navTxt ${isActive ? "active" : ""}`}
                 style={{ cursor: "pointer" }}
                 onClick={() => handleClick("find-talent")}
               >

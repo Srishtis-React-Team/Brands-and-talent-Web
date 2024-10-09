@@ -94,7 +94,9 @@ const CreateJobs = () => {
   const [jobCountNumber, setJobCountNumber] = useState("");
   const [brandData, setBrandData] = useState("");
   const [minPay, setMinPay] = useState("");
+  const [minPayError, setMinPayError] = useState("");
   const [maxPay, setMaxPay] = useState("");
+  const [maxPayError, setMaxPayError] = useState("");
   const [instaMin, setInstaMin] = useState("");
   const [instaMax, setInstaMax] = useState("");
   const [tikTokMin, setTiktokMin] = useState("");
@@ -107,6 +109,173 @@ const CreateJobs = () => {
   const [twitterMax, setTwitterMax] = useState("");
   const [youTubeMin, setYouTubeMin] = useState("");
   const [youTubeMax, setYouTubeMax] = useState("");
+
+  const [instaMinError, setInstaMinError] = useState("");
+  const [instaMaxError, setInstaMaxError] = useState("");
+
+  const [linkedInMinError, setLinkedInMinError] = useState("");
+  const [linkedInMaxError, setLinkedInMaxError] = useState("");
+
+  useEffect(() => {
+    if (instaMin && instaMax && parseInt(instaMin) > parseInt(instaMax)) {
+      setInstaMinError(
+        "Minimum followers cannot be greater than maximum followers."
+      );
+    } else {
+      setInstaMinError(""); // Clear error if valid
+    }
+
+    if (instaMax && instaMin && parseInt(instaMax) < parseInt(instaMin)) {
+      setInstaMaxError(
+        "Maximum followers cannot be less than minimum followers."
+      );
+    } else {
+      setInstaMaxError(""); // Clear error if valid
+    }
+  }, [instaMin, instaMax]);
+
+  useEffect(() => {
+    console.log(instaMinError, "instaMinError");
+  }, [instaMinError]);
+
+  const [tikTokMinError, setTikTokMinError] = useState("");
+  const [tikTokMaxError, setTikTokMaxError] = useState("");
+
+  useEffect(() => {
+    if (tikTokMin && tikTokMax && parseInt(tikTokMin) > parseInt(tikTokMax)) {
+      setTikTokMinError(
+        "Minimum followers cannot be greater than maximum followers."
+      );
+    } else {
+      setTikTokMinError(""); // Clear error if valid
+    }
+
+    if (tikTokMax && tikTokMin && parseInt(tikTokMax) < parseInt(tikTokMin)) {
+      setTikTokMaxError(
+        "Maximum followers cannot be less than minimum followers."
+      );
+    } else {
+      setTikTokMaxError(""); // Clear error if valid
+    }
+  }, [tikTokMin, tikTokMax]);
+
+  useEffect(() => {
+    if (
+      linkedInMin &&
+      linkedInMax &&
+      parseInt(linkedInMin) > parseInt(linkedInMax)
+    ) {
+      setLinkedInMinError(
+        "Minimum followers cannot be greater than maximum followers."
+      );
+    } else {
+      setLinkedInMinError(""); // Clear error if valid
+    }
+
+    if (
+      linkedInMax &&
+      linkedInMin &&
+      parseInt(linkedInMax) < parseInt(linkedInMin)
+    ) {
+      setLinkedInMaxError(
+        "Maximum followers cannot be less than minimum followers."
+      );
+    } else {
+      setLinkedInMaxError(""); // Clear error if valid
+    }
+  }, [linkedInMin, linkedInMax]);
+
+  const [fbMinError, setFbMinError] = useState("");
+  const [fbMaxError, setFbMaxError] = useState("");
+
+  useEffect(() => {
+    if (fbMin && fbMax && parseInt(fbMin) > parseInt(fbMax)) {
+      setFbMinError(
+        "Minimum followers cannot be greater than maximum followers."
+      );
+    } else {
+      setFbMinError(""); // Clear error if valid
+    }
+
+    if (fbMax && fbMin && parseInt(fbMax) < parseInt(fbMin)) {
+      setFbMaxError("Maximum followers cannot be less than minimum followers.");
+    } else {
+      setFbMaxError(""); // Clear error if valid
+    }
+  }, [fbMin, fbMax]);
+
+  const [twitterMinError, setTwitterMinError] = useState("");
+  const [twitterMaxError, setTwitterMaxError] = useState("");
+
+  useEffect(() => {
+    if (
+      twitterMin &&
+      twitterMax &&
+      parseInt(twitterMin) > parseInt(twitterMax)
+    ) {
+      setTwitterMinError(
+        "Minimum followers cannot be greater than maximum followers."
+      );
+    } else {
+      setTwitterMinError(""); // Clear error if valid
+    }
+
+    if (
+      twitterMax &&
+      twitterMin &&
+      parseInt(twitterMax) < parseInt(twitterMin)
+    ) {
+      setTwitterMaxError(
+        "Maximum followers cannot be less than minimum followers."
+      );
+    } else {
+      setTwitterMaxError(""); // Clear error if valid
+    }
+  }, [twitterMin, twitterMax]);
+
+  const [youTubeMinError, setYouTubeMinError] = useState("");
+  const [youTubeMaxError, setYouTubeMaxError] = useState("");
+
+  useEffect(() => {
+    if (minPay && maxPay && parseInt(minPay) > parseInt(maxPay)) {
+      setMinPayError("Minimum pay cannot be greater than maximum pay.");
+    } else {
+      setMinPayError(""); // Clear error if valid
+    }
+
+    if (maxPay && minPay && parseInt(maxPay) < parseInt(minPay)) {
+      setMaxPayError("Maximum pay cannot be less than minimum pay.");
+    } else {
+      setMaxPayError(""); // Clear error if valid
+    }
+  }, [minPay, maxPay]);
+
+  useEffect(() => {
+    if (
+      youTubeMin &&
+      youTubeMax &&
+      parseInt(youTubeMin) > parseInt(youTubeMax)
+    ) {
+      setYouTubeMinError(
+        "Minimum followers cannot be greater than maximum followers."
+      );
+    } else {
+      setYouTubeMinError(""); // Clear error if valid
+    }
+
+    if (
+      youTubeMax &&
+      youTubeMin &&
+      parseInt(youTubeMax) < parseInt(youTubeMin)
+    ) {
+      setYouTubeMaxError(
+        "Maximum followers cannot be less than minimum followers."
+      );
+    } else {
+      setYouTubeMaxError(""); // Clear error if valid
+    }
+  }, [youTubeMin, youTubeMax]);
+
   const [employmentType, setEmploymentType] = useState("");
   const [employmentError, setEmploymentError] = useState(false);
   const companyList = [];
@@ -131,6 +300,12 @@ const CreateJobs = () => {
       .catch((err) => {});
   };
 
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
+  useEffect(() => {
+    console.log(jobTitle, "jobTitle");
+  }, [jobTitle]);
   const customStylesProfession = {
     control: (provided, state) => ({
       ...provided,
@@ -150,7 +325,6 @@ const CreateJobs = () => {
   }, [editData]);
 
   const updateJobFormDatas = (editData) => {
-    // alert("updateJobFormDatas");
     if (editData) {
       setCategory(editData?.category);
       setEmploymentType(editData?.employmentType);
@@ -365,7 +539,7 @@ const CreateJobs = () => {
     //    Please include ${jobTitle} in the subject line.</p>\n`,
     // ];
     let initialHowToApply = [
-      `<p>Interested candidates should submit their resume and a link of their brandsandtalent.com profile/portfolio to ${brandData?.brandEmail}. Please include${jobTitle} in the subject line</p>\n`,
+      `<p>Interested candidates should submit their resume and a link that contains portfolio from Brands & Talent website to ${brandData?.brandEmail}. Please include ${jobTitle} in the subject line</p>\n`,
     ];
 
     const whyWorkWithUsContent = initialHowToApply[0];
@@ -378,7 +552,7 @@ const CreateJobs = () => {
     );
     setEditorStateHowToApply(updatewhyWorkWithUs);
     setHowToApplyDescription(editJobData?.whyWorkWithUs);
-  }, []);
+  }, [brandData, jobTitle]);
 
   const getAllJobs = async (id) => {
     await ApiHelper.get(`${API.getAllJobs}${id}`)
@@ -1147,7 +1321,23 @@ const CreateJobs = () => {
       skills !== "" &&
       country !== "" &&
       category !== "" &&
-      employmentType !== ""
+      employmentType !== "" &&
+      !minAgeError &&
+      !maxAgeError &&
+      !instaMinError &&
+      !instaMaxError &&
+      !tikTokMinError &&
+      !tikTokMaxError &&
+      !linkedInMinError &&
+      !linkedInMaxError &&
+      !fbMinError &&
+      !fbMaxError &&
+      !twitterMinError &&
+      !twitterMaxError &&
+      !youTubeMinError &&
+      !youTubeMaxError &&
+      !minPayError &&
+      !maxPayError
     ) {
       const formData = {
         jobTitle: jobTitle,
@@ -2214,7 +2404,7 @@ const CreateJobs = () => {
                       </div>
                       <div className="kids-form-row row">
                         <div className="kids-form-section col-md-6 mb-3">
-                          <div className="">
+                          <div className="rangeWidth">
                             <label className="form-label">Age Range</label>
                             <div className="creators-filter-select creator-age-wrapper">
                               <div className="age-inputs ">
@@ -2268,6 +2458,7 @@ const CreateJobs = () => {
                                 )}{" "}
                               </div>
                             </div>
+
                             {/* <label className="form-label">
                               Age <span className="mandatory">*</span>
                             </label>
@@ -2292,6 +2483,7 @@ const CreateJobs = () => {
                                 Please select Age
                               </div>
                             )} */}
+
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
@@ -2365,42 +2557,55 @@ const CreateJobs = () => {
                                 <i className="bi bi-instagram followers-social-icons"></i>
                                 Instagram Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={instaMin}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onInstaMinChange(e);
-                                    }
-                                  }}
-                                  placeholder="Minimum Followers"
-                                  min="0"
-                                ></input>
-
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={instaMax}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onInstaMaxChange(e);
-                                    }
-                                  }}
-                                  placeholder="Maximum Followers"
-                                  min="0"
-                                ></input>
+                              <div className="creators-filter-select creator-age-wrapper">
+                                <div className="age-inputs ">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={instaMin}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onInstaMinChange(e);
+                                      }
+                                    }}
+                                    placeholder="Minimum Followers"
+                                    min="0"
+                                  ></input>
+                                  {instaMinError && (
+                                    <div className="invalid-fields">
+                                      {instaMinError}
+                                    </div>
+                                  )}{" "}
+                                </div>
+                                <div className="age-inputs ">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={instaMax}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onInstaMaxChange(e);
+                                      }
+                                    }}
+                                    placeholder="Maximum Followers"
+                                    min="0"
+                                  ></input>
+                                  {instaMaxError && (
+                                    <div className="invalid-fields">
+                                      {instaMaxError}
+                                    </div>
+                                  )}{" "}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -2410,42 +2615,56 @@ const CreateJobs = () => {
                                 <i className="bi bi-tiktok followers-social-icons"></i>
                                 TikTok Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={tikTokMin}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onTiktokMinChange(e);
-                                    }
-                                  }}
-                                  placeholder="Minimum Followers"
-                                  min="0"
-                                ></input>
+                              <div className="creators-filter-select creator-age-wrapper">
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={tikTokMin}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onTiktokMinChange(e);
+                                      }
+                                    }}
+                                    placeholder="Minimum Followers"
+                                    min="0"
+                                  ></input>
+                                  {tikTokMinError && (
+                                    <div className="invalid-fields">
+                                      {tikTokMinError}
+                                    </div>
+                                  )}{" "}
+                                </div>
 
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={tikTokMax}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onTiktokMaxChange(e);
-                                    }
-                                  }}
-                                  placeholder="Maximum Followers"
-                                  min="0"
-                                ></input>
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={tikTokMax}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onTiktokMaxChange(e);
+                                      }
+                                    }}
+                                    placeholder="Maximum Followers"
+                                    min="0"
+                                  ></input>
+                                  {tikTokMaxError && (
+                                    <div className="invalid-fields">
+                                      {tikTokMaxError}
+                                    </div>
+                                  )}{" "}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -2455,42 +2674,56 @@ const CreateJobs = () => {
                                 <i className="bi bi-linkedin followers-social-icons"></i>
                                 LinkedIn Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={linkedInMin}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onLinkedInMinChange(e);
-                                    }
-                                  }}
-                                  placeholder="Minimum Followers"
-                                  min="0"
-                                ></input>
+                              <div className="creators-filter-select creator-age-wrapper">
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={linkedInMin}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onLinkedInMinChange(e);
+                                      }
+                                    }}
+                                    placeholder="Minimum Followers"
+                                    min="0"
+                                  ></input>
+                                  {linkedInMinError && (
+                                    <div className="invalid-fields">
+                                      {linkedInMinError}
+                                    </div>
+                                  )}{" "}
+                                </div>
 
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={linkedInMax}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onLinkedInMaxChange(e);
-                                    }
-                                  }}
-                                  placeholder="Maximum Followers"
-                                  min="0"
-                                ></input>
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={linkedInMax}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onLinkedInMaxChange(e);
+                                      }
+                                    }}
+                                    placeholder="Maximum Followers"
+                                    min="0"
+                                  ></input>
+                                  {linkedInMaxError && (
+                                    <div className="invalid-fields">
+                                      {linkedInMaxError}
+                                    </div>
+                                  )}{" "}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -2500,42 +2733,56 @@ const CreateJobs = () => {
                                 <i className="bi bi-facebook followers-social-icons"></i>
                                 Facebook Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={fbMin}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onFbMinChange(e);
-                                    }
-                                  }}
-                                  placeholder="Minimum Followers"
-                                  min="0"
-                                ></input>
+                              <div className="creators-filter-select creator-age-wrapper ">
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={fbMin}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onFbMinChange(e);
+                                      }
+                                    }}
+                                    placeholder="Minimum Followers"
+                                    min="0"
+                                  ></input>
+                                  {fbMinError && (
+                                    <div className="invalid-fields">
+                                      {fbMinError}
+                                    </div>
+                                  )}{" "}
+                                </div>
 
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={fbMax}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onFbMaxChange(e);
-                                    }
-                                  }}
-                                  placeholder="Maximum Followers"
-                                  min="0"
-                                ></input>
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={fbMax}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onFbMaxChange(e);
+                                      }
+                                    }}
+                                    placeholder="Maximum Followers"
+                                    min="0"
+                                  ></input>
+                                  {fbMaxError && (
+                                    <div className="invalid-fields">
+                                      {fbMaxError}
+                                    </div>
+                                  )}{" "}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -2545,42 +2792,56 @@ const CreateJobs = () => {
                                 <i className="bi bi-twitter-x followers-social-icons"></i>
                                 Twitter(X) Followers
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={twitterMin}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onTwitterMinChange(e);
-                                    }
-                                  }}
-                                  placeholder="Minimum Followers"
-                                  min="0"
-                                ></input>
+                              <div className="creators-filter-select creator-age-wrapper ">
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={twitterMin}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onTwitterMinChange(e);
+                                      }
+                                    }}
+                                    placeholder="Minimum Followers"
+                                    min="0"
+                                  ></input>
+                                  {twitterMinError && (
+                                    <div className="invalid-fields">
+                                      {twitterMinError}
+                                    </div>
+                                  )}{" "}
+                                </div>
 
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={twitterMax}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onTwitterMaxChange(e);
-                                    }
-                                  }}
-                                  placeholder="Maximum Followers"
-                                  min="0"
-                                ></input>
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={twitterMax}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onTwitterMaxChange(e);
+                                      }
+                                    }}
+                                    placeholder="Maximum Followers"
+                                    min="0"
+                                  ></input>
+                                  {twitterMaxError && (
+                                    <div className="invalid-fields">
+                                      {twitterMaxError}
+                                    </div>
+                                  )}{" "}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -2590,42 +2851,55 @@ const CreateJobs = () => {
                                 <i className="bi bi-youtube followers-social-icons"></i>
                                 Youtube
                               </label>
-                              <div className="creators-filter-select creator-age-wrapper splitterDiv">
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={youTubeMin}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onYouTubeMinChange(e);
-                                    }
-                                  }}
-                                  placeholder="Minimum Followers"
-                                  min="0"
-                                ></input>
-
-                                <input
-                                  type="number"
-                                  className="form-control "
-                                  value={youTubeMax}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Check if the value is a valid number and is non-negative
-                                    if (
-                                      /^\d*\.?\d*$/.test(value) &&
-                                      (value >= 0 || value === "")
-                                    ) {
-                                      onYouTubeMaxChange(e);
-                                    }
-                                  }}
-                                  placeholder="Maximum Followers"
-                                  min="0"
-                                ></input>
+                              <div className="creators-filter-select creator-age-wrapper ">
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={youTubeMin}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onYouTubeMinChange(e);
+                                      }
+                                    }}
+                                    placeholder="Minimum Followers"
+                                    min="0"
+                                  ></input>
+                                  {youTubeMinError && (
+                                    <div className="invalid-fields">
+                                      {youTubeMinError}
+                                    </div>
+                                  )}{" "}
+                                </div>
+                                <div className="age-inputs">
+                                  <input
+                                    type="number"
+                                    className="form-control "
+                                    value={youTubeMax}
+                                    onChange={(e) => {
+                                      const value = e.target.value;
+                                      // Check if the value is a valid number and is non-negative
+                                      if (
+                                        /^\d*\.?\d*$/.test(value) &&
+                                        (value >= 0 || value === "")
+                                      ) {
+                                        onYouTubeMaxChange(e);
+                                      }
+                                    }}
+                                    placeholder="Maximum Followers"
+                                    min="0"
+                                  ></input>
+                                  {youTubeMaxError && (
+                                    <div className="invalid-fields">
+                                      {youTubeMaxError}
+                                    </div>
+                                  )}{" "}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -2828,40 +3102,62 @@ const CreateJobs = () => {
                                     {type == "pay_range" && (
                                       <>
                                         <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
+                                          <div className="payWidth">
                                             <label className="form-label">
                                               Minimum Pay
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
-                                              <input
-                                                type="number"
-                                                className="form-control"
-                                                placeholder="Minimum Pay"
-                                                value={minPay}
-                                                onChange={(e) => {
-                                                  onMinPayChange(e);
-                                                }}
-                                                min={1}
-                                              ></input>
+                                              <div>
+                                                <input
+                                                  type="number"
+                                                  className="form-control"
+                                                  placeholder="Minimum Pay"
+                                                  value={minPay}
+                                                  onChange={(e) => {
+                                                    onMinPayChange(e);
+                                                  }}
+                                                 
+                                                  min={1}
+                                                ></input>
+                                                {minPayError && (
+                                                  <div
+                                                    className="invalid-fields"
+                                              
+                                                  >
+                                                    {minPayError}
+                                                  </div>
+                                                )}{" "}
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
                                         <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                          <div className="">
+                                          <div className="payWidth">
                                             <label className="form-label">
                                               Maximum Pay
                                             </label>
                                             <div className="creators-filter-select creator-age-wrapper">
-                                              <input
-                                                type="number"
-                                                className="form-control"
-                                                placeholder="Maximum Pay"
-                                                value={maxPay}
-                                                onChange={(e) => {
-                                                  onMaxPayChange(e);
-                                                }}
-                                                min={1}
-                                              ></input>
+                                              <div>
+                                                <input
+                                                  type="number"
+                                                  className="form-control"
+                                                  placeholder="Maximum Pay"
+                                                  value={maxPay}
+                                                  onChange={(e) => {
+                                                    onMaxPayChange(e);
+                                                  }}
+                                                  
+                                                  min={1}
+                                                ></input>
+                                                {maxPayError && (
+                                                  <div
+                                                    className="invalid-fields"
+                                                    
+                                                  >
+                                                    {maxPayError}
+                                                  </div>
+                                                )}{" "}
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
@@ -3081,40 +3377,62 @@ const CreateJobs = () => {
                                       {type == "pay_range" && (
                                         <>
                                           <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                            <div className="">
+                                            <div className="payWidth">
                                               <label className="form-label">
                                                 Minimum Pay
                                               </label>
                                               <div className="creators-filter-select creator-age-wrapper">
-                                                <input
-                                                  type="number"
-                                                  className="form-control"
-                                                  placeholder="Minimum Pay"
-                                                  value={minPay}
-                                                  onChange={(e) => {
-                                                    onMinPayChange(e);
-                                                  }}
-                                                  min={1}
-                                                ></input>
+                                                <div>
+                                                  <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    placeholder="Minimum Pay"
+                                                    value={minPay}
+                                              
+                                                    onChange={(e) => {
+                                                      onMinPayChange(e);
+                                                    }}
+                                                    min={1}
+                                                  ></input>
+                                                  {minPayError && (
+                                                    <div
+                                                      className="invalid-fields"
+                                                      style={{  }}
+                                                    >
+                                                      {minPayError}
+                                                    </div>
+                                                  )}{" "}
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
                                           <div className="kids-form-section col-md-3 mb-3 pr-sp">
-                                            <div className="">
+                                            <div className="payWidth">
                                               <label className="form-label">
                                                 Maximum Pay
                                               </label>
                                               <div className="creators-filter-select creator-age-wrapper">
-                                                <input
-                                                  type="number"
-                                                  className="form-control"
-                                                  placeholder="Maximum Pay"
-                                                  value={maxPay}
-                                                  onChange={(e) => {
-                                                    onMaxPayChange(e);
-                                                  }}
-                                                  min={1}
-                                                ></input>
+                                                <div>
+                                                  <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    placeholder="Maximum Pay"
+                                                    value={maxPay}
+                                                    onChange={(e) => {
+                                                      onMaxPayChange(e);
+                                                    }}
+                                                    style={{  }}
+                                                    min={1}
+                                                  ></input>
+                                                  {maxPayError && (
+                                                    <div
+                                                      className="invalid-fields"
+                                                      style={{  }}
+                                                    >
+                                                      {maxPayError}
+                                                    </div>
+                                                  )}{" "}
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
@@ -3182,7 +3500,7 @@ const CreateJobs = () => {
                                       </div>
                                     </div>
                                     <div className="compensation-row row">
-                                      <div className="kids-form-section col-md-3 mb-3 pr-sp">
+                                      <div className="kids-form-section col-md-4 mb-3 pr-sp">
                                         <div className="">
                                           <label className="form-label">
                                             Product/Gift Name (or) Product link
@@ -3248,7 +3566,7 @@ const CreateJobs = () => {
                                           </select>
                                         </div>
                                       </div>
-                                      <div className="kids-form-section col-md-3 mb-3">
+                                      <div className="kids-form-section col-md-2 mb-3">
                                         <div className="">
                                           <label className="form-label">
                                             Frequency

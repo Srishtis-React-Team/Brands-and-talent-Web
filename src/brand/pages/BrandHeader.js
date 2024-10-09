@@ -18,11 +18,10 @@ import { useLocation } from "react-router-dom";
 
 const BrandHeader = ({ toggleMenu, myState, from }) => {
   const { currentUserType, avatarImage } = CurrentUser();
-  console.log(toggleMenu, "toggleMenu");
-
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
   const cofeeIcon = require("../../assets/icons/cofeeIcon.png");
+  const [activeMenu, setActiveMenu] = useState(""); // State to track active menu
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [brandId, setBrandId] = useState(null);
@@ -89,17 +88,16 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
     // Extract the last part of the URL (i.e., 'peter')
     const pathParts = location.pathname.split("/");
     const name = pathParts[pathParts.length - 1];
-    console.log(name, "name");
     getDataByPublicUrl(name);
   }, [location]);
 
   const getDataByPublicUrl = async (name) => {
     const formData = {
       publicUrl: name,
+      userId: localStorage.getItem("brandId"),
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
-        console.log(resData, "getDataByPublicUrl");
         // setUrlTalentData(resData?.data?.data);
         // checkUser(resData?.data?.data?._id, resData?.data?.data);
         if (resData?.data?.data) {
@@ -110,10 +108,6 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
       })
       .catch((err) => {});
   };
-
-  useEffect(() => {
-    // console.log(brandData, "brandData");
-  }, [brandData]);
 
   const gotomessage = (item) => {
     navigate(`/message?${item?.talentId}`);
@@ -144,6 +138,9 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
 
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
+  }, [localStorage.getItem("brandId")]);
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
     if (brandId) {
       getBrand();
       getBrandNotification();
@@ -158,11 +155,8 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
 
   const createHandleMenuClick = (menuItem) => {
     return () => {
-      console.log("inside function");
       if (menuItem === "profile") {
-        console.log("inside profile");
-        console.log("brandData?.publicUrl", brandData?.publicUrl);
-        navigate(`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`);
+        navigate(`/client/${brandData?.publicUrl?.replace(/\s+/g, "")}`);
       } else if (menuItem === "logout") {
         localStorage.clear();
         setcurrentUserId(null);
@@ -194,9 +188,11 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
 
   const conditionalNavigate = () => {};
 
+  const isActive = location.pathname.includes("/find-talents");
+
   const handleNavigationClick = () => {
     if (brandData?.planName == "Basic") {
-      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setMessage("Upgrade Pro or Premium Plan to unlock this feature");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -287,11 +283,13 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
                     </div>
 
                     <div
-                      className="navTxt"
+                      style={{ cursor: "pointer" }}
+                      className={`navTxt ${isActive ? "active" : ""}`}
                       onClick={() => handleNavigationClick()}
                     >
-                      <NavLink>Find Talent</NavLink>
+                      Find Talent
                     </div>
+
                     <div className="navTxt">
                       <NavLink to="/how-it-works">How it works</NavLink>
                     </div>
@@ -405,19 +403,19 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
                   <Menu slots={{ listbox: AnimatedListbox }}>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("profile")}
+                      onClick={() => createHandleMenuClick("profile")()}
                     >
                       View profile
                     </MenuItem>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("edit")}
+                      onClick={() => createHandleMenuClick("edit")()}
                     >
                       Edit profile
                     </MenuItem>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("logout")}
+                      onClick={() => createHandleMenuClick("logout")()}
                     >
                       Log out
                     </MenuItem>

@@ -23,6 +23,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
   const { currentUserImage, currentUserType, avatarImage } = CurrentUser();
   const [talent, setTalent] = useState(true);
   const [signupCategory, setSignupCategory] = useState("talent");
+  const [activeMenu, setActiveMenu] = useState(""); // State to track active menu
 
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -99,6 +100,9 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
       getTalentById();
     }
   }, [myState]);
+  useEffect(() => {
+    console.log(activeMenu, "activeMenu");
+  }, [activeMenu]);
 
   const getTalentNotification = async () => {
     await ApiHelper.get(`${API.getTalentNotification}${talentId}`)
@@ -170,13 +174,14 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
           }, 2000);
         }
       } else if (menuItem == "find-talent" && talentData?.planName == "Basic") {
-        setMessage("Purchase Pro or Premium Plan to unlock this feature");
+        setMessage("Upgrade Pro or Premium Plan to unlock this feature");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
           navigate("/pricing");
         }, 3000);
       } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
+        setActiveMenu(menuItem); // Update the active menu item
         navigate("/find-creators");
       }
     };
@@ -777,9 +782,11 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                     <NavLink to="/talent-dashboard"> Get Booked</NavLink>
                   </div>
                   <div
-                    className="navTxt"
                     style={{ cursor: "pointer" }}
-                    onClick={createHandleMenuClick("find-talent")}
+                    className={`navTxt ${
+                      activeMenu === "find-talent" ? "active" : ""
+                    }`} // Apply active class conditionally
+                    onClick={() => createHandleMenuClick("find-talent")()}
                   >
                     Find Talent
                   </div>
@@ -1119,7 +1126,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                     {isTalentProfilePage === false && (
                       <MenuItem
                         style={{ cursor: "pointer" }}
-                        onClick={createHandleMenuClick("profile")}
+                        onClick={() => createHandleMenuClick("profile")()}
                       >
                         View Profile
                       </MenuItem>
@@ -1127,20 +1134,20 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                     {isTalentProfilePage === true && (
                       <MenuItem
                         style={{ cursor: "pointer" }}
-                        onClick={createHandleMenuClick("dashboard")}
+                        onClick={() => createHandleMenuClick("dashboard")()}
                       >
                         Dashboard
                       </MenuItem>
                     )}
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("edit")}
+                      onClick={() => createHandleMenuClick("edit")()}
                     >
                       Edit Profile
                     </MenuItem>
                     <MenuItem
                       style={{ cursor: "pointer" }}
-                      onClick={createHandleMenuClick("logout")}
+                      onClick={() => createHandleMenuClick("logout")()}
                     >
                       Log out
                     </MenuItem>

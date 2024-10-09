@@ -30,16 +30,23 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   const [brandData, setBrandData] = useState(null);
   const [jobCountNumber, setJobCountNumber] = useState(null);
 
-  useEffect(() => {
-    if (currentUserId) {
-      getBrand(currentUserId);
-      jobCount();
-      saveUser();
-    }
-  }, [currentUserId]);
+  // useEffect(() => {
+  //   if (currentUserId) {
+  //     getBrand(currentUserId);
 
-  const getBrand = async (id) => {
-    await ApiHelper.get(`${API.getBrandById}${id}`)
+  //   }
+  // }, [currentUserId]);
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+  }, [localStorage.getItem("brandId")]);
+  useEffect(() => {
+    getBrand();
+    jobCount();
+    saveUser();
+  }, [brandId]);
+
+  const getBrand = async () => {
+    await ApiHelper.get(`${API.getBrandById}${brandId}`)
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
@@ -52,7 +59,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
 
   const saveUser = async () => {
     const formData = {
-      tempId: currentUserId,
+      tempId: localStorage.getItem("brandId"),
     };
     await ApiHelper.post(`${API.saveUser}`, formData)
       .then((resData) => {})
@@ -60,7 +67,6 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   };
 
   const fetchUser = async () => {
-    // alert("fetchUser");
     await ApiHelper.get(`${API.fetchUser}`)
       .then((resData) => {
         console.log(resData?.data?.user?.tempId, "fetchUser");
@@ -84,6 +90,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   const getDataByPublicUrl = async (name) => {
     const formData = {
       publicUrl: name,
+      userId: localStorage.getItem("brandId"),
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
@@ -125,7 +132,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
 
   const handleNavigationClick = () => {
     if (brandData?.planName == "Basic") {
-      setMessage("Purchase Pro or Premium Plan to unlock this feature");
+      setMessage("Upgrade Pro or Premium Plan to unlock this feature");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -172,12 +179,16 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
       <nav className="brand-sidebar-container">
         <div className="brand-profile-not-sidemenu">
           <div className="profImg">
-            {brandData?.brandImage && (
-              <img
-                className="profile-img"
-                src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
-                alt="profile"
-              />
+            {brandData && (
+              <>
+                {brandData?.brandImage.length > 0 && (
+                  <img
+                    className="profile-img"
+                    src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}
+                    alt="profile"
+                  />
+                )}
+              </>
             )}
           </div>
         </div>
@@ -218,7 +229,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             </div>
             <div className="talent-details">
               <div className="talent-name">{brandData?.brandName}</div>
-              <div className="talent-category">Brand</div>
+              <div className="talent-category">Brand / Client</div>
             </div>
           </div>
           <div className="talents-plan-info">
@@ -241,10 +252,10 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
         <div className="sidenavWraper scroll">
           <Link
             onClick={fetchUser}
-            to={`/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`}
+            to={`/client/${brandData?.publicUrl.replace(/\s+/g, "")}`}
             className={
               location.pathname ===
-              `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
+              `/client/${brandData?.publicUrl.replace(/\s+/g, "")}`
                 ? "sidemenu-active mt-2"
                 : "brand-menu-wrapper mt-2"
             }
@@ -268,20 +279,23 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
             <div className="brand-menu-text">Post a Job</div>
           </Link>
 
-          <Link
-            className={
-              location.pathname === "/find-talents"
-                ? "sidemenu-active mt-2"
-                : "brand-menu-wrapper mt-2"
-            }
+          <div
             onClick={() => {
               handleNavigationClick();
               fetchUser();
             }}
           >
-            <i className="bi bi-send icons"></i>
-            <div className="brand-menu-text">Invite To Apply</div>
-          </Link>
+            <Link
+              className={
+                location.pathname === "/find-talents"
+                  ? "sidemenu-active mt-2"
+                  : "brand-menu-wrapper mt-2"
+              }
+            >
+              <i className="bi bi-send icons"></i>
+              <div className="brand-menu-text">Invite To Apply</div>
+            </Link>
+          </div>
 
           <Link
             to="/list-jobs"
@@ -380,7 +394,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
                 : "brand-menu-wrapper mt-2"
             }
           >
-            <i class="bi bi-tags-fill icons"></i>
+            <i className="bi bi-tags-fill icons"></i>
             <div className="brand-menu-text">Pricing</div>
           </Link> */}
 

@@ -1298,10 +1298,16 @@ input[type="radio"] {
 .carousel-title {
   color: #fff;
 }
+.secSpac,
+.main-footer-wrapper {
+  float: left;
+  width: 100%;
+}
 .carousel-section {
   min-height: 524px;
   width: 100%;
   margin-top: 30px;
+  float: left;
 }
 .carousel-section.storyCar {
   background-size: cover;
@@ -2066,9 +2072,8 @@ ul.MuiMenu-list li {
   color: red;
 }
 
-
-.topSpc-container{
-  margin:  100px 0 50px;
+.topSpc-container {
+  margin: 100px 0 50px;
 }
 .spacHeight-log {
   height: 100%;
@@ -2077,14 +2082,14 @@ ul.MuiMenu-list li {
   justify-content: center;
   min-height: 100vh;
 }
-.warning-wrapper.newBoxLog{
+.warning-wrapper.newBoxLog {
   width: 480px;
   margin: 0 auto;
   max-width: 90%;
   padding: 20px 30px;
   text-align: center;
 }
-.warning-wrapper.newBoxLog .logoImg{
+.warning-wrapper.newBoxLog .logoImg {
   margin-bottom: 15px;
 }
 .warning-wrapper.newBoxLog button.warning-btn {
@@ -2098,10 +2103,101 @@ ul.MuiMenu-list li {
   margin: 15px auto;
 }
 
-.pr-sp{ padding-right: 0; }
+.pr-sp {
+  padding-right: 0;
+}
 
+.payWidth .creator-age-wrapper {
+  width: 100%;
+  display: block;
+}
 
+.carrerList p {
+  padding: 0;
+  margin: 0;
+}
 
+.carrerList .jobtitle {
+  color: #c2114b;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 5px 0;
+  padding: 0;
+}
+.carrerList .jobLoct {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: normal;
+  margin: 5px 0 15px;
+  padding: 0;
+  /* font-style: italic; */
+}
+.carrerList .jobLoct span {
+  padding-left: 5px;
+}
+
+.carrerList .jobDescp {
+  font-size: 15px;
+  line-height: 24px;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.carrerList {
+  border: 1px solid #bab4b473;
+  padding: 10px 25px 20px;
+  border-radius: 10px;
+}
+.careerWraps .toptitle {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 10px 0;
+  padding: 0;
+  width: 100%;
+}
+.carrerList .jobtitle i.bi-suitcase-lg.icons {
+  font-size: 20px;
+  margin: 0 7px 0 0;
+}
+.careerWraps .applyInst {
+  margin: 15px 0;
+  padding: 15px;
+  border: 5px solid #c2114b21;
+  background-color: #c2114b0d;
+  border-radius: 10px;
+  text-align: center;
+}
+.careerWraps .applyInst h6.titles {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 5px 0 15px;
+  color: #c2124b;
+}
+.careerWraps .applyInst p {
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}
+.careerWraps .applyInst p a {
+  font-weight: 600;
+  color: #c2124b;
+}
+
+.genCont_desg .descp {
+  line-height: 26px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.genCont_desg {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  padding: 30px 0;
+}
 
 @media (max-width: 1399px) {
   .menu-items > div.navTxt {
@@ -2118,12 +2214,11 @@ ul.MuiMenu-list li {
   .navTxt {
     padding-right: 25px;
   }
-  .pr-sp{ padding-right: calc(var(--bs-gutter-x) * .5); }
-  
+  .pr-sp {
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+  }
 }
 @media (max-width: 991px) {
-
-
   .talent-all-details-wrapper .service-list-content .text-btm {
     justify-content: inherit;
     align-items: baseline;
@@ -2228,9 +2323,13 @@ ul.MuiMenu-list li {
 }
 
 @media (max-width: 767px) {
-
-  .talentSet .edit-basicdetails-section-main{ justify-content: center; width: 100%;  }
-  .brand-content-main.talentSet.boxBg .cardHeight{ min-height: auto !important; }
+  .talentSet .edit-basicdetails-section-main {
+    justify-content: center;
+    width: 100%;
+  }
+  .brand-content-main.talentSet.boxBg .cardHeight {
+    min-height: auto !important;
+  }
   .step-back,
   .step-continue {
     margin: 0 5px;
@@ -2328,11 +2427,12 @@ ul.MuiMenu-list li {
   .mobile-nav-functions .login-text {
     margin-right: 15px !important;
   }
-  .headerDashboard .dropdown-menu{ padding: 0.1rem 0; }
-  .headerDashboard .dropdown-menu li{ padding: 5px 10px; }
-
-
-
+  .headerDashboard .dropdown-menu {
+    padding: 0.1rem 0;
+  }
+  .headerDashboard .dropdown-menu li {
+    padding: 5px 10px;
+  }
 }
 @media (max-width: 580px) {
   .section-description {
@@ -4076,11 +4176,29 @@ ul.MuiMenu-list li {
     display: flex;
     flex-direction: column;
   }
+  .carrerList .jobtitle {
+    font-size: 20px;
+    margin: 10px 0;
+  }
+  .carrerList .jobtitle i.bi-suitcase-lg.icons {
+    font-size: 18px;
+  }
+  .carrerList {
+    padding: 15px;
+  }
+  .careerWraps .applyInst p {
+    font-size: 15px;
+  }
 }
-
 @media (max-width: 420px) {
   .mobile-navbar .icon {
     width: 45px;
+  }
+  .genCont_desg {
+    padding: 15px 0;
+  }
+  .carrerList .jobtitle i.bi-suitcase-lg.icons {
+    display: none;
   }
   .mobile-menu-items {
     height: fit-content;
@@ -4117,3 +4235,11 @@ ul.MuiMenu-list li {
 /* .navTxt {
   margin: 14px 0 !important;
 } */
+
+.navTxt.active {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #c2114b !important; /* Use the same color as the NavLink active state */
+  font-size: 15px;
+}

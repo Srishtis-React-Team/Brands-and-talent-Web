@@ -92,8 +92,6 @@ export let ApiHelper = {
 function handleError(error) {
   if (error) {
     let message = error.data.message;
-    // alert(message)
   } else {
-    // alert('Cant load data! Please check internet connection')
   }
 }

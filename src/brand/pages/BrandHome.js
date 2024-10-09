@@ -9,6 +9,7 @@ import Talentscarousel from "../../views/Talentscarousel.js";
 import BrandSideMenu from "./BrandSideMenu.js";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import TalentsSlider from "../../views/TalentsSlider.js";
 
 const BrandHome = () => {
   const navigate = useNavigate();
@@ -56,17 +57,16 @@ const BrandHome = () => {
     // Extract the last part of the URL (i.e., 'peter')
     const pathParts = location.pathname.split("/");
     const name = pathParts[pathParts.length - 1];
-    console.log(name, "name");
     getDataByPublicUrl(name);
   }, [location]);
 
   const getDataByPublicUrl = async (name) => {
     const formData = {
       publicUrl: name,
+      userId: localStorage.getItem("brandId"),
     };
     await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
       .then((resData) => {
-        console.log(resData?.data?.data?._id, "getDataByPublicUrl");
         // setUrlTalentData(resData?.data?.data);
         // checkUser(resData?.data?.data?._id, resData?.data?.data);
         setBrandData(resData?.data?.data);
@@ -75,7 +75,6 @@ const BrandHome = () => {
   };
 
   const toggleMenu = () => {
-    console.log("clicked");
     setShowSidebar(!showSidebar);
   };
 
@@ -170,11 +169,6 @@ const BrandHome = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(showSidebar, "showSidebar useEffect");
-    console.log(mobileSideBar, "mobileSideBar useEffect");
-  }, [showSidebar]);
-
   return (
     <>
       <BrandHeader toggleMenu={toggleMenu} myState={myState} />
@@ -228,7 +222,12 @@ const BrandHome = () => {
               </div>
 
               <div className="photos-slider">
-                <Talentscarousel talentList={talentList} />
+                <div className="row">
+                  <div className="col-lg-12">
+                    <Talentscarousel talentList={talentList} />
+                  </div>
+                </div>
+                {/* <TalentsSlider talentList={talentList} /> */}
               </div>
               <div className="brand-home-title-flex">
                 <div className="kids-title pb-2">Most Recent Campaigns</div>

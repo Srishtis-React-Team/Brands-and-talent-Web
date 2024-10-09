@@ -93,12 +93,10 @@ const TalentSettings = () => {
     const obj = {
       user_id: userId,
     };
-    console.log("inside fetchPaymentDetails", obj);
     const paymentDetailsData = await ApiHelper.post(
       "https://brandsandtalent.com/api/users/fetchPaymentDetails",
       obj
     );
-    console.log("paymentDetailsData", paymentDetailsData?.data?.data?.gift);
     setActiveGifts(paymentDetailsData?.data?.data?.gift);
     setPaymentDetailsDataArray(paymentDetailsData.data.data);
   };
@@ -147,9 +145,7 @@ const TalentSettings = () => {
   const getKidsData = async () => {
     await ApiHelper.post(`${API.getTalentById}${talentId}`)
       .then((resData) => {
-        console.log(resData, "resData?.data?.data");
         if (resData.data.status === true) {
-          console.log(resData?.data?.data, "resData?.data?.data");
           setTalentData(resData?.data?.data);
           setEditProfileImage(resData.data.data?.image?.fileData);
         }
@@ -368,13 +364,6 @@ const TalentSettings = () => {
     };
   }
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-  useEffect(() => {
-    console.log(editProfileImage, "editProfileImage");
-  }, [editProfileImage]);
-
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -484,8 +473,8 @@ const TalentSettings = () => {
                     {talentPassword && !passwordStatus && (
                       <div className="invalid-fields password-error-box">
                         Your password must be at least 8 characters long and
-                        include at least: 1 capital letter (A, B, C...) 1 small
-                        letter (a, b, c...) 1 number (1, 2, 3...) 1 special
+                        include at least: 1 capital letter (A, B, C...), 1 small
+                        letter (a, b, c...), 1 number (1, 2, 3...), 1 special
                         symbol (!, @, #...)
                       </div>
                     )}
@@ -620,7 +609,6 @@ const TalentSettings = () => {
               {/* Manage Account */}
               <div className="edit-basicdetails-section-main">
                 <div className="payment-details-card">
-                  {console.log("consoling the exact", paymentDetailsDataArray)}
                   <h6
                     style={{
                       fontSize: "14px",

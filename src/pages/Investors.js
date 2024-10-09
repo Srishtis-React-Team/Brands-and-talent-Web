@@ -30,10 +30,6 @@ const Investors = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(aboutusList, "aboutusList");
-  }, [aboutusList]);
-
   return (
     <>
       <Header />{" "}
@@ -44,56 +40,24 @@ const Investors = () => {
           </div>
         </div>
       </section>
-      <section className="abtWraper">
+      <section className="abtWraper genCont_desg">
         <div className="container">
-          <div className="topCont pt-5 pb-0">
-            <div className="text-center">
-              <h2 className="maintitles">About Brands & Talent</h2>
-              <div className="widthParg">
+          <div className="topCont mt-4">
+
+          <div className="text-center">
+
+              {/* <h2 className="maintitles">Investors</h2> */}
+              <div className="widthParg mb-3">
                 <p
-                  className="descp"
-                  dangerouslySetInnerHTML={{
-                    __html: aboutusList[0]?.description,
-                  }}
-                ></p>
-              </div>
-            </div>
-          </div>
-          <div className="contSpc pt-3 pb-5">
-            <div className="row textAlg mb-5">
-              <div
-                className="col-md-6 descp"
-                dangerouslySetInnerHTML={{
-                  __html: aboutusList[1]?.description,
-                }}
-              ></div>
-              <div className="col-md-6">
-                <img
-                  className="img-fluid"
-                  src={
-                    "https://brandsandtalent.com//backend/uploads/060b5e10-128d-455e-9a63-9d4bd1531031.webp"
-                  }
-                ></img>
+                  className="descp m-0">
+                    At Brands & Talent, we’re redefining the creator industry in the age of AI, providing a seamless platform for brands and talent to connect, collaborate, and succeed. We welcome visionary investors who want to join us in shaping this dynamic industry and empowering creators worldwide.<br/><br/>
+                    Our minimum investment amount is USD 80,000. If you’re interested in learning more or investing, please contact us at <strong><a href="mailto:brandsntalent@gmail.com">brandsntalent@gmail.com</a></strong>.
+                  </p>
               </div>
             </div>
 
-            <div className="row textAlg mt-3 mb-5">
-              <div className="col-md-6 ">
-                <img
-                  className="img-fluid"
-                  src={
-                    "https://brandsandtalent.com//backend/uploads/76f0ef01-9a84-4459-90f6-b2c7aaa9f1e3.webp"
-                  }
-                ></img>
-              </div>
-              <div
-                className="col-md-6 descp"
-                dangerouslySetInnerHTML={{
-                  __html: aboutusList[2]?.description,
-                }}
-              ></div>
-            </div>
           </div>
+   
         </div>
       </section>
       <Footer />

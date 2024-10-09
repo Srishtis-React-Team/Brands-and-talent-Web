@@ -167,7 +167,7 @@ function Routing() {
           element={brandID ? <BrandHome /> : <Navigate to="/login" replace />}
         /> */}
 
-            <Route path="/brand/:name" element={<BrandHome />} />
+            <Route path="/client/:name" element={<BrandHome />} />
 
             {/* <Route path="/talent/:name" element={<TalentProfile />} /> */}
             {/* <Route path="/pricing" element={<Pricing />} /> */}

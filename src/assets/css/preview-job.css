@@ -221,9 +221,7 @@
   }
 }
 
-
 @media (max-width: 420px) {
-
   .preview-main-box .company-location {
     display: flex;
     align-items: inherit;
@@ -231,8 +229,14 @@
     line-height: normal;
     padding: 10px 0 5px;
   }
-  .preview-main-box .job-feature-values, .preview-main-box .job-benefits-values{ padding-left: 0; }
+  .preview-main-box .job-feature-values,
+  .preview-main-box .job-benefits-values {
+    padding-left: 0;
+  }
+}
 
-
-
+.not-viewjob {
+  overflow: inherit;
+  max-height: inherit;
+  margin: 100px 30px 20px;
 }

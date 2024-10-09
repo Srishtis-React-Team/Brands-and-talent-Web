@@ -70,7 +70,6 @@ const Dashboard = () => {
     await ApiHelper.get(API.getLogos)
       .then((resData) => {
         if (resData) {
-          console.log(resData?.data?.data[0]?.image, "brandLogosList");
           setBrandLogosList(resData?.data?.data[0]?.image);
         }
       })
@@ -385,7 +384,7 @@ const Dashboard = () => {
                     onClick={(e) => {
                       if (currentUserType == "brand") {
                         navigate(
-                          `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
+                          `/client/${brandData?.publicUrl.replace(/\s+/g, "")}`
                         );
                       } else {
                         navigate("/signup", {
@@ -403,154 +402,167 @@ const Dashboard = () => {
           </div>
         </section>
 
-        <div className="wraper">
-          <div className="container-fluid">
-            <div className="tabs-section">
-              <div className="title">Popular Talent</div>
-            </div>
-          </div>
-
-          <div className="container">
-            <div className="gallery-section wraper">
-              <div className="gallery-main showContent">
-                {talentsList?.slice(0, visibleCount)?.map((item) => {
-                  return (
-                    <div className="gallery-wrapper">
-                      <div className="gallery-top">
-                        <img
-                          className="gallery-img"
-                          src={`${API.userFilePath}${item.image?.fileData}`}
-                        ></img>
-
-                        {(() => {
-                          const starRatings = parseInt(
-                            item?.averageStarRatings,
-                            10
-                          );
-                          const totalStars = 5;
-                          const filledStars =
-                            !isNaN(starRatings) && starRatings > 0
-                              ? starRatings
-                              : 0;
-
-                          return (
-                            <div
-                              className={`rating ${
-                                currentUserType === "brand" ? "cursor" : ""
-                              }`}
-                              onClick={() => rateTalent(item)}
-                            >
-                              {[...Array(totalStars)].map((_, starIndex) => (
-                                <i
-                                  key={starIndex}
-                                  className={
-                                    starIndex < filledStars
-                                      ? "bi bi-star-fill rating-filled-star"
-                                      : "bi bi-star rating-unfilled-star"
-                                  }
-                                  alt="Star"
-                                ></i>
-                              ))}
-                            </div>
-                          );
-                        })()}
-
-                        {!item.isFavorite && (
-                          <img
-                            className="heart-icon"
-                            src={heartIcon}
-                            onClick={() => addFavorite(item)}
-                          ></img>
-                        )}
-                        {item.isFavorite === true && (
-                          <img
-                            className="heart-icon"
-                            src={favoruiteIcon}
-                            onClick={() => removeFavorite(item)}
-                          ></img>
-                        )}
-                      </div>
-
-                      <div
-                        className="gallery-content"
-                        onClick={() => openTalent(item)}
-                      >
-                        <div className="content">
-                          <div className="name">
-                            {item?.preferredChildFirstname
-                              ? `${item?.preferredChildFirstname}`
-                              : "Elizabeth"}
-                          </div>
-                          {item?.averageStarRatings &&
-                            item?.averageStarRatings > 0 && (
-                              <>
-                                <div className="talent-details-wrapper">
-                                  <div className="logo-fill">
-                                    <img
-                                      className="talent-logo"
-                                      src={pinkStar}
-                                    ></img>
-                                  </div>
-                                  <div className="contSect">
-                                    <span>
-                                      *{item?.averageStarRatings} (
-                                      {item?.totalReviews} ratings)
-                                    </span>
-                                  </div>
-                                </div>
-                              </>
-                            )}
-
-                          {item?.noOfJobsCompleted && (
-                            <>
-                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
-                                <div className="logo-fill-briefcase">
-                                  <i className="bi bi-briefcase-fill model-job-icons"></i>
-                                </div>
-                                <div className="contSect">
-                                  <span>
-                                    {item?.noOfJobsCompleted} Jobs Completed
-                                  </span>
-                                </div>
-                              </div>
-                            </>
-                          )}
-                          {item?.profession && (
-                            <>
-                              <div className="talent-details-wrapper nweAlign pt-1 pb-0">
-                                <div className="logo-fill-briefcase">
-                                  <i className="bi bi-person-workspace model-job-icons"></i>
-                                </div>
-                                <div className="contSect">
-                                  <span>{item?.profession[0]?.value}</span>
-                                </div>
-                              </div>
-                            </>
-                          )}
-                          <span className="job-company_dtls nweAlign pt-2 d-flex">
-                            <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
-                            <span>
-                              {item?.childCity},{item?.parentState},{" "}
-                              {item?.parentCountry}{" "}
-                            </span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {visibleCount < talentList.length && (
-              <div className="find-more wraper">
-                <div onClick={() => handleReadMore()} className="moreBtn">
-                  Find More
+        {talentsList && talentsList?.length >= 10 && (
+          <>
+            <div className="wraper">
+              <div className="container-fluid">
+                <div className="tabs-section">
+                  <div className="title">Popular Talent</div>
                 </div>
               </div>
-            )}
-          </div>
-        </div>
+
+              <div className="container">
+                <div className="gallery-section wraper">
+                  <div className="gallery-main showContent">
+                    {talentsList?.slice(0, visibleCount)?.map((item) => {
+                      return (
+                        <div className="gallery-wrapper">
+                          <div className="gallery-top">
+                            <img
+                              className="gallery-img"
+                              src={`${API.userFilePath}${item.image?.fileData}`}
+                            ></img>
+
+                            {(() => {
+                              const starRatings = parseInt(
+                                item?.averageStarRatings,
+                                10
+                              );
+                              const totalStars = 5;
+                              const filledStars =
+                                !isNaN(starRatings) && starRatings > 0
+                                  ? starRatings
+                                  : 0;
+
+                              return (
+                                <div
+                                  className={`rating ${
+                                    currentUserType === "brand" ? "cursor" : ""
+                                  }`}
+                                  onClick={() => rateTalent(item)}
+                                >
+                                  {[...Array(totalStars)].map(
+                                    (_, starIndex) => (
+                                      <i
+                                        key={starIndex}
+                                        className={
+                                          starIndex < filledStars
+                                            ? "bi bi-star-fill rating-filled-star"
+                                            : "bi bi-star rating-unfilled-star"
+                                        }
+                                        alt="Star"
+                                      ></i>
+                                    )
+                                  )}
+                                </div>
+                              );
+                            })()}
+
+                            {!item.isFavorite && (
+                              <img
+                                className="heart-icon"
+                                src={heartIcon}
+                                onClick={() => addFavorite(item)}
+                              ></img>
+                            )}
+                            {item.isFavorite === true && (
+                              <img
+                                className="heart-icon"
+                                src={favoruiteIcon}
+                                onClick={() => removeFavorite(item)}
+                              ></img>
+                            )}
+                          </div>
+
+                          <div
+                            className="gallery-content"
+                            onClick={() => openTalent(item)}
+                          >
+                            <div className="content">
+                              <div className="name">
+                                {item?.preferredChildFirstname
+                                  ? `${item?.preferredChildFirstname}`
+                                  : "Elizabeth"}
+                              </div>
+                              {item?.averageStarRatings &&
+                                item?.averageStarRatings > 0 && (
+                                  <>
+                                    <div className="talent-details-wrapper">
+                                      <div className="logo-fill-briefcase">
+                                        <i class="bi bi-star-fill model-job-icons"></i>
+                                      </div>
+                                      <div className="contSect">
+                                        <span>
+                                          {item?.averageStarRatings} (
+                                          {item?.totalReviews} ratings)
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
+
+                              {item?.noOfJobsCompleted && (
+                                <>
+                                  <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                    <div className="logo-fill-briefcase">
+                                      <i className="bi bi-briefcase-fill model-job-icons"></i>
+                                    </div>
+                                    <div className="contSect">
+                                      <span>
+                                        {item?.noOfJobsCompleted} Jobs Completed
+                                      </span>
+                                    </div>
+                                  </div>
+                                </>
+                              )}
+                              {item?.profession && (
+                                <>
+                                  <div className="talent-details-wrapper nweAlign pt-1 pb-0">
+                                    <div className="logo-fill-briefcase">
+                                      <i className="bi bi-person-workspace model-job-icons"></i>
+                                    </div>
+                                    <div className="contSect">
+                                      <span>{item?.profession[0]?.value}</span>
+                                    </div>
+                                  </div>
+                                </>
+                              )}
+                              <span className="job-company_dtls nweAlign pt-2 d-flex">
+                                <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
+                                <span>
+                                  {item?.childCity && <>{item.childCity}</>}
+                                  {item?.parentState && item?.childCity && (
+                                    <>, </>
+                                  )}
+                                  {item?.parentState && <>{item.parentState}</>}
+                                  {item?.parentCountry &&
+                                    (item?.childCity || item?.parentState) && (
+                                      <>, </>
+                                    )}
+                                  {item?.parentCountry && (
+                                    <>{item.parentCountry}</>
+                                  )}
+                                </span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {visibleCount < talentList.length && (
+                  <div className="find-more wraper">
+                    <div onClick={() => handleReadMore()} className="moreBtn">
+                      Find More
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
+        )}
 
         <div className="productsWraper wraper secSpac">
           <div className="container">

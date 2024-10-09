@@ -71,8 +71,8 @@ const brandTypeList = [
   "Company ( 251-500 Employess )",
   "Company ( 501-3500 Employess )",
   "Company ( 3500+ Employess )",
-  "Recruiting firms",
-  "Staffing Agency",
+  "Recruiting firm",
+  "Talent agency",
 ];
 
 const EditBrands = () => {
@@ -301,6 +301,9 @@ const EditBrands = () => {
       .catch((err) => {});
   };
 
+  useEffect(() => {
+    console.log(errorMessage, "errorMessage");
+  }, [errorMessage]);
   useEffect(() => {}, [brandData]);
 
   useEffect(() => {}, [aboutBrand]);
@@ -1118,7 +1121,7 @@ const EditBrands = () => {
                       {!publicUrlEdit && (
                         <>
                           <div className="public-url-text">
-                            {`https://brandsandtalent.com/${publicUrl}`}
+                            {`https://brandsandtalent.com/client/${publicUrl}`}
                             <i
                               onClick={(e) => {
                                 setPublicUrlEdit(true);
@@ -1130,7 +1133,7 @@ const EditBrands = () => {
                       )}
                       {publicUrlEdit && (
                         <div className="public-url-text">
-                          {`https://brandsandtalent.com/talent/`}
+                          {`https://brandsandtalent.com/client/`}
                         </div>
                       )}
                       {publicUrlEdit && (

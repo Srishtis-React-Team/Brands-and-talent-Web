@@ -55,7 +55,6 @@ const Resources = () => {
         rating: 1,
       },
     ]);
-    console.log(caseList, "caseLis");
   }, [caseList]);
   return (
     <>

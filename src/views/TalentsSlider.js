@@ -8,7 +8,8 @@ import "../assets/css/SwiperSlider.css"; // Import your custom CSS
 import { API } from "../config/api";
 import { Modal, Box, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
-const SwiperSlider = ({ photosList }) => {
+const TalentsSlider = ({ talentList }) => {
+  console.log(talentList, "talentList");
   const logoWhite = require("../assets/images/logo-white.png");
   const [isSliderOpen, setSliderOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -28,12 +29,12 @@ const SwiperSlider = ({ photosList }) => {
   }, [currentImageIndex]);
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % photosList.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % talentList.length);
   };
 
   const handlePrevious = () => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + photosList.length) % photosList.length
+      (prevIndex) => (prevIndex - 1 + talentList.length) % talentList.length
     );
   };
 
@@ -62,12 +63,12 @@ const SwiperSlider = ({ photosList }) => {
           },
         }}
       >
-        {photosList?.map((item, index) => (
+        {talentList?.map((item, index) => (
           <SwiperSlide key={index}>
             <div className="slide-content swiper-slider-width">
               <img
                 style={{ borderRadius: "10px" }}
-                src={`${API.userFilePath}${item}`}
+                src={`${API.userFilePath}${item?.image?.fileData}`}
                 onClick={() => {
                   handleImageClick(index);
                 }}
@@ -104,7 +105,7 @@ const SwiperSlider = ({ photosList }) => {
             <Close />
           </IconButton>
           <img
-            src={`${API.userFilePath}${photosList[currentIndex]}`}
+            src={`${API.userFilePath}${talentList[currentIndex]}`}
             alt=""
             style={{
               width: "auto !important",
@@ -137,4 +138,4 @@ const SwiperSlider = ({ photosList }) => {
   );
 };
 
-export default SwiperSlider;
+export default TalentsSlider;

@@ -48,7 +48,6 @@ const TalentDashBoard = () => {
     getCountries();
   }, []);
   useEffect(() => {
-    console.log(flagCondition, "flagCondition");
     if (flagCondition == true) {
     }
   }, [flagCondition]);
@@ -167,10 +166,6 @@ const TalentDashBoard = () => {
   };
 
   useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-
-  useEffect(() => {
     getTopBrands();
     const storedUserId = localStorage.getItem("userId");
 
@@ -235,10 +230,8 @@ const TalentDashBoard = () => {
   };
 
   const viewJob = async (jobId) => {
-    // alert(jobId);
     const screenWidth = window.innerWidth;
     if (screenWidth > 768) {
-      // alert(jobId);
       setJob(jobId);
       setFlag(true);
     } else {
@@ -249,10 +242,8 @@ const TalentDashBoard = () => {
   };
 
   useEffect(() => {
-    console.log(gigsList, "gigsList");
-  }, [gigsList]);
-
-  useEffect(() => {}, [flag]);
+    console.log(flag, "flag");
+  }, [flag]);
 
   const getTopBrands = async () => {
     await ApiHelper.post(API.getTopBrands)
@@ -1255,7 +1246,11 @@ const TalentDashBoard = () => {
             </div>
             <div className={flag ? "col-md-4 col-lg-6" : "col-md-4 col-lg-4"}>
               {flag ? (
-                <TalentPreviewJob job={job} setFlag={setFlag} />
+                <TalentPreviewJob
+                  from={"dashboard"}
+                  job={job}
+                  setFlag={setFlag}
+                />
               ) : (
                 <div className="rightBx">
                   <div className="contact-section-main remvSpace">

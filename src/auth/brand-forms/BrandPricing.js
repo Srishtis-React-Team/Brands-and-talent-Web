@@ -31,8 +31,6 @@ const BrandPricing = () => {
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
-
-    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
   const goBack = async () => {
@@ -47,12 +45,8 @@ const BrandPricing = () => {
     }
   }, [location.state]);
 
-  useEffect(() => {
-    console.log(receivedData, "receivedData");
-  }, [receivedData]);
-
   const brandsSignup = async () => {
-    navigate(`/brand/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+    navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
       state: { data: receivedData },
     });
 

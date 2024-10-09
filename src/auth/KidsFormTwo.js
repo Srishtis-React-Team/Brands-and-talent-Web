@@ -19,15 +19,12 @@ import DialogActions from "@mui/material/DialogActions";
 import PaymentOptions from "../views/PaymentOptions.js";
 import CheckoutComponent from "../views/CheckoutComponent.js";
 
-
-
 import {
   parsePhoneNumber,
   isValidPhoneNumber,
   getNumberType,
   validatePhoneNumberLength,
 } from "libphonenumber-js";
-
 
 const KidsFormTwo = () => {
   const theme = useTheme();
@@ -83,12 +80,9 @@ const KidsFormTwo = () => {
   const [mobileNumberError, setMobileNumberError] = useState("");
   const [isPlanForm, setIsPlanForm] = useState(false);
   const [giftSub, setGiftSub] = useState(false);
-  const [appliedCouponCode, setAppliedCouponCode] = useState('')
-
-
+  const [appliedCouponCode, setAppliedCouponCode] = useState("");
 
   const handleMobileChange = (value) => {
-    console.log(value, "handleMobileChange");
     isValidPhoneNumber(value);
     if (isValidPhoneNumber(value)) {
       setMobileError(false);
@@ -121,11 +115,6 @@ const KidsFormTwo = () => {
     if (isPlanForm === false) {
       setIsPlanForm(true);
     } else {
-      console.log("Sender Name: ", senderName);
-      console.log("Email: ", email);
-      console.log("Receiver's Email: ", recieverEmail);
-      console.log("Receiver's First Name: ", recieversFirstName);
-      console.log("Receiver's Last Name: ", recieversLastName);
       if (!senderName) setSenderNameError(true);
       if (!email) setEmailError(true);
       if (!recieverEmail) setRecieverEmailError(true);
@@ -160,7 +149,6 @@ const KidsFormTwo = () => {
               `${API.giftSubCreation}`,
               payload
             );
-            console.log(resData, "resData");
             if (resData.data.status) {
               setIsLoading(false);
               setMessage("Form Submitted Successfully");
@@ -224,7 +212,6 @@ const KidsFormTwo = () => {
   const [pathFrom, setPathFrom] = useState("");
 
   const handleRadioChange = (type, id, planname) => (event) => {
-    console.log('type, id, planname',type, id, planname)
     setPlan(id);
     setSelectedPaymentPlan(planname);
     setSelectedPaymentPeriod(type);
@@ -237,58 +224,47 @@ const KidsFormTwo = () => {
         paymentOption == "card" ? API.createPayment : API.createqrpayment;
       const response = await ApiHelper.post(apiUrl, { amount, currency, type });
       // await axios.post('/api/pricing/create-payment', { amount, currency, type });
-      console.log("Payment Response:", response);
       setResponseUrl(response.data.url);
       localStorage.setItem("paymenttrans_id", response.data.trans_id);
       let planType;
-      if(selectedPaymentPlan == "Pro (Popular)"){
+      if (selectedPaymentPlan == "Pro (Popular)") {
         planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
-        console.log('trimed value',planType); // Output: "Pro"
       }
-      if(plan == 'giftsubscription'){
+      if (plan == "giftsubscription") {
         const giftObj = {
-          "senderName": senderName,
-          "email": email,
-          "gift": [
-              {
-                  "receiversFirstName": recieversFirstName,
-                  "receiverEmail": recieverEmail,
-                  "message": enquiry,
-                  "subscriptionPlan": selectedPaymentPeriod,
-                  "planName": planType?planType:selectedPaymentPlan,
-                  "transId": response.data.trans_id,
-                  "paymentStatus": "Pending",
-              }
+          senderName: senderName,
+          email: email,
+          gift: [
+            {
+              receiversFirstName: recieversFirstName,
+              receiverEmail: recieverEmail,
+              message: enquiry,
+              subscriptionPlan: selectedPaymentPeriod,
+              planName: planType ? planType : selectedPaymentPlan,
+              transId: response.data.trans_id,
+              paymentStatus: "Pending",
+            },
           ],
-          "isActive": true
-      }
+          isActive: true,
+        };
 
-      console.log('giftObj',giftObj)
-
-      const resGiftSub = await ApiHelper.post(
-        API.giftSubCreation,
-        giftObj
-      );
-      console.log("resGiftSub", resGiftSub);
-      }else{
+        const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
+      } else {
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
-          planName: planType?planType:selectedPaymentPlan,
+          planName: planType ? planType : selectedPaymentPlan,
           user_id: userId,
           transId: response.data.trans_id,
-          paymentStatus:'Pending',
-          coupon:appliedCouponCode?appliedCouponCode:'',
+          paymentStatus: "Pending",
+          coupon: appliedCouponCode ? appliedCouponCode : "",
         };
-        console.log('userData',userData)
         const responseSubscription = await ApiHelper.post(
           API.subscriptionPlan,
           userData
         );
-      console.log("responseSubscription", responseSubscription);
-
       }
       setCheckout(true);
-      setLoading(false)
+      setLoading(false);
       // Handle the response and update UI
     } catch (error) {
       console.error("Error during payment:", error);
@@ -297,7 +273,7 @@ const KidsFormTwo = () => {
 
   useEffect(() => {
     if (selectedPaymentOption == "qr") {
-      setLoading(true)
+      setLoading(true);
       if (giftSub) {
       handlePayment(
         selectedAmount,
@@ -316,7 +292,7 @@ const KidsFormTwo = () => {
       );
     }
     } else if (selectedPaymentOption == "card") {
-      setLoading(true)
+      setLoading(true);
       if (giftSub) {
       handlePayment(
         selectedAmount,
@@ -336,7 +312,6 @@ const KidsFormTwo = () => {
     }
     }
   }, [selectedPaymentOption]);
-
 
   useEffect(() => {
     getPricingList();
@@ -382,67 +357,61 @@ const KidsFormTwo = () => {
   // };
   const choosePlan = async (index, item, from) => {
     console.log("item", item);
-    console.log('index',index)
-    if(index == 0){
-      editKids()
-    }else{
+    console.log("index", index);
+    if (index == 0) {
+      editKids();
+    } else {
       setPathFrom(from);
-    console.log("selectedPlan", `annual-${selectedPlan}`);
-    if (from == "giftsubscription") {
-      setGiftSub(true);
-      localStorage.setItem("giftsubscription", true);
-    } else {
-      setGiftSub(false);
-      localStorage.setItem("giftsubscription", false);
-    }
-    const selectedPlanItem =
-      item.plan_type_annual.find(
-        (plan) => `annual-${item._id}` === selectedPlan
-      ) ||
-      item.plan_type_monthly.find(
-        (plan) => `monthly-${item._id}` === selectedPlan
-      );
-    console.log("selectedPlanItem", selectedPlanItem);
-    const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
-    const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
-    const afterDiscount = selectedPlanItem ? selectedPlanItem.afterDiscount : "N/A";
-
-    console.log("price", price);
-    const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
-    const match = price.match(regex);
-    if (match) {
-      let amount;
-      if(afterDiscount.includes("per year")){
-        const match = afterDiscount.match(/(\w+)\s([\d.,]+)\sper\syear/);
-        if (match) {
-          amount = parseFloat(match[2]); // Extracts the numeric part
-        }
-      }else{
-       amount = parseFloat(match[2]); // 29.99
+      console.log("selectedPlan", `annual-${selectedPlan}`);
+      if (from == "giftsubscription") {
+        setGiftSub(true);
+        localStorage.setItem("giftsubscription", true);
+      } else {
+        setGiftSub(false);
+        localStorage.setItem("giftsubscription", false);
       }
-      const currency = match[1].toUpperCase(); // "USD"
-      const duration = match[3]; // "month"
-      setSelectedCurrency(currency);
-      setSelectedAmount(amount);
-      localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
-      localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
-      setPaymentOption(true);
-    } else {
-      console.error("Price string format is incorrect");
+      const selectedPlanItem =
+        item.plan_type_annual.find(
+          (plan) => `annual-${item._id}` === selectedPlan
+        ) ||
+        item.plan_type_monthly.find(
+          (plan) => `monthly-${item._id}` === selectedPlan
+        );
+      const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
+      const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
+      const afterDiscount = selectedPlanItem
+        ? selectedPlanItem.afterDiscount
+        : "N/A";
+
+      const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
+      const match = price.match(regex);
+      if (match) {
+        let amount;
+        if (afterDiscount.includes("per year")) {
+          const match = afterDiscount.match(/(\w+)\s([\d.,]+)\sper\syear/);
+          if (match) {
+            amount = parseFloat(match[2]); // Extracts the numeric part
+          }
+        } else {
+          amount = parseFloat(match[2]); // 29.99
+        }
+        const currency = match[1].toUpperCase(); // "USD"
+        const duration = match[3]; // "month"
+        setSelectedCurrency(currency);
+        setSelectedAmount(amount);
+        localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
+        localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
+        setPaymentOption(true);
+      } else {
+        console.error("Price string format is incorrect");
+      }
     }
-    }
-    
 
-      // const type = `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`
-      // handlePayment(amount, currency, type)
-      // /api/pricing/create-payment
-      // /check-transaction
-      // handlePayment(amount, currency)
-   
-
-  
-
-  
+    // const type = `https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`
+    // handlePayment(amount, currency, type)
+    // /api/pricing/create-payment
+    // /check-transaction
+    // handlePayment(amount, currency)
 
     // const formData = {
     // };
@@ -1022,7 +991,13 @@ const KidsFormTwo = () => {
                                       ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
                                       : ""
                                   }
-                                  onClick={() => choosePlan(index + 1, item, "giftsubscription")} // Adjust the index for the chosen plan
+                                  onClick={() =>
+                                    choosePlan(
+                                      index + 1,
+                                      item,
+                                      "giftsubscription"
+                                    )
+                                  } // Adjust the index for the chosen plan
                                 >
                                   Choose plan
                                 </div>

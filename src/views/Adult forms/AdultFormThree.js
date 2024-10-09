@@ -58,20 +58,17 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   let queryString = url.split("?")[1];
 
-  console.log(queryString, "queryString");
-
   const userId = urlParams.get("userId");
-
   const [talentData, setTalentData] = useState();
 
   useEffect(() => {
-    if (userId) {
+    if (queryString) {
       getTalentById();
     }
-  }, [userId]);
+  }, [queryString]);
 
   const getTalentById = async () => {
-    await ApiHelper.post(`${API.getTalentById}${userId}`)
+    await ApiHelper.post(`${API.getTalentById}${queryString}`)
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
@@ -180,7 +177,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleEditFeatureChanges = (values) => {
     setFeature(values);
-    console.log("Updated Form Values handleEditFeatureChanges:", values);
   };
 
   const handleResumeDrop = (e) => {
@@ -254,10 +250,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     }
   };
   const isNotKnownFormatUrl = (url) => {
-    console.log(url, "url");
-
     const isValidAudioUrl = audioUrlPatterns?.audio?.test(url); // Check for audio URLs
-    console.log(isValidAudioUrl, "url");
 
     // Updated regex to accept valid URLs including those ending in .com, .in, and audio file types
     const isValidUrl =
@@ -279,7 +272,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleAudioUrl = () => {
     if (audioUrl.trim() !== "") {
-      // alert(isNotKnownFormatUrl(audioUrl));
       if (!isNotKnownFormatUrl(audioUrl)) {
         // Determine allowed URL limits based on plan type
         let maxUrls;
@@ -417,7 +409,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   const handleUrlChange = (e) => {
     // Avoid handling change if it was triggered by a paste event
     if (e.inputType === "insertFromPaste") return;
-    // alert("handleUrlChange");
     const url = e.target.value;
     setVideoUrl(url);
     // Validate URL in real-time
@@ -431,11 +422,9 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     // Validate URL in real-time
 
     setCheckAudioUrl(isNotKnownFormatUrl(url));
-    console.log(isNotKnownFormatUrl(url), "isNotKnownFormatUrl");
   };
 
   const handlePaste = (e) => {
-    // alert("handlePaste");
     e.preventDefault(); // Prevent the default paste behavior to avoid double handling
 
     const pastedText = (e.clipboardData || window.clipboardData).getData(
@@ -492,7 +481,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
       const nonImageFiles = filesArray.filter(
         (file) => !file.type.startsWith("image/")
       );
-
       // Check for non-image files
       if (nonImageFiles.length > 0) {
         setMessage("You can only upload images");
@@ -502,14 +490,14 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         }, 1000);
         return;
       }
-
       // Determine allowed file limits based on plan type
       let maxFiles;
-      if (talentData?.planName === "Basic") {
+
+      if (talentData?.planName == "Basic") {
         maxFiles = 5;
-      } else if (talentData?.planName === "Pro") {
+      } else if (talentData?.planName == "Pro") {
         maxFiles = 15;
-      } else if (talentData?.planName === "Premium") {
+      } else if (talentData?.planName == "Premium") {
         maxFiles = Infinity; // Unlimited
       }
 
@@ -521,7 +509,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
         } else if (talentData?.planName === "Pro") {
           upgradeMessage = "Upgrade to Premium to add more files.";
         }
-
         setMessage(
           `You can upload a maximum of ${maxFiles} images. ${upgradeMessage}`
         );
@@ -768,7 +755,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleView = (item) => {
-    console.log(item, "imageUrl");
     let viewImage = `${API.userFilePath}${item.fileData}`;
     window.open(viewImage, "_blank");
   };
@@ -836,7 +822,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleFeaturesChange = (label, value) => {
-    console.log(label, "label", value, "value", "handleFeaturesChange");
     const updatedValues = [...features];
     const index = updatedValues.findIndex((item) => item.label === label);
     let finalValue = value;
@@ -938,27 +923,12 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   useEffect(() => {
-    console.log(verificationID, "verificationID");
-  }, []);
-  useEffect(() => {
-    console.log(portofolioFile, "portofolioFile");
-  }, [portofolioFile]);
-  useEffect(() => {
-    console.log(urls, "urls");
-  }, [urls]);
-  useEffect(() => {
-    console.log(aboutYou, "aboutYou");
-  }, [aboutYou]);
-
-  useEffect(() => {
     getKidsData();
   }, [userId]);
 
   const getKidsData = async () => {
-    // alert("sd");
     await ApiHelper.post(`${API.getTalentById}${queryString}`)
       .then((resData) => {
-        console.log(resData, "getKidsData");
         if (resData.data.status === true) {
           setProfileFile(resData.data.data.image);
           setResumeFile(resData.data.data.cv);
@@ -987,7 +957,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 5 of 6</div>
+            <div className="step-text">Step 4 of 5</div>
           </div>
           <button
             type="button"
@@ -1272,7 +1242,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   <MenuItem
                                     onClick={() => {
                                       handleVideoClose(); // Close the menu
-                                      console.log(url, "url"); // Debugging: Log the URL to ensure it's correct
                                       window.open(selectedVideoItem, "_blank"); // Open the URL in a new tab
                                     }}
                                   >
@@ -1363,7 +1332,6 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   <MenuItem
                                     onClick={() => {
                                       handleAudioClose();
-                                      console.log(url, "url"); // Debugging: Log the URL to ensure it's correct
                                       window.open(url, "_blank"); // Open the YouTube video in a new tab
                                     }}
                                   >

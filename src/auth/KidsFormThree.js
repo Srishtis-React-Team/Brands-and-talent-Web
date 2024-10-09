@@ -61,15 +61,12 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [talentData, setTalentData] = useState();
 
   useEffect(() => {
-    console.log(userId, "userId");
     getKidsData();
   }, [userId]);
 
   const getKidsData = async () => {
-    // alert("sd");
     await ApiHelper.post(`${API.getTalentById}${userId}`)
       .then((resData) => {
-        console.log(resData, "getKidsData");
         if (resData.data.status === true) {
           setTalentData(resData.data.data);
           setProfileFile(resData.data.data.image);
@@ -85,10 +82,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
       })
       .catch((err) => {});
   };
-
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
 
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -136,25 +129,20 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   //   const paymenttrans_id = localStorage.getItem("paymenttrans_id");
   //   const selectedPaymentPeriod = localStorage.getItem("selectedPaymentPeriod");
   //   const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
-  //   console.log("selectedPaymentPeriod", selectedPaymentPeriod);
-  //   console.log("selectedPaymentPlan", selectedPaymentPlan);
 
   //   const obj = { tranId: paymenttrans_id };
 
   //   try {
-  //     console.log("here...");
   //     const resData = await ApiHelper.post(
   //       "https://brandsandtalent.com/api/pricing/check-transaction",
   //       obj
   //     );
-  //     console.log("resData", resData);
 
   //     if (resData) {
   //       if (resData.data.status.message == "Success!") {
   //         const paymentData = resData.data.data;
   //         if (paymentData.payment_status == "APPROVED") {
   //           localStorage.setItem("paymentData", JSON.stringify(paymentData));
-  //           // alert('payment successfully completed')
   //           const userId = localStorage.getItem("userId");
   //           const userData = {
   //             subscriptionPlan: selectedPaymentPeriod,
@@ -169,7 +157,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   //             API.subscriptionPlan,
   //             userData
   //           );
-  //           console.log("responseSubscription", responseSubscription);
   //         }
   //       }
   //     }
@@ -306,10 +293,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const isNotKnownFormatUrl = (url) => {
-    console.log(url, "url");
-
     const isValidAudioUrl = audioUrlPatterns?.audio?.test(url); // Check for audio URLs
-    console.log(isValidAudioUrl, "url");
 
     // Updated regex to accept valid URLs including those ending in .com, .in, and audio file types
     const isValidUrl =
@@ -331,7 +315,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleAudioUrl = () => {
     if (audioUrl.trim() !== "") {
-      // alert(isNotKnownFormatUrl(audioUrl));
       if (!isNotKnownFormatUrl(audioUrl)) {
         // Determine allowed URL limits based on plan type
         let maxUrls;
@@ -469,7 +452,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const handleUrlChange = (e) => {
     // Avoid handling change if it was triggered by a paste event
     if (e.inputType === "insertFromPaste") return;
-    // alert("handleUrlChange");
     const url = e.target.value;
     setVideoUrl(url);
     // Validate URL in real-time
@@ -485,7 +467,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handlePaste = (e) => {
-    // alert("handlePaste");
     e.preventDefault(); // Prevent the default paste behavior to avoid double handling
 
     const pastedText = (e.clipboardData || window.clipboardData).getData(
@@ -819,7 +800,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleView = (item) => {
-    console.log(item, "imageUrl");
     let viewImage = `${API.userFilePath}${item.fileData}`;
     window.open(viewImage, "_blank");
   };
@@ -846,7 +826,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   // };
 
   const handlePortofolioDelete = (index) => {
-    // alert(index);
     setPortofolioFile((prevImages) => {
       // Filter out the item at the specified index
       const updatedImages = prevImages.filter((_, i) => i !== index);
@@ -888,7 +867,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const handleFeaturesChange = (label, value) => {
-    console.log(label, "label", value, "value", "handleFeaturesChange");
     const updatedValues = [...features];
     const index = updatedValues.findIndex((item) => item.label === label);
     let finalValue = value;
@@ -962,7 +940,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
             if (talentData?.planName !== "Basic") {
               navigate(`/talent-signup-service-details?userId=${userId}`);
             } else {
-              // alert("directKidsLogin");
               directKidsLogin(resData);
             }
           }, 1000);
@@ -976,17 +953,14 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
 
   const handleEditFeatureChanges = (values) => {
     setFeature(values);
-    console.log("Updated Form Values handleEditFeatureChanges:", values);
   };
 
   const directKidsLogin = async (data) => {
-    console.log(data, "get directKidsLogin");
     const formData = {
       parentEmail: data?.data?.data?.email,
     };
     await ApiHelper.post(`${API.directKidsLogin}`, formData)
       .then((resData) => {
-        console.log(resData, "directKidsLogin_RESPONSE");
         if (resData.data.status === true) {
           setIsLoading(false);
           setTalentLocalStorage(resData.data.data);
@@ -1015,13 +989,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const goBack = () => {
     navigate(`/talent-signup-plan-details?userId=${userId}`);
   };
-
-  useEffect(() => {
-    console.log(verificationID, "verificationID");
-  }, []);
-  useEffect(() => {
-    console.log(portofolioFile, "portofolioFile");
-  }, [portofolioFile]);
 
   return (
     <>
@@ -1316,7 +1283,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   <MenuItem
                                     onClick={() => {
                                       handleVideoClose(); // Close the menu
-                                      console.log(url, "url"); // Debugging: Log the URL to ensure it's correct
                                       window.open(selectedVideoItem, "_blank"); // Open the URL in a new tab
                                     }}
                                   >
@@ -1407,7 +1373,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
                                   <MenuItem
                                     onClick={() => {
                                       handleAudioClose();
-                                      console.log(url, "url"); // Debugging: Log the URL to ensure it's correct
                                       window.open(url, "_blank"); // Open the YouTube video in a new tab
                                     }}
                                   >

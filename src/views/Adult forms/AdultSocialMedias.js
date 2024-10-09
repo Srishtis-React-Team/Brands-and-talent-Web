@@ -14,7 +14,6 @@ import "../../assets/css/register.css";
 const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
-  console.log(onDataFromChild, "onDataFromChild");
   const fbLogo = require("../../assets/icons/social-media-icons/fbLogo.png");
   const instagram = require("../../assets/icons/social-media-icons/instagram.png");
   const threads = require("../../assets/icons/social-media-icons/thread-fill.png");
@@ -148,7 +147,6 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
     setIsLoading(true);
     await ApiHelper.post(apiName, formData)
       .then((resData) => {
-        console.log(resData, "resData");
         if (resData?.data?.status === true) {
           setIsLoading(false);
           if (isTwitter) {
@@ -182,17 +180,12 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
         }
       })
       .catch((err) => {
-        console.log(err, "err");
         setIsLoading(false);
       });
   };
 
-  useEffect(() => {
-    console.log(twitterFollowersCount, "twitterFollowersCount");
-  }, [twitterFollowersCount]);
-  useEffect(() => {
-    console.log(youtubesFollowers, "youtubesFollowers");
-  }, [youtubesFollowers]);
+  useEffect(() => {}, [twitterFollowersCount]);
+  useEffect(() => {}, [youtubesFollowers]);
 
   const validateInstagramUrl = (url) => {
     const instagramUrlPattern =
@@ -466,10 +459,8 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
   };
 
   const getKidsData = async () => {
-    // alert("sd");
     await ApiHelper.post(`${API.getTalentById}${queryString}`)
       .then((resData) => {
-        console.log(resData, "getKidsData");
         if (resData.data.status === true) {
           setInstagramFollowers(resData.data.data.instaFollowers || "");
           setfacebookFollowers(resData.data.data.facebookFollowers || "");
@@ -503,7 +494,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
               }}
               src={btLogo}
             ></img>
-            <div className="step-text">Step 2 of 6</div>
+            <div className="step-text">Step 2 of 5</div>
           </div>
           <button
             type="button"
@@ -559,7 +550,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                         <div className="media-info">
                           <div className="mediaIcon">
-                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                            <i className="bi bi-link-45deg social-chain-icon"></i>
                           </div>
                           <div className="media-text">
                             <input
@@ -600,7 +591,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                         <div className="media-info">
                           <div className="mediaIcon">
-                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                            <i className="bi bi-link-45deg social-chain-icon"></i>
                           </div>
                           <div className="media-text">
                             <input
@@ -643,7 +634,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                         <div className="media-info">
                           <div className="mediaIcon">
-                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                            <i className="bi bi-link-45deg social-chain-icon"></i>
                           </div>
                           <div className="media-text">
                             <input
@@ -684,7 +675,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                         <div className="media-info">
                           <div className="mediaIcon">
-                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                            <i className="bi bi-link-45deg social-chain-icon"></i>
                           </div>
                           <div className="media-text">
                             <input
@@ -727,7 +718,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                         <div className="media-info">
                           <div className="mediaIcon">
-                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                            <i className="bi bi-link-45deg social-chain-icon"></i>
                           </div>
                           <div className="media-text">
                             <input
@@ -768,7 +759,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                         <div className="media-info">
                           <div className="mediaIcon">
-                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                            <i className="bi bi-link-45deg social-chain-icon"></i>
                           </div>
                           <div className="media-text">
                             <input
@@ -811,7 +802,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
                         </div>
                         <div className="media-info">
                           <div className="mediaIcon">
-                            <i class="bi bi-link-45deg social-chain-icon"></i>
+                            <i className="bi bi-link-45deg social-chain-icon"></i>
                           </div>
                           <div className="media-text">
                             <input

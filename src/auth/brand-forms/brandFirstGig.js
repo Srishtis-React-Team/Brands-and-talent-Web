@@ -25,7 +25,6 @@ const BrandFirstGig = () => {
   }, [location.state]);
 
   useEffect(() => {
-    console.log(receivedData, "Brand First Gig");
     setPosition(receivedData);
   }, [receivedData]);
 

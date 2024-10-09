@@ -223,7 +223,7 @@ const BrandDashboard = () => {
               style={{ paddingLeft: "15px" }}
               className="bi bi-people-fill"
             ></i>
-            <div className="brand-menu-text">Find Talents</div>
+            <div className="brand-menu-text">Find Talent</div>
           </div>
 
           <div className="brand-profile-not-sidemenu mt-5">

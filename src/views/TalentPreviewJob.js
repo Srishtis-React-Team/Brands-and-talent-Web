@@ -10,10 +10,10 @@ import "../assets/css/createjobs.css";
 import { useLocation } from "react-router-dom";
 import CurrentUser from "../CurrentUser.js";
 
-const TalentPreviewJob = ({ job, setFlag }) => {
+const TalentPreviewJob = ({ job, setFlag, from }) => {
   // const { job } = props;
   const job_id = job;
-  // alert(job_id);
+  console.log(from, "from");
 
   const url = window.location.href;
   const queryString = url.split("?")[1];
@@ -23,7 +23,6 @@ const TalentPreviewJob = ({ job, setFlag }) => {
   const location = useLocation();
 
   const { jobId } = location.state || {};
-  // alert(jobId, "dddd");
 
   const navigate = useNavigate();
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -33,7 +32,6 @@ const TalentPreviewJob = ({ job, setFlag }) => {
   const [brandData, setBrandData] = useState(null);
 
   const getJobsByID = async () => {
-    // alert(jobId);
     let preview_id;
     if (job_id) {
       preview_id = job_id;
@@ -109,18 +107,12 @@ const TalentPreviewJob = ({ job, setFlag }) => {
     getJobsByID();
   }, [job_id]);
 
-  useEffect(() => {
-    console.log(jobData, "jobData");
-  }, [jobData]);
-  useEffect(() => {}, [jobId]);
-
   const createJob = () => {
     navigate("/talent-dashboard");
   };
 
   const handleBackClick = () => {
     const currentUrl = location.pathname;
-    console.log(currentUrl, "currentUrl");
     if (currentUrl == "/talent-dashboard") {
       // navigate("/talent-dashboard");
       setFlag(false);
@@ -133,14 +125,18 @@ const TalentPreviewJob = ({ job, setFlag }) => {
   const [modalData, setModalData] = useState(null);
 
   const applyjobs = async (data) => {
-    console.log(data, "data");
+    console.log(data, "applyjobs_data");
     setModalData(data);
     if (data?.isApplied != "Applied") {
-      const modalElement = document.getElementById("exampleModal");
+      const modalElement = document.getElementById("viewJobApplyModal");
       const bootstrapModal = new window.bootstrap.Modal(modalElement);
       bootstrapModal.show();
     }
   };
+
+  useEffect(() => {
+    console.log(modalData, "modalData");
+  }, [modalData]);
 
   const handleCloseModal = async () => {
     const formData = {
@@ -155,7 +151,7 @@ const TalentPreviewJob = ({ job, setFlag }) => {
         setTimeout(function () {
           setOpenPopUp(false);
           getJobsByID();
-          const modalElement = document.getElementById("exampleModal");
+          const modalElement = document.getElementById("viewJobApplyModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
         }, 1000);
@@ -185,15 +181,29 @@ const TalentPreviewJob = ({ job, setFlag }) => {
     width: windowWidth >= 600 ? "800px" : "400px", // 800px for desktop, 400px for mobile
   };
 
-  useEffect(() => {
-    console.log(modalData, "modalData");
-  }, [modalData]);
+  // Utility function to check if the value is a valid URL
+  const isValidURL = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
 
   return (
     <>
-      <TalentHeader toggleMenu={toggleMenu} />
+      {from != "dashboard" && (
+        <>
+          <TalentHeader toggleMenu={toggleMenu} from={"message"} />
+        </>
+      )}
       <main id="mainBrand">
-        <div className="scrolscrolPrevOut">
+        <div
+          className={`scrolscrolPrevOut ${
+            from !== "dashboard" ? "not-viewjob" : ""
+          }`}
+        >
           <div className="brand-content-main preview-main-box boxBg scrlInner scroll">
             <div className="back-create" onClick={handleBackClick}>
               <i className="bi bi-arrow-left-circle-fill"></i>
@@ -296,9 +306,15 @@ const TalentPreviewJob = ({ job, setFlag }) => {
               </div>
 
               <div className="company-location">
-                <span className="job-feature-heading">
-                  Compensation :&nbsp;{" "}
-                </span>
+                {jobData.compensation &&
+                  Object.keys(jobData.compensation).length > 0 && (
+                    <>
+                      <span className="job-feature-heading">
+                        Compensation :&nbsp;{" "}
+                      </span>
+                    </>
+                  )}
+
                 <span>
                   {jobData.compensation && (
                     <>
@@ -307,7 +323,12 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                           Object.entries(jobData.compensation).map(
                             ([key, value]) => (
                               <span key={key}>
-                                <span>{value.currency}</span>&nbsp;
+                                {value?.minPay ||
+                                  (value?.maxPay && (
+                                    <>
+                                      <span>{value.currency}</span>&nbsp;
+                                    </>
+                                  ))}
                                 {value?.minPay && (
                                   <>
                                     <span>{value.minPay}/day</span>
@@ -332,14 +353,28 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                                 )}
                                 {value.product_name && (
                                   <>
-                                    <span>{value.product_name}</span>
+                                    {isValidURL(value.product_name) ? (
+                                      <a
+                                        href={value.product_name}
+                                        style={{
+                                          color: "#c2114b",
+                                          textDecoration: "underline",
+                                          fontWeight: "bold",
+                                        }}
+                                      >
+                                        {value.product_name}
+                                      </a>
+                                    ) : (
+                                      <span>{value.product_name}</span>
+                                    )}
                                     &nbsp;
                                   </>
                                 )}
                                 {value.product_name && value?.productValue && (
                                   <>
                                     <span>
-                                      ( valued at {value?.productValue} )
+                                      ( valued at {value.currency}{" "}
+                                      {value?.productValue} )
                                     </span>
                                   </>
                                 )}
@@ -710,7 +745,7 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                   <div className="job-feature-title">How to Apply</div>
                   <div className="job-about-values">
                     Interested candidates should submit their resume and a link
-                    that contains portfolio from Brands and Talent website to
+                    that contains portfolio from Brands & Talent website to
                     <span className="how-apply-terms-link">
                       {brandData?.brandEmail}
                     </span>
@@ -754,7 +789,7 @@ const TalentPreviewJob = ({ job, setFlag }) => {
 
       <div
         className="modal fade"
-        id="exampleModal"
+        id="viewJobApplyModal"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -847,14 +882,16 @@ const TalentPreviewJob = ({ job, setFlag }) => {
                   </div>
                 </div>
               )}
-              {modalData?.gender && Array.isArray(modalData?.gender) && (
-                <div className="modal-job-flex">
-                  <i className="bi bi-gender-ambiguous model-job-icons"></i>
-                  <div className="model-job-name">
-                    {modalData.gender.join(", ")}
+              {modalData?.gender &&
+                modalData?.gender.length > 0 &&
+                Array.isArray(modalData?.gender) && (
+                  <div className="modal-job-flex">
+                    <i className="bi bi-gender-ambiguous model-job-icons"></i>
+                    <div className="model-job-name">
+                      {modalData.gender.join(", ")}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {modalData?.lastDateForApply && (
                 <div className="modal-job-flex">

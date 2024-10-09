@@ -37,8 +37,6 @@ const BrandsOtp = React.memo((props) => {
     // Save the values into state
     if (userIdFromUrl) setUserId(userIdFromUrl);
     if (userEmailFromUrl) setUserEmail(userEmailFromUrl);
-
-    console.log(userIdFromUrl, userEmailFromUrl, "fetched");
   }, []);
 
   const goBack = async () => {

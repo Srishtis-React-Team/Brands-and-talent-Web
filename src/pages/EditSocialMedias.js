@@ -530,7 +530,7 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
                       </div>
                       <div className="media-info">
                         <div className="mediaIcon">
-                          <i class="bi bi-link-45deg social-chain-icon"></i>
+                          <i className="bi bi-link-45deg social-chain-icon"></i>
                         </div>
                         <div className="media-text">
                           <input
@@ -571,7 +571,7 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
                       </div>
                       <div className="media-info">
                         <div className="mediaIcon">
-                          <i class="bi bi-link-45deg social-chain-icon"></i>
+                          <i className="bi bi-link-45deg social-chain-icon"></i>
                         </div>
                         <div className="media-text">
                           <input
@@ -614,7 +614,7 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
                       </div>
                       <div className="media-info">
                         <div className="mediaIcon">
-                          <i class="bi bi-link-45deg social-chain-icon"></i>
+                          <i className="bi bi-link-45deg social-chain-icon"></i>
                         </div>
                         <div className="media-text">
                           <input
@@ -653,7 +653,7 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
                       </div>
                       <div className="media-info">
                         <div className="mediaIcon">
-                          <i class="bi bi-link-45deg social-chain-icon"></i>
+                          <i className="bi bi-link-45deg social-chain-icon"></i>
                         </div>
                         <div className="media-text">
                           <input
@@ -697,7 +697,7 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
                       </div>
                       <div className="media-info">
                         <div className="mediaIcon">
-                          <i class="bi bi-link-45deg social-chain-icon"></i>
+                          <i className="bi bi-link-45deg social-chain-icon"></i>
                         </div>
                         <div className="media-text">
                           <input
@@ -736,7 +736,7 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
                       </div>
                       <div className="media-info">
                         <div className="mediaIcon">
-                          <i class="bi bi-link-45deg social-chain-icon"></i>
+                          <i className="bi bi-link-45deg social-chain-icon"></i>
                         </div>
                         <div className="media-text">
                           <input
@@ -777,7 +777,7 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
                       </div>
                       <div className="media-info">
                         <div className="mediaIcon">
-                          <i class="bi bi-link-45deg social-chain-icon"></i>
+                          <i className="bi bi-link-45deg social-chain-icon"></i>
                         </div>
                         <div className="media-text">
                           <input

@@ -126,7 +126,7 @@ const Login = () => {
               setIsLoading(false);
               setBrandsLocalStorage(resData.data);
               navigate(
-                `/brand/${resData?.data?.data?.publicUrl.replace(/\s+/g, "")}`
+                `/client/${resData?.data?.data?.publicUrl.replace(/\s+/g, "")}`
               );
               // window.location.reload();
               // navigate(`/talent/${item.publicUrl}`, {

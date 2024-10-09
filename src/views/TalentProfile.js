@@ -87,39 +87,17 @@ const TalentProfile = () => {
     // Extract the last part of the URL (i.e., 'peter')
     const pathParts = location.pathname.split("/");
     const name = pathParts[pathParts.length - 1];
-    console.log(name, "name");
     setTalentName(name);
     getDataByPublicUrl(name);
   }, [location]);
 
-  const getDataByPublicUrl = async (name) => {
-    const formData = {
-      publicUrl: name,
-    };
-    await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
-      .then((resData) => {
-        console.log(resData?.data?.data?._id, "getDataByPublicUrl");
-        setUrlTalentData(resData?.data?.data);
-        // checkUser(resData?.data?.data?._id, resData?.data?.data);
-        setTalentData(resData?.data?.data);
-      })
-      .catch((err) => {});
-  };
-
   const url = window.location.href;
   const queryString = url.split("?")[1];
-  console.log(queryString, "queryString");
-
-  // console.log(userId, "userId IDS");
-  // console.log(urlTalentData?._id, "urlTalentData?._id IDS");
 
   // const selectedTalent = location.state && location.state.talentData;
-  // console.log(selectedTalent, "selectedTalent");
 
   // const checkUser = (id, data) => {
   //   const localID = localStorage.getItem("userId");
-  //   console.log(localID, "localID IDS");
-  //   console.log(id, "urlTalentData?._id IDS");
 
   //   if (localID && id) {
   //     if (localID !== id) {
@@ -209,10 +187,14 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
   const fetchURLS = async () => {
+    const formData = {
+      user: userId ? userId : null,
+    };
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
         talentData?._id ? talentData?._id : queryString
-      }/8`
+      }/8`,
+      formData
     )
       .then((resData) => {
         if (resData.data.status === true) {
@@ -222,10 +204,14 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
   const fetchFeatures = async () => {
+    const formData = {
+      user: userId ? userId : null,
+    };
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
         talentData?._id ? talentData?._id : queryString
-      }/4`
+      }/4`,
+      formData
     )
       .then((resData) => {
         if (resData.data.status === true) {
@@ -235,10 +221,14 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
   const fetchCV = async () => {
+    const formData = {
+      user: userId ? userId : null,
+    };
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
         talentData?._id ? talentData?._id : queryString
-      }/3`
+      }/3`,
+      formData
     )
       .then((resData) => {
         if (resData.data.status === true) {
@@ -248,10 +238,14 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
   const fetchReviews = async () => {
+    const formData = {
+      user: userId ? userId : null,
+    };
     await ApiHelper.post(
       `${API.unifiedDataFetch}${
         talentData?._id ? talentData?._id : queryString
-      }/7`
+      }/7`,
+      formData
     )
       .then((resData) => {
         if (resData.data.status === true) {
@@ -405,32 +399,57 @@ const TalentProfile = () => {
     // );
   };
   const messageNow = () => {
-    if (currentUserType == "talent" && talentData?.planName != "Premium") {
-      setMessage("Please upgrade to premium plan to use this feature");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 3000);
-    } else {
-      navigate(`/message?${talentData?._id}`);
+    if (isOwnTalent == true) {
+      if (talentData?.planName != "Premium") {
+        setMessage("Please upgrade to premium plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      } else if (talentData?.planName == "Premium") {
+        navigate(`/message?${talentData?._id}`);
+      }
+    } else if (isOwnTalent == false && isAdminApproved == true) {
+    } else if (currentUserType == "brand") {
+      if (brandData?.planName === "Basic") {
+        setMessage("Please upgrade to premium plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      } else if (brandData?.planName !== "Basic") {
+        navigate(`/message?${talentData?._id}`);
+      }
     }
-    if (currentUserType == "brand" && brandData?.planName === "Basic") {
-      setMessage("Please upgrade to pro plan to use this feature");
-      inviteTalentNotification();
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 2000);
-    } else {
-      navigate(`/message?${talentData?._id}`);
-    }
-  };
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
+    // if (currentUserType == "talent" && talentData?.planName != "Premium") {
+    //   alert("called");
+    //   setMessage("Please upgrade to premium plan to use this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 3000);
+    // } else if (talentData?.planName == "Premium") {
+    //   navigate(`/message?${talentData?._id}`);
+    // }
+    // if (currentUserType == "brand" && brandData?.planName === "Basic") {
+    //   setMessage("Please upgrade to pro plan to use this feature");
+    //   inviteTalentNotification();
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 2000);
+    // } else if (
+    //   currentUserType == "brand" &&
+    //   brandData?.planName === "Premium"
+    // ) {
+    //   navigate(`/message?${talentData?._id}`);
+    // }
+  };
 
   const inviteTalentNotification = async () => {
     const formData = {
@@ -439,13 +458,23 @@ const TalentProfile = () => {
     setIsLoading(true);
     await ApiHelper.post(`${API.inviteTalentNotification}`, formData)
       .then((resData) => {
+        setIsLoading(false);
         if (resData) {
-          // if (resData?.data?.status === true) {
-          // } else {
-          // }
+          console.log(resData, "resData");
+          if (resData?.data?.status === true) {
+            setMessage("Invitation email sent successfully");
+            setIsLoading(false);
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+            }, 3000);
+          } else {
+          }
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
 
   const inviteToApply = async () => {
@@ -522,13 +551,6 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {}, [isSliderOpen]);
-  useEffect(() => {
-    console.log(audiosList, "audiosList");
-  }, [audiosList]);
-  useEffect(() => {
-    console.log(urlsList, "urlsList");
-  }, [urlsList]);
   const [currentIndex, setCurrentIndex] = useState(currentImageIndex);
 
   useEffect(() => {
@@ -609,15 +631,7 @@ const TalentProfile = () => {
   const [hideToglle, setHideToggle] = useState(true);
 
   useEffect(() => {
-    console.log(userId, "userId");
-  }, [userId]);
-  useEffect(() => {
-    console.log(brandId, "brandId");
-  }, [brandId]);
-
-  useEffect(() => {
     if (userId == null || brandId == null) {
-      // alert("sd");
       // setMessage("Please login to continue");
       // setOpenPopUp(true);
       // setTimeout(function () {
@@ -645,23 +659,46 @@ const TalentProfile = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    console.log(featuresList, "featuresList");
-  }, [featuresList]);
+  const [isOwnTalent, setIsOwnTalent] = useState(null);
+  const [isAdminApproved, setIsAdminApproved] = useState(null);
+  const [showProfile, setShowProfile] = useState(null);
 
-  useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
-  useEffect(() => {
-    console.log(currentUser_type, "currentUser_type");
-  }, [currentUser_type]);
-  useEffect(() => {
-    console.log(userId, "userId");
-  }, [userId]);
+  const getDataByPublicUrl = async (name) => {
+    const formData = {
+      publicUrl: name,
+      userId:
+        localStorage.getItem("userId") || localStorage.getItem("currentUser"),
+    };
+    await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
+      .then((resData) => {
+        if (resData?.data?.currentStatus == "own-talent") {
+          setShowProfile(true);
+          setIsOwnTalent(true);
+        } else if (resData?.data?.currentStatus == "approved") {
+          setShowProfile(true);
+          setIsOwnTalent(false);
+          setIsAdminApproved(true);
+        } else if (resData?.data?.currentStatus == "not-approved") {
+          setShowProfile(false);
+          setIsOwnTalent(false);
+        }
+        if (resData?.data?.status == false) {
+          setMessage(resData?.data?.msg);
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+          }, 2000);
+        }
+        setUrlTalentData(resData?.data?.data);
+        // checkUser(resData?.data?.data?._id, resData?.data?.data);
+        setTalentData(resData?.data?.data);
+      })
+      .catch((err) => {});
+  };
 
   return (
     <>
-      {userId && (
+      {showProfile == true && userId && (
         <>
           {currentUser_type == "brand" && (
             <BrandHeader
@@ -679,11 +716,16 @@ const TalentProfile = () => {
             />
           )}
 
-          {/* <section>
-            <div className="popular-header">
-              <div className="header-title">Profile</div>
-            </div>
-          </section> */}
+          {/* {!currentUser_type && !userId && (
+            <>
+              <section>
+                <div className="popular-header">
+                  <div className="header-title">Profile</div>
+                </div>
+              </section>
+            </>
+          )} */}
+
           <section>
             <div className="container">
               <div className="talent-profile-main">
@@ -780,15 +822,13 @@ const TalentProfile = () => {
                             talentData?.averageStarRatings > 0 && (
                               <>
                                 <div className="talent-details-wrapper">
-                                  <div className="logo-fill">
-                                    <img
-                                      className="talent-logo"
-                                      src={pinkStar}
-                                    ></img>
+                                  <div className="logo-fill-briefcase">
+                                    <i class="bi bi-star-fill model-job-icons"></i>
                                   </div>
+
                                   <div className="contSect">
                                     <span>
-                                      *{talentData?.averageStarRatings} (
+                                      {talentData?.averageStarRatings} (
                                       {talentData?.totalReviews} ratings)
                                     </span>
                                   </div>
@@ -1426,18 +1466,18 @@ const TalentProfile = () => {
                             Videos & Audios
                           </div>
 
-                          {/* <div
-                        className={
-                          services
-                            ? "active-tab individual-talent-tab"
-                            : "individual-talent-tab"
-                        }
-                        onClick={(e) => {
-                          handleForms("services");
-                        }}
-                      >
-                        Services
-                      </div> */}
+                          <div
+                            className={
+                              services
+                                ? "active-tab individual-talent-tab"
+                                : "individual-talent-tab"
+                            }
+                            onClick={(e) => {
+                              handleForms("services");
+                            }}
+                          >
+                            Services
+                          </div>
 
                           <div
                             className={
@@ -1740,38 +1780,46 @@ const TalentProfile = () => {
                                 </div>
                               </div>
 
-                              {/* {talentData && talentData?.services?.length > 0 && (
-                            <>
-                              <div className="portofolio-section">
-                                <div className="portofolio-title">Services</div>
-                                <div
-                                  className="view-all"
-                                  onClick={(e) => {
-                                    handleForms("services");
-                                  }}
-                                >
-                                  View All
-                                </div>
-                              </div>
-                              <ServicesCarousel talentData={talentData} />
-                              {!talentData?.services?.length &&
-                                talentData?.adminApproved === true && (
+                              {talentData &&
+                                talentData?.services?.length > 0 && (
                                   <>
-                                    <div>Data not added</div>
-                                  </>
-                                )}
-
-                              {!talentData?.services?.length &&
-                                talentData?.adminApproved === false && (
-                                  <>
-                                    <div>
-                                      Data will be visible only after admin
-                                      approval
+                                    <div className="portofolio-section">
+                                      <div className="portofolio-title">
+                                        Services
+                                      </div>
+                                      <div
+                                        className="view-all"
+                                        onClick={(e) => {
+                                          handleForms("services");
+                                        }}
+                                      >
+                                        View All
+                                      </div>
                                     </div>
+                                    <ServicesCarousel
+                                      talentData={talentData}
+                                      brandData={brandData}
+                                    />
+
+                                    {!talentData?.services?.length === 0 && (
+                                      <>
+                                        <div className="msgs">
+                                          Services not added
+                                        </div>
+                                      </>
+                                    )}
+                                    {talentData?.adminApproved === false &&
+                                      talentData?.services?.length > 0 &&
+                                      !userId && (
+                                        <>
+                                          <div className="msgs">
+                                            Services will be visible only after
+                                            admin approval
+                                          </div>
+                                        </>
+                                      )}
                                   </>
                                 )}
-                            </>
-                          )} */}
 
                               {/* <div className="service-list-main">
                             {videoAudioList.map((item) => (
@@ -1870,52 +1918,50 @@ const TalentProfile = () => {
                           {photos && (
                             <div className="models-photos">
                               {/* row padSpc */}
-                              <section className="photos-gallery  w-100">
-                                <div className="row">
-                                  {photosList &&
-                                    photosList.map((image, index) => {
-                                      return (
-                                        <>
-                                          {/* col-lg-3 col-md-4 padSpc */}
-                                          <div className="col-md-4">
-                                            <div
-                                              className="photos-gallery-image"
-                                              key={index}
-                                            >
-                                              <img
-                                                className="photo-gallery-ind-image"
-                                                src={`${API.userFilePath}${image}`}
-                                                alt=""
-                                                onClick={() => {
-                                                  handleImageClick(index);
-                                                }}
-                                              />
-                                            </div>
+                              <div className="row">
+                                {photosList &&
+                                  photosList.map((image, index) => {
+                                    return (
+                                      <>
+                                        {/* col-lg-3 col-md-4 padSpc */}
+                                        <div className="col-md-4">
+                                          <div
+                                            className="photos-gallery-image"
+                                            key={index}
+                                          >
+                                            <img
+                                              className="photo-gallery-ind-image"
+                                              src={`${API.userFilePath}${image}`}
+                                              alt=""
+                                              onClick={() => {
+                                                handleImageClick(index);
+                                              }}
+                                            />
                                           </div>
-                                        </>
-                                      );
-                                    })}
-                                </div>
+                                        </div>
+                                      </>
+                                    );
+                                  })}
+                              </div>
 
-                                {talentData?.adminApproved === true &&
-                                  photosList.length === 0 && (
-                                    <>
-                                      <div className="msgs">
-                                        Photos are not added
-                                      </div>
-                                    </>
-                                  )}
-                                {talentData?.adminApproved === false &&
-                                  photosList.length === 0 && (
-                                    <>
-                                      <div className="msgs">
-                                        {" "}
-                                        Photos will be visible only after admin
-                                        approval
-                                      </div>
-                                    </>
-                                  )}
-                              </section>
+                              {talentData?.adminApproved === true &&
+                                photosList.length === 0 && (
+                                  <>
+                                    <div className="msgs">
+                                      Photos are not added
+                                    </div>
+                                  </>
+                                )}
+                              {talentData?.adminApproved === false &&
+                                photosList.length === 0 && (
+                                  <>
+                                    <div className="msgs">
+                                      {" "}
+                                      Photos will be visible only after admin
+                                      approval
+                                    </div>
+                                  </>
+                                )}
                             </div>
                           )}
 
@@ -2063,11 +2109,11 @@ const TalentProfile = () => {
                             </>
                           )}
 
-                          {/* {services && (
-                        <>
-                          <ServicesCarousel talentData={talentData} />
-                        </>
-                      )} */}
+                          {services && (
+                            <>
+                              <ServicesCarousel talentData={talentData} />
+                            </>
+                          )}
                           {/* {socialMedia && (
                         <>
                           <CardCarousel />
@@ -2209,7 +2255,7 @@ const TalentProfile = () => {
                                                   </Menu>
                                                 </div>
                                               </div>
-                                              <div className="review-title">
+                                              <div className="review-title scroll">
                                                 {item.comment}
                                               </div>
                                               <div className="reviewer-section pb-0">
@@ -2419,27 +2465,6 @@ const TalentProfile = () => {
           </div>
         </>
       )}
-      {/* {currentUser_type == "brand" &&
-        userId &&
-        talentData?.adminApproved == false && (
-          <>
-            <div className="warning-wrapper">
-              <p className="warning-msg">
-                This talent is not approved by admin
-              </p>
-              <button
-                onClick={() => {
-                  navigate(
-                    `/brand/${brandData?.publicUrl.replace(/\s+/g, "")}`
-                  );
-                }}
-                className="warning-btn "
-              >
-                Back
-              </button>
-            </div>
-          </>
-        )} */}
 
       {!userId && (
         <>
@@ -2464,11 +2489,29 @@ const TalentProfile = () => {
         </>
       )}
 
-      {/* {userId == null && talentData?.adminApproved == false && (
+      {showProfile == false && userId && (
         <>
-          <p className="mx-8">This profile is not approved by admin</p>
+          <div className="spacHeight-log">
+            <div className="warning-wrapper newBoxLog">
+              <div className="logoImg">
+                {" "}
+                <img src={log_Logo} alt="img" className="logNew-img" />
+              </div>
+              <p className="warning-msg">
+                This profile is not approved by the admin.
+              </p>
+              <button
+                onClick={() => {
+                  navigate("/");
+                }}
+                className="warning-btn "
+              >
+                Home
+              </button>
+            </div>
+          </div>
         </>
-      )} */}
+      )}
 
       {openPopUp && <PopUp message={message} />}
     </>

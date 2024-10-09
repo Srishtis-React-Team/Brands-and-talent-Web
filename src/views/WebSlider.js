@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/dashboard.css";
 import { Key } from "@mui/icons-material";
 const WebSlider = ({ successStories }) => {
-  console.log(successStories, "WebSlider");
   const roundProfile = require("../assets/icons/round-profile.png");
   const quoteIcon = require("../assets/icons/9044931_quotes_icon 1.png");
 
@@ -17,7 +16,6 @@ const WebSlider = ({ successStories }) => {
 
   // Transformed data
   const transformedData = transformData(successStories);
-  console.log(transformedData, "transformedData");
 
   return (
     <>

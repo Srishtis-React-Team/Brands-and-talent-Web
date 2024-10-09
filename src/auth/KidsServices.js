@@ -41,7 +41,6 @@ const KidsServices = () => {
   const [talentData, setTalentData] = useState();
 
   useEffect(() => {
-    console.log(userId, "userId");
     if (userId) {
       getTalentById();
     }
@@ -59,6 +58,8 @@ const KidsServices = () => {
       .catch((err) => {});
   };
 
+  const durationList = ["Days", "Weeks", "Months"];
+
   const navigate = useNavigate();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -66,9 +67,9 @@ const KidsServices = () => {
     let formData = {
       services: inputs,
     };
+    console.log(formData, "formData");
     await ApiHelper.post(`${API.editKids}${userId}`, formData)
       .then((resData) => {
-        console.log(resData.data.data, "SERVICE_AFTER_DATA");
         if (resData.data.status === true) {
           setIsLoading(false);
           setMessage("Updated successfully");
@@ -259,7 +260,7 @@ const KidsServices = () => {
                             <div className="">
                               <div className="mb-3 mt-3">
                                 <label className="form-label">
-                                  Service name
+                                  Service Name
                                 </label>
                                 <input
                                   value={input.serviceName}
@@ -273,14 +274,16 @@ const KidsServices = () => {
                                   type="text"
                                   name="serviceName"
                                   className="form-control"
-                                  placeholder="Enter Service Heading"
+                                  placeholder="Custom Photoshoot"
                                 ></input>
                               </div>
                             </div>
                           </div>
                           <div className="kids-form-row row">
                             <div className="kids-form-section col-md-6 mb-3">
-                              <label className="form-label">Amount</label>
+                              <label className="form-label">
+                                Rates (in USD)
+                              </label>
                               <input
                                 type="number"
                                 name="amount"
@@ -293,34 +296,62 @@ const KidsServices = () => {
                                   )
                                 }
                                 className="form-control"
-                                placeholder="Enter Amount In $"
+                                placeholder="$200 per hour (negotiable)"
                               ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">
                               <label className="form-label">
-                                Duration (Weeks/Months)
+                                Delivery Time
                               </label>
-                              <input
-                                type="text"
-                                name="duration"
-                                value={input.serviceDuration}
-                                onChange={(e) =>
-                                  handleInputChange(
-                                    serviceIndex,
-                                    "serviceDuration",
-                                    e.target.value
-                                  )
-                                }
-                                className="form-control"
-                                placeholder="Duration (Weeks/Months)"
-                              ></input>
+                              <div className="duration-splitter">
+                                <div className="duration-value-main">
+                                  <input
+                                    type="text"
+                                    name="duration"
+                                    value={input.serviceDuration}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceDuration",
+                                        e.target.value
+                                      )
+                                    }
+                                    className="form-control"
+                                    placeholder="3-5 days"
+                                  ></input>
+                                </div>
+                                <div className="duration-select-main">
+                                  <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    style={{ fontSize: "14px" }}
+                                    onChange={(e) =>
+                                      handleInputChange(
+                                        serviceIndex,
+                                        "serviceTime",
+                                        e.target.value
+                                      )
+                                    }
+                                  >
+                                    <option value="" disabled selected>
+                                      Time Unit
+                                    </option>
+                                    {durationList.map((option, index) => (
+                                      <option key={index} value={option}>
+                                        {option}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                          <div className="adults-titles">Features</div>
                           <div className="rich-editor">
-                            <label className="form-label">Features</label>
-
+                            <label className="form-label">
+                              Short Description
+                            </label>
                             <RichTextEditor
+                              from={"service"}
                               value={input.editorState}
                               onChange={(editorState) =>
                                 handleEditorStateChange(

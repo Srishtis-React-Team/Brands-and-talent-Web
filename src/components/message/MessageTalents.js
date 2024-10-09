@@ -140,7 +140,6 @@ const MessageTalents = () => {
       createChat(urlUserID);
     }
     if (currentUserId) {
-      // alert("findPreviousChatUsers currentUserId");
       getMessageByUser(currentUserId);
       findPreviousChatUsers();
       // fetchUserData(currentUserId);
@@ -250,7 +249,6 @@ const MessageTalents = () => {
             setInitaialUser(resData.data.data, resData.data.data[0]?._id);
           }
           if (resData?.data?.status === false) {
-            // alert("findPreviousChatUsersELSE");
             createChat(urlUserID);
           }
         }

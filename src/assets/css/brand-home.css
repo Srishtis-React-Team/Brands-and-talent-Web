@@ -495,14 +495,14 @@
 }
 
 .photos-slider .sliderImg {
-  height: 200px;
+  height: 250px !important;
   width: 100%;
   background-color: #fff;
   overflow: hidden;
 }
 
 .photos-slider .sliderImg .talents-profile-slider-image {
-  min-height: 200px;
+  min-height: 250px;
   -o-object-fit: cover;
   object-fit: cover;
   width: 100%;
@@ -635,13 +635,15 @@
     font-size: 13px;
     line-height: 23px;
   }
-  .campaigns-wrapper-one .job-company-name{ padding-left: 0; font-size: 14px; }
+  .campaigns-wrapper-one .job-company-name {
+    padding-left: 0;
+    font-size: 14px;
+  }
   .campaign-initial {
     width: 35px;
     height: 35px;
   }
-
-} 
+}
 @media (max-width: 480px) {
   .top-brands-wrapper.col-md-4 {
     width: 33.2%;
@@ -650,9 +652,14 @@
     width: 100%;
     margin: 0 0 15px;
   }
-  .list-jobs-card .campaign-company{ flex-direction: column; }
-  
-  .list-jobs-card .campaign-company .job-card-buttons {  display: flex; width: 100%;  }
+  .list-jobs-card .campaign-company {
+    flex-direction: column;
+  }
+
+  .list-jobs-card .campaign-company .job-card-buttons {
+    display: flex;
+    width: 100%;
+  }
 
   .brand-home-left-container .brand-home-one .btnSpace {
     justify-content: left;
@@ -670,18 +677,17 @@
     margin-right: 10px;
     width: 60px;
   }
-
-
 }
 @media (max-width: 380px) {
-
   .home-job-add {
     float: none;
     display: inline-block;
     margin: 0 0 15px;
   }
-  .home-add-title-wrapper{ padding-left: 0; }
- .brand-home-one .btnSpace {
+  .home-add-title-wrapper {
+    padding-left: 0;
+  }
+  .brand-home-one .btnSpace {
     justify-content: start;
     display: flex;
     align-items: center;
