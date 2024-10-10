@@ -3701,6 +3701,25 @@ ul.MuiMenu-list li {
   margin-bottom: 1rem !important;
 }
 
+.company-location.comp-main {
+  align-items: flex-start;
+}
+span.comp-H {
+  flex: 1;
+}
+
+span.comp-H a {
+  word-break: break-word;
+}
+input.form-control.adult-signup-inputs.pl-0x {
+  padding-left: .75rem !important;
+}
+
+
+
+
+
+
 @media (max-width: 767px) {
   .css-1yed7cp {
     position: absolute;

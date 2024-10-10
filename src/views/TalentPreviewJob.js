@@ -305,7 +305,7 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                 <span className="job-feature-values">{jobData?.category}</span>
               </div>
 
-              <div className="company-location">
+              <div className="company-location comp-main">
                 {jobData.compensation &&
                   Object.keys(jobData.compensation).length > 0 && (
                     <>
@@ -315,7 +315,7 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                     </>
                   )}
 
-                <span>
+                <span className="comp-H">
                   {jobData.compensation && (
                     <>
                       <span className="job-feature-values">
