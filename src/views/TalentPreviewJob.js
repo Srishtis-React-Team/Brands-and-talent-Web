@@ -266,13 +266,17 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                 <span className="job-feature-heading">Location :&nbsp; </span>
                 <span>
                   <span className="">
-                    {jobData?.country && `${jobData.country}`}
-                    {jobData?.country && jobData?.state && `, `}
-                    {jobData?.state && `${jobData.state}`}
-                    {(jobData?.country || jobData?.state) &&
-                      jobData?.jobLocation &&
-                      `, `}
-                    {jobData?.jobLocation && `${jobData.jobLocation}`}
+                    {jobData?.city && <>{jobData?.city}</>}{" "}
+                    {/* Display city if it exists */}
+                    {jobData?.city && (jobData?.state || jobData?.country) && (
+                      <span>, </span>
+                    )}{" "}
+                    {/* Show comma if city exists and either state or country exists */}
+                    {jobData?.state && <>{jobData?.state}</>}{" "}
+                    {/* Display state if it exists */}
+                    {jobData?.state && jobData?.country && <span>, </span>}{" "}
+                    {/* Show comma if state exists and country exists */}
+                    {jobData?.country && <>{jobData?.country}</>}{" "}
                   </span>
                 </span>
               </div>
