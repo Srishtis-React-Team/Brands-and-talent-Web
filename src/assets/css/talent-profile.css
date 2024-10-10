@@ -87,7 +87,7 @@
   padding: 15px 0px;
   line-height: 21px;
 }
-.talent-all-details-wrapper .review-title{
+.talent-all-details-wrapper .review-title {
   min-height: 120px;
   max-height: 120px;
   overflow-y: auto;
@@ -487,7 +487,7 @@
 
 .talent-details-wrapper {
   display: flex;
-  /* align-items: center; */
+  align-items: center !important;
   line-height: 23px;
   padding: 5px 0px;
 }

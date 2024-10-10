@@ -339,7 +339,7 @@ const Footer = (props) => {
                   </Link>
                 </li> */}
                 <li>
-                  <Link to="/career" onClick={handleClick}>
+                  <Link to="/careers" onClick={handleClick}>
                     Careers
                   </Link>
                 </li>
@@ -558,7 +558,10 @@ const Footer = (props) => {
             </div>
           </div>
           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 available-places">
-            Cambodia and the World
+            Brands & Talent (BT) is a legally registered company serving the
+            global creator community with zero tolerance for platform misuse,
+            harassment, racism, or discrimination. For more info, refer to our
+            policy and terms & conditions.
           </div>
         </div>
 

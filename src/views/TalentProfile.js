@@ -411,6 +411,16 @@ const TalentProfile = () => {
         navigate(`/message?${talentData?._id}`);
       }
     } else if (isOwnTalent == false && isAdminApproved == true) {
+      if (brandData?.planName === "Basic") {
+        setMessage("Please upgrade to premium plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      } else if (brandData?.planName !== "Basic") {
+        navigate(`/message?${talentData?._id}`);
+      }
     } else if (currentUserType == "brand") {
       if (brandData?.planName === "Basic") {
         setMessage("Please upgrade to premium plan to use this feature");
