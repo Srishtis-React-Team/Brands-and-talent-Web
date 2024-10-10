@@ -3690,6 +3690,23 @@ ul.MuiMenu-list li {
   margin-bottom: 1rem !important;
 }
 
+.company-location.comp-main {
+  align-items: flex-start;
+}
+span.comp-H {
+  flex: 1;
+}
+
+span.comp-H a {
+  word-break: break-word;
+}
+
+
+
+
+
+
+
 @media (max-width: 767px) {
   .css-1yed7cp {
     position: absolute;
