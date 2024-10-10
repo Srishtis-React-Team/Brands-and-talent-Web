@@ -3700,7 +3700,9 @@ span.comp-H {
 span.comp-H a {
   word-break: break-word;
 }
-
+input.form-control.adult-signup-inputs.pl-0x {
+  padding-left: .75rem !important;
+}
 
 
 
