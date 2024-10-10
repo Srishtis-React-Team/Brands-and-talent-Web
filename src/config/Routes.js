@@ -296,7 +296,7 @@ function Routing() {
             <Route path="/get-booked" element={<GetBooked />} />
             <Route path="/industry-news" element={<IndustryNews />} />
             <Route path="/edit-feature" element={<EditFeatures />} />
-            <Route path="/Career" element={<Career />} />
+            <Route path="/careers" element={<Career />} />
             <Route path="/become-affliate" element={<BecomeAffliate />} />
             <Route path="/investors" element={<Investors />} />
             <Route path="/feedback" element={<Feedbackreporting />} />

@@ -339,13 +339,20 @@ const ListJobs = () => {
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company_dtls">
                                       <i className="bi bi-geo-alt-fill location-icon"></i>
-                                      {job?.state && <span>{job.state}</span>}
+                                      {job?.city && <>{job?.city}</>}{" "}
+                                      {/* Display city if it exists */}
+                                      {job?.city &&
+                                        (job?.state || job?.country) && (
+                                          <span>, </span>
+                                        )}{" "}
+                                      {/* Show comma if city exists and either state or country exists */}
+                                      {job?.state && <>{job?.state}</>}{" "}
+                                      {/* Display state if it exists */}
                                       {job?.state && job?.country && (
                                         <span>, </span>
-                                      )}
-                                      {job?.country && (
-                                        <span>{job.country}</span>
-                                      )}
+                                      )}{" "}
+                                      {/* Show comma if state exists and country exists */}
+                                      {job?.country && <>{job?.country}</>}{" "}
                                     </span>
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company-name">

@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import "../../assets/css/forms/kidsform-one.css";
 import "../../assets/css/createjobs.css";
 import "../../assets/css/talent-profile.css";
+import "../../assets/css/talent-dashboard.css";
+
+import "../../assets/css/findcreators.css";
+
 import { API } from "../../config/api";
 import PopUp from "../../components/PopUp";
 import { ApiHelper } from "../../helpers/ApiHelper";
@@ -273,15 +277,13 @@ const BrandFavorites = () => {
                                   item?.averageStarRatings > 0 && (
                                     <>
                                       <div className="talent-details-wrapper">
-                                        <div className="logo-fill">
-                                          <img
-                                            className="talent-logo"
-                                            src={pinkStar}
-                                          ></img>
+                                        <div className="logo-fill-briefcase">
+                                          <i class="bi bi-star-fill model-job-icons"></i>
                                         </div>
+
                                         <div className="contSect">
                                           <span>
-                                            *{item?.averageStarRatings} (
+                                            {item?.averageStarRatings} (
                                             {item?.totalReviews} ratings)
                                           </span>
                                         </div>

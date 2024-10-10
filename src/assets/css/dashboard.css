@@ -31,6 +31,16 @@ body {
 .banner-title-section {
   padding: 30px 0 0 0;
 }
+
+.available-places {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  font-style: italic; /* Italic text */
+}
+
 .gallery-wrapper {
   width: 18%;
   margin: 15px 0.8%;
@@ -2661,10 +2671,11 @@ ul.MuiMenu-list li {
   }
   .available-places {
     color: #000;
-    font-size: 14px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 300;
     line-height: 24px;
+    font-style: italic; /* Italic text */
   }
   .case-images {
     border-radius: 12px;

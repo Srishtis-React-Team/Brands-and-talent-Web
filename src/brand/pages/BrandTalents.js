@@ -1026,7 +1026,6 @@ const BrandTalents = () => {
 
                                                   <div className="contSect">
                                                     <span>
-                                                      *
                                                       {item?.averageStarRatings}{" "}
                                                       ({item?.totalReviews}{" "}
                                                       ratings)

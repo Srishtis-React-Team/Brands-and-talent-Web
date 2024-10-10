@@ -5,6 +5,12 @@ import TalentHeader from "../layout/TalentHeader.js";
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.css";
+import "../assets/css/dashboard.css";
+import "../assets/css/brand-home.css";
+import "../assets/css/register.css";
+import "../assets/css/kidsmain.scss";
+import "../assets/css/createjobs.css";
+import "../assets/css/talent-profile.css";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
 
@@ -168,8 +174,29 @@ const SavedJobs = () => {
                                 </span>
                                 <span className="job-company_dtls">
                                   <i className="bi bi-geo-alt-fill location-icon"></i>
-                                  {job?.gigDetails?.state},{" "}
-                                  {job?.gigDetails?.city}{" "}
+                                  {job?.gigDetails?.city && (
+                                    <>{job?.gigDetails?.city}</>
+                                  )}{" "}
+                                  {/* Display city if it exists */}
+                                  {job?.gigDetails?.city &&
+                                    (job?.gigDetails?.state ||
+                                      job?.gigDetails?.country) && (
+                                      <span>, </span>
+                                    )}{" "}
+                                  {/* Show comma if city exists and either state or country exists */}
+                                  {job?.gigDetails?.state && (
+                                    <>{job?.gigDetails?.state}</>
+                                  )}{" "}
+                                  {/* Display state if it exists */}
+                                  {job?.gigDetails?.state &&
+                                    job?.gigDetails?.country && (
+                                      <span>, </span>
+                                    )}{" "}
+                                  {/* Show comma if state exists and country exists */}
+                                  {job?.gigDetails?.country && (
+                                    <>{job?.gigDetails?.country}</>
+                                  )}{" "}
+                                  {/* Display country if it exists */}
                                   <i className="bi bi-dot"></i>
                                 </span>
                                 <span className="job-company_dtls">

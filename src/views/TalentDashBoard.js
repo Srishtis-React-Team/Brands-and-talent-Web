@@ -1002,28 +1002,26 @@ const TalentDashBoard = () => {
                                         {item?.jobType}{" "}
                                         <i className="bi bi-dot"></i>
                                       </span>
-                                      {(item?.country ||
+                                      {(item?.city ||
                                         item?.state ||
-                                        item?.city) && ( // Check if at least one value exists
+                                        item?.country) && ( // Check if at least one value exists
                                         <span className="job-company_dtls">
                                           <i className="bi bi-geo-alt-fill"></i>
-                                          {item?.country && (
-                                            <>{item.country}</>
-                                          )}{" "}
-                                          {/* Display country if it exists */}
-                                          {item?.country &&
-                                            (item?.state || item?.city) && (
-                                              <span>, </span>
-                                            )}{" "}
-                                          {/* Show comma if country exists and either state or city exists */}
-                                          {item?.state && <>{item.state}</>}{" "}
-                                          {/* Display state if it exists */}
-                                          {item?.state && item?.city && (
-                                            <span>, </span>
-                                          )}{" "}
-                                          {/* Show comma if state exists and city exists */}
                                           {item?.city && <>{item.city}</>}{" "}
                                           {/* Display city if it exists */}
+                                          {item?.city &&
+                                            (item?.state || item?.country) && (
+                                              <span>, </span>
+                                            )}{" "}
+                                          {/* Show comma if city exists and either state or country exists */}
+                                          {item?.state && <>{item.state}</>}{" "}
+                                          {/* Display state if it exists */}
+                                          {item?.state && item?.country && (
+                                            <span>, </span>
+                                          )}{" "}
+                                          {/* Show comma if state exists and country exists */}
+                                          {item?.country && <>{item.country}</>}{" "}
+                                          {/* Display country if it exists */}
                                           <i className="bi bi-dot"></i>
                                         </span>
                                       )}
@@ -1133,9 +1131,14 @@ const TalentDashBoard = () => {
                         <div className="modal-job-flex">
                           <i className="bi bi-geo-alt-fill model-job-icons"></i>
                           <div className="model-job-name">
-                            {modalData?.city && <span>{modalData?.city}</span>}
+                            {modalData?.city && <span>{modalData.city}</span>}
                             {modalData?.city && modalData?.state && ", "}
-                            {modalData?.state}
+                            {modalData?.state && <span>{modalData.state}</span>}
+                            {modalData?.city &&
+                              modalData?.state &&
+                              modalData?.country &&
+                              ", "}
+                            {modalData?.country}
                           </div>
                         </div>
                       )}

@@ -243,7 +243,7 @@ const Register = () => {
     { value: "Artist", label: "Artist" },
     { value: "Blogger/Vlogger", label: "Blogger/Vlogger" },
     { value: "Blockchain Developer", label: "Blockchain Developer" },
-    { value: "Career Coach", label: "Career Coach" },
+    { value: "Careers Coach", label: "Careers Coach" },
     { value: "Cartoonist", label: "Cartoonist" },
     { value: "Celebrity", label: "Celebrity" },
     { value: "Chef/Culinary Artist", label: "Chef/Culinary Artist" },

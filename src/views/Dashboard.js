@@ -552,13 +552,13 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                {visibleCount < talentList.length && (
+                {/* {visibleCount < talentList.length && (
                   <div className="find-more wraper">
                     <div onClick={() => handleReadMore()} className="moreBtn">
                       Find More
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </>
