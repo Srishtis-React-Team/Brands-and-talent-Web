@@ -31,16 +31,6 @@ body {
 .banner-title-section {
   padding: 30px 0 0 0;
 }
-
-.available-places {
-  color: #000;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px;
-  font-style: italic; /* Italic text */
-}
-
 .gallery-wrapper {
   width: 18%;
   margin: 15px 0.8%;
@@ -2671,11 +2661,10 @@ ul.MuiMenu-list li {
   }
   .available-places {
     color: #000;
-    font-size: 13px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 300;
     line-height: 24px;
-    font-style: italic; /* Italic text */
   }
   .case-images {
     border-radius: 12px;
@@ -3711,11 +3700,22 @@ span.comp-H {
 span.comp-H a {
   word-break: break-word;
 }
+
 input.form-control.adult-signup-inputs.pl-0x {
   padding-left: .75rem !important;
 }
-
-
+main.brand-main-container:not(.main-pd) .keyword-wrapper,
+main.brand-main-container:not(.main-pd) .profession-creator-wrapper
+{
+  flex-direction: column;
+}
+main.brand-main-container:not(.main-pd) .keyword-wrapper .filter-items,
+ main.brand-main-container:not(.main-pd) .keyword-wrapper .inpWid,
+ main.brand-main-container:not(.main-pd) .profession-wrapper.talents-profession.inpWid,
+ main.brand-main-container:not(.main-pd) .filter-items
+ {
+  width: 100% !important;
+}
 
 
 
