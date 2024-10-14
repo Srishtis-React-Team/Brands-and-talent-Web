@@ -3709,10 +3709,11 @@ main.brand-main-container:not(.main-pd) .profession-creator-wrapper
 {
   flex-direction: column;
 }
-main.brand-main-container:not(.main-pd) .keyword-wrapper .filter-items,
+main.brand-main-container:not(.main-pd) .filter-items,
  main.brand-main-container:not(.main-pd) .keyword-wrapper .inpWid,
  main.brand-main-container:not(.main-pd) .profession-wrapper.talents-profession.inpWid,
- main.brand-main-container:not(.main-pd) .filter-items
+ main.brand-main-container:not(.main-pd) .filter-items,
+ main.brand-main-container:not(.main-pd) .creators-filter-select
  {
   width: 100% !important;
 }
@@ -4219,6 +4220,11 @@ main.brand-main-container:not(.main-pd) .keyword-wrapper .filter-items,
   .careerWraps .applyInst p {
     font-size: 15px;
   }
+  .base-Popup-root.base-Menu-root {
+    transform: inherit !important;
+}
+
+
 }
 @media (max-width: 420px) {
   .mobile-navbar .icon {
