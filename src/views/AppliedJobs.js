@@ -45,7 +45,10 @@ const AppliedJobs = () => {
   }, [userId]);
 
   const getJobsByID = async () => {
-    await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+    const formData = {
+      type: "talent",
+    };
+    await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
       .then((resData) => {
         setJobData(resData.data.data);
       })

@@ -493,7 +493,10 @@ const CreateJobs = () => {
 
   const getJobsByID = async (jobId, type) => {
     if (type == "Posted") {
-      await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+      const formData = {
+        type: "brand",
+      };
+      await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
             if (resData.data.data) {
@@ -504,7 +507,10 @@ const CreateJobs = () => {
         })
         .catch((err) => {});
     } else if (type == "Draft") {
-      await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+      const formData = {
+        type: "brand",
+      };
+      await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
             if (resData.data.data) {

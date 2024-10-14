@@ -137,51 +137,9 @@ function Routing() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/find-creators" element={<FindCreators />} />
-            {/* <Route
-              path="/find-creators"
-              element={
-                currentUserId || brandID ? (
-                  <FindCreators />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            /> */}
-            {/* <Route path="/find-creators" element={<FindCreators />} /> */}
-
-            {/* <Route
-              path="/talent/:name"
-              element={
-                currentUserId ? (
-                  <TalentProfile />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            /> */}
-
             <Route path="/talent/:name" element={<TalentProfile />} />
-
-            {/* <Route
-          path="/brand/:name"
-          element={brandID ? <BrandHome /> : <Navigate to="/login" replace />}
-        /> */}
-
             <Route path="/client/:name" element={<BrandHome />} />
-
-            {/* <Route path="/talent/:name" element={<TalentProfile />} /> */}
-            {/* <Route path="/pricing" element={<Pricing />} /> */}
-            <Route
-              path="/pricing"
-              element={
-                // currentUserId || brandID ? (
-                <Pricing />
-                // ) : (
-                //   <Navigate to="/login" replace />
-                // )
-              }
-            />
-
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/adult-signup" element={<AdultSignup />} />
