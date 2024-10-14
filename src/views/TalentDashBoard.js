@@ -139,6 +139,7 @@ const TalentDashBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [skillsList, setSkillsList] = useState([]);
   const [flag, setFlag] = useState(false);
+  const [previewApplied, setPreviewApplied] = useState(false);
   const url = window.location.href;
   const location = useLocation();
   const [talentData, setTalentData] = useState();
@@ -152,6 +153,13 @@ const TalentDashBoard = () => {
       getTalentById();
     }
   }, [currentUserId]);
+
+  useEffect(() => {
+    // alert("previewApplied");
+    if (previewApplied == true) {
+      getRecentGigs();
+    }
+  }, [previewApplied]);
 
   const getTalentById = async () => {
     await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
@@ -230,6 +238,7 @@ const TalentDashBoard = () => {
   };
 
   const viewJob = async (jobId) => {
+    setPreviewApplied(false);
     const screenWidth = window.innerWidth;
     if (screenWidth > 768) {
       setJob(jobId);
@@ -1253,6 +1262,7 @@ const TalentDashBoard = () => {
                   from={"dashboard"}
                   job={job}
                   setFlag={setFlag}
+                  setPreviewApplied={setPreviewApplied}
                 />
               ) : (
                 <div className="rightBx">

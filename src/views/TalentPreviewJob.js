@@ -10,7 +10,7 @@ import "../assets/css/createjobs.css";
 import { useLocation } from "react-router-dom";
 import CurrentUser from "../CurrentUser.js";
 
-const TalentPreviewJob = ({ job, setFlag, from }) => {
+const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   // const { job } = props;
   const job_id = job;
   console.log(from, "from");
@@ -40,7 +40,10 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
     } else if (queryString) {
       preview_id = queryString;
     }
-    await ApiHelper.get(`${API.getAnyJobById}${preview_id}`)
+    const formData = {
+      type: "talent",
+    };
+    await ApiHelper.post(`${API.getAnyJobById}${preview_id}`, formData)
       .then((resData) => {
         setJobData(resData.data.data);
         getBrand(resData.data.data?.brandId);
@@ -151,6 +154,7 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
         setTimeout(function () {
           setOpenPopUp(false);
           getJobsByID();
+          setPreviewApplied(true);
           const modalElement = document.getElementById("viewJobApplyModal");
           const bootstrapModal = new window.bootstrap.Modal(modalElement);
           bootstrapModal.hide();
@@ -214,7 +218,8 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                 <div className="preview-job-name">{jobData?.jobTitle}</div>
               </div>
 
-              {jobData?.howLikeToApply === "easy-apply" && (
+              {(jobData?.howLikeToApply === "easy-apply" ||
+                jobData?.isApplied == "Applied") && (
                 <div className="easy-apply-section">
                   <div
                     className={
@@ -327,16 +332,16 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                           Object.entries(jobData.compensation).map(
                             ([key, value]) => (
                               <span key={key}>
-                                {value?.minPay ||
-                                  (value?.maxPay && (
-                                    <>
-                                      <span>{value.currency}</span>&nbsp;
-                                    </>
-                                  ))}
+                                {(value?.minPay ||
+                                  value?.maxPay ||
+                                  value?.exactPay) && (
+                                  <>
+                                    <span>{value.currency}</span>&nbsp;
+                                  </>
+                                )}
                                 {value?.minPay && (
                                   <>
                                     <span>{value.minPay}/day</span>
-                                    {!value?.maxPay && <>+</>}
                                     &nbsp;
                                   </>
                                 )}
@@ -347,16 +352,18 @@ const TalentPreviewJob = ({ job, setFlag, from }) => {
                                 )}
                                 {value?.maxPay && (
                                   <>
-                                    <span>{value.maxPay}/day</span>+&nbsp;
+                                    <span>{value.maxPay}/day</span>&nbsp;
                                   </>
                                 )}
                                 {value?.exactPay && (
                                   <>
-                                    <span>{value.exactPay}</span>+&nbsp;
+                                    <span>{value.exactPay}</span>&nbsp;
                                   </>
                                 )}
+
                                 {value.product_name && (
                                   <>
+                                    +&nbsp;
                                     {isValidURL(value.product_name) ? (
                                       <a
                                         href={value.product_name}

@@ -328,6 +328,25 @@ const Header = ({ onData }) => {
     setSearchTerm(event.target.value);
   };
 
+  const filteredOptions = Array.from(
+    new Set(
+      searchPathOptions
+        .filter(
+          (option) =>
+            option.label.toLowerCase().includes(searchTerm.toLowerCase()) // Changed startsWith to includes for partial matching
+        )
+        .map((option) => option.label)
+    )
+  ).map((label) => searchPathOptions.find((option) => option.label === label));
+
+  console.log(filteredOptions, "filteredOptions");
+
+  const handleClickBlogs = (step) => {
+    //
+    // navigate("/blogs", { state: { step: step } });
+    window.open("https://brandsandtalent.substack.com/", "_blank");
+  };
+
   const handleLabelClick = (route) => {
     if (route === "/find-creators") {
       if (!currentUserId || currentUser_type != "brand") {
@@ -702,20 +721,18 @@ const Header = ({ onData }) => {
         navigate(route);
       }
     } else if (route === "/get-booked") {
-      if (!currentUserId || currentUser_type == "brand") {
+      if (!currentUserId) {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
           navigate("/login");
-          // window.open(
-          //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-          //   "_blank"
-          // );
         }, 1000);
-      } else {
+      } else if (currentUserId && currentUser_type == "brand") {
         navigate(route);
+      } else if (currentUserId && currentUser_type == "talent") {
+        navigate("/talent-dashboard");
       }
     }
     if (route == "/talent-signup") {
@@ -725,22 +742,6 @@ const Header = ({ onData }) => {
     if (route == "/brand-firstGig") {
       navigate(route);
     }
-  };
-
-  const filteredOptions = Array.from(
-    new Set(
-      searchPathOptions
-        .filter((option) =>
-          option.label.toLowerCase().startsWith(searchTerm.toLowerCase())
-        )
-        .map((option) => option.label)
-    )
-  ).map((label) => searchPathOptions.find((option) => option.label === label));
-
-  const handleClickBlogs = (step) => {
-    //
-    // navigate("/blogs", { state: { step: step } });
-    window.open("https://brandsandtalent.substack.com/", "_blank");
   };
 
   useEffect(() => {}, [talentData, brandData]);

@@ -173,6 +173,7 @@ const BrandTalents = () => {
     setNationality([]);
     setFullName("");
     setFeature([]);
+    getTalentList();
   };
 
   const customNoOptionsMessageState = ({ inputValue }) =>

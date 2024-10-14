@@ -187,6 +187,7 @@ const FindCreators = () => {
     setNationality([]);
     setFullName("");
     setFeature([]);
+    getTalentList();
   };
 
   const customNoOptionsMessageState = ({ inputValue }) =>
