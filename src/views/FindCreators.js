@@ -961,7 +961,7 @@ const FindCreators = () => {
                     <div className="filter-input-wrapper inpWid">
                       <input
                         className="keyword-input"
-                        placeholder="Search Keyword"
+                        placeholder="Enter Height"
                         value={height}
                         onChange={(e) => {
                           setHeight(e.target.value);
