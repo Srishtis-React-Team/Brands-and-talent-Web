@@ -181,7 +181,7 @@ const KidsFormTwo = () => {
           setIsLoading(false);
         }
       } else {
-        setMessage("Please Update All Required Fields");
+        setMessage("Kindly complete all mandatory fields");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

@@ -41,6 +41,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
       preview_id = queryString;
     }
     const formData = {
+      talentId: localStorage.getItem("userId"),
       type: "talent",
     };
     await ApiHelper.post(`${API.getAnyJobById}${preview_id}`, formData)
@@ -270,18 +271,16 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
               <div className="company-location">
                 <span className="job-feature-heading">Location :&nbsp; </span>
                 <span>
-                  <span className="">
-                    {jobData?.city && <>{jobData?.city}</>}{" "}
-                    {/* Display city if it exists */}
-                    {jobData?.city && (jobData?.state || jobData?.country) && (
-                      <span>, </span>
-                    )}{" "}
-                    {/* Show comma if city exists and either state or country exists */}
-                    {jobData?.state && <>{jobData?.state}</>}{" "}
-                    {/* Display state if it exists */}
-                    {jobData?.state && jobData?.country && <span>, </span>}{" "}
-                    {/* Show comma if state exists and country exists */}
-                    {jobData?.country && <>{jobData?.country}</>}{" "}
+                  <span>
+                    <span className="">
+                      {jobData?.jobLocation && `${jobData.jobLocation}`}
+                      {jobData?.jobLocation && jobData?.country && `, `}
+                      {jobData?.country && `${jobData.country}`}
+                      {(jobData?.jobLocation || jobData?.country) &&
+                        jobData?.state &&
+                        `, `}
+                      {jobData?.state && `${jobData.state}`}
+                    </span>
                   </span>
                 </span>
               </div>
@@ -341,7 +340,10 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                                 )}
                                 {value?.minPay && (
                                   <>
-                                    <span>{value.minPay}/day</span>
+                                    <span>
+                                      {value.minPay}
+                                      {value.frequency}
+                                    </span>
                                     &nbsp;
                                   </>
                                 )}
@@ -352,7 +354,11 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                                 )}
                                 {value?.maxPay && (
                                   <>
-                                    <span>{value.maxPay}/day</span>&nbsp;
+                                    <span>
+                                      {value.maxPay}
+                                      {value.frequency}
+                                    </span>
+                                    &nbsp;
                                   </>
                                 )}
                                 {value?.exactPay && (

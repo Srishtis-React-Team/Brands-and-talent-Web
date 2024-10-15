@@ -2351,9 +2351,9 @@ const TalentProfile = () => {
                 </div>
               </div>
 
-              <div className="find-more">
-                {/* <div className="btn moreBtn">Find More</div> */}
-              </div>
+              {/* <div className="find-more">
+                <div className="btn moreBtn">Find More</div>
+              </div> */}
             </div>
           </section>
           {isLoading && <Spinner />}

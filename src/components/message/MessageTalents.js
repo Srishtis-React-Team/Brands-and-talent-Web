@@ -117,7 +117,7 @@ const MessageTalents = () => {
         } else {
         }
 
-        setPopUpMessage("File Uploaded Successfully");
+        setPopUpMessage("The file has been successfully uploaded");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

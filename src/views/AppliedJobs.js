@@ -46,6 +46,7 @@ const AppliedJobs = () => {
 
   const getJobsByID = async () => {
     const formData = {
+      talentId: localStorage.getItem("userId"),
       type: "talent",
     };
     await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)

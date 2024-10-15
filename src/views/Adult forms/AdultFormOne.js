@@ -496,7 +496,7 @@ const AdultFormOne = () => {
           });
       }
     } else {
-      setMessage("Please Update All Required Fields");
+      setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -511,7 +511,7 @@ const AdultFormOne = () => {
     if (selectedOptions.length > 5) {
       // setProfessionError(true);
       // Optionally show a message to the user
-      setMessage("You can only select up to 5 skills");
+      setMessage("You may select a maximum of five skills");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -543,7 +543,7 @@ const AdultFormOne = () => {
         setSelectedCategoriesError(false);
       } else {
         // setCategoryError(true);
-        setMessage("you can only select 6 categories");
+        setMessage("A maximum of six categories may be selected");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

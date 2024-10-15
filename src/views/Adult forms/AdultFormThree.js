@@ -190,7 +190,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     );
 
     if (nonDocumentFiles.length > 0) {
-      setMessage("You can only upload PDF, Word documents, etc.");
+      setMessage("You may upload only PDF and Word documents");
       setOpenPopUp(true);
       setTimeout(() => {
         setOpenPopUp(false);
@@ -537,7 +537,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
           (file) => !isDocumentFile(file.type)
         );
         if (nonDocumentFiles.length > 0) {
-          setMessage("You can only upload PDF, Word documents, etc.");
+          setMessage("You may upload only PDF and Word documents");
           setOpenPopUp(true);
           setTimeout(() => {
             setOpenPopUp(false);

@@ -1145,9 +1145,9 @@ const FindCreators = () => {
           </div>
         </div>
       </section>
-      <div className="find-more mt-2 pt-0">
+      {/* <div className="find-more mt-2 pt-0">
         <div className="moreBtn">Find More</div>
-      </div>
+      </div> */}
       {openPopUp && <PopUp message={message} />}
 
       <div

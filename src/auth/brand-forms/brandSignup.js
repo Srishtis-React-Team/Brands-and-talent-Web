@@ -204,14 +204,14 @@ const BrandSignup = React.memo((props) => {
           }, 1000);
         });
     } else {
-      setMessage("Please Update All Required Fields");
+      setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     }
     if (!passwordMatch) {
-      setMessage("Please Update All Required Fields");
+      setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -473,7 +473,8 @@ const BrandSignup = React.memo((props) => {
                   <div className="invalid-fields password-error-box">
                     Your password must be at least 8 characters long and include
                     at least: 1 capital letter (A, B, C...), 1 small letter (a,
-                    b, c...), 1 number (1, 2, 3...), 1 special symbol (!, @, #...)
+                    b, c...), 1 number (1, 2, 3...), 1 special symbol (!, @,
+                    #...)
                   </div>
                 )}
                 {passwordError && (
