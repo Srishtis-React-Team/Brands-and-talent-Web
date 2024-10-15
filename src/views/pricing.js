@@ -386,7 +386,7 @@ const Pricing = ({
       if (senderName && email && recieverEmail && recieversFirstName) {
         setIsPlanForm(true);
       } else {
-        setMessage("Please Update All Required Fields");
+        setMessage("Kindly complete all mandatory fields");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);

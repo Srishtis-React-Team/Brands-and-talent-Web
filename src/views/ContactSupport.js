@@ -98,7 +98,7 @@ const ContactSupport = () => {
           }, 2000);
         } else {
           setIsLoading(false);
-          setMessage("Please Update All Required Fields");
+          setMessage("Kindly complete all mandatory fields");
 
           setOpenPopUp(true);
           setTimeout(() => setOpenPopUp(false), 2000);
@@ -108,7 +108,7 @@ const ContactSupport = () => {
         // Handle error
       }
     } else {
-      setMessage("Please Update All Required Fields");
+      setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);

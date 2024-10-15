@@ -175,14 +175,16 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 <span className="font-600">Location :&nbsp; </span>
                 {/* {jobData?.paymentType?.label} */}
                 <span>
-                  <span className="">
-                    {jobData?.country && `${jobData.country}`}
-                    {jobData?.country && jobData?.state && `, `}
-                    {jobData?.state && `${jobData.state}`}
-                    {(jobData?.country || jobData?.state) &&
-                      jobData?.jobLocation &&
-                      `, `}
-                    {jobData?.jobLocation && `${jobData.jobLocation}`}
+                  <span>
+                    <span className="">
+                      {jobData?.jobLocation && `${jobData.jobLocation}`}
+                      {jobData?.jobLocation && jobData?.country && `, `}
+                      {jobData?.country && `${jobData.country}`}
+                      {(jobData?.jobLocation || jobData?.country) &&
+                        jobData?.state &&
+                        `, `}
+                      {jobData?.state && `${jobData.state}`}
+                    </span>
                   </span>
                 </span>
               </div>
@@ -259,7 +261,10 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       )}
                       {value?.minPay && (
                         <>
-                          <span>{value.minPay}/day</span>
+                          <span>
+                            {value.minPay}
+                            {value.frequency}
+                          </span>
                           &nbsp;
                         </>
                       )}
@@ -270,7 +275,11 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       )}
                       {value?.maxPay && (
                         <>
-                          <span>{value.maxPay}/day</span>&nbsp;
+                          <span>
+                            {value.maxPay}
+                            {value.frequency}
+                          </span>
+                          &nbsp;
                         </>
                       )}
                       {value?.exactPay && (

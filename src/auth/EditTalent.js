@@ -333,7 +333,7 @@ const EditTalent = () => {
         setSelectedCategories([...selectedCategories, category]);
         setCategoryError(false);
       } else {
-        setMessage("you can only select 6 categories");
+        setMessage("A maximum of six categories may be selected");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -350,7 +350,7 @@ const EditTalent = () => {
 
   const handleProfessionChange = (selectedOptions) => {
     if (selectedOptions.length > 5) {
-      setMessage("You can only select up to 5 skills");
+      setMessage("You may select a maximum of five skills");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -798,7 +798,7 @@ const EditTalent = () => {
             setIsLoading(false);
           });
       } else {
-        setMessage("Please Update All Required Fields");
+        setMessage("Kindly complete all mandatory fields");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -855,7 +855,7 @@ const EditTalent = () => {
             setIsLoading(false);
           });
       } else {
-        setMessage("Please Update All Required Fields");
+        setMessage("Kindly complete all mandatory fields");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -1137,7 +1137,7 @@ const EditTalent = () => {
           (file) => !isDocumentFile(file.type)
         );
         if (nonDocumentFiles.length > 0) {
-          setMessage("You can only upload PDF, Word documents, etc.");
+          setMessage("You may upload only PDF and Word documents");
           setOpenPopUp(true);
           setTimeout(() => {
             setOpenPopUp(false);
