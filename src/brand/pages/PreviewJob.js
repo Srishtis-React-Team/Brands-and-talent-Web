@@ -177,13 +177,14 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 <span>
                   <span>
                     <span className="">
-                      {jobData?.jobLocation && `${jobData.jobLocation}`}
-                      {jobData?.jobLocation && jobData?.country && `, `}
-                      {jobData?.country && `${jobData.country}`}
-                      {(jobData?.jobLocation || jobData?.country) &&
-                        jobData?.state &&
-                        `, `}
-                      {jobData?.state && `${jobData.state}`}
+                      {[
+                        jobData?.jobLocation,
+                        jobData?.city,
+                        jobData?.state,
+                        jobData?.country,
+                      ]
+                        .filter(Boolean)
+                        .join(", ")}
                     </span>
                   </span>
                 </span>
@@ -262,7 +263,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       {value?.minPay && (
                         <>
                           <span>
-                            {value.minPay}
+                            {value.minPay}&nbsp;
                             {value.frequency}
                           </span>
                           &nbsp;
@@ -276,7 +277,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       {value?.maxPay && (
                         <>
                           <span>
-                            {value.maxPay}
+                            {value.maxPay}&nbsp;
                             {value.frequency}
                           </span>
                           &nbsp;

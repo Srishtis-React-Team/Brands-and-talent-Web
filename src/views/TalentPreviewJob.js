@@ -273,13 +273,14 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                 <span>
                   <span>
                     <span className="">
-                      {jobData?.jobLocation && `${jobData.jobLocation}`}
-                      {jobData?.jobLocation && jobData?.country && `, `}
-                      {jobData?.country && `${jobData.country}`}
-                      {(jobData?.jobLocation || jobData?.country) &&
-                        jobData?.state &&
-                        `, `}
-                      {jobData?.state && `${jobData.state}`}
+                      {[
+                        jobData?.jobLocation,
+                        jobData?.city,
+                        jobData?.state,
+                        jobData?.country,
+                      ]
+                        .filter(Boolean)
+                        .join(", ")}
                     </span>
                   </span>
                 </span>
@@ -341,7 +342,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                                 {value?.minPay && (
                                   <>
                                     <span>
-                                      {value.minPay}
+                                      {value.minPay}&nbsp;
                                       {value.frequency}
                                     </span>
                                     &nbsp;
@@ -355,7 +356,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                                 {value?.maxPay && (
                                   <>
                                     <span>
-                                      {value.maxPay}
+                                      {value.maxPay}&nbsp;
                                       {value.frequency}
                                     </span>
                                     &nbsp;

@@ -332,27 +332,20 @@ const ListJobs = () => {
                                     <span className="job-company-name">
                                       <i className="bi bi-person-workspace"></i>
                                     </span>{" "}
-                                    <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
                                       {job?.jobType}
                                     </span>
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company_dtls">
                                       <i className="bi bi-geo-alt-fill location-icon"></i>
-                                      {job?.city && <>{job?.city}</>}{" "}
-                                      {/* Display city if it exists */}
-                                      {job?.city &&
-                                        (job?.state || job?.country) && (
-                                          <span>, </span>
-                                        )}{" "}
-                                      {/* Show comma if city exists and either state or country exists */}
-                                      {job?.state && <>{job?.state}</>}{" "}
-                                      {/* Display state if it exists */}
-                                      {job?.state && job?.country && (
-                                        <span>, </span>
-                                      )}{" "}
-                                      {/* Show comma if state exists and country exists */}
-                                      {job?.country && <>{job?.country}</>}{" "}
+                                      {[
+                                        job?.jobLocation,
+                                        job?.city,
+                                        job?.state,
+                                        job?.country,
+                                      ]
+                                        .filter(Boolean)
+                                        .join(", ")}
                                     </span>
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company-name">

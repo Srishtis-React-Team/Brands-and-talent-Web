@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import "../assets/css/findcreators.css";
 import PopUp from "../components/PopUp";
 
-const Talentscarousel = ({ talentList }) => {
+const Talentscarousel = ({ talentList, callList }) => {
   const navigate = useNavigate();
   const favoruiteIcon = require("../assets/icons/favorite.png");
   const heartIcon = require("../assets/icons/heart.png");
@@ -54,6 +54,7 @@ const Talentscarousel = ({ talentList }) => {
           setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
           setTimeout(() => setOpenPopUp(false), 1000);
+          callList();
         }
       })
       .catch((err) => {
@@ -84,6 +85,7 @@ const Talentscarousel = ({ talentList }) => {
           setMessage("Removed Talent From Favorites");
           setOpenPopUp(true);
           setTimeout(() => setOpenPopUp(false), 1000);
+          callList();
         }
       })
       .catch((err) => {
