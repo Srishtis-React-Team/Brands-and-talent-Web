@@ -576,7 +576,6 @@ const CreateJobs = () => {
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
     setBrandImage(localStorage.getItem("currentUserImage"));
-
     if (brandId && brandId != null) {
       getAllJobs(brandId);
       getBrand();

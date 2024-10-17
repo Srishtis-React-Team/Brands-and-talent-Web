@@ -34,6 +34,10 @@ const BrandHome = () => {
       .catch((err) => {});
   };
 
+  const callList = () => {
+    getTalentList();
+  };
+
   useEffect(() => {
     if (brandId) {
       getBrand();
@@ -224,7 +228,10 @@ const BrandHome = () => {
               <div className="photos-slider">
                 <div className="row">
                   <div className="col-lg-12">
-                    <Talentscarousel talentList={talentList} />
+                    <Talentscarousel
+                      talentList={talentList}
+                      callList={callList}
+                    />
                   </div>
                 </div>
                 {/* <TalentsSlider talentList={talentList} /> */}
@@ -286,9 +293,14 @@ const BrandHome = () => {
                             <i className="bi bi-dot"></i>
                             <span className="job-company_dtls">
                               <i className="bi bi-geo-alt-fill location-icon"></i>
-                              {jobsList?.state && jobsList?.city
-                                ? `${jobsList.state}, ${jobsList.city}`
-                                : jobsList?.state || jobsList?.city}
+                              {[
+                                jobsList?.jobLocation,
+                                jobsList?.city,
+                                jobsList?.state,
+                                jobsList?.country,
+                              ]
+                                .filter(Boolean)
+                                .join(", ")}
                             </span>
                             <i className="bi bi-dot"></i>
                             <span className="job-company-name">
