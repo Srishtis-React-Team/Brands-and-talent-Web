@@ -1250,7 +1250,7 @@ const EditTalent = () => {
     }
     let apiUrl;
     if (talentData?.type == "kids") {
-      apiUrl = API.editKids;
+      apiUrl = API.getTalentById;
     } else if (talentData?.type == "adults") {
       apiUrl = API.updateAdults;
     }

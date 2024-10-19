@@ -73,6 +73,7 @@ export const API = {
   createqrpayment: BASEURL + "pricing/createqrpayment",
   giftSubCreation: BASEURL + "giftsub/giftSubCreation",
   getGiftSubscriptionsByUser: BASEURL + "giftsub/getGiftSubscriptionsByUser",
+  fetchTransactionId: BASEURL + "pricing/fetchTransactionId",
 
   // /api/pricing/create-payment
 
