@@ -1943,3 +1943,9 @@
   width: 60%;
   margin-right: 15px;
 }
+
+.material-mobile-style .MuiInputAdornment-root img {
+  display: block !important; /* Ensures the flag is always shown */
+  width: auto !important; /* Adjust width if necessary */
+  height: auto !important; /* Adjust height if necessary */
+}

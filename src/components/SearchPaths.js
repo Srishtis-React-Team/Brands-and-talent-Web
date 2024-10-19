@@ -1,6 +1,6 @@
 const searchPathOptions = [
   { routes: "/", label: "Home Page" },
-  { routes: "/find-creators", label: "Find Creators" },
+  // { routes: "/find-creators", label: "Find Creators" },
   { routes: "/pricing", label: "Pricing" },
   { routes: "/resources", label: "Resources" },
   { routes: "/signup", label: "Register" },

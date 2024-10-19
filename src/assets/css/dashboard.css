@@ -4233,46 +4233,44 @@ main.brand-main-container:not(.main-pd) .creators-filter-select {
   .rating {
     gap: 4px;
     width: inherit;
-}
-.creatorPage-Wraper .col-md-8.col-lg-8 {
-  padding: 0;
-}
-.creatorPage-Wraper .models-images {
-  padding: 10px;
-}
+  }
+  .creatorPage-Wraper .col-md-8.col-lg-8 {
+    padding: 0;
+  }
+  .creatorPage-Wraper .models-images {
+    padding: 10px;
+  }
 
-    .favTalent .col-md-4.col-lg-3.px-1 {
-        width: 50%;
-    }
-    .find-more.mt-2.pt-0 {
-      margin-bottom: 20px;
-      padding: 20px;
+  .favTalent .col-md-4.col-lg-3.px-1 {
+    width: 50%;
+  }
+  .find-more.mt-2.pt-0 {
+    margin-bottom: 20px;
+    padding: 20px;
   }
 
   .messages-section {
     width: 100%;
-}
-img.job-company-logo {
-  margin-right: 10px;    border-radius: 60px;
-}
-span.job-company-name {
-  font-weight: 700;
-}
-span.job-feature-values span {
-  word-break: break-word;
-}
-.not-viewjob {
-  margin: 100px 16px 20px !important;
-}
-.company-location {
-  padding: 6px 0 !important;
-}
-.job-feature-heading {
-  font-weight: 700 !important;
-}
-
-
-
+  }
+  img.job-company-logo {
+    margin-right: 10px;
+    border-radius: 60px;
+  }
+  span.job-company-name {
+    font-weight: 700;
+  }
+  span.job-feature-values span {
+    word-break: break-word;
+  }
+  .not-viewjob {
+    margin: 100px 16px 20px !important;
+  }
+  .company-location {
+    padding: 6px 0 !important;
+  }
+  .job-feature-heading {
+    font-weight: 700 !important;
+  }
 }
 @media (max-width: 420px) {
   .mobile-navbar .icon {
@@ -4326,4 +4324,10 @@ span.job-feature-values span {
   align-items: center;
   color: #c2114b !important; /* Use the same color as the NavLink active state */
   font-size: 15px;
+}
+
+.material-mobile-style .MuiInputAdornment-root img {
+  display: block !important; /* Ensures the flag is always shown */
+  width: auto !important; /* Adjust width if necessary */
+  height: auto !important; /* Adjust height if necessary */
 }

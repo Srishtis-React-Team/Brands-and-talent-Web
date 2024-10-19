@@ -1334,7 +1334,7 @@ const KidsformOne = () => {
                         <div className="kids-form-section">
                           <div className="mb-3">
                             <label className="form-label pay-info">
-                              Profession / Skills (Choose any 5)
+                              Profession / Skills (Choose any 1-5)
                               <span className="mandatory">*</span>
                             </label>
                             <div>
