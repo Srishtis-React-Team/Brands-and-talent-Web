@@ -19,7 +19,6 @@ import DialogActions from "@mui/material/DialogActions";
 import PaymentOptions from "../views/PaymentOptions.js";
 import CheckoutComponent from "../views/CheckoutComponent.js";
 
-
 import {
   parsePhoneNumber,
   isValidPhoneNumber,
@@ -182,7 +181,7 @@ const KidsFormTwo = () => {
           setIsLoading(false);
         }
       } else {
-        setMessage("Kindly complete all mandatory fields");
+        setMessage("Please Update All Required Fields");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
