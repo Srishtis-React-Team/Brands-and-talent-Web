@@ -2192,20 +2192,84 @@ const EditTalent = () => {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   const [videoAnchor, setVideoAnchor] = useState(null);
-
-  const videoOpen = Boolean(videoAnchor);
   const [selectedVideoItem, setSelectedVideoItem] = useState(null); // Track the selected item
+  const [videoIndex, setVideoIndex] = useState(null);
+  const videoOpen = Boolean(videoAnchor);
 
   // Single function to handle menu open
-  const handleVideoClick = (event, item) => {
+  const handleVideoClick = (event, item, index) => {
     setVideoAnchor(event.currentTarget);
     setSelectedVideoItem(item); // Set the selected item
+    setVideoIndex(index);
   };
 
-  const handleVideoClose = () => {
+  const handleVideoClose = (index) => {
     setVideoAnchor(null);
     setSelectedVideoItem(null); // Reset the selected item when closing the menu
+    setVideoIndex(index);
   };
+
+  ////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  const [audioAnchor, setAudioAnchor] = useState(null);
+  const [selectedAudioItem, setSelectedAudioItem] = useState(null); // Track the selected item
+  const [audioIndex, setAudioIndex] = useState(null);
+
+  // Single function to handle menu open
+  const handleAudioClick = (event, item, index) => {
+    setAudioAnchor(event.currentTarget);
+    setSelectedAudioItem(item); // Set the selected item
+    setAudioIndex(index);
+  };
+
+  const handleAudioClose = (index) => {
+    setAudioAnchor(null);
+    setSelectedAudioItem(null); // Reset the selected item when closing the menu
+    setAudioIndex(index);
+  };
+
+  //////////////////////////////////////////////////
+
+  const [serviceFileAnchor, setServiceFileAnchor] = useState(null);
+
+  const serviceFileOpen = Boolean(serviceFileAnchor);
+  const [selectedServiceItem, setSelectedServiceItem] = useState(null); // Track the selected item
+
+  // Single function to handle menu open
+  const handleServiceFileClickClick = (event, item) => {
+    setServiceFileAnchor(event.currentTarget);
+    setSelectedServiceItem(item); // Set the selected item
+  };
+
+  const handleServiceFileClose = () => {
+    setServiceFileAnchor(null);
+    setSelectedServiceItem(null); // Reset the selected item when closing the menu
+  };
+  ////////////////////////////////////////////////////////////////////////////
+
+  const [cvAnchor, setCvAnchor] = useState(null);
+
+  const cvOpen = Boolean(cvAnchor);
+  const [selectedCV, setSelectedCV] = useState(null); // Track the selected item
+  const [cvIndex, setCVIndex] = useState(null); // Track the selected item
+
+  // Single function to handle menu open
+  const handleCVFileClickClick = (event, item, index) => {
+    setCvAnchor(event.currentTarget);
+    setSelectedCV(item); // Set the selected item
+    setCVIndex(index);
+  };
+
+  const handleCVFileClose = (index) => {
+    setCvAnchor(null);
+    setSelectedCV(null); // Reset the selected item when closing the menu
+    setCVIndex(index);
+  };
+
+  useEffect(() => {
+    console.log(urls, "urls");
+  }, [urls]);
 
   return (
     <>
@@ -2785,7 +2849,7 @@ const EditTalent = () => {
                     <div className="kids-form-section">
                       <div className="mb-3">
                         <label className="form-label pay-info">
-                          Profession / Skills (Choose any 5)
+                          Profession / Skills (Choose any 1-5)
                           <span className="mandatory">*</span>
                         </label>
                         <div>
@@ -3153,7 +3217,7 @@ const EditTalent = () => {
                                             dropDownClose();
                                             setAlertpop({
                                               status: true,
-                                              item: item,
+                                              item: selectedPortfolioItem,
                                               label: "delete",
                                               eachService: null,
                                             });
@@ -3256,7 +3320,7 @@ const EditTalent = () => {
                                       aria-controls={`dropdown-menu-${index}`}
                                       aria-haspopup="true"
                                       onClick={(event) =>
-                                        handleVideoClick(event, url)
+                                        handleVideoClick(event, url, index)
                                       }
                                     >
                                       <MoreVertIcon />
@@ -3265,12 +3329,12 @@ const EditTalent = () => {
                                       id={`dropdown-menu-${index}`} // Use unique ID
                                       anchorEl={videoAnchor} // Correct prop name
                                       open={videoOpen} // Control visibility
-                                      onClose={handleVideoClose}
+                                      onClose={() => handleVideoClose(index)}
                                     >
                                       <MenuItem
                                         onClick={() => {
-                                          handleVideoClose();
-                                          handleDeleteUrl(index);
+                                          handleVideoClose(index);
+                                          handleDeleteUrl(videoIndex);
                                         }}
                                       >
                                         Delete
@@ -3336,22 +3400,32 @@ const EditTalent = () => {
                                   <div className="update-portfolio-action">
                                     <IconButton
                                       aria-label="more"
-                                      aria-controls="dropdown-menu"
+                                      aria-controls={`dropdown-menu-${index}`} // Use unique ID
                                       aria-haspopup="true"
-                                      onClick={handleClick}
+                                      onClick={(event) =>
+                                        handleAudioClick(event, url, index)
+                                      }
                                     >
                                       <MoreVertIcon />
                                     </IconButton>
                                     <Menu
-                                      id="dropdown-menu"
-                                      anchorEl={anchorEl}
-                                      open={Boolean(anchorEl)}
-                                      onClose={handleClose}
+                                      id={`dropdown-menu-${index}`} // Use unique ID
+                                      anchorEl={audioAnchor} // Correct prop name
+                                      open={audioAnchor} // Control visibility
+                                      onClose={() => handleAudioClose(index)}
                                     >
                                       <MenuItem
                                         onClick={() => {
-                                          dropDownClose();
-                                          deleteAudioUrl(index);
+                                          handleAudioClose(index);
+                                          window.open(url, "_blank"); // Open the YouTube video in a new tab
+                                        }}
+                                      >
+                                        View
+                                      </MenuItem>
+                                      <MenuItem
+                                        onClick={() => {
+                                          handleAudioClose(index);
+                                          deleteAudioUrl(audioIndex);
                                         }}
                                       >
                                         Delete
@@ -3658,30 +3732,35 @@ const EditTalent = () => {
                                                         <div className="ml-2">
                                                           <IconButton
                                                             aria-label="more"
-                                                            aria-controls="dropdown-menu"
+                                                            aria-controls={`dropdown-menu-${servicesIndex}`}
                                                             aria-haspopup="true"
-                                                            onClick={
-                                                              handleClick
+                                                            onClick={(event) =>
+                                                              handleServiceFileClickClick(
+                                                                event,
+                                                                item
+                                                              )
                                                             }
                                                           >
                                                             <MoreVertIcon />
                                                           </IconButton>
                                                           <Menu
-                                                            id="dropdown-menu"
-                                                            anchorEl={anchorEl}
-                                                            open={Boolean(
-                                                              anchorEl
-                                                            )}
+                                                            id={`dropdown-menu-${servicesIndex}`} // Use unique ID
+                                                            anchorEl={
+                                                              serviceFileAnchor
+                                                            } // Correct prop name
+                                                            open={
+                                                              serviceFileOpen
+                                                            } // Control visibility
                                                             onClose={
-                                                              handleClose
+                                                              handleServiceFileClose
                                                             }
                                                           >
                                                             <MenuItem
                                                               onClick={() => {
-                                                                handleClose();
+                                                                handleServiceFileClose();
                                                                 viewUpdateFile(
-                                                                  item
-                                                                );
+                                                                  selectedServiceItem
+                                                                ); // Use selected item
                                                               }}
                                                             >
                                                               View
@@ -3818,7 +3897,7 @@ const EditTalent = () => {
                   )}
                   {talentData &&
                     talentData?.cv?.length > 0 &&
-                    talentData?.cv?.map((item) => {
+                    talentData?.cv?.map((item, index) => {
                       return (
                         <>
                           <div className="col-md-6">
@@ -3847,22 +3926,28 @@ const EditTalent = () => {
                                   <div className="update-portfolio-action">
                                     <IconButton
                                       aria-label="more"
-                                      aria-controls="dropdown-menu"
+                                      aria-controls={`dropdown-menu-${index}`}
                                       aria-haspopup="true"
-                                      onClick={handleClick}
+                                      onClick={(event) =>
+                                        handleCVFileClickClick(
+                                          event,
+                                          item,
+                                          index
+                                        )
+                                      }
                                     >
                                       <MoreVertIcon />
                                     </IconButton>
                                     <Menu
-                                      id="dropdown-menu"
-                                      anchorEl={anchorEl}
-                                      open={Boolean(anchorEl)}
-                                      onClose={handleClose}
+                                      id={`dropdown-menu-${index}`} // Use unique ID
+                                      anchorEl={cvAnchor} // Correct prop name
+                                      open={cvOpen} // Control visibility
+                                      onClose={() => handleCVFileClose(index)}
                                     >
                                       <MenuItem
                                         onClick={() => {
-                                          handleClose();
-                                          viewUpdateFile(item);
+                                          handleCVFileClose(index);
+                                          viewUpdateFile(selectedCV); // Use selected item
                                         }}
                                       >
                                         View
@@ -3870,12 +3955,12 @@ const EditTalent = () => {
                                       <MenuItem
                                         onClick={(e) => {
                                           dropDownClose();
-
                                           setAlertpop({
                                             status: true,
-                                            item: item,
+                                            item: selectedCV,
                                             label: "delete",
                                             eachService: null,
+                                            index: cvIndex,
                                           });
                                         }}
                                       >

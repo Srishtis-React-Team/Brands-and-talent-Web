@@ -425,7 +425,7 @@ const AdultFormOne = () => {
       childCity: kidsCity,
       age: age,
       noOfJobsCompleted: completedJobs,
-      publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
+      publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
     };
 
     if (
@@ -468,7 +468,7 @@ const AdultFormOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
+        publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
       };
 
       if (userId) {
@@ -801,7 +801,7 @@ const AdultFormOne = () => {
                           style={{ fontWeight: "bold", fontSize: "small" }}
                           className="adults-titles kids-form-title mb-2"
                         >
-                          Profession / Skills (Choose any 1 to 5)
+                          Profession / Skills (Choose any 1-5)
                           <span className="mandatory">*</span>
                         </label>
 
@@ -1373,7 +1373,8 @@ const AdultFormOne = () => {
                       </label>
                       <span className="mandatory">*</span>
                       <textarea
-                        className="form-control address-textarea"
+                        className="address-textarea"
+                        style={{ width: "100%", height: "150px !important" }}
                         id="exampleFormControlTextarea1"
                         value={address}
                         rows="3"
