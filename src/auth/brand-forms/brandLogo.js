@@ -228,10 +228,13 @@ const BrandLogo = () => {
   };
 
   const setBrandsLocalStorage = (data) => {
+    console.log(data, "setBrandsLocalStorage");
+
     localStorage.setItem("brandId", data?.brand_id);
     localStorage.setItem("currentUser", data?.brand_id);
     localStorage.setItem("currentUserType", "brand");
     localStorage.setItem("currentUserImage", data?.brandImage[0]?.fileData);
+    localStorage.setItem("userEmail ", data?.brandEmail);
   };
   const dropDownClose = () => {
     setPortfolioAnchor(null);

@@ -222,7 +222,7 @@ const BrandDetails = () => {
         .then((resData) => {
           if (resData.data.status === true) {
             setMessage("Registered Successfully!");
-            setTalentLocalStorage(resData.data.data);
+            setBrandsLocalStorage(resData.data.data);
             setOpenPopUp(true);
             setTimeout(function () {
               setOpenPopUp(false);
@@ -255,8 +255,9 @@ const BrandDetails = () => {
     }
   };
 
-  const setTalentLocalStorage = (data) => {
+  const setBrandsLocalStorage = (data) => {
     localStorage.setItem("brandId", data?.brand_id);
+    localStorage.setItem("userEmail ", data?.brandEmail);
   };
 
   const selectHearAbout = (event) => {

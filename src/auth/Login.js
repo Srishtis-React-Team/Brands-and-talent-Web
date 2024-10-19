@@ -195,6 +195,7 @@ const Login = () => {
   const setTalentLocalStorage = (data) => {
     localStorage.setItem("userId", data?.user?._id);
     localStorage.setItem("emailID", data?.email);
+    localStorage.setItem("userEmail ", data?.email);
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
     localStorage.setItem("currentUserType", data?.user?.userType);
@@ -210,6 +211,8 @@ const Login = () => {
     localStorage.setItem("brandId", data?.data?._id);
     localStorage.setItem("currentUser", data?.data?._id);
     localStorage.setItem("brandEmail", data?.data?.brandEmail);
+    localStorage.setItem("userEmail ", data?.data?.brandEmail);
+
     localStorage.setItem("brandToken", data?.token);
     localStorage.setItem("currentUserType", data?.data?.userType);
     localStorage.setItem(

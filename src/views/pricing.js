@@ -155,7 +155,7 @@ const Pricing = ({
   const [giftSub, setGiftSub] = useState(false);
   const [pathFrom, setPathFrom] = useState("");
   const [appliedCouponCode, setAppliedCouponCode] = useState("");
-  const [success_url,setSuccess_url] = useState(``)
+  const [success_url, setSuccess_url] = useState(``);
 
   const handleMobileChange = (value) => {
     isValidPhoneNumber(value);
@@ -317,14 +317,14 @@ const Pricing = ({
   };
 
   const editKids = async () => {
-    console.log('currentPath',currentPath)
+    console.log("currentPath", currentPath);
     const userId = localStorage.getItem("userId");
-    if(currentPath == '/pricing'){
-      console.log("if")
-    navigate(``);
-    }else{
-      console.log('else')
-    navigate(`/adult-signup-files-details?userId=${userId}`);
+    if (currentPath == "/pricing") {
+      console.log("if");
+      navigate(``);
+    } else {
+      console.log("else");
+      navigate(`/adult-signup-files-details?userId=${userId}`);
     }
   };
 
@@ -336,59 +336,59 @@ const Pricing = ({
 
   const choosePlan = async (index, item, from) => {
     console.log("inside chooseplan.....", from);
-    if(index == 0){
-      editKids()
-    }else{
+    if (index == 0) {
+      editKids();
+    } else {
       setPathFrom(from);
-    if (from == "giftsubscription") {
-      console.log('inside the if case')
-      setGiftSub(true);
-      localStorage.setItem("giftsubscription", true);
-    } else {
-      console.log('inside the else case')
-      setGiftSub(false);
-      localStorage.setItem("giftsubscription", false);
-    }
-    const selectedPlanItem =
-      item.plan_type_annual.find(
-        (plan) => `annual-${item._id}` === selectedPlan
-      ) ||
-      item.plan_type_monthly.find(
-        (plan) => `monthly-${item._id}` === selectedPlan
-      );
-    console.log("selectedPlanItem", selectedPlanItem);
-    const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
-    const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
-    const afterDiscount = selectedPlanItem
-      ? selectedPlanItem.afterDiscount
-      : "N/A";
-    console.log("afterDiscount", afterDiscount);
-    const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
-    const match = price.match(regex);
-    if (match) {
-      let amount;
-      if (afterDiscount.includes("per year")) {
-        const match = afterDiscount.match(/(\w+)\s([\d.,]+)\sper\syear/);
-        if (match) {
-          amount = parseFloat(match[2]); // Extracts the numeric part
-        }
+      if (from == "giftsubscription") {
+        console.log("inside the if case");
+        setGiftSub(true);
+        localStorage.setItem("giftsubscription", true);
       } else {
-        amount = parseFloat(match[2]); // 29.99
+        console.log("inside the else case");
+        setGiftSub(false);
+        localStorage.setItem("giftsubscription", false);
       }
-      const currency = match[1].toUpperCase(); // "USD"
-      const duration = match[3]; // "month"
-      console.log("currency", currency);
-      console.log("amount", amount);
-      setSelectedCurrency(currency);
-      setSelectedAmount(amount);
-      // const type = 'https://brandsandtalent.com/create-jobs'
-      localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
-      localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
-      setPaymentFrom(from);
-      setPaymentOption(true);
-    } else {
-      console.error("Price string format is incorrect");
-    }
+      const selectedPlanItem =
+        item.plan_type_annual.find(
+          (plan) => `annual-${item._id}` === selectedPlan
+        ) ||
+        item.plan_type_monthly.find(
+          (plan) => `monthly-${item._id}` === selectedPlan
+        );
+      console.log("selectedPlanItem", selectedPlanItem);
+      const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
+      const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
+      const afterDiscount = selectedPlanItem
+        ? selectedPlanItem.afterDiscount
+        : "N/A";
+      console.log("afterDiscount", afterDiscount);
+      const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
+      const match = price.match(regex);
+      if (match) {
+        let amount;
+        if (afterDiscount.includes("per year")) {
+          const match = afterDiscount.match(/(\w+)\s([\d.,]+)\sper\syear/);
+          if (match) {
+            amount = parseFloat(match[2]); // Extracts the numeric part
+          }
+        } else {
+          amount = parseFloat(match[2]); // 29.99
+        }
+        const currency = match[1].toUpperCase(); // "USD"
+        const duration = match[3]; // "month"
+        console.log("currency", currency);
+        console.log("amount", amount);
+        setSelectedCurrency(currency);
+        setSelectedAmount(amount);
+        // const type = 'https://brandsandtalent.com/create-jobs'
+        localStorage.setItem("selectedPaymentPeriod", selectedPaymentPeriod);
+        localStorage.setItem("selectedPaymentPlan", selectedPaymentPlan);
+        setPaymentFrom(from);
+        setPaymentOption(true);
+      } else {
+        console.error("Price string format is incorrect");
+      }
     }
   };
 
@@ -664,16 +664,23 @@ const Pricing = ({
   //   setIsValidRecieverEmail(emailRegex.test(email));
   // };
 
-  useEffect(()=>{
-    if(userType == "adults"){
-      setSuccess_url(`https://brandsandtalent.com/adult-signup-files-details?${queryString}`)
-    }else if(userType == "brands"){
-      setSuccess_url(`https://brandsandtalent.com/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`)
-    }else{
-      setSuccess_url(`https://brandsandtalent.com/talent-home`)
+  useEffect(() => {
+    if (userType == "adults") {
+      setSuccess_url(
+        `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
+      );
+    } else if (userType == "brands") {
+      setSuccess_url(
+        `https://brandsandtalent.com/client/${receivedData?.publicUrl.replace(
+          /\s+/g,
+          ""
+        )}`
+      );
+    } else {
+      setSuccess_url(`https://brandsandtalent.com/talent-home`);
     }
-    console.log('success_url',success_url)
-  },[])
+    console.log("success_url", success_url);
+  }, []);
 
   useEffect(() => {
     if (userType == "adults") {
