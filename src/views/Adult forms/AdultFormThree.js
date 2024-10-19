@@ -190,7 +190,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
     );
 
     if (nonDocumentFiles.length > 0) {
-      setMessage("You can only upload PDF, Word documents, etc.");
+      setMessage("You may upload only PDF and Word documents");
       setOpenPopUp(true);
       setTimeout(() => {
         setOpenPopUp(false);
@@ -329,73 +329,88 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   const [portfolioAnchor, setPortfolioAnchor] = useState(null);
   const [selectedPortfolioItem, setSelectedPortfolioItem] = useState(null); // Track the selected item
+  const [portfolioOpenIndex, setPortfolioOpenIndex] = useState(null);
 
   // Single function to handle menu open
-  const handlePortfolioClick = (event, item) => {
+  const handlePortfolioClick = (event, item, index) => {
     setPortfolioAnchor(event.currentTarget);
     setSelectedPortfolioItem(item); // Set the selected item
+    setPortfolioOpenIndex(index); // Set the correct index for the opened menu
   };
 
-  const handlePortfolioClose = () => {
+  const handlePortfolioClose = (index) => {
     setPortfolioAnchor(null);
     setSelectedPortfolioItem(null); // Reset the selected item when closing the menu
+    setPortfolioOpenIndex(index); // Set the correct index for the opened menu
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   const [videoAnchor, setVideoAnchor] = useState(null);
   const [selectedVideoItem, setSelectedVideoItem] = useState(null); // Track the selected item
+  const [videoIndex, setVideoIndex] = useState(null);
 
   // Single function to handle menu open
-  const handleVideoClick = (event, item) => {
+  const handleVideoClick = (event, item, index) => {
     setVideoAnchor(event.currentTarget);
     setSelectedVideoItem(item); // Set the selected item
+    setVideoIndex(index);
   };
 
-  const handleVideoClose = () => {
+  const handleVideoClose = (index) => {
     setVideoAnchor(null);
     setSelectedVideoItem(null); // Reset the selected item when closing the menu
+    setVideoIndex(index);
   };
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   const [audioAnchor, setAudioAnchor] = useState(null);
   const [selectedAudioItem, setSelectedAudioItem] = useState(null); // Track the selected item
+  const [audioIndex, setAudioIndex] = useState(null);
 
   // Single function to handle menu open
-  const handleAudioClick = (event, item) => {
+  const handleAudioClick = (event, item, index) => {
     setAudioAnchor(event.currentTarget);
     setSelectedAudioItem(item); // Set the selected item
+    setAudioIndex(index);
   };
 
-  const handleAudioClose = () => {
+  const handleAudioClose = (index) => {
     setAudioAnchor(null);
     setSelectedAudioItem(null); // Reset the selected item when closing the menu
+    setAudioIndex(index);
   };
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   const [resumeAnchor, setResumeAnchor] = useState(null);
   const [selectedResumeItem, setSelectedResumeItem] = useState(null); // Track the selected item
+  const [cvIndex, setCVIndex] = useState(null);
 
   // Single function to handle menu open
-  const handleResumeClick = (event, item) => {
+  const handleResumeClick = (event, item, index) => {
     setResumeAnchor(event.currentTarget);
     setSelectedResumeItem(item); // Set the selected item
+    setCVIndex(index);
   };
 
-  const handleResumeClose = () => {
+  const handleResumeClose = (index) => {
     setResumeAnchor(null);
     setSelectedResumeItem(null); // Reset the selected item when closing the menu
+    setCVIndex(index);
   };
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   const [idAnchor, setIdAnchor] = useState(null);
   const [selectedIdItem, setSelectedIdItem] = useState(null); // Track the selected item
+  const [idIndex, setIdIndex] = useState(null);
 
   // Single function to handle menu open
-  const handleIdClick = (event, item) => {
+  const handleIdClick = (event, item, index) => {
     setIdAnchor(event.currentTarget);
     setSelectedIdItem(item); // Set the selected item
+    setIdIndex(index);
   };
 
-  const handleIdClose = () => {
+  const handleIdClose = (index) => {
     setIdAnchor(null);
     setSelectedIdItem(null); // Reset the selected item when closing the menu
+    setIdIndex(index);
   };
 
   // Determine if the menu is open
@@ -537,7 +552,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
           (file) => !isDocumentFile(file.type)
         );
         if (nonDocumentFiles.length > 0) {
-          setMessage("You can only upload PDF, Word documents, etc.");
+          setMessage("You may upload only PDF and Word documents");
           setOpenPopUp(true);
           setTimeout(() => {
             setOpenPopUp(false);
@@ -1139,7 +1154,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                               aria-controls={`dropdown-menu-${item.id}`} // Use unique ID
                               aria-haspopup="true"
                               onClick={(event) =>
-                                handlePortfolioClick(event, item)
+                                handlePortfolioClick(event, item, index)
                               } // Pass the specific item
                             >
                               <MoreVertIcon />
@@ -1148,11 +1163,11 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                               id={`dropdown-menu-${item.id}`} // Use unique ID
                               anchorEl={portfolioAnchor} // Correct prop name
                               open={portfolioOpen} // Control visibility
-                              onClose={handlePortfolioClose}
+                              onClose={() => handlePortfolioClose(index)}
                             >
                               <MenuItem
                                 onClick={() => {
-                                  handlePortfolioClose();
+                                  handlePortfolioClose(index);
                                   handleView(selectedPortfolioItem); // Use selected item
                                 }}
                               >
@@ -1160,8 +1175,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                               </MenuItem>
                               <MenuItem
                                 onClick={() => {
-                                  handlePortfolioClose();
-                                  handlePortofolioDelete(index); // Use selected item
+                                  handlePortfolioClose(index);
+                                  handlePortofolioDelete(portfolioOpenIndex); // Use selected item
                                 }}
                               >
                                 Delete
@@ -1228,7 +1243,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   aria-controls={`dropdown-menu-${index}`} // Use unique ID
                                   aria-haspopup="true"
                                   onClick={(event) =>
-                                    handleVideoClick(event, url)
+                                    handleVideoClick(event, url, index)
                                   }
                                 >
                                   <MoreVertIcon />
@@ -1237,11 +1252,11 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   id={`dropdown-menu-${index}`} // Use unique ID
                                   anchorEl={videoAnchor} // Correct prop name
                                   open={videoOpen} // Control visibility
-                                  onClose={handleVideoClose}
+                                  onClose={() => handleVideoClose(index)}
                                 >
                                   <MenuItem
                                     onClick={() => {
-                                      handleVideoClose(); // Close the menu
+                                      handleVideoClose(index); // Close the menu
                                       window.open(selectedVideoItem, "_blank"); // Open the URL in a new tab
                                     }}
                                   >
@@ -1249,8 +1264,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
-                                      handleVideoClose();
-                                      handleDeleteUrl(index); // Use selected item
+                                      handleVideoClose(index);
+                                      handleDeleteUrl(videoIndex); // Use selected item
                                     }}
                                   >
                                     Delete
@@ -1318,7 +1333,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   aria-controls={`dropdown-menu-${index}`} // Use unique ID
                                   aria-haspopup="true"
                                   onClick={(event) =>
-                                    handleAudioClick(event, url)
+                                    handleAudioClick(event, url, index)
                                   }
                                 >
                                   <MoreVertIcon />
@@ -1327,11 +1342,11 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   id={`dropdown-menu-${index}`} // Use unique ID
                                   anchorEl={audioAnchor} // Correct prop name
                                   open={audioAnchor} // Control visibility
-                                  onClose={handleAudioClose}
+                                  onClose={() => handleAudioClose(index)}
                                 >
                                   <MenuItem
                                     onClick={() => {
-                                      handleAudioClose();
+                                      handleAudioClose(index);
                                       window.open(url, "_blank"); // Open the YouTube video in a new tab
                                     }}
                                   >
@@ -1339,8 +1354,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
-                                      handleAudioClose();
-                                      deleteAudioUrl(index);
+                                      handleAudioClose(index);
+                                      deleteAudioUrl(audioIndex);
                                     }}
                                   >
                                     Delete
@@ -1414,7 +1429,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   aria-controls={`dropdown-menu-${index}`} // Use unique ID
                                   aria-haspopup="true"
                                   onClick={(event) =>
-                                    handleResumeClick(event, item)
+                                    handleResumeClick(event, item, index)
                                   }
                                 >
                                   <MoreVertIcon />
@@ -1423,11 +1438,11 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   id={`dropdown-menu-${index}`} // Use unique ID
                                   anchorEl={resumeAnchor} // Correct prop name
                                   open={resumeAnchor} // Control visibility
-                                  onClose={handleResumeClose}
+                                  onClose={() => handleResumeClose(index)}
                                 >
                                   <MenuItem
                                     onClick={() => {
-                                      handleResumeClose();
+                                      handleResumeClose(index);
                                       handleView(selectedResumeItem);
                                     }}
                                   >
@@ -1435,8 +1450,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
-                                      handleResumeClose();
-                                      handleResumeDelete(selectedResumeItem);
+                                      handleResumeClose(index);
+                                      handleResumeDelete(cvIndex);
                                     }}
                                   >
                                     Delete
@@ -1633,7 +1648,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   aria-controls={`dropdown-menu-${index}`} // Use unique ID
                                   aria-haspopup="true"
                                   onClick={(event) =>
-                                    handleIdClick(event, item)
+                                    handleIdClick(event, item, index)
                                   }
                                 >
                                   <MoreVertIcon />
@@ -1642,11 +1657,11 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   id={`dropdown-menu-${index}`} // Use unique ID
                                   anchorEl={idAnchor} // Correct prop name
                                   open={idAnchor} // Control visibility
-                                  onClose={handleIdClose}
+                                  onClose={() => handleIdClose(index)}
                                 >
                                   <MenuItem
                                     onClick={() => {
-                                      handleIdClose();
+                                      handleIdClose(index);
                                       handleView(selectedIdItem);
                                     }}
                                   >
@@ -1654,8 +1669,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                                   </MenuItem>
                                   <MenuItem
                                     onClick={() => {
-                                      handleIdClose();
-                                      handleVerificationDelete(index);
+                                      handleIdClose(index);
+                                      handleVerificationDelete(idIndex);
                                     }}
                                   >
                                     Delete

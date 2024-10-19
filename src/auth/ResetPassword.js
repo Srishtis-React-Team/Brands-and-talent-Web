@@ -156,13 +156,13 @@ const ResetPassword = () => {
         }, 2000);
       }
     } else if (!passwordStatus) {
-      setMessage("Please Update All Required Fields");
+      setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
       }, 1000);
     } else {
-      setMessage("Please Update All Required Fields");
+      setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);

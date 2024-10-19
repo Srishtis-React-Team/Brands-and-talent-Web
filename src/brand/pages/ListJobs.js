@@ -332,20 +332,20 @@ const ListJobs = () => {
                                     <span className="job-company-name">
                                       <i className="bi bi-person-workspace"></i>
                                     </span>{" "}
-                                    <i className="bi bi-dot"></i>
                                     <span className="job-company-name">
                                       {job?.jobType}
                                     </span>
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company_dtls">
                                       <i className="bi bi-geo-alt-fill location-icon"></i>
-                                      {job?.state && <span>{job.state}</span>}
-                                      {job?.state && job?.country && (
-                                        <span>, </span>
-                                      )}
-                                      {job?.country && (
-                                        <span>{job.country}</span>
-                                      )}
+                                      {[
+                                        job?.jobLocation,
+                                        job?.city,
+                                        job?.state,
+                                        job?.country,
+                                      ]
+                                        .filter(Boolean)
+                                        .join(", ")}
                                     </span>
                                     <i className="bi bi-dot"></i>
                                     <span className="job-company-name">

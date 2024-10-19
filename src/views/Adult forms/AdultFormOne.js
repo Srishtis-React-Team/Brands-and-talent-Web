@@ -425,7 +425,7 @@ const AdultFormOne = () => {
       childCity: kidsCity,
       age: age,
       noOfJobsCompleted: completedJobs,
-      publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
+      publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
     };
 
     if (
@@ -468,7 +468,7 @@ const AdultFormOne = () => {
         childCity: kidsCity,
         age: age,
         noOfJobsCompleted: completedJobs,
-        publicUrl: adultsPreferedFirstName.replace(/ /g, "-"),
+        publicUrl: adultsPreferedFirstName?.replace(/ /g, "-"),
       };
 
       if (userId) {
@@ -496,7 +496,7 @@ const AdultFormOne = () => {
           });
       }
     } else {
-      setMessage("Please Update All Required Fields");
+      setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -511,7 +511,7 @@ const AdultFormOne = () => {
     if (selectedOptions.length > 5) {
       // setProfessionError(true);
       // Optionally show a message to the user
-      setMessage("You can only select up to 5 skills");
+      setMessage("You may select a maximum of five skills");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -543,7 +543,7 @@ const AdultFormOne = () => {
         setSelectedCategoriesError(false);
       } else {
         // setCategoryError(true);
-        setMessage("you can only select 6 categories");
+        setMessage("A maximum of six categories may be selected");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
@@ -801,7 +801,7 @@ const AdultFormOne = () => {
                           style={{ fontWeight: "bold", fontSize: "small" }}
                           className="adults-titles kids-form-title mb-2"
                         >
-                          Profession / Skills (Choose any 1 to 5)
+                          Profession / Skills (Choose any 1-5)
                           <span className="mandatory">*</span>
                         </label>
 
@@ -1373,7 +1373,8 @@ const AdultFormOne = () => {
                       </label>
                       <span className="mandatory">*</span>
                       <textarea
-                        className="form-control address-textarea"
+                        className="address-textarea"
+                        style={{ width: "100%", height: "150px !important" }}
                         id="exampleFormControlTextarea1"
                         value={address}
                         rows="3"

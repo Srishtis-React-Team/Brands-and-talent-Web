@@ -2,19 +2,62 @@ import React, { useEffect, useState } from "react";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import "../assets/css/service-carousel.css";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import PopUp from "../components/PopUp";
 import CurrentUser from "../CurrentUser";
 const ServicesCarousel = ({ talentData, brandData }) => {
   const navigate = useNavigate();
   const { currentUserId, currentUserImage, currentUserType, avatarImage } =
     CurrentUser();
+  const location = useLocation();
+
   const [servicesList, setServicesList] = useState([]);
   const [userId, setUserId] = useState(null);
   const [videoAudioList, setVideoAudioList] = useState([]);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const [isOwnTalent, setIsOwnTalent] = useState(null);
+  const [isAdminApproved, setIsAdminApproved] = useState(null);
+  const [showProfile, setShowProfile] = useState(null);
+
+  useEffect(() => {
+    // Extract the last part of the URL (i.e., 'peter')
+    const pathParts = location.pathname.split("/");
+    const name = pathParts[pathParts.length - 1];
+    getDataByPublicUrl(name);
+  }, [location]);
+
+  const getDataByPublicUrl = async (name) => {
+    const formData = {
+      publicUrl: name,
+      userId:
+        localStorage.getItem("userId") || localStorage.getItem("currentUser"),
+    };
+    await ApiHelper.post(`${API.getDataByPublicUrl}`, formData)
+      .then((resData) => {
+        if (resData?.data?.currentStatus == "own-talent") {
+          setShowProfile(true);
+          setIsOwnTalent(true);
+        } else if (resData?.data?.currentStatus == "approved") {
+          setShowProfile(true);
+          setIsOwnTalent(false);
+          setIsAdminApproved(true);
+        } else if (resData?.data?.currentStatus == "not-approved") {
+          setShowProfile(false);
+          setIsOwnTalent(false);
+        }
+        if (resData?.data?.status == false) {
+          setMessage(resData?.data?.msg);
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+          }, 2000);
+        }
+      })
+      .catch((err) => {});
+  };
 
   useEffect(() => {
     const storedUserId =
@@ -60,29 +103,66 @@ const ServicesCarousel = ({ talentData, brandData }) => {
   };
 
   const messageNow = () => {
-    if (currentUserType == "talent" && talentData?.planName != "Premium") {
-      setMessage("Please upgrade to premium plan to use this feature");
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 3000);
-    } else if (
-      currentUserType == "talent" &&
-      talentData?.planName == "Premium"
-    ) {
-      navigate(`/message?${talentData?._id}`);
-    } else if (currentUserType == "brand" && brandData?.planName === "Basic") {
-      setMessage("Please upgrade to pro plan to use this feature");
-      inviteTalentNotification();
-      setOpenPopUp(true);
-      setTimeout(function () {
-        setOpenPopUp(false);
-        navigate(`/pricing`);
-      }, 2000);
-    } else if (currentUserType == "brand" && brandData?.planName != "Basic") {
-      navigate(`/message?${talentData?._id}`);
+    if (isOwnTalent == true) {
+      if (talentData?.planName != "Premium") {
+        setMessage("Please upgrade to premium plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      } else if (talentData?.planName == "Premium") {
+        navigate(`/message?${talentData?._id}`);
+      }
+    } else if (isOwnTalent == false && isAdminApproved == true) {
+      if (brandData?.planName === "Basic") {
+        setMessage("Please upgrade to premium plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      } else if (brandData?.planName !== "Basic") {
+        navigate(`/message?${talentData?._id}`);
+      }
+    } else if (currentUserType == "brand") {
+      if (brandData?.planName === "Basic") {
+        setMessage("Please upgrade to premium plan to use this feature");
+        setOpenPopUp(true);
+        setTimeout(function () {
+          setOpenPopUp(false);
+          navigate(`/pricing`);
+        }, 3000);
+      } else if (brandData?.planName !== "Basic") {
+        navigate(`/message?${talentData?._id}`);
+      }
     }
+
+    // if (currentUserType == "talent" && talentData?.planName != "Premium") {
+    //   alert("called");
+    //   setMessage("Please upgrade to premium plan to use this feature");
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 3000);
+    // } else if (talentData?.planName == "Premium") {
+    //   navigate(`/message?${talentData?._id}`);
+    // }
+    // if (currentUserType == "brand" && brandData?.planName === "Basic") {
+    //   setMessage("Please upgrade to pro plan to use this feature");
+    //   inviteTalentNotification();
+    //   setOpenPopUp(true);
+    //   setTimeout(function () {
+    //     setOpenPopUp(false);
+    //     navigate(`/pricing`);
+    //   }, 2000);
+    // } else if (
+    //   currentUserType == "brand" &&
+    //   brandData?.planName === "Premium"
+    // ) {
+    //   navigate(`/message?${talentData?._id}`);
+    // }
   };
 
   const inviteTalentNotification = async () => {

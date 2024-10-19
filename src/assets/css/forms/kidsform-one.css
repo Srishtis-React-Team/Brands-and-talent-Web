@@ -58,7 +58,7 @@
 
 .payment-detail span:nth-child(2) {
   font-weight: bold; /* Highlight the values */
-  color: #007BFF; /* Bootstrap primary color for emphasis */
+  color: #007bff; /* Bootstrap primary color for emphasis */
 }
 .kidsform-one .kids-wrapper .kids-form .kids-notes-two {
   padding: 20px 0;
@@ -91,10 +91,10 @@
   max-width: 100%;
 }
 
-.listsub{
+.listsub {
   font-size: 14px;
-    color: #afafaf;
-    font-weight: 600;
+  color: #afafaf;
+  font-weight: 600;
 }
 .kidsform-one .kids-wrapper .kids-form .profession-input {
   max-width: 145px;
@@ -1249,7 +1249,6 @@ textarea.contact-us-textarea.w-100 {
     padding: 0;
     width: 100%;
   }
-
 }
 
 .social-chain-icon {
@@ -1273,4 +1272,10 @@ textarea.contact-us-textarea.w-100 {
 .question-input-wrapper {
   display: flex;
   align-items: center;
+}
+
+.material-mobile-style .MuiInputAdornment-root img {
+  display: block !important; /* Ensures the flag is always shown */
+  width: auto !important; /* Adjust width if necessary */
+  height: auto !important; /* Adjust height if necessary */
 }

@@ -493,7 +493,10 @@ const CreateJobs = () => {
 
   const getJobsByID = async (jobId, type) => {
     if (type == "Posted") {
-      await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+      const formData = {
+        type: "brand",
+      };
+      await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
             if (resData.data.data) {
@@ -504,7 +507,10 @@ const CreateJobs = () => {
         })
         .catch((err) => {});
     } else if (type == "Draft") {
-      await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+      const formData = {
+        type: "brand",
+      };
+      await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
         .then((resData) => {
           if (resData.data.status === true) {
             if (resData.data.data) {
@@ -570,7 +576,6 @@ const CreateJobs = () => {
   useEffect(() => {
     setBrandId(localStorage.getItem("brandId"));
     setBrandImage(localStorage.getItem("currentUserImage"));
-
     if (brandId && brandId != null) {
       getAllJobs(brandId);
       getBrand();
@@ -1673,7 +1678,7 @@ const CreateJobs = () => {
     { title: "Architect " },
     { title: "Artist" },
     { title: "Blogger/Vlogger" },
-    { title: "Career Coach" },
+    { title: "Careers Coach" },
     { title: "Cartoonist" },
     { title: "Celebrity" },
     { title: "Chef/Culinary Artist" },
@@ -2156,6 +2161,7 @@ const CreateJobs = () => {
                               value={{ value: country, label: country }}
                               onChange={handleSelectedCountry}
                               isSearchable={true}
+                              styles={customStylesProfession}
                             />
 
                             {parentCountryError && (
@@ -2177,6 +2183,7 @@ const CreateJobs = () => {
                               value={{ value: state, label: state }}
                               onChange={handleSelectedState}
                               isSearchable={true}
+                              styles={customStylesProfession}
                             />
                             {stateError && (
                               <div className="invalid-fields">
@@ -2199,6 +2206,7 @@ const CreateJobs = () => {
                               value={{ value: kidsCity, label: kidsCity }}
                               onChange={handleSelectedCity}
                               isSearchable={true}
+                              styles={customStylesProfession}
                             />
                           </div>
                         </div>
@@ -2483,7 +2491,6 @@ const CreateJobs = () => {
                                 Please select Age
                               </div>
                             )} */}
-
                           </div>
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
@@ -3116,14 +3123,10 @@ const CreateJobs = () => {
                                                   onChange={(e) => {
                                                     onMinPayChange(e);
                                                   }}
-                                                 
                                                   min={1}
                                                 ></input>
                                                 {minPayError && (
-                                                  <div
-                                                    className="invalid-fields"
-                                              
-                                                  >
+                                                  <div className="invalid-fields">
                                                     {minPayError}
                                                   </div>
                                                 )}{" "}
@@ -3146,14 +3149,10 @@ const CreateJobs = () => {
                                                   onChange={(e) => {
                                                     onMaxPayChange(e);
                                                   }}
-                                                  
                                                   min={1}
                                                 ></input>
                                                 {maxPayError && (
-                                                  <div
-                                                    className="invalid-fields"
-                                                    
-                                                  >
+                                                  <div className="invalid-fields">
                                                     {maxPayError}
                                                   </div>
                                                 )}{" "}
@@ -3388,7 +3387,6 @@ const CreateJobs = () => {
                                                     className="form-control"
                                                     placeholder="Minimum Pay"
                                                     value={minPay}
-                                              
                                                     onChange={(e) => {
                                                       onMinPayChange(e);
                                                     }}
@@ -3397,7 +3395,7 @@ const CreateJobs = () => {
                                                   {minPayError && (
                                                     <div
                                                       className="invalid-fields"
-                                                      style={{  }}
+                                                      style={{}}
                                                     >
                                                       {minPayError}
                                                     </div>
@@ -3421,13 +3419,13 @@ const CreateJobs = () => {
                                                     onChange={(e) => {
                                                       onMaxPayChange(e);
                                                     }}
-                                                    style={{  }}
+                                                    style={{}}
                                                     min={1}
                                                   ></input>
                                                   {maxPayError && (
                                                     <div
                                                       className="invalid-fields"
-                                                      style={{  }}
+                                                      style={{}}
                                                     >
                                                       {maxPayError}
                                                     </div>

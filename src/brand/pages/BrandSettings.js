@@ -80,14 +80,27 @@ const BrandSettings = () => {
   const selectedPaymentPlan = localStorage.getItem("selectedPaymentPlan");
   const brand_Id = localStorage.getItem("brandId");
 
-  useEffect(async () => {
-    const obj = {
-      user_id: brand_Id,
+  useEffect(() => {
+    const fetchBrandDetails = async () => {
+      const obj = {
+        user_id: brand_Id,
+      };
+      try {
+        const resData = await ApiHelper.post(`${API.fetchPaymentDetails}`, obj);
+        setBrandDetails(resData?.data?.data);
+        console.log("resData--0--", resData);
+      } catch (error) {
+        console.error("Error fetching payment details:", error);
+      }
     };
-    const resData = await ApiHelper.post(`${API.fetchPaymentDetails}`, obj);
-    setBrandDetails(resData?.data?.data);
-    console.log("resData--0--", resData);
-  }, []);
+
+    fetchBrandDetails();
+
+    // Optional: Cleanup function if you have any cleanup logic
+    return () => {
+      // Cleanup logic if necessary
+    };
+  }, [brand_Id]); // Add brand_Id as a dependency if it changes
 
   const handleChange = (event, newValue) => {
     setValueTabs(newValue);

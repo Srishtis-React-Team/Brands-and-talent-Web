@@ -169,6 +169,13 @@ const GetBooked = () => {
         const bootstrapModal = new window.bootstrap.Modal(modalElement);
         bootstrapModal.show();
       }
+    } else if (currentUserId && currentUser_type == "brand") {
+      setMessage("Login as an talent to use this feature");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 1000);
     }
   };
   const viewJob = async (jobId) => {
@@ -185,6 +192,13 @@ const GetBooked = () => {
           jobId: jobId,
         },
       });
+    } else if (currentUserId && currentUser_type == "brand") {
+      setMessage("Login as an talent to use this feature");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+        navigate("/login");
+      }, 1000);
     }
   };
 

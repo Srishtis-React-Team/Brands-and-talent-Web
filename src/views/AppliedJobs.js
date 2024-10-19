@@ -5,13 +5,18 @@ import TalentHeader from "../layout/TalentHeader.js";
 import { useNavigate } from "react-router-dom";
 import PopUp from "../components/PopUp.js";
 import "../assets/css/talent-dashboard.css";
+import "../assets/css/dashboard.css";
+import "../assets/css/brand-home.css";
+import "../assets/css/register.css";
+import "../assets/css/kidsmain.scss";
+import "../assets/css/createjobs.css";
+import "../assets/css/talent-profile.css";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useLocation } from "react-router-dom";
 
 const AppliedJobs = () => {
   const location = useLocation();
   const { jobId } = location.state || {};
-
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -25,7 +30,6 @@ const AppliedJobs = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [userId, setUserId] = useState(null);
   const jobImage = require("../assets/icons/jobImage.png");
-
   const [allJobs, showAllJobs] = useState(true);
   const [draftJobs, showDraftJobs] = useState(false);
   const [postedJobs, showPostedJobs] = useState(false);
@@ -41,7 +45,11 @@ const AppliedJobs = () => {
   }, [userId]);
 
   const getJobsByID = async () => {
-    await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+    const formData = {
+      talentId: localStorage.getItem("userId"),
+      type: "talent",
+    };
+    await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
       .then((resData) => {
         setJobData(resData.data.data);
       })
@@ -179,7 +187,20 @@ const AppliedJobs = () => {
                                 </span>
                                 <span className="job-company_dtls">
                                   <i className="bi bi-geo-alt-fill location-icon"></i>
-                                  {job?.state}, {job?.city}{" "}
+                                  {job?.city && <>{job?.city}</>}{" "}
+                                  {/* Display city if it exists */}
+                                  {job?.city &&
+                                    (job?.state || job?.country) && (
+                                      <span>, </span>
+                                    )}{" "}
+                                  {/* Show comma if city exists and either state or country exists */}
+                                  {job?.state && <>{job?.state}</>}{" "}
+                                  {/* Display state if it exists */}
+                                  {job?.state && job?.country && (
+                                    <span>, </span>
+                                  )}{" "}
+                                  {/* Show comma if state exists and country exists */}
+                                  {job?.country && <>{job?.country}</>}{" "}
                                   <i className="bi bi-dot"></i>
                                 </span>
                                 <span className="job-company_dtls">

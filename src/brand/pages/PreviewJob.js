@@ -21,7 +21,10 @@ const PreviewJob = ({ data, onButtonClick }) => {
   const [showSidebar, setShowSidebar] = useState(true);
 
   const getJobsByID = async () => {
-    await ApiHelper.get(`${API.getAnyJobById}${jobId}`)
+    const formData = {
+      type: "brand",
+    };
+    await ApiHelper.post(`${API.getAnyJobById}${jobId}`, formData)
       .then((resData) => {
         setJobData(resData.data.data);
       })
@@ -101,7 +104,9 @@ const PreviewJob = ({ data, onButtonClick }) => {
   useEffect(() => {
     getJobsByID();
   }, []);
-  useEffect(() => {}, [jobData]);
+  useEffect(() => {
+    console.log(jobData, "jobData");
+  }, [jobData]);
   useEffect(() => {}, [jobId]);
 
   const handleBackClick = () => {
@@ -170,14 +175,17 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 <span className="font-600">Location :&nbsp; </span>
                 {/* {jobData?.paymentType?.label} */}
                 <span>
-                  <span className="">
-                    {jobData?.country && `${jobData.country}`}
-                    {jobData?.country && jobData?.state && `, `}
-                    {jobData?.state && `${jobData.state}`}
-                    {(jobData?.country || jobData?.state) &&
-                      jobData?.jobLocation &&
-                      `, `}
-                    {jobData?.jobLocation && `${jobData.jobLocation}`}
+                  <span>
+                    <span className="">
+                      {[
+                        jobData?.jobLocation,
+                        jobData?.city,
+                        jobData?.state,
+                        jobData?.country,
+                      ]
+                        .filter(Boolean)
+                        .join(", ")}
+                    </span>
                   </span>
                 </span>
               </div>
@@ -247,16 +255,17 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 {jobData.compensation &&
                   Object.entries(jobData.compensation).map(([key, value]) => (
                     <span key={key}>
-                      {value?.minPay ||
-                        (value?.maxPay && (
-                          <>
-                            <span>{value.currency}</span>&nbsp;
-                          </>
-                        ))}
+                      {(value?.minPay || value?.maxPay || value?.exactPay) && (
+                        <>
+                          <span>{value.currency}</span>&nbsp;
+                        </>
+                      )}
                       {value?.minPay && (
                         <>
-                          <span>{value.minPay}/day</span>
-                          {!value?.maxPay && <>+</>}
+                          <span>
+                            {value.minPay}&nbsp;
+                            {value.frequency}
+                          </span>
                           &nbsp;
                         </>
                       )}
@@ -267,16 +276,22 @@ const PreviewJob = ({ data, onButtonClick }) => {
                       )}
                       {value?.maxPay && (
                         <>
-                          <span>{value.maxPay}/day</span>+&nbsp;
+                          <span>
+                            {value.maxPay}&nbsp;
+                            {value.frequency}
+                          </span>
+                          &nbsp;
                         </>
                       )}
                       {value?.exactPay && (
                         <>
-                          <span>{value.exactPay}</span>+&nbsp;
+                          <span>{value.exactPay}</span>&nbsp;
                         </>
                       )}
+
                       {value.product_name && (
                         <>
+                          +&nbsp;
                           {isValidURL(value.product_name) ? (
                             <a
                               href={value.product_name}

@@ -137,51 +137,9 @@ function Routing() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/find-creators" element={<FindCreators />} />
-            {/* <Route
-              path="/find-creators"
-              element={
-                currentUserId || brandID ? (
-                  <FindCreators />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            /> */}
-            {/* <Route path="/find-creators" element={<FindCreators />} /> */}
-
-            {/* <Route
-              path="/talent/:name"
-              element={
-                currentUserId ? (
-                  <TalentProfile />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            /> */}
-
             <Route path="/talent/:name" element={<TalentProfile />} />
-
-            {/* <Route
-          path="/brand/:name"
-          element={brandID ? <BrandHome /> : <Navigate to="/login" replace />}
-        /> */}
-
             <Route path="/client/:name" element={<BrandHome />} />
-
-            {/* <Route path="/talent/:name" element={<TalentProfile />} /> */}
-            {/* <Route path="/pricing" element={<Pricing />} /> */}
-            <Route
-              path="/pricing"
-              element={
-                // currentUserId || brandID ? (
-                <Pricing />
-                // ) : (
-                //   <Navigate to="/login" replace />
-                // )
-              }
-            />
-
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/adult-signup" element={<AdultSignup />} />
@@ -296,7 +254,7 @@ function Routing() {
             <Route path="/get-booked" element={<GetBooked />} />
             <Route path="/industry-news" element={<IndustryNews />} />
             <Route path="/edit-feature" element={<EditFeatures />} />
-            <Route path="/Career" element={<Career />} />
+            <Route path="/careers" element={<Career />} />
             <Route path="/become-affliate" element={<BecomeAffliate />} />
             <Route path="/investors" element={<Investors />} />
             <Route path="/feedback" element={<Feedbackreporting />} />

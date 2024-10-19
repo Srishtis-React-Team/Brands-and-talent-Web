@@ -125,7 +125,7 @@ const BrandNotification = () => {
                           <div className="notification-card-flex">
                             <img
                               className="notification-card-image"
-                              src={`${API.userFilePath}${item?.brandDetails?.brandImage[0]?.fileData}`}
+                              src={`${API.userFilePath}${item?.talentDetails?.image?.fileData}`}
                               alt=""
                             />
                             <div

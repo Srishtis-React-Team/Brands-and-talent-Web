@@ -98,7 +98,7 @@ const ContactSupport = () => {
           }, 2000);
         } else {
           setIsLoading(false);
-          setMessage("Please Update All Required Fields");
+          setMessage("Kindly complete all mandatory fields");
 
           setOpenPopUp(true);
           setTimeout(() => setOpenPopUp(false), 2000);
@@ -108,7 +108,7 @@ const ContactSupport = () => {
         // Handle error
       }
     } else {
-      setMessage("Please Update All Required Fields");
+      setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
         setOpenPopUp(false);
@@ -181,7 +181,7 @@ const ContactSupport = () => {
               <div className="form-group adult-password-wrapper">
                 <input
                   type="text"
-                  className="form-control adult-signup-inputs"
+                  className="form-control adult-signup-inputs pl-0x"
                   placeholder="Enter Full Name"
                   value={name}
                   onChange={(e) => {
