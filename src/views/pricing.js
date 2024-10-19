@@ -52,6 +52,7 @@ const Pricing = ({
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const currentPath = location.pathname;
 
   const [receivedData, setReceivedData] = useState(null);
   useEffect(() => {
@@ -154,6 +155,7 @@ const Pricing = ({
   const [giftSub, setGiftSub] = useState(false);
   const [pathFrom, setPathFrom] = useState("");
   const [appliedCouponCode, setAppliedCouponCode] = useState("");
+  const [success_url,setSuccess_url] = useState(``)
 
   const handleMobileChange = (value) => {
     isValidPhoneNumber(value);
@@ -314,6 +316,18 @@ const Pricing = ({
     setSelectedType(type);
   };
 
+  const editKids = async () => {
+    console.log('currentPath',currentPath)
+    const userId = localStorage.getItem("userId");
+    if(currentPath == '/pricing'){
+      console.log("if")
+    navigate(``);
+    }else{
+      console.log('else')
+    navigate(`/adult-signup-files-details?userId=${userId}`);
+    }
+  };
+
   const handleNext = () => {
     // Handle form submission or transition to next form
     // setIsBillingForm(false);
@@ -322,11 +336,16 @@ const Pricing = ({
 
   const choosePlan = async (index, item, from) => {
     console.log("inside chooseplan.....", from);
-    setPathFrom(from);
+    if(index == 0){
+      editKids()
+    }else{
+      setPathFrom(from);
     if (from == "giftsubscription") {
+      console.log('inside the if case')
       setGiftSub(true);
       localStorage.setItem("giftsubscription", true);
     } else {
+      console.log('inside the else case')
       setGiftSub(false);
       localStorage.setItem("giftsubscription", false);
     }
@@ -369,6 +388,7 @@ const Pricing = ({
       setPaymentOption(true);
     } else {
       console.error("Price string format is incorrect");
+    }
     }
   };
 
@@ -643,6 +663,17 @@ const Pricing = ({
   //   setRecieverEmail(e.target.value);
   //   setIsValidRecieverEmail(emailRegex.test(email));
   // };
+
+  useEffect(()=>{
+    if(userType == "adults"){
+      setSuccess_url(`https://brandsandtalent.com/adult-signup-files-details?${queryString}`)
+    }else if(userType == "brands"){
+      setSuccess_url(`https://brandsandtalent.com/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`)
+    }else{
+      setSuccess_url(`https://brandsandtalent.com/talent-home`)
+    }
+    console.log('success_url',success_url)
+  },[])
 
   useEffect(() => {
     if (userType == "adults") {
@@ -1466,6 +1497,14 @@ const Pricing = ({
           selectedPaymentPlan={selectedPaymentPlan}
           setAppliedCouponCode={setAppliedCouponCode}
           selectedPaymentPeriod={selectedPaymentPeriod}
+          giftSub={giftSub}
+          senderName={senderName}
+          email={email}
+          recieversFirstName={recieversFirstName}
+          recieverEmail={recieverEmail}
+          enquiry={enquiry}
+          appliedCouponCode={appliedCouponCode}
+          success_url={success_url}
         />
       )}
 

@@ -8,6 +8,7 @@ import "../assets/css/register.css";
 import "../assets/css/forms/kidsform-one.css";
 import "../assets/css/forms/login.css";
 import "../assets/css/dashboard.css";
+import { LocalLaundryService } from "@mui/icons-material";
 
 const KidsOTP = () => {
   const paramsValues = window.location.search;
@@ -92,6 +93,8 @@ const KidsOTP = () => {
           }, 1000);
           setTimeout(function () {
             let successData = "verified";
+            console.log('resData.data.--',resData.data.data.parentEmail)
+            localStorage.setItem('userEmail',resData.data.data.parentEmail)
             navigate(
               `/talent-social-media-connections?userId=${userId}&userEmail=${userEmail}`
             );
