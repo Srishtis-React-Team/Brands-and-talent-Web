@@ -257,7 +257,7 @@ const BrandDetails = () => {
 
   const setBrandsLocalStorage = (data) => {
     localStorage.setItem("brandId", data?.brand_id);
-    localStorage.setItem("userEmail ", data?.brandEmail);
+    localStorage.setItem("userEmail", data?.brandEmail);
   };
 
   const selectHearAbout = (event) => {

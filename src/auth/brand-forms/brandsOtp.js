@@ -188,7 +188,7 @@ const BrandsOtp = React.memo((props) => {
                   onChange={(e) => handleChange(e.target.value, index)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
                   ref={(el) => (inputRefs.current[index] = el)}
-                  style={{
+                   style={{
                     width: "50px",
                     height: "50px",
                     fontSize: "24px",

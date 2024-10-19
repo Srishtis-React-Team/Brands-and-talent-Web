@@ -234,7 +234,7 @@ const BrandLogo = () => {
     localStorage.setItem("currentUser", data?.brand_id);
     localStorage.setItem("currentUserType", "brand");
     localStorage.setItem("currentUserImage", data?.brandImage[0]?.fileData);
-    localStorage.setItem("userEmail ", data?.brandEmail);
+    localStorage.setItem("userEmail", data?.brandEmail);
   };
   const dropDownClose = () => {
     setPortfolioAnchor(null);

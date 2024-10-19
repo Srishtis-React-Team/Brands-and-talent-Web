@@ -53,7 +53,9 @@ const Pricing = ({
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
-
+  console.log('location.state',location.state)
+  const brand_url = `https://brandsandtalent.com/client/${location?.state?.data?.publicUrl?.replace(/\s+/g,"")}`
+  console.log('brand_url',brand_url)
   const [receivedData, setReceivedData] = useState(null);
   useEffect(() => {
     if (location.state && location.state.data) {
@@ -476,72 +478,65 @@ const Pricing = ({
     }
   };
 
-  const handlePayment = async (amount, currency, type, paymentOption, plan) => {
-    try {
-      console.log("plan----", plan);
-      const userId = localStorage.getItem("userId");
-      const brandId = localStorage.getItem("brandId");
+  // const handlePayment = async (amount, currency, type, paymentOption, plan) => {
+  //   try {
+  //     console.log("plan----", plan);
+  //     const userId = localStorage.getItem("userId");
+  //     const brandId = localStorage.getItem("brandId");
 
-      let apiUrl =
-        paymentOption == "card" ? API.createPayment : API.createqrpayment;
-      const response = await ApiHelper.post(apiUrl, {
-        amount,
-        currency,
-        type,
-      });
-      setResponseUrl(response.data.url);
-      localStorage.setItem("paymenttrans_id", response.data.trans_id);
-      console.log("selectedPaymentPlan---", selectedPaymentPlan);
-      let planType;
-      if (selectedPaymentPlan == "Pro (Popular)") {
-        planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
-        console.log("trimed value", planType); // Output: "Pro"
-      }
-      console.log("middle", plan);
-      if (plan == "giftsubscription") {
-        const giftObj = {
-          senderName: senderName,
-          email: email,
-          gift: [
-            {
-              receiversFirstName: recieversFirstName,
-              receiverEmail: recieverEmail,
-              message: enquiry,
-              subscriptionPlan: selectedPaymentPeriod,
-              planName: planType ? planType : selectedPaymentPlan,
-              transId: response.data.trans_id,
-              paymentStatus: "Pending",
-            },
-          ],
-          isActive: true,
-        };
-        console.log("giftObj--0", giftObj);
-        // giftSubCreation
-        const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
-        console.log("resGiftSub", resGiftSub);
-      } else {
-        const userData = {
-          subscriptionPlan: selectedPaymentPeriod,
-          planName: planType ? planType : selectedPaymentPlan,
-          user_id: userId,
-          brand_id: brandId,
-          transId: response.data.trans_id,
-          paymentStatus: "Pending",
-          coupon: appliedCouponCode ? appliedCouponCode : "",
-        };
-        console.log("userData--0", userData);
-        const responseSubscription = await ApiHelper.post(
-          API.subscriptionPlan,
-          userData
-        );
-        console.log("responseSubscription", responseSubscription);
-      }
-      setCheckout(true);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error during payment:", error);
-    }
-  };
+  //     let apiUrl =
+  //       paymentOption == "card" ? API.createPayment : API.createqrpayment;
+  //     const response = await ApiHelper.post(apiUrl, {
+  //       amount,
+  //       currency,
+  //       type,
+  //     });
+  //     setResponseUrl(response.data.url);
+  //     localStorage.setItem("paymenttrans_id", response.data.trans_id);
+  //     let planType;
+  //     if (selectedPaymentPlan == "Pro (Popular)") {
+  //       planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
+  //     }
+  //     if (plan == "giftsubscription") {
+  //       const giftObj = {
+  //         senderName: senderName,
+  //         email: email,
+  //         gift: [
+  //           {
+  //             receiversFirstName: recieversFirstName,
+  //             receiverEmail: recieverEmail,
+  //             message: enquiry,
+  //             subscriptionPlan: selectedPaymentPeriod,
+  //             planName: planType ? planType : selectedPaymentPlan,
+  //             transId: response.data.trans_id,
+  //             paymentStatus: "Pending",
+  //           },
+  //         ],
+  //         isActive: true,
+  //       };
+  //       // giftSubCreation
+  //       const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
+  //     } else {
+  //       const userData = {
+  //         subscriptionPlan: selectedPaymentPeriod,
+  //         planName: planType ? planType : selectedPaymentPlan,
+  //         user_id: userId,
+  //         brand_id: brandId,
+  //         transId: response.data.trans_id,
+  //         paymentStatus: "Pending",
+  //         coupon: appliedCouponCode ? appliedCouponCode : "",
+  //       };
+  //       const responseSubscription = await ApiHelper.post(
+  //         API.subscriptionPlan,
+  //         userData
+  //       );
+  //     }
+  //     setCheckout(true);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error("Error during payment:", error);
+  //   }
+  // };
 
   // const subscriptionHandler = async (trans_id) => {
   //   const userId = localStorage.getItem("userId");
@@ -670,144 +665,139 @@ const Pricing = ({
         `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
-      setSuccess_url(
-        `https://brandsandtalent.com/client/${receivedData?.publicUrl.replace(
-          /\s+/g,
-          ""
-        )}`
-      );
+      setSuccess_url(brand_url);
     } else {
       setSuccess_url(`https://brandsandtalent.com/talent-home`);
     }
     console.log("success_url", success_url);
   }, []);
 
-  useEffect(() => {
-    if (userType == "adults") {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
-        if (giftSub) {
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            `/adult-signup-files-details?${queryString}`,
-            "qr",
-            "giftsubscription"
-          );
-        } else {
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            `/adult-signup-files-details?${queryString}`,
-            "qr",
-            "normal"
-          );
-        }
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
-        if (giftSub) {
-          console.log("correct...");
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            `/adult-signup-files-details?${queryString}`,
-            "card",
-            "giftsubscription"
-          );
-        } else {
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            `/adult-signup-files-details?${queryString}`,
-            "card",
-            "normal"
-          );
-        }
-      }
-    } else if (userType == "brands") {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
-        if (giftSub) {
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
-            "qr",
-            "giftsubscription"
-          );
-        } else {
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
-            "qr",
-            "normal"
-          );
-        }
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
-        if (giftSub) {
-          console.log("correct...");
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
-            "card",
-            "giftsubscription"
-          );
-        } else {
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
-            "card",
-            "normal"
-          );
-        }
-      }
-    } else {
-      if (selectedPaymentOption == "qr") {
-        setLoading(true);
-        if (giftSub) {
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            "https://brandsandtalent.com/talent-settings",
-            "qr",
-            "giftsubscription"
-          );
-        } else {
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            "https://brandsandtalent.com/talent-home",
-            "qr",
-            "normal"
-          );
-        }
-      } else if (selectedPaymentOption == "card") {
-        setLoading(true);
-        if (giftSub) {
-          console.log("correct...");
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            "https://brandsandtalent.com/talent-settings",
-            "card",
-            "giftsubscription"
-          );
-        } else {
-          handlePayment(
-            selectedAmount,
-            selectedCurrency,
-            "https://brandsandtalent.com/talent-home",
-            "card",
-            "normal"
-          );
-        }
-      }
-    }
-  }, [selectedPaymentOption]);
+  // useEffect(() => {
+  //   if (userType == "adults") {
+  //     if (selectedPaymentOption == "qr") {
+  //       setLoading(true);
+  //       if (giftSub) {
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           `/adult-signup-files-details?${queryString}`,
+  //           "qr",
+  //           "giftsubscription"
+  //         );
+  //       } else {
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           `/adult-signup-files-details?${queryString}`,
+  //           "qr",
+  //           "normal"
+  //         );
+  //       }
+  //     } else if (selectedPaymentOption == "card") {
+  //       setLoading(true);
+  //       if (giftSub) {
+  //         console.log("correct...");
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           `/adult-signup-files-details?${queryString}`,
+  //           "card",
+  //           "giftsubscription"
+  //         );
+  //       } else {
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           `/adult-signup-files-details?${queryString}`,
+  //           "card",
+  //           "normal"
+  //         );
+  //       }
+  //     }
+  //   } else if (userType == "brands") {
+  //     if (selectedPaymentOption == "qr") {
+  //       setLoading(true);
+  //       if (giftSub) {
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+  //           "qr",
+  //           "giftsubscription"
+  //         );
+  //       } else {
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+  //           "qr",
+  //           "normal"
+  //         );
+  //       }
+  //     } else if (selectedPaymentOption == "card") {
+  //       setLoading(true);
+  //       if (giftSub) {
+  //         console.log("correct...");
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+  //           "card",
+  //           "giftsubscription"
+  //         );
+  //       } else {
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           `/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`,
+  //           "card",
+  //           "normal"
+  //         );
+  //       }
+  //     }
+  //   } else {
+  //     if (selectedPaymentOption == "qr") {
+  //       setLoading(true);
+  //       if (giftSub) {
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           "https://brandsandtalent.com/talent-settings",
+  //           "qr",
+  //           "giftsubscription"
+  //         );
+  //       } else {
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           "https://brandsandtalent.com/talent-home",
+  //           "qr",
+  //           "normal"
+  //         );
+  //       }
+  //     } else if (selectedPaymentOption == "card") {
+  //       setLoading(true);
+  //       if (giftSub) {
+  //         console.log("correct...");
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           "https://brandsandtalent.com/talent-settings",
+  //           "card",
+  //           "giftsubscription"
+  //         );
+  //       } else {
+  //         handlePayment(
+  //           selectedAmount,
+  //           selectedCurrency,
+  //           "https://brandsandtalent.com/talent-home",
+  //           "card",
+  //           "normal"
+  //         );
+  //       }
+  //     }
+  //   }
+  // }, [selectedPaymentOption]);
 
   const modalRef = useRef(null);
 
