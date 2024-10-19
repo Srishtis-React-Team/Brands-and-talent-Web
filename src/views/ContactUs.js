@@ -18,6 +18,7 @@ import {
   validatePhoneNumberLength,
 } from "libphonenumber-js";
 import parseMax from "libphonenumber-js/max";
+import "material-icons/iconfont/material-icons.css";
 
 const ContactUs = () => {
   const navigate = useNavigate();

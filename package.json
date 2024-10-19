@@ -26,6 +26,7 @@
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "libphonenumber-js": "^1.11.5",
+    "material-icons": "^1.13.12",
     "material-ui-phone-number": "^3.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.4",

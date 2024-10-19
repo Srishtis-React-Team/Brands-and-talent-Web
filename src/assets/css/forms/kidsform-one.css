@@ -1279,3 +1279,16 @@ textarea.contact-us-textarea.w-100 {
   width: auto !important; /* Adjust width if necessary */
   height: auto !important; /* Adjust height if necessary */
 }
+
+@supports (-webkit-touch-callout: none) {
+  .material-mobile-style .MuiPhoneNumber-flag {
+    display: inline-block;
+  }
+}
+
+.material-mobile-style .MuiPhoneNumber-flag {
+  display: inline-block !important;
+  width: 24px !important; /* Adjust as per need */
+  height: 16px !important;
+  background-size: cover !important;
+}

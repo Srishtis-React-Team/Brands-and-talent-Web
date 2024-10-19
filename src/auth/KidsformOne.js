@@ -21,6 +21,7 @@ import {
   getNumberType,
   validatePhoneNumberLength,
 } from "libphonenumber-js";
+import "material-icons/iconfont/material-icons.css";
 
 const KidsformOne = () => {
   const [listOfLanguages, setListOfLanguages] = useState([]);
