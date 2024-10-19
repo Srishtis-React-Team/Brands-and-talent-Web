@@ -19,6 +19,7 @@ import DialogActions from "@mui/material/DialogActions";
 import PaymentOptions from "../views/PaymentOptions.js";
 import CheckoutComponent from "../views/CheckoutComponent.js";
 
+
 import {
   parsePhoneNumber,
   isValidPhoneNumber,
@@ -202,6 +203,7 @@ const KidsFormTwo = () => {
   const userId = urlParams.get("userId");
   const userEmail = urlParams.get("userEmail");
   const [responseurl, setResponseUrl] = useState("");
+  const [htmlContent,setHtmlContent] = useState('')
   const [checkout, setCheckout] = useState(false);
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
   const [selectedPaymentPeriod, setSelectedPaymentPeriod] = useState("");
@@ -219,13 +221,17 @@ const KidsFormTwo = () => {
 
   const handlePayment = async (amount, currency, type, paymentOption, plan) => {
     try {
+      console.log('handlePayment')
       const userId = localStorage.getItem("userId");
       let apiUrl =
         paymentOption == "card" ? API.createPayment : API.createqrpayment;
       const response = await ApiHelper.post(apiUrl, { amount, currency, type });
       // await axios.post('/api/pricing/create-payment', { amount, currency, type });
-      setResponseUrl(response.data.url);
-      localStorage.setItem("paymenttrans_id", response.data.trans_id);
+      // console.log('html',response.data.data.data)
+      // setHtmlContent(response.data.data.data)
+      // navigate('/fortesting', { state: { htmlContent: response.data.data.data } });
+      // setResponseUrl(response.data.url);
+      // localStorage.setItem("paymenttrans_id", response.data.trans_id);
       let planType;
       if (selectedPaymentPlan == "Pro (Popular)") {
         planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
@@ -241,30 +247,32 @@ const KidsFormTwo = () => {
               message: enquiry,
               subscriptionPlan: selectedPaymentPeriod,
               planName: planType ? planType : selectedPaymentPlan,
-              transId: response.data.trans_id,
               paymentStatus: "Pending",
             },
           ],
           isActive: true,
         };
 
-        const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
+        console.log('giftObj',giftObj)
+
+        // const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
       } else {
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
           planName: planType ? planType : selectedPaymentPlan,
           user_id: userId,
-          transId: response.data.trans_id,
           paymentStatus: "Pending",
           coupon: appliedCouponCode ? appliedCouponCode : "",
         };
-        const responseSubscription = await ApiHelper.post(
-          API.subscriptionPlan,
-          userData
-        );
+
+        console.log('userData',userData)
+        // const responseSubscription = await ApiHelper.post(
+        //   API.subscriptionPlan,
+        //   userData
+        // );
       }
-      setCheckout(true);
-      setLoading(false);
+      // setCheckout(true);
+      // setLoading(false);
       // Handle the response and update UI
     } catch (error) {
       console.error("Error during payment:", error);
@@ -273,7 +281,7 @@ const KidsFormTwo = () => {
 
   useEffect(() => {
     if (selectedPaymentOption == "qr") {
-      setLoading(true);
+      // setLoading(true);
       if (giftSub) {
       handlePayment(
         selectedAmount,
@@ -292,7 +300,7 @@ const KidsFormTwo = () => {
       );
     }
     } else if (selectedPaymentOption == "card") {
-      setLoading(true);
+      // setLoading(true);
       if (giftSub) {
       handlePayment(
         selectedAmount,
@@ -364,9 +372,11 @@ const KidsFormTwo = () => {
       setPathFrom(from);
       console.log("selectedPlan", `annual-${selectedPlan}`);
       if (from == "giftsubscription") {
+        console.log('inside from ')
         setGiftSub(true);
         localStorage.setItem("giftsubscription", true);
       } else {
+        console.log('else from00')
         setGiftSub(false);
         localStorage.setItem("giftsubscription", false);
       }
@@ -1046,12 +1056,22 @@ const KidsFormTwo = () => {
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
           setAppliedCouponCode={setAppliedCouponCode}
+          selectedPaymentPeriod={selectedPaymentPeriod}
+          giftSub={giftSub}
+          senderName={senderName}
+          email={email}
+          recieversFirstName={recieversFirstName}
+          recieverEmail={recieverEmail}
+          enquiry={enquiry}
+          appliedCouponCode={appliedCouponCode}
+          success_url={`https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`}
         />
       )}
       {checkout && (
         <CheckoutComponent
           responseUrl={responseurl}
           setCheckout={setCheckout}
+          htmlContent={htmlContent}
         />
       )}
       {loading ? <Loader /> : <div></div>}
