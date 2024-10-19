@@ -33,6 +33,7 @@ import BrandHeader from "./BrandHeader";
 import BrandSideMenu from "./BrandSideMenu";
 import CurrentUser from "../../CurrentUser";
 import RichTextEditor from "../../views/RichTextEditor";
+import "material-icons/iconfont/material-icons.css";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;

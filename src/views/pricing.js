@@ -35,6 +35,7 @@ import PaymentOptions from "./PaymentOptions.js";
 import Loader from "./Loader.js";
 // import { createPayment, checkTransactionStatus } from '../config/paymentGateway.js';
 import { useTheme, useMediaQuery } from "@mui/material";
+import "material-icons/iconfont/material-icons.css";
 
 const Pricing = ({
   from,

@@ -43,6 +43,7 @@ import { Tooltip } from "react-tooltip";
 import useFieldDatas from "../config/useFieldDatas";
 import EditFeatures from "../pages/EditFeatures";
 import EditSocialMedias from "../pages/EditSocialMedias";
+import "material-icons/iconfont/material-icons.css";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;

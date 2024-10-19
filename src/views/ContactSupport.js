@@ -30,6 +30,7 @@ import {
   validatePhoneNumberLength,
 } from "libphonenumber-js";
 import parseMax from "libphonenumber-js/max";
+import "material-icons/iconfont/material-icons.css";
 
 const ContactSupport = () => {
   const [anchorEl, setAnchorEl] = useState(null);

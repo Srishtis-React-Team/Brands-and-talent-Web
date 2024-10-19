@@ -22,6 +22,8 @@ import CurrentUser from "../../CurrentUser";
 import useFieldDatas from "../../config/useFieldDatas";
 import { Tooltip } from "react-tooltip";
 import { isValidPhoneNumber } from "libphonenumber-js";
+import "material-icons/iconfont/material-icons.css";
+
 const AdultFormOne = () => {
   const {
     currentUserId,

@@ -15,6 +15,8 @@ import {
   getNumberType,
   validatePhoneNumberLength,
 } from "libphonenumber-js";
+import "material-icons/iconfont/material-icons.css";
+
 const BrandDetails = () => {
   const navigate = useNavigate();
   const btLogo = require("../../assets/images/LOGO.png");
