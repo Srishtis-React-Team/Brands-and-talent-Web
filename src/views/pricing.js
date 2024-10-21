@@ -53,9 +53,12 @@ const Pricing = ({
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log('location.state',location.state)
-  const brand_url = `https://brandsandtalent.com/client/${location?.state?.data?.publicUrl?.replace(/\s+/g,"")}`
-  console.log('brand_url',brand_url)
+  console.log("location.state", location.state);
+  const brand_url = `https://brandsandtalent.com/client/${location?.state?.data?.publicUrl?.replace(
+    /\s+/g,
+    ""
+  )}`;
+  console.log("brand_url", brand_url);
   const [receivedData, setReceivedData] = useState(null);
   useEffect(() => {
     if (location.state && location.state.data) {

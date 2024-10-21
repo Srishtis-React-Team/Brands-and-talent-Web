@@ -906,6 +906,7 @@ const EditBrands = () => {
                     <label className="form-label">Mobile No</label>
 
                     <MuiPhoneNumber
+                      sx={{ "& svg": { height: "1em" } }}
                       countryCodeEditable={false}
                       value={brandPhone}
                       defaultCountry={"kh"}

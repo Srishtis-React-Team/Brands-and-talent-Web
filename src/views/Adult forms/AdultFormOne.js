@@ -614,10 +614,11 @@ const AdultFormOne = () => {
   const handleMobileChange = (value, countryData) => {
     setAdultsPhone(value);
     setAdultsPhoneError(false);
-    isValidPhoneNumber(value);
-    if (isValidPhoneNumber(value)) {
+
+    const isValid = isValidPhoneNumber(value);
+
+    if (isValid) {
       setMobileValidationError(false);
-      setAdultsPhone(value);
     } else {
       setMobileValidationError(true);
     }
@@ -1221,6 +1222,7 @@ const AdultFormOne = () => {
                           placeholder="Enter Phone number"
                         ></input> */}
                       <MuiPhoneNumber
+                        sx={{ "& svg": { height: "1em" } }}
                         countryCodeEditable={false}
                         defaultCountry={"kh"}
                         className="material-mobile-style"

@@ -96,12 +96,25 @@ const ContactUs = () => {
     }
   };
 
-  const handleMobileChange = (value) => {
-    isValidPhoneNumber(value);
-    if (isValidPhoneNumber(value)) {
-      setMobileError(false);
+  // const handleMobileChange = (value) => {
+  //   isValidPhoneNumber(value);
+  //   if (isValidPhoneNumber(value)) {
+  //     setMobileError(false);
+  //     setMobileValidationError(false);
+  //     setMobile(value);
+  //   } else {
+  //     setMobileValidationError(true);
+  //   }
+  // };
+
+  const handleMobileChange = (value, countryData) => {
+    setMobile(value);
+    setMobileError(false);
+
+    const isValid = isValidPhoneNumber(value);
+
+    if (isValid) {
       setMobileValidationError(false);
-      setMobile(value);
     } else {
       setMobileValidationError(true);
     }
@@ -179,6 +192,7 @@ const ContactUs = () => {
             <div className="kids-form-section col-md-12 mb-3">
               <label className="form-label">Mobile Number</label>
               <MuiPhoneNumber
+                sx={{ "& svg": { height: "1em" } }}
                 countryCodeEditable={false}
                 defaultCountry={"kh"}
                 className="material-mobile-style"
