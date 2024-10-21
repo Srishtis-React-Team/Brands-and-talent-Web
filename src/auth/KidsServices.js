@@ -103,7 +103,7 @@ const KidsServices = () => {
   const setTalentLocalStorage = (data) => {
     localStorage.setItem("userId", data?.user?._id);
     localStorage.setItem("emailID", data?.email);
-    localStorage.setItem("userEmail ", data?.email);
+    localStorage.setItem("userEmail", data?.email);
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
     localStorage.setItem("currentUserType", "talent");

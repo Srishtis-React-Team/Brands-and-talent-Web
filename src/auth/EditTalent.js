@@ -1002,10 +1002,11 @@ const EditTalent = () => {
   const handleMobileChange = (value, countryData) => {
     setParentMobile(value);
     setParentMobileError(false);
-    isValidPhoneNumber(value);
-    if (isValidPhoneNumber(value)) {
+
+    const isValid = isValidPhoneNumber(value);
+
+    if (isValid) {
       setMobileValidationError(false);
-      setParentMobile(value);
     } else {
       setMobileValidationError(true);
     }
@@ -2685,6 +2686,7 @@ const EditTalent = () => {
                     </label>
 
                     <MuiPhoneNumber
+                      sx={{ "& svg": { height: "1em" } }}
                       value={parentMobile}
                       defaultCountry={"kh"}
                       countryCodeEditable={false}

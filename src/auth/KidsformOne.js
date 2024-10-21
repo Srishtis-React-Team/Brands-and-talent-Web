@@ -821,13 +821,26 @@ const KidsformOne = () => {
 
   const [mobileNumError, setMobileNumError] = useState();
 
+  // const handleMobileChange = (value, countryData) => {
+  //   setParentMobile(value);
+  //   setParentMobileError(false);
+  //   isValidPhoneNumber(value);
+  //   if (isValidPhoneNumber(value)) {
+  //     setMobileValidationError(false);
+  //     setParentMobile(value);
+  //   } else {
+  //     setMobileValidationError(true);
+  //   }
+  // };
+
   const handleMobileChange = (value, countryData) => {
     setParentMobile(value);
     setParentMobileError(false);
-    isValidPhoneNumber(value);
-    if (isValidPhoneNumber(value)) {
+
+    const isValid = isValidPhoneNumber(value);
+
+    if (isValid) {
       setMobileValidationError(false);
-      setParentMobile(value);
     } else {
       setMobileValidationError(true);
     }
@@ -1275,6 +1288,7 @@ const KidsformOne = () => {
                         </label>
 
                         <MuiPhoneNumber
+                          sx={{ "& svg": { height: "1em" } }}
                           countryCodeEditable={false}
                           defaultCountry={"kh"}
                           className="material-mobile-style"

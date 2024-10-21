@@ -257,7 +257,7 @@ const BrandDetails = () => {
 
   const setBrandsLocalStorage = (data) => {
     localStorage.setItem("brandId", data?.brand_id);
-    localStorage.setItem("userEmail ", data?.brandEmail);
+    localStorage.setItem("userEmail", data?.brandEmail);
   };
 
   const selectHearAbout = (event) => {
@@ -419,10 +419,11 @@ const BrandDetails = () => {
   const handleMobileChange = (value, countryData) => {
     setPhoneNumber(value);
     setPhoneNumberError(false);
-    isValidPhoneNumber(value);
-    if (isValidPhoneNumber(value)) {
+
+    const isValid = isValidPhoneNumber(value);
+
+    if (isValid) {
       setMobileValidationError(false);
-      setPhoneNumber(value);
     } else {
       setMobileValidationError(true);
     }
@@ -553,6 +554,7 @@ const BrandDetails = () => {
                   </label>
                   <div className="form-group">
                     <MuiPhoneNumber
+                      sx={{ "& svg": { height: "1em" } }}
                       countryCodeEditable={false}
                       defaultCountry={"kh"}
                       className="material-mobile-style"
