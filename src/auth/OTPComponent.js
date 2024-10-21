@@ -93,7 +93,7 @@ const OTPComponent = () => {
           setTimeout(function () {
             let successData = "verified";
             directLogin(resData);
-            // navigate(`/login?type=talent&user_id=${resData?.data?.data}`);
+            navigate(`/login?type=talent&user_id=${resData?.data?.data}`);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("Enter Correct OTP");
@@ -118,7 +118,7 @@ const OTPComponent = () => {
   const setTalentLocalStorage = (data) => {
     localStorage.setItem("userId", data?.user?._id);
     localStorage.setItem("emailID", data?.email);
-    localStorage.setItem("userEmail ", data?.email);
+    localStorage.setItem("userEmail", data?.email);
     localStorage.setItem("token", data?.token);
     localStorage.setItem("currentUser", data?.user?._id);
     localStorage.setItem("currentUserType", data?.user?.userType);
@@ -134,7 +134,7 @@ const OTPComponent = () => {
     localStorage.setItem("brandId", data?.data?._id);
     localStorage.setItem("currentUser", data?.data?._id);
     localStorage.setItem("brandEmail", data?.data?.brandEmail);
-    localStorage.setItem("userEmail ", data?.data?.brandEmail);
+    localStorage.setItem("userEmail", data?.data?.brandEmail);
 
     localStorage.setItem("brandToken", data?.token);
     localStorage.setItem("currentUserType", data?.data?.userType);

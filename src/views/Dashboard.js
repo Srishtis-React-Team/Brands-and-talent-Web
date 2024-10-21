@@ -402,7 +402,7 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {talentsList && talentsList?.length >= 10 && (
+        {/* {talentsList && talentsList?.length >= 10 && (
           <>
             <div className="wraper">
               <div className="container-fluid">
@@ -552,17 +552,18 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                {/* {visibleCount < talentList.length && (
+                
+              </div>
+            </div>
+          </>
+        )} */}
+        {/* {visibleCount < talentList.length && (
                   <div className="find-more wraper">
                     <div onClick={() => handleReadMore()} className="moreBtn">
                       Find More
                     </div>
                   </div>
                 )} */}
-              </div>
-            </div>
-          </>
-        )}
 
         <div className="productsWraper wraper secSpac">
           <div className="container">
