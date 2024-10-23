@@ -93,7 +93,7 @@ const OTPComponent = () => {
           setTimeout(function () {
             let successData = "verified";
             directLogin(resData);
-            navigate(`/login?type=talent&user_id=${resData?.data?.data}`);
+            // navigate(`/login?type=talent&user_id=${resData?.data?.data}`);
           }, 1000);
         } else if (resData.data.status === false) {
           setMessage("Enter Correct OTP");

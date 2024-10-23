@@ -1002,10 +1002,11 @@ const EditTalent = () => {
   const handleMobileChange = (value, countryData) => {
     setParentMobile(value);
     setParentMobileError(false);
-    isValidPhoneNumber(value);
-    if (isValidPhoneNumber(value)) {
+
+    const isValid = isValidPhoneNumber(value);
+
+    if (isValid) {
       setMobileValidationError(false);
-      setParentMobile(value);
     } else {
       setMobileValidationError(true);
     }
@@ -1241,6 +1242,7 @@ const EditTalent = () => {
   };
 
   const updatePortfolioAPI = async (fileObj) => {
+    // alert("updatePortfolioAPI");
     let portofolioArray = [...portofolioFile, fileObj];
 
     let formData;
@@ -1251,7 +1253,7 @@ const EditTalent = () => {
     }
     let apiUrl;
     if (talentData?.type == "kids") {
-      apiUrl = API.getTalentById;
+      apiUrl = API.editKids;
     } else if (talentData?.type == "adults") {
       apiUrl = API.updateAdults;
     }
@@ -1909,19 +1911,10 @@ const EditTalent = () => {
   };
 
   const isNotKnownFormatUrl = (url) => {
-    const isValidAudioUrl = audioUrlPatterns?.audio?.test(url); // Check for audio URLs
-
-    const isValidUrl = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i?.test(url); // Check for valid URL format
-    return !(
-      (
-        audioUrlPatterns.youtube.test(url) ||
-        audioUrlPatterns.vimeo.test(url) ||
-        audioUrlPatterns.instagram.test(url) ||
-        audioUrlPatterns.twitter.test(url) ||
-        isValidAudioUrl || // Accept valid audio URLs
-        isValidUrl
-      ) // Accept any standard valid URL
-    );
+    console.log(url, "url");
+    const isValidUrl = /^(https?|ftp):\/\/[^\s]+$/i.test(url);
+    // alert(isValidUrl);
+    return isValidUrl; // If the URL is valid, return false (since we want to check if it's NOT valid)
   };
 
   const handleAudioUrl = async () => {
@@ -1955,12 +1948,17 @@ const EditTalent = () => {
         if (isNotKnownFormatUrl(audioUrl)) {
           setAudioUrlsList([...audioUrlsList, audioUrl]);
           setAudioUrl("");
-          setCheckAudioUrl(true);
-        } else {
           setCheckAudioUrl(false);
+          postNewAudios([...audioUrlsList, audioUrl]);
+        } else {
+          setCheckAudioUrl(true);
+          setMessage(`Enter a valid url`);
+          setOpenPopUp(true);
+          setTimeout(() => {
+            setOpenPopUp(false);
+          }, 1000);
         }
       }
-      postNewAudios([...audioUrlsList, audioUrl]);
     }
   };
 
@@ -1977,7 +1975,11 @@ const EditTalent = () => {
     const url = e.target.value;
     setAudioUrl(url);
     // Validate URL in real-time
-    setCheckAudioUrl(isNotKnownFormatUrl(url));
+    if (isNotKnownFormatUrl(url)) {
+      setCheckAudioUrl(false);
+    } else {
+      setCheckAudioUrl(true);
+    }
   };
 
   const handleAudioPaste = (e) => {
@@ -1987,7 +1989,11 @@ const EditTalent = () => {
     );
     setAudioUrl(pastedText);
     // Validate pasted URL
-    setCheckAudioUrl(isNotKnownFormatUrl(pastedText));
+    if (isNotKnownFormatUrl(pastedText)) {
+      setCheckAudioUrl(false);
+    } else {
+      setCheckAudioUrl(true);
+    }
   };
 
   const handleAddUrl = async () => {
@@ -1997,7 +2003,6 @@ const EditTalent = () => {
           console.error("urls is not an array:", urls);
           return;
         }
-
         let maxUrls;
         if (talentData?.planName === "Basic") {
           maxUrls = 2;
@@ -2026,15 +2031,19 @@ const EditTalent = () => {
           }, 1000);
           return;
         }
-
         setUrls([...urls, videoUrl]);
         setVideoUrl("");
         setCheckVideoUrl(false);
+        postNewVideos([...urls, videoUrl]);
       } else {
         setCheckVideoUrl(true);
+        setMessage(`Enter a valid url`);
+        setOpenPopUp(true);
+        setTimeout(() => {
+          setOpenPopUp(false);
+        }, 1000);
       }
     }
-    postNewVideos([...urls, videoUrl]);
   };
 
   const handleJobsCompleted = (event) => {
@@ -2144,6 +2153,7 @@ const EditTalent = () => {
     }
   };
   const postNewAudios = async (urlsData) => {
+    // alert("postNewAudios");
     let apiName;
     if (talentData?.type === "adults") {
       apiName = `${API.updateAdults}`;
@@ -2271,6 +2281,9 @@ const EditTalent = () => {
   useEffect(() => {
     console.log(urls, "urls");
   }, [urls]);
+  useEffect(() => {
+    console.log(checkAudioUrl, "checkAudioUrl");
+  }, [checkAudioUrl]);
 
   return (
     <>
@@ -2685,6 +2698,7 @@ const EditTalent = () => {
                     </label>
 
                     <MuiPhoneNumber
+                      sx={{ "& svg": { height: "1em" } }}
                       value={parentMobile}
                       defaultCountry={"kh"}
                       countryCodeEditable={false}
