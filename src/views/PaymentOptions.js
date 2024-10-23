@@ -38,10 +38,6 @@ const PaymentOptions = ({
   const [isCouponApplied, setIsCouponApplied] = useState(false); // New state for coupon applied status
   const [tran_id,setTran_id] = useState('')
   const [payOption, setPayOption] = useState(false);
-  const [reqTime, setReqTime] = useState("");
-  const [hash, setHash] = useState("");
-  const merchantId = "brandsandtalent"; // replace with actual
-  const transactionId = "29049578399218700"; // replace with actual
   const userId = localStorage.getItem("userId");
   const userEmail = localStorage.getItem('userEmail');
   useEffect(() => {
@@ -105,16 +101,15 @@ const PaymentOptions = ({
   // Handle Payment Option Selection
   const handleSelection = async (type) => {
     try {
-      console.log('type',type)
       let planType;
       if (selectedPaymentPlan == "Pro (Popular)") {
         planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
       }
-     console.log('giftSub',giftSub)
-     let plan;
-     if(giftSub){
-      plan = 'giftsubscription'
-     }
+      let plan;
+      if (giftSub) {
+        plan = 'giftsubscription';
+      }
+
       if (plan == "giftsubscription") {
         const giftObj = {
           senderName: senderName,
@@ -124,7 +119,7 @@ const PaymentOptions = ({
               receiversFirstName: recieversFirstName,
               receiverEmail: recieverEmail,
               message: enquiry,
-              transId:tran_id,
+              transId: tran_id,
               subscriptionPlan: selectedPaymentPeriod,
               planName: planType ? planType : selectedPaymentPlan,
               paymentStatus: "Pending",
@@ -132,82 +127,75 @@ const PaymentOptions = ({
           ],
           isActive: true,
         };
-        // transId: response.data.trans_id,
-        console.log('giftObj',giftObj)
 
         const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
-        console.log('resGiftSub',resGiftSub)
       } else {
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
           planName: planType ? planType : selectedPaymentPlan,
           user_id: userId,
-          transId:tran_id,
+          transId: tran_id,
           paymentStatus: "Pending",
           coupon: appliedCouponCode ? appliedCouponCode : "",
         };
 
-        console.log('userData',userData)
         const responseSubscription = await ApiHelper.post(
           API.subscriptionPlan,
           userData
         );
-        console.log('responseSubscription',responseSubscription)
       }
-        setSelectedPaymentOption(type);
-        setPayOption(type);
-        console.log('type',type)
-        // Create a data object for hash generation
-        const dataObject = {
-            req_time: getFormattedTimestamp(),
-            merchant_id: "brandsandtalent",
-            tran_id: tran_id, // You can dynamically generate this if needed
-            amount: finalAmount ? finalAmount : amount, // This could also be dynamic
-            email: userEmail,
-            payment_option: type,
-            continue_success_url: success_url,
-        };
 
-        // Generate the hash using the dataObject and your public key
-        const publicKey = "366b35eb-433b-4d8e-8ee9-036bcd3e2e2c"; // Replace with your actual public key
-        const hash = generateHash(dataObject, publicKey);
+      setSelectedPaymentOption(type);
+      setPayOption(type);
 
-        // Create a new FormData object
-        const formData = new FormData();
+      // Create a data object for hash generation
+      const dataObject = {
+        req_time: getFormattedTimestamp(),
+        merchant_id: "brandsandtalent",
+        tran_id: tran_id,
+        amount: finalAmount ? finalAmount : amount,
+        email: userEmail,
+        payment_option: type,
+        continue_success_url: success_url,
+      };
 
-        // Populate the FormData with dynamic values
-        Object.keys(dataObject).forEach(key => {
-            formData.append(key, dataObject[key]);
-        });
-        
-        // Append the generated hash to FormData
-        formData.append("hash", hash);
+      // Generate the hash using the dataObject and your public key
+      const publicKey = "366b35eb-433b-4d8e-8ee9-036bcd3e2e2c";
+      const hash = generateHash(dataObject, publicKey);
 
-        // Create a new form element
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = "https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase";
-        form.target = "aba_webservice";
+      // Create a new FormData object
+      const formData = new FormData();
+      Object.keys(dataObject).forEach(key => {
+        formData.append(key, dataObject[key]);
+      });
+      formData.append("hash", hash);
 
-        // Append all FormData fields to the form
-        for (const [key, value] of formData.entries()) {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = key;
-            input.value = value;
-            form.appendChild(input);
-        }
+      // Create a new form element
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = "https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase";
+      // form.target = "aba_webservice"; // Temporarily remove or comment out
 
-        // Append the form to the body and submit it
-        document.body.appendChild(form);
+      // Append all FormData fields to the form
+      for (const [key, value] of formData.entries()) {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
+      }
+
+      // Append the form to the body
+      document.body.appendChild(form);
+
+      // Submit the form after ensuring it is appended
+      setTimeout(() => {
         form.submit();
+      }, 0); // Delay to ensure form is fully appended
 
-        // Optionally remove the form after submission (cleanup)
-        form.remove();
     } catch (error) {
-        console.error("Payment option selection error:", error);
-        // Display an error message to the user
-        setErrorMessage("The selected payment option is not available. Please choose another option.");
+      console.error("Payment option selection error:", error);
+      setErrorMessage("The selected payment option is not available. Please choose another option.");
     }
 };
 
@@ -260,32 +248,13 @@ const PaymentOptions = ({
           </>
         )}
 
-        {/* <form
-          method="POST"
-          action="https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase"
-          id="aba_merchant_request"
-          target="aba_webservice"
-        >
-          <input type="hidden" name="req_time" value="1729174451" />
-          <input type="hidden" name="merchant_id" value="brandsandtalent" />
-          <input type="hidden" name="tran_id" value="2904957839920"/>
-          <input type="hidden" name="amount" value="10.00" />
-          <input type="hidden" name="firstname" value="jai" />
-          <input type="hidden" name="lastname" value="jv" />
-          <input type="hidden" name="email" value="jaivinvenkolla@gmail.com" />
-          <input type="hidden" name="phone" value="0965965897" />
-          <input type="hidden" name="payment_option" value="cards" />
-          <input type="hidden" name="continue_success_url" value="https://brandsandtalent.com/" />
-          <input type="hidden" name="hash" value="ru6vg/uAy+COBQtusL8gOaYmAG3E4P/CtDeBYlE63RKA4V+rYXwek0eHsyUS8yaYQ2K3Ui/LMbhYQWjg3/5a7A==" />
-        </form> */}
-
         {errorMessage && <div className="error-message">{errorMessage}</div>}
         <div className="paymentOptionSection">
           <div onClick={() => handleSelection("abapay_khqr")} style={{ cursor: "pointer" }} className="paymentOption">
             <img src={qrlogo} alt="QR Code" />
             <div>
               <p>ABA KHQR</p>
-              <span>Scan and pay using any Cambodian banking app</span>
+              <span>Scan to pay with any banking app</span>
             </div>
             <div>
               <img src={rightArrow} alt="Right Arrow" />
@@ -296,7 +265,7 @@ const PaymentOptions = ({
             <div>
               <p>Credit/Debit Card</p>
               <span>
-                <img src={payOptionslogo} alt="Payment Options" />
+                <img className="paymentOptions" src={payOptionslogo} alt="Payment Options" />
               </span>
             </div>
             <div>

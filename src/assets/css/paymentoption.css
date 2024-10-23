@@ -25,6 +25,10 @@
     border: 3px solid #6495ed;
   }
 
+  .paymentOptions {
+    width: 60%;
+  }
+
   .popupcontainer2 {
     width: 628px;
     height: 85%;
