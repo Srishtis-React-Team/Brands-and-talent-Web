@@ -2049,7 +2049,7 @@ const CreateJobs = () => {
             {selectedTab === "create-job" && (
               <>
                 <div
-                  className="dialog-body mt-0"
+                  className="dialog-body mt-0 mobile-mb-0"
                   style={{ overflow: "hidden" }}
                 >
                   <div className="kidsform-one w-100 p-2">
