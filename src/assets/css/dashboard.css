@@ -2208,6 +2208,35 @@ ul.MuiMenu-list li {
   align-items: center;
   padding: 30px 0;
 }
+.popupcontainer {
+  width: 500px !important;
+}
+.popupcontainer span {
+  font-size: 14px !important;
+  line-height: 25px;
+  /* margin-top: 20px; */
+}
+.popupcontainer h4 {
+  margin-bottom: 20px ;
+}
+.paymentOption span {
+  font-size: 13px !important;
+}
+.paymentOption {
+  margin-top: 0% !important;
+}
+.paymentOptionSection {
+  gap: 15px !important;
+  height: fit-content !important;
+  margin-top: 8% !important;
+}
+
+
+
+
+
+
+
 
 @media (max-width: 1399px) {
   .menu-items > div.navTxt {
@@ -2443,6 +2472,45 @@ ul.MuiMenu-list li {
   .headerDashboard .dropdown-menu li {
     padding: 5px 10px;
   }
+  .notification-card-flex img {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 40px;
+    min-height: 50px !important;
+    min-width: 50px !important;
+}
+.talent-notification-card.notification-read {
+  padding: 15px 0px !important;
+  position: relative;
+}
+.notification-card-time {
+  position: absolute;
+  font-size: 11px;
+  bottom: 5px;
+}
+.notification-card-flex {
+  align-items: flex-start !important;
+}
+.dialog-body.mt-0.mobile-mb-0 {
+  margin-bottom: 0px !important;
+}
+.spd div {
+  text-align: left !important;
+}
+.spd {
+  display: flex !important;
+  flex-direction: column !important;
+}
+.hd-sett{
+  font-size: 20px !important;
+}
+.nav.menu-items ul.dropdown-menu.show {
+  position: relative !important;
+}
+
+
+
+
 }
 @media (max-width: 580px) {
   .section-description {
@@ -4228,7 +4296,7 @@ main.brand-main-container:not(.main-pd) .creators-filter-select {
     font-size: 15px;
   }
   .base-Popup-root.base-Menu-root {
-    /* transform: inherit !important; */
+    transform: inherit !important;
   }
   .rating {
     gap: 4px;
@@ -4271,6 +4339,26 @@ main.brand-main-container:not(.main-pd) .creators-filter-select {
   .job-feature-heading {
     font-weight: 700 !important;
   }
+  .scrolscrolPrevOut.not-viewjob .preview-main-box {
+    margin-top: 0px !important;
+}
+.brand-headings-wrapper.mobilevw {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.brand-headings-wrapper.mobilevw .create-job-title.w-50, .brand-headings-wrapper.mobilevw .sample-profile {
+  width: 100% !important;
+}
+
+
+
+
+
+
+
+
+
 }
 @media (max-width: 420px) {
   .mobile-navbar .icon {

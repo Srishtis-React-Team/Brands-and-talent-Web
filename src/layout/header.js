@@ -800,7 +800,7 @@ const Header = ({ onData }) => {
           </div>
 
           {currentUserId && (
-            <Dropdown>
+            <Dropdown className="usr-s">
               <MenuButton className="profile-image-header">
                 <div className="talent-profile-icon">
                   {talentData?.image && (
@@ -823,7 +823,7 @@ const Header = ({ onData }) => {
                   )}
                 </div>
               </MenuButton>
-              <Menu slots={{ listbox: AnimatedListbox }}>
+              <Menu className="listss" slots={{ listbox: AnimatedListbox }}>
                 <MenuItem
                   style={{ cursor: "pointer" }}
                   onClick={createHandleMenuClick("dashboard")}
