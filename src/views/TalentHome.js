@@ -202,7 +202,7 @@ const TalentHome = () => {
         className={`brand-main-container ${showSidebar ? "" : "main-pd"}`}
       >
         <div className="brand-content-main">
-          <div className="brand-headings-wrapper">
+          <div className="brand-headings-wrapper mobilevw">
             <div className="create-job-title w-50">
               Welcome To Brands and Talent
             </div>
