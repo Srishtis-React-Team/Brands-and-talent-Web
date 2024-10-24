@@ -23,6 +23,11 @@ const BrandFavorites = () => {
     talentName,
     brandName,
   } = CurrentUser();
+  const [brandId, setBrandId] = useState(null);
+
+  useEffect(() => {
+    setBrandId(localStorage.getItem("brandId"));
+  }, []);
 
   const [starCount, setStarCount] = useState(0);
   const handleStarClick = (index) => {
@@ -44,7 +49,10 @@ const BrandFavorites = () => {
   const [talentList, setTalentList] = useState([]);
 
   const getFavorites = async () => {
-    await ApiHelper.get(API.favouritesList)
+    const formData = {
+      userId: localStorage.getItem("brandId"),
+    };
+    await ApiHelper.post(API.favouritesList, formData)
       .then((resData) => {
         if (resData) {
           setTalentList(resData.data.data);
@@ -149,7 +157,7 @@ const BrandFavorites = () => {
       starRatings: starCount,
       reviewerName: talentName ? talentName : brandName,
       reviewerId: currentUserId,
-      talentId: talent?._id,
+      talentId: modalData?.favouriteUserId,
     };
     await ApiHelper.post(API.reviewsPosting, formData)
       .then((resData) => {
@@ -176,6 +184,13 @@ const BrandFavorites = () => {
       });
     });
   });
+
+  useEffect(() => {
+    console.log(talentList, "favoriteTalents");
+  }, [talentList]);
+  useEffect(() => {
+    console.log(modalData, "modalData");
+  }, [modalData]);
 
   return (
     <>
@@ -211,11 +226,12 @@ const BrandFavorites = () => {
                             <div className="gallery-wrapper modalSpc">
                               <img
                                 className="gallery-img"
-                                src={`${API.userFilePath}${item.image?.fileData}`}
+                                src={`${API.userFilePath}${item?.favouriteUserDetails?.image[0]?.fileData}`}
                               ></img>
                               {(() => {
                                 const starRatings = parseInt(
-                                  item?.averageStarRatings,
+                                  item?.favouriteUserDetails
+                                    ?.averageStarRatings,
                                   10
                                 );
                                 const totalStars = 5;
@@ -250,14 +266,14 @@ const BrandFavorites = () => {
                                 );
                               })()}
 
-                              {!item.isFavorite && (
+                              {!item?.isFavourite && (
                                 <img
                                   className="heart-icon"
                                   src={heartIcon}
                                   onClick={() => addFavorite(item)}
                                 ></img>
                               )}
-                              {item.isFavorite === true && (
+                              {item?.isFavourite === true && (
                                 <img
                                   className="heart-icon"
                                   src={favoruiteIcon}
@@ -271,10 +287,12 @@ const BrandFavorites = () => {
                                   className="find-creator-name"
                                   onClick={() => openTalent(item)}
                                 >
-                                  {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
+                                  {`${item?.favouriteUserDetails?.preferredChildFirstname} ${item?.favouriteUserDetails?.preferredChildLastName}`}
                                 </div>
-                                {item?.averageStarRatings &&
-                                  item?.averageStarRatings > 0 && (
+                                {item?.favouriteUserDetails
+                                  ?.averageStarRatings &&
+                                  item?.favouriteUserDetails
+                                    ?.averageStarRatings > 0 && (
                                     <>
                                       <div className="talent-details-wrapper">
                                         <div className="logo-fill-briefcase">
@@ -283,15 +301,24 @@ const BrandFavorites = () => {
 
                                         <div className="contSect">
                                           <span>
-                                            {item?.averageStarRatings} (
-                                            {item?.totalReviews} ratings)
+                                            {
+                                              item?.favouriteUserDetails
+                                                ?.averageStarRatings
+                                            }{" "}
+                                            (
+                                            {
+                                              item?.favouriteUserDetails
+                                                ?.totalReviews
+                                            }{" "}
+                                            ratings)
                                           </span>
                                         </div>
                                       </div>
                                     </>
                                   )}
 
-                                {item?.noOfJobsCompleted && (
+                                {item?.favouriteUserDetails
+                                  ?.noOfJobsCompleted && (
                                   <>
                                     <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                       <div className="logo-fill-briefcase">
@@ -299,14 +326,17 @@ const BrandFavorites = () => {
                                       </div>
                                       <div className="contSect">
                                         <span>
-                                          {item?.noOfJobsCompleted} Jobs
-                                          Completed
+                                          {
+                                            item?.favouriteUserDetails
+                                              ?.noOfJobsCompleted
+                                          }{" "}
+                                          Jobs Completed
                                         </span>
                                       </div>
                                     </div>
                                   </>
                                 )}
-                                {item?.profession && (
+                                {item?.favouriteUserDetails?.profession && (
                                   <>
                                     <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                       <div className="logo-fill-briefcase">
@@ -314,7 +344,10 @@ const BrandFavorites = () => {
                                       </div>
                                       <div className="contSect">
                                         <span>
-                                          {item?.profession[0]?.value}
+                                          {
+                                            item?.favouriteUserDetails
+                                              ?.profession[0]?.value
+                                          }
                                         </span>
                                       </div>
                                     </div>
@@ -323,16 +356,22 @@ const BrandFavorites = () => {
                                 <span className="job-company_dtls nweAlign pt-2 d-flex">
                                   <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
                                   <span>
-                                    {item?.childCity && `${item.childCity}`}
-                                    {item?.childCity &&
-                                      item?.parentState &&
+                                    {item?.favouriteUserDetails?.childCity &&
+                                      `${item?.favouriteUserDetails?.childCity}`}
+                                    {item?.favouriteUserDetails?.childCity &&
+                                      item?.favouriteUserDetails?.parentState &&
                                       `, `}
-                                    {item?.parentState && `${item.parentState}`}
-                                    {(item?.childCity || item?.parentState) &&
-                                      item?.parentCountry &&
+                                    {item?.favouriteUserDetails?.parentState &&
+                                      `${item?.favouriteUserDetails?.parentState}`}
+                                    {(item?.favouriteUserDetails?.childCity ||
+                                      item?.favouriteUserDetails
+                                        ?.parentState) &&
+                                      item?.favouriteUserDetails
+                                        ?.parentCountry &&
                                       `, `}
-                                    {item?.parentCountry &&
-                                      `${item.parentCountry}`}
+                                    {item?.favouriteUserDetails
+                                      ?.parentCountry &&
+                                      `${item?.favouriteUserDetails?.parentCountry}`}
                                   </span>
                                 </span>
                               </div>
@@ -373,7 +412,11 @@ const BrandFavorites = () => {
             <div className="modal-body">
               <div className="mb-3">
                 <div className="rating-box">
-                  <h3> Rate {modalData?.preferredChildFirstname}</h3>
+                  <h3>
+                    {" "}
+                    Rate{" "}
+                    {modalData?.favouriteUserDetails?.preferredChildFirstname}
+                  </h3>
                   <div className="stars">
                     {[...Array(5)].map((star, index) => {
                       return (

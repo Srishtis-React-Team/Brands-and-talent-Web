@@ -244,7 +244,10 @@ const BrandTalents = () => {
   };
 
   const getTalentList = async () => {
-    await ApiHelper.get(API.getTalentList)
+    const formData = {
+      userId: brandId,
+    };
+    await ApiHelper.post(API.getTalentList, formData)
       .then((resData) => {
         if (resData) {
           setTalentList(resData.data.data);
@@ -994,14 +997,14 @@ const BrandTalents = () => {
                                             </div>
                                           );
                                         })()}
-                                        {!item.isFavorite && (
+                                        {!item.isFavourite && (
                                           <img
                                             className="heart-icon"
                                             src={heartIcon}
                                             onClick={() => addFavorite(item)}
                                           ></img>
                                         )}
-                                        {item.isFavorite === true && (
+                                        {item.isFavourite === true && (
                                           <img
                                             className="heart-icon"
                                             src={favoruiteIcon}

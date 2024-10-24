@@ -103,7 +103,7 @@ const Dashboard = () => {
   };
 
   const getTalentList = async () => {
-    await ApiHelper.get(API.getTalentList)
+    await ApiHelper.get(API.getPopularTalent)
       .then((resData) => {
         if (resData) {
           setTalentsList(resData.data.data);
@@ -327,6 +327,9 @@ const Dashboard = () => {
     );
   };
 
+  useEffect(() => {
+    console.log(talentsList, "talentsList");
+  }, [talentsList]);
   return (
     <>
       <div className="dashboard-main">
@@ -458,14 +461,14 @@ const Dashboard = () => {
                               );
                             })()}
 
-                            {!item.isFavorite && (
+                            {!item.isFavourite && (
                               <img
                                 className="heart-icon"
                                 src={heartIcon}
                                 onClick={() => addFavorite(item)}
                               ></img>
                             )}
-                            {item.isFavorite === true && (
+                            {item.isFavourite === true && (
                               <img
                                 className="heart-icon"
                                 src={favoruiteIcon}

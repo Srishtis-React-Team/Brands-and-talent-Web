@@ -25,7 +25,10 @@ const BrandHome = () => {
 
   const headsetLogo = require("../../assets/icons/headset.png");
   const getTalentList = async () => {
-    await ApiHelper.get(API.getTalentList)
+    const formData = {
+      userId: brandId,
+    };
+    await ApiHelper.post(API.getTalentList, formData)
       .then((resData) => {
         if (resData) {
           setTalentList(resData.data.data);

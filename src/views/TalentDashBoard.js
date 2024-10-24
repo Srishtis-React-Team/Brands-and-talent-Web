@@ -920,7 +920,7 @@ const TalentDashBoard = () => {
                                       </div>
 
                                       <div className="recent-gig-description">
-                                        {!item?.isFavorite && (
+                                        {!item?.isFavourite && (
                                           <i
                                             className="bi bi-heart save-job-icon"
                                             onClick={() => {
@@ -928,7 +928,7 @@ const TalentDashBoard = () => {
                                             }}
                                           ></i>
                                         )}
-                                        {item?.isFavorite && (
+                                        {item?.isFavourite && (
                                           <i
                                             className="bi bi-heart-fill remove-job-icon"
                                             onClick={() => {

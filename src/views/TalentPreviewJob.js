@@ -23,6 +23,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   const location = useLocation();
 
   const { jobId } = location.state || {};
+  const [talentData, setTalentData] = useState();
 
   const navigate = useNavigate();
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -30,6 +31,24 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   const [message, setMessage] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
   const [brandData, setBrandData] = useState(null);
+
+  useEffect(() => {
+    if (currentUserId) {
+      getTalentById();
+    }
+  }, [currentUserId]);
+
+  const getTalentById = async () => {
+    await ApiHelper.post(`${API.getTalentById}${currentUserId}`)
+      .then((resData) => {
+        if (resData.data.status === true) {
+          if (resData.data.data) {
+            setTalentData(resData.data.data, "resData.data.data");
+          }
+        }
+      })
+      .catch((err) => {});
+  };
 
   const getJobsByID = async () => {
     let preview_id;
@@ -128,13 +147,37 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
   };
   const [modalData, setModalData] = useState(null);
 
+  // const applyjobs = async (data) => {
+  //   console.log(data, "applyjobs_data");
+  //   setModalData(data);
+  //   if (data?.isApplied != "Applied") {
+  //     const modalElement = document.getElementById("viewJobApplyModal");
+  //     const bootstrapModal = new window.bootstrap.Modal(modalElement);
+  //     bootstrapModal.show();
+  //   }
+  // };
+
   const applyjobs = async (data) => {
-    console.log(data, "applyjobs_data");
-    setModalData(data);
-    if (data?.isApplied != "Applied") {
-      const modalElement = document.getElementById("viewJobApplyModal");
-      const bootstrapModal = new window.bootstrap.Modal(modalElement);
-      bootstrapModal.show();
+    if (talentData?.planName == "Basic") {
+      let upgradeMessage;
+      if (talentData?.planName === "Basic") {
+        upgradeMessage = "Upgrade to Pro to apply for this job.";
+      }
+      setMessage(`${upgradeMessage}`);
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 4000);
+    } else if (
+      talentData?.planName?.includes("Pro") ||
+      talentData?.planName == "Premium"
+    ) {
+      setModalData(data);
+      if (data?.isApplied != "Applied") {
+        const modalElement = document.getElementById("viewJobApplyModal");
+        const bootstrapModal = new window.bootstrap.Modal(modalElement);
+        bootstrapModal.show();
+      }
     }
   };
 
