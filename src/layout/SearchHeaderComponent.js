@@ -162,10 +162,19 @@ const SearchHeaderComponent = ({ onData }) => {
         }
       }
       if (menuItem === "edit") {
-        if (currentUser_type === "talent") {
-          navigate(`${"/edit-talent-profile"}?${currentUserId}`);
-        } else if (currentUser_type === "brand") {
-          navigate(`/`);
+        if (talentData?.accountBlock == false) {
+          if (currentUser_type === "talent") {
+            navigate(`${"/edit-talent-profile"}?${currentUserId}`);
+          } else if (currentUser_type === "brand") {
+            navigate(`/`);
+          }
+        } else if (talentData?.accountBlock == true) {
+          setMessage("Please upgrade your plan to access your profile");
+          setOpenPopUp(true);
+          setTimeout(function () {
+            setOpenPopUp(false);
+            navigate(`/pricing`);
+          }, 3000);
         }
       }
     };
