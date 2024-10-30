@@ -7,8 +7,11 @@ import payOptionslogo from "../assets/icons/payment/4Cards_2x.png";
 import rightArrow from "../assets/icons/payment/right-arrow.svg";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
+import { useNavigate,useLocation } from "react-router";
+
 
 const PaymentOptions = ({
+  onConfirm,
   responseUrl,
   setCheckout,
   selectedCurrency,
@@ -40,6 +43,10 @@ const PaymentOptions = ({
   const [payOption, setPayOption] = useState(false);
   const userId = localStorage.getItem("userId");
   const userEmail = localStorage.getItem('userEmail');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log('userEmail',userEmail)
   useEffect(() => {
     setAmount(selectedAmount);
     getTransactionId()
@@ -51,6 +58,22 @@ const PaymentOptions = ({
     console.log('id resData',resData.data.data.transactionid);
     setTran_id(resData.data.data.transactionid);
   }
+
+  const freeContinueBtn = () =>{
+    console.log('location.pathname',location.pathname)
+    let url;
+    if(location.pathname == '/pricing'){
+      url =  `/talent-home`;
+    }else if(location.pathname == '/talent-signup-plan-details'){
+      url =  `/talent-signup-files-details?userId=${userId}`;
+    }else{
+      url = success_url;
+    }
+    navigate(
+      url
+    );
+  }
+  
 
 
   // Generate Unix Timestamp
@@ -100,6 +123,7 @@ const PaymentOptions = ({
 
   // Handle Payment Option Selection
   const handleSelection = async (type) => {
+    setPaymentOption(false)
     try {
       let planType;
       if (selectedPaymentPlan == "Pro (Popular)") {
@@ -143,10 +167,10 @@ const PaymentOptions = ({
           API.subscriptionPlan,
           userData
         );
+        console.log('responseSubscription',responseSubscription)
       }
 
-      setSelectedPaymentOption(type);
-      setPayOption(type);
+      
 
       // Create a data object for hash generation
       const dataObject = {
@@ -158,41 +182,12 @@ const PaymentOptions = ({
         payment_option: type,
         continue_success_url: success_url,
       };
-
-      // Generate the hash using the dataObject and your public key
+      // // Generate the hash using the dataObject and your public key
       const publicKey = "366b35eb-433b-4d8e-8ee9-036bcd3e2e2c";
       const hash = generateHash(dataObject, publicKey);
-
-      // Create a new FormData object
-      const formData = new FormData();
-      Object.keys(dataObject).forEach(key => {
-        formData.append(key, dataObject[key]);
-      });
-      formData.append("hash", hash);
-
-      // Create a new form element
-      const form = document.createElement("form");
-      form.method = "POST";
-      form.action = "https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase";
-      // form.target = "aba_webservice"; // Temporarily remove or comment out
-
-      // Append all FormData fields to the form
-      for (const [key, value] of formData.entries()) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = key;
-        input.value = value;
-        form.appendChild(input);
-      }
-
-      // Append the form to the body
-      document.body.appendChild(form);
-
-      // Submit the form after ensuring it is appended
-      setTimeout(() => {
-        form.submit();
-      }, 0); // Delay to ensure form is fully appended
-
+      onConfirm(dataObject, hash)
+      setSelectedPaymentOption(type);
+      setPayOption(type);
     } catch (error) {
       console.error("Payment option selection error:", error);
       setErrorMessage("The selected payment option is not available. Please choose another option.");
@@ -249,7 +244,10 @@ const PaymentOptions = ({
         )}
 
         {errorMessage && <div className="error-message">{errorMessage}</div>}
-        <div className="paymentOptionSection">
+        {finalAmount !== undefined && finalAmount === "0" ?(
+          <button className="cntnebtn" onClick={freeContinueBtn}>Continue</button>
+        ) : (
+          <div className="paymentOptionSection">
           <div onClick={() => handleSelection("abapay_khqr")} style={{ cursor: "pointer" }} className="paymentOption">
             <img src={qrlogo} alt="QR Code" />
             <div>
@@ -273,6 +271,8 @@ const PaymentOptions = ({
             </div>
           </div>
         </div>
+        )}
+        
       </div>
     </div>
   );
