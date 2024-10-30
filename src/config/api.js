@@ -81,6 +81,7 @@ export const API = {
   getFeatures: BASEURL + "features/getFeatures",
   getTopBrands: BASEURL + "brands/topBrands",
   getTalentList: BASEURL + "users/talentList",
+  getPopularTalent: BASEURL + "users/popularTalent",
   getKidsData: BASEURL + "users/kidsFetch/",
   unifiedDataFetch: BASEURL + "users/unifiedDataFetch/",
   getTalentById: BASEURL + "users/getTalentById/",

@@ -162,16 +162,25 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
       } else if (menuItem === "dashboard") {
         navigate(`${"/talent-home"}`);
       } else if (menuItem === "edit") {
-        if (talentData?.adminApproved === true) {
-          navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
-        } else {
-          setMessage(
-            "After your verification is approved, you can update your profile"
-          );
+        if (talentData?.accountBlock == false) {
+          if (talentData?.adminApproved === true) {
+            navigate(`${"/edit-talent-profile"}?${talentData?._id}`);
+          } else {
+            setMessage(
+              "After your verification is approved, you can update your profile"
+            );
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+            }, 2000);
+          }
+        } else if (talentData?.accountBlock == true) {
+          setMessage("Please upgrade your plan to access your profile");
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-          }, 2000);
+            navigate(`/pricing`);
+          }, 3000);
         }
       } else if (menuItem == "find-talent" && talentData?.planName == "Basic") {
         setMessage("Upgrade Pro or Premium Plan to unlock this feature");
@@ -545,7 +554,6 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
     } else if (route === "/edit-talent-profile") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();
-
         setMessage("You must be logged in");
         setOpenPopUp(true);
         setTimeout(function () {
