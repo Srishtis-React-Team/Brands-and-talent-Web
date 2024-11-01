@@ -58,6 +58,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   let queryString = url.split("?")[1];
 
+  console.log(queryString, "queryString");
+
   const userId = urlParams.get("userId");
   const [talentData, setTalentData] = useState();
 
