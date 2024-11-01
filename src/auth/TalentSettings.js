@@ -636,6 +636,25 @@ const TalentSettings = () => {
                     }}
                     className="listsub"
                   >
+                    Expiry Date :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {paymentDetailsDataArray?.expirationDate}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
                     Payment Status :{" "}
                     <span
                       style={{

@@ -81,6 +81,8 @@ const KidsFormTwo = () => {
   const [isPlanForm, setIsPlanForm] = useState(false);
   const [giftSub, setGiftSub] = useState(false);
   const [appliedCouponCode, setAppliedCouponCode] = useState("");
+  const [abaFormData, setAbaFormData] = useState({});
+
 
   const handleMobileChange = (value) => {
     isValidPhoneNumber(value);
@@ -447,6 +449,13 @@ const KidsFormTwo = () => {
       `/talent-social-media-connections?userId=${userId}&userEmail=${userEmail}`
     );
   };
+
+  const handleFormSubmit = (dataObject, hash) => {
+    setAbaFormData({ ...dataObject, hash });
+    setTimeout(() => {
+      document.getElementById("checkout_button").click();
+    }, 100);
+  };
   return (
     <>
       <div className="form-dialog">
@@ -471,6 +480,24 @@ const KidsFormTwo = () => {
         </div>
 
         <div className="dialog-body spaceTops">
+        <form
+        id="aba_merchant_request"
+        target="aba_webservice"
+        method="POST"
+        action="https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase"
+      >
+        <input type="hidden" name="merchant_id" value={abaFormData.merchant_id || ""} />
+        <input type="hidden" name="tran_id" value={abaFormData.tran_id || ""} />
+        <input type="hidden" name="amount" value={abaFormData.amount || ""} />
+        <input type="hidden" name="email" value={abaFormData.email || ""} />
+        <input type="hidden" name="payment_option" value={abaFormData.payment_option || ""} />
+        <input type="hidden" name="req_time" value={abaFormData.req_time || ""} />
+        <input type="hidden" name="continue_success_url" value={abaFormData.continue_success_url || ""} />
+        <input type="hidden" name="hash" value={abaFormData.hash || ""} />
+        <button type="button" id="checkout_button" style={{ display: 'none' }}>
+          Pay Now
+        </button>
+      </form>
           <div className="container">
             <div className="subscribe-form">
               <div className="subscriptions-wrapper">
@@ -1048,6 +1075,7 @@ const KidsFormTwo = () => {
 
       {paymentOptions && (
         <PaymentOptions
+          onConfirm={handleFormSubmit}
           selectedCurrency={selectedCurrency}
           selectedAmount={selectedAmount}
           setSelectedAmount={setSelectedAmount}
@@ -1063,7 +1091,7 @@ const KidsFormTwo = () => {
           recieverEmail={recieverEmail}
           enquiry={enquiry}
           appliedCouponCode={appliedCouponCode}
-          success_url={`https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`}
+          success_url={`https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`}
         />
       )}
       {checkout && (
