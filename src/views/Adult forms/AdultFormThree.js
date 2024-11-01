@@ -58,6 +58,8 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
 
   let queryString = url.split("?")[1];
 
+  console.log(queryString, "queryString");
+
   const userId = urlParams.get("userId");
   const [talentData, setTalentData] = useState();
 
@@ -95,7 +97,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [resumeFile, setResumeFile] = useState([]);
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
-  const [aboutYou, setAboutYou] = useState([]);
+  const [aboutYou, setAboutYou] = useState("");
   const [features, setFeature] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [instagramFollowers, setInstagramFollowers] = useState("");

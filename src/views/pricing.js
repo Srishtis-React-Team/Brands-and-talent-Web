@@ -258,7 +258,7 @@ const Pricing = ({
     console.log(pricingList, "pricingList");
   }, [pricingList]);
 
-  useEffect(() => { }, [comment]);
+  useEffect(() => {}, [comment]);
 
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
@@ -267,7 +267,7 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const getBrandsPricingList = async () => {
@@ -277,7 +277,7 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const editKids = async () => {
@@ -288,10 +288,9 @@ const Pricing = ({
       navigate(``);
     } else {
       console.log("else");
-      navigate(`/adult-signup-files-details?userId=${userId}`);
+      navigate(`/adult-signup-files-details?${userId}`);
     }
   };
-
 
   const choosePlan = async (index, item, from) => {
     console.log("inside chooseplan.....", from);
@@ -350,7 +349,6 @@ const Pricing = ({
       }
     }
   };
-
 
   const handleSubmit = async () => {
     setShowBtn(false);
@@ -547,7 +545,7 @@ const Pricing = ({
     } else {
       console.error("PayWay checkout script not loaded");
     }
-  }
+  };
 
   useEffect(() => {
     console.log(currentUserId, "currentUserId");
@@ -570,7 +568,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const getBrand = async () => {
@@ -582,7 +580,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -600,8 +598,6 @@ const Pricing = ({
       document.getElementById("checkout_button").click();
     }, 100);
   };
-
-
 
   return (
     <>
@@ -629,22 +625,38 @@ const Pricing = ({
           </div>
         </>
       )}
-      {console.log('formData',abaFormData)}
+      {console.log("formData", abaFormData)}
       <form
         id="aba_merchant_request"
         target="aba_webservice"
         method="POST"
         action="https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase"
       >
-        <input type="hidden" name="merchant_id" value={abaFormData.merchant_id || ""} />
+        <input
+          type="hidden"
+          name="merchant_id"
+          value={abaFormData.merchant_id || ""}
+        />
         <input type="hidden" name="tran_id" value={abaFormData.tran_id || ""} />
         <input type="hidden" name="amount" value={abaFormData.amount || ""} />
         <input type="hidden" name="email" value={abaFormData.email || ""} />
-        <input type="hidden" name="payment_option" value={abaFormData.payment_option || ""} />
-        <input type="hidden" name="req_time" value={abaFormData.req_time || ""} />
-        <input type="hidden" name="continue_success_url" value={abaFormData.continue_success_url || ""} />
+        <input
+          type="hidden"
+          name="payment_option"
+          value={abaFormData.payment_option || ""}
+        />
+        <input
+          type="hidden"
+          name="req_time"
+          value={abaFormData.req_time || ""}
+        />
+        <input
+          type="hidden"
+          name="continue_success_url"
+          value={abaFormData.continue_success_url || ""}
+        />
         <input type="hidden" name="hash" value={abaFormData.hash || ""} />
-        <button type="button" id="checkout_button" style={{ display: 'none' }}>
+        <button type="button" id="checkout_button" style={{ display: "none" }}>
           Pay Now
         </button>
       </form>
@@ -667,10 +679,10 @@ const Pricing = ({
                         index === 0
                           ? "plans-wrapper free-plans"
                           : index === 1
-                            ? "plans-wrapper pro-plans"
-                            : index === 2
-                              ? "plans-wrapper premium-plans"
-                              : ""
+                          ? "plans-wrapper pro-plans"
+                          : index === 2
+                          ? "plans-wrapper premium-plans"
+                          : ""
                       }
                     >
                       <div className="priceHeight">
@@ -683,8 +695,8 @@ const Pricing = ({
                                   index === 1
                                     ? "pro-gift giftSize"
                                     : index === 2
-                                      ? "premium-gift giftSize"
-                                      : ""
+                                    ? "premium-gift giftSize"
+                                    : ""
                                 }
                                 onClick={handleClickOpen}
                               >
@@ -796,10 +808,10 @@ const Pricing = ({
                           index === 0
                             ? "choose-btn free-btn"
                             : index === 1
-                              ? "choose-btn pro-btn"
-                              : index === 2
-                                ? "choose-btn premium-btn"
-                                : ""
+                            ? "choose-btn pro-btn"
+                            : index === 2
+                            ? "choose-btn premium-btn"
+                            : ""
                         }
                         onClick={() => choosePlan(index, item, "plan")}
                       >
@@ -899,8 +911,9 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"
-                        }`}
+                      className={`form-control ${
+                        !isValidEmail ? "is-invalid" : "form-control"
+                      }`}
                       onChange={handleEmailChange}
                       placeholder="Email Address"
                       value={email}
@@ -952,8 +965,9 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${!isRecieverValidEmail ? "is-invalid" : "form-control"
-                        }`}
+                      className={`form-control ${
+                        !isRecieverValidEmail ? "is-invalid" : "form-control"
+                      }`}
                       onChange={handleRecieverEmailChange}
                       placeholder="Recipient's Email Address"
                       value={recieverEmail}
@@ -1011,8 +1025,8 @@ const Pricing = ({
                                   index === 0
                                     ? "plans-wrapper pro-plans" // index 0 here corresponds to the original index 1
                                     : index === 1
-                                      ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
-                                      : ""
+                                    ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
+                                    : ""
                                 }
                               >
                                 <div className="priceHeight">
@@ -1131,8 +1145,8 @@ const Pricing = ({
                                     index === 0
                                       ? "choose-btn pro-btn" // index 0 here corresponds to the original index 1
                                       : index === 1
-                                        ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
-                                        : ""
+                                      ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
+                                      : ""
                                   }
                                   onClick={() =>
                                     choosePlan(
