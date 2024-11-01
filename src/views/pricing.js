@@ -58,6 +58,18 @@ const Pricing = ({
     /\s+/g,
     ""
   )}`;
+  useEffect(() => {
+    // Check if the page has already been reloaded
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "true"); // Set flag in localStorage
+      window.location.reload();
+    }
+
+    // Clear the flag when the component unmounts
+    return () => {
+      localStorage.removeItem("reloaded");
+    };
+  }, []);
   console.log("brand_url", brand_url);
   const [receivedData, setReceivedData] = useState(null);
   useEffect(() => {
@@ -581,8 +593,10 @@ const Pricing = ({
   }, [brandData]);
 
   const handleFormSubmit = (dataObject, hash) => {
+    console.log('inside the handleFormsubmit')
     setAbaFormData({ ...dataObject, hash });
     setTimeout(() => {
+      console.log('inside hee')
       document.getElementById("checkout_button").click();
     }, 100);
   };

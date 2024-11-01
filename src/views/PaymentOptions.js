@@ -59,7 +59,27 @@ const PaymentOptions = ({
     setTran_id(resData.data.data.transactionid);
   }
 
-  const freeContinueBtn = () =>{
+  const freeContinueBtn = async () =>{
+    console.log('appliedCouponCode',appliedCouponCode)
+    let planType = selectedPaymentPlan.split(" ")[0]; // Extract plan name
+    console.log('planType',planType)
+    // console.log('planType',planType)
+    const userData = {
+      subscriptionPlan: selectedPaymentPeriod,
+      planName: planType,
+      user_id: userId,
+      transId: tran_id,
+      paymentStatus: "Pending",
+      coupon: appliedCouponCode ? appliedCouponCode : "",
+    };
+
+    console.log('userData',userData)
+
+    const responseSubscription = await ApiHelper.post(
+      API.subscriptionPlan,
+      userData
+    );
+    console.log('responseSubscription',responseSubscription)
     console.log('location.pathname',location.pathname)
     let url;
     if(location.pathname == '/pricing'){
@@ -244,7 +264,9 @@ const PaymentOptions = ({
         )}
 
         {errorMessage && <div className="error-message">{errorMessage}</div>}
-        {finalAmount !== undefined && finalAmount === "0" ?(
+        {console.log('finalAmount',finalAmount)}
+        {console.log(typeof finalAmount)}
+        {finalAmount !== undefined && finalAmount === 0 ?(
           <button className="cntnebtn" onClick={freeContinueBtn}>Continue</button>
         ) : (
           <div className="paymentOptionSection">

@@ -32,6 +32,19 @@ const KidsFormTwo = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
+  useEffect(() => {
+    // Check if the page has already been reloaded
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "true"); // Set flag in localStorage
+      window.location.reload();
+    }
+
+    // Clear the flag when the component unmounts
+    return () => {
+      localStorage.removeItem("reloaded");
+    };
+  }, []);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -50,10 +63,7 @@ const KidsFormTwo = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isRecieverValidEmail, setIsRecieverValidEmail] = useState(true);
-  const [isValidRecieverEmail, setIsValidRecieverEmail] = useState(true);
   const [senderName, setSenderName] = useState("");
-  const [giftRecieverName, setGiftRecieverName] = useState("");
-  const [senderEmail, setSenderEmail] = useState("");
   const [recieverEmail, setRecieverEmail] = useState("");
   const [recieverEmailError, setRecieverEmailError] = useState(false);
   const [senderNameLetterError, setSenderNameLetterError] = useState(false);
@@ -280,47 +290,6 @@ const KidsFormTwo = () => {
     }
   };
 
-  useEffect(() => {
-    if (selectedPaymentOption == "qr") {
-      // setLoading(true);
-      if (giftSub) {
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "qr",
-        'giftsubscription'
-      );
-    } else {
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "qr",
-        'normal'
-      );
-    }
-    } else if (selectedPaymentOption == "card") {
-      // setLoading(true);
-      if (giftSub) {
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "card",
-        'giftsubscription'
-      );
-    } else {
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "card",
-        'normal'
-      );
-    }
-    }
-  }, [selectedPaymentOption]);
 
   useEffect(() => {
     getPricingList();
