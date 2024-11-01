@@ -59,6 +59,19 @@
     <div id="root"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- PayWay Plugin -->
+    <script src="https://checkout.payway.com.kh/plugins/checkout2-0.js"></script>
+
+    <script>
+        $(document).ready(function() {
+          console.log('inside the ready function')
+          $('#checkout_button').click(function() {
+            $('#aba_merchant_request').append($(".payment_option:checked"));
+            console.log('AbaPayway',AbaPayway)
+            AbaPayway.checkout();
+          });
+        });
+      </script>
 
     <script
       data-name="BMC-Widget"
@@ -109,7 +122,6 @@
     </script>
 
     <!-- Load Bootstrap and other scripts -->
-    <script src="https://checkout.payway.com.kh/plugins/checkout2-0.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
