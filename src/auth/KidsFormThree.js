@@ -97,7 +97,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   const [portofolioFile, setPortofolioFile] = useState([]);
   const [resumeFile, setResumeFile] = useState([]);
   const [videoAUdioFile, setVideoAudioFile] = useState([]);
-  const [aboutYou, setAboutYou] = useState([]);
+  const [aboutYou, setAboutYou] = useState("");
   const [features, setFeature] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [instagramFollowers, setInstagramFollowers] = useState("");
