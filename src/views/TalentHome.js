@@ -216,7 +216,7 @@ const TalentHome = () => {
               Welcome To Brands and Talent
             </div>
             <div className="sample-profile" onClick={sampleProfileNavigate}>
-              Go to sample profile
+              View Sample Profile
             </div>
           </div>
 
