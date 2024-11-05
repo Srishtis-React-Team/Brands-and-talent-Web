@@ -58,6 +58,18 @@ const Pricing = ({
     /\s+/g,
     ""
   )}`;
+  useEffect(() => {
+    // Check if the page has already been reloaded
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "true"); // Set flag in localStorage
+      window.location.reload();
+    }
+
+    // Clear the flag when the component unmounts
+    return () => {
+      localStorage.removeItem("reloaded");
+    };
+  }, []);
   console.log("brand_url", brand_url);
   const [receivedData, setReceivedData] = useState(null);
   useEffect(() => {
@@ -455,12 +467,12 @@ const Pricing = ({
   useEffect(() => {
     if (userType == "adults") {
       setSuccess_url(
-        `https://dev.brandsandtalent.com/adult-signup-files-details?${queryString}`
+        `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
       setSuccess_url(brand_url);
     } else {
-      setSuccess_url(`https://dev.brandsandtalent.com/talent-home`);
+      setSuccess_url(`https://brandsandtalent.com/talent-home`);
     }
     console.log("success_url", success_url);
   }, []);
@@ -579,8 +591,10 @@ const Pricing = ({
   }, [brandData]);
 
   const handleFormSubmit = (dataObject, hash) => {
+    console.log('inside the handleFormsubmit')
     setAbaFormData({ ...dataObject, hash });
     setTimeout(() => {
+      console.log('inside hee')
       document.getElementById("checkout_button").click();
     }, 100);
   };
@@ -642,7 +656,7 @@ const Pricing = ({
           value={abaFormData.continue_success_url || ""}
         />
         <input type="hidden" name="hash" value={abaFormData.hash || ""} />
-        <button type="button" id="checkout_button" style={{ display: "none" }}>
+        <button type="button" id="checkout_button" style={{ opacity: "0", height: "1px", width: "1px", position: "absolute" }}>
           Pay Now
         </button>
       </form>
