@@ -32,6 +32,19 @@ const KidsFormTwo = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
+  useEffect(() => {
+    // Check if the page has already been reloaded
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "true"); // Set flag in localStorage
+      window.location.reload();
+    }
+
+    // Clear the flag when the component unmounts
+    return () => {
+      localStorage.removeItem("reloaded");
+    };
+  }, []);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -50,10 +63,7 @@ const KidsFormTwo = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isRecieverValidEmail, setIsRecieverValidEmail] = useState(true);
-  const [isValidRecieverEmail, setIsValidRecieverEmail] = useState(true);
   const [senderName, setSenderName] = useState("");
-  const [giftRecieverName, setGiftRecieverName] = useState("");
-  const [senderEmail, setSenderEmail] = useState("");
   const [recieverEmail, setRecieverEmail] = useState("");
   const [recieverEmailError, setRecieverEmailError] = useState(false);
   const [senderNameLetterError, setSenderNameLetterError] = useState(false);
@@ -96,6 +106,17 @@ const KidsFormTwo = () => {
   };
 
   const editKids = async () => {
+    const userData = {
+      planName: 'Basic',
+      user_id: userId,
+      paymentStatus: "Pending",
+    };
+    console.log('userData',userData)
+    const responseSubscription = await ApiHelper.post(
+      API.subscriptionPlan,
+      userData
+    );
+    console.log("responseSubscription", responseSubscription);
     navigate(`/talent-signup-files-details?userId=${userId}`);
   };
 
@@ -280,47 +301,6 @@ const KidsFormTwo = () => {
     }
   };
 
-  useEffect(() => {
-    if (selectedPaymentOption == "qr") {
-      // setLoading(true);
-      if (giftSub) {
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "qr",
-        'giftsubscription'
-      );
-    } else {
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "qr",
-        'normal'
-      );
-    }
-    } else if (selectedPaymentOption == "card") {
-      // setLoading(true);
-      if (giftSub) {
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "card",
-        'giftsubscription'
-      );
-    } else {
-      handlePayment(
-        selectedAmount,
-        selectedCurrency,
-        `https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`,
-        "card",
-        'normal'
-      );
-    }
-    }
-  }, [selectedPaymentOption]);
 
   useEffect(() => {
     getPricingList();
@@ -494,7 +474,7 @@ const KidsFormTwo = () => {
         <input type="hidden" name="req_time" value={abaFormData.req_time || ""} />
         <input type="hidden" name="continue_success_url" value={abaFormData.continue_success_url || ""} />
         <input type="hidden" name="hash" value={abaFormData.hash || ""} />
-        <button type="button" id="checkout_button" style={{ display: 'none' }}>
+        <button type="button" id="checkout_button" style={{ opacity: "0", height: "1px", width: "1px", position: "absolute" }}>
           Pay Now
         </button>
       </form>
@@ -1091,7 +1071,7 @@ const KidsFormTwo = () => {
           recieverEmail={recieverEmail}
           enquiry={enquiry}
           appliedCouponCode={appliedCouponCode}
-          success_url={`https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`}
+          success_url={`https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`}
         />
       )}
       {checkout && (

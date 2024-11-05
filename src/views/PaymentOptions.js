@@ -3,12 +3,11 @@ import CryptoJS from "crypto-js"; // Ensure CryptoJS is installed
 import "../assets/css/paymentoption.css";
 import qrlogo from "../assets/icons/payment/ic_KHQR_x2.png";
 import cardlogo from "../assets/icons/payment/ic_generic_1x.png";
-import payOptionslogo from "../assets/icons/payment/4Cards_2x.png";
+import payOptionslogo from "../assets/icons/payment/paymentlogos.png";
 import rightArrow from "../assets/icons/payment/right-arrow.svg";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import { useNavigate, useLocation } from "react-router";
-
 const PaymentOptions = ({
   onConfirm,
   responseUrl,
@@ -58,8 +57,28 @@ const PaymentOptions = ({
     setTran_id(resData.data.data.transactionid);
   };
 
-  const freeContinueBtn = () => {
-    console.log("location.pathname", location.pathname);
+  const freeContinueBtn = async () =>{
+    console.log('appliedCouponCode',appliedCouponCode)
+    let planType = selectedPaymentPlan.split(" ")[0]; // Extract plan name
+    console.log('planType',planType)
+    // console.log('planType',planType)
+    const userData = {
+      subscriptionPlan: selectedPaymentPeriod,
+      planName: planType,
+      user_id: userId,
+      transId: tran_id,
+      paymentStatus: "Pending",
+      coupon: appliedCouponCode ? appliedCouponCode : "",
+    };
+
+    console.log('userData',userData)
+
+    const responseSubscription = await ApiHelper.post(
+      API.subscriptionPlan,
+      userData
+    );
+    console.log('responseSubscription',responseSubscription)
+    console.log('location.pathname',location.pathname)
     let url;
     if (location.pathname == "/pricing") {
       url = `/talent-home`;
@@ -177,6 +196,7 @@ const PaymentOptions = ({
         payment_option: type,
         continue_success_url: success_url,
       };
+      console.log('dataObject',dataObject)
       // // Generate the hash using the dataObject and your public key
       const publicKey = "366b35eb-433b-4d8e-8ee9-036bcd3e2e2c";
       const hash = generateHash(dataObject, publicKey);
@@ -258,10 +278,10 @@ const PaymentOptions = ({
         )}
 
         {errorMessage && <div className="error-message">{errorMessage}</div>}
-        {finalAmount !== undefined && finalAmount === "0" ? (
-          <button className="cntnebtn" onClick={freeContinueBtn}>
-            Continue
-          </button>
+        {console.log('finalAmount',finalAmount)}
+        {console.log(typeof finalAmount)}
+        {finalAmount !== undefined && finalAmount === 0 ?(
+          <button className="cntnebtn" onClick={freeContinueBtn}>Continue</button>
         ) : (
           <div className="paymentOptionSection">
             <div
