@@ -63,15 +63,15 @@
     <script src="https://checkout.payway.com.kh/plugins/checkout2-0.js"></script>
 
     <script>
-        $(document).ready(function() {
-          console.log('inside the ready function')
-          $('#checkout_button').click(function() {
-            $('#aba_merchant_request').append($(".payment_option:checked"));
-            console.log('AbaPayway',AbaPayway)
-            AbaPayway.checkout();
-          });
-        });
-      </script>
+        window.onload = function() {
+            console.log('inside the onload function');
+            document.getElementById('checkout_button').addEventListener('click', function() {
+                document.getElementById('aba_merchant_request').append(document.querySelector(".payment_option:checked"));
+                console.log('AbaPayway', AbaPayway);
+                AbaPayway.checkout();
+            });
+        };
+    </script>
 
     <script
       data-name="BMC-Widget"
