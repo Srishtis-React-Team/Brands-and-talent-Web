@@ -106,6 +106,17 @@ const KidsFormTwo = () => {
   };
 
   const editKids = async () => {
+    const userData = {
+      planName: 'Basic',
+      user_id: userId,
+      paymentStatus: "Pending",
+    };
+    console.log('userData',userData)
+    const responseSubscription = await ApiHelper.post(
+      API.subscriptionPlan,
+      userData
+    );
+    console.log("responseSubscription", responseSubscription);
     navigate(`/talent-signup-files-details?userId=${userId}`);
   };
 
@@ -463,7 +474,7 @@ const KidsFormTwo = () => {
         <input type="hidden" name="req_time" value={abaFormData.req_time || ""} />
         <input type="hidden" name="continue_success_url" value={abaFormData.continue_success_url || ""} />
         <input type="hidden" name="hash" value={abaFormData.hash || ""} />
-        <button type="button" id="checkout_button" style={{ display: 'none' }}>
+        <button type="button" id="checkout_button" style={{ opacity: "0", height: "1px", width: "1px", position: "absolute" }}>
           Pay Now
         </button>
       </form>
@@ -1060,7 +1071,7 @@ const KidsFormTwo = () => {
           recieverEmail={recieverEmail}
           enquiry={enquiry}
           appliedCouponCode={appliedCouponCode}
-          success_url={`https://dev.brandsandtalent.com/talent-signup-files-details?userId=${userId}`}
+          success_url={`https://brandsandtalent.com/talent-signup-files-details?userId=${userId}`}
         />
       )}
       {checkout && (

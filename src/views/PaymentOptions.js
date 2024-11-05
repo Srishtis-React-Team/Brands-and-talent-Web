@@ -3,12 +3,11 @@ import CryptoJS from "crypto-js"; // Ensure CryptoJS is installed
 import "../assets/css/paymentoption.css";
 import qrlogo from "../assets/icons/payment/ic_KHQR_x2.png";
 import cardlogo from "../assets/icons/payment/ic_generic_1x.png";
-import payOptionslogo from "../assets/icons/payment/4Cards_2x.png";
+import payOptionslogo from "../assets/icons/payment/paymentlogos.png";
 import rightArrow from "../assets/icons/payment/right-arrow.svg";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";
 import { useNavigate, useLocation } from "react-router";
-
 const PaymentOptions = ({
   onConfirm,
   responseUrl,
@@ -197,6 +196,7 @@ const PaymentOptions = ({
         payment_option: type,
         continue_success_url: success_url,
       };
+      console.log('dataObject',dataObject)
       // // Generate the hash using the dataObject and your public key
       const publicKey = "366b35eb-433b-4d8e-8ee9-036bcd3e2e2c";
       const hash = generateHash(dataObject, publicKey);

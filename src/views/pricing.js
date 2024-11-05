@@ -467,12 +467,12 @@ const Pricing = ({
   useEffect(() => {
     if (userType == "adults") {
       setSuccess_url(
-        `https://dev.brandsandtalent.com/adult-signup-files-details?${queryString}`
+        `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
       setSuccess_url(brand_url);
     } else {
-      setSuccess_url(`https://dev.brandsandtalent.com/talent-home`);
+      setSuccess_url(`https://brandsandtalent.com/talent-home`);
     }
     console.log("success_url", success_url);
   }, []);
@@ -656,7 +656,7 @@ const Pricing = ({
           value={abaFormData.continue_success_url || ""}
         />
         <input type="hidden" name="hash" value={abaFormData.hash || ""} />
-        <button type="button" id="checkout_button" style={{ display: "none" }}>
+        <button type="button" id="checkout_button" style={{ opacity: "0", height: "1px", width: "1px", position: "absolute" }}>
           Pay Now
         </button>
       </form>
