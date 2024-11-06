@@ -2176,7 +2176,7 @@ const CreateJobs = () => {
                             <label className="form-label">State</label>
                             <Select
                               placeholder="Select state..."
-                              options={stateList.map((state) => ({
+                              options={stateList?.map((state) => ({
                                 value: state.stateId, // or whatever unique identifier you want to use
                                 label: state.name,
                               }))}
@@ -2199,7 +2199,7 @@ const CreateJobs = () => {
                             <label className="form-label">City</label>
                             <Select
                               placeholder="Select City..."
-                              options={cityList.map((city) => ({
+                              options={cityList?.map((city) => ({
                                 value: city.cityId, // or whatever unique identifier you want to use
                                 label: city.name,
                               }))}
@@ -2273,7 +2273,7 @@ const CreateJobs = () => {
                               <option value="" disabled selected>
                                 Select Employment Type
                               </option>
-                              {jobTypeOptions.map((option, index) => (
+                              {jobTypeOptions?.map((option, index) => (
                                 <option key={index} value={option}>
                                   {option}
                                 </option>
@@ -2353,7 +2353,7 @@ const CreateJobs = () => {
                                   freeSolo
                                   id="free-solo-2-demo"
                                   disableClearable
-                                  options={professionList.map(
+                                  options={professionList?.map(
                                     (option) => option.value
                                   )}
                                   value={skillInputValue}
@@ -2392,7 +2392,7 @@ const CreateJobs = () => {
                           </div>
 
                           <div className="skills-section">
-                            {skills.map((skill, index) => (
+                            {skills?.map((skill, index) => (
                               <div className="skills-wrapper" key={index}>
                                 <div className="skill-text"> {skill}</div>
                                 <i
@@ -2925,7 +2925,7 @@ const CreateJobs = () => {
 
                           {showQuestions && (
                             <div className="kids-form-section col-md-6 mb-3">
-                              {questions.map((question, index) => (
+                              {questions?.map((question, index) => (
                                 <div className=" mb-2" key={index}>
                                   <label className="form-label mb-2">{`Question ${
                                     index + 1
@@ -2975,7 +2975,7 @@ const CreateJobs = () => {
                               Benefits <span className="mandatory">*</span>
                             </label>
                             <div className="benefits-wrapper">
-                              {benefitsList.map((benefit, index) => (
+                              {benefitsList?.map((benefit, index) => (
                                 <label
                                   className="screening-questions-label"
                                   key={index}
@@ -3180,14 +3180,16 @@ const CreateJobs = () => {
                                           <option value="" disabled selected>
                                             Select Currency
                                           </option>
-                                          {currencyList.map((option, index) => (
-                                            <option
-                                              key={index}
-                                              value={option?.value}
-                                            >
-                                              {option?.title}
-                                            </option>
-                                          ))}
+                                          {currencyList?.map(
+                                            (option, index) => (
+                                              <option
+                                                key={index}
+                                                value={option?.value}
+                                              >
+                                                {option?.title}
+                                              </option>
+                                            )
+                                          )}
                                         </select>
                                       </div>
                                     </div>
@@ -3209,7 +3211,7 @@ const CreateJobs = () => {
                                           <option value="" disabled selected>
                                             Select Frequency
                                           </option>
-                                          {frequencyOptions.map(
+                                          {frequencyOptions?.map(
                                             (option, index) => (
                                               <option
                                                 key={index}
@@ -3278,14 +3280,16 @@ const CreateJobs = () => {
                                           <option value="" disabled selected>
                                             Select Currency
                                           </option>
-                                          {currencyList.map((option, index) => (
-                                            <option
-                                              key={index}
-                                              value={option?.value}
-                                            >
-                                              {option?.title}
-                                            </option>
-                                          ))}
+                                          {currencyList?.map(
+                                            (option, index) => (
+                                              <option
+                                                key={index}
+                                                value={option?.value}
+                                              >
+                                                {option?.title}
+                                              </option>
+                                            )
+                                          )}
                                         </select>
                                       </div>
                                     </div>
@@ -3306,7 +3310,7 @@ const CreateJobs = () => {
                                           <option value="" disabled selected>
                                             Select Frequency
                                           </option>
-                                          {frequencyOptions.map(
+                                          {frequencyOptions?.map(
                                             (option, index) => (
                                               <option
                                                 key={index}
@@ -3453,7 +3457,7 @@ const CreateJobs = () => {
                                             <option value="" disabled selected>
                                               Select Currency
                                             </option>
-                                            {currencyList.map(
+                                            {currencyList?.map(
                                               (option, index) => (
                                                 <option
                                                   key={index}
@@ -3483,7 +3487,7 @@ const CreateJobs = () => {
                                             <option value="" disabled selected>
                                               Select Frequency
                                             </option>
-                                            {frequencyOptions.map(
+                                            {frequencyOptions?.map(
                                               (option, index) => (
                                                 <option
                                                   key={index}
@@ -3551,7 +3555,7 @@ const CreateJobs = () => {
                                             <option value="" disabled selected>
                                               Select Currency
                                             </option>
-                                            {currencyList.map(
+                                            {currencyList?.map(
                                               (option, index) => (
                                                 <option
                                                   key={index}
@@ -3583,7 +3587,7 @@ const CreateJobs = () => {
                                             <option value="" disabled selected>
                                               Select Frequency
                                             </option>
-                                            {frequencyOptions.map(
+                                            {frequencyOptions?.map(
                                               (option, index) => (
                                                 <option
                                                   key={index}
@@ -3702,7 +3706,7 @@ const CreateJobs = () => {
                     <option value="" disabled selected>
                       Select
                     </option>
-                    {[brandData?.brandName].map((option, index) => (
+                    {[brandData?.brandName]?.map((option, index) => (
                       <option key={index} value={option}>
                         {option}
                       </option>
@@ -3881,7 +3885,7 @@ const CreateJobs = () => {
 
                 {portofolioFile && (
                   <>
-                    {portofolioFile.map((item, index) => {
+                    {portofolioFile?.map((item, index) => {
                       return (
                         <>
                           <div key={index} className="uploaded-file-wrapper">
@@ -4022,7 +4026,7 @@ const CreateJobs = () => {
                             </label>
                             <Select
                               placeholder="Select Previous Job..."
-                              options={allJobsList.map((job) => ({
+                              options={allJobsList?.map((job) => ({
                                 value: job._id, // or whatever unique identifier you want to use
                                 label: job.jobTitle,
                                 type: job?.type,

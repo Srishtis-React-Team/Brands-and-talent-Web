@@ -472,7 +472,7 @@ const AdultSignup = () => {
                   {adultPassword && !passwordStatus && (
                     <div
                       className="invalid-fields password-error-box"
-                      style={{ width: "420px" }}
+                      style={{ width: "width: 350px;" }}
                     >
                       Your password must be at least 8 characters long and
                       include at least: 1 capital letter (A, B, C...), 1 small

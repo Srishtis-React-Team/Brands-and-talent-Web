@@ -193,7 +193,7 @@ const BrandHome = () => {
       >
         <div className="brand-content-main my-2">
           <div className="brand-home-main row">
-            <div className="brand-home-left-container col-md-8 col-lg-9">
+            <div className="brand-home-left-container col-md-8 col-lg-8">
               <div className="brand-home-one">
                 <div className="row">
                   <div className="col-md-8 col-lg-9">
@@ -385,7 +385,7 @@ const BrandHome = () => {
               )}
             </div>
 
-            <div className="brand-home-right-container col-md-4 col-lg-3">
+            <div className="brand-home-right-container col-md-4 col-lg-4">
               <div className="contact-section-main">
                 <div className="contact-wrapper">
                   <div className="contact-logo">
