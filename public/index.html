@@ -1,61 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="icon" href="./favicon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
     <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css"
-        rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css"
+      rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.4.0/remixicon.css"
-        crossorigin=""
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.4.0/remixicon.css"
+      crossorigin=""
     />
     <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
     />
     <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
     />
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
     />
     <title>Brands & Talent | Global creator-booking platform</title>
     <style>
-        /* Style for positioning the Buy Me a Coffee widget */
-        #bmc-wbtn {
-            position: fixed;
-            bottom: inherit; 
-            top: 95px !important;
-            right: 10px !important;
-            background-color: #c2124b !important;
-        }
+      /* Style for positioning the Buy Me a Coffee widget */
+      #bmc-wbtn {
+        position: fixed;
+        bottom: inherit;
+        top: 95px !important;
+        right: 10px !important;
+        background-color: #c2124b !important;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -63,14 +66,18 @@
     <script src="https://checkout.payway.com.kh/plugins/checkout2-0.js"></script>
 
     <script>
-        window.onload = function() {
-            console.log('inside the onload function');
-            document.getElementById('checkout_button').addEventListener('click', function() {
-                document.getElementById('aba_merchant_request').append(document.querySelector(".payment_option:checked"));
-                console.log('AbaPayway', AbaPayway);
-                AbaPayway.checkout();
-            });
-        };
+      window.onload = function () {
+        console.log("inside the onload function");
+        document
+          .getElementById("checkout_button")
+          ?.addEventListener("click", function () {
+            document
+              .getElementById("aba_merchant_request")
+              .append(document.querySelector(".payment_option:checked"));
+            console.log("AbaPayway", AbaPayway);
+            AbaPayway.checkout();
+          });
+      };
     </script>
 
     <script
@@ -83,48 +90,55 @@
       data-position="Right"
       data-x_margin="18"
       data-y_margin="18"
-    ></script>  
+    ></script>
 
     <script>
-        // Function to check if the current URL matches the excluded page
-        function isExcludedPage() {
-            return window.location.pathname.includes('/pricingadmin');
-        }
+      // Function to check if the current URL matches the excluded page
+      function isExcludedPage() {
+        return window.location.pathname.includes("/pricingadmin");
+      }
 
-        // Load scripts only if not on the excluded page
-        if (!isExcludedPage()) {
-            // Load the Buy Me a Coffee widget
-            var bmcWidget = document.createElement('script');
-            bmcWidget.setAttribute('data-name', 'BMC-Widget');
-            bmcWidget.setAttribute('data-cfasync', 'false');
-            bmcWidget.src = 'https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js';
-            bmcWidget.setAttribute('data-id', 'brandsandtalent');
-            bmcWidget.setAttribute('data-description', 'Support me on Buy me a coffee!');
-            bmcWidget.setAttribute('data-color', '#FF5F5F');
-            bmcWidget.setAttribute('data-position', 'Right');
-            bmcWidget.setAttribute('data-x_margin', '18');
-            bmcWidget.setAttribute('data-y_margin', '18');
-            document.body.appendChild(bmcWidget);
+      // Load scripts only if not on the excluded page
+      if (!isExcludedPage()) {
+        // Load the Buy Me a Coffee widget
+        var bmcWidget = document.createElement("script");
+        bmcWidget.setAttribute("data-name", "BMC-Widget");
+        bmcWidget.setAttribute("data-cfasync", "false");
+        bmcWidget.src =
+          "https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js";
+        bmcWidget.setAttribute("data-id", "brandsandtalent");
+        bmcWidget.setAttribute(
+          "data-description",
+          "Support me on Buy me a coffee!"
+        );
+        bmcWidget.setAttribute("data-color", "#FF5F5F");
+        bmcWidget.setAttribute("data-position", "Right");
+        bmcWidget.setAttribute("data-x_margin", "18");
+        bmcWidget.setAttribute("data-y_margin", "18");
+        document.body.appendChild(bmcWidget);
 
-            // Load Tawk.to script
-            var Tawk_API = Tawk_API || {},
-                Tawk_LoadStart = new Date();
-            (function () {
-                var s1 = document.createElement("script"),
-                    s0 = document.getElementsByTagName("script")[0];
-                s1.async = true;
-                s1.src = "https://embed.tawk.to/661937541ec1082f04e199f9/1hr9808o1";
-                s1.charset = "UTF-8";
-                s1.setAttribute("crossorigin", "*");
-                s0.parentNode.insertBefore(s1, s0);
-            })();
-        }
+        // Load Tawk.to script
+        var Tawk_API = Tawk_API || {},
+          Tawk_LoadStart = new Date();
+        (function () {
+          var s1 = document.createElement("script"),
+            s0 = document.getElementsByTagName("script")[0];
+          s1.async = true;
+          s1.src = "https://embed.tawk.to/661937541ec1082f04e199f9/1hr9808o1";
+          s1.charset = "UTF-8";
+          s1.setAttribute("crossorigin", "*");
+          s0.parentNode.insertBefore(s1, s0);
+        })();
+      }
     </script>
 
     <!-- Load Bootstrap and other scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script
+      src="https://platform.twitter.com/widgets.js"
+      charset="utf-8"
+    ></script>
     <script src="https://accounts.google.com/gsi/client"></script>
-</body>
+  </body>
 </html>

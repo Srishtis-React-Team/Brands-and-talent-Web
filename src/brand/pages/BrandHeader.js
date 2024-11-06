@@ -33,38 +33,38 @@ const BrandHeader = ({ toggleMenu, myState, from }) => {
   const [currentUserId, setcurrentUserId] = useState(null);
   const sliderIcon = require("../../assets/icons/sliders.png");
 
-  useEffect(() => {
-    const handleBellIconClick = (event) => {
-      if (event.target.closest(".notification_icon")) {
-        const dropdown = document.querySelector(".notification-dropdown");
-        dropdown.classList.toggle("active");
-      }
-    };
-    const handleCloseIconClick = (event) => {
-      if (event.target.closest(".notification-close")) {
-        const dropdown = document.querySelector(".notification-dropdown");
-        dropdown.classList.remove("active");
-      }
-    };
-    const handleCloseDropdownOutsideClick = (event) => {
-      const dropdown = document.querySelector(".notification-dropdown");
-      if (
-        !event.target.closest(".notification-bell-wrapper") &&
-        dropdown?.classList?.contains("active")
-      ) {
-        dropdown?.classList?.remove("active");
-      }
-    };
+  // useEffect(() => {
+  //   const handleBellIconClick = (event) => {
+  //     if (event.target.closest(".notification_icon")) {
+  //       const dropdown = document.querySelector(".notification-dropdown");
+  //       dropdown.classList.toggle("active");
+  //     }
+  //   };
+  //   const handleCloseIconClick = (event) => {
+  //     if (event.target.closest(".notification-close")) {
+  //       const dropdown = document.querySelector(".notification-dropdown");
+  //       dropdown.classList.remove("active");
+  //     }
+  //   };
+  //   const handleCloseDropdownOutsideClick = (event) => {
+  //     const dropdown = document.querySelector(".notification-dropdown");
+  //     if (
+  //       !event.target.closest(".notification-bell-wrapper") &&
+  //       dropdown?.classList?.contains("active")
+  //     ) {
+  //       dropdown?.classList?.remove("active");
+  //     }
+  //   };
 
-    document.addEventListener("click", handleBellIconClick);
-    document.addEventListener("click", handleCloseIconClick);
-    document.addEventListener("click", handleCloseDropdownOutsideClick);
-    return () => {
-      document.removeEventListener("click", handleBellIconClick);
-      document.removeEventListener("click", handleCloseIconClick);
-      document.removeEventListener("click", handleCloseDropdownOutsideClick);
-    };
-  }, []);
+  //   document.addEventListener("click", handleBellIconClick);
+  //   document.addEventListener("click", handleCloseIconClick);
+  //   document.addEventListener("click", handleCloseDropdownOutsideClick);
+  //   return () => {
+  //     document.removeEventListener("click", handleBellIconClick);
+  //     document.removeEventListener("click", handleCloseIconClick);
+  //     document.removeEventListener("click", handleCloseDropdownOutsideClick);
+  //   };
+  // }, []);
 
   const logout = () => {
     navigate("/");
