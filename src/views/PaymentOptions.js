@@ -30,7 +30,7 @@ const PaymentOptions = ({
   appliedCouponCode,
   success_url,
 }) => {
-  console.log("-----111----", success_url);
+  console.log("ookoo", success_url);
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [amount, setAmount] = useState("");

@@ -70,7 +70,6 @@ const Pricing = ({
       localStorage.removeItem("reloaded");
     };
   }, []);
-  console.log("brand_url", brand_url);
   const [receivedData, setReceivedData] = useState(null);
   useEffect(() => {
     if (location.state && location.state.data) {
@@ -281,6 +280,7 @@ const Pricing = ({
   };
 
   const editKids = async () => {
+    console.log('jjkkdkdkkd')
     console.log("currentPath", currentPath);
     const userId = localStorage.getItem("userId");
     if (currentPath == "/pricing") {
@@ -288,6 +288,17 @@ const Pricing = ({
       navigate(``);
     } else {
       console.log("else");
+      const userData = {
+        planName: 'Basic',
+        user_id: userId,
+        paymentStatus: "Pending",
+      };
+      console.log('userData',userData)
+      const responseSubscription = await ApiHelper.post(
+        API.subscriptionPlan,
+        userData
+      );
+      console.log("responseSubscription", responseSubscription);
       navigate(`/adult-signup-files-details?${userId}`);
     }
   };
@@ -470,6 +481,7 @@ const Pricing = ({
         `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
+      console.log('brand_url',brand_url)
       setSuccess_url(brand_url);
     } else {
       setSuccess_url(`https://brandsandtalent.com/talent-home`);

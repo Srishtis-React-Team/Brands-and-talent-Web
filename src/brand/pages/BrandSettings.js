@@ -700,7 +700,7 @@ const BrandSettings = () => {
             <CustomTabPanel value={valueTabs} index={2}>
               {/* Manage Account */}
               {console.log("brandDetails", brandDetails)}
-              <div style={containerStyle} className="cardHeight">
+              {/* <div style={containerStyle} className="cardHeight">
                 <div style={cardStyle}>
                   <h2 className="hd-sett" style={headerStyle}>Transaction Details</h2>
                   <div style={listStyle}>
@@ -738,7 +738,145 @@ const BrandSettings = () => {
                     </div>
                   </div>
                 </div>
+              </div> */}
+              <div className="edit-basicdetails-section-main">
+                <div className="payment-details-card">
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Transaction Date :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {brandDetails?.transactionDate}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Expiry Date :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {brandDetails?.expirationDate}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Status :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {brandDetails?.paymentStatus}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Currency :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {brandDetails?.paymentCurreny}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Amount :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {brandDetails?.paymentAmount}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Period :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {brandDetails?.subscriptionPlan}
+                    </span>
+                  </h6>
+                  <h6
+                    style={{
+                      fontSize: "14px",
+                      color: "#afafaf",
+                      fontWeight: "600",
+                    }}
+                    className="listsub"
+                  >
+                    Payment Plan :{" "}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#afafaf",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {brandDetails?.planName}
+                    </span>
+                  </h6>
+                </div>
               </div>
+
             </CustomTabPanel>
           </Box>
         </div>
