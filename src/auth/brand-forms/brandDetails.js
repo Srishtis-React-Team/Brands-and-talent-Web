@@ -178,26 +178,32 @@ const BrandDetails = () => {
   useEffect(() => {}, [openPopUp]);
 
   const brandsSignup = async () => {
-    if (brandName === "") {
+    console.log("brandName:", brandName);
+    console.log("phoneNumber:", phoneNumber);
+    console.log("zipCode:", zipCode);
+    console.log("yourName:", yourName);
+    console.log("mobileValidationError:", mobileValidationError);
+
+    if (!brandName) {
       setbrandNameError(true);
     }
-    if (phoneNumber === "") {
+    if (!phoneNumber) {
       setPhoneNumberError(true);
     }
-    if (zipCode === "") {
+    if (!zipCode) {
       setZipCodeError(true);
     }
-    if (address === "") {
+    if (!address) {
       setAddressError(true);
     }
-    if (yourName === "") {
+    if (!yourName) {
       setYourNameError(true);
     }
     if (
-      brandName !== "" &&
-      phoneNumber !== "" &&
-      zipCode !== "" &&
-      yourName !== "" &&
+      brandName &&
+      phoneNumber &&
+      zipCode &&
+      yourName &&
       !mobileValidationError
     ) {
       const formData = {
@@ -207,7 +213,7 @@ const BrandDetails = () => {
         brandZipCode: zipCode,
         howHearAboutAs: hearAboutUs,
         address: address,
-        publicUrl: brandName.replace(/ /g, "-"),
+        publicUrl: brandName?.replace(/ /g, "-"),
         yourFullName: yourName,
         brandType: brandType,
         brandCountry: country,

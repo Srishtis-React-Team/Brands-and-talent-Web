@@ -174,7 +174,7 @@ const BrandLogo = () => {
   };
 
   const handlePortofolioDelete = (index) => {
-    setPortofolioFile(null);
+    setPortofolioFile([]);
   };
 
   const brandsSignup = async () => {

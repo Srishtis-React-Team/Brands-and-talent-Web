@@ -569,8 +569,10 @@ const BrandSignup = React.memo((props) => {
                   <div className="media-text">Google</div>
                 </div> */}
             </div>
+
             <div className="signup-terms">
-              By registering you confirm that you accept the 
+              By registering you confirm that you accept the Brands & Talent
+              (BT)
             </div>
             <div className="signup-terms-linetwo">
               <span onClick={() => handleCondition("terms")}>

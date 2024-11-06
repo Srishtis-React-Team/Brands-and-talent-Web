@@ -1030,7 +1030,7 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
         </div>
         <div className="dialog-body spaceTops">
           <div className="kidsform-one container">
-            <div className="kids-wrapper row">
+            <div className="kids-wrapper row kids-form-three-wrapper">
               <div className="kids-img col-md-4 col-lg-3">
                 <div className="fixImgs">
                   <img src={kidsImage} className="kids-image-sticky" alt="" />
