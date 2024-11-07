@@ -741,139 +741,155 @@ const BrandSettings = () => {
               </div> */}
               <div className="edit-basicdetails-section-main">
                 <div className="payment-details-card">
+                  {brandDetails?.transactionDate ?
                   <h6
+                  style={{
+                    fontSize: "14px",
+                    color: "#afafaf",
+                    fontWeight: "600",
+                  }}
+                  className="listsub"
+                >
+                  Transaction Date :{" "}
+                  <span
                     style={{
                       fontSize: "14px",
                       color: "#afafaf",
                       fontWeight: "600",
                     }}
-                    className="listsub"
                   >
-                    Transaction Date :{" "}
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#afafaf",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {brandDetails?.transactionDate}
-                    </span>
-                  </h6>
+                    {brandDetails?.transactionDate}
+                  </span>
+                </h6>
+                  :
+                  ''}
+                  {brandDetails?.expirationDate?
                   <h6
+                  style={{
+                    fontSize: "14px",
+                    color: "#afafaf",
+                    fontWeight: "600",
+                  }}
+                  className="listsub"
+                >
+                  Expiry Date :{" "}
+                  <span
                     style={{
                       fontSize: "14px",
                       color: "#afafaf",
                       fontWeight: "600",
                     }}
-                    className="listsub"
                   >
-                    Expiry Date :{" "}
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#afafaf",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {brandDetails?.expirationDate}
-                    </span>
-                  </h6>
+                    {brandDetails?.expirationDate}
+                  </span>
+                </h6>
+                  :''}
+                  {brandDetails?.paymentStatus?
                   <h6
+                  style={{
+                    fontSize: "14px",
+                    color: "#afafaf",
+                    fontWeight: "600",
+                  }}
+                  className="listsub"
+                >
+                  Payment Status :{" "}
+                  <span
                     style={{
                       fontSize: "14px",
                       color: "#afafaf",
                       fontWeight: "600",
                     }}
-                    className="listsub"
                   >
-                    Payment Status :{" "}
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#afafaf",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {brandDetails?.paymentStatus}
-                    </span>
-                  </h6>
+                    {brandDetails?.paymentStatus}
+                  </span>
+                </h6>
+                  :''}
+                  {brandDetails?.paymentCurreny?
                   <h6
+                  style={{
+                    fontSize: "14px",
+                    color: "#afafaf",
+                    fontWeight: "600",
+                  }}
+                  className="listsub"
+                >
+                  Payment Currency :{" "}
+                  <span
                     style={{
                       fontSize: "14px",
                       color: "#afafaf",
                       fontWeight: "600",
                     }}
-                    className="listsub"
                   >
-                    Payment Currency :{" "}
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#afafaf",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {brandDetails?.paymentCurreny}
-                    </span>
-                  </h6>
+                    {brandDetails?.paymentCurreny}
+                  </span>
+                </h6>
+                  :''}
+                  {brandDetails?.paymentAmount?
                   <h6
+                  style={{
+                    fontSize: "14px",
+                    color: "#afafaf",
+                    fontWeight: "600",
+                  }}
+                  className="listsub"
+                >
+                  Payment Amount :{" "}
+                  <span
                     style={{
                       fontSize: "14px",
                       color: "#afafaf",
                       fontWeight: "600",
                     }}
-                    className="listsub"
                   >
-                    Payment Amount :{" "}
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#afafaf",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {brandDetails?.paymentAmount}
-                    </span>
-                  </h6>
+                    {brandDetails?.paymentAmount}
+                  </span>
+                </h6>
+                  :''}
+                  {brandDetails?.subscriptionPlan?
                   <h6
+                  style={{
+                    fontSize: "14px",
+                    color: "#afafaf",
+                    fontWeight: "600",
+                  }}
+                  className="listsub"
+                >
+                  Payment Period :{" "}
+                  <span
                     style={{
                       fontSize: "14px",
                       color: "#afafaf",
                       fontWeight: "600",
                     }}
-                    className="listsub"
                   >
-                    Payment Period :{" "}
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#afafaf",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {brandDetails?.subscriptionPlan}
-                    </span>
-                  </h6>
+                    {brandDetails?.subscriptionPlan}
+                  </span>
+                </h6>
+                  :''}
+                  {brandDetails?.planName?
                   <h6
+                  style={{
+                    fontSize: "14px",
+                    color: "#afafaf",
+                    fontWeight: "600",
+                  }}
+                  className="listsub"
+                >
+                  Payment Plan :{" "}
+                  <span
                     style={{
                       fontSize: "14px",
                       color: "#afafaf",
                       fontWeight: "600",
                     }}
-                    className="listsub"
                   >
-                    Payment Plan :{" "}
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#afafaf",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {brandDetails?.planName}
-                    </span>
-                  </h6>
+                    {brandDetails?.planName}
+                  </span>
+                </h6>
+                  :''}
+                  
                 </div>
               </div>
 

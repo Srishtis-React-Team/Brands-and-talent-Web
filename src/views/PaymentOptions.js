@@ -40,7 +40,10 @@ const PaymentOptions = ({
   const [tran_id, setTran_id] = useState("");
   const [payOption, setPayOption] = useState(false);
   const userId = localStorage.getItem("userId");
+  const currentUser = localStorage.getItem("currentUser");
   const userEmail = localStorage.getItem("userEmail");
+  const currentUserType = localStorage.getItem("currentUserType");
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -61,7 +64,6 @@ const PaymentOptions = ({
     console.log('appliedCouponCode',appliedCouponCode)
     let planType = selectedPaymentPlan.split(" ")[0]; // Extract plan name
     console.log('planType',planType)
-    // console.log('planType',planType)
     const userData = {
       subscriptionPlan: selectedPaymentPeriod,
       planName: planType,
@@ -149,7 +151,7 @@ const PaymentOptions = ({
       if (giftSub) {
         plan = "giftsubscription";
       }
-
+      let publicUrl;
       if (plan == "giftsubscription") {
         const giftObj = {
           senderName: senderName,
@@ -170,23 +172,28 @@ const PaymentOptions = ({
 
         const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
       } else {
+        console.log('inside the else condision--')
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
           planName: planType ? planType : selectedPaymentPlan,
-          user_id: userId,
+          user_id: userId ? userId : currentUser,
           transId: tran_id,
           paymentStatus: "Pending",
           coupon: appliedCouponCode ? appliedCouponCode : "",
         };
+
+        console.log('userData--+',userData)
 
         const responseSubscription = await ApiHelper.post(
           API.subscriptionPlan,
           userData
         );
         console.log("responseSubscription", responseSubscription);
+        publicUrl = responseSubscription.data.publicUrl;
+        console.log('publicUrl',publicUrl)
       }
 
-      // Create a data object for hash generation
+      // // Create a data object for hash generation
       const dataObject = {
         req_time: getFormattedTimestamp(),
         merchant_id: "brandsandtalent",
@@ -194,7 +201,7 @@ const PaymentOptions = ({
         amount: finalAmount ? finalAmount : amount,
         email: userEmail,
         payment_option: type,
-        continue_success_url: success_url,
+        continue_success_url: currentUserType == 'brand' ? `https://brandsandtalent.com/client/${publicUrl}` :success_url,
       };
       console.log('dataObject',dataObject)
       // // Generate the hash using the dataObject and your public key

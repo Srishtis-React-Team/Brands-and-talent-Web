@@ -82,7 +82,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
   useEffect(() => {
     // Extract the last part of the URL (i.e., 'peter')
     const pathParts = location.pathname.split("/");
-    const name = pathParts[pathParts.length - 1];
+    const name = pathParts[pathParts?.length - 1];
     console.log(name, "name");
     getDataByPublicUrl(name);
   }, [location]);
@@ -181,7 +181,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
           <div className="profImg">
             {brandData && (
               <>
-                {brandData?.brandImage.length > 0 && (
+                {brandData?.brandImage?.length > 0 && (
                   <img
                     className="profile-img"
                     src={`${API.userFilePath}${brandData?.brandImage[0]?.fileData}`}

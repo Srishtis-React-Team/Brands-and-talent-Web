@@ -42,6 +42,7 @@ const Pricing = ({
   setSelectedPaymentStatus,
   setIsPaymentClicked,
   userType,
+  receivedData
 }) => {
   const { currentUserId, currentUserImage, currentUserType, avatarImage } =
     CurrentUser();
@@ -70,15 +71,15 @@ const Pricing = ({
       localStorage.removeItem("reloaded");
     };
   }, []);
-  const [receivedData, setReceivedData] = useState(null);
-  useEffect(() => {
-    if (location.state && location.state.data) {
-      setReceivedData(location.state.data);
-    }
-  }, [location.state]);
-  useEffect(() => {
-    console.log(receivedData, "receivedData");
-  }, [receivedData]);
+  // const [receivedData, setReceivedData] = useState(null);
+  // useEffect(() => {
+  //   if (location.state && location.state.data) {
+  //     setReceivedData(location.state.data);
+  //   }
+  // }, [location.state]);
+  // useEffect(() => {
+  //   console.log(receivedData, "receivedData");
+  // }, [receivedData]);
 
   const paramsValues = window.location.search;
 
@@ -282,13 +283,10 @@ const Pricing = ({
   const editKids = async () => {
     console.log('jjkkdkdkkd')
     console.log("currentPath", currentPath);
-    const userId = localStorage.getItem("userId");
-    if (currentPath == "/pricing") {
-      console.log("if");
-      navigate(``);
-    } else {
-      console.log("else");
-      const userData = {
+    const userId = localStorage.getItem("currentUser");
+    console.log('userId',userId)
+    if(userType == 'adults'){
+        const userData = {
         planName: 'Basic',
         user_id: userId,
         paymentStatus: "Pending",
@@ -298,9 +296,50 @@ const Pricing = ({
         API.subscriptionPlan,
         userData
       );
-      console.log("responseSubscription", responseSubscription);
+      console.log("responseSubscription--", responseSubscription);
+      console.log('receivedData',receivedData)
       navigate(`/adult-signup-files-details?${userId}`);
+      // navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+      //   state: { data: receivedData },
+      // });
+    }else{
+        const userData = {
+        planName: 'Basic',
+        user_id: userId,
+        paymentStatus: "Pending",
+      };
+      console.log('userData',userData)
+      const responseSubscription = await ApiHelper.post(
+        API.subscriptionPlan,
+        userData
+      );
+      console.log("responseSubscription--", responseSubscription);
+      console.log('receivedData',receivedData)
+      navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+        state: { data: receivedData },
+      });
     }
+    // if (currentPath == "/pricing") {
+    //   console.log("if");
+    //   navigate(``);
+    // } else {
+    //   console.log("else");
+    //   const userData = {
+    //     planName: 'Basic',
+    //     user_id: userId,
+    //     paymentStatus: "Pending",
+    //   };
+    //   console.log('userData',userData)
+    //   const responseSubscription = await ApiHelper.post(
+    //     API.subscriptionPlan,
+    //     userData
+    //   );
+    //   console.log("responseSubscription--", responseSubscription);
+    //   console.log('receivedData',receivedData)
+    //   navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+    //     state: { data: receivedData },
+    //   });
+    // }
   };
 
   const choosePlan = async (index, item, from) => {

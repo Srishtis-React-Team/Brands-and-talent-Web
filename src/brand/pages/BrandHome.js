@@ -63,7 +63,7 @@ const BrandHome = () => {
   useEffect(() => {
     // Extract the last part of the URL (i.e., 'peter')
     const pathParts = location.pathname.split("/");
-    const name = pathParts[pathParts.length - 1];
+    const name = pathParts[pathParts?.length - 1];
     getDataByPublicUrl(name);
   }, [location]);
 
@@ -408,7 +408,7 @@ const BrandHome = () => {
                 <div className="my-plan-contents">
                   <p className="my-plan">My Plan</p>
                   <div className="my-plan-features scroll">
-                    {filteresPricingList && filteresPricingList.length > 0 && (
+                    {filteresPricingList && filteresPricingList?.length > 0 && (
                       <>
                         {filteresPricingList?.map((item, index) => {
                           return (
