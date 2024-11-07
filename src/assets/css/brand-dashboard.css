@@ -25,10 +25,10 @@
 }
 .brand-sidebar {
   position: fixed;
-  top: 5%;
+  top: 14%;
   width: 8%;
   height: 100%;
-  padding: 3rem 0;
+  padding: 10px 0;
   background-color: #fff;
   z-index: 100;
   transition: left 0.4s;
