@@ -758,7 +758,7 @@ const BrandSettings = () => {
                       fontWeight: "600",
                     }}
                   >
-                    {brandDetails?.transactionDate}
+                    {brandDetails.transactionDate.replace("T", " T")}
                   </span>
                 </h6>
                   :
@@ -780,7 +780,7 @@ const BrandSettings = () => {
                       fontWeight: "600",
                     }}
                   >
-                    {brandDetails?.expirationDate}
+                    {brandDetails?.expirationDate.replace("T", " T")}
                   </span>
                 </h6>
                   :''}
