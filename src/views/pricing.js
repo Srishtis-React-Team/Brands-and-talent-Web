@@ -61,14 +61,14 @@ const Pricing = ({
   )}`;
   useEffect(() => {
     // Check if the page has already been reloaded
-    if (!localStorage.getItem("reloaded")) {
-      localStorage.setItem("reloaded", "true"); // Set flag in localStorage
+    if (!localStorage.getItem("reloades")) {
+      localStorage.setItem("reloades", "true"); // Set flag in localStorage
       window.location.reload();
     }
 
     // Clear the flag when the component unmounts
     return () => {
-      localStorage.removeItem("reloaded");
+      localStorage.removeItem("reloades");
     };
   }, []);
   // const [receivedData, setReceivedData] = useState(null);
@@ -258,7 +258,7 @@ const Pricing = ({
     console.log(pricingList, "pricingList");
   }, [pricingList]);
 
-  useEffect(() => {}, [comment]);
+  useEffect(() => { }, [comment]);
 
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
@@ -267,7 +267,7 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getBrandsPricingList = async () => {
@@ -277,44 +277,44 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const editKids = async () => {
     console.log('jjkkdkdkkd')
     console.log("currentPath", currentPath);
     const userId = localStorage.getItem("currentUser");
-    console.log('userId',userId)
-    if(userType == 'adults'){
-        const userData = {
+    console.log('userId', userId)
+    if (userType == 'adults') {
+      const userData = {
         planName: 'Basic',
         user_id: userId,
         paymentStatus: "Pending",
       };
-      console.log('userData',userData)
+      console.log('userData', userData)
       const responseSubscription = await ApiHelper.post(
         API.subscriptionPlan,
         userData
       );
       console.log("responseSubscription--", responseSubscription);
-      console.log('receivedData',receivedData)
+      console.log('receivedData', receivedData)
       navigate(`/adult-signup-files-details?${userId}`);
       // navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
       //   state: { data: receivedData },
       // });
-    }else{
-        const userData = {
+    } else {
+      const userData = {
         planName: 'Basic',
         user_id: userId,
         paymentStatus: "Pending",
       };
-      console.log('userData',userData)
+      console.log('userData', userData)
       const responseSubscription = await ApiHelper.post(
         API.subscriptionPlan,
         userData
       );
       console.log("responseSubscription--", responseSubscription);
-      console.log('receivedData',receivedData)
+      console.log('receivedData', receivedData)
       navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
         state: { data: receivedData },
       });
@@ -520,7 +520,7 @@ const Pricing = ({
         `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
-      console.log('brand_url',brand_url)
+      console.log('brand_url', brand_url)
       setSuccess_url(brand_url);
     } else {
       setSuccess_url(`https://brandsandtalent.com/talent-home`);
@@ -619,7 +619,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getBrand = async () => {
@@ -631,7 +631,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -691,21 +691,10 @@ const Pricing = ({
         <input type="hidden" name="tran_id" value={abaFormData.tran_id || ""} />
         <input type="hidden" name="amount" value={abaFormData.amount || ""} />
         <input type="hidden" name="email" value={abaFormData.email || ""} />
-        <input
-          type="hidden"
-          name="payment_option"
-          value={abaFormData.payment_option || ""}
-        />
-        <input
-          type="hidden"
-          name="req_time"
-          value={abaFormData.req_time || ""}
-        />
-        <input
-          type="hidden"
-          name="continue_success_url"
-          value={abaFormData.continue_success_url || ""}
-        />
+        <input type="hidden" name="payment_option" value={abaFormData.payment_option || ""}/>
+        <input type="hidden" name="req_time" value={abaFormData.req_time || ""}/>
+        <input type="hidden" name="continue_success_url" value={abaFormData.continue_success_url || ""}/>
+        <input type="hidden" name="return_params" value={abaFormData.return_params || ""} />
         <input type="hidden" name="hash" value={abaFormData.hash || ""} />
         <button type="button" id="checkout_button" style={{ opacity: "0", height: "1px", width: "1px", position: "absolute" }}>
           Pay Now
@@ -730,10 +719,10 @@ const Pricing = ({
                         index === 0
                           ? "plans-wrapper free-plans"
                           : index === 1
-                          ? "plans-wrapper pro-plans"
-                          : index === 2
-                          ? "plans-wrapper premium-plans"
-                          : ""
+                            ? "plans-wrapper pro-plans"
+                            : index === 2
+                              ? "plans-wrapper premium-plans"
+                              : ""
                       }
                     >
                       <div className="priceHeight">
@@ -746,8 +735,8 @@ const Pricing = ({
                                   index === 1
                                     ? "pro-gift giftSize"
                                     : index === 2
-                                    ? "premium-gift giftSize"
-                                    : ""
+                                      ? "premium-gift giftSize"
+                                      : ""
                                 }
                                 onClick={handleClickOpen}
                               >
@@ -859,10 +848,10 @@ const Pricing = ({
                           index === 0
                             ? "choose-btn free-btn"
                             : index === 1
-                            ? "choose-btn pro-btn"
-                            : index === 2
-                            ? "choose-btn premium-btn"
-                            : ""
+                              ? "choose-btn pro-btn"
+                              : index === 2
+                                ? "choose-btn premium-btn"
+                                : ""
                         }
                         onClick={() => choosePlan(index, item, "plan")}
                       >
@@ -962,9 +951,8 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${
-                        !isValidEmail ? "is-invalid" : "form-control"
-                      }`}
+                      className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"
+                        }`}
                       onChange={handleEmailChange}
                       placeholder="Email Address"
                       value={email}
@@ -1016,9 +1004,8 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${
-                        !isRecieverValidEmail ? "is-invalid" : "form-control"
-                      }`}
+                      className={`form-control ${!isRecieverValidEmail ? "is-invalid" : "form-control"
+                        }`}
                       onChange={handleRecieverEmailChange}
                       placeholder="Recipient's Email Address"
                       value={recieverEmail}
@@ -1076,8 +1063,8 @@ const Pricing = ({
                                   index === 0
                                     ? "plans-wrapper pro-plans" // index 0 here corresponds to the original index 1
                                     : index === 1
-                                    ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
-                                    : ""
+                                      ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
+                                      : ""
                                 }
                               >
                                 <div className="priceHeight">
@@ -1196,8 +1183,8 @@ const Pricing = ({
                                     index === 0
                                       ? "choose-btn pro-btn" // index 0 here corresponds to the original index 1
                                       : index === 1
-                                      ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
-                                      : ""
+                                        ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
+                                        : ""
                                   }
                                   onClick={() =>
                                     choosePlan(

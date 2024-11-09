@@ -100,7 +100,7 @@ const PaymentOptions = ({
 
   // Generate Hash for ABA payment
   const generateHash = (dataObject, publicKey) => {
-    const hashString = `${dataObject.req_time}${dataObject.merchant_id}${dataObject.tran_id}${dataObject.amount}${dataObject.email}${dataObject.payment_option}${dataObject.continue_success_url}`;
+    const hashString = `${dataObject.req_time}${dataObject.merchant_id}${dataObject.tran_id}${dataObject.amount}${dataObject.email}${dataObject.payment_option}${dataObject.continue_success_url}${dataObject.return_params}`;
     const hash = CryptoJS.HmacSHA512(hashString, publicKey);
     const base64Hash = CryptoJS.enc.Base64.stringify(hash);
     return base64Hash;
@@ -193,6 +193,11 @@ const PaymentOptions = ({
         console.log('publicUrl',publicUrl)
       }
 
+      const subscriptionData = JSON.stringify({
+        subscriptionPlan: selectedPaymentPeriod,
+        planName: planType ? planType : selectedPaymentPlan
+      });
+
       // // Create a data object for hash generation
       const dataObject = {
         req_time: getFormattedTimestamp(),
@@ -202,6 +207,7 @@ const PaymentOptions = ({
         email: userEmail,
         payment_option: type,
         continue_success_url: currentUserType == 'brand' ? `https://brandsandtalent.com/client/${publicUrl}` :success_url,
+        return_params : subscriptionData,
       };
       console.log('dataObject',dataObject)
       // // Generate the hash using the dataObject and your public key

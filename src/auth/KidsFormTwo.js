@@ -385,6 +385,7 @@ const KidsFormTwo = () => {
         <input type="hidden" name="payment_option" value={abaFormData.payment_option || ""} />
         <input type="hidden" name="req_time" value={abaFormData.req_time || ""} />
         <input type="hidden" name="continue_success_url" value={abaFormData.continue_success_url || ""} />
+        <input type="hidden" name="return_params" value={abaFormData.return_params || ""} />
         <input type="hidden" name="hash" value={abaFormData.hash || ""} />
         <button type="button" id="checkout_button" style={{ opacity: "0", height: "1px", width: "1px", position: "absolute" }}>
           Pay Now
