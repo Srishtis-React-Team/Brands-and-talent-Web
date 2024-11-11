@@ -100,7 +100,9 @@ const PaymentOptions = ({
 
   // Generate Hash for ABA payment
   const generateHash = (dataObject, publicKey) => {
+    console.log('kjjj--',dataObject)
     const hashString = `${dataObject.req_time}${dataObject.merchant_id}${dataObject.tran_id}${dataObject.amount}${dataObject.email}${dataObject.payment_option}${dataObject.continue_success_url}${dataObject.return_params}`;
+    console.log('kjjj--',hashString)
     const hash = CryptoJS.HmacSHA512(hashString, publicKey);
     const base64Hash = CryptoJS.enc.Base64.stringify(hash);
     return base64Hash;
