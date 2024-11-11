@@ -199,6 +199,12 @@ const BrandDetails = () => {
     if (!yourName) {
       setYourNameError(true);
     }
+    if (!country) {
+      setParentCountryError(true);
+    }
+    if (!websiteLink) {
+      setWebsiteLinkError(true);
+    }
     if (
       brandName &&
       phoneNumber &&
@@ -679,9 +685,7 @@ const BrandDetails = () => {
             <div className="kids-form-row row">
               <div className="kids-form-section col-md-6">
                 <div className="mb-3">
-                  <label className="form-label">
-                    Brand / Client Website<span className="mandatory">*</span>
-                  </label>
+                  <label className="form-label">Brand / Client Website</label>
                   <div className="form-group">
                     <input
                       type="text"
@@ -693,9 +697,11 @@ const BrandDetails = () => {
                       }}
                       value={websiteLink}
                     ></input>
-                    {websiteLinkError && (
-                      <div className="invalid-fields">Please enter Website</div>
-                    )}
+                    {/* {websiteLinkError && (
+                      <div className="invalid-fields">
+                        Please provide Brand / Client Website
+                      </div>
+                    )} */}
                     {websiteValidError && (
                       <div className="invalid-fields">
                         Please enter valid website

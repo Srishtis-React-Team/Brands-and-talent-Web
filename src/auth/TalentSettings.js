@@ -209,7 +209,7 @@ const TalentSettings = () => {
   };
 
   const updatePassword = async () => {
-    if (!allSamePasswordError && passwordMatch) {
+    if (!allSamePasswordError && passwordMatch && passwordStatus) {
       const formData = {
         talentId: talentId,
         password: oldPassword,

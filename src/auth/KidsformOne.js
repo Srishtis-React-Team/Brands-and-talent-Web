@@ -1534,7 +1534,7 @@ const KidsformOne = () => {
                       </div>
                     </div>
                     <div className="kids-form-title-sub">
-                      Select 3 to 6 categories relevant to your profile
+                      Select 1 to 6 categories relevant to your profile
                       <span className="mandatory">*</span>
                     </div>
                     <div className="category-list">
@@ -1569,7 +1569,7 @@ const KidsformOne = () => {
                       selectedCategories?.length > 6) &&
                       categoryError && (
                         <div className="invalid-fields">
-                          Please select 3 to 6 categories relevant to your
+                          Please select 1 to 6 categories relevant to your
                           profile
                         </div>
                       )}
