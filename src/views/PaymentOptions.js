@@ -30,7 +30,7 @@ const PaymentOptions = ({
   appliedCouponCode,
   success_url,
 }) => {
-  console.log("-----111----", success_url);
+  console.log("ookoo", success_url);
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [amount, setAmount] = useState("");
@@ -40,7 +40,10 @@ const PaymentOptions = ({
   const [tran_id, setTran_id] = useState("");
   const [payOption, setPayOption] = useState(false);
   const userId = localStorage.getItem("userId");
+  const currentUser = localStorage.getItem("currentUser");
   const userEmail = localStorage.getItem("userEmail");
+  const currentUserType = localStorage.getItem("currentUserType");
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -61,7 +64,6 @@ const PaymentOptions = ({
     console.log('appliedCouponCode',appliedCouponCode)
     let planType = selectedPaymentPlan.split(" ")[0]; // Extract plan name
     console.log('planType',planType)
-    // console.log('planType',planType)
     const userData = {
       subscriptionPlan: selectedPaymentPeriod,
       planName: planType,
@@ -98,7 +100,7 @@ const PaymentOptions = ({
 
   // Generate Hash for ABA payment
   const generateHash = (dataObject, publicKey) => {
-    const hashString = `${dataObject.req_time}${dataObject.merchant_id}${dataObject.tran_id}${dataObject.amount}${dataObject.email}${dataObject.payment_option}${dataObject.continue_success_url}`;
+    const hashString = `${dataObject.req_time}${dataObject.merchant_id}${dataObject.tran_id}${dataObject.amount}${dataObject.email}${dataObject.payment_option}${dataObject.continue_success_url}${dataObject.return_params}`;
     const hash = CryptoJS.HmacSHA512(hashString, publicKey);
     const base64Hash = CryptoJS.enc.Base64.stringify(hash);
     return base64Hash;
@@ -149,7 +151,7 @@ const PaymentOptions = ({
       if (giftSub) {
         plan = "giftsubscription";
       }
-
+      let publicUrl;
       if (plan == "giftsubscription") {
         const giftObj = {
           senderName: senderName,
@@ -170,23 +172,33 @@ const PaymentOptions = ({
 
         const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
       } else {
+        console.log('inside the else condision--')
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
           planName: planType ? planType : selectedPaymentPlan,
-          user_id: userId,
+          user_id: userId ? userId : currentUser,
           transId: tran_id,
           paymentStatus: "Pending",
           coupon: appliedCouponCode ? appliedCouponCode : "",
         };
+
+        console.log('userData--+',userData)
 
         const responseSubscription = await ApiHelper.post(
           API.subscriptionPlan,
           userData
         );
         console.log("responseSubscription", responseSubscription);
+        publicUrl = responseSubscription.data.publicUrl;
+        console.log('publicUrl',publicUrl)
       }
 
-      // Create a data object for hash generation
+      const subscriptionData = JSON.stringify({
+        subscriptionPlan: selectedPaymentPeriod,
+        planName: planType ? planType : selectedPaymentPlan
+      });
+
+      // // Create a data object for hash generation
       const dataObject = {
         req_time: getFormattedTimestamp(),
         merchant_id: "brandsandtalent",
@@ -194,7 +206,8 @@ const PaymentOptions = ({
         amount: finalAmount ? finalAmount : amount,
         email: userEmail,
         payment_option: type,
-        continue_success_url: success_url,
+        continue_success_url: currentUserType == 'brand' ? `https://brandsandtalent.com/client/${publicUrl}` :success_url,
+        return_params : subscriptionData,
       };
       console.log('dataObject',dataObject)
       // // Generate the hash using the dataObject and your public key

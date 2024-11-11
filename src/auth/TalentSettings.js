@@ -625,7 +625,7 @@ const TalentSettings = () => {
                         fontWeight: "600",
                       }}
                     >
-                      {paymentDetailsDataArray?.transactionDate}
+                      {paymentDetailsDataArray?.transactionDate?.replace("T", " T")}
                     </span>
                   </h6>
                   <h6
@@ -644,7 +644,7 @@ const TalentSettings = () => {
                         fontWeight: "600",
                       }}
                     >
-                      {paymentDetailsDataArray?.expirationDate}
+                      {paymentDetailsDataArray?.expirationDate?.replace("T", " T")}
                     </span>
                   </h6>
                   <h6

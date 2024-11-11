@@ -42,6 +42,7 @@ const Pricing = ({
   setSelectedPaymentStatus,
   setIsPaymentClicked,
   userType,
+  receivedData
 }) => {
   const { currentUserId, currentUserImage, currentUserType, avatarImage } =
     CurrentUser();
@@ -60,26 +61,25 @@ const Pricing = ({
   )}`;
   useEffect(() => {
     // Check if the page has already been reloaded
-    if (!localStorage.getItem("reloaded")) {
-      localStorage.setItem("reloaded", "true"); // Set flag in localStorage
+    if (!localStorage.getItem("reloades")) {
+      localStorage.setItem("reloades", "true"); // Set flag in localStorage
       window.location.reload();
     }
 
     // Clear the flag when the component unmounts
     return () => {
-      localStorage.removeItem("reloaded");
+      localStorage.removeItem("reloades");
     };
   }, []);
-  console.log("brand_url", brand_url);
-  const [receivedData, setReceivedData] = useState(null);
-  useEffect(() => {
-    if (location.state && location.state.data) {
-      setReceivedData(location.state.data);
-    }
-  }, [location.state]);
-  useEffect(() => {
-    console.log(receivedData, "receivedData");
-  }, [receivedData]);
+  // const [receivedData, setReceivedData] = useState(null);
+  // useEffect(() => {
+  //   if (location.state && location.state.data) {
+  //     setReceivedData(location.state.data);
+  //   }
+  // }, [location.state]);
+  // useEffect(() => {
+  //   console.log(receivedData, "receivedData");
+  // }, [receivedData]);
 
   const paramsValues = window.location.search;
 
@@ -230,7 +230,36 @@ const Pricing = ({
     // Add other states as needed
   });
 
+  const [activePlan,setActivePlan] = useState('')
+  const [activePeriod,setActivePeriod] = useState('')
+
+  useEffect(()=>{
+    fetchPaymentDetails()
+  },[])
+
+  const fetchPaymentDetails = async () => {
+    const userId = localStorage.getItem("userId");
+    const obj = {
+      user_id: userId,
+    };
+    const paymentDetailsData = await ApiHelper.post(
+      "https://brandsandtalent.com/api/users/fetchPaymentDetails",
+      obj
+    );
+    console.log('paymentDetailsData',paymentDetailsData?.data?.data);
+    let activatedPlan;
+    let activatedPeriod = paymentDetailsData?.data?.data?.subscriptionPlan;
+    if(paymentDetailsData?.data?.data?.planName == 'Pro'){
+      activatedPlan = 'Pro (Popular)'
+    }else{
+      activatedPlan = paymentDetailsData?.data?.data?.planName;
+    }
+    setActivePlan(activatedPlan)
+    setActivePeriod(activatedPeriod)
+  };
+
   const [isChecked, setIsChecked] = useState(false);
+  
 
   useEffect(() => {
     if (userType == "adults") {
@@ -258,7 +287,7 @@ const Pricing = ({
     console.log(pricingList, "pricingList");
   }, [pricingList]);
 
-  useEffect(() => {}, [comment]);
+  useEffect(() => { }, [comment]);
 
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
@@ -267,7 +296,7 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getBrandsPricingList = async () => {
@@ -277,19 +306,69 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const editKids = async () => {
+    console.log('jjkkdkdkkd')
     console.log("currentPath", currentPath);
-    const userId = localStorage.getItem("userId");
-    if (currentPath == "/pricing") {
-      console.log("if");
-      navigate(``);
-    } else {
-      console.log("else");
+    const userId = localStorage.getItem("currentUser");
+    console.log('userId', userId)
+    if (userType == 'adults') {
+      const userData = {
+        planName: 'Basic',
+        user_id: userId,
+        paymentStatus: "Pending",
+      };
+      console.log('userData', userData)
+      const responseSubscription = await ApiHelper.post(
+        API.subscriptionPlan,
+        userData
+      );
+      console.log("responseSubscription--", responseSubscription);
+      console.log('receivedData', receivedData)
       navigate(`/adult-signup-files-details?${userId}`);
+      // navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+      //   state: { data: receivedData },
+      // });
+    } else {
+      const userData = {
+        planName: 'Basic',
+        user_id: userId,
+        paymentStatus: "Pending",
+      };
+      console.log('userData', userData)
+      const responseSubscription = await ApiHelper.post(
+        API.subscriptionPlan,
+        userData
+      );
+      console.log("responseSubscription--", responseSubscription);
+      console.log('receivedData', receivedData)
+      navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+        state: { data: receivedData },
+      });
     }
+    // if (currentPath == "/pricing") {
+    //   console.log("if");
+    //   navigate(``);
+    // } else {
+    //   console.log("else");
+    //   const userData = {
+    //     planName: 'Basic',
+    //     user_id: userId,
+    //     paymentStatus: "Pending",
+    //   };
+    //   console.log('userData',userData)
+    //   const responseSubscription = await ApiHelper.post(
+    //     API.subscriptionPlan,
+    //     userData
+    //   );
+    //   console.log("responseSubscription--", responseSubscription);
+    //   console.log('receivedData',receivedData)
+    //   navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
+    //     state: { data: receivedData },
+    //   });
+    // }
   };
 
   const choosePlan = async (index, item, from) => {
@@ -470,6 +549,7 @@ const Pricing = ({
         `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
+      console.log('brand_url', brand_url)
       setSuccess_url(brand_url);
     } else {
       setSuccess_url(`https://brandsandtalent.com/talent-home`);
@@ -568,7 +648,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getBrand = async () => {
@@ -580,7 +660,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -630,7 +710,7 @@ const Pricing = ({
         id="aba_merchant_request"
         target="aba_webservice"
         method="POST"
-        action="https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase"
+        action="https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase"
       >
         <input
           type="hidden"
@@ -640,21 +720,10 @@ const Pricing = ({
         <input type="hidden" name="tran_id" value={abaFormData.tran_id || ""} />
         <input type="hidden" name="amount" value={abaFormData.amount || ""} />
         <input type="hidden" name="email" value={abaFormData.email || ""} />
-        <input
-          type="hidden"
-          name="payment_option"
-          value={abaFormData.payment_option || ""}
-        />
-        <input
-          type="hidden"
-          name="req_time"
-          value={abaFormData.req_time || ""}
-        />
-        <input
-          type="hidden"
-          name="continue_success_url"
-          value={abaFormData.continue_success_url || ""}
-        />
+        <input type="hidden" name="payment_option" value={abaFormData.payment_option || ""}/>
+        <input type="hidden" name="req_time" value={abaFormData.req_time || ""}/>
+        <input type="hidden" name="continue_success_url" value={abaFormData.continue_success_url || ""}/>
+        <input type="hidden" name="return_params" value={abaFormData.return_params || ""} />
         <input type="hidden" name="hash" value={abaFormData.hash || ""} />
         <button type="button" id="checkout_button" style={{ opacity: "0", height: "1px", width: "1px", position: "absolute" }}>
           Pay Now
@@ -672,165 +741,182 @@ const Pricing = ({
           {pricingList.length > 0 && (
             <div className="plans-section">
               <div className="row">
-                {pricingList.map((item, index) => (
-                  <div key={item._id} className="col-md-4">
-                    <div
-                      className={
-                        index === 0
-                          ? "plans-wrapper free-plans"
-                          : index === 1
-                          ? "plans-wrapper pro-plans"
-                          : index === 2
-                          ? "plans-wrapper premium-plans"
-                          : ""
-                      }
-                    >
-                      <div className="priceHeight">
-                        <div className="plan-name">
-                          {item.planname}
-                          {from != "signup" && (
-                            <>
-                              <div
-                                className={
-                                  index === 1
-                                    ? "pro-gift giftSize"
-                                    : index === 2
-                                    ? "premium-gift giftSize"
-                                    : ""
-                                }
-                                onClick={handleClickOpen}
-                              >
-                                {item.gift}
-                              </div>
-                            </>
-                          )}
-                        </div>
+{pricingList.map((item, index) => (
+  <div key={item._id} className="col-md-4">
+    <div
+      className={
+        index === 0
+          ? "plans-wrapper free-plans"
+          : index === 1
+          ? "plans-wrapper pro-plans"
+          : index === 2
+          ? "plans-wrapper premium-plans"
+          : ""
+      }
+    >
+      <div className="priceHeight">
+        <div className="plan-name">
+          {item.planname}
+          {from != "signup" && (
+            <>
+              <div
+                className={
+                  index === 1
+                    ? "pro-gift giftSize"
+                    : index === 2
+                    ? "premium-gift giftSize"
+                    : ""
+                }
+                onClick={handleClickOpen}
+              >
+                {item.gift}
+              </div>
+            </>
+          )}
+        </div>
 
-                        {item.planname === "Basic" && (
-                          <>
-                            <div className="plan-value">Free</div>
-                            <div className="plan-validity">Forever</div>
-                          </>
-                        )}
-                        {item.planname === "Free For ever" && (
-                          <>
-                            <div className="plan-value">Free</div>
-                            <div className="plan-validity">Forever</div>
-                          </>
-                        )}
+        {item.planname === "Basic" && (
+          <>
+            <div className="plan-value">Free</div>
+            <div className="plan-validity">Forever</div>
+          </>
+        )}
+        {item.planname === "Free For ever" && (
+          <>
+            <div className="plan-value">Free</div>
+            <div className="plan-validity">Forever</div>
+          </>
+        )}
 
-                        {item.plan_type_annual.length >= 1 && (
-                          <>
-                            <div className="annual-main-wrapper">
-                              <div className="annual-wrapper">
-                                <input
-                                  type="radio"
-                                  name={`annual-${item._id}`}
-                                  id={`annual-${item._id}`}
-                                  checked={
-                                    selectedPlan === `annual-${item._id}`
-                                  }
-                                  onChange={handleRadioChange(
-                                    "annual",
-                                    `annual-${item._id}`,
-                                    item.planname
-                                  )}
-                                  className={
-                                    item.planname === "Pro (Popular)"
-                                      ? "pro-checkbox"
-                                      : "premium-checkbox"
-                                  }
-                                />
-                                <label
-                                  htmlFor={`annual-${item._id}`}
-                                  className="annual"
-                                >
-                                  {item.period}
-                                </label>
-                              </div>
-                              <div className="per-value">
-                                {item.annualTotalAmount}
-                              </div>
-                            </div>
+        {item.plan_type_annual.length >= 1 && (
+          <>
+            <div className="annual-main-wrapper">
+              <div className="annual-wrapper">
+                <input
+                  type="radio"
+                  name={`annual-${item._id}`}
+                  id={`annual-${item._id}`}
+                  checked={
+                    selectedPlan === `annual-${item._id}`
+                  }
+                  onChange={handleRadioChange(
+                    "annual",
+                    `annual-${item._id}`,
+                    item.planname
+                  )}
+                  className={
+                    item.planname === "Pro (Popular)"
+                      ? "pro-checkbox"
+                      : "premium-checkbox"
+                  }
+                  disabled={
+                    item.planname === activePlan && activePeriod === "annual"
+                  }
+                />
+                <label
+                  htmlFor={`annual-${item._id}`}
+                  className={`annual ${
+                    item.planname === activePlan && activePeriod === "annual"
+                      ? "checked-label"
+                      : ""
+                  }`}
+                >
+                  {item.period}
+                  {item.planname === activePlan && activePeriod === "annual" && (
+                    <i className="bi bi-check-circle-fill active-icon"></i>
+                  )}
+                </label>
+              </div>
+              <div className="per-value">
+                {item.annualTotalAmount}
+              </div>
+            </div>
 
-                            {item.plan_type_annual.map((plan, index) => (
-                              <>
-                                <div key={index} className="plan-amounts">
-                                  {/* <div className="previous-value">
-                                    {plan.beforeValue}
-                                  </div> */}
-                                  <div className="per-value">
-                                    {plan.afterDiscount}
-                                  </div>
-                                </div>
-                                <div className="border-bottom"></div>
-                              </>
-                            ))}
-
-                            <div className="monthly-wrapper pt-3">
-                              <div>
-                                <input
-                                  type="radio"
-                                  name={`monthly-${item._id}`}
-                                  id={`monthly-${item._id}`}
-                                  checked={
-                                    selectedPlan === `monthly-${item._id}`
-                                  }
-                                  onChange={handleRadioChange(
-                                    "monthly",
-                                    `monthly-${item._id}`,
-                                    item.planname
-                                  )}
-                                  className={
-                                    item.planname === "Pro (Popular)"
-                                      ? "pro-checkbox"
-                                      : "premium-checkbox"
-                                  }
-                                />
-                                <label
-                                  htmlFor={`monthly-${item._id}`}
-                                  className="monthly"
-                                >
-                                  Monthly
-                                </label>
-                              </div>
-                              {item.plan_type_monthly.map((plan, index) => (
-                                <div key={index} className="monthly-amount">
-                                  {plan.amount}
-                                </div>
-                              ))}
-                            </div>
-                          </>
-                        )}
-                      </div>
-                      <div
-                        className={
-                          index === 0
-                            ? "choose-btn free-btn"
-                            : index === 1
-                            ? "choose-btn pro-btn"
-                            : index === 2
-                            ? "choose-btn premium-btn"
-                            : ""
-                        }
-                        onClick={() => choosePlan(index, item, "plan")}
-                      >
-                        Choose plan
-                      </div>
-                      <div className="include">What's Included</div>
-                      <div className="included-things">
-                        {item.data.map((content, index) => (
-                          <div key={index} className="plan-content">
-                            <div className="icPrice">
-                              <i className="bi bi-check-circle-fill"></i>
-                            </div>
-                            <div className="plan-content-text">{content}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+            {item.plan_type_annual.map((plan, index) => (
+              <>
+                <div key={index} className="plan-amounts">
+                  <div className="per-value">
+                    {plan.afterDiscount}
                   </div>
-                ))}
+                </div>
+                <div className="border-bottom"></div>
+              </>
+            ))}
+            <div className="monthly-wrapper pt-3">
+              <div>
+                <input
+                  type="radio"
+                  name={`monthly-${item._id}`}
+                  id={`monthly-${item._id}`}
+                  checked={
+                    selectedPlan === `monthly-${item._id}`
+                  }
+                  onChange={handleRadioChange(
+                    "monthly",
+                    `monthly-${item._id}`,
+                    item.planname
+                  )}
+                  className={
+                    item.planname === "Pro (Popular)"
+                      ? "pro-checkbox"
+                      : "premium-checkbox"
+                  }
+                  disabled={
+                    item.planname === activePlan && activePeriod === "monthly"
+                  }
+                />
+                <label
+                  htmlFor={`monthly-${item._id}`}
+                  className={`monthly ${
+                    item.planname === activePlan && activePeriod === "monthly"
+                      ? "checked-label"
+                      : ""
+                  }`}
+                >
+                  Monthly
+                  {item.planname === activePlan && activePeriod === "monthly" && (
+                    <i className="bi bi-check-circle-fill active-icon"></i>
+                  )}
+                </label>
+              </div>
+              {item.plan_type_monthly.map((plan, index) => (
+                <div key={index} className="monthly-amount">
+                  {plan.amount}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <div
+        className={
+          index === 0
+            ? "choose-btn free-btn"
+            : index === 1
+            ? "choose-btn pro-btn"
+            : index === 2
+            ? "choose-btn premium-btn"
+            : ""
+        }
+        onClick={() => choosePlan(index, item, "plan")}
+      >
+        Choose plan
+      </div>
+      <div className="include">What's Included</div>
+      <div className="included-things">
+        {item.data.map((content, index) => (
+          <div key={index} className="plan-content">
+            <div className="icPrice">
+              <i className="bi bi-check-circle-fill"></i>
+            </div>
+            <div className="plan-content-text">{content}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+))}
+
               </div>
             </div>
           )}
@@ -911,9 +997,8 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${
-                        !isValidEmail ? "is-invalid" : "form-control"
-                      }`}
+                      className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"
+                        }`}
                       onChange={handleEmailChange}
                       placeholder="Email Address"
                       value={email}
@@ -965,9 +1050,8 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${
-                        !isRecieverValidEmail ? "is-invalid" : "form-control"
-                      }`}
+                      className={`form-control ${!isRecieverValidEmail ? "is-invalid" : "form-control"
+                        }`}
                       onChange={handleRecieverEmailChange}
                       placeholder="Recipient's Email Address"
                       value={recieverEmail}
@@ -1025,8 +1109,8 @@ const Pricing = ({
                                   index === 0
                                     ? "plans-wrapper pro-plans" // index 0 here corresponds to the original index 1
                                     : index === 1
-                                    ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
-                                    : ""
+                                      ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
+                                      : ""
                                 }
                               >
                                 <div className="priceHeight">
@@ -1145,8 +1229,8 @@ const Pricing = ({
                                     index === 0
                                       ? "choose-btn pro-btn" // index 0 here corresponds to the original index 1
                                       : index === 1
-                                      ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
-                                      : ""
+                                        ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
+                                        : ""
                                   }
                                   onClick={() =>
                                     choosePlan(
