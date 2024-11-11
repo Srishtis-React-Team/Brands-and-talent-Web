@@ -307,7 +307,7 @@ const BrandSettings = () => {
   };
 
   const updatePassword = async () => {
-    if (!allSamePasswordError && passwordMatch) {
+    if (!allSamePasswordError && passwordMatch && passwordStatus) {
       const formData = {
         brandId: brandId,
         password: oldPassword,
@@ -702,7 +702,9 @@ const BrandSettings = () => {
               {console.log("brandDetails", brandDetails)}
               {/* <div style={containerStyle} className="cardHeight">
                 <div style={cardStyle}>
-                  <h2 className="hd-sett" style={headerStyle}>Transaction Details</h2>
+                  <h2 className="hd-sett" style={headerStyle}>
+                    Transaction Details
+                  </h2>
                   <div style={listStyle}>
                     <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Transaction Date:</div>
@@ -710,29 +712,29 @@ const BrandSettings = () => {
                         {brandDetails?.transactionDate}
                       </div>
                     </div>
-                    <div  className="spd" style={detailItemStyle}>
+                    <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Payment Status:</div>
                       <div style={valueStyle}>
                         {brandDetails?.paymentStatus}
                       </div>
                     </div>
-                    <div  className="spd" style={detailItemStyle}>
+                    <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Payment Currency:</div>
                       <div style={valueStyle}>
                         {brandDetails?.paymentCurreny}
                       </div>
                     </div>
-                    <div  className="spd" style={detailItemStyle}>
+                    <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Payment Amount:</div>
                       <div style={valueStyle}>
                         {brandDetails?.paymentAmount}
                       </div>
                     </div>
-                    <div  className="spd" style={detailItemStyle}>
+                    <div className="spd" style={detailItemStyle}>
                       <div style={labelStyle}>Payment Period:</div>
                       <div style={valueStyle}>{selectedPaymentPeriod}</div>
                     </div>
-                    <div  className="spd" style={lastDetailItemStyle}>
+                    <div className="spd" style={lastDetailItemStyle}>
                       <div style={labelStyle}>Payment Plan:</div>
                       <div style={valueStyle}>{selectedPaymentPlan}</div>
                     </div>

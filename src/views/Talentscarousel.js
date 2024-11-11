@@ -151,7 +151,7 @@ const Talentscarousel = ({ talentList, callList }) => {
                   src={`${API.userFilePath}${item?.image?.fileData}`}
                   alt=""
                 />
-                {!item.isFavourite && (
+                {!item.isFavorite && (
                   <img
                     className="heart-icon"
                     style={{ left: "80%" }}
@@ -162,7 +162,7 @@ const Talentscarousel = ({ talentList, callList }) => {
                     }}
                   />
                 )}
-                {item.isFavourite && (
+                {item.isFavorite && (
                   <img
                     className="heart-icon"
                     style={{ left: "80%" }}

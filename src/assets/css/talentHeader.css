@@ -19,7 +19,7 @@
   width: 100%;
   background-color: #fff;
   padding: 0 20px;
-  z-index: 0;
+  z-index: 9;
   box-shadow: 0 4px 4px rgb(201 201 201 / 0.5);
 }
 .talent-header-main .leftPart {
@@ -318,5 +318,6 @@ button.btn.gift-payment-btn {
     right: 10px !important; /* Adjust to your preference */
     top: 50px !important; /* Adjust to your preference */
     transform: none !important;
+    z-index: 999999999999999;
   }
 }

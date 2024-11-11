@@ -1012,7 +1012,7 @@ const AdultFormOne = () => {
                   </div>
                   <div className="adults-titles kids-form-title mb-2">
                     <span style={{ fontWeight: "bold", fontSize: "small" }}>
-                      Select 3 to 6 categories that best reflect your skills and
+                      Select 1 to 6 categories that best reflect your skills and
                       interests for portfolio and job notifications{" "}
                       <span className="mandatory">*</span>
                     </span>
@@ -1044,7 +1044,7 @@ const AdultFormOne = () => {
                     selectedCategories?.length > 6) &&
                     selectedCategoriesError && (
                       <div className="invalid-fields">
-                        Please select 3 to 6 categories relevant to your profile
+                        Please select 1 to 6 categories relevant to your profile
                       </div>
                     )}
                   <div className="adults-titles kids-form-title mt-3">
