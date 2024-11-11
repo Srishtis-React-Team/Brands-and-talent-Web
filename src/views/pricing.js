@@ -230,7 +230,36 @@ const Pricing = ({
     // Add other states as needed
   });
 
+  const [activePlan,setActivePlan] = useState('')
+  const [activePeriod,setActivePeriod] = useState('')
+
+  useEffect(()=>{
+    fetchPaymentDetails()
+  },[])
+
+  const fetchPaymentDetails = async () => {
+    const userId = localStorage.getItem("userId");
+    const obj = {
+      user_id: userId,
+    };
+    const paymentDetailsData = await ApiHelper.post(
+      "https://brandsandtalent.com/api/users/fetchPaymentDetails",
+      obj
+    );
+    console.log('paymentDetailsData',paymentDetailsData?.data?.data);
+    let activatedPlan;
+    let activatedPeriod = paymentDetailsData?.data?.data?.subscriptionPlan;
+    if(paymentDetailsData?.data?.data?.planName == 'Pro'){
+      activatedPlan = 'Pro (Popular)'
+    }else{
+      activatedPlan = paymentDetailsData?.data?.data?.planName;
+    }
+    setActivePlan(activatedPlan)
+    setActivePeriod(activatedPeriod)
+  };
+
   const [isChecked, setIsChecked] = useState(false);
+  
 
   useEffect(() => {
     if (userType == "adults") {
@@ -681,7 +710,7 @@ const Pricing = ({
         id="aba_merchant_request"
         target="aba_webservice"
         method="POST"
-        action="https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase"
+        action="https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase"
       >
         <input
           type="hidden"
@@ -712,165 +741,182 @@ const Pricing = ({
           {pricingList.length > 0 && (
             <div className="plans-section">
               <div className="row">
-                {pricingList.map((item, index) => (
-                  <div key={item._id} className="col-md-4">
-                    <div
-                      className={
-                        index === 0
-                          ? "plans-wrapper free-plans"
-                          : index === 1
-                            ? "plans-wrapper pro-plans"
-                            : index === 2
-                              ? "plans-wrapper premium-plans"
-                              : ""
-                      }
-                    >
-                      <div className="priceHeight">
-                        <div className="plan-name">
-                          {item.planname}
-                          {from != "signup" && (
-                            <>
-                              <div
-                                className={
-                                  index === 1
-                                    ? "pro-gift giftSize"
-                                    : index === 2
-                                      ? "premium-gift giftSize"
-                                      : ""
-                                }
-                                onClick={handleClickOpen}
-                              >
-                                {item.gift}
-                              </div>
-                            </>
-                          )}
-                        </div>
+{pricingList.map((item, index) => (
+  <div key={item._id} className="col-md-4">
+    <div
+      className={
+        index === 0
+          ? "plans-wrapper free-plans"
+          : index === 1
+          ? "plans-wrapper pro-plans"
+          : index === 2
+          ? "plans-wrapper premium-plans"
+          : ""
+      }
+    >
+      <div className="priceHeight">
+        <div className="plan-name">
+          {item.planname}
+          {from != "signup" && (
+            <>
+              <div
+                className={
+                  index === 1
+                    ? "pro-gift giftSize"
+                    : index === 2
+                    ? "premium-gift giftSize"
+                    : ""
+                }
+                onClick={handleClickOpen}
+              >
+                {item.gift}
+              </div>
+            </>
+          )}
+        </div>
 
-                        {item.planname === "Basic" && (
-                          <>
-                            <div className="plan-value">Free</div>
-                            <div className="plan-validity">Forever</div>
-                          </>
-                        )}
-                        {item.planname === "Free For ever" && (
-                          <>
-                            <div className="plan-value">Free</div>
-                            <div className="plan-validity">Forever</div>
-                          </>
-                        )}
+        {item.planname === "Basic" && (
+          <>
+            <div className="plan-value">Free</div>
+            <div className="plan-validity">Forever</div>
+          </>
+        )}
+        {item.planname === "Free For ever" && (
+          <>
+            <div className="plan-value">Free</div>
+            <div className="plan-validity">Forever</div>
+          </>
+        )}
 
-                        {item.plan_type_annual.length >= 1 && (
-                          <>
-                            <div className="annual-main-wrapper">
-                              <div className="annual-wrapper">
-                                <input
-                                  type="radio"
-                                  name={`annual-${item._id}`}
-                                  id={`annual-${item._id}`}
-                                  checked={
-                                    selectedPlan === `annual-${item._id}`
-                                  }
-                                  onChange={handleRadioChange(
-                                    "annual",
-                                    `annual-${item._id}`,
-                                    item.planname
-                                  )}
-                                  className={
-                                    item.planname === "Pro (Popular)"
-                                      ? "pro-checkbox"
-                                      : "premium-checkbox"
-                                  }
-                                />
-                                <label
-                                  htmlFor={`annual-${item._id}`}
-                                  className="annual"
-                                >
-                                  {item.period}
-                                </label>
-                              </div>
-                              <div className="per-value">
-                                {item.annualTotalAmount}
-                              </div>
-                            </div>
+        {item.plan_type_annual.length >= 1 && (
+          <>
+            <div className="annual-main-wrapper">
+              <div className="annual-wrapper">
+                <input
+                  type="radio"
+                  name={`annual-${item._id}`}
+                  id={`annual-${item._id}`}
+                  checked={
+                    selectedPlan === `annual-${item._id}`
+                  }
+                  onChange={handleRadioChange(
+                    "annual",
+                    `annual-${item._id}`,
+                    item.planname
+                  )}
+                  className={
+                    item.planname === "Pro (Popular)"
+                      ? "pro-checkbox"
+                      : "premium-checkbox"
+                  }
+                  disabled={
+                    item.planname === activePlan && activePeriod === "annual"
+                  }
+                />
+                <label
+                  htmlFor={`annual-${item._id}`}
+                  className={`annual ${
+                    item.planname === activePlan && activePeriod === "annual"
+                      ? "checked-label"
+                      : ""
+                  }`}
+                >
+                  {item.period}
+                  {item.planname === activePlan && activePeriod === "annual" && (
+                    <i className="bi bi-check-circle-fill active-icon"></i>
+                  )}
+                </label>
+              </div>
+              <div className="per-value">
+                {item.annualTotalAmount}
+              </div>
+            </div>
 
-                            {item.plan_type_annual.map((plan, index) => (
-                              <>
-                                <div key={index} className="plan-amounts">
-                                  {/* <div className="previous-value">
-                                    {plan.beforeValue}
-                                  </div> */}
-                                  <div className="per-value">
-                                    {plan.afterDiscount}
-                                  </div>
-                                </div>
-                                <div className="border-bottom"></div>
-                              </>
-                            ))}
-
-                            <div className="monthly-wrapper pt-3">
-                              <div>
-                                <input
-                                  type="radio"
-                                  name={`monthly-${item._id}`}
-                                  id={`monthly-${item._id}`}
-                                  checked={
-                                    selectedPlan === `monthly-${item._id}`
-                                  }
-                                  onChange={handleRadioChange(
-                                    "monthly",
-                                    `monthly-${item._id}`,
-                                    item.planname
-                                  )}
-                                  className={
-                                    item.planname === "Pro (Popular)"
-                                      ? "pro-checkbox"
-                                      : "premium-checkbox"
-                                  }
-                                />
-                                <label
-                                  htmlFor={`monthly-${item._id}`}
-                                  className="monthly"
-                                >
-                                  Monthly
-                                </label>
-                              </div>
-                              {item.plan_type_monthly.map((plan, index) => (
-                                <div key={index} className="monthly-amount">
-                                  {plan.amount}
-                                </div>
-                              ))}
-                            </div>
-                          </>
-                        )}
-                      </div>
-                      <div
-                        className={
-                          index === 0
-                            ? "choose-btn free-btn"
-                            : index === 1
-                              ? "choose-btn pro-btn"
-                              : index === 2
-                                ? "choose-btn premium-btn"
-                                : ""
-                        }
-                        onClick={() => choosePlan(index, item, "plan")}
-                      >
-                        Choose plan
-                      </div>
-                      <div className="include">What's Included</div>
-                      <div className="included-things">
-                        {item.data.map((content, index) => (
-                          <div key={index} className="plan-content">
-                            <div className="icPrice">
-                              <i className="bi bi-check-circle-fill"></i>
-                            </div>
-                            <div className="plan-content-text">{content}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+            {item.plan_type_annual.map((plan, index) => (
+              <>
+                <div key={index} className="plan-amounts">
+                  <div className="per-value">
+                    {plan.afterDiscount}
                   </div>
-                ))}
+                </div>
+                <div className="border-bottom"></div>
+              </>
+            ))}
+            <div className="monthly-wrapper pt-3">
+              <div>
+                <input
+                  type="radio"
+                  name={`monthly-${item._id}`}
+                  id={`monthly-${item._id}`}
+                  checked={
+                    selectedPlan === `monthly-${item._id}`
+                  }
+                  onChange={handleRadioChange(
+                    "monthly",
+                    `monthly-${item._id}`,
+                    item.planname
+                  )}
+                  className={
+                    item.planname === "Pro (Popular)"
+                      ? "pro-checkbox"
+                      : "premium-checkbox"
+                  }
+                  disabled={
+                    item.planname === activePlan && activePeriod === "monthly"
+                  }
+                />
+                <label
+                  htmlFor={`monthly-${item._id}`}
+                  className={`monthly ${
+                    item.planname === activePlan && activePeriod === "monthly"
+                      ? "checked-label"
+                      : ""
+                  }`}
+                >
+                  Monthly
+                  {item.planname === activePlan && activePeriod === "monthly" && (
+                    <i className="bi bi-check-circle-fill active-icon"></i>
+                  )}
+                </label>
+              </div>
+              {item.plan_type_monthly.map((plan, index) => (
+                <div key={index} className="monthly-amount">
+                  {plan.amount}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <div
+        className={
+          index === 0
+            ? "choose-btn free-btn"
+            : index === 1
+            ? "choose-btn pro-btn"
+            : index === 2
+            ? "choose-btn premium-btn"
+            : ""
+        }
+        onClick={() => choosePlan(index, item, "plan")}
+      >
+        Choose plan
+      </div>
+      <div className="include">What's Included</div>
+      <div className="included-things">
+        {item.data.map((content, index) => (
+          <div key={index} className="plan-content">
+            <div className="icPrice">
+              <i className="bi bi-check-circle-fill"></i>
+            </div>
+            <div className="plan-content-text">{content}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+))}
+
               </div>
             </div>
           )}
