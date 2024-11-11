@@ -3833,7 +3833,7 @@ const EditTalent = () => {
                                                 variant="text"
                                               >
                                                 <i className="bi bi-plus-circle-fill"></i>{" "}
-                                                Add Files
+                                                Attach Sample
                                               </div>
                                             </div>
                                           </div>

@@ -187,20 +187,19 @@ const ServicesCarousel = ({ talentData, brandData }) => {
 
   return (
     <>
-      {servicesList && servicesList.length > 0 && <></>}
-
-      <div className="service-list-main">
+      {/* <div className="service-list-main">
         {servicesList &&
           servicesList.length > 0 &&
           servicesList?.map((item, index) => {
             return (
               <>
-                <div className="service-list-wrapper" key={index}>
+                <div className="service-list-wrapper">
                   <div className="row">
-                    <div className="service-list-image col-md-4">
+                    <div className="col-md-4">
                       {item?.files[0]?.fileData && (
                         <>
                           <img
+                            className="service-image-style"
                             src={`${API.userFilePath}${item?.files[0]?.fileData}`}
                             alt=""
                           />
@@ -208,7 +207,11 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                       )}
                       {!item?.files[0]?.fileData && (
                         <>
-                          <img src={avatarImage} alt="" />
+                          <img
+                            className="service-image-style"
+                            src={avatarImage}
+                            alt=""
+                          />
                         </>
                       )}
                     </div>
@@ -219,9 +222,9 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                         dangerouslySetInnerHTML={{ __html: item?.editorState }}
                       />
                       <div className="starting-amount">
-                        $ {item?.serviceAmount} per hour
+                        ${item?.serviceAmount} per hour
                       </div>
-                      <div className="text-btm">
+                      <div className="text-btm mb-3">
                         <div className="service-duration">
                           <div className="service-duration-title">
                             Delivery Time :
@@ -230,12 +233,9 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                             {item?.serviceDuration} {item?.serviceTime}
                           </div>
                         </div>
-                        <div
-                          onClick={() => messageNow()}
-                          className="enquire-btn"
-                        >
-                          Inquire Now
-                        </div>
+                      </div>
+                      <div onClick={() => messageNow()} className="enquire-btn">
+                        Inquire Now
                       </div>
                     </div>
                   </div>
@@ -249,7 +249,68 @@ const ServicesCarousel = ({ talentData, brandData }) => {
             <div>No Services Available</div>
           </>
         )}
+      </div> */}
+
+      <div className="service-list-main">
+        {servicesList &&
+          servicesList.length > 0 &&
+          servicesList.map((item, index) => {
+            // Check if the service has a valid serviceName before rendering
+            if (!item?.serviceName) return null;
+
+            return (
+              <div className="service-list-wrapper" key={index}>
+                <div className="row">
+                  <div className="col-md-4">
+                    {item?.files[0]?.fileData ? (
+                      <img
+                        className="service-image-style"
+                        src={`${API.userFilePath}${item?.files[0]?.fileData}`}
+                        alt=""
+                      />
+                    ) : (
+                      <img
+                        className="service-image-style"
+                        src={avatarImage}
+                        alt=""
+                      />
+                    )}
+                  </div>
+                  <div className="service-list-content col-md-8">
+                    <div className="service-title">{item?.serviceName}</div>
+                    <div
+                      className="service-description"
+                      dangerouslySetInnerHTML={{ __html: item?.editorState }}
+                    />
+                    <div className="starting-amount">
+                      ${item?.serviceAmount} per hour
+                    </div>
+                    <div className="text-btm mb-3">
+                      <div className="service-duration">
+                        <div className="service-duration-title">
+                          Delivery Time :
+                        </div>
+                        <div>
+                          {item?.serviceDuration} {item?.serviceTime}
+                        </div>
+                      </div>
+                    </div>
+                    <div onClick={() => messageNow()} className="enquire-btn">
+                      Inquire Now
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+        {/* Display message if no services available or all services have empty serviceName */}
+        {(!servicesList.length ||
+          !servicesList.some((item) => item.serviceName)) && (
+          <div>No Services Available</div>
+        )}
       </div>
+
       {openPopUp && <PopUp message={message} />}
     </>
   );
