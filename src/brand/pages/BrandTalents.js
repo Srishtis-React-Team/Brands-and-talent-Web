@@ -430,6 +430,7 @@ const BrandTalents = () => {
       socialmedia: socialMedias,
       name: fullName,
       height: height,
+      relevantCategories: categories,
     };
 
     setIsLoading(true);
@@ -549,6 +550,20 @@ const BrandTalents = () => {
     setProfession(selectedOptions);
   };
 
+  const selectCategory = (selectedOptions) => {
+    if (!selectedOptions || selectedOptions.length === 0) {
+      setCategories([]);
+      return;
+    }
+    const selectedLanguages = selectedOptions.map((option) => option.value);
+
+    setCategories(selectedLanguages);
+  };
+
+  const [showAllProfessions, setShowAllProfessions] = useState(false);
+
+  const toggleShowAll = () => setShowAllProfessions((prev) => !prev);
+
   return (
     <>
       <>
@@ -644,6 +659,23 @@ const BrandTalents = () => {
                               }}
                               value={fullName}
                             ></input>
+                          </div>
+                        </div>
+
+                        <div className="profession-creator-wrapper">
+                          <div className="filter-items">Category</div>
+                          <div className="profession-wrapper talents-profession inpWid">
+                            <Select
+                              defaultValue={[]}
+                              isMulti
+                              name="professions"
+                              options={categoryList}
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              placeholder="Search for category"
+                              onChange={selectCategory}
+                              styles={customStylesProfession}
+                            />
                           </div>
                         </div>
 
@@ -911,7 +943,7 @@ const BrandTalents = () => {
                         )}
 
                         <div className="keyword-wrapper pt-4">
-                          <div className="filter-items">Height</div>
+                          <div className="filter-items">Height ( cm )</div>
                           <div className="filter-input-wrapper inpWid">
                             <input
                               className="keyword-input"
@@ -956,11 +988,25 @@ const BrandTalents = () => {
                                   <div className="col-sm-6 col-md-4 col-lg-3 px-1">
                                     <div className="gallery-wrapper modalSpc  mb-2">
                                       <div className="imgBox">
-                                        <img
-                                          onClick={() => openTalent(item)}
-                                          className="gallery-img"
-                                          src={`${API.userFilePath}${item.image?.fileData}`}
-                                        ></img>
+                                        {item.image?.fileData && (
+                                          <>
+                                            <img
+                                              onClick={() => openTalent(item)}
+                                              className="gallery-img"
+                                              src={`${API.userFilePath}${item.image?.fileData}`}
+                                            ></img>
+                                          </>
+                                        )}
+                                        {!item.image?.fileData && (
+                                          <>
+                                            <img
+                                              onClick={() => openTalent(item)}
+                                              className="gallery-img"
+                                              src={avatarImage}
+                                            ></img>
+                                          </>
+                                        )}
+
                                         {(() => {
                                           const starRatings = parseInt(
                                             item?.averageStarRatings,
@@ -1012,12 +1058,12 @@ const BrandTalents = () => {
                                           ></img>
                                         )}
                                       </div>
-                                      <div
-                                        className="galCont"
-                                        onClick={() => openTalent(item)}
-                                      >
+                                      <div className="galCont">
                                         <div className="content">
-                                          <div className="find-creator-name">
+                                          <div
+                                            className="find-creator-name"
+                                            onClick={() => openTalent(item)}
+                                          >
                                             {`${item?.preferredChildFirstname} ${item?.preferredChildLastName}`}
                                           </div>
                                           {item?.averageStarRatings &&
@@ -1038,7 +1084,6 @@ const BrandTalents = () => {
                                                 </div>
                                               </>
                                             )}
-
                                           {item?.noOfJobsCompleted && (
                                             <>
                                               <div className="talent-details-wrapper nweAlign pt-1 pb-0">
@@ -1054,22 +1099,45 @@ const BrandTalents = () => {
                                               </div>
                                             </>
                                           )}
-
-                                          {item?.profession && (
-                                            <>
+                                          {item?.profession &&
+                                            item.profession.length > 0 && (
                                               <div className="talent-details-wrapper nweAlign pt-1 pb-0">
                                                 <div className="logo-fill-briefcase">
                                                   <i className="bi bi-person-workspace model-job-icons"></i>
                                                 </div>
                                                 <div className="contSect">
-                                                  <span>
-                                                    {item?.profession[0]?.value}
-                                                  </span>
+                                                  {item.profession
+                                                    .slice(
+                                                      0,
+                                                      showAllProfessions
+                                                        ? item.profession.length
+                                                        : 2
+                                                    )
+                                                    .map((prof, index) => (
+                                                      <span key={prof.id}>
+                                                        {prof.value}
+                                                        {index <
+                                                          item.profession
+                                                            .length -
+                                                            1 &&
+                                                          index < 1 &&
+                                                          ", "}
+                                                      </span>
+                                                    ))}
+                                                  {item.profession.length >
+                                                    2 && (
+                                                    <span
+                                                      className="show-more"
+                                                      onClick={toggleShowAll}
+                                                    >
+                                                      {showAllProfessions
+                                                        ? " Show Less"
+                                                        : " ..."}
+                                                    </span>
+                                                  )}
                                                 </div>
                                               </div>
-                                            </>
-                                          )}
-
+                                            )}
                                           <span className="job-company_dtls nweAlign pt-2 pb-0 d-flex">
                                             <i className="bi bi-geo-alt-fill location-icon model-job-icons"></i>
                                             {item?.childCity &&

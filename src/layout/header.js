@@ -217,7 +217,7 @@ const Header = ({ onData }) => {
         // );
       } else if (currentUser_type === "brand" && currentUserId) {
         setActiveMenu("find-talent"); // Update the active menu item
-        navigate("/find-creators");
+        navigate("/find-talent");
       } else if (
         currentUser_type === "talent" &&
         talentData?.planName == "Basic"
@@ -232,7 +232,7 @@ const Header = ({ onData }) => {
         currentUser_type === "talent" &&
         talentData?.planName != "Basic"
       ) {
-        navigate("/find-creators");
+        navigate("/find-talent");
         setActiveMenu("find-talent"); // Update the active menu item
       }
     }
@@ -357,7 +357,7 @@ const Header = ({ onData }) => {
   };
 
   const handleLabelClick = (route) => {
-    if (route === "/find-creators") {
+    if (route === "/find-talent") {
       if (!currentUserId || currentUser_type != "brand") {
         // window.open(
         //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
@@ -757,7 +757,7 @@ const Header = ({ onData }) => {
   const location = useLocation();
   const isLoginPage = location.pathname.includes("/login");
 
-  const isActive = location.pathname.includes("/find-creators");
+  const isActive = location.pathname.includes("/find-talent");
 
   useEffect(() => {
     console.log(activeMenu, "activeMenu");

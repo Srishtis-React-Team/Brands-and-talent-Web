@@ -214,7 +214,7 @@ const Footer = (props) => {
         navigate("/login");
       }, 1000);
     } else if (currentUserType === "brand" && currentUserId) {
-      navigate("/find-creators");
+      navigate("/find-talent");
     } else if (
       currentUserType === "talent" &&
       talentData?.planName == "Basic"
@@ -229,7 +229,7 @@ const Footer = (props) => {
       currentUserType === "talent" &&
       talentData?.planName != "Basic"
     ) {
-      navigate("/find-creators");
+      navigate("/find-talent");
     }
   };
 

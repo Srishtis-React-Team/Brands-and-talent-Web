@@ -2153,7 +2153,11 @@ const TalentProfile = () => {
                                         .map((feature) => (
                                           <tr key={feature.label}>
                                             <td>{feature.label}</td>
-                                            <td>{feature.value}</td>
+                                            <td>
+                                              {isNaN(feature.value)
+                                                ? feature.value
+                                                : `${feature.value} cm`}
+                                            </td>
                                           </tr>
                                         ))}
                                     </tbody>

@@ -5,12 +5,16 @@ import React, {
   useState,
   startTransition,
 } from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import Spinner from "../components/Spinner";
 import ErrorBoundary from "../components/ErrorBoundary";
-import Pricing from '../views/pricing'
-import KidsFormTwo from '../auth/KidsFormTwo'
-
+import Pricing from "../views/pricing";
+import KidsFormTwo from "../auth/KidsFormTwo";
 
 // Lazy load components
 const PopUp = lazy(() => import("../components/PopUp"));
@@ -134,97 +138,628 @@ function Routing() {
 
   return (
     <>
-    <ErrorBoundary>
-      <Routes>
-        {/* Normal route for Pricing */}
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/talent-signup-plan-details" element={<KidsFormTwo />} />
+      <ErrorBoundary>
+        <Routes>
+          {/* Normal route for Pricing */}
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/talent-signup-plan-details" element={<KidsFormTwo />} />
 
-        
-        {/* Lazy-loaded route for Dashboard */}
-        <Route path="/" element={<Suspense fallback={<Spinner />}><Dashboard /></Suspense>}/>
-        <Route path="/" element={<Suspense fallback={<Spinner />}><Dashboard /></Suspense>} />
-        <Route path="/find-creators" element={<Suspense fallback={<Spinner />}><FindCreators /></Suspense>} />
-        <Route path="/talent/:name" element={<Suspense fallback={<Spinner />}><TalentProfile /></Suspense>} />
-        <Route path="/client/:name" element={<Suspense fallback={<Spinner />}><BrandHome /></Suspense>} />
-        <Route path="/pricing" element={<Suspense fallback={<Spinner />}><Pricing /></Suspense>} />
-        <Route path="/resources" element={<Suspense fallback={<Spinner />}><Resources /></Suspense>} />
-        <Route path="/signup" element={<Suspense fallback={<Spinner />}><Register /></Suspense>} />
-        <Route path="/adult-signup" element={<Suspense fallback={<Spinner />}><AdultSignup /></Suspense>} />
-        <Route path="/otp" element={<Suspense fallback={<Spinner />}><OTPComponent /></Suspense>} />
-        <Route path="/about-us" element={<Suspense fallback={<Spinner />}><About /></Suspense>} />
-        <Route path="/community-guidelines" element={<Suspense fallback={<Spinner />}><Guidelines /></Suspense>} />
-        <Route path="/terms-conditions" element={<Suspense fallback={<Spinner />}><TermsConditions /></Suspense>} />
-        <Route path="/privacy-policy" element={<Suspense fallback={<Spinner />}><PrivacyPolicy /></Suspense>} />
-        <Route path="/blogs" element={<Suspense fallback={<Spinner />}><Blogs /></Suspense>} />
-        <Route path="/post-job" element={<Suspense fallback={<Spinner />}><PostJob /></Suspense>} />
-        <Route path="/how-it-works" element={<Suspense fallback={<Spinner />}><HowItWorks /></Suspense>} />
-        <Route path="/login" element={<Suspense fallback={<Spinner />}><Login /></Suspense>} />
-        <Route path="/job-list" element={<Suspense fallback={<Spinner />}><OverallJobs /></Suspense>} />
-        <Route path="/forgot-password" element={<Suspense fallback={<Spinner />}><ForgotPassword /></Suspense>} />
-        <Route path="/reset-password" element={<Suspense fallback={<Spinner />}><ResetPassword /></Suspense>} />
-        <Route path="/reset-password/brand/:token" element={<Suspense fallback={<Spinner />}><ResetPassword /></Suspense>} />
-        <Route path="/reset-password/adult/:token" element={<Suspense fallback={<Spinner />}><ResetPassword /></Suspense>} />
-        <Route path="/success-password" element={<Suspense fallback={<Spinner />}><PasswordSuccess /></Suspense>} />
-        <Route path="/talent-dashboard" element={<Suspense fallback={<Spinner />}><TalentDashBoard /></Suspense>} />
-        <Route path="/talent-signup-basic-details" element={<Suspense fallback={<Spinner />}><KidsformOne /></Suspense>} />
-        <Route path="/talent-otp" element={<Suspense fallback={<Spinner />}><KidsOTP /></Suspense>} />
-        <Route path="/talent-social-media-connections" element={<Suspense fallback={<Spinner />}><KidsSocialMedias /></Suspense>} />
-        <Route path="/adult-signup-plan-details" element={<Suspense fallback={<Spinner />}><AdultPricing /></Suspense>} />
-        <Route path="/brand-signup-plan-details" element={<Suspense fallback={<Spinner />}><BrandPricing /></Suspense>} />
-        <Route path="/talent-signup-files-details" element={<Suspense fallback={<Spinner />}><KidsFormThree /></Suspense>} />
-        <Route path="/talent-signup-files-success" element={<Suspense fallback={<Spinner />}><KidsFormFour /></Suspense>} />
-        <Route path="/talent-signup-service-details" element={<Suspense fallback={<Spinner />}><KidsServices /></Suspense>} />
-        <Route path="/adult-signup-basic-details" element={<Suspense fallback={<Spinner />}><AdultFormOne /></Suspense>} />
-        <Route path="/adult-signup-service-details" element={<Suspense fallback={<Spinner />}><AdultFormTwo /></Suspense>} />
-        <Route path="/adult-signup-files-details" element={<Suspense fallback={<Spinner />}><AdultFormThree /></Suspense>} />
-        <Route path="/adult-social-medias-details" element={<Suspense fallback={<Spinner />}><AdultSocialMedias /></Suspense>} />
-        <Route path="/otp-verification" element={<Suspense fallback={<Spinner />}><OTPComponent /></Suspense>} />
-        <Route path="/otp-verification-brands" element={<Suspense fallback={<Spinner />}><BrandsOtp /></Suspense>} />
-        <Route path="/adult-success" element={<Suspense fallback={<Spinner />}><AdultSuccess /></Suspense>} />
-        <Route path="/update-talent-password" element={<Suspense fallback={<Spinner />}><UpdateAdultPassword /></Suspense>} />
-        <Route path="/brand-signup" element={<Suspense fallback={<Spinner />}><BrandSignup /></Suspense>} />
-        <Route path="/brand-firstGig" element={<Suspense fallback={<Spinner />}><BrandFirstGig /></Suspense>} />
-        <Route path="/brand-details" element={<Suspense fallback={<Spinner />}><BrandDetails /></Suspense>} />
-        <Route path="/brand-logo" element={<Suspense fallback={<Spinner />}><BrandLogo /></Suspense>} />
-        <Route path="/contact-us" element={<Suspense fallback={<Spinner />}><ContactUs /></Suspense>} />
-        <Route path="/contact-support" element={<Suspense fallback={<Spinner />}><ContactSupport /></Suspense>} />
-        <Route path="/brand-activated" element={<Suspense fallback={<Spinner />}><BrandActivation /></Suspense>} />
-        <Route path="/list-jobs" element={<Suspense fallback={<Spinner />}><ListJobs /></Suspense>} />
-        <Route path="/applied-jobs" element={<Suspense fallback={<Spinner />}><AppliedJobs /></Suspense>} />
-        <Route path="/saved-jobs" element={<Suspense fallback={<Spinner />}><SavedJobs /></Suspense>} />
-        <Route path="/create-jobs" element={<Suspense fallback={<Spinner />}><CreateJobs /></Suspense>} />
-        <Route path="/find-talents" element={<Suspense fallback={<Spinner />}><BrandTalents /></Suspense>} />
-        <Route path="/favorite-talents" element={<Suspense fallback={<Spinner />}><BrandFavorites /></Suspense>} />
-        <Route path="/brand-help" element={<Suspense fallback={<Spinner />}><BrandHelp /></Suspense>} />
-        <Route path="/preview-job" element={<Suspense fallback={<Spinner />}><PreviewJob /></Suspense>} />
-        <Route path="/job-success" element={<Suspense fallback={<Spinner />}><JobSuccess /></Suspense>} />
-        <Route path="/message" element={<Suspense fallback={<Spinner />}><MessageTalents /></Suspense>} />
-        <Route path="/preview-job-talent" element={<Suspense fallback={<Spinner />}><TalentPreviewJob /></Suspense>} />
-        <Route path="/applicants" element={<Suspense fallback={<Spinner />}><Applicants /></Suspense>} />
-        <Route path="/edit-talent-profile" element={<Suspense fallback={<Spinner />}><EditTalent /></Suspense>} />
-        <Route path="/edit-brand-profile" element={<Suspense fallback={<Spinner />}><EditBrands /></Suspense>} />
-        <Route path="/pricingadmin" element={<Suspense fallback={<Spinner />}><AdminPayment /></Suspense>} />
-        <Route path="/talent-notification" element={<Suspense fallback={<Spinner />}><TalentNotification /></Suspense>} />
-        <Route path="/talent-settings" element={<Suspense fallback={<Spinner />}><TalentSettings /></Suspense>} />
-        <Route path="/brand-settings" element={<Suspense fallback={<Spinner />}><BrandSettings /></Suspense>} />
-        <Route path="/talent-home" element={<Suspense fallback={<Spinner />}><TalentHome /></Suspense>} />
-        <Route path="/brand-notification" element={<Suspense fallback={<Spinner />}><BrandNotification /></Suspense>} />
-        <Route path="/get-booked" element={<Suspense fallback={<Spinner />}><GetBooked /></Suspense>} />
-        <Route path="/industry-news" element={<Suspense fallback={<Spinner />}><IndustryNews /></Suspense>} />
-        <Route path="/edit-feature" element={<Suspense fallback={<Spinner />}><EditFeatures /></Suspense>} />
-        <Route path="/careers" element={<Suspense fallback={<Spinner />}><Career /></Suspense>} />
-        <Route path="/become-affliate" element={<Suspense fallback={<Spinner />}><BecomeAffliate /></Suspense>} />
-        <Route path="/investors" element={<Suspense fallback={<Spinner />}><Investors /></Suspense>} />
-        <Route path="/feedback" element={<Suspense fallback={<Spinner />}><Feedbackreporting /></Suspense>} />
-        <Route path="/location-select" element={<Suspense fallback={<Spinner />}><LocationComponent /></Suspense>} />
-      </Routes>
+          {/* Lazy-loaded route for Dashboard */}
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Dashboard />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Dashboard />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/find-talent"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <FindCreators />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent/:name"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <TalentProfile />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/client/:name"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandHome />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/pricing"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Pricing />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/resources"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Resources />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Register />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/adult-signup"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <AdultSignup />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/otp"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <OTPComponent />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/about-us"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <About />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/community-guidelines"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Guidelines />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/terms-conditions"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <TermsConditions />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/privacy-policy"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <PrivacyPolicy />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blogs"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Blogs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/post-job"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <PostJob />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/how-it-works"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <HowItWorks />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Login />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/job-list"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <OverallJobs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <ForgotPassword />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <ResetPassword />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/reset-password/brand/:token"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <ResetPassword />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/reset-password/adult/:token"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <ResetPassword />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/success-password"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <PasswordSuccess />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-dashboard"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <TalentDashBoard />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-signup-basic-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <KidsformOne />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-otp"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <KidsOTP />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-social-media-connections"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <KidsSocialMedias />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/adult-signup-plan-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <AdultPricing />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/brand-signup-plan-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandPricing />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-signup-files-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <KidsFormThree />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-signup-files-success"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <KidsFormFour />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-signup-service-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <KidsServices />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/adult-signup-basic-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <AdultFormOne />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/adult-signup-service-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <AdultFormTwo />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/adult-signup-files-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <AdultFormThree />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/adult-social-medias-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <AdultSocialMedias />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/otp-verification"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <OTPComponent />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/otp-verification-brands"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandsOtp />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/adult-success"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <AdultSuccess />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/update-talent-password"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <UpdateAdultPassword />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/brand-signup"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandSignup />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/brand-firstGig"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandFirstGig />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/brand-details"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandDetails />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/brand-logo"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandLogo />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/contact-us"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <ContactUs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/contact-support"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <ContactSupport />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/brand-activated"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandActivation />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/list-jobs"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <ListJobs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/applied-jobs"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <AppliedJobs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/saved-jobs"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <SavedJobs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/create-jobs"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <CreateJobs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/find-talents"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandTalents />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/favorite-talents"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandFavorites />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/brand-help"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandHelp />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/preview-job"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <PreviewJob />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/job-success"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <JobSuccess />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/message"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <MessageTalents />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/preview-job-talent"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <TalentPreviewJob />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/applicants"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Applicants />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/edit-talent-profile"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <EditTalent />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/edit-brand-profile"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <EditBrands />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/pricingadmin"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <AdminPayment />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-notification"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <TalentNotification />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-settings"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <TalentSettings />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/brand-settings"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandSettings />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/talent-home"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <TalentHome />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/brand-notification"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BrandNotification />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/get-booked"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <GetBooked />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/industry-news"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <IndustryNews />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/edit-feature"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <EditFeatures />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/careers"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Career />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/become-affliate"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <BecomeAffliate />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/investors"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Investors />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/feedback"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Feedbackreporting />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/location-select"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <LocationComponent />
+              </Suspense>
+            }
+          />
+        </Routes>
 
-      {openPopUp && (
-        <PopUp message={message} onClose={() => setOpenPopUp(false)} />
-      )}
-    </ErrorBoundary>
-  </>
+        {openPopUp && (
+          <PopUp message={message} onClose={() => setOpenPopUp(false)} />
+        )}
+      </ErrorBoundary>
+    </>
   );
 }
 
