@@ -6,6 +6,11 @@
 .plan-name {
   font-family: "Libre Baskerville", serif;
 }
+
+.active-icon {
+  color: green;
+  margin-left: 5px;
+}
 .plans-wrapper .include {
   font-weight: 600;
   font-style: italic;
