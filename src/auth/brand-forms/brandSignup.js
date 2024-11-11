@@ -162,7 +162,8 @@ const BrandSignup = React.memo((props) => {
       adultEmail !== "" &&
       adultPassword !== "" &&
       adultConfirmPassword !== "" &&
-      passwordMatch === true
+      passwordMatch === true &&
+      passwordStatus == true
     ) {
       const formData = {
         userName: adultName,

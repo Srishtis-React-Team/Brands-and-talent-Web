@@ -1045,14 +1045,14 @@ const FindCreators = () => {
                                       </div>
                                     );
                                   })()}
-                                  {!item.isFavourite && (
+                                  {!item.isFavorite && (
                                     <img
                                       className="heart-icon"
                                       src={heartIcon}
                                       onClick={() => addFavorite(item)}
                                     ></img>
                                   )}
-                                  {item.isFavourite === true && (
+                                  {item.isFavorite === true && (
                                     <img
                                       className="heart-icon"
                                       src={favoruiteIcon}

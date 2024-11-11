@@ -198,6 +198,10 @@
   text-transform: capitalize;
 }
 @media only screen and (min-width: 320px) and (max-width: 768px) {
+  .company-location {
+    display: block;
+    margin-bottom: 0px;
+  }
   .job-features-benefits {
     padding: 20px 0;
     display: flex;

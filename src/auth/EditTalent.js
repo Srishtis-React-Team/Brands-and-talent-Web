@@ -3047,7 +3047,7 @@ const EditTalent = () => {
                   </div>
                 </div>
                 <div className="kids-form-title">
-                  Select 3 to 6 categories relevant to your profile
+                  Select 1 to 6 categories relevant to your profile
                   <span className="mandatory">*</span>
                 </div>
                 <div className="category-list">
@@ -3080,7 +3080,7 @@ const EditTalent = () => {
                   selectedCategories?.length > 6) &&
                   categoryError && (
                     <div className="invalid-fields">
-                      Please select 3 to 6 categories relevant to your profile
+                      Please select 1 to 6 categories relevant to your profile
                     </div>
                   )}
                 <div className="row">
