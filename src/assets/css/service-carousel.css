@@ -1,7 +1,4 @@
 .service-list-main {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
 }
 .service-list-main .service-list-wrapper {
   margin: 10px 0 20px;
@@ -10,13 +7,7 @@
   height: 250px;
   overflow: hidden;
 }
-.service-list-main .service-list-wrapper .service-list-image img {
-  width: 100%;
-  min-height: 250px;
-  -o-object-fit: cover;
-  object-fit: cover;
-  border-radius: 16px;
-}
+
 .service-list-main
   .service-list-wrapper
   .service-list-content
@@ -101,4 +92,10 @@
   justify-content: space-between;
   align-items: center;
   margin: 2px 0 0;
+}
+
+.service-image-style {
+  width: 300px !important;
+  height: 300px;
+  border-radius: 16px;
 }

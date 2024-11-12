@@ -191,7 +191,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
         }, 3000);
       } else if (menuItem == "find-talent" && talentData?.planName != "Basic") {
         setActiveMenu(menuItem); // Update the active menu item
-        navigate("/find-creators");
+        navigate("/find-talent");
       }
     };
   };
@@ -313,7 +313,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
   };
 
   const handleLabelClick = (route) => {
-    if (route === "/find-creators") {
+    if (route === "/find-talent") {
       if (!currentUserId || currentUser_type != "brand") {
         // window.open(
         //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",

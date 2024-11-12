@@ -133,7 +133,7 @@ const SearchHeaderComponent = ({ onData }) => {
           navigate("/login");
         }, 1000);
       } else if (currentUser_type === "brand" && currentUserId) {
-        navigate("/find-creators");
+        navigate("/find-talent");
       } else if (currentUser_type === "talent" && currentUserId) {
         setMessage("You need to sign Up as Brand to find talents");
         setOpenPopUp(true);
@@ -218,7 +218,7 @@ const SearchHeaderComponent = ({ onData }) => {
   };
 
   const handleLabelClick = (route) => {
-    if (route === "/find-creators") {
+    if (route === "/find-talent") {
       if (!currentUserId || currentUser_type != "brand") {
         handleClose();
         setMessage("You must be logged in");
