@@ -942,7 +942,15 @@ const TalentProfile = () => {
                               <div className="row">
                                 {(talentData?.instaFollowers ||
                                   talentData?.instagramUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    onClick={() =>
+                                      window.open(
+                                        talentData?.instagramUrl,
+                                        "_blank"
+                                      )
+                                    }
+                                  >
                                     <div className="logoSocial">
                                       <img
                                         onClick={() =>
@@ -958,7 +966,16 @@ const TalentProfile = () => {
                                     <div className="social-followers-count-section">
                                       <div className="social-count">
                                         {talentData?.instaFollowers ? (
-                                          <p>{talentData.instaFollowers}</p>
+                                          <p
+                                            onClick={() =>
+                                              window.open(
+                                                talentData?.instagramUrl,
+                                                "_blank"
+                                              )
+                                            }
+                                          >
+                                            {talentData.instaFollowers}
+                                          </p>
                                         ) : (
                                           <div
                                             onClick={() =>
@@ -984,7 +1001,15 @@ const TalentProfile = () => {
 
                                 {(talentData?.facebookFollowers ||
                                   talentData?.facebookUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.facebookUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                  >
                                     <div className="logoSocial">
                                       <img
                                         onClick={() =>
@@ -1029,7 +1054,15 @@ const TalentProfile = () => {
                                 )}
                                 {(talentData?.tiktokFollowers ||
                                   talentData?.tikTokUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.tikTokUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                  >
                                     <div className="logoSocial">
                                       <img
                                         onClick={() =>
@@ -1075,7 +1108,15 @@ const TalentProfile = () => {
 
                                 {(talentData?.linkedinFollowers ||
                                   talentData?.linkedinUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.linkedinUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                  >
                                     <div className="logoSocial">
                                       <img
                                         onClick={() =>
@@ -1121,7 +1162,15 @@ const TalentProfile = () => {
 
                                 {(talentData?.twitterFollowers ||
                                   talentData?.twitterUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.twitterUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                  >
                                     <div className="logoSocial">
                                       <img
                                         onClick={() =>
@@ -1167,7 +1216,15 @@ const TalentProfile = () => {
                                 )}
                                 {(talentData?.threadsFollowers ||
                                   talentData?.threadsUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.threadsUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                  >
                                     <div className="logoSocial">
                                       <img
                                         onClick={() =>
@@ -1214,7 +1271,15 @@ const TalentProfile = () => {
 
                                 {(talentData?.youtubeFollowers ||
                                   talentData?.youTubeUrl) && (
-                                  <div className="talents-social col-md-6">
+                                  <div
+                                    className="talents-social col-md-6"
+                                    onClick={() =>
+                                      window.open(
+                                        `${talentData?.youTubeUrl}`,
+                                        "_blank"
+                                      )
+                                    }
+                                  >
                                     <div className="logoSocial">
                                       <img
                                         onClick={() =>

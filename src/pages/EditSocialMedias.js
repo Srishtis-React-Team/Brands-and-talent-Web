@@ -485,25 +485,6 @@ const EditSocialMedias = ({ talentData, onValuesChange }) => {
   return (
     <>
       <div className="form-dialog">
-        <div className="header-wrapper">
-          <div className="step-wrapper">
-            <img
-              className="modal-logo"
-              onClick={() => {
-                navigate("/");
-              }}
-              src={btLogo}
-            ></img>
-            <div className="step-text">Step 3 of 6</div>
-          </div>
-          <button
-            type="button"
-            className="btn-close"
-            onClick={() => {
-              navigate("/");
-            }}
-          ></button>
-        </div>
         <div className="kidsform-one container">
           <div className="row">
             <div className="kids-form col-lg-12  col-md-12">
