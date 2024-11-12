@@ -92,7 +92,7 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
                 value={value}
                 onChange={(e) => handleChange(label, e.target.value)}
               >
-                <option value="">Select...</option>
+                <option value="">Select</option>
                 {options.map((option, i) => (
                   <option key={i} value={option}>
                     {option}
@@ -131,6 +131,7 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
                 }}
                 options={getOptions(options)}
                 isClearable
+                placeholder="US or EU size"
               />
             </div>
           );
