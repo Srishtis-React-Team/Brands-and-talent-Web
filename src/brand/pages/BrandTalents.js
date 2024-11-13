@@ -947,7 +947,7 @@ const BrandTalents = () => {
                           <div className="filter-input-wrapper inpWid">
                             <input
                               className="keyword-input"
-                              placeholder="Enter Height"
+                              placeholder="Enter value in cm"
                               value={height}
                               onChange={(e) => {
                                 setHeight(e.target.value);

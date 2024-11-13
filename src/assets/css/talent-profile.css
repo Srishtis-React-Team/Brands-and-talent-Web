@@ -434,6 +434,7 @@
   border-radius: 10px;
   flex-wrap: wrap;
   margin: 5px 0;
+  cursor: pointer;
 }
 
 .insta-backdrop {
