@@ -237,14 +237,16 @@ const Pricing = ({
   },[])
 
   const fetchPaymentDetails = async () => {
-    const userId = localStorage.getItem("userId");
-    const obj = {
+    const userId = localStorage.getItem("currentUser");
+    console.log('userId---------',userId)
+    const obj = { 
       user_id: userId,
     };
     const paymentDetailsData = await ApiHelper.post(
       "https://brandsandtalent.com/api/users/fetchPaymentDetails",
       obj
     );
+    console.log('paymentDetailsData',paymentDetailsData)
     let activatedPlan;
     let activatedPeriod = paymentDetailsData?.data?.data?.subscriptionPlan;
     if(paymentDetailsData?.data?.data?.planName == 'Pro'){
@@ -737,10 +739,12 @@ const Pricing = ({
             <div className="plan-validity">Forever</div>
           </>
         )}
+        {console.log('activePlan',activePlan)}
 
         {item.plan_type_annual.length >= 1 && (
           <>
             <div className="annual-main-wrapper">
+              {console.log('item.plan_type_annual',item.planname)}
               <div className="annual-wrapper">
                 <input
                   type="radio"
