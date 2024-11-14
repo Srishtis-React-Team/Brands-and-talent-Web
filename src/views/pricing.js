@@ -46,22 +46,21 @@ const Pricing = ({
 }) => {
   const { currentUserId, currentUserImage, currentUserType, avatarImage } =
     CurrentUser();
-  console.log(from, "from");
-  console.log(userType, "userType");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log("location.state", location.state);
   const brand_url = `https://brandsandtalent.com/client/${location?.state?.data?.publicUrl?.replace(
     /\s+/g,
     ""
   )}`;
   useEffect(() => {
+    const data = localStorage.getItem("reloades")
+
     // Check if the page has already been reloaded
-    if (!localStorage.getItem("reloades")) {
+    if (!data) {
       localStorage.setItem("reloades", "true"); // Set flag in localStorage
       window.location.reload();
     }
@@ -78,7 +77,6 @@ const Pricing = ({
   //   }
   // }, [location.state]);
   // useEffect(() => {
-  //   console.log(receivedData, "receivedData");
   // }, [receivedData]);
 
   const paramsValues = window.location.search;
@@ -92,7 +90,6 @@ const Pricing = ({
   const url = window.location.href;
   const queryString = url.split("?")[1];
 
-  console.log(queryString, "queryString");
 
   const handleClickOpen = () => {
     if (currentUserType == "talent") {
@@ -248,7 +245,6 @@ const Pricing = ({
       "https://brandsandtalent.com/api/users/fetchPaymentDetails",
       obj
     );
-    console.log('paymentDetailsData',paymentDetailsData?.data?.data);
     let activatedPlan;
     let activatedPeriod = paymentDetailsData?.data?.data?.subscriptionPlan;
     if(paymentDetailsData?.data?.data?.planName == 'Pro'){
@@ -285,9 +281,6 @@ const Pricing = ({
     setIsChecked(event.target.checked);
   };
 
-  useEffect(() => {
-    console.log(pricingList, "pricingList");
-  }, [pricingList]);
 
   useEffect(() => { }, [comment]);
 
@@ -312,23 +305,17 @@ const Pricing = ({
   };
 
   const editKids = async () => {
-    console.log('jjkkdkdkkd')
-    console.log("currentPath", currentPath);
     const userId = localStorage.getItem("currentUser");
-    console.log('userId', userId)
     if (userType == 'adults') {
       const userData = {
         planName: 'Basic',
         user_id: userId,
         paymentStatus: "Pending",
       };
-      console.log('userData', userData)
       const responseSubscription = await ApiHelper.post(
         API.subscriptionPlan,
         userData
       );
-      console.log("responseSubscription--", responseSubscription);
-      console.log('receivedData', receivedData)
       navigate(`/adult-signup-files-details?${userId}`);
       // navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
       //   state: { data: receivedData },
@@ -339,34 +326,26 @@ const Pricing = ({
         user_id: userId,
         paymentStatus: "Pending",
       };
-      console.log('userData', userData)
       const responseSubscription = await ApiHelper.post(
         API.subscriptionPlan,
         userData
       );
-      console.log("responseSubscription--", responseSubscription);
-      console.log('receivedData', receivedData)
       navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
         state: { data: receivedData },
       });
     }
     // if (currentPath == "/pricing") {
-    //   console.log("if");
     //   navigate(``);
     // } else {
-    //   console.log("else");
     //   const userData = {
     //     planName: 'Basic',
     //     user_id: userId,
     //     paymentStatus: "Pending",
     //   };
-    //   console.log('userData',userData)
     //   const responseSubscription = await ApiHelper.post(
     //     API.subscriptionPlan,
     //     userData
     //   );
-    //   console.log("responseSubscription--", responseSubscription);
-    //   console.log('receivedData',receivedData)
     //   navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
     //     state: { data: receivedData },
     //   });
@@ -374,17 +353,14 @@ const Pricing = ({
   };
 
   const choosePlan = async (index, item, from) => {
-    console.log("inside chooseplan.....", from);
     if (index == 0) {
       editKids();
     } else {
       setPathFrom(from);
       if (from == "giftsubscription") {
-        console.log("inside the if case");
         setGiftSub(true);
         localStorage.setItem("giftsubscription", true);
       } else {
-        console.log("inside the else case");
         setGiftSub(false);
         localStorage.setItem("giftsubscription", false);
       }
@@ -395,13 +371,11 @@ const Pricing = ({
         item.plan_type_monthly.find(
           (plan) => `monthly-${item._id}` === selectedPlan
         );
-      console.log("selectedPlanItem", selectedPlanItem);
       const currency = selectedPlanItem ? selectedPlanItem.currency : "Unknown";
       const price = selectedPlanItem ? selectedPlanItem.amount : "N/A";
       const afterDiscount = selectedPlanItem
         ? selectedPlanItem.afterDiscount
         : "N/A";
-      console.log("afterDiscount", afterDiscount);
       const regex = /^(\w+)\s([\d.,]+)\/(\w+)$/;
       const match = price.match(regex);
       if (match) {
@@ -416,8 +390,6 @@ const Pricing = ({
         }
         const currency = match[1].toUpperCase(); // "USD"
         const duration = match[3]; // "month"
-        console.log("currency", currency);
-        console.log("amount", amount);
         setSelectedCurrency(currency);
         setSelectedAmount(amount);
         // const type = 'https://brandsandtalent.com/create-jobs'
@@ -434,11 +406,6 @@ const Pricing = ({
   const handleSubmit = async () => {
     setShowBtn(false);
     if (isPlanForm === false) {
-      console.log("Sender Name: ", senderName);
-      console.log("Email: ", email);
-      console.log("Receiver's Email: ", recieverEmail);
-      console.log("Receiver's First Name: ", recieversFirstName);
-      console.log("Receiver's Last Name: ", recieversLastName);
       if (!senderName) setSenderNameError(true);
       if (!email) setEmailError(true);
       if (!recieverEmail) setRecieverEmailError(true);
@@ -458,7 +425,6 @@ const Pricing = ({
   };
 
   const handleRadioChange = (type, id, planname) => (event) => {
-    console.log("type, id, planname", type, id, planname);
     setSelectedPlan(id);
     setSelectedPaymentPlan(planname);
     setSelectedPaymentPeriod(type);
@@ -551,12 +517,10 @@ const Pricing = ({
         `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
-      console.log('brand_url', brand_url)
       setSuccess_url(brand_url);
     } else {
       setSuccess_url(`https://brandsandtalent.com/talent-home`);
     }
-    console.log("success_url", success_url);
   }, []);
 
   const modalRef = useRef(null);
@@ -630,8 +594,6 @@ const Pricing = ({
   };
 
   useEffect(() => {
-    console.log(currentUserId, "currentUserId");
-    console.log(currentUserType, "currentUserType");
     if (currentUserId) {
       if (currentUserType == "talent") {
         getTalentById();
@@ -665,18 +627,9 @@ const Pricing = ({
       .catch((err) => { });
   };
 
-  useEffect(() => {
-    console.log(talentData, "talentData");
-  }, [talentData]);
-  useEffect(() => {
-    console.log(brandData, "brandData");
-  }, [brandData]);
-
   const handleFormSubmit = (dataObject, hash) => {
-    console.log('inside the handleFormsubmit')
     setAbaFormData({ ...dataObject, hash });
     setTimeout(() => {
-      console.log('inside hee')
       document.getElementById("checkout_button").click();
     }, 100);
   };
@@ -707,7 +660,6 @@ const Pricing = ({
           </div>
         </>
       )}
-      {console.log("formData", abaFormData)}
       <form id="aba_merchant_request" target="aba_webservice" method="POST" action="https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase"
       >
         <input
