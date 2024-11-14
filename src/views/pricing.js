@@ -173,6 +173,8 @@ const Pricing = ({
   const [pathFrom, setPathFrom] = useState("");
   const [appliedCouponCode, setAppliedCouponCode] = useState("");
   const [success_url, setSuccess_url] = useState(``);
+  const [giftError, setGiftError] = useState(`(Please fill out the form below to gift a subscription to someone special and support their creative journey).`);
+
 
   const handleMobileChange = (value) => {
     isValidPhoneNumber(value);
@@ -955,8 +957,7 @@ const Pricing = ({
               className="plan-content-text-popup pb-2"
               style={{ color: "#c2114b" }}
             >
-              (Please fill out the form below to gift a subscription to someone
-              special and support their creative journey).
+              {giftError}
             </p>
           </div>
 
@@ -1265,6 +1266,7 @@ const Pricing = ({
               <>
                 <div>
                   <PaymentOptions
+                  onConfirm={handleFormSubmit}
                     paymentFrom={paymentFrom}
                     selectedCurrency={selectedCurrency}
                     selectedAmount={selectedAmount}
@@ -1273,6 +1275,14 @@ const Pricing = ({
                     setPaymentOption={setPaymentOption}
                     selectedPaymentPlan={selectedPaymentPlan}
                     selectedPaymentPeriod={selectedPaymentPeriod}
+                    giftSub={giftSub}
+                    senderName={senderName}
+                    email={email}
+                    recieversFirstName={recieversFirstName}
+                    recieverEmail={recieverEmail}
+                    appliedCouponCode={appliedCouponCode}
+                    success_url={success_url}
+                    setGiftError={setGiftError}
                   />
                 </div>
               </>
