@@ -29,8 +29,8 @@ const PaymentOptions = ({
   enquiry,
   appliedCouponCode,
   success_url,
-  setGiftError
 }) => {
+  console.log("ookoo", success_url);
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [amount, setAmount] = useState("");
@@ -47,18 +47,19 @@ const PaymentOptions = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log("userEmail", userEmail);
   useEffect(() => {
     setAmount(selectedAmount);
     getTransactionId();
   }, []);
 
   const getTransactionId = async () => {
+    console.log("gettransactionId");
     const resData = await ApiHelper.get(`${API.fetchTransactionId}`);
+    console.log("id resData", resData.data.data.transactionid);
     setTran_id(resData.data.data.transactionid);
   };
 
-  const freeContinueBtn = async () =>{
-    let planType = selectedPaymentPlan.split(" ")[0]; // Extract plan name
   const freeContinueBtn = async () => {
     console.log("appliedCouponCode", appliedCouponCode);
     let planType = selectedPaymentPlan.split(" ")[0]; // Extract plan name
@@ -71,6 +72,7 @@ const PaymentOptions = ({
       paymentStatus: "Pending",
       coupon: appliedCouponCode ? appliedCouponCode : "",
     };
+
     console.log("userData", userData);
 
     const responseSubscription = await ApiHelper.post(
@@ -83,7 +85,7 @@ const PaymentOptions = ({
     if (location.pathname == "/pricing") {
       url = `/talent-home`;
     } else if (location.pathname == "/talent-signup-plan-details") {
-      url = `/talent-kids-teen-signup-files-details?userId=${userId}`;
+      url = `/talent-signup-files-details?userId=${userId}`;
     } else {
       url = success_url;
     }
@@ -139,8 +141,8 @@ const PaymentOptions = ({
 
   // Handle Payment Option Selection
   const handleSelection = async (type) => {
+    setPaymentOption(false);
     try {
-      let couponNotFound = false;
       let planType;
       if (selectedPaymentPlan == "Pro (Popular)") {
         planType = selectedPaymentPlan.split(" ")[0]; // This will give you "Pro"
@@ -169,9 +171,6 @@ const PaymentOptions = ({
         };
 
         const resGiftSub = await ApiHelper.post(API.giftSubCreation, giftObj);
-        if(resGiftSub.data.message == 'coupon not found'){
-          couponNotFound = true;
-        }
       } else {
         console.log("inside the else condision--");
         const userData = {
@@ -189,6 +188,7 @@ const PaymentOptions = ({
           API.subscriptionPlan,
           userData
         );
+        console.log("responseSubscription", responseSubscription);
         publicUrl = responseSubscription.data.publicUrl;
         console.log("publicUrl", publicUrl);
       }
@@ -216,17 +216,12 @@ const PaymentOptions = ({
       // // Generate the hash using the dataObject and your public key
       const publicKey = "366b35eb-433b-4d8e-8ee9-036bcd3e2e2c";
       const hash = generateHash(dataObject, publicKey);
-      if(!couponNotFound){
       onConfirm(dataObject, hash);
       setSelectedPaymentOption(type);
       setPayOption(type);
-      setPaymentOption(false);
-      }else{
-        setErrorMessage('Coupon unavailable for this subscription. Please contact support for assistance with available coupons.')
-      }
     } catch (error) {
       console.error("Payment option selection error:", error);
-      setGiftError(
+      setErrorMessage(
         "The selected payment option is not available. Please choose another option."
       );
     }
@@ -299,8 +294,6 @@ const PaymentOptions = ({
         )}
 
         {errorMessage && <div className="error-message">{errorMessage}</div>}
-        {finalAmount !== undefined && finalAmount === 0 ?(
-          <button className="cntnebtn" onClick={freeContinueBtn}>Continue</button>
         {console.log("finalAmount", finalAmount)}
         {console.log(typeof finalAmount)}
         {finalAmount !== undefined && finalAmount === 0 ? (
