@@ -4,7 +4,7 @@ const searchPathOptions = [
   { routes: "/pricing", label: "Pricing" },
   { routes: "/resources", label: "Resources" },
   { routes: "/signup", label: "Register" },
-  { routes: "/adult-signup", label: "Adult Signup" },
+  { routes: "/talent-signup", label: "Adult Signup" },
   { routes: "/about-us", label: "About Us" },
   { routes: "/community-guidelines", label: "Community Guidelines" },
   { routes: "/terms-conditions", label: "Terms & Conditions" },

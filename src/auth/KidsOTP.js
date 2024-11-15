@@ -93,10 +93,10 @@ const KidsOTP = () => {
           }, 1000);
           setTimeout(function () {
             let successData = "verified";
-            console.log('resData.data.--',resData.data.data.parentEmail)
-            localStorage.setItem('userEmail',resData.data.data.parentEmail)
+            console.log("resData.data.--", resData.data.data.parentEmail);
+            localStorage.setItem("userEmail", resData.data.data.parentEmail);
             navigate(
-              `/talent-social-media-connections?userId=${userId}&userEmail=${userEmail}`
+              `/talent-kids-teen-social-media-connections?userId=${userId}&userEmail=${userEmail}`
             );
           }, 1000);
         } else if (resData.data.status === false) {
@@ -148,7 +148,7 @@ const KidsOTP = () => {
 
   const goBack = async () => {
     navigate(
-      `/talent-signup-basic-details?userId=${userId}&userEmail=${userEmail}`
+      `/talent-kids-teen-signup-basic-details?userId=${userId}&userEmail=${userEmail}`
     );
   };
 

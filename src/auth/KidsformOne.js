@@ -595,7 +595,7 @@ const KidsformOne = () => {
               setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(
-                  `/talent-otp?userId=${resData.data["user_id"]}&userEmail=${resData.data.data}`
+                  `/talent-kids-teen-signup-otp?userId=${resData.data["user_id"]}&userEmail=${resData.data.data}`
                 );
               }, 1000);
             } else if (resData.data.status === false) {
@@ -620,7 +620,7 @@ const KidsformOne = () => {
               setTimeout(function () {
                 setOpenPopUp(false);
                 navigate(
-                  `/talent-otp?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
+                  `/talent-kids-teen-signup-otp?userId=${resData.data.data["user_id"]}&userEmail=${resData.data.data["email"]}`
                 );
               }, 1000);
             } else if (resData.data.status === false) {

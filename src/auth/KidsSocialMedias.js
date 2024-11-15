@@ -497,7 +497,9 @@ const KidsSocialMedias = ({ onDataFromChild, ...props }) => {
   };
 
   const goBack = async () => {
-    navigate(`/talent-otp?userId=${userId}&userEmail=${userEmail}`);
+    navigate(
+      `/talent-kids-teen-signup-otp?userId=${userId}&userEmail=${userEmail}`
+    );
   };
 
   return (

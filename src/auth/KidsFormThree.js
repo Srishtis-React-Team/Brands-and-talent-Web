@@ -953,7 +953,9 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
           setTimeout(function () {
             setOpenPopUp(false);
             if (talentData?.planName !== "Basic") {
-              navigate(`/talent-signup-service-details?userId=${userId}`);
+              navigate(
+                `/talent-kids-teen-signup-service-details?userId=${userId}`
+              );
             } else {
               directKidsLogin(resData);
             }
