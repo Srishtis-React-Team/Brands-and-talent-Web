@@ -59,6 +59,10 @@ const PaymentOptions = ({
 
   const freeContinueBtn = async () =>{
     let planType = selectedPaymentPlan.split(" ")[0]; // Extract plan name
+  const freeContinueBtn = async () => {
+    console.log("appliedCouponCode", appliedCouponCode);
+    let planType = selectedPaymentPlan.split(" ")[0]; // Extract plan name
+    console.log("planType", planType);
     const userData = {
       subscriptionPlan: selectedPaymentPeriod,
       planName: planType,
@@ -67,17 +71,19 @@ const PaymentOptions = ({
       paymentStatus: "Pending",
       coupon: appliedCouponCode ? appliedCouponCode : "",
     };
-
+    console.log("userData", userData);
 
     const responseSubscription = await ApiHelper.post(
       API.subscriptionPlan,
       userData
     );
+    console.log("responseSubscription", responseSubscription);
+    console.log("location.pathname", location.pathname);
     let url;
     if (location.pathname == "/pricing") {
       url = `/talent-home`;
     } else if (location.pathname == "/talent-signup-plan-details") {
-      url = `/talent-signup-files-details?userId=${userId}`;
+      url = `/talent-kids-teen-signup-files-details?userId=${userId}`;
     } else {
       url = success_url;
     }
@@ -167,6 +173,7 @@ const PaymentOptions = ({
           couponNotFound = true;
         }
       } else {
+        console.log("inside the else condision--");
         const userData = {
           subscriptionPlan: selectedPaymentPeriod,
           planName: planType ? planType : selectedPaymentPlan,
@@ -176,17 +183,19 @@ const PaymentOptions = ({
           coupon: appliedCouponCode ? appliedCouponCode : "",
         };
 
+        console.log("userData--+", userData);
 
         const responseSubscription = await ApiHelper.post(
           API.subscriptionPlan,
           userData
         );
         publicUrl = responseSubscription.data.publicUrl;
+        console.log("publicUrl", publicUrl);
       }
 
       const subscriptionData = JSON.stringify({
         subscriptionPlan: selectedPaymentPeriod,
-        planName: planType ? planType : selectedPaymentPlan
+        planName: planType ? planType : selectedPaymentPlan,
       });
 
       // // Create a data object for hash generation
@@ -197,9 +206,13 @@ const PaymentOptions = ({
         amount: finalAmount ? finalAmount : amount,
         email: userEmail,
         payment_option: type,
-        continue_success_url: currentUserType == 'brand' ? `https://brandsandtalent.com/client/${publicUrl}` :success_url,
-        return_params : subscriptionData,
+        continue_success_url:
+          currentUserType == "brand"
+            ? `https://brandsandtalent.com/client/${publicUrl}`
+            : success_url,
+        return_params: subscriptionData,
       };
+      console.log("dataObject", dataObject);
       // // Generate the hash using the dataObject and your public key
       const publicKey = "366b35eb-433b-4d8e-8ee9-036bcd3e2e2c";
       const hash = generateHash(dataObject, publicKey);
@@ -288,6 +301,12 @@ const PaymentOptions = ({
         {errorMessage && <div className="error-message">{errorMessage}</div>}
         {finalAmount !== undefined && finalAmount === 0 ?(
           <button className="cntnebtn" onClick={freeContinueBtn}>Continue</button>
+        {console.log("finalAmount", finalAmount)}
+        {console.log(typeof finalAmount)}
+        {finalAmount !== undefined && finalAmount === 0 ? (
+          <button className="cntnebtn" onClick={freeContinueBtn}>
+            Continue
+          </button>
         ) : (
           <div className="paymentOptionSection">
             <div

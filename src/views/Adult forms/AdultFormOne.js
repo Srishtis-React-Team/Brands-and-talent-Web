@@ -482,7 +482,7 @@ const AdultFormOne = () => {
               setOpenPopUp(true);
               setTimeout(function () {
                 setOpenPopUp(false);
-                navigate(`/adult-social-medias-details?${userId}`);
+                navigate(`/talent-signup-social-medias-details?${userId}`);
               }, 1000);
             } else if (resData.data.status === false) {
               setIsLoading(false);

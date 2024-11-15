@@ -142,6 +142,7 @@ function Routing() {
         <Routes>
           {/* Normal route for Pricing */}
           <Route path="/pricing" element={<Pricing />} />
+
           <Route path="/talent-signup-plan-details" element={<KidsFormTwo />} />
 
           {/* Lazy-loaded route for Dashboard */}
@@ -210,7 +211,7 @@ function Routing() {
             }
           />
           <Route
-            path="/adult-signup"
+            path="/talent-signup"
             element={
               <Suspense fallback={<Spinner />}>
                 <AdultSignup />
@@ -345,24 +346,27 @@ function Routing() {
               </Suspense>
             }
           />
+
           <Route
-            path="/talent-signup-basic-details"
+            path="/talent-kids-teen-signup-basic-details"
             element={
               <Suspense fallback={<Spinner />}>
                 <KidsformOne />
               </Suspense>
             }
           />
+
           <Route
-            path="/talent-otp"
+            path="/talent-kids-teen-signup-otp"
             element={
               <Suspense fallback={<Spinner />}>
                 <KidsOTP />
               </Suspense>
             }
           />
+
           <Route
-            path="/talent-social-media-connections"
+            path="/talent-kids-teen-social-media-connections"
             element={
               <Suspense fallback={<Spinner />}>
                 <KidsSocialMedias />
@@ -385,48 +389,54 @@ function Routing() {
               </Suspense>
             }
           />
+
           <Route
-            path="/talent-signup-files-details"
+            path="/talent-kids-teen-signup-files-details"
             element={
               <Suspense fallback={<Spinner />}>
                 <KidsFormThree />
               </Suspense>
             }
           />
+
           <Route
-            path="/talent-signup-files-success"
+            path="/talent-kids-teen-signup-files-success"
             element={
               <Suspense fallback={<Spinner />}>
                 <KidsFormFour />
               </Suspense>
             }
           />
+
           <Route
-            path="/talent-signup-service-details"
+            path="/talent-kids-teen-signup-service-details"
             element={
               <Suspense fallback={<Spinner />}>
                 <KidsServices />
               </Suspense>
             }
           />
+
           <Route
-            path="/adult-signup-basic-details"
+            path="/talent-signup-basic-details"
             element={
               <Suspense fallback={<Spinner />}>
                 <AdultFormOne />
               </Suspense>
             }
           />
+
           <Route
-            path="/adult-signup-service-details"
+            path="/talent-signup-service-details"
             element={
               <Suspense fallback={<Spinner />}>
                 <AdultFormTwo />
               </Suspense>
             }
           />
+
           <Route
-            path="/adult-signup-files-details"
+            path="/talent-signup-files-details"
             element={
               <Suspense fallback={<Spinner />}>
                 <AdultFormThree />
@@ -434,7 +444,7 @@ function Routing() {
             }
           />
           <Route
-            path="/adult-social-medias-details"
+            path="/talent-signup-social-medias-details"
             element={
               <Suspense fallback={<Spinner />}>
                 <AdultSocialMedias />

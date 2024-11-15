@@ -79,7 +79,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
-            // navigate(`/adult-signup-files-details?${queryString}`);
+            // navigate(`/talent-signup-files-details?${queryString}`);
             navigate(`/adult-signup-plan-details?${queryString}`);
           }, 1000);
         } else {
@@ -455,7 +455,7 @@ const AdultSocialMedias = ({ onDataFromChild, ...props }) => {
   };
 
   const goBack = async () => {
-    navigate(`/adult-signup-basic-details?${queryString}`);
+    navigate(`/talent-signup-basic-details?${queryString}`);
   };
 
   const getKidsData = async () => {

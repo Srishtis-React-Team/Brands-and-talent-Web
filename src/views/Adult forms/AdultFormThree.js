@@ -889,7 +889,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
   };
 
   const updateAdultSignup = async () => {
-    // navigate(`/talent-signup-files-success`);
+    // navigate(`/talent-kids-teen-signup-files-success`);
     const formData = {
       image: profileFile,
       cv: resumeFile,
@@ -917,7 +917,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                 state: { talentData: talentData },
               });
             } else {
-              navigate(`/adult-signup-service-details?${queryString}`);
+              navigate(`/talent-signup-service-details?${queryString}`);
             }
           }, 1000);
         } else {

@@ -42,7 +42,7 @@ const Pricing = ({
   setSelectedPaymentStatus,
   setIsPaymentClicked,
   userType,
-  receivedData
+  receivedData,
 }) => {
   const { currentUserId, currentUserImage, currentUserType, avatarImage } =
     CurrentUser();
@@ -229,12 +229,12 @@ const Pricing = ({
     // Add other states as needed
   });
 
-  const [activePlan,setActivePlan] = useState('')
-  const [activePeriod,setActivePeriod] = useState('')
+  const [activePlan, setActivePlan] = useState("");
+  const [activePeriod, setActivePeriod] = useState("");
 
-  useEffect(()=>{
-    fetchPaymentDetails()
-  },[])
+  useEffect(() => {
+    fetchPaymentDetails();
+  }, []);
 
   const fetchPaymentDetails = async () => {
     const userId = localStorage.getItem("currentUser");
@@ -247,19 +247,19 @@ const Pricing = ({
       obj
     );
     console.log('paymentDetailsData',paymentDetailsData)
+    console.log("paymentDetailsData", paymentDetailsData?.data?.data);
     let activatedPlan;
     let activatedPeriod = paymentDetailsData?.data?.data?.subscriptionPlan;
-    if(paymentDetailsData?.data?.data?.planName == 'Pro'){
-      activatedPlan = 'Pro (Popular)'
-    }else{
+    if (paymentDetailsData?.data?.data?.planName == "Pro") {
+      activatedPlan = "Pro (Popular)";
+    } else {
       activatedPlan = paymentDetailsData?.data?.data?.planName;
     }
-    setActivePlan(activatedPlan)
-    setActivePeriod(activatedPeriod)
+    setActivePlan(activatedPlan);
+    setActivePeriod(activatedPeriod);
   };
 
   const [isChecked, setIsChecked] = useState(false);
-  
 
   useEffect(() => {
     if (userType == "adults") {
@@ -284,7 +284,7 @@ const Pricing = ({
   };
 
 
-  useEffect(() => { }, [comment]);
+  useEffect(() => {}, [comment]);
 
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
@@ -293,7 +293,7 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const getBrandsPricingList = async () => {
@@ -303,35 +303,47 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const editKids = async () => {
     const userId = localStorage.getItem("currentUser");
     if (userType == 'adults') {
+    console.log("jjkkdkdkkd");
+    console.log("currentPath", currentPath);
+    const userId = localStorage.getItem("currentUser");
+    console.log("userId", userId);
+    if (userType == "adults") {
       const userData = {
-        planName: 'Basic',
+        planName: "Basic",
         user_id: userId,
         paymentStatus: "Pending",
       };
+      console.log("userData", userData);
       const responseSubscription = await ApiHelper.post(
         API.subscriptionPlan,
         userData
       );
       navigate(`/adult-signup-files-details?${userId}`);
+      console.log("responseSubscription--", responseSubscription);
+      console.log("receivedData", receivedData);
+      navigate(`/talent-signup-files-details?${userId}`);
       // navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
       //   state: { data: receivedData },
       // });
     } else {
       const userData = {
-        planName: 'Basic',
+        planName: "Basic",
         user_id: userId,
         paymentStatus: "Pending",
       };
+      console.log("userData", userData);
       const responseSubscription = await ApiHelper.post(
         API.subscriptionPlan,
         userData
       );
+      console.log("responseSubscription--", responseSubscription);
+      console.log("receivedData", receivedData);
       navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
         state: { data: receivedData },
       });
@@ -516,9 +528,10 @@ const Pricing = ({
   useEffect(() => {
     if (userType == "adults") {
       setSuccess_url(
-        `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
+        `https://brandsandtalent.com/talent-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
+      console.log("brand_url", brand_url);
       setSuccess_url(brand_url);
     } else {
       setSuccess_url(`https://brandsandtalent.com/talent-home`);
@@ -614,7 +627,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const getBrand = async () => {
@@ -626,12 +639,16 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const handleFormSubmit = (dataObject, hash) => {
     setAbaFormData({ ...dataObject, hash });
     setTimeout(() => {
+    console.log("inside the handleFormsubmit");
+    setAbaFormData({ ...dataObject, hash });
+    setTimeout(() => {
+      console.log("inside hee");
       document.getElementById("checkout_button").click();
     }, 100);
   };
@@ -672,12 +689,37 @@ const Pricing = ({
         <input type="hidden" name="tran_id" value={abaFormData.tran_id || ""} />
         <input type="hidden" name="amount" value={abaFormData.amount || ""} />
         <input type="hidden" name="email" value={abaFormData.email || ""} />
-        <input type="hidden" name="payment_option" value={abaFormData.payment_option || ""}/>
-        <input type="hidden" name="req_time" value={abaFormData.req_time || ""}/>
-        <input type="hidden" name="continue_success_url" value={abaFormData.continue_success_url || ""}/>
-        <input type="hidden" name="return_params" value={abaFormData.return_params || ""} />
+        <input
+          type="hidden"
+          name="payment_option"
+          value={abaFormData.payment_option || ""}
+        />
+        <input
+          type="hidden"
+          name="req_time"
+          value={abaFormData.req_time || ""}
+        />
+        <input
+          type="hidden"
+          name="continue_success_url"
+          value={abaFormData.continue_success_url || ""}
+        />
+        <input
+          type="hidden"
+          name="return_params"
+          value={abaFormData.return_params || ""}
+        />
         <input type="hidden" name="hash" value={abaFormData.hash || ""} />
-        <button type="button" id="checkout_button" style={{ opacity: "0", height: "1px", width: "1px", position: "absolute" }}>
+        <button
+          type="button"
+          id="checkout_button"
+          style={{
+            opacity: "0",
+            height: "1px",
+            width: "1px",
+            position: "absolute",
+          }}
+        >
           Pay Now
         </button>
       </form>
@@ -693,39 +735,39 @@ const Pricing = ({
           {pricingList.length > 0 && (
             <div className="plans-section">
               <div className="row">
-{pricingList.map((item, index) => (
-  <div key={item._id} className="col-md-4">
-    <div
-      className={
-        index === 0
-          ? "plans-wrapper free-plans"
-          : index === 1
-          ? "plans-wrapper pro-plans"
-          : index === 2
-          ? "plans-wrapper premium-plans"
-          : ""
-      }
-    >
-      <div className="priceHeight">
-        <div className="plan-name">
-          {item.planname}
-          {from != "signup" && (
-            <>
-              <div
-                className={
-                  index === 1
-                    ? "pro-gift giftSize"
-                    : index === 2
-                    ? "premium-gift giftSize"
-                    : ""
-                }
-                onClick={handleClickOpen}
-              >
-                {item.gift}
-              </div>
-            </>
-          )}
-        </div>
+                {pricingList.map((item, index) => (
+                  <div key={item._id} className="col-md-4">
+                    <div
+                      className={
+                        index === 0
+                          ? "plans-wrapper free-plans"
+                          : index === 1
+                          ? "plans-wrapper pro-plans"
+                          : index === 2
+                          ? "plans-wrapper premium-plans"
+                          : ""
+                      }
+                    >
+                      <div className="priceHeight">
+                        <div className="plan-name">
+                          {item.planname}
+                          {from != "signup" && (
+                            <>
+                              <div
+                                className={
+                                  index === 1
+                                    ? "pro-gift giftSize"
+                                    : index === 2
+                                    ? "premium-gift giftSize"
+                                    : ""
+                                }
+                                onClick={handleClickOpen}
+                              >
+                                {item.gift}
+                              </div>
+                            </>
+                          )}
+                        </div>
 
         {item.planname === "Basic" && (
           <>
@@ -786,91 +828,94 @@ const Pricing = ({
               </div>
             </div>
 
-            {item.plan_type_annual.map((plan, index) => (
-              <>
-                <div key={index} className="plan-amounts">
-                  <div className="per-value">
-                    {plan.afterDiscount}
-                  </div>
-                </div>
-                <div className="border-bottom"></div>
-              </>
-            ))}
-            <div className="monthly-wrapper pt-3">
-              <div>
-                <input
-                  type="radio"
-                  name={`monthly-${item._id}`}
-                  id={`monthly-${item._id}`}
-                  checked={
-                    selectedPlan === `monthly-${item._id}`
-                  }
-                  onChange={handleRadioChange(
-                    "monthly",
-                    `monthly-${item._id}`,
-                    item.planname
-                  )}
-                  className={
-                    item.planname === "Pro (Popular)"
-                      ? "pro-checkbox"
-                      : "premium-checkbox"
-                  }
-                  disabled={
-                    item.planname === activePlan && activePeriod === "monthly"
-                  }
-                />
-                <label
-                  htmlFor={`monthly-${item._id}`}
-                  className={`monthly ${
-                    item.planname === activePlan && activePeriod === "monthly"
-                      ? "checked-label"
-                      : ""
-                  }`}
-                >
-                  Monthly
-                  {item.planname === activePlan && activePeriod === "monthly" && (
-                    <i className="bi bi-check-circle-fill active-icon"></i>
-                  )}
-                </label>
-              </div>
-              {item.plan_type_monthly.map((plan, index) => (
-                <div key={index} className="monthly-amount">
-                  {plan.amount}
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-      <div
-        className={
-          index === 0
-            ? "choose-btn free-btn"
-            : index === 1
-            ? "choose-btn pro-btn"
-            : index === 2
-            ? "choose-btn premium-btn"
-            : ""
-        }
-        onClick={() => choosePlan(index, item, "plan")}
-      >
-        Choose plan
-      </div>
-      <div className="include">What's Included</div>
-      <div className="included-things">
-        {item.data.map((content, index) => (
-          <div key={index} className="plan-content">
-            <div className="icPrice">
-              <i className="bi bi-check-circle-fill"></i>
-            </div>
-            <div className="plan-content-text">{content}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-))}
 
+                            {item.plan_type_annual.map((plan, index) => (
+                              <>
+                                <div key={index} className="plan-amounts">
+                                  <div className="per-value">
+                                    {plan.afterDiscount}
+                                  </div>
+                                </div>
+                                <div className="border-bottom"></div>
+                              </>
+                            ))}
+                            <div className="monthly-wrapper pt-3">
+                              <div>
+                                <input
+                                  type="radio"
+                                  name={`monthly-${item._id}`}
+                                  id={`monthly-${item._id}`}
+                                  checked={
+                                    selectedPlan === `monthly-${item._id}`
+                                  }
+                                  onChange={handleRadioChange(
+                                    "monthly",
+                                    `monthly-${item._id}`,
+                                    item.planname
+                                  )}
+                                  className={
+                                    item.planname === "Pro (Popular)"
+                                      ? "pro-checkbox"
+                                      : "premium-checkbox"
+                                  }
+                                  disabled={
+                                    item.planname === activePlan &&
+                                    activePeriod === "monthly"
+                                  }
+                                />
+                                <label
+                                  htmlFor={`monthly-${item._id}`}
+                                  className={`monthly ${
+                                    item.planname === activePlan &&
+                                    activePeriod === "monthly"
+                                      ? "checked-label"
+                                      : ""
+                                  }`}
+                                >
+                                  Monthly
+                                  {item.planname === activePlan &&
+                                    activePeriod === "monthly" && (
+                                      <i className="bi bi-check-circle-fill active-icon"></i>
+                                    )}
+                                </label>
+                              </div>
+                              {item.plan_type_monthly.map((plan, index) => (
+                                <div key={index} className="monthly-amount">
+                                  {plan.amount}
+                                </div>
+                              ))}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <div
+                        className={
+                          index === 0
+                            ? "choose-btn free-btn"
+                            : index === 1
+                            ? "choose-btn pro-btn"
+                            : index === 2
+                            ? "choose-btn premium-btn"
+                            : ""
+                        }
+                        onClick={() => choosePlan(index, item, "plan")}
+                      >
+                        Choose plan
+                      </div>
+                      <div className="include">What's Included</div>
+                      <div className="included-things">
+                        {item.data.map((content, index) => (
+                          <div key={index} className="plan-content">
+                            <div className="icPrice">
+                              <i className="bi bi-check-circle-fill"></i>
+                            </div>
+                            <div className="plan-content-text">{content}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -950,8 +995,9 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"
-                        }`}
+                      className={`form-control ${
+                        !isValidEmail ? "is-invalid" : "form-control"
+                      }`}
                       onChange={handleEmailChange}
                       placeholder="Email Address"
                       value={email}
@@ -1003,8 +1049,9 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${!isRecieverValidEmail ? "is-invalid" : "form-control"
-                        }`}
+                      className={`form-control ${
+                        !isRecieverValidEmail ? "is-invalid" : "form-control"
+                      }`}
                       onChange={handleRecieverEmailChange}
                       placeholder="Recipient's Email Address"
                       value={recieverEmail}
@@ -1062,8 +1109,8 @@ const Pricing = ({
                                   index === 0
                                     ? "plans-wrapper pro-plans" // index 0 here corresponds to the original index 1
                                     : index === 1
-                                      ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
-                                      : ""
+                                    ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
+                                    : ""
                                 }
                               >
                                 <div className="priceHeight">
@@ -1182,8 +1229,8 @@ const Pricing = ({
                                     index === 0
                                       ? "choose-btn pro-btn" // index 0 here corresponds to the original index 1
                                       : index === 1
-                                        ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
-                                        : ""
+                                      ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
+                                      : ""
                                   }
                                   onClick={() =>
                                     choosePlan(
