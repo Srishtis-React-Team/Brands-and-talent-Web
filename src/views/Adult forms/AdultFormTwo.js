@@ -486,7 +486,7 @@ const AdultFormTwo = () => {
             <button
               type="button"
               onClick={(e) => {
-                navigate(`/adult-signup-files-details?${queryString}`);
+                navigate(`/talent-signup-files-details?${queryString}`);
               }}
               className="step-back"
             >

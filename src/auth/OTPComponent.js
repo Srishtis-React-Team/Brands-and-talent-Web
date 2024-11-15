@@ -184,7 +184,7 @@ const OTPComponent = () => {
   };
 
   const goBack = async () => {
-    navigate(`/adult-signup?userId=${userId}&userEmail=${userEmail}`);
+    navigate(`/talent-signup?userId=${userId}&userEmail=${userEmail}`);
   };
 
   return (

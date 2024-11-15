@@ -29,7 +29,7 @@ const AdultPricing = ({ onDataFromChild, ...props }) => {
   }, [userId]);
 
   const editKids = async () => {
-    navigate(`/adult-signup-files-details?${userId}`);
+    navigate(`/talent-signup-files-details?${userId}`);
     // const formData = {
     // };
     // setIsLoading(true);
@@ -41,7 +41,7 @@ const AdultPricing = ({ onDataFromChild, ...props }) => {
     //       setOpenPopUp(true);
     //       setTimeout(function () {
     //         setOpenPopUp(false);
-    //         navigate(`/adult-signup-files-details?${queryString}`);
+    //         navigate(`/talent-signup-files-details?${queryString}`);
     //       }, 1000);
     //     } else {
     //     }
@@ -51,7 +51,7 @@ const AdultPricing = ({ onDataFromChild, ...props }) => {
     //   });
   };
   const goBack = async () => {
-    navigate(`/adult-social-medias-details?${queryString}`);
+    navigate(`/talent-signup-social-medias-details?${queryString}`);
   };
 
   return (

@@ -160,7 +160,7 @@ const TalentHome = () => {
 
     closeDoItNowModal();
     setTimeout(() => {
-      navigate(`/adult-signup-basic-details`);
+      navigate(`/talent-signup-basic-details`);
     }, 800);
   };
 

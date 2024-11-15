@@ -143,7 +143,7 @@ const KidsServices = () => {
   ]);
 
   const goBack = () => {
-    navigate(`/talent-signup-files-details?userId=${userId}`);
+    navigate(`/talent-kids-teen-signup-files-details?userId=${userId}`);
   };
 
   const handleFileChange = (index, event) => {

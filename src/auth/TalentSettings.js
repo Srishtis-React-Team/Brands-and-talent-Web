@@ -89,7 +89,7 @@ const TalentSettings = () => {
   }, []);
 
   const fetchPaymentDetails = async () => {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("currentUser");
     const obj = {
       user_id: userId,
     };
