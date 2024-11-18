@@ -29,6 +29,7 @@ const KidsformOne = () => {
   const [selectedLanguageOptions, setSelectedLanguageOptions] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [dateError, setDateError] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const {
     categoryList,
@@ -407,13 +408,21 @@ const KidsformOne = () => {
         }, 2000);
       }
     }
-
-    if (selectedCategories.length < 4) {
-      setCategoryError(true);
-    } else {
-      setCategoryError(false);
-    }
+    // console.log(selectedCategories, "selectedCategories");
+    // console.log(selectedCategories.length, "selectedCategories.length");
   };
+
+  useEffect(() => {
+    if (isSubmitted) {
+      console.log(selectedCategories, "selectedCategories");
+      console.log(selectedCategories.length, "selectedCategories.length");
+      if (selectedCategories.length === 0) {
+        setCategoryError(true);
+      } else {
+        setCategoryError(false);
+      }
+    }
+  }, [isSubmitted, selectedCategories]);
 
   const deleteProfession = (profession, index) => {
     setSelectedProfessions((prevSelectedProfessions) =>
@@ -475,6 +484,8 @@ const KidsformOne = () => {
   };
 
   const kidsSignUp = async () => {
+    setIsSubmitted(true);
+
     if (parentFirstName === "") {
       setparentFirstNameError(true);
     }

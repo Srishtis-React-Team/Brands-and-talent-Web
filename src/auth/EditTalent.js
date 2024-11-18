@@ -44,6 +44,7 @@ import useFieldDatas from "../config/useFieldDatas";
 import EditFeatures from "../pages/EditFeatures";
 import EditSocialMedias from "../pages/EditSocialMedias";
 import "material-icons/iconfont/material-icons.css";
+import { tr } from "date-fns/locale";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -104,6 +105,7 @@ const EditTalent = () => {
   const [languages, setLanguages] = useState([]);
   const [nationality, setNationality] = useState("");
   const [mobileValidationError, setMobileValidationError] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [listOfLanguages, setListOfLanguages] = useState([]);
   const [listOfNationalities, setListOfNationalities] = useState([]);
@@ -341,13 +343,19 @@ const EditTalent = () => {
         }, 2000);
       }
     }
-
-    if (selectedCategories.length < 4) {
-      setCategoryError(true);
-    } else {
-      setCategoryError(false);
-    }
   };
+
+  useEffect(() => {
+    if (isSubmitted) {
+      console.log(selectedCategories, "selectedCategories");
+      console.log(selectedCategories.length, "selectedCategories.length");
+      if (selectedCategories.length === 0) {
+        setCategoryError(true);
+      } else {
+        setCategoryError(false);
+      }
+    }
+  }, [isSubmitted, selectedCategories]);
 
   const handleProfessionChange = (selectedOptions) => {
     if (selectedOptions.length > 5) {
@@ -747,6 +755,7 @@ const EditTalent = () => {
   };
 
   const basicDetailsUpdate = async () => {
+    setIsSubmitted(true);
     setMyState(false);
     if (talentData?.type === "kids") {
       if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
@@ -3076,7 +3085,7 @@ const EditTalent = () => {
                 {/* {categoryError && (
                   <div className="invalid-fields">Please choose Categories</div>
                 )} */}
-                {(selectedCategories?.length < 3 ||
+                {(selectedCategories?.length == 0 ||
                   selectedCategories?.length > 6) &&
                   categoryError && (
                     <div className="invalid-fields">

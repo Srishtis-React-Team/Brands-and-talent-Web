@@ -192,9 +192,9 @@ const TalentSettings = () => {
     setOldPasswordError(false);
   };
   const handlePasswordChange = (e) => {
-    setTalentPassword(e.target.value);
     setPasswordMatch(e.target.value === talentConfirmPassword);
     settalentPasswordError(false);
+    setTalentPassword(e.target.value);
   };
 
   const handleConfirmPasswordChange = (e) => {
@@ -241,18 +241,24 @@ const TalentSettings = () => {
   };
 
   useEffect(() => {
+    console.log(allSamePasswordError, "allSamePasswordError useEffect");
+    console.log(passwordMatch, "passwordMatch useEffect");
+    console.log(oldPassword, "oldPassword useEffect");
+    console.log(talentPassword, "talentPassword useEffect");
+    console.log(talentConfirmPassword, "talentConfirmPassword useEffect");
     if (
-      allSamePasswordError ||
-      !passwordMatch ||
-      oldPassword == "" ||
-      talentPassword == "" ||
-      talentConfirmPassword == ""
+      !allSamePasswordError &&
+      !passwordMatch &&
+      oldPassword != "" &&
+      talentPassword != "" &&
+      talentConfirmPassword != ""
     ) {
       setIsButtonDisabled(true);
     } else {
       setIsButtonDisabled(false);
     }
   }, [allSamePasswordError, passwordMatch]);
+
   const [passwordStatus, setPasswordStatus] = useState(false);
 
   let line = document.querySelector(".line");
@@ -264,7 +270,6 @@ const TalentSettings = () => {
     if (passwordCriteria.value.length == 0) {
       password_strength_box.style.display = "none";
     }
-
     passwordCriteria.oninput = function () {
       if (passwordCriteria.value.length == 0) {
         password_strength_box.style.display = "none";
@@ -364,6 +369,19 @@ const TalentSettings = () => {
     };
   }
 
+  useEffect(() => {
+    console.log(talentPassword, "talentPassword");
+  }, [talentPassword]);
+  useEffect(() => {
+    console.log(passwordStatus, "passwordStatus");
+  }, [passwordStatus]);
+  useEffect(() => {
+    console.log(
+      passwordCriteria?.value?.length,
+      "passwordCriteria.value.length"
+    );
+  }, [passwordCriteria]);
+
   return (
     <>
       <TalentHeader toggleMenu={toggleMenu} />
@@ -454,28 +472,53 @@ const TalentSettings = () => {
                   <label className="form-label">
                     New Password <span className="mandatory">*</span>
                   </label>
+
                   <div className="form-group has-search adult-password-wrapper">
                     <span className="fa fa-lock form-control-feedback"></span>
                     <input
                       type={showPassword ? "text" : "password"}
                       className="form-control password adult-signup-inputs"
-                      placeholder="New Password"
-                      value={talentPassword}
+                      placeholder="Password"
                       onChange={(e) => {
                         handlePasswordChange(e);
-                        setTalentPassword(e.target.value);
-                        settalentPasswordError(false);
                       }}
+                      value={talentPassword}
                     ></input>
+
                     <div className="password_strength_box">
-                      <div className="password_strength"></div>
+                      <div className="password_strength">
+                        <p className="text">Weak</p>
+                        <div className="line_box">
+                          <div className="line"></div>
+                        </div>
+                      </div>
+                      <div className="tool_tip_box">
+                        <span>
+                          <i className="bi bi-question-circle"></i>
+                        </span>
+                        <div className="tool_tip">
+                          <p style={{ listStyleType: "none" }}>
+                            <b>Password must be:</b>
+                          </p>
+                          <p>1 capital letter (A, B, C...)</p>
+                          <p>1 small letter (a, b, c...)</p>
+                          <p>1 number (1, 2, 3...)</p>
+                          <p>1 special symbol (!, @, #...)</p>
+                        </div>
+                      </div>
                     </div>
+
                     {talentPassword && !passwordStatus && (
                       <div className="invalid-fields password-error-box">
                         Your password must be at least 8 characters long and
                         include at least: 1 capital letter (A, B, C...), 1 small
                         letter (a, b, c...), 1 number (1, 2, 3...), 1 special
                         symbol (!, @, #...)
+                      </div>
+                    )}
+                    {talentPasswordError && (
+                      <div className="invalid-fields">
+                        Please enter Password
                       </div>
                     )}
                     {showPassword ? (
@@ -488,11 +531,6 @@ const TalentSettings = () => {
                         className="fa fa-eye-slash show-password-icon"
                         onClick={togglePasswordVisibility}
                       ></span>
-                    )}
-                    {talentPasswordError && (
-                      <div className="invalid-fields">
-                        Please enter Password
-                      </div>
                     )}
                   </div>
                 </div>
@@ -625,7 +663,10 @@ const TalentSettings = () => {
                         fontWeight: "600",
                       }}
                     >
-                      {paymentDetailsDataArray?.transactionDate?.replace("T", " T")}
+                      {paymentDetailsDataArray?.transactionDate?.replace(
+                        "T",
+                        " T"
+                      )}
                     </span>
                   </h6>
                   <h6
@@ -644,7 +685,10 @@ const TalentSettings = () => {
                         fontWeight: "600",
                       }}
                     >
-                      {paymentDetailsDataArray?.expirationDate?.replace("T", " T")}
+                      {paymentDetailsDataArray?.expirationDate?.replace(
+                        "T",
+                        " T"
+                      )}
                     </span>
                   </h6>
                   <h6
