@@ -9,13 +9,27 @@ import { useNavigate } from "react-router-dom";
 import "../assets/css/findcreators.css";
 import PopUp from "../components/PopUp";
 
-const Talentscarousel = ({ talentList, callList }) => {
+const Talentscarousel = () => {
   const navigate = useNavigate();
   const favoruiteIcon = require("../assets/icons/favorite.png");
   const heartIcon = require("../assets/icons/heart.png");
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [itemsToShow, setItemsToShow] = useState(4); // Default to 4 items
+  const [talentList, setTalentList] = useState([]);
+
+  const getTalentList = async () => {
+    const formData = {
+      userId: localStorage.getItem("brandId"),
+    };
+    await ApiHelper.post(API.getTalentList, formData)
+      .then((resData) => {
+        if (resData) {
+          setTalentList(resData.data.data);
+        }
+      })
+      .catch((err) => {});
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,7 +68,7 @@ const Talentscarousel = ({ talentList, callList }) => {
           setMessage("Talent added to your favourite list");
           setOpenPopUp(true);
           setTimeout(() => setOpenPopUp(false), 1000);
-          callList();
+          getTalentList();
         }
       })
       .catch((err) => {
@@ -85,7 +99,7 @@ const Talentscarousel = ({ talentList, callList }) => {
           setMessage("Removed Talent From Favorites");
           setOpenPopUp(true);
           setTimeout(() => setOpenPopUp(false), 1000);
-          callList();
+          getTalentList();
         }
       })
       .catch((err) => {
@@ -94,6 +108,14 @@ const Talentscarousel = ({ talentList, callList }) => {
         setTimeout(() => setOpenPopUp(false), 1000);
       });
   };
+
+  useEffect(() => {
+    console.log(talentList, "talentList");
+  }, [talentList]);
+
+  useEffect(() => {
+    getTalentList();
+  }, []);
 
   return (
     <div className="photos-carousel-owl-container">

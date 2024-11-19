@@ -617,7 +617,7 @@
   cursor: pointer;
 }
 .add-more-services {
-  padding: 10px 0;
+  padding: 10px 0 60px 0px;
 }
 .add-more-services .add-more-services-btn {
   padding: 10px 15px;
@@ -788,7 +788,8 @@
   background-color: #eee;
 }
 
-.gallery-wrapper.modalSpc .galCont .logo-fill-briefcase, .gallery-wrapper.modalSpc .galCont .model-job-icons.location-icon {
+.gallery-wrapper.modalSpc .galCont .logo-fill-briefcase,
+.gallery-wrapper.modalSpc .galCont .model-job-icons.location-icon {
   float: left;
   width: 20px;
   min-width: 20px;

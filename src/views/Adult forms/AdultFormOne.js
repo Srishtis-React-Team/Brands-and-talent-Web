@@ -42,6 +42,7 @@ const AdultFormOne = () => {
   const [listOfNationalities, setListOfNationalities] = useState([]);
   const [listOfLanguages, setListOfLanguages] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     if (nationalitiesList.length > 0) {
@@ -359,6 +360,8 @@ const AdultFormOne = () => {
   };
 
   const updateAdultSignup = async () => {
+    setIsSubmitted(true);
+
     if (adultsLegalFirstName === "") {
       setAdultsLegalFirstNameError(true);
     }
@@ -552,12 +555,19 @@ const AdultFormOne = () => {
         }, 2000);
       }
     }
-    if (selectedCategories.length < 4) {
-      setSelectedCategoriesError(true);
-    } else {
-      setSelectedCategoriesError(false);
-    }
   };
+
+  useEffect(() => {
+    if (isSubmitted) {
+      console.log(selectedCategories, "selectedCategories");
+      console.log(selectedCategories.length, "selectedCategories.length");
+      if (selectedCategories.length === 0) {
+        setSelectedCategoriesError(true);
+      } else {
+        setSelectedCategoriesError(false);
+      }
+    }
+  }, [isSubmitted, selectedCategories]);
 
   const selectEthnicity = (event) => {
     setEthnicity(event.target.value);

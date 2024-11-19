@@ -96,10 +96,29 @@ const TalentSideMenu = ({ myState }) => {
     }
   };
 
-  const handleMessages = () => {
-    if (talentData?.planName !== "Basic") {
-      navigate("/message");
-    }
+  const handleMessages = async () => {
+    const formData = {
+      talentId: talentData?._id,
+    };
+    await ApiHelper.post(`${API.allowPermission}`, formData)
+      .then((resData) => {
+        console.log(resData, "resData");
+        if (resData?.data?.msg == "Yes") {
+          navigate("/message");
+        } else if (resData?.data?.msg == "No") {
+          if (talentData?.planName !== "Basic") {
+            navigate("/message");
+          } else {
+            setMessage("Please upgrade to pro plan to use this feature");
+            setOpenPopUp(true);
+            setTimeout(function () {
+              setOpenPopUp(false);
+              navigate(`/pricing`);
+            }, 3000);
+          }
+        }
+      })
+      .catch((err) => {});
   };
 
   return (

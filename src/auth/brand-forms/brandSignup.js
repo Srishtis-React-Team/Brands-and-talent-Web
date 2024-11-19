@@ -339,7 +339,7 @@ const BrandSignup = React.memo((props) => {
       }
 
       if (
-        passwordCriteria.value.length >= 8 &&
+        passwordCriteria.value.length > 7 &&
         passwordCriteria.value.match(/[A-Z]/) &&
         passwordCriteria.value.match(/[a-z]/) &&
         passwordCriteria.value.match(/[0-9]/) &&
@@ -443,7 +443,6 @@ const BrandSignup = React.memo((props) => {
                   placeholder="Password"
                   onChange={(e) => {
                     handlePasswordChange(e);
-                    setAdultPassword(e.target.value);
                   }}
                   value={adultPassword}
                 ></input>
@@ -470,6 +469,7 @@ const BrandSignup = React.memo((props) => {
                     </div>
                   </div>
                 </div>
+
                 {adultPassword && !passwordStatus && (
                   <div className="invalid-fields password-error-box">
                     Your password must be at least 8 characters long and include
