@@ -17,29 +17,12 @@ const BrandHome = () => {
   const girl1 = require("../../assets/images/girl1.png");
   const [showSidebar, setShowSidebar] = useState(true);
   const [mobileSideBar, setMobileSidebar] = useState(true);
-  const [talentList, setTalentList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [brandId, setBrandId] = useState(null);
   const [brandData, setBrandData] = useState(null);
   const [myState, setMyState] = useState(false);
 
   const headsetLogo = require("../../assets/icons/headset.png");
-  const getTalentList = async () => {
-    const formData = {
-      userId: brandId,
-    };
-    await ApiHelper.post(API.getTalentList, formData)
-      .then((resData) => {
-        if (resData) {
-          setTalentList(resData.data.data);
-        }
-      })
-      .catch((err) => {});
-  };
-
-  const callList = () => {
-    getTalentList();
-  };
 
   useEffect(() => {
     if (brandId) {
@@ -117,12 +100,7 @@ const BrandHome = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    getTalentList();
-  }, []);
-
   useEffect(() => {}, [jobsList]);
-  useEffect(() => {}, [talentList]);
 
   function PreviewJob(jobId) {
     navigate("/preview-job", {
@@ -231,10 +209,7 @@ const BrandHome = () => {
               <div className="photos-slider">
                 <div className="row">
                   <div className="col-lg-12">
-                    <Talentscarousel
-                      talentList={talentList}
-                      callList={callList}
-                    />
+                    <Talentscarousel />
                   </div>
                 </div>
                 {/* <TalentsSlider talentList={talentList} /> */}

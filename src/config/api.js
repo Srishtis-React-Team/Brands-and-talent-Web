@@ -37,6 +37,7 @@ export const API = {
   adultFetch: BASEURL + "users/adultFetch/",
   typeChecking: BASEURL + "users/typeChecking",
   getDataByPublicUrl: BASEURL + "users/getDataByPublicUrl",
+
   //passwords
   brandsForgotPassword: BASEURL + "brands/brandsForgotPassword",
   brandsResetPassword: BASEURL + "brands/brandsResetPassword",
@@ -148,6 +149,7 @@ export const API = {
   listTalentsForChat: BASEURL + "message/listTalentsForChat",
   listBrandsForChat: BASEURL + "message/listBrandsForChat",
   addMessage: BASEURL + "message/addMessage",
+  allowPermission: BASEURL + "message/allowPermission",
 
   //conversation
   addConversation: BASEURL + "conversation/addConversation",

@@ -400,15 +400,15 @@ const TalentProfile = () => {
   };
   const messageNow = () => {
     if (isOwnTalent == true) {
-      if (talentData?.planName != "Premium") {
-        setMessage("Please upgrade to premium plan to use this feature");
+      if (talentData?.planName == "Basic") {
+        setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
           navigate(`/pricing`);
         }, 3000);
       } else if (
-        talentData?.planName == "Premium" &&
+        talentData?.planName != "Basic" &&
         talentData?.accountBlock == false
       ) {
         navigate(`/message?${talentData?._id}`);
@@ -422,7 +422,7 @@ const TalentProfile = () => {
       }
     } else if (isOwnTalent == false && isAdminApproved == true) {
       if (brandData?.planName === "Basic") {
-        setMessage("Please upgrade to premium plan to use this feature");
+        setMessage("Please upgrade to pro plan to use this feature");
         setOpenPopUp(true);
         setTimeout(function () {
           setOpenPopUp(false);
