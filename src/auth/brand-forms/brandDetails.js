@@ -286,7 +286,7 @@ const BrandDetails = () => {
   const handleBrandName = (e) => {
     const value = e.target.value;
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
+    if (value?.trim() === "") {
       setBrandNameLetterError(false);
       setBrandName("");
     } else if (!onlyLettersRegex.test(value)) {
@@ -310,7 +310,7 @@ const BrandDetails = () => {
   const handleYourName = (e) => {
     const value = e.target.value;
     const onlyLettersRegex = /^[a-zA-Z\s]*$/;
-    if (value.trim() === "") {
+    if (value?.trim() === "") {
       setYourNameLetterError(false);
       setYourName("");
     } else if (!onlyLettersRegex.test(value)) {

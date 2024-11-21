@@ -455,7 +455,10 @@ const CreateJobs = () => {
       setEditorStateJobDescription(updateJobDescription);
       setJobDescription(editData?.jobDescription);
       const whyWorkWithUsContent = editData?.whyWorkWithUs[0];
-      const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      let whyWorkWithUsContentBlocks;
+      if (whyWorkWithUsContent) {
+        whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
+      }
       const whyWorkWithUsContentState = ContentState.createFromBlockArray(
         whyWorkWithUsContentBlocks
       );
@@ -550,9 +553,13 @@ const CreateJobs = () => {
 
     const whyWorkWithUsContent = initialHowToApply[0];
     const whyWorkWithUsContentBlocks = convertFromHTML(whyWorkWithUsContent);
-    const whyWorkWithUsContentState = ContentState.createFromBlockArray(
-      whyWorkWithUsContentBlocks
-    );
+    let whyWorkWithUsContentState;
+    if (whyWorkWithUsContentBlocks) {
+      whyWorkWithUsContentState = ContentState.createFromBlockArray(
+        whyWorkWithUsContentBlocks
+      );
+    }
+
     const updatewhyWorkWithUs = EditorState.createWithContent(
       whyWorkWithUsContentState
     );
@@ -1658,7 +1665,7 @@ const CreateJobs = () => {
     addSkill();
   };
   const addSkill = () => {
-    if (skillInputValue.trim() !== "") {
+    if (skillInputValue?.trim() !== "") {
       setSkills([...skills, skillInputValue]);
       setSkillInputValue("");
     }

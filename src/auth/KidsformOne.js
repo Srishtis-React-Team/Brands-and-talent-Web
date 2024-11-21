@@ -1418,7 +1418,7 @@ const KidsformOne = () => {
                                         // Check if the value is a valid number and is non-negative
                                         if (
                                           /^\d*\.?\d*$/.test(value) &&
-                                          (value >= 0 || value === "")
+                                          (value >= 1 || value === "")
                                         ) {
                                           handleDetailChange(
                                             index,
@@ -1428,7 +1428,7 @@ const KidsformOne = () => {
                                         }
                                       }}
                                       placeholder="$/hr"
-                                      min="0"
+                                      min="1"
                                     ></input>
                                   </div>
                                   <div className="mb-3 col-md-3 divSep">
@@ -1441,7 +1441,7 @@ const KidsformOne = () => {
                                         // Check if the value is a valid number and is non-negative
                                         if (
                                           /^\d*\.?\d*$/.test(value) &&
-                                          (value >= 0 || value === "")
+                                          (value >= 1 || value === "")
                                         ) {
                                           handleDetailChange(
                                             index,
