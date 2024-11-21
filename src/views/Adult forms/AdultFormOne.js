@@ -872,7 +872,7 @@ const AdultFormOne = () => {
                                         // Check if the value is a valid number and is non-negative
                                         if (
                                           /^\d*\.?\d*$/.test(value) &&
-                                          (value >= 0 || value === "")
+                                          (value >= 1 || value === "")
                                         ) {
                                           handleDetailChange(
                                             index,
@@ -895,7 +895,7 @@ const AdultFormOne = () => {
                                         // Check if the value is a valid number and is non-negative
                                         if (
                                           /^\d*\.?\d*$/.test(value) &&
-                                          (value >= 0 || value === "")
+                                          (value >= 1 || value === "")
                                         ) {
                                           handleDetailChange(
                                             index,

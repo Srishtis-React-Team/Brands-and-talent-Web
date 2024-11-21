@@ -14,7 +14,10 @@ import "../assets/css/forms/kidsform-one.css";
 import "../assets/css/register.css";
 import "../assets/css/dashboard.css";
 import "../assets/css/kidsmain.scss";
-
+import { IconButton } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 const KidsServices = () => {
   const btLogo = require("../assets/images/LOGO.png");
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -214,6 +217,45 @@ const KidsServices = () => {
     window.open(viewImage, "_blank");
   };
 
+  const [videoAnchor, setVideoAnchor] = useState(null);
+  const [selectedVideoItem, setSelectedVideoItem] = useState(null); // Track the selected item
+  const [videoIndex, setVideoIndex] = useState(null);
+  const videoOpen = Boolean(videoAnchor);
+
+  // Single function to handle menu open
+  const handleVideoClick = (event, item, index) => {
+    setVideoAnchor(event.currentTarget);
+    setSelectedVideoItem(item); // Set the selected item
+    setVideoIndex(index);
+  };
+
+  const handleVideoClose = (index) => {
+    setVideoAnchor(null);
+    setSelectedVideoItem(null); // Reset the selected item when closing the menu
+    setVideoIndex(index);
+  };
+
+  const handleDeleteFile = (serviceIndex, fileIndex) => {
+    alert(fileIndex);
+    setInputs((prevInputs) => {
+      const newInputs = prevInputs.map(
+        (input, index) =>
+          index === serviceIndex
+            ? {
+                ...input,
+                files: input.files.filter((_, i) => i !== fileIndex), // Update only the files array of the targeted object
+              }
+            : { ...input } // Ensure other objects remain unaffected
+      );
+
+      return newInputs;
+    });
+  };
+
+  useEffect(() => {
+    console.log(inputs, "inputs");
+  }, [inputs]);
+
   return (
     <>
       <>
@@ -298,6 +340,7 @@ const KidsServices = () => {
                                 }
                                 className="form-control"
                                 placeholder="$200 per hour (negotiable)"
+                                min="1"
                               ></input>
                             </div>
                             <div className="kids-form-section col-md-6 mb-3">
@@ -385,11 +428,9 @@ const KidsServices = () => {
                               Drag and drop your photos/work samples here.
                             </div>
                           </div>
-                          {input.files.map((file, fileIndex) => (
-                            <div
-                              key={fileIndex}
-                              className="uploaded-file-wrapper"
-                            >
+
+                          {input.files.map((file, index) => (
+                            <div key={index} className="uploaded-file-wrapper">
                               <div className="file-section">
                                 {file.type === "image" && (
                                   <div className="fileType">
@@ -413,48 +454,35 @@ const KidsServices = () => {
                                 )}
                                 <div className="fileName">{file.title}</div>
                               </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="dropdownMenuButton"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="dropdownMenuButton"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleView(file)}
-                                          id="view"
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
+
+                              <div className="update-portfolio-action">
+                                <IconButton
+                                  aria-label="more"
+                                  aria-controls={`dropdown-menu-${index}`} // Use unique ID
+                                  aria-haspopup="true"
+                                  onClick={(event) =>
+                                    handleVideoClick(event, url, index)
+                                  }
+                                >
+                                  <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                  id={`dropdown-menu-${index}`} // Use unique ID
+                                  anchorEl={videoAnchor} // Correct prop name
+                                  open={videoOpen} // Control visibility
+                                  onClose={() => handleVideoClose(index)}
+                                >
+                                  <MenuItem onClick={() => handleView(file)}>
+                                    View
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() =>
+                                      handleDeleteFile(serviceIndex, videoIndex)
+                                    }
+                                  >
+                                    Delete
+                                  </MenuItem>
+                                </Menu>
                               </div>
                             </div>
                           ))}

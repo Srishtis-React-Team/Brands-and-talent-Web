@@ -840,7 +840,6 @@ const KidsFormThree = ({ onDataFromChild, ...props }) => {
   // };
 
   const handlePortofolioDelete = (index) => {
-    alert(index);
     setPortofolioFile((prevImages) => {
       // Filter out the item at the specified index
       const updatedImages = prevImages.filter((_, i) => i !== index);
