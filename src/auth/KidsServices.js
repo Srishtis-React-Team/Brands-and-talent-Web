@@ -217,44 +217,36 @@ const KidsServices = () => {
     window.open(viewImage, "_blank");
   };
 
-  const [videoAnchor, setVideoAnchor] = useState(null);
-  const [selectedVideoItem, setSelectedVideoItem] = useState(null); // Track the selected item
-  const [videoIndex, setVideoIndex] = useState(null);
-  const videoOpen = Boolean(videoAnchor);
-
-  // Single function to handle menu open
-  const handleVideoClick = (event, item, index) => {
-    setVideoAnchor(event.currentTarget);
-    setSelectedVideoItem(item); // Set the selected item
-    setVideoIndex(index);
-  };
-
-  const handleVideoClose = (index) => {
-    setVideoAnchor(null);
-    setSelectedVideoItem(null); // Reset the selected item when closing the menu
-    setVideoIndex(index);
-  };
-
-  const handleDeleteFile = (serviceIndex, fileIndex) => {
-    alert(fileIndex);
-    setInputs((prevInputs) => {
-      const newInputs = prevInputs.map(
-        (input, index) =>
-          index === serviceIndex
-            ? {
-                ...input,
-                files: input.files.filter((_, i) => i !== fileIndex), // Update only the files array of the targeted object
-              }
-            : { ...input } // Ensure other objects remain unaffected
-      );
-
-      return newInputs;
-    });
-  };
-
   useEffect(() => {
     console.log(inputs, "inputs");
   }, [inputs]);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleMenuOpen = (event, file) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedFile(file); // Save selected file for actions
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedFile(null);
+  };
+
+  const deleteFile = (serviceUniqueId, fileId) => {
+    setInputs((prevInputs) =>
+      prevInputs.map((service) =>
+        service.uniqueId === serviceUniqueId
+          ? {
+              ...service,
+              files: service.files.filter((file) => file.id !== fileId),
+            }
+          : service
+      )
+    );
+    handleMenuClose();
+  };
 
   return (
     <>
@@ -429,63 +421,53 @@ const KidsServices = () => {
                             </div>
                           </div>
 
-                          {input.files.map((file, index) => (
-                            <div key={index} className="uploaded-file-wrapper">
-                              <div className="file-section">
-                                {file.type === "image" && (
-                                  <div className="fileType">
-                                    <img src={imageType} alt="" />
-                                  </div>
-                                )}
-                                {file.type === "audio" && (
-                                  <div className="fileType">
-                                    <img src={audiotype} alt="" />
-                                  </div>
-                                )}
-                                {file.type === "video" && (
-                                  <div className="fileType">
-                                    <img src={videoType} alt="" />
-                                  </div>
-                                )}
-                                {file.type === "document" && (
-                                  <div className="fileType">
-                                    <img src={docsIcon} alt="" />
-                                  </div>
-                                )}
-                                <div className="fileName">{file.title}</div>
-                              </div>
-
-                              <div className="update-portfolio-action">
-                                <IconButton
-                                  aria-label="more"
-                                  aria-controls={`dropdown-menu-${index}`} // Use unique ID
-                                  aria-haspopup="true"
-                                  onClick={(event) =>
-                                    handleVideoClick(event, url, index)
-                                  }
-                                >
-                                  <MoreVertIcon />
-                                </IconButton>
-                                <Menu
-                                  id={`dropdown-menu-${index}`} // Use unique ID
-                                  anchorEl={videoAnchor} // Correct prop name
-                                  open={videoOpen} // Control visibility
-                                  onClose={() => handleVideoClose(index)}
-                                >
-                                  <MenuItem onClick={() => handleView(file)}>
-                                    View
-                                  </MenuItem>
-                                  <MenuItem
-                                    onClick={() =>
-                                      handleDeleteFile(serviceIndex, videoIndex)
-                                    }
-                                  >
-                                    Delete
-                                  </MenuItem>
-                                </Menu>
-                              </div>
+                          {input.files.map((file) => (
+                            <div
+                              key={file.id}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <span className="fileName">{file.title}</span>
+                              <IconButton
+                                onClick={(e) => handleMenuOpen(e, file)}
+                                aria-label="more"
+                              >
+                                <MoreVertIcon />
+                              </IconButton>
                             </div>
                           ))}
+
+                          <Menu
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleMenuClose}
+                          >
+                            <MenuItem
+                              onClick={() => {
+                                handleView(selectedFile);
+                                handleMenuClose(); // Close the menu after viewing
+                              }}
+                            >
+                              View
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() =>
+                                deleteFile(
+                                  inputs.find((service) =>
+                                    service.files.some(
+                                      (file) => file.id === selectedFile?.id
+                                    )
+                                  ).uniqueId,
+                                  selectedFile?.id
+                                )
+                              }
+                            >
+                              Delete
+                            </MenuItem>
+                          </Menu>
                         </div>
                       </>
                     ))}

@@ -316,7 +316,7 @@ const Pricing = ({
         API.subscriptionPlan,
         userData
       );
-      navigate(`/adult-signup-files-details?${userId}`);
+      navigate(`/talent-signup-files-details?${userId}`);
       // navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
       //   state: { data: receivedData },
       // });
@@ -514,7 +514,7 @@ const Pricing = ({
   useEffect(() => {
     if (userType == "adults") {
       setSuccess_url(
-        `https://brandsandtalent.com/adult-signup-files-details?${queryString}`
+        `https://brandsandtalent.com/talent-signup-files-details?${queryString}`
       );
     } else if (userType == "brands") {
       setSuccess_url(brand_url);
