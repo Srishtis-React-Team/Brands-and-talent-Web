@@ -1136,7 +1136,7 @@ const FindCreators = () => {
                                           <div className="logo-fill-briefcase">
                                             <i className="bi bi-person-workspace model-job-icons"></i>
                                           </div>
-                                          <div className="contSect">
+                                          <div className="contSect profession-text">
                                             {item.profession
                                               .slice(
                                                 0,

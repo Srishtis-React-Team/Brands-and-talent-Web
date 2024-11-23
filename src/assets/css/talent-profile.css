@@ -1525,3 +1525,40 @@
     padding: 10px 15px;
   }
 }
+
+/* Tooltip Container */
+[data-tooltip] {
+  position: relative;
+}
+
+/* Tooltip Text */
+[data-tooltip]::before {
+  content: attr(data-tooltip); /* Tooltip text from data-tooltip attribute */
+  position: absolute;
+  background: rgba(194, 17, 75, 0.8); /* #c2114b with transparency */
+  color: #fff; /* White text color */
+  padding: 5px 10px; /* Spacing inside the tooltip */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 12px; /* Small font size */
+  white-space: nowrap; /* Prevent text from wrapping */
+  opacity: 0; /* Hidden by default */
+  visibility: hidden; /* Ensure it's invisible initially */
+  transform: translateY(10px); /* Move tooltip below the element */
+  transition: opacity 0.2s ease, transform 0.2s ease; /* Smooth appearance */
+  z-index: 10; /* Ensure tooltip is above other elements */
+  top: 75%; /* Position below the element */
+  left: 50%; /* Center align horizontally */
+  transform: translateX(-50%) translateY(10px); /* Center and offset vertically */
+  margin-top: 5px; /* Add spacing below the element */
+}
+
+/* Show Tooltip on Hover */
+[data-tooltip]:hover::before {
+  opacity: 1; /* Make visible */
+  visibility: visible; /* Ensure it appears */
+  transform: translateX(-50%) translateY(0); /* Slide up smoothly */
+}
+
+.profession-text {
+  line-height: 23px !important;
+}

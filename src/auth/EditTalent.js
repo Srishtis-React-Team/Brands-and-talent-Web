@@ -3184,9 +3184,9 @@ const EditTalent = () => {
 
                   {talentData?.portfolio?.length === 0 && (
                     <>
-                      <div className="update-portfolio-label">
+                      {/* <div className="update-portfolio-label">
                         Add Your work samples here
-                      </div>
+                      </div> */}
 
                       {/* <div className="no-data">Please Add Files</div> */}
                     </>

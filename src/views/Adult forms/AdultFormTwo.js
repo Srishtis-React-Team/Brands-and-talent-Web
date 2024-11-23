@@ -19,6 +19,10 @@ import "../../assets/css/forms/login.css";
 import "../../assets/css/dashboard.css";
 import "../../assets/css/register.css";
 import "../../assets/css/kidsmain.scss";
+import { IconButton } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 const AdultFormTwo = () => {
   const {
     currentUserId,
@@ -215,6 +219,33 @@ const AdultFormTwo = () => {
 
   useEffect(() => {}, []);
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleMenuOpen = (event, file) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedFile(file); // Save selected file for actions
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedFile(null);
+  };
+
+  const deleteFile = (serviceUniqueId, fileId) => {
+    setInputs((prevInputs) =>
+      prevInputs.map((service) =>
+        service.uniqueId === serviceUniqueId
+          ? {
+              ...service,
+              files: service.files.filter((file) => file.id !== fileId),
+            }
+          : service
+      )
+    );
+    handleMenuClose();
+  };
+
   return (
     <>
       <>
@@ -391,80 +422,54 @@ const AdultFormTwo = () => {
                               Drag and drop your photos/work samples here.
                             </div>
                           </div>
-                          {/* Display uploaded files for this input */}
-                          {input.files.map((file, fileIndex) => (
+
+                          {input.files.map((file) => (
                             <div
-                              key={fileIndex}
-                              className="uploaded-file-wrapper"
+                              key={file.id}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              }}
                             >
-                              <div className="file-section">
-                                {file.type === "image" && (
-                                  <div className="fileType">
-                                    <img src={imageType} alt="" />
-                                  </div>
-                                )}
-                                {file.type === "audio" && (
-                                  <div className="fileType">
-                                    <img src={audiotype} alt="" />
-                                  </div>
-                                )}
-                                {file.type === "video" && (
-                                  <div className="fileType">
-                                    <img src={videoType} alt="" />
-                                  </div>
-                                )}
-                                {file.type === "document" && (
-                                  <div className="fileType">
-                                    <img src={docsIcon} alt="" />
-                                  </div>
-                                )}
-                                <div className="fileName">{file.title}</div>
-                              </div>
-                              <div className="file-options">
-                                <div className="sucess-tick">
-                                  <img src={greenTickCircle} alt="" />
-                                </div>
-                                <div className="option-menu">
-                                  <div className="dropdown">
-                                    <img
-                                      onClick={() =>
-                                        setShowOptions(!showOptions)
-                                      }
-                                      src={elipsis}
-                                      alt=""
-                                      className="dropdown-toggle elipsis-icon"
-                                      type="button"
-                                      id="dropdownMenuButton"
-                                      data-bs-toggle="dropdown"
-                                      aria-expanded="false"
-                                    />
-                                    <ul
-                                      className="dropdown-menu"
-                                      aria-labelledby="dropdownMenuButton"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          onClick={() => handleView(file)}
-                                          id="view"
-                                        >
-                                          View
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          id="delete"
-                                        >
-                                          Delete
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
+                              <span className="fileName">{file.title}</span>
+                              <IconButton
+                                onClick={(e) => handleMenuOpen(e, file)}
+                                aria-label="more"
+                              >
+                                <MoreVertIcon />
+                              </IconButton>
                             </div>
                           ))}
+
+                          <Menu
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleMenuClose}
+                          >
+                            <MenuItem
+                              onClick={() => {
+                                handleView(selectedFile);
+                                handleMenuClose(); // Close the menu after viewing
+                              }}
+                            >
+                              View
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() =>
+                                deleteFile(
+                                  inputs.find((service) =>
+                                    service.files.some(
+                                      (file) => file.id === selectedFile?.id
+                                    )
+                                  ).uniqueId,
+                                  selectedFile?.id
+                                )
+                              }
+                            >
+                              Delete
+                            </MenuItem>
+                          </Menu>
                         </div>
                       </>
                     ))}

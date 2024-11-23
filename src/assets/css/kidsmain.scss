@@ -497,7 +497,7 @@
 }
 
 .invalid-fields {
-  width: 100%;
+  // width: 100%;
   margin-top: 0.25rem;
   font-size: 0.875em;
   color: #dc3545;
@@ -1966,4 +1966,10 @@
 
 .kids-form-three-wrapper {
   margin-bottom: 100px !important;
+}
+
+@media only screen and (max-width: 480px) {
+  .id-upload {
+    margin-bottom: 100px !important;
+  }
 }

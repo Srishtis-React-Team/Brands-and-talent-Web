@@ -1029,7 +1029,7 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                   </div>
                   {profileFile && (
                     <>
-                      <div className="uploaded-file-wrapper">
+                      <div className="uploaded-file-wrapper ">
                         <div className="file-section">
                           {profileFile.type === "image" && (
                             <div className="fileType">
@@ -1614,7 +1614,10 @@ const AdultFormThree = ({ onDataFromChild, ...props }) => {
                       {verificationID.map((item, index) => {
                         return (
                           <>
-                            <div key={index} className="uploaded-file-wrapper">
+                            <div
+                              key={index}
+                              className="uploaded-file-wrapper id-upload"
+                            >
                               <div className="file-section">
                                 {item.type === "image" && (
                                   <div className="fileType">

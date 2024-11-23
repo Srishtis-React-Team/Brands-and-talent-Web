@@ -919,6 +919,13 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                         <div className="navTxt">
                           <NavLink to="/talent-settings">Settings</NavLink>
                         </div>
+
+                        {talentData?.planName !== "Premium" && (
+                          <Link to="/pricing">
+                            <div className="upgrade-btn mt-2">Upgrade Now</div>
+                          </Link>
+                        )}
+
                         {/* <div className="navTxt">
                           <NavLink to="/pricing">Pricing</NavLink>
                         </div> */}
@@ -945,7 +952,8 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                       <SearchHeaderComponent />
                     </div>
                   </React.Fragment>
-                  <div className="mobile-search">
+
+                  {/* <div className="mobile-search">
                     <form className="d-flex" role="search">
                       <input
                         className="form-control me-2"
@@ -981,7 +989,7 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                         </div>
                       </>
                     )}
-                  </div>
+                  </div> */}
                 </div>
                 {/* <div
                         className="offcanvas offcanvas-top search-canvas-top"
