@@ -1370,7 +1370,7 @@ const TalentProfile = () => {
                           </div>
                         </div>
 
-                        <div className="talent-rates">
+                        {/* <div className="talent-rates">
                           <div className="title">
                             {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
                             Rates
@@ -1434,6 +1434,67 @@ const TalentProfile = () => {
                                 </div>
                               </>
                             ))}
+                        </div> */}
+
+                        <div className="talent-rates">
+                          {talentData?.profession?.some(
+                            (item) =>
+                              item?.perHourSalary ||
+                              item?.perDaySalary ||
+                              item?.perMonthSalary ||
+                              item?.perPostSalary ||
+                              item?.perImageSalary
+                          ) && (
+                            <>
+                              <div className="title">
+                                {`${talentData?.preferredChildFirstname} ${talentData?.preferredChildLastName}`}{" "}
+                                Rates
+                              </div>
+                              {talentData.profession.map((item, index) => (
+                                <div key={index}>
+                                  {(item?.perHourSalary ||
+                                    item?.perDaySalary ||
+                                    item?.perMonthSalary ||
+                                    item?.perPostSalary ||
+                                    item?.perImageSalary) && (
+                                    <>
+                                      <div className="talent-profession-name">
+                                        {item?.value}{" "}
+                                        {item?.openToOffers === true && (
+                                          <span>(Negotiable)</span>
+                                        )}
+                                      </div>
+                                    </>
+                                  )}
+                                  {item?.perHourSalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perHourSalary} per hour
+                                    </div>
+                                  )}
+                                  {item?.perDaySalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perDaySalary} per day
+                                    </div>
+                                  )}
+                                  {item?.perMonthSalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perMonthSalary} per month
+                                    </div>
+                                  )}
+                                  {item?.perPostSalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perPostSalary} per post
+                                    </div>
+                                  )}
+                                  {item?.perImageSalary && (
+                                    <div className="talent-profession-value">
+                                      ${item?.perImageSalary} per image
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>

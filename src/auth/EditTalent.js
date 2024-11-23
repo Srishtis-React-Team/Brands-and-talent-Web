@@ -3238,7 +3238,7 @@ const EditTalent = () => {
                                         </MenuItem>
                                         <MenuItem
                                           onClick={() => {
-                                            dropDownClose();
+                                            handlePortfolioClose();
                                             setAlertpop({
                                               status: true,
                                               item: selectedPortfolioItem,
@@ -3524,7 +3524,7 @@ const EditTalent = () => {
                                         </MenuItem>
                                         <MenuItem
                                           onClick={() => {
-                                            dropDownClose();
+                                            handleClose();
                                             deleteVideoUrls(item, index);
                                           }}
                                         >
@@ -3791,7 +3791,7 @@ const EditTalent = () => {
                                                             </MenuItem>
                                                             <MenuItem
                                                               onClick={(e) => {
-                                                                dropDownClose();
+                                                                handleServiceFileClose();
                                                                 setAlertpop({
                                                                   status: true,
                                                                   item: item,
@@ -3978,7 +3978,7 @@ const EditTalent = () => {
                                       </MenuItem>
                                       <MenuItem
                                         onClick={(e) => {
-                                          dropDownClose();
+                                          handleCVFileClose(index);
                                           setAlertpop({
                                             status: true,
                                             item: selectedCV,

@@ -1968,8 +1968,15 @@
   margin-bottom: 100px !important;
 }
 
+.adult-service-form {
+  margin-top: 10px;
+}
+
 @media only screen and (max-width: 480px) {
   .id-upload {
     margin-bottom: 100px !important;
+  }
+  .adult-service-image {
+    display: none;
   }
 }

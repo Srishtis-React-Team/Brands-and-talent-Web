@@ -269,7 +269,8 @@ const EditBrands = () => {
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
-            setBrandData(resData.data.data, "resData.data.data");
+            console.log(resData.data.data, "resData.data.data");
+            setBrandData(resData.data.data);
             setEditProfileImage(resData.data.data?.brandImage[0]?.fileData);
             setBrandName(resData.data.data?.brandName);
             setBrandEmail(resData.data.data?.brandEmail);
@@ -294,7 +295,7 @@ const EditBrands = () => {
             setState(resData?.data?.data?.brandState);
             setKidsCity(resData?.data?.data?.brandCity);
             setBrandType(resData?.data?.data?.brandType);
-            setAboutBrand(...resData?.data?.data?.aboutBrand);
+            setAboutBrand(resData?.data?.data?.aboutBrand);
             setWhyWorkWithUs(...resData?.data?.data?.whyWorkWithUs);
           }
         }
@@ -307,7 +308,9 @@ const EditBrands = () => {
   }, [errorMessage]);
   useEffect(() => {}, [brandData]);
 
-  useEffect(() => {}, [aboutBrand]);
+  useEffect(() => {
+    console.log(aboutBrand, "aboutBrand");
+  }, [aboutBrand]);
 
   const [valueTabs, setValueTabs] = React.useState(0);
 

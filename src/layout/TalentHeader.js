@@ -920,11 +920,11 @@ const TalentHeader = ({ toggleMenu, myState, from }) => {
                           <NavLink to="/talent-settings">Settings</NavLink>
                         </div>
 
-                        {talentData?.planName !== "Premium" && (
+                        {/* {talentData?.planName !== "Premium" && (
                           <Link to="/pricing">
                             <div className="upgrade-btn mt-2">Upgrade Now</div>
                           </Link>
-                        )}
+                        )} */}
 
                         {/* <div className="navTxt">
                           <NavLink to="/pricing">Pricing</NavLink>
