@@ -101,3 +101,23 @@
   height: 250px;
   border-radius: 16px;
 }
+
+.service-description {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* Limit to 5 lines */
+  -webkit-box-orient: vertical;
+}
+
+.service-description.expanded {
+  -webkit-line-clamp: unset; /* Remove line limit */
+}
+
+.toggle-button {
+  margin-top: 10px;
+  color: #c2114b;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}

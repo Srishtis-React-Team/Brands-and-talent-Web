@@ -8,8 +8,16 @@ import { ApiHelper } from "../helpers/ApiHelper";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/findcreators.css";
 import PopUp from "../components/PopUp";
-
+import CurrentUser from "../CurrentUser";
 const Talentscarousel = () => {
+  const {
+    currentUserId,
+    currentUserImage,
+    currentUserType,
+    avatarImage,
+    talentName,
+    brandName,
+  } = CurrentUser();
   const navigate = useNavigate();
   const favoruiteIcon = require("../assets/icons/favorite.png");
   const heartIcon = require("../assets/icons/heart.png");
@@ -168,11 +176,26 @@ const Talentscarousel = () => {
               }}
             >
               <div className="sliderImg">
-                <img
-                  className="talents-profile-slider-image"
-                  src={`${API.userFilePath}${item?.image?.fileData}`}
-                  alt=""
-                />
+                {item?.image?.fileData && (
+                  <>
+                    <img
+                      className="talents-profile-slider-image"
+                      src={`${API.userFilePath}${item?.image?.fileData}`}
+                      alt=""
+                    />
+                  </>
+                )}
+                {!item?.image ||
+                  (!item?.image?.fileData && (
+                    <>
+                      <img
+                        className="talents-profile-slider-image"
+                        src={avatarImage}
+                        alt=""
+                      />
+                    </>
+                  ))}
+
                 {!item.isFavorite && (
                   <img
                     className="heart-icon"

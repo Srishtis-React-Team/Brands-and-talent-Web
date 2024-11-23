@@ -272,7 +272,7 @@ const AdultFormTwo = () => {
           <div className="dialog-body">
             <div className="kidsform-one container">
               <div className="adult-form-wrapper row ml-0 mr-0">
-                <div className="col-md-4 col-lg-3 mt-5">
+                <div className="col-md-4 col-lg-3 mt-5 adult-service-image">
                   <div className="fixImgs">
                     <img
                       src={adultsBanner}
@@ -281,7 +281,7 @@ const AdultFormTwo = () => {
                     />
                   </div>
                 </div>
-                <div className="adult-main remvSpc col-md-8 col-lg-9 mt-5">
+                <div className="adult-main remvSpc col-md-8 col-lg-9 adult-service-form">
                   <div className="adults-form-title">Complete your Profile</div>
                   <div className="adults-titles">Services (Optional)</div>
                   <div>

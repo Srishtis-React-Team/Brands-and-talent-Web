@@ -400,4 +400,12 @@ input[type="radio"]:checked + .create-job-toggle-label {
   .createjob-btn {
     width: 40%;
   }
+
+  .editTabs .image-edit-icon {
+    width: 20px;
+    height: 20px;
+    padding: 16px;
+    top: 64px;
+    right: 100px;
+  }
 }

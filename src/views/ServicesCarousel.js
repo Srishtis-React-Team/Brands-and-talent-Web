@@ -17,7 +17,11 @@ const ServicesCarousel = ({ talentData, brandData }) => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
+  const toggleContent = () => {
+    setIsExpanded((prev) => !prev);
+  };
   const [isOwnTalent, setIsOwnTalent] = useState(null);
   const [isAdminApproved, setIsAdminApproved] = useState(null);
   const [showProfile, setShowProfile] = useState(null);
@@ -279,9 +283,14 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                   <div className="service-list-content col-md-8">
                     <div className="service-title">{item?.serviceName}</div>
                     <div
-                      className="service-description"
+                      className={`service-description ${
+                        isExpanded ? "expanded" : "collapsed"
+                      }`}
                       dangerouslySetInnerHTML={{ __html: item?.editorState }}
                     />
+                    <button className="toggle-button" onClick={toggleContent}>
+                      {isExpanded ? "Show Less" : "Show More"}
+                    </button>
                     <div className="starting-amount">
                       ${item?.serviceAmount} per hour
                     </div>

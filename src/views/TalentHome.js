@@ -7,7 +7,7 @@ import "../assets/css/talent-dashboard.css";
 import TalentSideMenu from "../layout/TalentSideMenu.js";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import CurrentUser from "../CurrentUser.js";
 const TalentHome = () => {
   const [talentId, setTalentId] = useState(null);
   const [notificationList, setNotifications] = useState([]);
@@ -18,7 +18,8 @@ const TalentHome = () => {
   const doitnow = require("../assets/images/doitnow.png");
   const [isFilled, setIsFilled] = useState(true);
   const [talentData, setTalentData] = useState();
-
+  const { currentUserId, currentUserImage, currentUserType, avatarImage } =
+    CurrentUser();
   useEffect(() => {
     setTimeout(function () {
       setTalentId(localStorage.getItem("userId"));
@@ -126,7 +127,7 @@ const TalentHome = () => {
   }, [userId]);
 
   const checkProfileStatus = async () => {
-    await ApiHelper.post(`${API.checkProfileStatus}${queryString}`)
+    await ApiHelper.post(`${API.checkProfileStatus}${userId}`)
       .then((resData) => {
         if (resData.data.profileStatus === false) {
           openDoItNowModal();
@@ -136,8 +137,16 @@ const TalentHome = () => {
   };
 
   const doItNowRef = useRef(null);
+  // const openDoItNowModal = () => {
+  //   const modal = new window.bootstrap.Modal(doItNowRef.current);
+  //   modal.show();
+  // };
+
   const openDoItNowModal = () => {
-    const modal = new window.bootstrap.Modal(doItNowRef.current);
+    const modal = new window.bootstrap.Modal(doItNowRef.current, {
+      backdrop: "static", // Prevent closing when clicking outside the modal
+      keyboard: false, // Optional: Prevent closing via the Esc key
+    });
     modal.show();
   };
 
@@ -220,6 +229,56 @@ const TalentHome = () => {
             </div>
           </div>
 
+          <div className="mobile-profile-details">
+            <div className="talent-profile">
+              <div className="talent-data-wrapper">
+                <div className="profImg">
+                  {talentData?.image?.fileData && (
+                    <>
+                      <img
+                        className="profile-img"
+                        src={`${API.userFilePath}${talentData?.image?.fileData}`}
+                        alt=""
+                      />
+                    </>
+                  )}
+
+                  {!talentData?.image?.fileData && (
+                    <>
+                      <img
+                        className="profile-img"
+                        src={`${avatarImage}`}
+                        alt=""
+                      />
+                    </>
+                  )}
+                </div>
+                <div className="talent-details">
+                  <div className="talent-name">
+                    {talentData?.preferredChildFirstname}{" "}
+                    {talentData?.preferredChildLastName}
+                  </div>
+                  <div className="talent-category">Talent</div>
+                </div>
+              </div>
+              <div className="talents-plan-info">
+                <div className="talent-plan-name">
+                  Plan : <span>{talentData?.planName}</span>
+                </div>
+
+                <div className="talent-plan-name">
+                  {/* campaigns : <span>{jobCountNumber && <>{jobCountNumber}</>}</span> */}
+                </div>
+              </div>
+
+              {talentData?.planName !== "Premium" && (
+                <Link to="/pricing">
+                  <div className="upgrade-btn">Upgrade Now</div>
+                </Link>
+              )}
+            </div>
+          </div>
+
           <div className="home-cards mt-1 row pad8">
             <div className="col-md-4 col-lg-3 pad8">
               <div>
@@ -284,12 +343,12 @@ const TalentHome = () => {
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content ">
             <div className="modal-header">
-              <button
+              {/* <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              ></button> */}
             </div>
             <div className="modal-body talent-popup-body pt-1">
               <div className="doitnow-main row">
