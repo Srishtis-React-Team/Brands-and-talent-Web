@@ -44,9 +44,12 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
     jobCount();
     saveUser();
   }, [brandId]);
+  useEffect(() => {
+    getBrand();
+  }, []);
 
   const getBrand = async () => {
-    await ApiHelper.get(`${API.getBrandById}${brandId}`)
+    await ApiHelper.get(`${API.getBrandById}${localStorage.getItem("brandId")}`)
       .then((resData) => {
         if (resData.data.status === true) {
           if (resData.data.data) {
@@ -97,7 +100,7 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
         console.log(resData?.data?.data?._id, "getDataByPublicUrl");
         // setUrlTalentData(resData?.data?.data);
         // checkUser(resData?.data?.data?._id, resData?.data?.data);
-        setBrandData(resData?.data?.data);
+        // setBrandData(resData?.data?.data);
       })
       .catch((err) => {});
   };
@@ -166,6 +169,10 @@ const BrandSideMenu = ({ onChildClick, myState }) => {
       getBrand();
     }
   }, [myState]);
+
+  useEffect(() => {
+    console.log(brandData, "brandData");
+  }, [brandData]);
 
   // useEffect(() => {
   //   if (brandId) {
