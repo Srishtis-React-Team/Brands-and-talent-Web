@@ -1299,6 +1299,13 @@
   overflow-x: hidden;
 }
 
+.job-features-li .pr-1{
+  padding-right: 1rem;
+}
+
+
+
+
 @media (max-width: 1200px) {
   .kidsform-one .kids-wrapper {
     margin: 25px 30px;
@@ -1309,7 +1316,16 @@
   }
   .adult-img-img.fixImgs {
     display: none;
+  } 
+  .userBox .campaigns-content-wrapper .recent-set-three {
+    margin: 0 0 10px;
+    display: flex;
+    justify-content: end;
+    width: 100%;
   }
+
+
+
 }
 @media (max-width: 991px) {
   .campaigns-content-wrapper .recent-set-three {
@@ -1581,4 +1597,6 @@
     .recent-gig-name {
     font-size: 16px;
   }
+  .job-features-li .d-flex {  flex-direction: column; }
+
 }

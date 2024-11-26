@@ -53,6 +53,13 @@
 .header-menu > div:nth-child(2) {
   padding-left: 15px;
 }
+
+.creatorPage-Wraper .filter-section, .creatorPage-Wraper .filter-section .brand-filter-section {
+  padding: 0 !important;
+  background-color: transparent;
+}
+
+
 .filter-section {
   padding: 60px 0;
   background-color: #f8f8f8;
@@ -421,6 +428,15 @@ select {
   padding: 2px 0 2px 3px !important;
 }
 
+.job-company_dtls {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  padding-right: 5px;
+}
+
+
+
 
 
 @media (max-width: 1080px) {
@@ -561,6 +577,14 @@ select {
     padding: 0;
     box-shadow: inherit;
   }
+  .creatorPage-Wraper .filter-section .brand-filter-section .filter-wrapper{
+    background-color: #FFF;
+    padding: 12px;
+  }
+  .creatorPage-Wraper .filter-section .brand-filter-section.px-4 .col-md-4.col-lg-4 {
+    padding: 0;
+  }
+
 }
 @media (max-width: 480px) {
 
@@ -697,10 +721,4 @@ select {
   .favTalent .col-md-4.col-lg-3.px-1 {
     width: 100%;
   }
-}
-.job-company_dtls {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  padding-right: 5px;
 }
