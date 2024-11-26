@@ -260,6 +260,19 @@ const Pricing = ({
 
   const [isChecked, setIsChecked] = useState(false);
 
+  const planHierarchy = {
+    "Pro (Popular)": { monthly: 1, annual: 2 },
+    Premium: { monthly: 3, annual: 4 },
+  };
+
+  const activePlanRank = planHierarchy[activePlan]?.[activePeriod] || 0;
+
+  const isPlanDisabled = (planName, period) => {
+    const planRank = planHierarchy[planName]?.[period] || 0;
+    return planRank <= activePlanRank; // Disable plans with a lower rank
+  };
+
+
   useEffect(() => {
     if (userType == "adults") {
       getPricingList();
@@ -282,7 +295,7 @@ const Pricing = ({
     setIsChecked(event.target.checked);
   };
 
-  useEffect(() => {}, [comment]);
+  useEffect(() => { }, [comment]);
 
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
@@ -291,7 +304,7 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getBrandsPricingList = async () => {
@@ -301,7 +314,7 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const editKids = async () => {
@@ -612,7 +625,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getBrand = async () => {
@@ -624,7 +637,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleFormSubmit = (dataObject, hash) => {
@@ -727,10 +740,10 @@ const Pricing = ({
                         index === 0
                           ? "plans-wrapper free-plans"
                           : index === 1
-                          ? "plans-wrapper pro-plans"
-                          : index === 2
-                          ? "plans-wrapper premium-plans"
-                          : ""
+                            ? "plans-wrapper pro-plans"
+                            : index === 2
+                              ? "plans-wrapper premium-plans"
+                              : ""
                       }
                     >
                       <div className="priceHeight">
@@ -743,8 +756,8 @@ const Pricing = ({
                                   index === 1
                                     ? "pro-gift giftSize"
                                     : index === 2
-                                    ? "premium-gift giftSize"
-                                    : ""
+                                      ? "premium-gift giftSize"
+                                      : ""
                                 }
                                 onClick={handleClickOpen}
                               >
@@ -769,124 +782,103 @@ const Pricing = ({
                         {console.log("activePlan", activePlan)}
 
                         {item.plan_type_annual.length >= 1 && (
-                          <>
-                            <div className="annual-main-wrapper">
-                              {console.log(
-                                "item.plan_type_annual",
-                                item.planname
-                              )}
-                              <div className="annual-wrapper">
-                                <input
-                                  type="radio"
-                                  name={`annual-${item._id}`}
-                                  id={`annual-${item._id}`}
-                                  checked={
-                                    selectedPlan === `annual-${item._id}`
-                                  }
-                                  onChange={handleRadioChange(
-                                    "annual",
-                                    `annual-${item._id}`,
-                                    item.planname
-                                  )}
-                                  className={
-                                    item.planname === "Pro (Popular)"
-                                      ? "pro-checkbox"
-                                      : "premium-checkbox"
-                                  }
-                                  disabled={
-                                    item.planname === activePlan &&
-                                    activePeriod === "annual"
-                                  }
-                                />
-                                <label
-                                  htmlFor={`annual-${item._id}`}
-                                  className={`annual ${
-                                    item.planname === activePlan &&
-                                    activePeriod === "annual"
-                                      ? "checked-label"
-                                      : ""
-                                  }`}
-                                >
-                                  {item.period}
-                                  {item.planname === activePlan &&
-                                    activePeriod === "annual" && (
-                                      <i className="bi bi-check-circle-fill active-icon"></i>
-                                    )}
-                                </label>
-                              </div>
-                              <div className="per-value">
-                                {item.annualTotalAmount}
-                              </div>
-                            </div>
+  <>
+    <div className="annual-main-wrapper">
+      <div className="annual-wrapper">
+        <input
+          type="radio"
+          name={`annual-${item._id}`}
+          id={`annual-${item._id}`}
+          checked={selectedPlan === `annual-${item._id}`}
+          onChange={handleRadioChange(
+            "annual",
+            `annual-${item._id}`,
+            item.planname
+          )}
+          className={
+            item.planname === "Pro (Popular)"
+              ? "pro-checkbox"
+              : "premium-checkbox"
+          }
+          disabled={isPlanDisabled(item.planname, "annual")}
+        />
+        <label
+          htmlFor={`annual-${item._id}`}
+          className={`annual ${
+            item.planname === activePlan && activePeriod === "annual"
+              ? "checked-label"
+              : ""
+          }`}
+        >
+          {item.period}
+          {item.planname === activePlan && activePeriod === "annual" && (
+            <i className="bi bi-check-circle-fill active-icon"></i>
+          )}
+        </label>
+      </div>
+      <div className="per-value">{item.annualTotalAmount}</div>
+    </div>
 
-                            {item.plan_type_annual.map((plan, index) => (
-                              <>
-                                <div key={index} className="plan-amounts">
-                                  <div className="per-value">
-                                    {plan.afterDiscount}
-                                  </div>
-                                </div>
-                                <div className="border-bottom"></div>
-                              </>
-                            ))}
-                            <div className="monthly-wrapper pt-3">
-                              <div>
-                                <input
-                                  type="radio"
-                                  name={`monthly-${item._id}`}
-                                  id={`monthly-${item._id}`}
-                                  checked={
-                                    selectedPlan === `monthly-${item._id}`
-                                  }
-                                  onChange={handleRadioChange(
-                                    "monthly",
-                                    `monthly-${item._id}`,
-                                    item.planname
-                                  )}
-                                  className={
-                                    item.planname === "Pro (Popular)"
-                                      ? "pro-checkbox"
-                                      : "premium-checkbox"
-                                  }
-                                  disabled={
-                                    item.planname === activePlan &&
-                                    activePeriod === "monthly"
-                                  }
-                                />
-                                <label
-                                  htmlFor={`monthly-${item._id}`}
-                                  className={`monthly ${
-                                    item.planname === activePlan &&
-                                    activePeriod === "monthly"
-                                      ? "checked-label"
-                                      : ""
-                                  }`}
-                                >
-                                  Monthly
-                                  {item.planname === activePlan &&
-                                    activePeriod === "monthly" && (
-                                      <i className="bi bi-check-circle-fill active-icon"></i>
-                                    )}
-                                </label>
-                              </div>
-                              {item.plan_type_monthly.map((plan, index) => (
-                                <div key={index} className="monthly-amount">
-                                  {plan.amount}
-                                </div>
-                              ))}
-                            </div>
-                          </>
-                        )}
+    {item.plan_type_annual.map((plan, index) => (
+      <>
+        <div key={index} className="plan-amounts">
+          <div className="per-value">{plan.afterDiscount}</div>
+        </div>
+        <div className="border-bottom"></div>
+      </>
+    ))}
+
+    <div className="monthly-wrapper pt-3">
+      <div>
+        <input
+          type="radio"
+          name={`monthly-${item._id}`}
+          id={`monthly-${item._id}`}
+          checked={selectedPlan === `monthly-${item._id}`}
+          onChange={handleRadioChange(
+            "monthly",
+            `monthly-${item._id}`,
+            item.planname
+          )}
+          className={
+            item.planname === "Pro (Popular)"
+              ? "pro-checkbox"
+              : "premium-checkbox"
+          }
+          disabled={isPlanDisabled(item.planname, "monthly")}
+        />
+        <label
+          htmlFor={`monthly-${item._id}`}
+          className={`monthly ${
+            item.planname === activePlan && activePeriod === "monthly"
+              ? "checked-label"
+              : ""
+          }`}
+        >
+          Monthly
+          {item.planname === activePlan && activePeriod === "monthly" && (
+            <i className="bi bi-check-circle-fill active-icon"></i>
+          )}
+        </label>
+      </div>
+      {item.plan_type_monthly.map((plan, index) => (
+        <div key={index} className="monthly-amount">
+          {plan.amount}
+        </div>
+      ))}
+    </div>
+  </>
+)}
                       </div>
                       <div
                         className={
                           index === 0
                             ? "choose-btn free-btn"
                             : index === 1
-                            ? "choose-btn pro-btn"
-                            : index === 2
-                            ? "choose-btn premium-btn"
-                            : ""
+                              ? "choose-btn pro-btn"
+                              : index === 2
+                                ? "choose-btn premium-btn"
+                                : ""
                         }
                         onClick={() => choosePlan(index, item, "plan")}
                       >
@@ -985,9 +977,8 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${
-                        !isValidEmail ? "is-invalid" : "form-control"
-                      }`}
+                      className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"
+                        }`}
                       onChange={handleEmailChange}
                       placeholder="Email Address"
                       value={email}
@@ -1039,9 +1030,8 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${
-                        !isRecieverValidEmail ? "is-invalid" : "form-control"
-                      }`}
+                      className={`form-control ${!isRecieverValidEmail ? "is-invalid" : "form-control"
+                        }`}
                       onChange={handleRecieverEmailChange}
                       placeholder="Recipient's Email Address"
                       value={recieverEmail}
@@ -1099,8 +1089,8 @@ const Pricing = ({
                                   index === 0
                                     ? "plans-wrapper pro-plans" // index 0 here corresponds to the original index 1
                                     : index === 1
-                                    ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
-                                    : ""
+                                      ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
+                                      : ""
                                 }
                               >
                                 <div className="priceHeight">
@@ -1219,8 +1209,8 @@ const Pricing = ({
                                     index === 0
                                       ? "choose-btn pro-btn" // index 0 here corresponds to the original index 1
                                       : index === 1
-                                      ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
-                                      : ""
+                                        ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
+                                        : ""
                                   }
                                   onClick={() =>
                                     choosePlan(
