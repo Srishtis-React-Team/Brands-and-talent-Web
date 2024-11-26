@@ -109,7 +109,6 @@ const PaymentOptions = ({
       subscriptionPlan: selectedPaymentPeriod,
       planName: planType ? planType : selectedPaymentPlan,
     };
-
     try {
       const responseCoupon = await ApiHelper.post(API.applyCoupon, obj);
       if (responseCoupon?.data?.status) {
@@ -126,6 +125,7 @@ const PaymentOptions = ({
         setIsCouponApplied(false);
       }
     } catch (error) {
+      console.log('err',error)
       setErrorMessage("An error occurred while applying the coupon.");
     }
   };
