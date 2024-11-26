@@ -269,11 +269,6 @@ const SearchHeaderComponent = ({ onData }) => {
     } else if (route === "/how-it-works") {
       navigate(route);
     } else if (route === "/login") {
-      // navigate(route);
-      // window.open(
-      //   "https://airtable.com/appluOJ2R4RAOIloi/shr99sNN8682idCXG",
-      //   "_blank"
-      // );
     } else if (route === "/talent-dashboard") {
       if (!currentUserId || currentUser_type == "brand") {
         handleClose();

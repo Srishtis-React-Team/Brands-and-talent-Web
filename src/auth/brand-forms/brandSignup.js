@@ -163,7 +163,7 @@ const BrandSignup = React.memo((props) => {
       adultPassword !== "" &&
       adultConfirmPassword !== "" &&
       passwordMatch === true &&
-      passwordStatus == true
+      adultPasswordError == false
     ) {
       const formData = {
         userName: adultName,
@@ -220,10 +220,37 @@ const BrandSignup = React.memo((props) => {
     }
   };
 
+  const [adultPasswordError, setAdultPasswordError] = useState(false);
+
+  // Password validation function
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      setAdultPasswordError("Password must be at least 8 characters long.");
+    } else if (
+      !hasUpperCase ||
+      !hasLowerCase ||
+      !hasNumber ||
+      !hasSpecialChar
+    ) {
+      setAdultPasswordError(
+        "Your password must include at least 1 capital letter, 1 small letter, 1 number, and 1 special symbol."
+      );
+    } else {
+      setAdultPasswordError(""); // Clear the error if password meets the requirements
+    }
+  };
+
   const handlePasswordChange = (e) => {
     setAdultPassword(e.target.value);
     setPasswordMatch(e.target.value === adultConfirmPassword);
     setPasswordError(false);
+    validatePassword(e.target.value);
   };
 
   const handleConfirmPasswordChange = (e) => {
@@ -243,117 +270,6 @@ const BrandSignup = React.memo((props) => {
       navigate("/community-guidelines");
     }
   };
-
-  const [passwordStatus, setPasswordStatus] = useState(false);
-
-  let line = document.querySelector(".line");
-  let text = document.querySelector(".text");
-  let password_strength_box = document.querySelector(".password_strength_box");
-  let passwordCriteria = document.querySelector(".password");
-
-  if (passwordCriteria && password_strength_box && line && text) {
-    if (passwordCriteria.value.length == 0) {
-      password_strength_box.style.display = "none";
-    }
-
-    passwordCriteria.oninput = function () {
-      if (passwordCriteria.value.length == 0) {
-        password_strength_box.style.display = "none";
-      }
-
-      if (passwordCriteria.value.length >= 1) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "5%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (passwordCriteria.value.length >= 2) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "10%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (passwordCriteria.value.length >= 3) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "20%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (passwordCriteria.value.length >= 4) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "35%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-        if (passwordCriteria.value.match(/[!@#$%^&*]/)) {
-          setPasswordStatus(false);
-          password_strength_box.style.display = "flex";
-          line.style.width = "45%";
-          line.style.backgroundColor = "#e9ee30";
-          text.style.color = "#e9ee30";
-          text.innerHTML = "Medium";
-        }
-      }
-      if (
-        passwordCriteria.value.length >= 5 &&
-        passwordCriteria.value.match(/[A-Z]/) &&
-        passwordCriteria.value.match(/[a-z]/)
-      ) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "50%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (
-        passwordCriteria.value.length >= 6 &&
-        passwordCriteria.value.match(/[0-9]/)
-      ) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "70%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (
-        passwordCriteria.value.length >= 7 &&
-        passwordCriteria.value.match(/[A-Z]/) &&
-        passwordCriteria.value.match(/[a-z]/) &&
-        passwordCriteria.value.match(/[0-9]/)
-      ) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "80%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-
-      if (
-        passwordCriteria.value.length > 7 &&
-        passwordCriteria.value.match(/[A-Z]/) &&
-        passwordCriteria.value.match(/[a-z]/) &&
-        passwordCriteria.value.match(/[0-9]/) &&
-        passwordCriteria.value.match(/[!@#$%^&*]/)
-      ) {
-        setPasswordStatus(true);
-        password_strength_box.style.display = "flex";
-        line.style.width = "100%";
-        line.style.backgroundColor = "#2ccc2c";
-        text.style.color = "#2ccc2c";
-        text.innerHTML = "Strong";
-      }
-    };
-  }
 
   return (
     <>
@@ -470,7 +386,7 @@ const BrandSignup = React.memo((props) => {
                   </div>
                 </div>
 
-                {adultPassword && !passwordStatus && (
+                {adultPasswordError && (
                   <div className="invalid-fields password-error-box">
                     Your password must be at least 8 characters long and include
                     at least: 1 capital letter (A, B, C...), 1 small letter (a,

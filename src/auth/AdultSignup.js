@@ -71,10 +71,37 @@ const AdultSignup = () => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  const [adultPasswordError, setAdultPasswordError] = useState(false);
+
+  // Password validation function
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      setAdultPasswordError("Password must be at least 8 characters long.");
+    } else if (
+      !hasUpperCase ||
+      !hasLowerCase ||
+      !hasNumber ||
+      !hasSpecialChar
+    ) {
+      setAdultPasswordError(
+        "Your password must include at least 1 capital letter, 1 small letter, 1 number, and 1 special symbol."
+      );
+    } else {
+      setAdultPasswordError(""); // Clear the error if password meets the requirements
+    }
+  };
+
   const handlePasswordChange = (e) => {
     setAdultPassword(e.target.value);
     setPasswordMatch(e.target.value === adultConfirmPassword);
     setPasswordError(false);
+    validatePassword(e.target.value);
   };
   const handleConfirmPasswordChange = (e) => {
     setAdultConfirmPassword(e.target.value);
@@ -158,7 +185,7 @@ const AdultSignup = () => {
       adultPassword !== "" &&
       adultConfirmPassword !== "" &&
       passwordMatch === true &&
-      passwordStatus &&
+      !adultPasswordError &&
       adultName
     ) {
       const formData = {
@@ -217,7 +244,7 @@ const AdultSignup = () => {
         setOpenPopUp(false);
       }, 1000);
     }
-    if (!passwordStatus) {
+    if (adultPasswordError) {
       setMessage("Kindly complete all mandatory fields");
       setOpenPopUp(true);
       setTimeout(function () {
@@ -225,113 +252,6 @@ const AdultSignup = () => {
       }, 1000);
     }
   };
-  const [passwordStatus, setPasswordStatus] = useState(false);
-
-  let line = document.querySelector(".line");
-  let text = document.querySelector(".text");
-  let password_strength_box = document.querySelector(".password_strength_box");
-  let password = document.querySelector(".password");
-
-  if (password && password_strength_box && line && text) {
-    if (password.value.length == 0) {
-      password_strength_box.style.display = "none";
-    }
-
-    password.oninput = function () {
-      if (password.value.length == 0) {
-        password_strength_box.style.display = "none";
-      }
-
-      if (password.value.length >= 1) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "5%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (password.value.length >= 2) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "10%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (password.value.length >= 3) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "20%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-      }
-      if (password.value.length >= 4) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "35%";
-        line.style.backgroundColor = "red";
-        text.style.color = "red";
-        text.innerHTML = "Weak";
-        if (password.value.match(/[!@#$%^&*]/)) {
-          setPasswordStatus(false);
-          password_strength_box.style.display = "flex";
-          line.style.width = "45%";
-          line.style.backgroundColor = "#e9ee30";
-          text.style.color = "#e9ee30";
-          text.innerHTML = "Medium";
-        }
-      }
-      if (
-        password.value.length >= 5 &&
-        password.value.match(/[A-Z]/) &&
-        password.value.match(/[a-z]/)
-      ) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "50%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (password.value.length >= 6 && password.value.match(/[0-9]/)) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "70%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-      if (
-        password.value.length >= 7 &&
-        password.value.match(/[A-Z]/) &&
-        password.value.match(/[a-z]/) &&
-        password.value.match(/[0-9]/)
-      ) {
-        setPasswordStatus(false);
-        password_strength_box.style.display = "flex";
-        line.style.width = "80%";
-        line.style.backgroundColor = "#e9ee30";
-        text.style.color = "#e9ee30";
-        text.innerHTML = "Medium";
-      }
-
-      if (
-        password.value.length >= 8 &&
-        password.value.match(/[A-Z]/) &&
-        password.value.match(/[a-z]/) &&
-        password.value.match(/[0-9]/) &&
-        password.value.match(/[!@#$%^&*]/)
-      ) {
-        setPasswordStatus(true);
-        password_strength_box.style.display = "flex";
-        line.style.width = "100%";
-        line.style.backgroundColor = "#2ccc2c";
-        text.style.color = "#2ccc2c";
-        text.innerHTML = "Strong";
-      }
-    };
-  }
 
   const handleCondition = (e) => {
     if (e == "terms") {
@@ -469,7 +389,7 @@ const AdultSignup = () => {
                     </div>
                   </div>
 
-                  {adultPassword && !passwordStatus && (
+                  {adultPasswordError && (
                     <div
                       className="invalid-fields password-error-box"
                       style={{ width: "width: 350px;" }}
