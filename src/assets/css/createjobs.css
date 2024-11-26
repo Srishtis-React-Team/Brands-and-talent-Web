@@ -9,7 +9,10 @@
 .screening-checkbox {
   margin-right: 8px !important;
 }
-
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root{
+  padding: 0;
+  font-family: "Open Sans", sans-serif !important;
+}
 .view-undo-jobs {
   background-color: #c2114b;
   color: #fff;
@@ -91,12 +94,16 @@
 }
 .browseJob .job-company-logo {
   border-radius: 0;
+  float: left;
 }
 .browseJob .logoSpc .job-company-name {
-  padding-left: 15px;
+  padding: 0 25px 0 15px;
   font-weight: 600;
   font-size: 16px;
+  display: flex;
+  line-height: 20px;
 }
+
 .createjob-btn {
   width: auto;
   min-width: 160px;
@@ -432,6 +439,9 @@
   .browseJob .recent-set-three.col-md-5 {
     justify-content: center;
   }
+  .browseJob .logoSpc .job-company-name { padding: 0; }
+
+
 }
 
 @media only screen and (max-width: 580px) {
