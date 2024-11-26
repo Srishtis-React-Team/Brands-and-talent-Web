@@ -459,7 +459,7 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
 
               <div className="job-features-benefits pb-0">
                 <div className="row">
-                  <div className="job-features col-md-6">
+                  <div className="job-features col-md-12">
                     <div className="job-feature-title">
                       Key Details and Requirements
                     </div>
@@ -588,68 +588,70 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                           jobData?.youTubeMin) && (
                           <>
                             <li className="job-features-li">
-                              <span className="job-feature-heading">
-                                Social Media Followers Count:
-                              </span>
-                              <ul>
-                                {jobData?.instaMin && (
-                                  <li>
-                                    Instagram Followers:{" "}
-                                    <span className="job-feature-values">
-                                      {jobData?.instaMin} - {jobData?.instaMax}
-                                    </span>
-                                  </li>
-                                )}
+                              <div className="d-flex">
+                                <span className="job-feature-heading pr-1">
+                                  Social Media Followers Count:
+                                </span>
+                                <ul>
+                                  {jobData?.instaMin && (
+                                    <li>
+                                      Instagram Followers:{" "}
+                                      <span className="job-feature-values">
+                                        {jobData?.instaMin} - {jobData?.instaMax}
+                                      </span>
+                                    </li>
+                                  )}
 
-                                {jobData?.tikTokMin && (
-                                  <li>
-                                    TikTok Followers:{" "}
-                                    <span className="job-feature-values">
-                                      {jobData?.tikTokMin} -{" "}
-                                      {jobData?.tikTokMax}
-                                    </span>
-                                  </li>
-                                )}
+                                  {jobData?.tikTokMin && (
+                                    <li>
+                                      TikTok Followers:{" "}
+                                      <span className="job-feature-values">
+                                        {jobData?.tikTokMin} -{" "}
+                                        {jobData?.tikTokMax}
+                                      </span>
+                                    </li>
+                                  )}
 
-                                {jobData?.linkedInMin && (
-                                  <li>
-                                    Linkedin Followers:{" "}
-                                    <span className="job-feature-values">
-                                      {jobData?.linkedInMin} -{" "}
-                                      {jobData?.linkedInMax}
-                                    </span>
-                                  </li>
-                                )}
+                                  {jobData?.linkedInMin && (
+                                    <li>
+                                      Linkedin Followers:{" "}
+                                      <span className="job-feature-values">
+                                        {jobData?.linkedInMin} -{" "}
+                                        {jobData?.linkedInMax}
+                                      </span>
+                                    </li>
+                                  )}
 
-                                {jobData?.fbMin && (
-                                  <li>
-                                    Facebook Followers:{" "}
-                                    <span className="job-feature-values">
-                                      {jobData?.fbMin} - {jobData?.fbMax}
-                                    </span>
-                                  </li>
-                                )}
+                                  {jobData?.fbMin && (
+                                    <li>
+                                      Facebook Followers:{" "}
+                                      <span className="job-feature-values">
+                                        {jobData?.fbMin} - {jobData?.fbMax}
+                                      </span>
+                                    </li>
+                                  )}
 
-                                {jobData?.twitterMin && (
-                                  <li>
-                                    Twitter(X) Followers:{" "}
-                                    <span className="job-feature-values">
-                                      {jobData?.twitterMin} -{" "}
-                                      {jobData?.twitterMax}
-                                    </span>
-                                  </li>
-                                )}
+                                  {jobData?.twitterMin && (
+                                    <li>
+                                      Twitter(X) Followers:{" "}
+                                      <span className="job-feature-values">
+                                        {jobData?.twitterMin} -{" "}
+                                        {jobData?.twitterMax}
+                                      </span>
+                                    </li>
+                                  )}
 
-                                {jobData?.youTubeMin && (
-                                  <li>
-                                    YouTube Followers:{" "}
-                                    <span className="job-feature-values">
-                                      {jobData?.youTubeMin} -{" "}
-                                      {jobData?.youTubeMax}
-                                    </span>
-                                  </li>
-                                )}
-                              </ul>
+                                  {jobData?.youTubeMin && (
+                                    <li>
+                                      YouTube Followers:{" "}
+                                      <span className="job-feature-values">
+                                        {jobData?.youTubeMin} -{" "}
+                                        {jobData?.youTubeMax}
+                                      </span>
+                                    </li>
+                                  )}
+                                </ul>
+                              </div>
                             </li>
                           </>
                         )}
