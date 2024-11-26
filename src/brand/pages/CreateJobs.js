@@ -82,6 +82,8 @@ const CreateJobs = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [updateDisabled, setUpdateDisabled] = useState(false);
   const [jobTitleError, setjobTitleError] = useState(false);
+  const [deadlineError, setDeadlineError] = useState(false);
+  const [skillError, setSkillError] = useState(false);
   const [jobTitle, setjobTitle] = useState("");
   const [message, setMessage] = useState("");
   const [allJobsList, setAllJobsList] = useState([]);
@@ -321,6 +323,8 @@ const CreateJobs = () => {
   useEffect(() => {
     if (editData?.value && editData?.type) {
       getJobsByID(editData?.value, editData?.type);
+    } else {
+      setEditJobData(null);
     }
   }, [editData]);
 
@@ -495,6 +499,8 @@ const CreateJobs = () => {
   };
 
   const getJobsByID = async (jobId, type) => {
+    console.log(jobId, "jobId");
+    console.log(type, "type");
     if (type == "Posted") {
       const formData = {
         type: "brand",
@@ -526,7 +532,9 @@ const CreateJobs = () => {
     }
   };
 
-  useEffect(() => {}, [editJobData]);
+  useEffect(() => {
+    console.log(editJobData, "editJobData");
+  }, [editJobData]);
 
   useEffect(() => {
     // const howToApplyDescriptionContent = initialHowToApply;
@@ -1327,6 +1335,12 @@ const CreateJobs = () => {
     if (employmentType == "") {
       setEmploymentError(true);
     }
+    if (lastdateApply == null) {
+      setDeadlineError(true);
+    }
+    if (skills.length == 0) {
+      setSkillError(true);
+    }
     if (
       jobTitle !== "" &&
       jobType !== "" &&
@@ -1349,7 +1363,9 @@ const CreateJobs = () => {
       !youTubeMinError &&
       !youTubeMaxError &&
       !minPayError &&
-      !maxPayError
+      !maxPayError &&
+      lastdateApply != null &&
+      skills.length != 0
     ) {
       const formData = {
         jobTitle: jobTitle,
@@ -1676,7 +1692,11 @@ const CreateJobs = () => {
     setSkills(newSkills);
   };
 
-  useEffect(() => {}, [skills]);
+  useEffect(() => {
+    if (skills.length > 0) {
+      setSkillError(false);
+    }
+  }, [skills]);
   useEffect(() => {}, [skills]);
 
   const skillsListing = [
@@ -1744,6 +1764,7 @@ const CreateJobs = () => {
 
   const handleDateChange = (date) => {
     // Format the date to ensure it's correctly parsed and displayed
+    setDeadlineError(false);
     const formattedDate = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
     setLastdateApply(formattedDate);
     // Set the DOB state and calculate the age
@@ -1975,6 +1996,10 @@ const CreateJobs = () => {
       setfrequency(frequencyValue);
     }
   };
+
+  useEffect(() => {
+    console.log(lastdateApply, "lastdateApply");
+  }, [lastdateApply]);
 
   return (
     <>
@@ -2344,6 +2369,11 @@ const CreateJobs = () => {
                               disablePast
                             />
                           </LocalizationProvider>
+                          {deadlineError && (
+                            <div className="invalid-fields">
+                              Please select Application Deadline
+                            </div>
+                          )}
                         </div>
                         <div className="kids-form-section col-md-6 mb-3">
                           <label className="form-label mb-2">
@@ -2396,6 +2426,11 @@ const CreateJobs = () => {
                                 Add Skill
                               </div>
                             </div>
+                            {skillError && (
+                              <div className="invalid-fields">
+                                Please select Profession/Skills
+                              </div>
+                            )}
                           </div>
 
                           <div className="skills-section">
