@@ -2080,7 +2080,6 @@ ul.MuiMenu-list li {
 .invalid-fields {
   font-size: 12px;
   color: red;
-  width: 421px;
 }
 
 .topSpc-container {
@@ -4428,6 +4427,6 @@ main.brand-main-container:not(.main-pd) .creators-filter-select {
   .invalid-fields {
     font-size: 12px;
     color: red;
-    width: 358px;
+    width: 345px !important;
   }
 }

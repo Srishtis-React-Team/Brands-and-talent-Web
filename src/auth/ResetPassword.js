@@ -39,9 +39,36 @@ const ResetPassword = () => {
     }
   }, [paramsValue]);
 
+  const [adultPasswordError, setAdultPasswordError] = useState(false);
+
+  // Password validation function
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      setAdultPasswordError("Password must be at least 8 characters long.");
+    } else if (
+      !hasUpperCase ||
+      !hasLowerCase ||
+      !hasNumber ||
+      !hasSpecialChar
+    ) {
+      setAdultPasswordError(
+        "Your password must include at least 1 capital letter, 1 small letter, 1 number, and 1 special symbol."
+      );
+    } else {
+      setAdultPasswordError(""); // Clear the error if password meets the requirements
+    }
+  };
+
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setPasswordMatch(e.target.value === confirmPassword);
+    validatePassword(e.target.value);
   };
 
   const handleConfirmPasswordChange = (e) => {
@@ -327,7 +354,7 @@ const ResetPassword = () => {
                   </div>
                 </div>
               </div>
-              {password && !passwordStatus && (
+              {password && adultPasswordError && (
                 <div className="invalid-fields password-error-box">
                   Your password must be at least 8 characters long and include
                   at least: 1 capital letter (A, B, C...), 1 small letter (a, b,
