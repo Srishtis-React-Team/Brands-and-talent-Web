@@ -582,7 +582,7 @@ const KidsformOne = () => {
       country !== "" &&
       address !== "" &&
       selectedProfessions.length !== 0 &&
-      selectedCategories.length >= 3 &&
+      selectedCategories.length != 0 &&
       selectedCategories.length <= 6 &&
       kidsPreferedFirstName !== "" &&
       nationality.length !== 0 &&
@@ -1492,7 +1492,7 @@ const KidsformOne = () => {
                         Please choose Categories
                       </div>
                     )} */}
-                    {(selectedCategories?.length < 3 ||
+                    {(selectedCategories?.length == 0 ||
                       selectedCategories?.length > 6) &&
                       categoryError && (
                         <div className="invalid-fields">

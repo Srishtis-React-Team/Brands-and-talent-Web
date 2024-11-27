@@ -758,7 +758,7 @@ const EditTalent = () => {
     setIsSubmitted(true);
     setMyState(false);
     if (talentData?.type === "kids") {
-      if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
+      if (selectedCategories.length != 0 && selectedCategories.length <= 6) {
         const formData = {
           parentFirstName: parentFirstName,
           parentLastName: parentLastName,
@@ -816,7 +816,7 @@ const EditTalent = () => {
       }
     }
     if (talentData?.type === "adults") {
-      if (selectedCategories.length >= 3 && selectedCategories.length <= 6) {
+      if (selectedCategories.length !== 0 && selectedCategories.length <= 6) {
         let formData = {
           adultLegalFirstName: parentFirstName,
           adultLegalLastName: parentLastName,
