@@ -512,7 +512,7 @@ const SearchHeaderComponent = ({ onData }) => {
       searchPathOptions
         .filter(
           (option) =>
-            option.label.toLowerCase().includes(searchTerm.toLowerCase()) // Changed startsWith to includes for partial matching
+            option.label.toLowerCase().startsWith(searchTerm.toLowerCase()) // Changed startsWith to includes for partial matching
         )
         .map((option) => option.label)
     )
