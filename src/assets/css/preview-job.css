@@ -197,6 +197,24 @@
   width: 100%;
   text-transform: capitalize;
 }
+
+.company-location.compSect{
+  display: flex;
+  align-items: baseline;
+}
+
+.compSect>span { min-width: 115px; }
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (min-width: 320px) and (max-width: 768px) {
   .company-location {
     display: block;

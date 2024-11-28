@@ -116,17 +116,32 @@ const EditFeatures = ({ featuresStructure, featureValues, onValuesChange }) => {
                 //   )
                 // }
                 onKeyDown={handleKeyDown}
+                // onChange={(selectedOption) => {
+                //   const value = selectedOption?.value;
+                //   // Check if the value is a valid number and is non-negative
+                //   if (
+                //     /^\d*\.?\d*$/.test(value) &&
+                //     (value >= 0 || value === "")
+                //   ) {
+                //     handleChange(
+                //       label,
+                //       selectedOption ? selectedOption?.value : ""
+                //     );
+                //   }
+                // }}
                 onChange={(selectedOption) => {
-                  const value = selectedOption.value;
-                  // Check if the value is a valid number and is non-negative
-                  if (
-                    /^\d*\.?\d*$/.test(value) &&
-                    (value >= 0 || value === "")
-                  ) {
-                    handleChange(
-                      label,
-                      selectedOption ? selectedOption.value : ""
-                    );
+                  if (selectedOption === null) {
+                    // Handle the clear action
+                    handleChange(label, "");
+                  } else {
+                    const value = selectedOption?.value;
+                    // Check if the value is a valid number and is non-negative
+                    if (
+                      /^\d*\.?\d*$/.test(value) &&
+                      (value >= 0 || value === "")
+                    ) {
+                      handleChange(label, value);
+                    }
                   }
                 }}
                 options={getOptions(options)}
