@@ -1262,6 +1262,7 @@ const Pricing = ({
                     appliedCouponCode={appliedCouponCode}
                     success_url={success_url}
                     setGiftError={setGiftError}
+                    userType={userType}
                   />
                 </div>
               </>

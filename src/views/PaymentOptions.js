@@ -30,6 +30,7 @@ const PaymentOptions = ({
   appliedCouponCode,
   success_url,
   setGiftError,
+  userType
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -76,8 +77,14 @@ const PaymentOptions = ({
     if (location.pathname == "/pricing") {
       url = `/talent-home`;
     } else if (location.pathname == "/talent-signup-plan-details") {
+      if (userType == 'adults') {
+        url = `/talent-signup-files-details?userId=${userId}`;
+      } else {
+        url = `/talent-kids-teen-signup-files-details?userId=${userId}`;
+      }
+    } else if('/adult-signup-plan-details'){
       url = `/talent-signup-files-details?userId=${userId}`;
-    } else {
+    }else {
       url = success_url;
     }
     navigate(url);
@@ -125,7 +132,7 @@ const PaymentOptions = ({
         setIsCouponApplied(false);
       }
     } catch (error) {
-      console.log('err',error)
+      console.log('err', error)
       setErrorMessage("An error occurred while applying the coupon.");
     }
   };
