@@ -56,19 +56,17 @@ const Pricing = ({
     /\s+/g,
     ""
   )}`;
+
   useEffect(() => {
-    const data = localStorage.getItem("reloades");
+    const hasReloaded = localStorage.getItem("reloades");
 
-    // Check if the page has already been reloaded
-    if (!data) {
-      localStorage.setItem("reloades", "true"); // Set flag in localStorage
-      window.location.reload();
+    // Check if the reload flag is not set for this component
+    if (!hasReloaded) {
+      localStorage.setItem("reloades", "true"); // Set the reload flag
+      window.location.reload(); // Reload the page
+    } else {
+      localStorage.removeItem("reloades"); // Clear the flag for the next mount
     }
-
-    // Clear the flag when the component unmounts
-    return () => {
-      localStorage.removeItem("reloades");
-    };
   }, []);
   // const [receivedData, setReceivedData] = useState(null);
   // useEffect(() => {
@@ -238,7 +236,6 @@ const Pricing = ({
 
   const fetchPaymentDetails = async () => {
     const userId = localStorage.getItem("currentUser");
-    console.log("userId---------", userId);
     const obj = {
       user_id: userId,
     };
@@ -246,7 +243,6 @@ const Pricing = ({
       "https://brandsandtalent.com/api/users/fetchPaymentDetails",
       obj
     );
-    console.log("paymentDetailsData", paymentDetailsData);
     let activatedPlan;
     let activatedPeriod = paymentDetailsData?.data?.data?.subscriptionPlan;
     if (paymentDetailsData?.data?.data?.planName == "Pro") {
@@ -329,7 +325,7 @@ const Pricing = ({
         API.subscriptionPlan,
         userData
       );
-      navigate(`/talent-signup-files-details?${userId}`);
+      navigate(`/talent-kids-teen-signup-files-details?${userId}`);
       // navigate(`/client/${receivedData?.publicUrl.replace(/\s+/g, "")}`, {
       //   state: { data: receivedData },
       // });
@@ -1266,6 +1262,7 @@ const Pricing = ({
                     appliedCouponCode={appliedCouponCode}
                     success_url={success_url}
                     setGiftError={setGiftError}
+                    userType={userType}
                   />
                 </div>
               </>
