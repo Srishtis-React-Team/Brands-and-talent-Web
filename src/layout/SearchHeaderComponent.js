@@ -498,9 +498,31 @@ const SearchHeaderComponent = ({ onData }) => {
         navigate(route);
       }
     }
+
+    if (route == "/careers") {
+      handleClose();
+      navigate("/careers");
+    }
+    if (route == "/become-affliate") {
+      handleClose();
+      navigate("/become-affliate");
+    }
+    if (route == "/investors") {
+      handleClose();
+      navigate("/investors");
+    }
+    if (route == "/feedback") {
+      handleClose();
+      navigate("/feedback");
+    }
+
     if (route == "/talent-signup") {
       handleClose();
       handleRegister();
+    }
+    if (route == "/contact-us") {
+      handleClose();
+      navigate("/contact-us");
     }
     if (route == "/brand-firstGig") {
       navigate(route);
