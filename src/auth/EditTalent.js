@@ -578,7 +578,6 @@ const EditTalent = () => {
                 );
               });
             setSelectedNationalityOptions(selectedNationalityOptions);
-
             setServices(resData.data.data?.services);
             const selectedProfessionOptions = resData.data.data?.profession.map(
               (profession) => {
@@ -1637,7 +1636,36 @@ const EditTalent = () => {
     ]);
   };
 
+  const [serviceNameError, setServiceNameError] = useState(false);
+  const [serviceAmountError, setServiceAmountError] = useState(false);
+
   const submitServices = async () => {
+    let hasError = false;
+
+    services.forEach((service, index) => {
+      if (!service.serviceName.trim()) {
+        setServiceNameError(true);
+        hasError = true;
+      } else {
+        setServiceNameError(false);
+      }
+      if (!service.serviceAmount.trim()) {
+        setServiceAmountError(true);
+        hasError = true;
+      } else {
+        setServiceAmountError(false);
+      }
+    });
+
+    if (hasError) {
+      setMessage("Please fill in all required fields");
+      setOpenPopUp(true);
+      setTimeout(function () {
+        setOpenPopUp(false);
+      }, 1000);
+      return;
+    }
+
     let formData = {
       services: services,
     };
@@ -1653,7 +1681,6 @@ const EditTalent = () => {
           setIsLoading(false);
           setMessage("Services Updated Successfully");
           scrollToTop();
-
           setOpenPopUp(true);
           setTimeout(function () {
             setOpenPopUp(false);
@@ -3604,14 +3631,20 @@ const EditTalent = () => {
                                       className="form-control"
                                       placeholder="Custom Photoshoot"
                                       value={eachService.serviceName}
-                                      onChange={(e) =>
+                                      onChange={(e) => {
                                         handleInputChange(
                                           servicesIndex,
                                           "serviceName",
                                           e.target.value
-                                        )
-                                      }
+                                        );
+                                        setServiceNameError(false);
+                                      }}
                                     ></input>
+                                    {serviceNameError && (
+                                      <div className="invalid-fields">
+                                        Please enter service name
+                                      </div>
+                                    )}
                                   </div>
                                   <div className="kids-form-section col-md-6 mb-3">
                                     <label className="form-label">
@@ -3624,21 +3657,26 @@ const EditTalent = () => {
                                       className="form-control"
                                       placeholder="$200 per hour (negotiable)"
                                       value={eachService.serviceAmount}
-                                      onChange={(e) =>
+                                      onChange={(e) => {
                                         handleInputChange(
                                           servicesIndex,
                                           "serviceAmount",
                                           e.target.value
-                                        )
-                                      }
+                                        );
+                                        setServiceAmountError(false);
+                                      }}
                                     ></input>
+                                    {serviceAmountError && (
+                                      <div className="invalid-fields">
+                                        Please enter service amount
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                                 <div className="row">
                                   <div className="kids-form-section col-md-6 mb-2">
                                     <label className="form-label">
                                       Short Description
-                                      <span className="mandatory">*</span>
                                     </label>
                                     <RichTextEditor
                                       from={"service"}
