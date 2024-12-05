@@ -288,9 +288,17 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                       }`}
                       dangerouslySetInnerHTML={{ __html: item?.editorState }}
                     />
-                    <button className="toggle-button" onClick={toggleContent}>
-                      {isExpanded ? "Show Less" : "Show More"}
-                    </button>
+                    {item?.editorState && (
+                      <>
+                        <button
+                          className="toggle-button"
+                          onClick={toggleContent}
+                        >
+                          {isExpanded ? "Show Less" : "Show More"}
+                        </button>
+                      </>
+                    )}
+
                     {item?.serviceAmount && (
                       <>
                         <div className="starting-amount">
