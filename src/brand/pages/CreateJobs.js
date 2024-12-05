@@ -3045,7 +3045,6 @@ const CreateJobs = () => {
                             <div className="">
                               <label className="form-label mb-4">
                                 Compensation{" "}
-                                <span className="mandatory">*</span>
                               </label>
                               <div className="compensation-radios mb-2">
                                 <label
