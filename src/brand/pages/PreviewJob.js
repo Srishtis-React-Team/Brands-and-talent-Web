@@ -244,8 +244,18 @@ const PreviewJob = ({ data, onButtonClick }) => {
               </div>
 
               <div className="company-location compSect">
-                {jobData.compensation &&
+                {/* {jobData.compensation &&
                   Object.keys(jobData.compensation).length > 0 && (
+                    <>
+                      <span className="font-600">Compensation :&nbsp;</span>
+                    </>
+                  )} */}
+
+                {jobData.compensation?.paid_collaboration &&
+                  Object.values(jobData.compensation.paid_collaboration).some(
+                    (value) =>
+                      value !== null && value !== undefined && value !== ""
+                  ) && (
                     <>
                       <span className="font-600">Compensation :&nbsp;</span>
                     </>
@@ -254,7 +264,7 @@ const PreviewJob = ({ data, onButtonClick }) => {
                 {/* {jobData?.paymentType?.label} */}
                 {jobData.compensation &&
                   Object.entries(jobData.compensation).map(([key, value]) => (
-                    <span style={{ wordBreak: 'break-all' }} key={key}>
+                    <span style={{ wordBreak: "break-all" }} key={key}>
                       {(value?.minPay || value?.maxPay || value?.exactPay) && (
                         <>
                           <span>{value.currency}</span>&nbsp;
@@ -467,7 +477,8 @@ const PreviewJob = ({ data, onButtonClick }) => {
                                     <li>
                                       Instagram Followers:{" "}
                                       <span className="job-feature-values">
-                                        {jobData?.instaMin} - {jobData?.instaMax}
+                                        {jobData?.instaMin} -{" "}
+                                        {jobData?.instaMax}
                                       </span>
                                     </li>
                                   )}

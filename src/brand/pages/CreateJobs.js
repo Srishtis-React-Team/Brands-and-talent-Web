@@ -95,9 +95,9 @@ const CreateJobs = () => {
   const [brandImage, setBrandImage] = useState("");
   const [jobCountNumber, setJobCountNumber] = useState("");
   const [brandData, setBrandData] = useState("");
-  const [minPay, setMinPay] = useState("");
+  const [minPay, setMinPay] = useState(null);
   const [minPayError, setMinPayError] = useState("");
-  const [maxPay, setMaxPay] = useState("");
+  const [maxPay, setMaxPay] = useState(null);
   const [maxPayError, setMaxPayError] = useState("");
   const [instaMin, setInstaMin] = useState("");
   const [instaMax, setInstaMax] = useState("");
@@ -690,15 +690,15 @@ const CreateJobs = () => {
 
   const [selectedOption, setCompensationChange] =
     useState("paid_collaboration");
-  const [type, setType] = useState("");
-  const [currency, setCurrency] = useState("");
-  const [productCurrency, setProductCurrency] = useState("");
-  const [frequency, setfrequency] = useState("");
-  const [productFrequency, setProductFrequency] = useState("");
-  const [productName, setProductName] = useState("");
-  const [valueUSD, setValueUSD] = useState("");
-  const [exactPay, setExactPay] = useState("");
-  const [productValue, setProductValue] = useState("");
+  const [type, setType] = useState(null);
+  const [currency, setCurrency] = useState(null);
+  const [productCurrency, setProductCurrency] = useState(null);
+  const [frequency, setfrequency] = useState(null);
+  const [productFrequency, setProductFrequency] = useState(null);
+  const [productName, setProductName] = useState(null);
+  const [valueUSD, setValueUSD] = useState(null);
+  const [exactPay, setExactPay] = useState(null);
+  const [productValue, setProductValue] = useState(null);
 
   const compensationChange = (event) => {
     setCompensationChange(event.target.value);
