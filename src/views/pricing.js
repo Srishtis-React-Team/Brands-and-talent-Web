@@ -778,93 +778,107 @@ const Pricing = ({
                         {console.log("activePlan", activePlan)}
 
                         {item.plan_type_annual.length >= 1 && (
-  <>
-    <div className="annual-main-wrapper">
-      <div className="annual-wrapper">
-        <input
-          type="radio"
-          name={`annual-${item._id}`}
-          id={`annual-${item._id}`}
-          checked={selectedPlan === `annual-${item._id}`}
-          onChange={handleRadioChange(
-            "annual",
-            `annual-${item._id}`,
-            item.planname
-          )}
-          className={
-            item.planname === "Pro (Popular)"
-              ? "pro-checkbox"
-              : "premium-checkbox"
-          }
-          disabled={isPlanDisabled(item.planname, "annual")}
-        />
-        <label
-          htmlFor={`annual-${item._id}`}
-          className={`annual ${
-            item.planname === activePlan && activePeriod === "annual"
-              ? "checked-label"
-              : ""
-          }`}
-        >
-          {item.period}
-          {item.planname === activePlan && activePeriod === "annual" && (
-            <i className="bi bi-check-circle-fill active-icon"></i>
-          )}
-        </label>
-      </div>
-      <div className="per-value">{item.annualTotalAmount}</div>
-    </div>
+                          <>
+                            <div className="annual-main-wrapper">
+                              <div className="annual-wrapper">
+                                <input
+                                  type="radio"
+                                  name={`annual-${item._id}`}
+                                  id={`annual-${item._id}`}
+                                  checked={selectedPlan === `annual-${item._id}`}
+                                  onChange={(e) => {
+                                    if (!isPlanDisabled(item.planname, "annual")) {
+                                      handleRadioChange("annual", `annual-${item._id}`, item.planname)(e);
+                                    }
+                                  }}
+                                  className={
+                                    item.planname === "Pro (Popular)"
+                                      ? "pro-checkbox"
+                                      : "premium-checkbox"
+                                  }
+                                />
+                                <label
+                                  htmlFor={`annual-${item._id}`}
+                                  className={`annual ${item.planname === activePlan && activePeriod === "annual"
+                                    ? "checked-label"
+                                    : ""
+                                    }`}
+                                >
+                                  {item.period}
+                                  {item.planname === activePlan && activePeriod === "annual" && (
+                                    <i className="bi bi-check-circle-fill active-icon"></i>
+                                  )}
+                                </label>
+                                {isPlanDisabled(item.planname, "annual") && (
+                                  <div className="info-icon-wrapper">
+                                    <i
+                                      className="bi bi-info-circle-fill info-icon"
+                                      title="Cannot downgrade plan"
+                                    ></i>
+                                    <div className="tooltip">Cannot downgrade plan</div>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="per-value">{item.annualTotalAmount}</div>
+                            </div>
 
-    {item.plan_type_annual.map((plan, index) => (
-      <>
-        <div key={index} className="plan-amounts">
-          <div className="per-value">{plan.afterDiscount}</div>
-        </div>
-        <div className="border-bottom"></div>
-      </>
-    ))}
+                            {item.plan_type_annual.map((plan, index) => (
+                              <>
+                                <div key={index} className="plan-amounts">
+                                  <div className="per-value">{plan.afterDiscount}</div>
+                                </div>
+                                <div className="border-bottom"></div>
+                              </>
+                            ))}
 
-    <div className="monthly-wrapper pt-3">
-      <div>
-        <input
-          type="radio"
-          name={`monthly-${item._id}`}
-          id={`monthly-${item._id}`}
-          checked={selectedPlan === `monthly-${item._id}`}
-          onChange={handleRadioChange(
-            "monthly",
-            `monthly-${item._id}`,
-            item.planname
-          )}
-          className={
-            item.planname === "Pro (Popular)"
-              ? "pro-checkbox"
-              : "premium-checkbox"
-          }
-          disabled={isPlanDisabled(item.planname, "monthly")}
-        />
-        <label
-          htmlFor={`monthly-${item._id}`}
-          className={`monthly ${
-            item.planname === activePlan && activePeriod === "monthly"
-              ? "checked-label"
-              : ""
-          }`}
-        >
-          Monthly
-          {item.planname === activePlan && activePeriod === "monthly" && (
-            <i className="bi bi-check-circle-fill active-icon"></i>
-          )}
-        </label>
-      </div>
-      {item.plan_type_monthly.map((plan, index) => (
-        <div key={index} className="monthly-amount">
-          {plan.amount}
-        </div>
-      ))}
-    </div>
-  </>
-)}
+                            <div className="monthly-wrapper pt-3">
+                              <div>
+                                <input
+                                  type="radio"
+                                  name={`monthly-${item._id}`}
+                                  id={`monthly-${item._id}`}
+                                  checked={selectedPlan === `monthly-${item._id}`}
+                                  onChange={(e) => {
+                                    if (!isPlanDisabled(item.planname, "monthly")) {
+                                      handleRadioChange("monthly", `monthly-${item._id}`, item.planname)(e);
+                                    }
+                                  }}
+                                  className={
+                                    item.planname === "Pro (Popular)"
+                                      ? "pro-checkbox"
+                                      : "premium-checkbox"
+                                  }
+                                />
+                                <label
+                                  htmlFor={`monthly-${item._id}`}
+                                  className={`monthly ${item.planname === activePlan && activePeriod === "monthly"
+                                    ? "checked-label"
+                                    : ""
+                                    }`}
+                                >
+                                  Monthly
+                                  {item.planname === activePlan && activePeriod === "monthly" && (
+                                    <i className="bi bi-check-circle-fill active-icon"></i>
+                                  )}
+                                </label>
+                                {isPlanDisabled(item.planname, "monthly") && (
+                                  <div className="info-icon-wrapper">
+                                    <i
+                                      className="bi bi-info-circle-fill info-icon"
+                                      title="Cannot downgrade plan"
+                                    ></i>
+                                    <div className="tooltip">Cannot downgrade plan</div>
+                                  </div>
+                                )}
+                              </div>
+                              {item.plan_type_monthly.map((plan, index) => (
+                                <div key={index} className="monthly-amount">
+                                  {plan.amount}
+                                </div>
+                              ))}
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div
                         className={
