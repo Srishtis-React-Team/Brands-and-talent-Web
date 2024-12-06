@@ -288,22 +288,40 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                       }`}
                       dangerouslySetInnerHTML={{ __html: item?.editorState }}
                     />
-                    <button className="toggle-button" onClick={toggleContent}>
-                      {isExpanded ? "Show Less" : "Show More"}
-                    </button>
-                    <div className="starting-amount">
-                      ${item?.serviceAmount} per hour
-                    </div>
-                    <div className="text-btm mb-3">
-                      <div className="service-duration">
-                        <div className="service-duration-title">
-                          Delivery Time :
+                    {item?.editorState && (
+                      <>
+                        <button
+                          className="toggle-button"
+                          onClick={toggleContent}
+                        >
+                          {isExpanded ? "Show Less" : "Show More"}
+                        </button>
+                      </>
+                    )}
+
+                    {item?.serviceAmount && (
+                      <>
+                        <div className="starting-amount">
+                          ${item?.serviceAmount} per hour
                         </div>
-                        <div>
-                          {item?.serviceDuration} {item?.serviceTime}
+                      </>
+                    )}
+
+                    {(item?.serviceDuration || item?.serviceTime) && (
+                      <>
+                        <div className="text-btm mb-3">
+                          <div className="service-duration">
+                            <div className="service-duration-title">
+                              Delivery Time :
+                            </div>
+                            <div>
+                              {item?.serviceDuration} {item?.serviceTime}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
+                      </>
+                    )}
+
                     <div onClick={() => messageNow()} className="enquire-btn">
                       Inquire Now
                     </div>

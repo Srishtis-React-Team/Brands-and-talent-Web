@@ -90,7 +90,7 @@ const BrandTalents = () => {
   const postKeyword = async (e) => {
     const fromData = {
       searchedKeyword: searchKeyword,
-      user_id: brandId,
+      user_id: localStorage.getItem("brandId"),
     };
     await ApiHelper.post(API.postUserSearchKeyword, fromData)
       .then((resData) => {
@@ -103,7 +103,9 @@ const BrandTalents = () => {
   };
 
   const getUserSearchKeyword = async () => {
-    await ApiHelper.get(`${API.getUserSearchKeyword}${brandId}`)
+    await ApiHelper.get(
+      `${API.getUserSearchKeyword}${localStorage.getItem("brandId")}`
+    )
       .then((resData) => {
         if (resData) {
           setkeywordsList(resData.data.data);
@@ -245,7 +247,7 @@ const BrandTalents = () => {
 
   const getTalentList = async () => {
     const formData = {
-      userId: brandId,
+      userId: localStorage.getItem("brandId"),
     };
     await ApiHelper.post(API.getTalentList, formData)
       .then((resData) => {

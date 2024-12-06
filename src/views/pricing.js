@@ -268,7 +268,6 @@ const Pricing = ({
     return planRank <= activePlanRank; // Disable plans with a lower rank
   };
 
-
   useEffect(() => {
     if (userType == "adults") {
       getPricingList();
@@ -291,7 +290,7 @@ const Pricing = ({
     setIsChecked(event.target.checked);
   };
 
-  useEffect(() => { }, [comment]);
+  useEffect(() => {}, [comment]);
 
   const getPricingList = async () => {
     await ApiHelper.get(API.getPricingList)
@@ -300,7 +299,7 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const getBrandsPricingList = async () => {
@@ -310,7 +309,7 @@ const Pricing = ({
           setPricingList(resData.data.data);
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const editKids = async () => {
@@ -621,7 +620,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const getBrand = async () => {
@@ -633,7 +632,7 @@ const Pricing = ({
           }
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const handleFormSubmit = (dataObject, hash) => {
@@ -736,10 +735,10 @@ const Pricing = ({
                         index === 0
                           ? "plans-wrapper free-plans"
                           : index === 1
-                            ? "plans-wrapper pro-plans"
-                            : index === 2
-                              ? "plans-wrapper premium-plans"
-                              : ""
+                          ? "plans-wrapper pro-plans"
+                          : index === 2
+                          ? "plans-wrapper premium-plans"
+                          : ""
                       }
                     >
                       <div className="priceHeight">
@@ -752,8 +751,8 @@ const Pricing = ({
                                   index === 1
                                     ? "pro-gift giftSize"
                                     : index === 2
-                                      ? "premium-gift giftSize"
-                                      : ""
+                                    ? "premium-gift giftSize"
+                                    : ""
                                 }
                                 onClick={handleClickOpen}
                               >
@@ -885,10 +884,10 @@ const Pricing = ({
                           index === 0
                             ? "choose-btn free-btn"
                             : index === 1
-                              ? "choose-btn pro-btn"
-                              : index === 2
-                                ? "choose-btn premium-btn"
-                                : ""
+                            ? "choose-btn pro-btn"
+                            : index === 2
+                            ? "choose-btn premium-btn"
+                            : ""
                         }
                         onClick={() => choosePlan(index, item, "plan")}
                       >
@@ -932,7 +931,7 @@ const Pricing = ({
                 ? isMobile
                   ? "90vw"
                   : "60vw" // If isPlanForm is true, always 90vw
-                : "60vw", // If isPlanForm is false, always 60vw regardless of mobile or desktop
+                : "90vw", // If isPlanForm is false, always 60vw regardless of mobile or desktop
               maxWidth: "90vw", // Ensure the dialog does not exceed the viewport width
             },
           }}
@@ -987,8 +986,9 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${!isValidEmail ? "is-invalid" : "form-control"
-                        }`}
+                      className={`form-control ${
+                        !isValidEmail ? "is-invalid" : "form-control"
+                      }`}
                       onChange={handleEmailChange}
                       placeholder="Email Address"
                       value={email}
@@ -1040,8 +1040,9 @@ const Pricing = ({
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${!isRecieverValidEmail ? "is-invalid" : "form-control"
-                        }`}
+                      className={`form-control ${
+                        !isRecieverValidEmail ? "is-invalid" : "form-control"
+                      }`}
                       onChange={handleRecieverEmailChange}
                       placeholder="Recipient's Email Address"
                       value={recieverEmail}
@@ -1088,7 +1089,7 @@ const Pricing = ({
             {isPlanForm == true && (
               <>
                 <div className="plan-main">
-                  <div className="container">
+                  <div className="container mobile-plan-container">
                     {pricingList.length > 0 && (
                       <div className="plans-section">
                         <div className="row">
@@ -1099,8 +1100,8 @@ const Pricing = ({
                                   index === 0
                                     ? "plans-wrapper pro-plans" // index 0 here corresponds to the original index 1
                                     : index === 1
-                                      ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
-                                      : ""
+                                    ? "plans-wrapper premium-plans" // index 1 here corresponds to the original index 2
+                                    : ""
                                 }
                               >
                                 <div className="priceHeight">
@@ -1219,8 +1220,8 @@ const Pricing = ({
                                     index === 0
                                       ? "choose-btn pro-btn" // index 0 here corresponds to the original index 1
                                       : index === 1
-                                        ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
-                                        : ""
+                                      ? "choose-btn premium-btn" // index 1 here corresponds to the original index 2
+                                      : ""
                                   }
                                   onClick={() =>
                                     choosePlan(

@@ -13,8 +13,7 @@ import PopUp from "../components/PopUp";
 import { API } from "../config/api";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { Button, Modal, Box, Typography } from "@mui/material";
-import searchPathOptions from "../components/SearchPaths";
-
+import SearchPaths from "../components/SearchPaths";
 const SearchHeaderComponent = ({ onData }) => {
   const navigate = useNavigate();
   const btLogo = require("../assets/images/LOGO.png");
@@ -32,7 +31,9 @@ const SearchHeaderComponent = ({ onData }) => {
   const [currentUser_type, setCurrentUserType] = useState("");
   const [talentData, setTalentData] = useState();
   const [talentId, setTalentId] = useState(null);
+  const searchPathOptions = SearchPaths(); // Call the function/component to get the options
 
+  console.log(searchPathOptions, "searchPathOptions"); // Use the dynamically generated options
   useEffect(() => {
     setcurrentUserId(localStorage.getItem("currentUser"));
     setCurrentUserImage(localStorage.getItem("currentUserImage"));
@@ -218,6 +219,15 @@ const SearchHeaderComponent = ({ onData }) => {
   };
 
   const handleLabelClick = (route) => {
+    if (route == "/") {
+      navigate("/");
+    }
+    if (route == "/privacy-policy") {
+      navigate("/privacy-policy");
+    }
+    if (route == "/terms-conditions") {
+      navigate("/terms-conditions");
+    }
     if (route === "/find-talent") {
       if (!currentUserId || currentUser_type != "brand") {
         handleClose();
@@ -264,7 +274,7 @@ const SearchHeaderComponent = ({ onData }) => {
           navigate("/login");
         }, 1000);
       } else {
-        navigate(route);
+        navigate("/create-jobs");
       }
     } else if (route === "/how-it-works") {
       navigate(route);
@@ -306,7 +316,7 @@ const SearchHeaderComponent = ({ onData }) => {
         navigate(route);
       }
     } else if (route === "/applied-jobs") {
-      if (!currentUserId || currentUser_type == "talent") {
+      if (!currentUserId || currentUser_type == "brand") {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
@@ -318,7 +328,7 @@ const SearchHeaderComponent = ({ onData }) => {
         navigate(route);
       }
     } else if (route === "/saved-jobs") {
-      if (!currentUserId || currentUser_type == "talent") {
+      if (!currentUserId) {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
@@ -342,7 +352,7 @@ const SearchHeaderComponent = ({ onData }) => {
         navigate(route);
       }
     } else if (route === "/find-talents") {
-      if (!currentUserId || currentUser_type == "talent") {
+      if (!currentUserId) {
         handleClose();
         setMessage("You must be logged in");
         setOpenPopUp(true);
@@ -350,7 +360,9 @@ const SearchHeaderComponent = ({ onData }) => {
           setOpenPopUp(false);
           navigate("/login");
         }, 1000);
-      } else {
+      } else if (currentUserId && currentUser_type == "talent") {
+        navigate("/find-talent");
+      } else if (currentUserId && currentUser_type == "brand") {
         navigate(route);
       }
     } else if (route === "/favorite-talents") {

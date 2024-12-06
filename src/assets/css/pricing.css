@@ -655,3 +655,7 @@ input[type="radio"].premium-checkbox {
   height: 600px;
   overflow-y: scroll;
 }
+
+.mobile-plan-container {
+  padding: 0px !important;
+}
