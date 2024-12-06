@@ -367,12 +367,22 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
               </div>
 
               <div className="company-location comp-main">
-                {jobData.compensation &&
+                {/* {jobData.compensation &&
                   Object.keys(jobData.compensation).length > 0 && (
                     <>
                       <span className="job-feature-heading">
                         Compensation :&nbsp;{" "}
                       </span>
+                    </>
+                  )} */}
+
+                {jobData.compensation?.paid_collaboration &&
+                  Object.values(jobData.compensation.paid_collaboration).some(
+                    (value) =>
+                      value !== null && value !== undefined && value !== ""
+                  ) && (
+                    <>
+                      <span className="font-600">Compensation :&nbsp;</span>
                     </>
                   )}
 
@@ -597,7 +607,8 @@ const TalentPreviewJob = ({ job, setFlag, from, setPreviewApplied }) => {
                                     <li>
                                       Instagram Followers:{" "}
                                       <span className="job-feature-values">
-                                        {jobData?.instaMin} - {jobData?.instaMax}
+                                        {jobData?.instaMin} -{" "}
+                                        {jobData?.instaMax}
                                       </span>
                                     </li>
                                   )}

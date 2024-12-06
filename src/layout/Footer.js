@@ -7,6 +7,7 @@ import PopUp from "../components/PopUp";
 import { ApiHelper } from "../helpers/ApiHelper";
 import { API } from "../config/api";
 import CurrentUser from "../CurrentUser";
+import weAccept from '../assets/icons/payment/Group 126 (1).png'
 import Header from "./header";
 const Footer = (props) => {
   const {
@@ -554,6 +555,10 @@ const Footer = (props) => {
                     margin: "0 10px",
                   }}
                 ></i>
+              </div>
+              <div style={{display:'flex',gap:'10px', marginTop:'10px'}}>
+                <span style={{fontWeight: 'bold'}}>We accept: </span>
+                <img style={{height:'22px'}} src={weAccept}></img>
               </div>
             </div>
           </div>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import CryptoJS from "crypto-js"; // Ensure CryptoJS is installed
 import "../assets/css/paymentoption.css";
-import qrlogo from "../assets/icons/payment/ic_KHQR_x2.png";
-import cardlogo from "../assets/icons/payment/ic_generic_1x.png";
-import payOptionslogo from "../assets/icons/payment/paymentlogos.png";
+import qrlogo from "../assets/icons/payment/ic_generic copy (1).png";
+import cardlogo from "../assets/icons/payment/cards_icons.png";
+import payOptionslogo from "../assets/icons/payment/4Cards_2x.png";
 import rightArrow from "../assets/icons/payment/right-arrow.svg";
 import { ApiHelper } from "../helpers/ApiHelper.js";
 import { API } from "../config/api.js";

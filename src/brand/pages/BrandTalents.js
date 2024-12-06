@@ -599,7 +599,7 @@ const BrandTalents = () => {
                             Filters
                           </div>
                         </div>
-                        <div className="keyword-wrapper pt-4">
+                        {/* <div className="keyword-wrapper pt-4">
                           <div className="filter-items">Keyword</div>
                           <div className="filter-input-wrapper inpWid">
                             <input
@@ -648,7 +648,7 @@ const BrandTalents = () => {
                               </div>
                             </>
                           )}
-                        </div>
+                        </div> */}
                         <div className="keyword-wrapper">
                           <div className="filter-items">Name</div>
                           <div className="creators-filter-select inpWid">

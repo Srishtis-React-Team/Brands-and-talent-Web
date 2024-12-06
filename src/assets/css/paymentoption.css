@@ -52,7 +52,8 @@
   }
 
   .paymentOptions {
-    width: 90% !important;
+    height: 23px;
+    width: 60% !important;
   }
 
   .popupcontainer2 {

@@ -40,14 +40,12 @@ const SearchPaths = () => {
           { routes: "/talent-dashboard", label: "Get Booked" },
         ]
       : []), // Example for another condition
-    { routes: "/about", label: "About Us" }, // Common route for all users
     { routes: "/", label: "Home Page" },
     // { routes: "/find-talent", label: "Find Creators" },
     { routes: "/pricing", label: "Pricing" },
-    { routes: "/resources", label: "Resources" },
+    // { routes: "/resources", label: "Resources" },
     // { routes: "/signup", label: "Register" },
     { routes: "/talent-signup", label: "Signup" },
-    { routes: "/about-us", label: "About Us" },
     { routes: "/community-guidelines", label: "Community Guidelines" },
     { routes: "/terms-conditions", label: "Terms & Conditions" },
     { routes: "/privacy-policy", label: "Privacy Policy" },
@@ -65,6 +63,7 @@ const SearchPaths = () => {
     { routes: "/become-affliate", label: "Become Affiliate" },
     { routes: "/investors", label: "Investors" },
     { routes: "/feedback", label: "Feedback Reporting" },
+    { routes: "/about-us", label: "About Us" }, // Common route for all users
   ];
 
   return searchPathOptions; // Export the array
