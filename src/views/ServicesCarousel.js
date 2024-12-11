@@ -230,7 +230,7 @@ const ServicesCarousel = ({ talentData, brandData }) => {
                       }`}
                       dangerouslySetInnerHTML={{ __html: item?.editorState }}
                     />
-                    {item?.editorState && (
+                    {item?.editorState?.length > 50 && ( // Only show the button if content is long enough
                       <>
                         <button
                           className="toggle-button"
