@@ -672,7 +672,7 @@ const Pricing = ({
         id="aba_merchant_request"
         target="aba_webservice"
         method="POST"
-        action="https://checkout-sandbox.payway.com.kh/api/payment-gateway/v1/payments/purchase"
+        action="https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase"
       >
         <input
           type="hidden"
