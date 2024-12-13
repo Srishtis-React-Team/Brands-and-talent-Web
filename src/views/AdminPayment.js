@@ -14,6 +14,8 @@ const AdminPayment = () => {
   const [selectedPaymentPlan, setSelectedPaymentPlan] = useState("");
   const [loading, setLoading] = useState(false);
   const [appliedCouponCode, setAppliedCouponCode] = useState("");
+  const [abaFormData, setAbaFormData] = useState({});
+
 
   const handlePayNow = async () => {
     setPaymentOption(true);
@@ -34,6 +36,14 @@ const AdminPayment = () => {
     } catch (error) {
       console.error("Error during payment:", error);
     }
+  };
+
+  const handleFormSubmit = (dataObject, hash) => {
+    console.log('dataObject',dataObject)
+    setAbaFormData({ ...dataObject, hash });
+    setTimeout(() => {
+      document.getElementById("checkout_button").click();
+    }, 100);
   };
 
   useEffect(() => {
@@ -107,6 +117,7 @@ const AdminPayment = () => {
 
       {paymentOptions && (
         <PaymentOptions
+          onConfirm={handleFormSubmit}
           paymentFrom={"giftsubscription"}
           selectedCurrency={"USD"}
           selectedAmount={selectedAmount} // Pass selectedAmount to PaymentOptions
@@ -115,15 +126,65 @@ const AdminPayment = () => {
           setPaymentOption={setPaymentOption}
           selectedPaymentPlan={selectedPaymentPlan}
           setAppliedCouponCode={setAppliedCouponCode}
+          success_url='https://brandsandtalent.com/pricingadmin'
         />
       )}
 
-      {checkout && (
+<form
+        id="aba_merchant_request"
+        target="aba_webservice"
+        method="POST"
+        action="https://checkout.payway.com.kh/api/payment-gateway/v1/payments/purchase"
+      >
+        <input
+          type="hidden"
+          name="merchant_id"
+          value={abaFormData.merchant_id || ""}
+        />
+        <input type="hidden" name="tran_id" value={abaFormData.tran_id || ""} />
+        <input type="hidden" name="amount" value={abaFormData.amount || ""} />
+        <input type="hidden" name="email" value={abaFormData.email || ""} />
+        <input
+          type="hidden"
+          name="payment_option"
+          value={abaFormData.payment_option || ""}
+        />
+        <input
+          type="hidden"
+          name="req_time"
+          value={abaFormData.req_time || ""}
+        />
+        <input
+          type="hidden"
+          name="continue_success_url"
+          value={abaFormData.continue_success_url || ""}
+        />
+        <input
+          type="hidden"
+          name="return_params"
+          value={abaFormData.return_params || ""}
+        />
+        <input type="hidden" name="hash" value={abaFormData.hash || ""} />
+        <button
+          type="button"
+          id="checkout_button"
+          style={{
+            opacity: "0",
+            height: "1px",
+            width: "1px",
+            position: "absolute",
+          }}
+        >
+          Pay Now
+        </button>
+      </form>
+
+      {/* {checkout && (
         <CheckoutComponent
           responseUrl={responseurl}
           setCheckout={setCheckout}
         />
-      )}
+      )} */}
       {loading ? <Loader /> : <div></div>}
     </>
   );
